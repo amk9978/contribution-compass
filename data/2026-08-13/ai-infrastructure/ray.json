@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "ai-infrastructure",
@@ -40,11 +40,84 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "master",
-    "stars": 43508,
-    "forks": 7923,
-    "openIssues": 3487,
+    "stars": 43509,
+    "forks": 7922,
+    "openIssues": 3488,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:12.444680+00:00"
+    "collectedAt": "2026-08-13T16:19:34.410995+00:00"
+  },
+  "news": {
+    "repository": "ray-project/ray",
+    "collectedAt": "2026-08-13T16:19:34.410995+00:00",
+    "latestRelease": {
+      "repository": "ray-project/ray",
+      "tag": "ray-2.57.0",
+      "title": "Ray-2.57.0",
+      "url": "https://github.com/ray-project/ray/releases/tag/ray-2.57.0",
+      "publishedAt": "2026-08-11T01:15:44Z",
+      "notes": "# Highlights\r\n\r\n* **Ray Data:** In this Ray release, we've enabled `DataSourceV2` by default (#64821), so `read_parquet` and friends use the new scan/listing infrastructure with row-group-aware chunking and predicate splitting. Hash Shuffle V2 eliminates the aggregator actor pool. V1 had to provision that pool up front from an estimate of the input size, and its actors accumulated partition shards in actor heap memory, invisible to Ray and unspillable, until finalization. V2 replaces it with two stateless task-based operators, ShuffleMapOp --> ShuffleReduceOp, that pass shards through the object store, so intermediate state spills under pressure and no capacity has to be reserved in advance. The map/reduce barrier itself remains in both designs.\r\n* HashShuffleV2 supports `join` ([#63598](https://github.com/ray-project/ray/pull/63598), [#64538](https://github.com/ray-project/ray/pull/64538), [#64687](https://github.com/ray-project/ray/pull/64687)). This lets shuffles reuse standard map/reduce scheduling, backpressure, and resource accounting.\r\n* **Ray Serve:** The HAProxy ingress is now distributed as the `ray-haproxy` PyPI package instead of being compiled into images, and it is the default HAProxy binary (#64141, #64163, #64164). We've also added gRPC support to the HAProxy direct-ingress path, including streaming, metrics, and custom request IDs (#63735, #64310, #64166, #64112). For Ray Serve LLM, we've added experimental KV-cache-aware request routing that tracks replica KV state through an event plane, tokenizes before routing, and routes on prefill/decode token load (#64084, #64085, #64097, #64224, #64327, #64400). KV cache-aware routing’s complete support will land in 2.58.\r\n* **Ray Core:** We've added an embedded RocksDB storage backend for GCS fault tolerance (REP-64), selectable with `RAY_gcs_storage=rocksdb` and `RAY_gcs_storage_path` (#63657). GCS fault tolerance no longer requires an external Redis instance. We've also added a public API for topology-aware scheduling (#63479, #63740).\r\n\r\n# Ray Data\r\n\r\n### 🎉 New Features\r\n* Enable `DataSourceV2` by default via `DataContext.use_datasource_v2` (#64821)\r\n* New task-based hash shuffle v2 (`ShuffleMapOp` → `ShuffleReduceOp`) with `join`, multi-input reduce, downstream map fusion, and reducer remote args, behind an env flag (#63598, #64538, #64687, #64438, #64302, #64532, #64481)\r\n* Add a `Catalog` abstraction with a `UnityCatalog` implementation that can be passed to `read_*`, and Unity Catalog write support for Parquet and Iceberg (#64193, #64519)\r\n* Add `read_zarr` for Zarr datasets (#63003) and `read_lerobot` for LeRobot v3 datasets (#63821)\r\n* Add `PushdownCountFiles` optimization to answer `count()` from Parquet footers (#64763)\r\n* Add common subexpression elimination to the expression optimizer (#63974)\r\n* Add GPU support for `Aggregate` (#63708)\r\n* Make dataset iteration metrics queryable per split (#64608)\r\n* Add custom operator stats to capture worker-side metrics during task execution (#64221)\r\n* Refactor usage collection into an extensible `UsageCallback` (#64500)\r\n* Export `from_blocks` from `ray.data` (#64127)\r\n* Add support for `rapidsmpf-26.4.0` (#64324)\r\n\r\n### 💫 Enhancements\r\n* Hide Ray Data internal frames from user-code error tracebacks (#64587)\r\n* Run projection/predicate pushdown before limit pushdown, block optimization of non-deterministic expressions, and make fuse checks consistent between the logical and physical optimizers (#64651, #64165, #63936)\r\n* Add a two-mode block metadata fetch behind a single `MetadataFetcher` interface (#64378)\r\n* Use work stealing for file listing and a dynamic work queue for traversals (#64675, #64388)\r\n* Speed up `ExecutionResources` and the reservation/budget loops on the scheduling hot path (#63964)\r\n* Fix `O(n^2)` schema reconciliation in `unify_schemas` and avoid per-column `Series` materialization in tensor-column casting (#64555, #64038)\r\n* Decouple collate and memory pinning in `iter_torch_batches`, add per-stage training-thread blocking attribution, bound in-flight `iter_threaded` items, and finalize after reordering under `preserve_order` (#64653, #64183, #64219, #64282)\r\n* Add default logical memory for map operators, wire the materializing-op filter into `OpResourceAllocator` budgeting, and move `estimate_object_store_usage` into the physical op (#63814, #63665, #63961)\r\n* Decrease the downstream backpressure ratio to 2.0 (#64352)\r\n* Route native `S3FileSystem` downloads to the PyArrow threaded path (#64089)\r\n* Size hash-shuffle aggregators via bounded online sampling and add a timeout to the batched `ray.get` when fetching partitions (#63929, #64256)\r\n* Replace manual block reference accounting with Ray Core out-of-scope object callbacks (#64011, #64157, #64191)\r\n* Default `read_numpy` to `allow_pickle=False` and make it manually configurable (#64684)\r\n* Make `write_lance(mode=CREATE)` error instead of silently overwriting (#64364)\r\n* Expand `DistributionTracker` with `merge()` and p25/p75, and add dead node counts and detected issues to usage collection (#64074, #64459, #64198)\r\n* Remove cluster autoscaler v1, rename the subcluster label key to `ray-subcluster`, avoid scaling nodegroups dedicated to the head node, and quiet autoscaling coordinator logs (#64380, #64003, #63918, #63534)\r\n* Delay the \"cluster resources not enough\" warning until an operator is persistently starved, and lower the high-memory warning threshold (#63969, #64124)\r\n* Remove `ExecutionPlan`, `_num_outputs`, `batch_format` on `AllToAllOperators`, and `InheritBatchFormatRule`; use `input_dependencies` in logical operators (#63662, #64167, #64152, #64149, #64148)\r\n* Deprecate low-level scheduling APIs (`DataContext.scheduling_strategy`, `actor_locality_enabled`, `exclude_resources`, `local://`) ahead of the actor-only rearchitecture (#64632)\r\n* Migrate the Daft dependency from `getdaft` to `daft` (#64240)\r\n* Migrate `apply_chat_template`/`tokenize`/`detokenize` callers to `*_stage` form, and remove `PrepareImageStage` while deprecating the `image` row column (#63590, #63570)\r\n\r\n### 🔨 Fixes\r\n* Fix `TensorDtype.__from_arrow__` crash on empty tensor columns (#64767)\r\n* Fix Arrow-backed `to_pandas` regressions with an opt-out flag and int/float block overflow handling (#64768)\r\n* Fix read-only hash array crash in hash partition (#64552, #64559)\r\n* Fix streaming-generator hang on a plasma-resident return object (#64386)\r\n* Fix Parquet write overflow for string/binary columns larger than 2 GiB (#64212)\r\n* Fix Parquet sampling hang on a permanent `OSError` (#64342)\r\n* Fix the BigQuery datasink to handle empty blocks (#60797)\r\n* Make `PandasBlock.size_bytes` deterministic (#64393)\r\n* Propagate branch in `_append_and_commit()` for the Iceberg overwrite save mode (#63922)\r\n* Propagate `isolate_read_workers` to `DatasourceV2` (#65191, #65207)\r\n* Fix cross-region S3 bucket access in the obstore download path (#63890)\r\n* Restore `safe_round` in the `ExecutionResources` hot path (#64296)\r\n* Log both the wrapped and wrapper exception in `iterate_with_retry` (#64639)\r\n* Add `tf-keras` to the `text_embedding` pip packages (#64889, #64968)\r\n* Fix `build_processor` failing with vLLM >= 0.19, correct its `config` type hint, and add `request_timeout_s` to `ServeDeploymentProcessor` to prevent indefinite hangs (#64337, #64098, #64496)\r\n* Fix type hints in `throughput_solver.py` (#64289)\r\n\r\n### 📖 Documentation\r\n* Add a guide on avoiding out-of-memory errors and improve the existing OOM docs (#64046, #64297)\r\n* Document the best practice for isolating Ray Data workers from training nodes (#64588)\r\n* Document running two datasets in one cluster (#64200)\r\n* Move the `read_zarr` guide back into its docstring (#64409)\r\n* Remove Ray Data and DAG docstring ignores from pydoclint (#63634)\r\n\r\n# Ray Serve\r\n\r\n### 🎉 New Features\r\n* Distribute HAProxy through the `ray-haproxy` PyPI package, make it the default binary, and remove the from-source build (#64141, #64163, #64164)\r\n* Add gRPC support to the HAProxy direct ingress, including streaming, unary-unary metrics, and custom request IDs (#63735, #64310, #64166, #64112)\r\n* Emit request and system metrics from HAProxy (#64329, #64255)\r\n* Support `root_path` in the HAProxy ingress (#64295)\r\n* Add a per-replica metadata hook exposed on `ReplicaSelection` (#63948)\r\n\r\n### 💫 Enhancements\r\n* HAProxy stability: graceful drain waits for in-flight and queued requests, replicas quiesce before reporting shutdown complete, dispatches cancelled by replica gRPC stop are retried, reload takeover is verified by pid, and `close-spread-time` is set in the template (#63886, #63920, #63995, #64022, #64063, #63996)\r\n* Make direct-ingress port reconcile incremental and skip it entirely when ingress membership is unchanged (#64508, #64676)\r\n* Controller performance: `O(1)` version-filtered replica counts, in-place health-check reconcile in the deployment-state loop, and a fast-path orphaned-actor check (#64699, #64507, #64511)\r\n* Freeze GC after replica initialization by default (#64742)\r\n* Eager-load proxy imports (#64113)\r\n* Pin the replica actor to bundle 0 of its placement group and track actor `fallback_strategy` on `DeploymentSchedulingInfo` (#62693, #64346)\r\n* Deprecate `HTTPOptions.location` in favor of `proxy_location`, raise on non-zero `HTTPOptions.num_cpus`, and warn on other deprecated HTTP options (#64479, #64418, #63604)\r\n* Raise a clear error when a custom request router or `serve.multiplexed` is used on an ingress deployment under direct ingress (#64211, #64045)\r\n* Recover ingress request router pin-misses via the fallback proxy instead of returning 503 (#64218)\r\n* Add `RAY_SERVE_CONTROLLER_METRICS_INCLUDE_HIGH_CARDINALITY_TAGS` to control controller metric tags (#63642)\r\n* Default `RAY_SERVE_PORT_QUARANTINE_S` to hard-stop-after plus a margin (#64021)\r\n* Defer the \"application ready\" log until proxies are ready (#64010)\r\n* Dedup ingress replica and proxy metrics code, and migrate `parse_uri` from `_private` to `_common` (#64041, #64371)\r\n* Enforce `mypy` and `pyrefly` type checking on clean Serve files (#64662)\r\n* Fail loudly when subclassing `@serve.ingress` with a sync `__init__` (#63413)\r\n* Supply a safe default request id header value in direct ingress (#64118)\r\n\r\n### 🔨 Fixes\r\n* Fix `serve.ingress(FastAPI())` pickling and `include_router` under FastAPI >= 0.137 (#64814, #64531)\r\n* Fix an idle worker leak that caused OOM on the Ray head node (#63597)\r\n* Fix `serve.shutdown()` skipping live shutdown when the cached controller client is stale after a driver reconnect (#64660)\r\n* Preserve the deployment actor class across a config re-apply (#64411)\r\n* Fix rank corruption on controller recovery after a lightweight reconfigure (#64636)\r\n* Fix `route=None` crash in direct-ingress metrics reporting (#64645)\r\n* Fix the direct-ingress backpressure counter leak on cancel-while-queued and clean up the leaked receive task on request timeout (#64348, #64123)\r\n* Fix HAProxy `healthz` falling through to 404 when there are no backends (#64582)\r\n* Guard request router backoff against `OverflowError` (#64539)\r\n* Fix a slot leak race in `SingletonThreadRouter.choose_replica` (#63649)\r\n* Fix a type regression in `RAY_SERVE_HAPROXY_CLOSE_SPREAD_TIME_S` (#64752)\r\n* Fix Serve tests broken by protobuf 7 (#64362)\r\n\r\n### 📖 Documentation\r\n* Fix the `RequestRouterConfig` stats docstring to reference `record_routing_stats` (#64086)\r\n\r\n# Ray Train\r\n\r\n### 🎉 New Features\r\n* Add preemption handling: a preemption watcher for node-drain observability, with the signal fanned out to workers (#63807, #64099)\r\n\r\n### 💫 Enhancements\r\n* Make Train v1 and v2 use the autoscaling coordinator (#64824, #64936)\r\n* Restrict `ray.train.report(checkpoint)` to in-band checkpoints only (#63645)\r\n* Make `Result.from_path` read-only (#64340)\r\n* Add compute-time metrics to `tune_torch_benchmark.py` (#64274)\r\n* Update TensorFlow/Keras examples and tests for Keras 3 compatibility (#64276)\r\n\r\n### 🔨 Fixes\r\n* Fix `CometLoggerCallback` mutating the caller's result dict via `result.pop()` (#64570)\r\n* Fix the `WorkerMetricsCallback` method name to match the `WorkerCallback` interface (#64568)\r\n\r\n### 📖 Documentation\r\n* Document the unsafe deserialization risk in `TorchCheckpoint.get_model()` and `FrameworkCheckpoint.get_preprocessor()` (#64586)\r\n* Fix docstring style and enable `--check-style-mismatch=True` in pydoclint (#63988)\r\n* Enumerate the accepted resource keys for `ScalingConfig` (#63449)\r\n\r\n# Ray Tune\r\n\r\n### 💫 Enhancements\r\n* Make `BayesOptSearch` float-hash precision configurable (#63914)\r\n* Require `optuna>=3.0.0` in `OptunaSearch` (#64242)\r\n\r\n### 🔨 Fixes\r\n* Respect `max_concurrent_trials` for custom searchers (#63770)\r\n\r\n### 📖 Documentation\r\n* Warn when `BayesOptSearch` stops early on convergence, and document `patience`/`skip_duplicate` (#64288)\r\n* Restructure the Tune example pages and add PyTorch Lightning examples to the examples README (#63460, #63438)\r\n* Document nested-metric keys in `ResultGrid.get_best_result` and add a conditional search-space example to `tune.sample_from` (#63445, #63443)\r\n\r\n# Ray LLM\r\n\r\n### 🎉 New Features\r\n* Add KV-cache-aware request routing: `KVAwareRouter`/`KVRouterActor` interfaces, replica tracking, an event plane, pre-routing tokenization, token-level request lifecycle tracking, and prefill/decode token-load-aware routing (#64084, #64085, #64097, #64224, #64327, #64400)\r\n* Switch the Ray Serve SGLang engine to the sglang `RayEngine`, reach control-plane parity, and support Ray Serve direct streaming by serving SGLang's native OpenAI app (#62888, #63021, #64611)\r\n* Add the MoRIIO KV-connector backend for prefill/decode disaggregation, with cross-node worker IP advertisement via a vLLM plugin (#63951, #64067)\r\n* Enable the `/classify` and `/pooling` endpoints in direct-streaming mode (#64494)\r\n* Add a Ray Serve LLM SGLang metrics dashboard (#64797, #65083)\r\n\r\n### 💫 Enhancements\r\n* Upgrade vLLM to 0.25.1 (#64082, #64483, #64697)\r\n* Delegate prefill/decode orchestration to the KV-connector backend and avoid double prompt tokenization in disaggregation (#63950, #64049)\r\n* Make `request.request_id` authoritative for the engine and stop clobbering an explicitly set request id with the Serve id (#63949, #64044)\r\n* Parse the direct-streaming routing payload for body-aware routers, and add direct streaming session-affinity tests (#64328, #63927, #64266)\r\n* Use `asyncio.create_task` instead of `ensure_future` in `KVRouterActor` (#64546)\r\n* Add a cluster filter to the Serve LLM Grafana dashboard (#64596)\r\n* Validate `accelerator_type` for CPU vLLM engine configs (#64235)\r\n* Use `model_id` rather than the remote URI as the cache identifier in `VLLMEngineConfig` (#64110)\r\n* Remove the Serve LLM config generator (#64075)\r\n\r\n### 🔨 Fixes\r\n* Fix malformed PromQL in the Serve LLM Grafana dashboard (#63893)\r\n\r\n### 📖 Documentation\r\n* Add a custom vLLM model guide and update the vLLM embedding model example (#64594, #64504)\r\n* Improve the Serve LLM docs landing pages, add a config reference, and document direct streaming and the ingress request router (#64076, #63860)\r\n* Fix 404s in the Serve LLM examples sidebar links (#64209)\r\n\r\n# Ray RLlib\r\n\r\n### 🎉 New Features\r\n* Add a pull-based `EnvRunnerStateServer` for async weight sync (#63849)\r\n* Expose the count of `EnvRunner`s dropped on `timeout_seconds` calls (#63493)\r\n\r\n### 💫 Enhancements\r\n* Upgrade the example vision stack to MobileNet v3 and remove MobileNet v2 torchhub usage (#64031, #64028)\r\n\r\n### 🔨 Fixes\r\n* Narrow `from_checkpoint` expectations to avoid silent failures (#63614)\r\n* Require `MultiRLModuleSpec.rl_module_specs` to be a dict (#64785)\r\n* Fix the perpetual pending state in offline evaluation during Tune (#64453)\r\n* Fix RLlib with Tune by reverting the `AlgorithmConfig.to_dict()` change for the new API stack (#63695, #64501)\r\n* Fix ONNX export under torch 2.9 by bumping `onnxscript` and migrating to the dynamo exporter (#64410, #64033)\r\n* Apply observation filters in `compute_single_action()` on the old API stack (#64088)\r\n\r\n### 📖 Documentation\r\n* Revamp the RL modules docs and speed up the docs tests (#64505)\r\n* Fix the outdated parametric-action-spaces link in `rllib-algorithms` (#63435)\r\n\r\n# Ray Core\r\n\r\n### 🎉 New Features\r\n* Add an embedded RocksDB storage backend for GCS fault tolerance (REP-64), selected via `RAY_gcs_storage=rocksdb` and `RAY_gcs_storage_path` (#63657)\r\n* Add a public API for topology-aware scheduling via `topology_strategy` (#63479, #63740)\r\n* Implement backpressure for async streaming generators, add actor-level backpressure config, and add `_num_objects_per_yield` (#64383, #63310, #63943)\r\n* Implement `RayTaskEventRecorder` as the first step of moving task events out of GCS (#64168)\r\n* Drain the node on `SIGTERM` before shutting down `ray start --block` (#64454)\r\n* Add `tpu.dispatch` syntax sugar and a JAX profiler for TPU (#64493, #62371)\r\n* Publicize `__ray_call__` as a `DeveloperAPI` for running closures on actors (#64367)\r\n* Add the NVIDIA RTX PRO 6000 accelerator type and update the AMD accelerator manager (#64428, #62477)\r\n* RDT: enable the `LIBFABRIC` backend for NIXL and upgrade NIXL to v1.2.0 (#62339, #63980)\r\n* Add an owner-driven `FreeLocalObjects` RPC and remove the original `FreeObjects` RPC and `ObjectEviction` pubsub (#63218, #63181)\r\n\r\n### 💫 Enhancements\r\n* Actor scalability: prefill the placement-group bundle cache at creation to remove an actor submission bottleneck, and construct gRPC metric objects once per process instead of per request (#64649, #64732)\r\n* Bound the GCS worker table by evicting old dead-worker entries, prioritized by exit type (#64612, #64729)\r\n* Batch object-manager `Pull` RPCs by destination node and read spilled object chunks in bulk instead of byte-by-byte (#64225, #63830)\r\n* Post all object pubsub publishes to the IO thread to relieve lock contention (#63983)\r\n* Autoscaler: improve v2 scheduler performance for large clusters, handle deleted node types in the metrics reporter, and support env-var configuration for log rotation (#64175, #64184, #63955)\r\n* Integrate `IOContextMonitor` into GCS, update its metrics, and exclude `ray_syncer_io_context` and `task_io_context` from health checks while raising the probe deadline to 30s (#63930, #63975, #64522, #64421)\r\n* Continue the `ClockInterface` migration in the core worker and dependency-inject `PeriodicalRunnerInterface` (#63956, #63994, #64061, #64029)\r\n* Enable `process_group_cleanup_enabled` by default and fix graceful-shutdown cleanup (#64407)\r\n* Make owned object metrics lazy, compute per-component memory usage in MiB, scope `prom_metrics_service_discovery.json` to the session dir, and set the OpenTelemetry resource identity (#64093, #63932, #63850, #63921)\r\n* Re-emit per-state task, actor, and placement group gauges every metrics tick and retain gauge observations for a TTL, so live series survive a missed scrape (#64524, #64633)\r\n* Add the GPU UUID to the labels of GPU metrics (#65113, #65134)\r\n* Log a hint to the driver when system overhead exceeds reserved system memory (#64270)\r\n* Validate explicit zero resource isolation overrides and move memory monitors into `common/monitor` (#63864, #64491)\r\n* Prioritize tasks over actors when killing under memory pressure (#64170)\r\n* Bail on `AdjustWorkerOomScore` read failure and clamp the score to `[-1000, 1000]` (#62713)\r\n* Cap the `runtime_env` `parse_uri` package name length to avoid `ENAMETOOLONG` (#64339)\r\n* Scope the raylet's forced GC to backstop actor handle cycle deadlocks (#63939)\r\n* Support joining fibers before exiting the fiber runner thread (#64405)\r\n* Internal cleanups: remove callbacks from `TaskToExecute`, split task/resource preparation utils out of `_raylet.pyx`, consolidate the GCS dedicated `io_context` policy, and rename `OnDemandBroadcasting` (#64182, #63088, #63931, #63855)\r\n\r\n### 🔨 Fixes\r\n* Fix a Python 3.14 async-actor memory leak by re-anchoring the stack (#65177)\r\n* Fix a deadlock between metric registration and `collect()` in `OpenTelemetryMetricRecorder` (#64946, #65094)\r\n* Fix multi-threaded actor graceful shutdown (#64019)\r\n* Streaming generator fixes: remove ref stream callbacks that caused a reconstruction hang, fail fast on a replay object-count mismatch, remove the implicit `__dealloc__()`, and honor `timeout_s` in the end-of-stream `ray.get` (#64581, #64394, #64333, #64014)\r\n* Fix pipelining of actor argument fetches while an actor task is running (#63079)\r\n* Fix a dangling reference in `GetSchedulingClassDescriptor` (#64707)\r\n* Fix a pgid cleanup leak in the job supervisor (#64746)\r\n* Fix the raylet drain path reading stale object store memory usage (#64415)\r\n* Avoid a GCS crash on Redis connection loss in `RedisResponseFn` (#64204)\r\n* Fix the actor `working_dir` being overridden by the job-level `py_driver_sys_path` (#63756)\r\n* Fix `RAY_CHECK` failures caused by double `ray.cancel()` and keyboard interrupts (#63663)\r\n* Fix `event_logger` and `export_event_logger` to flush all handlers safely (#63947)\r\n* Default `TaskProfileEvent.extra_data_` to `{}` to avoid a JSON decoding error in the State API, and normalize the `cmdline` field in the `StatsPayload` schema (#64589, #64286)\r\n* Autoscaler v2: fix `ALLOCATION_TIMEOUT` worker replacement ordering and the `RAY_STOP_REQUESTED` → `RAY_RUNNING` fallback when drain has succeeded (#63815, #63424)\r\n* Jobs: replace an `assert` with `RuntimeError` in `put_status` and avoid mutating `runtime_env` during submission (#64569, #63990)\r\n* Improve the error message when `RAY_ADDRESS` is set to an HTTP address (#64180)\r\n* Define `WIN32_LEAN_AND_MEAN` globally for Windows builds (#64361)\r\n* Wait for subprocesses to terminate in `ray.shutdown()` (#63655)\r\n* Fix the per-process GPU memory utilization dashboard stat (#61412)\r\n\r\n### 📖 Documentation\r\n* Update the OOM documentation to use resource isolation mode (#63652)\r\n* Clarify the KubeRay autoscaler `restartPolicy` requirement (#64855)\r\n* Document the `name` parameter for `task.options()` (#63450)\r\n* Enforce Doxygen documentation style for coding agents and remove Ray Core docstring ignores from pydoclint (#64188, #63639)\r\n\r\n# Dashboard\r\n\r\n### 🎉 New Features\r\n* Implement the frontend UI for Platform Events (#63332)\r\n\r\n### 💫 Enhancements\r\n* Link workers to actor detail pages and handle nil IDs (#63795)\r\n* Support a Grafana Cloud metrics fallback (#64138)\r\n* Format `RuntimeEnvState.creation_time_ms` as a duration (#64207)\r\n* Diagnose dashboard-agent event-loop stalls (#64436)\r\n* Log errors when job submission fails in `JobHead` and stop configuring the root logger on module import (#64443, #64463)\r\n\r\n### 🔨 Fixes\r\n* Fix local file inclusion in the `/logs` API endpoint by rejecting absolute paths and `..` components in `LogAgentV1Grpc.ListLogs()` (#64701)\r\n* Fix TPU metrics (#63998)\r\n* Fix task grouping by custom task name in the Dashboard API (#63820)\r\n* Fix an \"automaticaly\" typo in the Grafana dashboard descriptions (#64614)\r\n\r\n# Ray Wheels and Images\r\n\r\n* Build and publish Python 3.14 wheels and images, add py3.14 TPU base deps, refresh the py3.14 locks, and add a py3.14 smoke release test (#64754, #64750, #64857, #64938).\r\n* Build and publish `cu130` variants for the `ray` and `ray-extra` images (#63972, #63801).\r\n* Add a py3.13 `ray-ml` image with `torchft-nightly` (#63587).\r\n* Add `ray-haproxy` to the `ray[serve]` extra and base requirements, and bump it to 2.8.25 for CVE-2026-55203/55204 (#64141, #64430).\r\n* Unify `requirements_compiled` across Python versions and upgrade the HuggingFace stack to `datasets` 4.x (#64257, #64054).\r\n* Fix the vendored RocksDB build: use Make instead of Ninja to repair aarch64 core builds, drop `-Wl,-pie` from the TSAN link flags, and silence TSAN false-positive races (#64748, #64917, #64937, #64759).\r\n\r\n# Documentation\r\n\r\n* Added `AGENTS.md` with the AI-assisted contribution policy, routed `.claude/CLAUDE.md` to it, and added a documentation style and grammar guide (#64419, #64518).\r\n* Converted the ray-contribute developer guides from RST to MyST, soft-wrapped prose across `doc/source`, and added an rst-to-myst conversion skill (#64100, #64111, #64115, #64136, #64259, #64279, #64135).\r\n* Added a unified APIs navigation section, generated API stubs without a full doc build, and greened the API-doc consistency check with reverse/dedup policies and a split whitelist (#64387, #64423, #64420, #64783, #64786, #64808, #64818).\r\n* Added curated page descriptions for nav pages (SEO and `llms.txt`) and a custom 404 page with absolute URLs (#64330, #64603).\r\n* Built Read the Docs incrementally from the doc build cache, repaired cache production, and skipped RtD PR builds for code-only PRs (#64277, #64414, #64482, #64599, #64547, #64480).\r\n* Hardened doc template fetches: pinned to specific build ids, guarded zip extraction against path traversal, failed the build loudly on fetch failure, and removed outdated templates now synced at build time (#64637, #64669, #64629, #64635, #63971).\r\n* Upgraded Sphinx to 8.2.3 on Python 3.11, decoupled Sphinx from the test/CI dependency stack, and fixed moved intersphinx inventory URLs (#64070, #63962, #64516).\r\n* KubeRay: added an IPPR user guide, documented RayCronJob timezone support and autoscaler command overwrite, updated the RayJob agent sandbox docs, and refreshed the Serve High Throughput guide for Ray 2.56 (#63212, #64444, #63627, #64460, #64144).\r\n* Added notebook tests for the lightweight Ray Core examples and recorded the Train example notebooks that are intentionally untested (#64313, #64318).\r\n* Refreshed the ecosystem page, added a Ray + Agent Sandbox example, and renamed the AI chat widget to \"Ray Docs\" (#64156, #64047, #64351).\r\n\r\n# Thanks\r\n\r\nMany thanks to all those who contributed to this release!\r\n\r\n@justinvyu, @neuyilan, @bveeramani, @abhishekverma-ray, @dstrodtman, @yinli-systems, @Truc54, @tanmayrauth, @ArchishmanSengupta, @yuhuan130, @skpark-rh, @shaun0927, @ps2181, @edoakes, @htvien, @xinyuangui2, @owenowenisme, @ronny-anyscale, @nadongjun, @LeMinhNhat2901, @kevin85421, @akyang-anyscale, @jeffreywang88, @sai-miduthuri, @robertnishihara, @andrewsykim, @iamjustinhsu, @leewyang, @marwan116, @MortalHappiness, @fscnick, @ayushk7102, @ArturNiederfahrenhorst, @rayhhome, @nh-atuan, @kimngoc280105, @TimothySeah, @zyxue, @antoine-galataud, @omkar-334, @alimaazamat, @jhasm, @ShockYoungCHN, @Kunchd, @richardliaw, @xyuzh, @linh285, @shorbaji, @ans9868, @LuciferYang, @joaquinhuigomez, @liujp, @ShuChenLin, @johntaylor-cell, @vickytsang, @abrarsheikh, @saivedant169, @rmhowe425, @kyuds, @kunling-anyscale, @fuxi611, @karticam, @enginarslan1, @spencer-p, @MengjinYan, @AyushKashyapII, @dragongu, @Sparks0219, @rueian, @praneethkaturi, @dinhxuanvu, @lonexreb, @AarryaSaraf, @Junyi-Wang-6, @saschwartz, @odncode, @vicentefb, @JasonLi1909, @coqian, @kouroshHakha, @daiping8, @pseudo-rnd-thoughts, @wanadzhar913, @HungHiHung10, @goutamvenkat-anyscale, @LeThienTrong, @alexandrplashchinsky, @raulchen, @ryankert01, @jiangxt2, @HirokiNariyoshi, @Yicheng-Lu-llll, @martinlhw, @richabanker, @aaronscalene, @SohamRajpure, @tvaucher, @Jade07-1, @eicherseiji, @dayshah, @Kropiunig, @machichima, @harshit-anyscale, @elliot-barn, @liulehui, @OneSizeFitsQuorum, @alexeykudinkin, @sampan-s-nayak, @prince8273, @jpatra72",
+      "highlights": [
+        "Ray Data: In this Ray release, we've enabled DataSourceV2 by default (#64821), so readparquet and friends use the new scan/listing infrastructure with row-group-aware chunking and predicate splitting. Hash Shuffle V2 eliminates the aggregat",
+        "HashShuffleV2 supports join (#63598, #64538, #64687). This lets shuffles reuse standard map/reduce scheduling, backpressure, and resource accounting.",
+        "Ray Serve: The HAProxy ingress is now distributed as the ray-haproxy PyPI package instead of being compiled into images, and it is the default HAProxy binary (#64141, #64163, #64164). We've also added gRPC support to the HAProxy direct-ingr",
+        "Ray Core: We've added an embedded RocksDB storage backend for GCS fault tolerance (REP-64), selectable with RAYgcsstorage=rocksdb and RAYgcsstoragepath (#63657). GCS fault tolerance no longer requires an external Redis instance. We've also ",
+        "🎉 New Features",
+        "Enable DataSourceV2 by default via DataContext.usedatasourcev2 (#64821)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "ray-project/ray",
+        "kind": "milestone",
+        "title": "Infra Backlog",
+        "url": "https://github.com/ray-project/ray/milestone/11",
+        "description": "P1 issues: https://github.com/ray-project/ray/issues?q=is%3Aopen+is%3Aissue+milestone%3A\"Infra+Backlog\"+label%3AP1",
+        "progress": 95,
+        "openIssues": 20,
+        "closedIssues": 378
+      },
+      {
+        "repository": "ray-project/ray",
+        "kind": "milestone",
+        "title": "Packaging and Dependency Management",
+        "url": "https://github.com/ray-project/ray/milestone/36",
+        "description": "P1 Issues: https://github.com/ray-project/ray/issues?q=is%3Aopen+is%3Aissue+milestone%3A\"Packaging+and+Dependency+Management\"+label%3AP1\r\n",
+        "progress": 79,
+        "openIssues": 8,
+        "closedIssues": 31
+      },
+      {
+        "repository": "ray-project/ray",
+        "kind": "milestone",
+        "title": "[serve] Support Java as language",
+        "url": "https://github.com/ray-project/ray/milestone/45",
+        "description": "",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 18
+      },
+      {
+        "repository": "ray-project/ray",
+        "kind": "milestone",
+        "title": "runtime_env backlog",
+        "url": "https://github.com/ray-project/ray/milestone/48",
+        "description": "",
+        "progress": 94,
+        "openIssues": 9,
+        "closedIssues": 137
+      },
+      {
+        "repository": "ray-project/ray",
+        "kind": "milestone",
+        "title": "Workflows after-alpha",
+        "url": "https://github.com/ray-project/ray/milestone/52",
+        "description": "",
+        "progress": 99,
+        "openIssues": 1,
+        "closedIssues": 78
+      }
+    ]
   },
   "runs": [
     {
@@ -58,6 +131,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 96,
       "changedCount": 96
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 93,
+      "changedCount": 5
     }
   ],
   "signals": [
@@ -86,8 +165,7 @@
       ],
       "author": "krfricke",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:56431",
@@ -118,8 +196,7 @@
       "state": "open",
       "assignees": [
         "bveeramani"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:issue:64693",
@@ -144,8 +221,7 @@
       ],
       "author": "logical-misha",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65259",
@@ -173,8 +249,7 @@
       "state": "open",
       "assignees": [
         "richardliaw"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:issue:65280",
@@ -201,8 +276,7 @@
       "state": "open",
       "assignees": [
         "Hyunoh-Yeo"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:issue:65300",
@@ -228,8 +302,7 @@
       ],
       "author": "LuciferYang",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65350",
@@ -254,8 +327,7 @@
       ],
       "author": "Hyunoh-Yeo",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65352",
@@ -282,8 +354,7 @@
       ],
       "author": "andrewsykim",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65427",
@@ -332,8 +403,7 @@
       ],
       "author": "praateekmahajan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65434",
@@ -358,8 +428,7 @@
       ],
       "author": "praateekmahajan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65443",
@@ -384,8 +453,7 @@
       ],
       "author": "OneSizeFitsQuorum",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65444",
@@ -412,8 +480,7 @@
       ],
       "author": "zzchun",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65449",
@@ -441,8 +508,7 @@
       "state": "open",
       "assignees": [
         "viiccwen"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:issue:65451",
@@ -467,8 +533,7 @@
       ],
       "author": "zzchun",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65454",
@@ -495,8 +560,7 @@
       ],
       "author": "vivekmahajan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:61053",
@@ -522,8 +586,7 @@
       "state": "open",
       "assignees": [
         "harshit-anyscale"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:61898",
@@ -550,8 +613,7 @@
       "state": "open",
       "assignees": [
         "Yicheng-Lu-llll"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:63793",
@@ -579,8 +641,7 @@
       "state": "open",
       "assignees": [
         "Kunchd"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:64413",
@@ -628,8 +689,7 @@
       ],
       "author": "edoakes",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:64462",
@@ -679,8 +739,7 @@
       "state": "open",
       "assignees": [
         "ayushk7102"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:64542",
@@ -728,8 +787,7 @@
       ],
       "author": "dragongu",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:64670",
@@ -754,8 +812,7 @@
       ],
       "author": "xyuzh",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:64672",
@@ -779,8 +836,7 @@
       ],
       "author": "xyuzh",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:64738",
@@ -807,8 +863,7 @@
       "state": "open",
       "assignees": [
         "rueian"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:64828",
@@ -832,8 +887,7 @@
       ],
       "author": "ShockYoungCHN",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:64885",
@@ -904,8 +958,7 @@
       ],
       "author": "pseudo-rnd-thoughts",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:64986",
@@ -956,8 +1009,7 @@
       "state": "open",
       "assignees": [
         "MortalHappiness"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65020",
@@ -1007,8 +1059,7 @@
       ],
       "author": "pavan51",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65071",
@@ -1033,8 +1084,7 @@
       ],
       "author": "violivei",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65077",
@@ -1059,8 +1109,7 @@
       ],
       "author": "MiXaiLL76",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65098",
@@ -1112,8 +1161,7 @@
       "state": "open",
       "assignees": [
         "machichima"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65132",
@@ -1140,8 +1188,7 @@
       "state": "closed",
       "assignees": [
         "rueian"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65173",
@@ -1169,8 +1216,7 @@
       "state": "open",
       "assignees": [
         "rueian"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65202",
@@ -1195,8 +1241,7 @@
       ],
       "author": "dragongu",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65215",
@@ -1220,8 +1265,7 @@
       ],
       "author": "YashwanthRanjanSingaravel",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65220",
@@ -1249,8 +1293,7 @@
       "assignees": [
         "Yicheng-Lu-llll",
         "rayhhome"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65228",
@@ -1276,8 +1319,7 @@
       ],
       "author": "yuhuan130",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65230",
@@ -1301,8 +1343,7 @@
       ],
       "author": "imtherealnaska",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65239",
@@ -1327,8 +1368,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65245",
@@ -1353,8 +1393,7 @@
       ],
       "author": "YashwanthRanjanSingaravel",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65263",
@@ -1380,8 +1419,7 @@
       ],
       "author": "dstrodtman",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65264",
@@ -1405,8 +1443,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65267",
@@ -1432,8 +1469,7 @@
       "state": "closed",
       "assignees": [
         "harshit-anyscale"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65282",
@@ -1459,8 +1495,7 @@
       "state": "open",
       "assignees": [
         "rueian"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65287",
@@ -1486,8 +1521,7 @@
       ],
       "author": "dstrodtman",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65298",
@@ -1514,8 +1548,7 @@
       "state": "open",
       "assignees": [
         "rueian"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65301",
@@ -1542,8 +1575,7 @@
       "state": "closed",
       "assignees": [
         "martinlhw"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65351",
@@ -1566,8 +1598,7 @@
       ],
       "author": "jeffreywang88",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65363",
@@ -1593,8 +1624,7 @@
       "state": "open",
       "assignees": [
         "Yicheng-Lu-llll"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65366",
@@ -1618,8 +1648,7 @@
       ],
       "author": "zzchun",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65368",
@@ -1645,8 +1674,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65370",
@@ -1658,11 +1686,11 @@
       "text": "## Summary Adds a backward-compatible `multiplexed_model_ids` field to `ReplicaDetails` and keeps it synchronized when the controller receives updated multiplexed model IDs. Extends the existing multiplexing test to verify the values through `ServeInstanceDetails` returned by `serve_instance.get_serve_details()`. Closes #65347 ## Duplicate check I checked open PRs for #65347 and for `multiplexed_model_ids ReplicaDetails`; no matching open PR existed. ## Testing - `python -m compileall` on all four changed Python files — passed. - Direct execution of `test_record_multiplexed_model_ids_updates_actor_details` — passed. - `git diff --check` — passed. - Ruff, pydoclint, Ray Serve mypy, Pyrefly, import-order, and Black checks — passed. - The full pytest integration test could not be collected locally because Windows `setup-dev.py` junctions caused duplicate `conftest.py` registration. Ray CI will run the added integration test on Linux. - `docstyle` could not run because `/bin/bash` is unavailable in this Windows environment; Semgrep's pre-commit environment had an invalid cached Python path. ## AI assistance I used AI assistance to help implement and validate this change. I reviewed and understand every changed line.",
       "url": "https://github.com/ray-project/ray/pull/65370",
       "createdAt": "2026-08-11T13:32:40Z",
-      "updatedAt": "2026-08-13T13:31:16Z",
-      "timestamp": "2026-08-13T13:31:16Z",
+      "updatedAt": "2026-08-13T14:46:49Z",
+      "timestamp": "2026-08-13T14:46:49Z",
       "metrics": {
         "reactions": 1,
-        "comments": 2
+        "comments": 3
       },
       "labels": [
         "serve",
@@ -1723,8 +1751,7 @@
       ],
       "author": "dstrodtman",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65389",
@@ -1773,8 +1800,7 @@
       ],
       "author": "Divyam19",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65394",
@@ -1799,8 +1825,7 @@
       ],
       "author": "Hyunoh-Yeo",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65398",
@@ -1824,8 +1849,7 @@
       ],
       "author": "YashwanthRanjanSingaravel",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65403",
@@ -1850,8 +1874,7 @@
       ],
       "author": "spencer-p",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65404",
@@ -1876,8 +1899,7 @@
       ],
       "author": "spencer-p",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65405",
@@ -1902,8 +1924,7 @@
       ],
       "author": "nataliekung",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65406",
@@ -1927,8 +1948,7 @@
       ],
       "author": "AarryaSaraf",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65410",
@@ -1954,8 +1974,7 @@
       "state": "open",
       "assignees": [
         "johntaylor-cell"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65417",
@@ -2026,8 +2045,7 @@
       "state": "open",
       "assignees": [
         "martinlhw"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65420",
@@ -2053,8 +2071,7 @@
       "state": "open",
       "assignees": [
         "Yicheng-Lu-llll"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65422",
@@ -2078,8 +2095,7 @@
       ],
       "author": "ryanaoleary",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65423",
@@ -2105,8 +2121,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65424",
@@ -2131,8 +2146,7 @@
       ],
       "author": "zzchun",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65425",
@@ -2201,8 +2215,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65429",
@@ -2228,8 +2241,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65430",
@@ -2255,8 +2267,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65431",
@@ -2281,8 +2292,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65432",
@@ -2308,8 +2318,7 @@
       "state": "open",
       "assignees": [
         "johntaylor-cell"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65435",
@@ -2330,8 +2339,7 @@
       "labels": [],
       "author": "praateekmahajan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65436",
@@ -2352,8 +2360,7 @@
       "labels": [],
       "author": "praateekmahajan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65437",
@@ -2380,8 +2387,7 @@
       "state": "open",
       "assignees": [
         "jeffreywang88"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ray-project/ray:pull_request:65438",
@@ -2402,8 +2408,7 @@
       "labels": [],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65439",
@@ -2427,8 +2432,7 @@
       ],
       "author": "ardozcnn",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65440",
@@ -2453,8 +2457,7 @@
       ],
       "author": "jeffreywang88",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65441",
@@ -2479,8 +2482,7 @@
       ],
       "author": "chiayi",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65442",
@@ -2505,8 +2507,7 @@
       ],
       "author": "spencer-p",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65445",
@@ -2531,8 +2532,7 @@
       ],
       "author": "OneSizeFitsQuorum",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65446",
@@ -2556,8 +2556,7 @@
       ],
       "author": "pjdurden",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65447",
@@ -2581,8 +2580,7 @@
       ],
       "author": "OneSizeFitsQuorum",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65448",
@@ -2606,8 +2604,7 @@
       ],
       "author": "zzchun",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65450",
@@ -2631,8 +2628,7 @@
       ],
       "author": "viiccwen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65452",
@@ -2656,8 +2652,7 @@
       ],
       "author": "zzchun",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65453",
@@ -2669,11 +2664,11 @@
       "text": "## Description Ray Data can read ORC files, but it can't write them. This adds `Dataset.write_orc()`, backed by a new `ORCDatasink` that writes each output block with `pyarrow.orc.write_table`. The API forwards PyArrow ORC writer options and supports `min_rows_per_file` through the existing block-based file datasink infrastructure. ## Related issues Follow-up to #64600 ## Additional information Mirrors the `write_csv` / `write_json` APIs. PyArrow ORC writer options can be passed directly to `write_orc()`. No new dependency (`pyarrow` already ships `pyarrow.orc`). Adds write tests in `test_orc.py` and API docs in `saving_data.rst`. ```python import ray ds = ray.data.range(100) ds.write_orc(\"s3://bucket/path/\", compression=\"zstd\")",
       "url": "https://github.com/ray-project/ray/pull/65453",
       "createdAt": "2026-08-13T09:53:45Z",
-      "updatedAt": "2026-08-13T13:32:10Z",
-      "timestamp": "2026-08-13T13:32:10Z",
+      "updatedAt": "2026-08-13T13:59:52Z",
+      "timestamp": "2026-08-13T13:59:52Z",
       "metrics": {
         "reactions": 1,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "docs",
@@ -2709,8 +2704,7 @@
       ],
       "author": "vivekmahajan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65456",
@@ -2735,8 +2729,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65457",
@@ -2762,8 +2755,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65458",
@@ -2789,8 +2781,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65459",
@@ -2802,14 +2793,61 @@
       "text": "> **Stacked PR.** Fourth in a chain: #65456 (pin ReDoc) → #65457 (spec validity) → #65458 (declare 3.0.3) → this. It's independent in substance and touches only `doc/requirements-doc.txt`, so it can be retargeted to `master` if you'd rather take it on its own. ## Why this change is needed The `setuptools==80.9.0` pin in `doc/requirements-doc.txt` exists because `sphinxcontrib-redoc` imports `pkg_resources` at module load, and setuptools 82 removed it. The comment ends with \"Lifting this ceiling means replacing or vendoring that extension,\" which leaves two questions open: 1. Is `sphinxcontrib-redoc` actually the *only* thing in the doc environment that needs `pkg_resources`? If not, removing it wouldn't lift the ceiling anyway. 2. Is there a usable replacement? I evaluated both. This records the answers so the next person hitting this pin doesn't re-derive them. ## Related changes Fourth in the chain above. No functional dependency on the three below it. ## What changes A comment in `doc/requirements-doc.txt`. No behavior change, no dependency change, no build change. ## Finding 1: `sphinxcontrib-redoc` is the sole blocker Installed every extension `conf.py` loads into an environment with no setuptools and no importable `pkg_resources`, then imported each one: | Result | Extensions | | --- | --- | | Import cleanly | `sphinx.ext.autodoc`, `viewcode`, `napoleon`, `doctest`, `coverage`, `autosummary`, `intersphinx`, `sphinx_click.ext`, `sphinxemoji`, `sphinx_copybutton`, `sphinx_sitemap`, `myst_nb`, `sphinxcontrib.autodoc_pydantic`, `sphinx_remove_toctrees`, `sphinx_design`, `sphinx_docsearch`, `sphinx_collections`, `sphinxext.opengraph` | | **Fails** | `sphinxcontrib.redoc` — `ModuleNotFoundError: No module named 'pkg_resources'` | That failure is the control: it reproduces the exact documented breakage, which confirms the test has power rather than passing vacuously. So dropping that one extension is sufficient to lift the ceiling. ## Finding 2: the maintained replacement works, in exactly one configuration `sphinxcontrib-openapi` 0.9.0 (released 2026-02-10, `requires_python >=3.10`) is the actively maintained alternative from the same `sphinx-contrib` org. It needs no setuptools, and it **does** render this spec with full request and response schemas and **zero warnings under `-W`** — but only with both of these: - `openapi_default_renderer = \"httpdomain\"` in `conf.py`, then a plain `.. openapi::` directive. - Operation `summary` fields as plain scalars rather than YAML block scalars. Neither is obvious, and each failure mode is silent or fatal rather than self-explaining: | Configuration | Schema content | Warnings under `-W` | | --- | --- | --- | | default renderer (`httpdomain:old`) | **none** — paths, parameters, status codes only | 0 | | `httpdomain:old` + `:request:` | request bodies only, as a raw JSON blob | 1 — [#171](https://github.com/sphinx-contrib/openapi/issues/171) | | `httpdomain:old` + `:examples:` | full | 1 — [#172](https://github.com/sphinx-contrib/openapi/issues/172) | | `httpdomain`, block-scalar summaries | full | 2 — [#173](https://github.com/sphinx-contrib/openapi/issues/173), plus literal `**` on the page | | **`httpdomain`, plain-scalar summaries** | **full** | **0** | The literal-asterisk defect is worth calling out because it's triggered by this repo's own spec: two operations use `summary: |`, which leaves a trailing newline in the value that the renderer interpolates straight into `**...**`. Changing those two lines to plain scalars is sufficient. The three configurations that genuinely don't work are filed upstream with minimal reproducers. ## So what actually gates migrating Not dependency hygiene, and not warnings. It's that ReDoc's standalone three-panel page would be replaced by output rendered inline in the site theme. That's a visible change to a published reference page, so it's a maintainer call rather than a docs-tooling cleanup, and this PR doesn't make it. Two things worth weighing whenever that call happens. In favor: the current page is a client-rendered JavaScript island. It's in no toctree, it's reachable only through a hardcoded `<api.html>` link at `rest.rst:94`, and its endpoint content isn't in the built HTML, so it doesn't participate in Sphinx search or cross-referencing. The trial build produced real Sphinx nodes and an `http-routingtable` index. Migrating would also let the `setuptools` ceiling lift, per finding 1. Against: it's a published reference page that readers may have bookmarked in its current form, and the inline rendering is a different reading experience rather than a strictly better one. My trial builds used the `basic` theme, so I can't show what it looks like under this site's actual theme without a full doc build. ## Checks - [x] Comment-only change; `pre-commit run` clean. - [x] Every claim in the comment verified by the trial builds described above.",
       "url": "https://github.com/ray-project/ray/pull/65459",
       "createdAt": "2026-08-13T13:30:11Z",
-      "updatedAt": "2026-08-13T13:42:55Z",
-      "timestamp": "2026-08-13T13:42:55Z",
+      "updatedAt": "2026-08-13T14:03:44Z",
+      "timestamp": "2026-08-13T14:03:44Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "dstrodtman",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:ray-project/ray:pull_request:65460",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "pull_request",
+      "title": "[doc] Render the Jobs API spec with sphinxcontrib-openapi instead of ReDoc",
+      "text": "> **Stacked PR.** Targets `doc-1513-declare-openapi-303` (#65458), which targets #65457. Review order is #65457 → #65458 → this. GitHub retargets automatically as each merges. > > **Conflicts with #65456 by design.** That PR pins `redoc_uri` to a specific ReDoc version; this one deletes `redoc_uri` entirely. If #65456 lands first I'll resolve the conflict here. If this lands, #65456 becomes moot and should be closed. Either order works — #65456 is worth keeping as the safe fix in case this one stalls in review. ## Why this change is needed `sphinxcontrib-redoc` is unmaintained. 1.6.0 is the latest release and dates from 2020; the `2.0.0a1` alpha still imports `pkg_resources`. Keeping it costs this repo three things: | Cost | Location | | --- | --- | | A `setuptools<82` ceiling, because the extension imports `pkg_resources` at module load and setuptools 82 removed it | `doc/requirements-doc.txt` | | A `misc.copy_overwrite` entry in `suppress_warnings`, because the extension redundantly copies its own bundled asset | `doc/source/conf.py` | | The renderer fetched from a third-party CDN at page-view time | `doc/source/conf.py` | All of that buys exactly one page. The Jobs API spec is the only consumer: `conf.py` had one `redoc` entry and there's no other OpenAPI document in the repo. There's a second, larger reason. **The current page is a client-rendered JavaScript island.** ReDoc has no source file at all — the extension synthesizes `api.html` from `conf.py`. So today the page: - is in **no toctree**, and - is reachable only through a hardcoded `` `... <api.html>`_ `` link at `rest.rst:94`, and - has **none of its endpoint content in the built HTML**, so it can't participate in Sphinx search or cross-referencing. ## Related changes Fourth in the chain above. Supersedes the \"record why we stay on ReDoc\" PR (#65459), which I'll close — its conclusion is obsolete now that this works. ## What changes - Swap `sphinxcontrib.redoc` → `sphinxcontrib.openapi` (0.9.0) in `conf.py` and `doc/requirements-doc.txt`, and regenerate the deplock. - Add a real `api.rst`, put it in the `job-submission` toctree, and replace the raw `<api.html>` link with a `:ref:`. - Drop the now-unneeded `misc.copy_overwrite` suppression. - Change two operation `summary` fields from YAML block scalars to plain scalars (see below). - Update the `setuptools` comment: the `<82` ceiling's cause is gone. The pin itself is left in place, since unpinning is a separate resolve worth verifying on its own. `sphinxcontrib-openapi` is pure Python, from the same `sphinx-contrib` org, and needs no `pkg_resources`. The deplock diff is `-sphinxcontrib-redoc` and `+sphinxcontrib-openapi` plus its five dependencies (`sphinxcontrib-httpdomain`, `sphinx-mdinclude`, `deepmerge`, `mistune`, `picobox`). ## Verification Built with `make -C doc rtd-build`, which runs the RtD-faithful clean build with `-W`, matching `fail_on_warning: true`: ``` build succeeded. ``` Exit 0, and **zero `WARNING:`/`ERROR:` lines in the whole log**. `raydepsets --check` on `docbuild_depset_311` reports \"Lock files are up to date.\" Checked against the built `api.html` rather than inferred: | Check | Result | | --- | --- | | Request/response schemas rendered | Yes — `Request JSON Object` and `Response JSON Object` field lists, with `entrypoint`, `runtime_env`, `metadata`, and the rest, including types and required flags | | `$ref` and `allOf` resolution | Resolved, including through `JobDetails` | | Literal `**` on the page | None — zero docutils `problematic` nodes | | `http-routingtable` index | Generated | | Page in the sidebar, with prev/next pagination | Yes | ## Two non-obvious configuration details Both are commented at their sites in the diff, because both fail quietly. **The renderer is selected via `openapi_default_renderer`, not by the directive spelling.** Writing `.. openapi:httpdomain::` in the page adds an `unknown directive name` warning, which is fatal under `fail_on_warning`. Selecting it in `conf.py` and using a plain `.. openapi::` avoids that. **The default renderer emits no request or response schemas at all** — just paths, parameters, and status codes. So leaving `openapi_default_renderer` unset would silently drop most of the reference content while still building green. That's the trap worth knowing about if anyone touches this later. ## Why the summary fields change `sphinxcontrib-openapi`'s renderer interpolates an operation's `summary` into `**...**` without stripping it. A YAML block scalar (`summary: |`) leaves a trailing newline in the value, so the markup opens on one line and closes on the next, docutils can't pair it, and readers see literal asterisks. Filed upstream as [sphinx-contrib/openapi#173](https://github.com/sphinx-contrib/openapi/issues/173). Two operations used block scalars (`GET /api/version` and `POST /api/jobs`); the other six already used plain scalars. Converting those two is the whole fix and changes no rendered text. ## What this gives up, honestly **Request and response samples.** ReDoc rendered example payloads; this doesn't. It isn't a configuration choice — both routes to examples are blocked by upstream bugs, and I've confirmed each against this spec: - `:generate-examples-from-schemas:` crashes with `ValueError: dictionary update sequence element #0 has length 1; 2 is required` ([#166](https://github.com/sphinx-contrib/openapi/issues/166)). Example generation can't handle an `allOf` that targets a non-object schema, which is exactly how `JobDetails` attaches descriptions to the `JobType` and `JobStatus` string enums. - `:response-examples-for:` is rejected as an unknown option ([#165](https://github.com/sphinx-contrib/openapi/issues/165)). `api.rst` carries a comment recording this so nobody re-derives it, and I've added the reproduction detail to both upstream issues. Weighed against gaining search, cross-referencing, navigation, a dependency that's actually maintained, and no third-party CDN at page-view time, losing sample payloads seemed like the right trade — but it is a real loss, and it's reasonable to want the upstream fixes first instead. I've also filed [#171](https://github.com/sphinx-contrib/openapi/issues/171), [#172](https://github.com/sphinx-contrib/openapi/issues/172), and [#173](https://github.com/sphinx-contrib/openapi/issues/173), each with a minimal reproducer, and am planning PRs for them. ## Checks - [x] `make -C doc rtd-build`: build succeeded, zero warnings. - [x] `raydepsets --check`: lock files up to date. - [x] Built page inspected for schema content, `allOf`/`$ref` resolution, and stray markup. - [x] `pre-commit run` clean. - [ ] Read the Docs preview reviewed for the appearance change.",
+      "url": "https://github.com/ray-project/ray/pull/65460",
+      "createdAt": "2026-08-13T14:03:32Z",
+      "updatedAt": "2026-08-13T14:05:12Z",
+      "timestamp": "2026-08-13T14:05:12Z",
       "metrics": {
         "reactions": 1,
         "comments": 0
       },
       "labels": [],
       "author": "dstrodtman",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:ray-project/ray:pull_request:65461",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "pull_request",
+      "title": "[doc] llms.txt: tell agents the page links also serve Markdown",
+      "text": "## Summary Follow-up to #64458. Adds one line to `llms.txt` telling agents that the page links also serve Markdown. Read the Docs serves a Markdown rendering of any page **from that page's own `.html` URL**, under an `Accept: text/markdown` request. There is no separate `.md` file to link to — `page.md`, `page.html.md`, `/md/<page>.md`, and `?format=md` all 404, and no `Link: rel=alternate` header advertises one. So the `.html` links `llms.txt` already emits *are* the Markdown links. Nothing in the file says so, and an agent has no way to discover it. ``` # Ray > Ray is an open-source unified compute framework for scaling AI and Python workloads… Full page text, grouped by section, is in [llms-full.txt](https://docs.ray.io/en/master/llms-full.txt). Request the links that follow with the HTTP header `Accept: text/markdown` to retrieve a Markdown rendering of the page. ## Overview … ``` ## The header has to be explicit Measured against `docs.ray.io/en/master/data/data.html`: | `Accept:` sent | returns | |---|---| | `*/*` — the default for curl, `requests`, `httpx` | `text/html` | | `text/html,application/xhtml+xml,*/*;q=0.8` — browser default | `text/html` | | `text/plain` | `text/html` | | `text/markdown` | **`text/markdown`** | | `text/markdown, */*` | **`text/markdown`** | | `text/markdown;q=1.0, text/html;q=0.9` | **`text/markdown`** | A wildcard isn't enough; the type has to be named. A client gets Markdown only by asking deliberately, so the pointer has a real audience. ## Config-gated New `llms_txt_markdown_hint`, **default `False`**. Content negotiation is a property of the host, not of the generator — a build served from somewhere that doesn't negotiate Markdown would otherwise advertise a representation that doesn't exist. `conf.py` sets it `True` for Ray. ## Wording note It says \"a Markdown rendering of **the page**\", deliberately not \"the source\". What comes back is the built page converted to Markdown — front matter, then site chrome (`Skip to main content`, theme switcher, version picker), then the content. That is not what `_sources/<page>.<ext>.txt` returns, and `_sources` genuinely exists, so calling it \"the source\" would point agents at the wrong artifact. ## Why not link `_sources/<page>.<ext>.txt` instead Considered and rejected: - **It leaks the source format to the consumer.** master is **363 `.rst` to 232 `.md`**, so most pages would hand back reStructuredText, not Markdown — noisier for an agent than the HTML→Markdown conversion. - **The URL isn't derivable from the page URL** — it depends on each page's source suffix (`index.md.txt` vs `installation.rst.txt`). - **It isn't human-clickable.** - **It would churn.** As pages migrate to MyST, each link would change from `.rst.txt` to `.md.txt`. Negotiation happens on the rendered HTML, so it's identical for both source formats and survives the migration. - **It's redundant** — the verbatim source is already in the `llms-full.txt` shards. ## Testing ``` $ python doc/source/_ext/test_llms_txt.py PASS: llms_txt extension produced a correct index, Optional section, llms-full shards, excludes notebooks by source type, gates the Markdown pointer, and honors the llms_txt_build gate. $ ruff check doc/source/_ext/llms_txt.py doc/source/_ext/test_llms_txt.py All checks passed! ``` New `test_markdown_hint` covers both directions: the pointer appears in the header (asserted to sit before the first `##` section) when the config is on, and is absent when it's off. The header table above was produced by probing the live `docs.ray.io`. All three changed files route to `@ doc doc_api` under the current `.buildkite/test.rules.txt`, so `doc: test llms.txt extension` runs on this PR. Not a duplicate: `gh pr list --state open` finds no other open PR touching `llms.txt` or Markdown content negotiation. ## AI assistance Drafted with Claude Code. The behavioural claims here (which `Accept` values return what, which `.md` URL forms 404, the negotiated output including page chrome) were each verified against the live site rather than assumed.",
+      "url": "https://github.com/ray-project/ray/pull/65461",
+      "createdAt": "2026-08-13T15:06:22Z",
+      "updatedAt": "2026-08-13T15:31:51Z",
+      "timestamp": "2026-08-13T15:31:51Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [
+        "go",
+        "docs-go"
+      ],
+      "author": "ronny-anyscale",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -6001,6 +6039,171 @@
         },
         "labels": [],
         "author": "dstrodtman",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6bde6ec110c0a6656156",
+      "signalId": "github:ray-project/ray:pull_request:65461",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65461",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[doc] llms.txt: tell agents the page links also serve Markdown",
+        "text": "## Summary Follow-up to #64458. Adds one line to `llms.txt` telling agents that the page links also serve Markdown. Read the Docs serves a Markdown rendering of any page **from that page's own `.html` URL**, under an `Accept: text/markdown` request. There is no separate `.md` file to link to — `page.md`, `page.html.md`, `/md/<page>.md`, and `?format=md` all 404, and no `Link: rel=alternate` header advertises one. So the `.html` links `llms.txt` already emits *are* the Markdown links. Nothing in the file says so, and an agent has no way to discover it. ``` # Ray > Ray is an open-source unified compute framework for scaling AI and Python workloads… Full page text, grouped by section, is in [llms-full.txt](https://docs.ray.io/en/master/llms-full.txt). Request the links that follow with the HTTP header `Accept: text/markdown` to retrieve a Markdown rendering of the page. ## Overview … ``` ## The header has to be explicit Measured against `docs.ray.io/en/master/data/data.html`: | `Accept:` sent | returns | |---|---| | `*/*` — the default for curl, `requests`, `httpx` | `text/html` | | `text/html,application/xhtml+xml,*/*;q=0.8` — browser default | `text/html` | | `text/plain` | `text/html` | | `text/markdown` | **`text/markdown`** | | `text/markdown, */*` | **`text/markdown`** | | `text/markdown;q=1.0, text/html;q=0.9` | **`text/markdown`** | A wildcard isn't enough; the type has to be named. A client gets Markdown only by asking deliberately, so the pointer has a real audience. ## Config-gated New `llms_txt_markdown_hint`, **default `False`**. Content negotiation is a property of the host, not of the generator — a build served from somewhere that doesn't negotiate Markdown would otherwise advertise a representation that doesn't exist. `conf.py` sets it `True` for Ray. ## Wording note It says \"a Markdown rendering of **the page**\", deliberately not \"the source\". What comes back is the built page converted to Markdown — front matter, then site chrome (`Skip to main content`, theme switcher, version picker), then the content. That is not what `_sources/<page>.<ext>.txt` returns, and `_sources` genuinely exists, so calling it \"the source\" would point agents at the wrong artifact. ## Why not link `_sources/<page>.<ext>.txt` instead Considered and rejected: - **It leaks the source format to the consumer.** master is **363 `.rst` to 232 `.md`**, so most pages would hand back reStructuredText, not Markdown — noisier for an agent than the HTML→Markdown conversion. - **The URL isn't derivable from the page URL** — it depends on each page's source suffix (`index.md.txt` vs `installation.rst.txt`). - **It isn't human-clickable.** - **It would churn.** As pages migrate to MyST, each link would change from `.rst.txt` to `.md.txt`. Negotiation happens on the rendered HTML, so it's identical for both source formats and survives the migration. - **It's redundant** — the verbatim source is already in the `llms-full.txt` shards. ## Testing ``` $ python doc/source/_ext/test_llms_txt.py PASS: llms_txt extension produced a correct index, Optional section, llms-full shards, excludes notebooks by source type, gates the Markdown pointer, and honors the llms_txt_build gate. $ ruff check doc/source/_ext/llms_txt.py doc/source/_ext/test_llms_txt.py All checks passed! ``` New `test_markdown_hint` covers both directions: the pointer appears in the header (asserted to sit before the first `##` section) when the config is on, and is absent when it's off. The header table above was produced by probing the live `docs.ray.io`. All three changed files route to `@ doc doc_api` under the current `.buildkite/test.rules.txt`, so `doc: test llms.txt extension` runs on this PR. Not a duplicate: `gh pr list --state open` finds no other open PR touching `llms.txt` or Markdown content negotiation. ## AI assistance Drafted with Claude Code. The behavioural claims here (which `Accept` values return what, which `.md` URL forms 404, the negotiated output including page chrome) were each verified against the live site rather than assumed.",
+        "url": "https://github.com/ray-project/ray/pull/65461",
+        "createdAt": "2026-08-13T15:06:22Z",
+        "updatedAt": "2026-08-13T15:31:51Z",
+        "timestamp": "2026-08-13T15:31:51Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [
+          "go",
+          "docs-go"
+        ],
+        "author": "ronny-anyscale",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:87932c4c0d2be83bb71c",
+      "signalId": "github:ray-project/ray:pull_request:65370",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65370",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "serve: expose multiplexed model IDs in ReplicaDetails",
+        "text": "## Summary Adds a backward-compatible `multiplexed_model_ids` field to `ReplicaDetails` and keeps it synchronized when the controller receives updated multiplexed model IDs. Extends the existing multiplexing test to verify the values through `ServeInstanceDetails` returned by `serve_instance.get_serve_details()`. Closes #65347 ## Duplicate check I checked open PRs for #65347 and for `multiplexed_model_ids ReplicaDetails`; no matching open PR existed. ## Testing - `python -m compileall` on all four changed Python files — passed. - Direct execution of `test_record_multiplexed_model_ids_updates_actor_details` — passed. - `git diff --check` — passed. - Ruff, pydoclint, Ray Serve mypy, Pyrefly, import-order, and Black checks — passed. - The full pytest integration test could not be collected locally because Windows `setup-dev.py` junctions caused duplicate `conftest.py` registration. Ray CI will run the added integration test on Linux. - `docstyle` could not run because `/bin/bash` is unavailable in this Windows environment; Semgrep's pre-commit environment had an invalid cached Python path. ## AI assistance I used AI assistance to help implement and validate this change. I reviewed and understand every changed line.",
+        "url": "https://github.com/ray-project/ray/pull/65370",
+        "createdAt": "2026-08-11T13:32:40Z",
+        "updatedAt": "2026-08-13T14:46:49Z",
+        "timestamp": "2026-08-13T14:46:49Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [
+          "serve",
+          "community-contribution"
+        ],
+        "author": "upadhyay74aman",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:5be54980a3eaaf1e01bd",
+      "signalId": "github:ray-project/ray:pull_request:65460",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65460",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[doc] Render the Jobs API spec with sphinxcontrib-openapi instead of ReDoc",
+        "text": "> **Stacked PR.** Targets `doc-1513-declare-openapi-303` (#65458), which targets #65457. Review order is #65457 → #65458 → this. GitHub retargets automatically as each merges. > > **Conflicts with #65456 by design.** That PR pins `redoc_uri` to a specific ReDoc version; this one deletes `redoc_uri` entirely. If #65456 lands first I'll resolve the conflict here. If this lands, #65456 becomes moot and should be closed. Either order works — #65456 is worth keeping as the safe fix in case this one stalls in review. ## Why this change is needed `sphinxcontrib-redoc` is unmaintained. 1.6.0 is the latest release and dates from 2020; the `2.0.0a1` alpha still imports `pkg_resources`. Keeping it costs this repo three things: | Cost | Location | | --- | --- | | A `setuptools<82` ceiling, because the extension imports `pkg_resources` at module load and setuptools 82 removed it | `doc/requirements-doc.txt` | | A `misc.copy_overwrite` entry in `suppress_warnings`, because the extension redundantly copies its own bundled asset | `doc/source/conf.py` | | The renderer fetched from a third-party CDN at page-view time | `doc/source/conf.py` | All of that buys exactly one page. The Jobs API spec is the only consumer: `conf.py` had one `redoc` entry and there's no other OpenAPI document in the repo. There's a second, larger reason. **The current page is a client-rendered JavaScript island.** ReDoc has no source file at all — the extension synthesizes `api.html` from `conf.py`. So today the page: - is in **no toctree**, and - is reachable only through a hardcoded `` `... <api.html>`_ `` link at `rest.rst:94`, and - has **none of its endpoint content in the built HTML**, so it can't participate in Sphinx search or cross-referencing. ## Related changes Fourth in the chain above. Supersedes the \"record why we stay on ReDoc\" PR (#65459), which I'll close — its conclusion is obsolete now that this works. ## What changes - Swap `sphinxcontrib.redoc` → `sphinxcontrib.openapi` (0.9.0) in `conf.py` and `doc/requirements-doc.txt`, and regenerate the deplock. - Add a real `api.rst`, put it in the `job-submission` toctree, and replace the raw `<api.html>` link with a `:ref:`. - Drop the now-unneeded `misc.copy_overwrite` suppression. - Change two operation `summary` fields from YAML block scalars to plain scalars (see below). - Update the `setuptools` comment: the `<82` ceiling's cause is gone. The pin itself is left in place, since unpinning is a separate resolve worth verifying on its own. `sphinxcontrib-openapi` is pure Python, from the same `sphinx-contrib` org, and needs no `pkg_resources`. The deplock diff is `-sphinxcontrib-redoc` and `+sphinxcontrib-openapi` plus its five dependencies (`sphinxcontrib-httpdomain`, `sphinx-mdinclude`, `deepmerge`, `mistune`, `picobox`). ## Verification Built with `make -C doc rtd-build`, which runs the RtD-faithful clean build with `-W`, matching `fail_on_warning: true`: ``` build succeeded. ``` Exit 0, and **zero `WARNING:`/`ERROR:` lines in the whole log**. `raydepsets --check` on `docbuild_depset_311` reports \"Lock files are up to date.\" Checked against the built `api.html` rather than inferred: | Check | Result | | --- | --- | | Request/response schemas rendered | Yes — `Request JSON Object` and `Response JSON Object` field lists, with `entrypoint`, `runtime_env`, `metadata`, and the rest, including types and required flags | | `$ref` and `allOf` resolution | Resolved, including through `JobDetails` | | Literal `**` on the page | None — zero docutils `problematic` nodes | | `http-routingtable` index | Generated | | Page in the sidebar, with prev/next pagination | Yes | ## Two non-obvious configuration details Both are commented at their sites in the diff, because both fail quietly. **The renderer is selected via `openapi_default_renderer`, not by the directive spelling.** Writing `.. openapi:httpdomain::` in the page adds an `unknown directive name` warning, which is fatal under `fail_on_warning`. Selecting it in `conf.py` and using a plain `.. openapi::` avoids that. **The default renderer emits no request or response schemas at all** — just paths, parameters, and status codes. So leaving `openapi_default_renderer` unset would silently drop most of the reference content while still building green. That's the trap worth knowing about if anyone touches this later. ## Why the summary fields change `sphinxcontrib-openapi`'s renderer interpolates an operation's `summary` into `**...**` without stripping it. A YAML block scalar (`summary: |`) leaves a trailing newline in the value, so the markup opens on one line and closes on the next, docutils can't pair it, and readers see literal asterisks. Filed upstream as [sphinx-contrib/openapi#173](https://github.com/sphinx-contrib/openapi/issues/173). Two operations used block scalars (`GET /api/version` and `POST /api/jobs`); the other six already used plain scalars. Converting those two is the whole fix and changes no rendered text. ## What this gives up, honestly **Request and response samples.** ReDoc rendered example payloads; this doesn't. It isn't a configuration choice — both routes to examples are blocked by upstream bugs, and I've confirmed each against this spec: - `:generate-examples-from-schemas:` crashes with `ValueError: dictionary update sequence element #0 has length 1; 2 is required` ([#166](https://github.com/sphinx-contrib/openapi/issues/166)). Example generation can't handle an `allOf` that targets a non-object schema, which is exactly how `JobDetails` attaches descriptions to the `JobType` and `JobStatus` string enums. - `:response-examples-for:` is rejected as an unknown option ([#165](https://github.com/sphinx-contrib/openapi/issues/165)). `api.rst` carries a comment recording this so nobody re-derives it, and I've added the reproduction detail to both upstream issues. Weighed against gaining search, cross-referencing, navigation, a dependency that's actually maintained, and no third-party CDN at page-view time, losing sample payloads seemed like the right trade — but it is a real loss, and it's reasonable to want the upstream fixes first instead. I've also filed [#171](https://github.com/sphinx-contrib/openapi/issues/171), [#172](https://github.com/sphinx-contrib/openapi/issues/172), and [#173](https://github.com/sphinx-contrib/openapi/issues/173), each with a minimal reproducer, and am planning PRs for them. ## Checks - [x] `make -C doc rtd-build`: build succeeded, zero warnings. - [x] `raydepsets --check`: lock files up to date. - [x] Built page inspected for schema content, `allOf`/`$ref` resolution, and stray markup. - [x] `pre-commit run` clean. - [ ] Read the Docs preview reviewed for the appearance change.",
+        "url": "https://github.com/ray-project/ray/pull/65460",
+        "createdAt": "2026-08-13T14:03:32Z",
+        "updatedAt": "2026-08-13T14:05:12Z",
+        "timestamp": "2026-08-13T14:05:12Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "dstrodtman",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ba675ad165954d34263f",
+      "signalId": "github:ray-project/ray:pull_request:65459",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65459",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[doc] Record what blocks lifting the setuptools ceiling and replacing sphinxcontrib-redoc",
+        "text": "> **Stacked PR.** Fourth in a chain: #65456 (pin ReDoc) → #65457 (spec validity) → #65458 (declare 3.0.3) → this. It's independent in substance and touches only `doc/requirements-doc.txt`, so it can be retargeted to `master` if you'd rather take it on its own. ## Why this change is needed The `setuptools==80.9.0` pin in `doc/requirements-doc.txt` exists because `sphinxcontrib-redoc` imports `pkg_resources` at module load, and setuptools 82 removed it. The comment ends with \"Lifting this ceiling means replacing or vendoring that extension,\" which leaves two questions open: 1. Is `sphinxcontrib-redoc` actually the *only* thing in the doc environment that needs `pkg_resources`? If not, removing it wouldn't lift the ceiling anyway. 2. Is there a usable replacement? I evaluated both. This records the answers so the next person hitting this pin doesn't re-derive them. ## Related changes Fourth in the chain above. No functional dependency on the three below it. ## What changes A comment in `doc/requirements-doc.txt`. No behavior change, no dependency change, no build change. ## Finding 1: `sphinxcontrib-redoc` is the sole blocker Installed every extension `conf.py` loads into an environment with no setuptools and no importable `pkg_resources`, then imported each one: | Result | Extensions | | --- | --- | | Import cleanly | `sphinx.ext.autodoc`, `viewcode`, `napoleon`, `doctest`, `coverage`, `autosummary`, `intersphinx`, `sphinx_click.ext`, `sphinxemoji`, `sphinx_copybutton`, `sphinx_sitemap`, `myst_nb`, `sphinxcontrib.autodoc_pydantic`, `sphinx_remove_toctrees`, `sphinx_design`, `sphinx_docsearch`, `sphinx_collections`, `sphinxext.opengraph` | | **Fails** | `sphinxcontrib.redoc` — `ModuleNotFoundError: No module named 'pkg_resources'` | That failure is the control: it reproduces the exact documented breakage, which confirms the test has power rather than passing vacuously. So dropping that one extension is sufficient to lift the ceiling. ## Finding 2: the maintained replacement works, in exactly one configuration `sphinxcontrib-openapi` 0.9.0 (released 2026-02-10, `requires_python >=3.10`) is the actively maintained alternative from the same `sphinx-contrib` org. It needs no setuptools, and it **does** render this spec with full request and response schemas and **zero warnings under `-W`** — but only with both of these: - `openapi_default_renderer = \"httpdomain\"` in `conf.py`, then a plain `.. openapi::` directive. - Operation `summary` fields as plain scalars rather than YAML block scalars. Neither is obvious, and each failure mode is silent or fatal rather than self-explaining: | Configuration | Schema content | Warnings under `-W` | | --- | --- | --- | | default renderer (`httpdomain:old`) | **none** — paths, parameters, status codes only | 0 | | `httpdomain:old` + `:request:` | request bodies only, as a raw JSON blob | 1 — [#171](https://github.com/sphinx-contrib/openapi/issues/171) | | `httpdomain:old` + `:examples:` | full | 1 — [#172](https://github.com/sphinx-contrib/openapi/issues/172) | | `httpdomain`, block-scalar summaries | full | 2 — [#173](https://github.com/sphinx-contrib/openapi/issues/173), plus literal `**` on the page | | **`httpdomain`, plain-scalar summaries** | **full** | **0** | The literal-asterisk defect is worth calling out because it's triggered by this repo's own spec: two operations use `summary: |`, which leaves a trailing newline in the value that the renderer interpolates straight into `**...**`. Changing those two lines to plain scalars is sufficient. The three configurations that genuinely don't work are filed upstream with minimal reproducers. ## So what actually gates migrating Not dependency hygiene, and not warnings. It's that ReDoc's standalone three-panel page would be replaced by output rendered inline in the site theme. That's a visible change to a published reference page, so it's a maintainer call rather than a docs-tooling cleanup, and this PR doesn't make it. Two things worth weighing whenever that call happens. In favor: the current page is a client-rendered JavaScript island. It's in no toctree, it's reachable only through a hardcoded `<api.html>` link at `rest.rst:94`, and its endpoint content isn't in the built HTML, so it doesn't participate in Sphinx search or cross-referencing. The trial build produced real Sphinx nodes and an `http-routingtable` index. Migrating would also let the `setuptools` ceiling lift, per finding 1. Against: it's a published reference page that readers may have bookmarked in its current form, and the inline rendering is a different reading experience rather than a strictly better one. My trial builds used the `basic` theme, so I can't show what it looks like under this site's actual theme without a full doc build. ## Checks - [x] Comment-only change; `pre-commit run` clean. - [x] Every claim in the comment verified by the trial builds described above.",
+        "url": "https://github.com/ray-project/ray/pull/65459",
+        "createdAt": "2026-08-13T13:30:11Z",
+        "updatedAt": "2026-08-13T14:03:44Z",
+        "timestamp": "2026-08-13T14:03:44Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "dstrodtman",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:93e682bfbbf2f52c86d9",
+      "signalId": "github:ray-project/ray:pull_request:65453",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65453",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[Data] Add support for writing ORC files",
+        "text": "## Description Ray Data can read ORC files, but it can't write them. This adds `Dataset.write_orc()`, backed by a new `ORCDatasink` that writes each output block with `pyarrow.orc.write_table`. The API forwards PyArrow ORC writer options and supports `min_rows_per_file` through the existing block-based file datasink infrastructure. ## Related issues Follow-up to #64600 ## Additional information Mirrors the `write_csv` / `write_json` APIs. PyArrow ORC writer options can be passed directly to `write_orc()`. No new dependency (`pyarrow` already ships `pyarrow.orc`). Adds write tests in `test_orc.py` and API docs in `saving_data.rst`. ```python import ray ds = ray.data.range(100) ds.write_orc(\"s3://bucket/path/\", compression=\"zstd\")",
+        "url": "https://github.com/ray-project/ray/pull/65453",
+        "createdAt": "2026-08-13T09:53:45Z",
+        "updatedAt": "2026-08-13T13:59:52Z",
+        "timestamp": "2026-08-13T13:59:52Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "docs",
+          "data",
+          "community-contribution"
+        ],
+        "author": "WFY123wfy",
         "state": "open",
         "assignees": [],
         "change": "updated"

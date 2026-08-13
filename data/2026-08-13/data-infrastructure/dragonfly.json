@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "data-infrastructure",
@@ -35,11 +35,54 @@
     ],
     "license": "NOASSERTION",
     "defaultBranch": "main",
-    "stars": 30989,
+    "stars": 30991,
     "forks": 1226,
-    "openIssues": 302,
+    "openIssues": 300,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:08.703370+00:00"
+    "collectedAt": "2026-08-13T16:19:30.632795+00:00"
+  },
+  "news": {
+    "repository": "dragonflydb/dragonfly",
+    "collectedAt": "2026-08-13T16:19:30.632795+00:00",
+    "latestRelease": {
+      "repository": "dragonflydb/dragonfly",
+      "tag": "v1.40.1",
+      "title": "v1.40.1",
+      "url": "https://github.com/dragonflydb/dragonfly/releases/tag/v1.40.1",
+      "publishedAt": "2026-08-06T06:54:05Z",
+      "notes": "## This is a patch release.\r\n\r\n### What's Changed\r\n\r\n- Fixed connection-state handling in squashed pipelines. Commands following `AUTH`, `SELECT`, `HELLO`, `CLIENT`, or `RESET` now observe the updated connection state instead of stale authentication, database, or RESP protocol state ([#8016](https://github.com/dragonflydb/dragonfly/pull/8016)).\r\n- Fixed compressed QList node memory accounting and defragmentation ([#8011](https://github.com/dragonflydb/dragonfly/pull/8011), [#8014](https://github.com/dragonflydb/dragonfly/pull/8014)).\r\n\r\nFull Changelog: [v1.40.0...v1.40.1](https://github.com/dragonflydb/dragonfly/compare/v1.40.0...v1.40.1)",
+      "highlights": [
+        "This is a patch release.",
+        "What's Changed",
+        "Fixed connection-state handling in squashed pipelines. Commands following AUTH, SELECT, HELLO, CLIENT, or RESET now observe the updated connection state instead of stale authentication, database, or RESP protocol state (#8016).",
+        "Fixed compressed QList node memory accounting and defragmentation (#8011, #8014)."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "Cluster Search",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/19",
+        "description": "",
+        "dueAt": "2025-12-31T00:00:00Z",
+        "progress": 60,
+        "openIssues": 2,
+        "closedIssues": 3
+      },
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "v1.41",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/24",
+        "description": "",
+        "dueAt": "2026-09-10T00:00:00Z",
+        "progress": 12,
+        "openIssues": 7,
+        "closedIssues": 1
+      }
+    ]
   },
   "runs": [
     {
@@ -53,6 +96,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 27,
       "changedCount": 27
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 29,
+      "changedCount": 8
     }
   ],
   "signals": [
@@ -82,8 +131,7 @@
       "state": "open",
       "assignees": [
         "abhijat"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:7903",
@@ -108,8 +156,60 @@
       "state": "closed",
       "assignees": [
         "BorysTheDev"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:7953",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "FT.CREATE without SCHEMA returns OK but creates unusable listed index",
+      "text": "## Summary `FT.CREATE` accepts an index definition that omits the required `SCHEMA` keyword. It returns `OK` and exposes the index in `FT._LIST`, but the resulting index is unusable: `FT.INFO` reports that the index does not exist. The command should be rejected during parsing/validation rather than creating a listed-but-non-operational index. ## Reproduction Started a local single-node Dragonfly instance: ```sh mkdir ~/local-data-dragonfly podman --connection dragon run -d --pull=always -p 6379:6379 \\ -v ~/local-data-dragonfly/:/data:Z --ulimit memlock=-1 \\ docker.dragonflydb.io/dragonflydb/dragonfly \\ --lua_allow_undeclared_auto_correct=true --nodf_snapshot_format & ``` Then: ```redis FT.CREATE idx_ts_test ON HASH PREFIX 1 ot:foo name TEXT timestamp NUMERIC SORTABLE # OK FT._LIST # includes \"idx_ts_test\" FT.INFO idx_ts_test # ERR Index with name 'idx_ts_test' not found ``` This is on a local single-node instance, so cluster request routing is not involved. ## Expected behavior The malformed `FT.CREATE` invocation should fail immediately because `SCHEMA` is missing, e.g. with a syntax error. A valid invocation is: ```redis FT.CREATE idx_ts_test ON HASH PREFIX 1 ot:foo SCHEMA name TEXT timestamp NUMERIC SORTABLE ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/7953",
+      "createdAt": "2026-07-28T18:14:00Z",
+      "updatedAt": "2026-08-13T15:59:09Z",
+      "timestamp": "2026-08-13T15:59:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "dragonclaw-dragonflydb",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8028",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "Disabled python tests in tests/dragonfly",
+      "text": "## Unconditional skips (broken / flaky / WIP) - [ ] `tests/dragonfly/shutdown_test.py:15` — class `TestDflyAutoLoadSnapshot` (covers `test_gracefull_shutdown`) — \"Currently we can not guarantee that on shutdown if command is executed and value is written we response before breaking the connection\" @vyavdoshenko -> check if the invariants/what's written is true and if we can change somehow the test semantics to assert that we get a reply before we shutdown --- - [ ] `tests/dragonfly/memory_test.py:327` — `test_throttle_on_commands_squashing_replies_bytes` — \"Disabling test until improvements in squashing.\" @mkaruza --- - [ ] `tests/dragonfly/snapshot_test.py:222` — `test_cron_snapshot_failed_saving` — \"Fails and also causes all TLS tests to fail\" @BorysTheDev --- - [ ] `tests/dragonfly/snapshot_test.py:961` — `test_tiered_entries_throttle` — no reason given (also `@large`/`@opt_only`) @dranikpg --- - [ ] `tests/dragonfly/acl_family_test.py:271` — `test_acl_del_user_while_running_lua_script` — \"Flaky on CI, needs investigation\" @kostasrim --- - [ ] `tests/dragonfly/acl_family_test.py:297` — `test_acl_with_long_running_script` — \"Check TODO in the body below\" @kostasrim --- - [ ] `tests/dragonfly/connection_test.py:2483` — `test_pipeline_cache_size` — \"Flaky\" @abhijat --- - [ ] `tests/dragonfly/replication_specific_test.py:508` — `test_big_huge_streaming_restart` — \"fails, investigating\" @kostasrim --- - [x] `tests/dragonfly/replication_specific_test.py:730` — `test_replication_onmove_flow` — \"Fails constantly on CI\" Dead test https://github.com/dragonflydb/dragonfly/pull/7096 and https://github.com/dragonflydb/dragonfly/pull/7068/changes @kostasrim will remove it in a sec",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8028",
+      "createdAt": "2026-08-07T09:05:39Z",
+      "updatedAt": "2026-08-13T15:51:22Z",
+      "timestamp": "2026-08-13T15:51:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "bug",
+        "failing-test"
       ],
-      "change": "updated"
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "abhijat",
+        "mkaruza",
+        "kostasrim",
+        "dranikpg",
+        "vyavdoshenko"
+      ],
+      "change": "new"
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8056",
@@ -132,8 +232,7 @@
       "state": "closed",
       "assignees": [
         "mkaruza"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8063",
@@ -157,8 +256,7 @@
       ],
       "author": "dragonclaw-dragonflydb",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8067",
@@ -181,8 +279,7 @@
       ],
       "author": "BorysTheDev",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8068",
@@ -205,8 +302,7 @@
       ],
       "author": "BorysTheDev",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8069",
@@ -229,8 +325,7 @@
       ],
       "author": "BorysTheDev",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8070",
@@ -253,8 +348,7 @@
       ],
       "author": "BorysTheDev",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8071",
@@ -277,8 +371,7 @@
       ],
       "author": "BorysTheDev",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8072",
@@ -301,8 +394,7 @@
       ],
       "author": "BorysTheDev",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8073",
@@ -327,8 +419,7 @@
       "state": "open",
       "assignees": [
         "mkaruza"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8074",
@@ -353,8 +444,7 @@
       "state": "open",
       "assignees": [
         "mkaruza"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8076",
@@ -379,8 +469,7 @@
       "state": "open",
       "assignees": [
         "mkaruza"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:6991",
@@ -405,6 +494,28 @@
       "change": "updated"
     },
     {
+      "id": "github:dragonflydb/dragonfly:pull_request:7984",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(geo): add GEOSEARCHSTORE command",
+      "text": "<!-- **Commits Must Be Signed and Your PR title must conform to the conventional commit spec** * See: https://github.com/dragonflydb/dragonfly/blob/main/CONTRIBUTING.md * Please follow the section on `pre-commit hooks`, a linter will validate before you push Example PR Title: <type>(<scope>)!: <description> * `type` = bug, chore, feat, fix, docs, build, style, refactor, perf, test * `!` = OPTIONAL: signals a breaking change * `scope` = Optional when `type` is \"chore\" or \"docs\" * `description` = short description of the change Examples: * chore(examples): Clarify `docker` usage #120 * docs(readme): Fix Example Links #121 * feat(ingest)!: Add new ingest #122 * fix(ingest): Refactor for loop to list comprehension #123 --> Adds GEOSEARCHSTORE (dest + src keys, same search options as GEOSEARCH, optional STOREDIST). Most of the work was already in GeoSearchStoreGeneric() via GEORADIUS ... STORE — this wires up the dedicated command and parser. Closes #3883. Also fixed a couple of Redis mismatches in the shared store/search path: - STORE when the source key is missing now returns 0 and clears the dest key (was an empty array) - COUNT without ASC/DESC now defaults to ASC, same as Redis Tests in geo_family_test.cc. Ran geo_family_test locally + manual redis-cli checks.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/7984",
+      "createdAt": "2026-08-03T03:51:25Z",
+      "updatedAt": "2026-08-13T16:05:14Z",
+      "timestamp": "2026-08-13T16:05:14Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "rounaknandanwar",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:dragonflydb/dragonfly:pull_request:7997",
       "source": "github",
       "group": "data-infrastructure",
@@ -425,8 +536,29 @@
       "state": "open",
       "assignees": [
         "kostasrim"
-      ],
-      "change": "updated"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8002",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "docs: add design doc for replication fanout (NOT FOR MERGE)",
+      "text": "This is a design doc for #7993.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8002",
+      "createdAt": "2026-08-04T12:45:27Z",
+      "updatedAt": "2026-08-13T15:48:22Z",
+      "timestamp": "2026-08-13T15:48:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "BorysTheDev",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8026",
@@ -471,8 +603,7 @@
       "labels": [],
       "author": "dranikpg",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8039",
@@ -525,11 +656,11 @@
       "text": "## Summary - `Renamer::FinalizeRename()` ran `DelSrc` and `DeserializeDest` in the same transaction hop with no ordering guarantee between shards. If `DeserializeDest` failed (e.g. OOM), the source key could already be deleted, silently losing its data. - Now deserializes into the destination first, and only deletes the source once that succeeds. `COPY` is unaffected since it never deletes the source. ## Test plan - [x] Added `GenericFamilyTest.RenameOOMPreservesSource`: drives real per-shard OOM via repeated `RESTORE`, then asserts a failed `RENAME` leaves the source key intact and does not create the destination. - [x] Full `generic_family_test` suite passes (84/84). - [x] `pre-commit` (clang-format) passes on changed files. Fixes #5296",
       "url": "https://github.com/dragonflydb/dragonfly/pull/8053",
       "createdAt": "2026-08-11T17:02:15Z",
-      "updatedAt": "2026-08-13T13:46:44Z",
-      "timestamp": "2026-08-13T13:46:44Z",
+      "updatedAt": "2026-08-13T13:59:40Z",
+      "timestamp": "2026-08-13T13:59:40Z",
       "metrics": {
         "reactions": 0,
-        "comments": 7
+        "comments": 8
       },
       "labels": [],
       "author": "Shikha-code36",
@@ -544,18 +675,18 @@
       "project": "dragonflydb/dragonfly",
       "kind": "pull_request",
       "title": "fix(search): reject FT.CREATE missing the SCHEMA keyword",
-      "text": "## Summary - `FT.CREATE` accepted an index definition missing the required `SCHEMA` keyword, returning `OK` and listing the index in `FT._LIST`, but the index was unusable (`FT.INFO` reported it as not found). - Root cause: without `SCHEMA`, tokens that look like field definitions fall through the \"unsupported parameters are ignored\" branch in `CreateDocIndex` and get silently skipped one by one. - Fix: track whether any token was skipped this way; only reject the command when that happened *and* no fields were parsed. This keeps `FT.CREATE idx ON HASH` (no trailing tokens at all, populated later via `FT.ALTER`) legal, matching existing behavior covered by the `AlterIndex` test. ## Test plan - [x] Added `SearchFamilyTest.CreateWithoutSchemaKeywordIsError`, covering both the bug repro (rejected with a syntax error, no phantom index left behind) and the still-legal empty-schema-for-later-ALTER case. - [x] Full `search_family_test` suite passes (330/330), confirming no regression in existing `FT.CREATE` tests (including `CreateDropListIndex` and `AlterIndex`, which rely on schema-less creation succeeding). - [x] `pre-commit` (clang-format) passes on changed files. Fixes #7953",
+      "text": "## Summary - `FT.CREATE` accepted an index definition missing the required `SCHEMA` keyword, returning `OK` and listing the index in `FT._LIST`, but the index was unusable (`FT.INFO` reported it as not found). - Root cause: without `SCHEMA`, tokens that look like field definitions fall through the \"unsupported parameters are ignored\" branch in `CreateDocIndex` and get silently skipped one by one. - Fix: track whether any token was skipped this way; only reject the command when that happened *and* no fields were parsed. This keeps `FT.CREATE idx ON HASH` (no trailing tokens at all, populated later via `FT.ALTER`) legal, matching existing behavior covered by the `AlterIndex` test. ## Behavior notes - `FT.CREATE <existing-index> ON HASH` (with no `SCHEMA`) now returns the missing-SCHEMA error instead of \"Index already exists\" — the command is malformed regardless of whether the index name already exists, so the syntax error takes precedence. - During a mixed-version rolling upgrade window, a schema-less `FT.CREATE` journaled by an old master is rejected when replayed on an already-upgraded replica. That index was already unusable and non-durable under the old behavior (didn't survive serialization, diverged FT.INFO from FT._LIST), so this doesn't introduce new master/replica divergence — the replica simply converges at the next full sync. ## Test plan - [x] Added `SearchFamilyTest.CreateWithoutSchemaKeywordIsError`, covering both the bug repro (rejected with a syntax error, no phantom index left behind) and the still-legal empty-schema-for-later-ALTER case. - [x] Full `search_family_test` suite passes (330/330), confirming no regression in existing `FT.CREATE` tests (including `CreateDropListIndex` and `AlterIndex`, which rely on schema-less creation succeeding). - [x] `pre-commit` (clang-format) passes on changed files. Fixes #7953",
       "url": "https://github.com/dragonflydb/dragonfly/pull/8054",
       "createdAt": "2026-08-11T18:32:41Z",
-      "updatedAt": "2026-08-13T12:42:13Z",
-      "timestamp": "2026-08-13T12:42:13Z",
+      "updatedAt": "2026-08-13T15:59:08Z",
+      "timestamp": "2026-08-13T15:59:08Z",
       "metrics": {
         "reactions": 0,
-        "comments": 6
+        "comments": 7
       },
       "labels": [],
       "author": "Shikha-code36",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -578,8 +709,7 @@
       "labels": [],
       "author": "Shikha-code36",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8062",
@@ -600,8 +730,7 @@
       "labels": [],
       "author": "vjymisal0",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8064",
@@ -622,8 +751,7 @@
       "labels": [],
       "author": "mkaruza",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8065",
@@ -646,8 +774,7 @@
       "state": "open",
       "assignees": [
         "vyavdoshenko"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8066",
@@ -668,8 +795,7 @@
       "labels": [],
       "author": "abhijat",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8075",
@@ -681,8 +807,8 @@
       "text": "This PR fixes a known issue that was already fixed for V1 at 5ef35182. Defer V2 pipeline execution when queued control work predates the next parsed command. Let IoLoopV2 drain that work so UNSUBSCRIBE cannot discard earlier Pub/Sub messages. Tests: Extend the unsubscribe regression across V1 and V2 with standalone and deferred-GET commands. Bound the starvation publisher wave to assert fairness without treating ordered backlog as starvation.",
       "url": "https://github.com/dragonflydb/dragonfly/pull/8075",
       "createdAt": "2026-08-13T10:10:27Z",
-      "updatedAt": "2026-08-13T13:29:03Z",
-      "timestamp": "2026-08-13T13:29:03Z",
+      "updatedAt": "2026-08-13T13:50:16Z",
+      "timestamp": "2026-08-13T13:50:16Z",
       "metrics": {
         "reactions": 0,
         "comments": 7
@@ -712,8 +838,31 @@
       "labels": [],
       "author": "dranikpg",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8078",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "chore: remove dead test_replication_onmove_flow",
+      "text": "no point in time was removed in https://github.com/dragonflydb/dragonfly/pull/7068/changes",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8078",
+      "createdAt": "2026-08-13T14:53:44Z",
+      "updatedAt": "2026-08-13T16:04:25Z",
+      "timestamp": "2026-08-13T16:04:25Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "closed",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "new"
     }
   ],
   "events": [
@@ -1542,6 +1691,259 @@
         "labels": [],
         "author": "dranikpg",
         "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:76b455386e56daab9e5f",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:7984",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:7984",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(geo): add GEOSEARCHSTORE command",
+        "text": "<!-- **Commits Must Be Signed and Your PR title must conform to the conventional commit spec** * See: https://github.com/dragonflydb/dragonfly/blob/main/CONTRIBUTING.md * Please follow the section on `pre-commit hooks`, a linter will validate before you push Example PR Title: <type>(<scope>)!: <description> * `type` = bug, chore, feat, fix, docs, build, style, refactor, perf, test * `!` = OPTIONAL: signals a breaking change * `scope` = Optional when `type` is \"chore\" or \"docs\" * `description` = short description of the change Examples: * chore(examples): Clarify `docker` usage #120 * docs(readme): Fix Example Links #121 * feat(ingest)!: Add new ingest #122 * fix(ingest): Refactor for loop to list comprehension #123 --> Adds GEOSEARCHSTORE (dest + src keys, same search options as GEOSEARCH, optional STOREDIST). Most of the work was already in GeoSearchStoreGeneric() via GEORADIUS ... STORE — this wires up the dedicated command and parser. Closes #3883. Also fixed a couple of Redis mismatches in the shared store/search path: - STORE when the source key is missing now returns 0 and clears the dest key (was an empty array) - COUNT without ASC/DESC now defaults to ASC, same as Redis Tests in geo_family_test.cc. Ran geo_family_test locally + manual redis-cli checks.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/7984",
+        "createdAt": "2026-08-03T03:51:25Z",
+        "updatedAt": "2026-08-13T16:05:14Z",
+        "timestamp": "2026-08-13T16:05:14Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "rounaknandanwar",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:caa9f5d7ff48632e3ccb",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8078",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8078",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "chore: remove dead test_replication_onmove_flow",
+        "text": "no point in time was removed in https://github.com/dragonflydb/dragonfly/pull/7068/changes",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8078",
+        "createdAt": "2026-08-13T14:53:44Z",
+        "updatedAt": "2026-08-13T16:04:25Z",
+        "timestamp": "2026-08-13T16:04:25Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "closed",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:4b5a0cf5e9829c8aea63",
+      "signalId": "github:dragonflydb/dragonfly:issue:7953",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:7953",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "FT.CREATE without SCHEMA returns OK but creates unusable listed index",
+        "text": "## Summary `FT.CREATE` accepts an index definition that omits the required `SCHEMA` keyword. It returns `OK` and exposes the index in `FT._LIST`, but the resulting index is unusable: `FT.INFO` reports that the index does not exist. The command should be rejected during parsing/validation rather than creating a listed-but-non-operational index. ## Reproduction Started a local single-node Dragonfly instance: ```sh mkdir ~/local-data-dragonfly podman --connection dragon run -d --pull=always -p 6379:6379 \\ -v ~/local-data-dragonfly/:/data:Z --ulimit memlock=-1 \\ docker.dragonflydb.io/dragonflydb/dragonfly \\ --lua_allow_undeclared_auto_correct=true --nodf_snapshot_format & ``` Then: ```redis FT.CREATE idx_ts_test ON HASH PREFIX 1 ot:foo name TEXT timestamp NUMERIC SORTABLE # OK FT._LIST # includes \"idx_ts_test\" FT.INFO idx_ts_test # ERR Index with name 'idx_ts_test' not found ``` This is on a local single-node instance, so cluster request routing is not involved. ## Expected behavior The malformed `FT.CREATE` invocation should fail immediately because `SCHEMA` is missing, e.g. with a syntax error. A valid invocation is: ```redis FT.CREATE idx_ts_test ON HASH PREFIX 1 ot:foo SCHEMA name TEXT timestamp NUMERIC SORTABLE ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/7953",
+        "createdAt": "2026-07-28T18:14:00Z",
+        "updatedAt": "2026-08-13T15:59:09Z",
+        "timestamp": "2026-08-13T15:59:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "dragonclaw-dragonflydb",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2fc0acbdfab52094d069",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8054",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8054",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(search): reject FT.CREATE missing the SCHEMA keyword",
+        "text": "## Summary - `FT.CREATE` accepted an index definition missing the required `SCHEMA` keyword, returning `OK` and listing the index in `FT._LIST`, but the index was unusable (`FT.INFO` reported it as not found). - Root cause: without `SCHEMA`, tokens that look like field definitions fall through the \"unsupported parameters are ignored\" branch in `CreateDocIndex` and get silently skipped one by one. - Fix: track whether any token was skipped this way; only reject the command when that happened *and* no fields were parsed. This keeps `FT.CREATE idx ON HASH` (no trailing tokens at all, populated later via `FT.ALTER`) legal, matching existing behavior covered by the `AlterIndex` test. ## Behavior notes - `FT.CREATE <existing-index> ON HASH` (with no `SCHEMA`) now returns the missing-SCHEMA error instead of \"Index already exists\" — the command is malformed regardless of whether the index name already exists, so the syntax error takes precedence. - During a mixed-version rolling upgrade window, a schema-less `FT.CREATE` journaled by an old master is rejected when replayed on an already-upgraded replica. That index was already unusable and non-durable under the old behavior (didn't survive serialization, diverged FT.INFO from FT._LIST), so this doesn't introduce new master/replica divergence — the replica simply converges at the next full sync. ## Test plan - [x] Added `SearchFamilyTest.CreateWithoutSchemaKeywordIsError`, covering both the bug repro (rejected with a syntax error, no phantom index left behind) and the still-legal empty-schema-for-later-ALTER case. - [x] Full `search_family_test` suite passes (330/330), confirming no regression in existing `FT.CREATE` tests (including `CreateDropListIndex` and `AlterIndex`, which rely on schema-less creation succeeding). - [x] `pre-commit` (clang-format) passes on changed files. Fixes #7953",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8054",
+        "createdAt": "2026-08-11T18:32:41Z",
+        "updatedAt": "2026-08-13T15:59:08Z",
+        "timestamp": "2026-08-13T15:59:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "Shikha-code36",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4fcf7b3b3e488a41170e",
+      "signalId": "github:dragonflydb/dragonfly:issue:8028",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8028",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "Disabled python tests in tests/dragonfly",
+        "text": "## Unconditional skips (broken / flaky / WIP) - [ ] `tests/dragonfly/shutdown_test.py:15` — class `TestDflyAutoLoadSnapshot` (covers `test_gracefull_shutdown`) — \"Currently we can not guarantee that on shutdown if command is executed and value is written we response before breaking the connection\" @vyavdoshenko -> check if the invariants/what's written is true and if we can change somehow the test semantics to assert that we get a reply before we shutdown --- - [ ] `tests/dragonfly/memory_test.py:327` — `test_throttle_on_commands_squashing_replies_bytes` — \"Disabling test until improvements in squashing.\" @mkaruza --- - [ ] `tests/dragonfly/snapshot_test.py:222` — `test_cron_snapshot_failed_saving` — \"Fails and also causes all TLS tests to fail\" @BorysTheDev --- - [ ] `tests/dragonfly/snapshot_test.py:961` — `test_tiered_entries_throttle` — no reason given (also `@large`/`@opt_only`) @dranikpg --- - [ ] `tests/dragonfly/acl_family_test.py:271` — `test_acl_del_user_while_running_lua_script` — \"Flaky on CI, needs investigation\" @kostasrim --- - [ ] `tests/dragonfly/acl_family_test.py:297` — `test_acl_with_long_running_script` — \"Check TODO in the body below\" @kostasrim --- - [ ] `tests/dragonfly/connection_test.py:2483` — `test_pipeline_cache_size` — \"Flaky\" @abhijat --- - [ ] `tests/dragonfly/replication_specific_test.py:508` — `test_big_huge_streaming_restart` — \"fails, investigating\" @kostasrim --- - [x] `tests/dragonfly/replication_specific_test.py:730` — `test_replication_onmove_flow` — \"Fails constantly on CI\" Dead test https://github.com/dragonflydb/dragonfly/pull/7096 and https://github.com/dragonflydb/dragonfly/pull/7068/changes @kostasrim will remove it in a sec",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8028",
+        "createdAt": "2026-08-07T09:05:39Z",
+        "updatedAt": "2026-08-13T15:51:22Z",
+        "timestamp": "2026-08-13T15:51:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "bug",
+          "failing-test"
+        ],
+        "author": "kostasrim",
+        "state": "open",
+        "assignees": [
+          "abhijat",
+          "mkaruza",
+          "kostasrim",
+          "dranikpg",
+          "vyavdoshenko"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:689a671572ee5dd75d4c",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8002",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8002",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "docs: add design doc for replication fanout (NOT FOR MERGE)",
+        "text": "This is a design doc for #7993.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8002",
+        "createdAt": "2026-08-04T12:45:27Z",
+        "updatedAt": "2026-08-13T15:48:22Z",
+        "timestamp": "2026-08-13T15:48:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "BorysTheDev",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d69921d1fd1adb21ed7c",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8053",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8053",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(generic): avoid data loss on RENAME when destination write fails",
+        "text": "## Summary - `Renamer::FinalizeRename()` ran `DelSrc` and `DeserializeDest` in the same transaction hop with no ordering guarantee between shards. If `DeserializeDest` failed (e.g. OOM), the source key could already be deleted, silently losing its data. - Now deserializes into the destination first, and only deletes the source once that succeeds. `COPY` is unaffected since it never deletes the source. ## Test plan - [x] Added `GenericFamilyTest.RenameOOMPreservesSource`: drives real per-shard OOM via repeated `RESTORE`, then asserts a failed `RENAME` leaves the source key intact and does not create the destination. - [x] Full `generic_family_test` suite passes (84/84). - [x] `pre-commit` (clang-format) passes on changed files. Fixes #5296",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8053",
+        "createdAt": "2026-08-11T17:02:15Z",
+        "updatedAt": "2026-08-13T13:59:40Z",
+        "timestamp": "2026-08-13T13:59:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "Shikha-code36",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0c40eae3420f1415cb13",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8075",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8075",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(pubsub): preserve V2 message ordering",
+        "text": "This PR fixes a known issue that was already fixed for V1 at 5ef35182. Defer V2 pipeline execution when queued control work predates the next parsed command. Let IoLoopV2 drain that work so UNSUBSCRIBE cannot discard earlier Pub/Sub messages. Tests: Extend the unsubscribe regression across V1 and V2 with standalone and deferred-GET commands. Bound the starvation publisher wave to assert fairness without treating ordered backlog as starvation.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8075",
+        "createdAt": "2026-08-13T10:10:27Z",
+        "updatedAt": "2026-08-13T13:50:16Z",
+        "timestamp": "2026-08-13T13:50:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "glevkovich",
+        "state": "open",
         "assignees": [],
         "change": "updated"
       }

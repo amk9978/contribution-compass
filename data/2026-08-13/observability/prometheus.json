@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "observability",
@@ -27,11 +27,60 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 65724,
-    "forks": 10776,
-    "openIssues": 884,
+    "stars": 65726,
+    "forks": 10775,
+    "openIssues": 886,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:05.752212+00:00"
+    "collectedAt": "2026-08-13T16:19:27.949435+00:00"
+  },
+  "news": {
+    "repository": "prometheus/prometheus",
+    "collectedAt": "2026-08-13T16:19:27.949435+00:00",
+    "latestRelease": {
+      "repository": "prometheus/prometheus",
+      "tag": "v3.13.2",
+      "title": "3.13.2 / 2026-07-29",
+      "url": "https://github.com/prometheus/prometheus/releases/tag/v3.13.2",
+      "publishedAt": "2026-07-30T13:25:26Z",
+      "notes": "## What's Changed\r\n\r\n- [SECURITY] Bump golang.org/x/text to v0.39.0 (CVE-2026-56852) and google.golang.org/grpc to v1.82.1 (GHSA-hrxh-6v49-42gf). #19290 by @krajorama\r\n- [BUGFIX] PromQL: Preallocate the active query tracker file to avoid SIGBUS crashes when the data disk is full. #19289 by @akshajrawat\r\n\r\n**Full Changelog**: https://github.com/prometheus/prometheus/compare/v3.13.1...v3.13.2",
+      "highlights": [
+        "What's Changed",
+        "[SECURITY] Bump golang.org/x/text to v0.39.0 (CVE-2026-56852) and google.golang.org/grpc to v1.82.1 (GHSA-hrxh-6v49-42gf). #19290 by @krajorama",
+        "[BUGFIX] PromQL: Preallocate the active query tracker file to avoid SIGBUS crashes when the data disk is full. #19289 by @akshajrawat"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "prometheus/prometheus",
+        "kind": "prerelease",
+        "title": "3.14.0-rc.0 / 2026-08-06",
+        "url": "https://github.com/prometheus/prometheus/releases/tag/v3.14.0-rc.0",
+        "description": "- [CHANGE] API: Deprecate the `stats` query parameter of `/api/v1/query` and `/api/v1/query_range` for values other than `true` and `all`. Other values still enable basic statistics but now return a deprecation warning; they will be rejected in the next major release. #19124\r\n- [CHANGE] API: `/api/v1/status/config` now correctly shows `separator: \"\"` and `replacement: \"\"` in relabel configs when explicitly set to empty, instead of omitting them. #18653\r\n- [CHANGE] Discovery/Hetzner: Drop the `__meta_hetzner_datacenter` label for `hcloud` targets, following its removal from the Hetzner Cloud API. #19269\r\n- [CHANGE] PromQL: Enable duration expressions by default. The `promql-duration-expr` feature flag is now a no-op. #19033\r\n- [CHANGE] PromQL: Promote `first_over_time` to stable. It no longer requires the `promql-experimental-functions` feature flag. #19093\r\n- [FEATURE] Discovery: Add Oracle Cloud Infrastructure compute service discovery (`oci_sd_configs`). #18919\r\n- [FEATURE] PromQL: A",
+        "tag": "v3.14.0-rc.0",
+        "publishedAt": "2026-08-11T11:05:32Z"
+      },
+      {
+        "repository": "prometheus/prometheus",
+        "kind": "milestone",
+        "title": "Native Histograms",
+        "url": "https://github.com/prometheus/prometheus/milestone/10",
+        "description": "This milestone is mostly about merging the new native histograms (AKA sparse histograms AKA high-res histograms) into the main branch (and hide it behind a feature flag), and only after that about declaring native histograms a stable feature (ultimately no-op'ing the feature flag). Therefore, the priorities have a slightly different meaning (because the issues do not affect the released Prometheus versions before we merge to the main branch):\r\n* **P0:** Prometheus, if built from the sparsehistogram branch, doesn't work properly until this is fixed.\r\n* **P1:** We must fix this before merging to main (e.g. Prometheus might not work properly even if the feature flag is not set)\r\n* **P2:** We can merge to main without this but we need to fix this to declare Histograms stable.\r\n* **P3:** Nice to have. Can be introduced later without a breaking change.\r\n* **P4:** The future! Do not focus on this for now. (Labeled as Pmaybe.)",
+        "progress": 90,
+        "openIssues": 13,
+        "closedIssues": 114
+      },
+      {
+        "repository": "prometheus/prometheus",
+        "kind": "milestone",
+        "title": "OTEL Support",
+        "url": "https://github.com/prometheus/prometheus/milestone/12",
+        "description": "",
+        "progress": 71,
+        "openIssues": 4,
+        "closedIssues": 10
+      }
+    ]
   },
   "runs": [
     {
@@ -45,6 +94,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 40,
       "changedCount": 40
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 42,
+      "changedCount": 9
     }
   ],
   "signals": [
@@ -69,8 +124,7 @@
       "state": "closed",
       "assignees": [
         "alexgreenbank"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:prometheus/prometheus:issue:14398",
@@ -98,8 +152,7 @@
       "state": "open",
       "assignees": [
         "machine424"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:prometheus/prometheus:issue:17273",
@@ -124,8 +177,7 @@
       ],
       "author": "tguenneguez",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:issue:17691",
@@ -146,8 +198,7 @@
       "labels": [],
       "author": "renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:issue:17857",
@@ -192,8 +243,7 @@
       "state": "closed",
       "assignees": [
         "kakabisht"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:prometheus/prometheus:issue:18269",
@@ -214,8 +264,7 @@
       "labels": [],
       "author": "bwplotka",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:issue:18770",
@@ -242,8 +291,7 @@
       "state": "open",
       "assignees": [
         "roidelapluie"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:prometheus/prometheus:pull_request:17136",
@@ -266,8 +314,7 @@
       "state": "open",
       "assignees": [
         "machine424"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:prometheus/prometheus:pull_request:17852",
@@ -288,8 +335,29 @@
       "labels": [],
       "author": "adity-a34",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:prometheus/prometheus:pull_request:18606",
+      "source": "github",
+      "group": "observability",
+      "project": "prometheus/prometheus",
+      "kind": "pull_request",
+      "title": "model/textparse: implement OM2 scrape format",
+      "text": "<!-- - Please give your PR a title in the form \"area: short description\". For example \"tsdb: reduce disk usage by 95%\" - Please sign CNCF's Developer Certificate of Origin and sign-off your commits by adding the -s / --signoff flag to `git commit`. See https://github.com/apps/dco for more information. - If the PR adds or changes a behaviour or fixes a bug of an exported API it would need a unit/e2e test. - Where possible use only exported APIs for tests to simplify the review and make it as close as possible to an actual library usage. - Performance improvements would need a benchmark test to prove it. - All exposed objects should have a comment. - All comments should start with a capital letter and end with a full stop. --> #### Which issue(s) does the PR fix: <!-- If it applies. Automatically closes linked issue when PR is merged. Usage: `Fixes #<issue number>`, or `Fixes (paste link of issue)`. More at https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword --> #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* <!-- Write NONE only if there is no user-facing change. Otherwise use one of: [FEATURE] [ENHANCEMENT] [PERF] [BUGFIX] [SECURITY] [CHANGE] Following the pattern `[TYPE] Component: description.` Example: [FEATURE] API: Add `/api/v1/features` endpoint. Refer to the existing CHANGELOG for inspiration: https://github.com/prometheus/ prometheus/blob/main/CHANGELOG.md --> ```release-notes [FEATURE] scrape: Implement OM2.0 scrape format ``` ### What this PR does / why we need it: This PR introduces OpenMetrics2Parser from the [specifications](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md). The implementation is heavily inspired from the OM1 implementation. ## Benchstat Then benchstat are split into 3 categories: - AllTypes: for a generic /metric - CT: to check the created timestamp performance gain - Histogram: to check histograms performance gain ``` goos: linux goarch: amd64 pkg: github.com/prometheus/prometheus/model/textparse cpu: AMD Ryzen 7 3800X 8-Core Processor │ OM1 (old) │ OM2 (new) │ │ sec/op │ sec/op vs base │ ParseOM1VsOM2_AllTypes-16 597.3µ ± 3% 103.3µ ± 2% -82.70% (p=0.000 n=10) ParseOM1VsOM2_CT-16 111.81µ ± 2% 56.47µ ± 2% -49.49% (p=0.000 n=10) ParseOM1VsOM2_Histograms-16 944.5µ ± 2% 113.5µ ± 2% -87.98% (p=0.000 n=10) geomean 398.1µ 87.16µ -78.10% │ OM1 (old) │ OM2 (new) │ │ B/op │ B/op vs base │ ParseOM1VsOM2_AllTypes-16 28.10Ki ± 0% 17.91Ki ± 0% -36.24% (p=0.000 n=10) ParseOM1VsOM2_CT-16 14.00Ki ± 0% 11.54Ki ± 0% -17.53% (p=0.000 n=10) ParseOM1VsOM2_Histograms-16 39.22Ki ± 0% 24.01Ki ± 0% -38.79% (p=0.000 n=10) geomean 24.89Ki 17.06Ki -31.47% │ OM1 (old) │ OM2 (new) │ │ allocs/op │ allocs/op vs base │ ParseOM1VsOM2_AllTypes-16 794.0 ± 0% 437.0 ± 0% -44.96% (p=0.000 n=10) ParseOM1VsOM2_CT-16 409.0 ± 0% 242.0 ± 0% -40.83% (p=0.000 n=10) ParseOM1VsOM2_Histograms-16 935.0 ± 0% 533.0 ± 0% -42.99% (p=0.000 n=10) geomean 672.1 383.4 -42.95% ```",
+      "url": "https://github.com/prometheus/prometheus/pull/18606",
+      "createdAt": "2026-04-29T10:01:08Z",
+      "updatedAt": "2026-08-13T16:10:40Z",
+      "timestamp": "2026-08-13T16:10:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "rbizos",
+      "state": "open",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
     },
     {
       "id": "github:prometheus/prometheus:pull_request:18757",
@@ -310,8 +378,7 @@
       "labels": [],
       "author": "renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19180",
@@ -332,8 +399,7 @@
       "labels": [],
       "author": "anxkhn",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19200",
@@ -354,8 +420,7 @@
       "labels": [],
       "author": "GiedriusS",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19211",
@@ -376,8 +441,7 @@
       "labels": [],
       "author": "oindrilakha12-ui",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19216",
@@ -441,8 +505,29 @@
       ],
       "author": "prymitive",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:prometheus/prometheus:pull_request:19328",
+      "source": "github",
+      "group": "observability",
+      "project": "prometheus/prometheus",
+      "kind": "pull_request",
+      "title": "scrape: keep staleness tracking in sync when the series ref changes",
+      "text": "Follow up on #19325. Staleness is tracked in `scrapeCache.seriesCur`/`seriesPrev`, both keyed by `storage.SeriesRef`. When the storage hands out a new reference for a series it already gave one for (e.g. it was garbage collected and had to be recreated), the scrape loop updates the cached reference and tracks the current scrape under the new one, while the previous scrape is still tracked under the old one. The old reference is then missing from the current scrape, so `forEachStale` reports the series as stale even though the target still exposes it. The stale marker is appended for `ce.ref`, i.e. for the *new*, live reference, at the same timestamp as the sample of this scrape. `headAppender.Commit` writes the WAL before applying samples to the head, so while the head itself drops the marker as a duplicate, it is already persisted: ``` StaleNaN append at same t returned err=<nil> WAL sample: ref=1 t=1000 v=1 stale=false WAL sample: ref=1 t=1000 v=NaN stale=true ``` Remote write and agent mode read the WAL, so they ship the marker downstream and the series ends there until the next scrape. This affects appender v2 since the reference was first written back to the cache, and appender v1 since #19325 made it consistent with v2. v2 is what the Prometheus binary runs today (`cmd/prometheus/main.go` passes `nil, fanoutStorage` to `scrape.NewManager`), so the fix is done for both loops. `scrapeCache.updateRef` now re-keys the staleness tracking to the new reference, and both scrape loops go through it. It deliberately *moves* the tracking instead of dropping it: dropping it would suppress the stale marker of a series that is still exposed but stopped being tracked for another reason in the same scrape, which would make staleness depend on whether the reference happened to change. The one case where that is observable is a series that starts carrying an explicit timestamp, which the last two test cases pin down. ### Tests `TestScrapeLoopCacheRefUpdatedOnChange` from #19325 is reworked into the table driven `TestScrapeLoopSeriesRefChange`, which drives a sequence of scrapes and asserts on the samples the scrape loop appends, not only on the cached reference. It reuses the `teststorage.Appendable` mock with an injected reference rather than a purpose built appendable, which is what makes the stale marker visible. All cases run against both scrape loops: | case | before | after | | --- | --- | --- | | reference stays the same | pass | pass | | reference changes while the series is still exposed | stale marker | pass | | reference changes on every scrape | stale marker per change | pass | | series stops being exposed after the reference changed | extra stale marker | pass | | explicit timestamp appears, reference stays the same | pass | pass | | explicit timestamp appears and the reference changes | pass | pass | The last two agree by construction, which is what keeps `updateRef` from turning into a plain delete. Commit 2 adds the test and fails on purpose, commit 3 fixes the bug. ```release-notes [BUGFIX] Scrape: Do not append a stale marker for a series that is still exposed when the storage returns a new series reference for it. ```",
+      "url": "https://github.com/prometheus/prometheus/pull/19328",
+      "createdAt": "2026-08-04T08:43:14Z",
+      "updatedAt": "2026-08-13T14:28:19Z",
+      "timestamp": "2026-08-13T14:28:19Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "krajorama",
+      "state": "open",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19339",
@@ -463,8 +548,7 @@
       "labels": [],
       "author": "JustDaile",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19340",
@@ -485,8 +569,7 @@
       "labels": [],
       "author": "JustDaile",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19341",
@@ -507,8 +590,7 @@
       "labels": [],
       "author": "krajorama",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19370",
@@ -529,8 +611,7 @@
       "labels": [],
       "author": "JustDaile",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19373",
@@ -551,8 +632,7 @@
       "labels": [],
       "author": "Ankitavasudev",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19375",
@@ -573,8 +653,7 @@
       "labels": [],
       "author": "waterWang",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19377",
@@ -595,8 +674,7 @@
       "labels": [],
       "author": "Ankitavasudev",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19386",
@@ -617,8 +695,7 @@
       "labels": [],
       "author": "Nexxurs",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19387",
@@ -642,8 +719,7 @@
       ],
       "author": "aknuds1",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19390",
@@ -664,8 +740,7 @@
       "labels": [],
       "author": "VedantMadane",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19396",
@@ -686,8 +761,7 @@
       "labels": [],
       "author": "r0h1tb",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19399",
@@ -708,8 +782,7 @@
       "labels": [],
       "author": "roidelapluie",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19400",
@@ -730,8 +803,7 @@
       "labels": [],
       "author": "Dlorite",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19401",
@@ -752,8 +824,7 @@
       "labels": [],
       "author": "roidelapluie",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19402",
@@ -787,11 +858,11 @@
       "text": "#### Which issue(s) does the PR fix: Fixes #18770 #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] PromQL: Preserve parentheses around duration literals on Expr.String() round-trip. ``` `paren_duration_expr` only set `Wrapped` on `*DurationExpr`, so a parenthesised `*NumberLiteral` (`foo offset (5)`, `foo[(5s)]`) was flattened by `Expr.String()`. This wraps a parenthesised number in a unary-plus `*DurationExpr` with `Wrapped: true`, matching how `+(5*2)` already survives. Unary `+(5)` / `-(5)` go through the same path. @krajorama @roidelapluie @vpranckaitis",
       "url": "https://github.com/prometheus/prometheus/pull/19403",
       "createdAt": "2026-08-13T01:35:12Z",
-      "updatedAt": "2026-08-13T09:00:24Z",
-      "timestamp": "2026-08-13T09:00:24Z",
+      "updatedAt": "2026-08-13T14:23:41Z",
+      "timestamp": "2026-08-13T14:23:41Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [],
       "author": "aamoghS",
@@ -809,8 +880,8 @@
       "text": "#### Which issue(s) does the PR fix: Fixes #14398 #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] discovery/kubernetes: Populate `__meta_kubernetes_service_loadbalancer_ip` from `status.loadBalancer.ingress`, falling back to deprecated `spec.loadBalancerIP`. ``` Kubernetes 1.24 dropped automatic `spec.loadBalancerIP`. Controllers (MetalLB, AKS, …) now only write IPs to `status.loadBalancer.ingress`, so the meta label was empty. This PR: - Prefers ingress IPs (comma-separated for dual-stack) - Falls back to `spec.loadBalancerIP` when status has no IPs - Leaves hostname-only ingress (EKS) for a follow-up, as discussed on the issue Related: #17136 (stalled on DCO). @machine424 @brancz @rexagod",
       "url": "https://github.com/prometheus/prometheus/pull/19404",
       "createdAt": "2026-08-13T01:35:17Z",
-      "updatedAt": "2026-08-13T01:35:18Z",
-      "timestamp": "2026-08-13T01:35:18Z",
+      "updatedAt": "2026-08-13T14:22:41Z",
+      "timestamp": "2026-08-13T14:22:41Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -831,8 +902,8 @@
       "text": "#### Which issue(s) does the PR fix: Follow-up to #19396 (same nil-deref class in AWS SD). #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] discovery/aws: Don't panic on ElastiCache caches or clusters with absent optional fields. ``` `addServerlessCacheTargets` / `addCacheClusterTargets` dereferenced `ARN`, `ServerlessCacheName`, `Status`, `Engine`, `CacheClusterId`, etc. without nil checks. A cache missing any of those panics the refresh goroutine and takes the process down. Optional fields now omit the label instead of dereferencing. Refresh also skips tag lookup when `ARN` is nil. @matt-gp @sysadmind",
       "url": "https://github.com/prometheus/prometheus/pull/19405",
       "createdAt": "2026-08-13T01:35:23Z",
-      "updatedAt": "2026-08-13T01:35:24Z",
-      "timestamp": "2026-08-13T01:35:24Z",
+      "updatedAt": "2026-08-13T14:22:41Z",
+      "timestamp": "2026-08-13T14:22:41Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -862,8 +933,7 @@
       "labels": [],
       "author": "aamoghS",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19407",
@@ -875,11 +945,11 @@
       "text": "#18259 stopped tests from truncating SD files to zero bytes, but `requireUpdate` still treated the first snapshot with the expected *number* of groups as the result. File SD can emit empty groups (`[{\"targets\":[]},{\"targets\":[]}]`) before the file contents are visible, so `TestInvalidFileUpdate` and `TestUpdateFileWithPartialWrites` still flake. Wait until the groups match the expected snapshot (or time out). #18259 can stay; this is the remaining race in the test helper. cc @machine424 @bwplotka @krajorama Fixes #18269 #### Which issue(s) does the PR fix: Fixes #18269 #### Release notes for end users (**ALL** commits must be considered). ```release-notes NONE ```",
       "url": "https://github.com/prometheus/prometheus/pull/19407",
       "createdAt": "2026-08-13T03:09:41Z",
-      "updatedAt": "2026-08-13T09:33:50Z",
-      "timestamp": "2026-08-13T09:33:50Z",
+      "updatedAt": "2026-08-13T14:23:24Z",
+      "timestamp": "2026-08-13T14:23:24Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [],
       "author": "aamoghS",
@@ -906,8 +976,7 @@
       "labels": [],
       "author": "aamoghS",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19409",
@@ -928,8 +997,7 @@
       "labels": [],
       "author": "Boulea7",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19410",
@@ -950,8 +1018,7 @@
       "labels": [],
       "author": "prymitive",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19411",
@@ -972,8 +1039,7 @@
       "labels": [],
       "author": "prymitive",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19412",
@@ -985,8 +1051,8 @@
       "text": "Range-query and compaction readers cache collected head chunks for sequential access. When a reader moved from a series with more than `headChunksBufMaxCap` head chunks to a different series with zero or one head chunk, the direct-lookup fast path returned before applying the capacity policy. The reader then retained the oversized backing array and its chunk pointers until it closed or visited another multi-chunk series. Release the oversized cache on that series switch, resetting the fingerprint and slice together. Preserve the backing array for the same series so it can still be reused after mmap or truncation. The cache-cap regression now covers both multi-chunk and single-chunk destinations and verifies that caching can repopulate after the release. #### Which issue(s) does the PR fix: Follow-up to #19136. #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] TSDB: Avoid excess memory retention during range queries and head compaction after reading series with many in-memory chunks ```",
       "url": "https://github.com/prometheus/prometheus/pull/19412",
       "createdAt": "2026-08-13T13:17:14Z",
-      "updatedAt": "2026-08-13T13:24:06Z",
-      "timestamp": "2026-08-13T13:24:06Z",
+      "updatedAt": "2026-08-13T14:13:26Z",
+      "timestamp": "2026-08-13T14:13:26Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -996,6 +1062,50 @@
         "component/tsdb"
       ],
       "author": "aknuds1",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:prometheus/prometheus:pull_request:19413",
+      "source": "github",
+      "group": "observability",
+      "project": "prometheus/prometheus",
+      "kind": "pull_request",
+      "title": "promql: preserve name-dropping through the info function",
+      "text": "Previously, the info function did not properly implement delayed name removal, and did not propagate the `dropName` flag properly. This PR makes the info function behave more consistently with other functions like `label_replace` with respect to delayed name removal. #### Which issue(s) does the PR fix: N/A Problem found in https://github.com/prometheus/prometheus/pull/19387 #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] PromQL: Preserve metric-name dropping through the info function when delayed name removal is enabled. ```",
+      "url": "https://github.com/prometheus/prometheus/pull/19413",
+      "createdAt": "2026-08-13T14:02:16Z",
+      "updatedAt": "2026-08-13T14:02:17Z",
+      "timestamp": "2026-08-13T14:02:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "zenador",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:prometheus/prometheus:pull_request:19414",
+      "source": "github",
+      "group": "observability",
+      "project": "prometheus/prometheus",
+      "kind": "pull_request",
+      "title": "Agent wal",
+      "text": "<!-- - Please give your PR a title in the form \"area: short description\". For example \"tsdb: reduce disk usage by 95%\" - Please sign CNCF's Developer Certificate of Origin and sign-off your commits by adding the -s / --signoff flag to `git commit`. See https://github.com/apps/dco for more information. - If the PR adds or changes a behaviour or fixes a bug of an exported API it would need a unit/e2e test. - Where possible use only exported APIs for tests to simplify the review and make it as close as possible to an actual library usage. - Performance improvements would need a benchmark test to prove it. - All exposed objects should have a comment. - All comments should start with a capital letter and end with a full stop. --> #### Which issue(s) does the PR fix: <!-- If it applies. Automatically closes linked issue when PR is merged. Usage: `Fixes #<issue number>`, or `Fixes (paste link of issue)`. More at https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword --> #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* <!-- Write NONE only if there is no user-facing change. Otherwise use one of: [FEATURE] [ENHANCEMENT] [PERF] [BUGFIX] [SECURITY] [CHANGE] Following the pattern `[TYPE] Component: description.` Example: [FEATURE] API: Add `/api/v1/features` endpoint. Refer to the existing CHANGELOG for inspiration: https://github.com/prometheus/ prometheus/blob/main/CHANGELOG.md --> ```release-notes [PERF] Agent: replay WAL concurrently ```",
+      "url": "https://github.com/prometheus/prometheus/pull/19414",
+      "createdAt": "2026-08-13T16:06:54Z",
+      "updatedAt": "2026-08-13T16:08:05Z",
+      "timestamp": "2026-08-13T16:08:05Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "prymitive",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -2191,6 +2301,282 @@
         "state": "open",
         "assignees": [],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:a07fae3d0260e3d17b28",
+      "signalId": "github:prometheus/prometheus:pull_request:18606",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:18606",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "model/textparse: implement OM2 scrape format",
+        "text": "<!-- - Please give your PR a title in the form \"area: short description\". For example \"tsdb: reduce disk usage by 95%\" - Please sign CNCF's Developer Certificate of Origin and sign-off your commits by adding the -s / --signoff flag to `git commit`. See https://github.com/apps/dco for more information. - If the PR adds or changes a behaviour or fixes a bug of an exported API it would need a unit/e2e test. - Where possible use only exported APIs for tests to simplify the review and make it as close as possible to an actual library usage. - Performance improvements would need a benchmark test to prove it. - All exposed objects should have a comment. - All comments should start with a capital letter and end with a full stop. --> #### Which issue(s) does the PR fix: <!-- If it applies. Automatically closes linked issue when PR is merged. Usage: `Fixes #<issue number>`, or `Fixes (paste link of issue)`. More at https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword --> #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* <!-- Write NONE only if there is no user-facing change. Otherwise use one of: [FEATURE] [ENHANCEMENT] [PERF] [BUGFIX] [SECURITY] [CHANGE] Following the pattern `[TYPE] Component: description.` Example: [FEATURE] API: Add `/api/v1/features` endpoint. Refer to the existing CHANGELOG for inspiration: https://github.com/prometheus/ prometheus/blob/main/CHANGELOG.md --> ```release-notes [FEATURE] scrape: Implement OM2.0 scrape format ``` ### What this PR does / why we need it: This PR introduces OpenMetrics2Parser from the [specifications](https://github.com/prometheus/OpenMetrics/blob/main/specification/OpenMetrics.md). The implementation is heavily inspired from the OM1 implementation. ## Benchstat Then benchstat are split into 3 categories: - AllTypes: for a generic /metric - CT: to check the created timestamp performance gain - Histogram: to check histograms performance gain ``` goos: linux goarch: amd64 pkg: github.com/prometheus/prometheus/model/textparse cpu: AMD Ryzen 7 3800X 8-Core Processor │ OM1 (old) │ OM2 (new) │ │ sec/op │ sec/op vs base │ ParseOM1VsOM2_AllTypes-16 597.3µ ± 3% 103.3µ ± 2% -82.70% (p=0.000 n=10) ParseOM1VsOM2_CT-16 111.81µ ± 2% 56.47µ ± 2% -49.49% (p=0.000 n=10) ParseOM1VsOM2_Histograms-16 944.5µ ± 2% 113.5µ ± 2% -87.98% (p=0.000 n=10) geomean 398.1µ 87.16µ -78.10% │ OM1 (old) │ OM2 (new) │ │ B/op │ B/op vs base │ ParseOM1VsOM2_AllTypes-16 28.10Ki ± 0% 17.91Ki ± 0% -36.24% (p=0.000 n=10) ParseOM1VsOM2_CT-16 14.00Ki ± 0% 11.54Ki ± 0% -17.53% (p=0.000 n=10) ParseOM1VsOM2_Histograms-16 39.22Ki ± 0% 24.01Ki ± 0% -38.79% (p=0.000 n=10) geomean 24.89Ki 17.06Ki -31.47% │ OM1 (old) │ OM2 (new) │ │ allocs/op │ allocs/op vs base │ ParseOM1VsOM2_AllTypes-16 794.0 ± 0% 437.0 ± 0% -44.96% (p=0.000 n=10) ParseOM1VsOM2_CT-16 409.0 ± 0% 242.0 ± 0% -40.83% (p=0.000 n=10) ParseOM1VsOM2_Histograms-16 935.0 ± 0% 533.0 ± 0% -42.99% (p=0.000 n=10) geomean 672.1 383.4 -42.95% ```",
+        "url": "https://github.com/prometheus/prometheus/pull/18606",
+        "createdAt": "2026-04-29T10:01:08Z",
+        "updatedAt": "2026-08-13T16:10:40Z",
+        "timestamp": "2026-08-13T16:10:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "rbizos",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:619adda21fab3b70ec00",
+      "signalId": "github:prometheus/prometheus:pull_request:19414",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19414",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "Agent wal",
+        "text": "<!-- - Please give your PR a title in the form \"area: short description\". For example \"tsdb: reduce disk usage by 95%\" - Please sign CNCF's Developer Certificate of Origin and sign-off your commits by adding the -s / --signoff flag to `git commit`. See https://github.com/apps/dco for more information. - If the PR adds or changes a behaviour or fixes a bug of an exported API it would need a unit/e2e test. - Where possible use only exported APIs for tests to simplify the review and make it as close as possible to an actual library usage. - Performance improvements would need a benchmark test to prove it. - All exposed objects should have a comment. - All comments should start with a capital letter and end with a full stop. --> #### Which issue(s) does the PR fix: <!-- If it applies. Automatically closes linked issue when PR is merged. Usage: `Fixes #<issue number>`, or `Fixes (paste link of issue)`. More at https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword --> #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* <!-- Write NONE only if there is no user-facing change. Otherwise use one of: [FEATURE] [ENHANCEMENT] [PERF] [BUGFIX] [SECURITY] [CHANGE] Following the pattern `[TYPE] Component: description.` Example: [FEATURE] API: Add `/api/v1/features` endpoint. Refer to the existing CHANGELOG for inspiration: https://github.com/prometheus/ prometheus/blob/main/CHANGELOG.md --> ```release-notes [PERF] Agent: replay WAL concurrently ```",
+        "url": "https://github.com/prometheus/prometheus/pull/19414",
+        "createdAt": "2026-08-13T16:06:54Z",
+        "updatedAt": "2026-08-13T16:08:05Z",
+        "timestamp": "2026-08-13T16:08:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "prymitive",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:77cbd61cb8930d320649",
+      "signalId": "github:prometheus/prometheus:pull_request:19328",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19328",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "scrape: keep staleness tracking in sync when the series ref changes",
+        "text": "Follow up on #19325. Staleness is tracked in `scrapeCache.seriesCur`/`seriesPrev`, both keyed by `storage.SeriesRef`. When the storage hands out a new reference for a series it already gave one for (e.g. it was garbage collected and had to be recreated), the scrape loop updates the cached reference and tracks the current scrape under the new one, while the previous scrape is still tracked under the old one. The old reference is then missing from the current scrape, so `forEachStale` reports the series as stale even though the target still exposes it. The stale marker is appended for `ce.ref`, i.e. for the *new*, live reference, at the same timestamp as the sample of this scrape. `headAppender.Commit` writes the WAL before applying samples to the head, so while the head itself drops the marker as a duplicate, it is already persisted: ``` StaleNaN append at same t returned err=<nil> WAL sample: ref=1 t=1000 v=1 stale=false WAL sample: ref=1 t=1000 v=NaN stale=true ``` Remote write and agent mode read the WAL, so they ship the marker downstream and the series ends there until the next scrape. This affects appender v2 since the reference was first written back to the cache, and appender v1 since #19325 made it consistent with v2. v2 is what the Prometheus binary runs today (`cmd/prometheus/main.go` passes `nil, fanoutStorage` to `scrape.NewManager`), so the fix is done for both loops. `scrapeCache.updateRef` now re-keys the staleness tracking to the new reference, and both scrape loops go through it. It deliberately *moves* the tracking instead of dropping it: dropping it would suppress the stale marker of a series that is still exposed but stopped being tracked for another reason in the same scrape, which would make staleness depend on whether the reference happened to change. The one case where that is observable is a series that starts carrying an explicit timestamp, which the last two test cases pin down. ### Tests `TestScrapeLoopCacheRefUpdatedOnChange` from #19325 is reworked into the table driven `TestScrapeLoopSeriesRefChange`, which drives a sequence of scrapes and asserts on the samples the scrape loop appends, not only on the cached reference. It reuses the `teststorage.Appendable` mock with an injected reference rather than a purpose built appendable, which is what makes the stale marker visible. All cases run against both scrape loops: | case | before | after | | --- | --- | --- | | reference stays the same | pass | pass | | reference changes while the series is still exposed | stale marker | pass | | reference changes on every scrape | stale marker per change | pass | | series stops being exposed after the reference changed | extra stale marker | pass | | explicit timestamp appears, reference stays the same | pass | pass | | explicit timestamp appears and the reference changes | pass | pass | The last two agree by construction, which is what keeps `updateRef` from turning into a plain delete. Commit 2 adds the test and fails on purpose, commit 3 fixes the bug. ```release-notes [BUGFIX] Scrape: Do not append a stale marker for a series that is still exposed when the storage returns a new series reference for it. ```",
+        "url": "https://github.com/prometheus/prometheus/pull/19328",
+        "createdAt": "2026-08-04T08:43:14Z",
+        "updatedAt": "2026-08-13T14:28:19Z",
+        "timestamp": "2026-08-13T14:28:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "krajorama",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b2948b4606aecc13f51a",
+      "signalId": "github:prometheus/prometheus:pull_request:19403",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19403",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "promql/parser: preserve parentheses around duration literals",
+        "text": "#### Which issue(s) does the PR fix: Fixes #18770 #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] PromQL: Preserve parentheses around duration literals on Expr.String() round-trip. ``` `paren_duration_expr` only set `Wrapped` on `*DurationExpr`, so a parenthesised `*NumberLiteral` (`foo offset (5)`, `foo[(5s)]`) was flattened by `Expr.String()`. This wraps a parenthesised number in a unary-plus `*DurationExpr` with `Wrapped: true`, matching how `+(5*2)` already survives. Unary `+(5)` / `-(5)` go through the same path. @krajorama @roidelapluie @vpranckaitis",
+        "url": "https://github.com/prometheus/prometheus/pull/19403",
+        "createdAt": "2026-08-13T01:35:12Z",
+        "updatedAt": "2026-08-13T14:23:41Z",
+        "timestamp": "2026-08-13T14:23:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "aamoghS",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d2f85e363e89fa3be3b4",
+      "signalId": "github:prometheus/prometheus:pull_request:19407",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19407",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "discovery/file: wait for a matching snapshot instead of failing on empty updates",
+        "text": "#18259 stopped tests from truncating SD files to zero bytes, but `requireUpdate` still treated the first snapshot with the expected *number* of groups as the result. File SD can emit empty groups (`[{\"targets\":[]},{\"targets\":[]}]`) before the file contents are visible, so `TestInvalidFileUpdate` and `TestUpdateFileWithPartialWrites` still flake. Wait until the groups match the expected snapshot (or time out). #18259 can stay; this is the remaining race in the test helper. cc @machine424 @bwplotka @krajorama Fixes #18269 #### Which issue(s) does the PR fix: Fixes #18269 #### Release notes for end users (**ALL** commits must be considered). ```release-notes NONE ```",
+        "url": "https://github.com/prometheus/prometheus/pull/19407",
+        "createdAt": "2026-08-13T03:09:41Z",
+        "updatedAt": "2026-08-13T14:23:24Z",
+        "timestamp": "2026-08-13T14:23:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "aamoghS",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f9390a628bce786d9fd2",
+      "signalId": "github:prometheus/prometheus:pull_request:19405",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19405",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "discovery/aws: don't panic on ElastiCache caches with absent optional fields",
+        "text": "#### Which issue(s) does the PR fix: Follow-up to #19396 (same nil-deref class in AWS SD). #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] discovery/aws: Don't panic on ElastiCache caches or clusters with absent optional fields. ``` `addServerlessCacheTargets` / `addCacheClusterTargets` dereferenced `ARN`, `ServerlessCacheName`, `Status`, `Engine`, `CacheClusterId`, etc. without nil checks. A cache missing any of those panics the refresh goroutine and takes the process down. Optional fields now omit the label instead of dereferencing. Refresh also skips tag lookup when `ARN` is nil. @matt-gp @sysadmind",
+        "url": "https://github.com/prometheus/prometheus/pull/19405",
+        "createdAt": "2026-08-13T01:35:23Z",
+        "updatedAt": "2026-08-13T14:22:41Z",
+        "timestamp": "2026-08-13T14:22:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "aamoghS",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c986370de88390159a45",
+      "signalId": "github:prometheus/prometheus:pull_request:19404",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19404",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "discovery/kubernetes: populate loadbalancer IP from status.ingress",
+        "text": "#### Which issue(s) does the PR fix: Fixes #14398 #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] discovery/kubernetes: Populate `__meta_kubernetes_service_loadbalancer_ip` from `status.loadBalancer.ingress`, falling back to deprecated `spec.loadBalancerIP`. ``` Kubernetes 1.24 dropped automatic `spec.loadBalancerIP`. Controllers (MetalLB, AKS, …) now only write IPs to `status.loadBalancer.ingress`, so the meta label was empty. This PR: - Prefers ingress IPs (comma-separated for dual-stack) - Falls back to `spec.loadBalancerIP` when status has no IPs - Leaves hostname-only ingress (EKS) for a follow-up, as discussed on the issue Related: #17136 (stalled on DCO). @machine424 @brancz @rexagod",
+        "url": "https://github.com/prometheus/prometheus/pull/19404",
+        "createdAt": "2026-08-13T01:35:17Z",
+        "updatedAt": "2026-08-13T14:22:41Z",
+        "timestamp": "2026-08-13T14:22:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "aamoghS",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:30c8b46d0c2a82665894",
+      "signalId": "github:prometheus/prometheus:pull_request:19412",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19412",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "tsdb: release oversized head-chunk cache for single-chunk series",
+        "text": "Range-query and compaction readers cache collected head chunks for sequential access. When a reader moved from a series with more than `headChunksBufMaxCap` head chunks to a different series with zero or one head chunk, the direct-lookup fast path returned before applying the capacity policy. The reader then retained the oversized backing array and its chunk pointers until it closed or visited another multi-chunk series. Release the oversized cache on that series switch, resetting the fingerprint and slice together. Preserve the backing array for the same series so it can still be reused after mmap or truncation. The cache-cap regression now covers both multi-chunk and single-chunk destinations and verifies that caching can repopulate after the release. #### Which issue(s) does the PR fix: Follow-up to #19136. #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] TSDB: Avoid excess memory retention during range queries and head compaction after reading series with many in-memory chunks ```",
+        "url": "https://github.com/prometheus/prometheus/pull/19412",
+        "createdAt": "2026-08-13T13:17:14Z",
+        "updatedAt": "2026-08-13T14:13:26Z",
+        "timestamp": "2026-08-13T14:13:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "kind/bug",
+          "component/tsdb"
+        ],
+        "author": "aknuds1",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2484d7673a602254e42e",
+      "signalId": "github:prometheus/prometheus:pull_request:19413",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:prometheus/prometheus:pull_request:19413",
+        "source": "github",
+        "group": "observability",
+        "project": "prometheus/prometheus",
+        "kind": "pull_request",
+        "title": "promql: preserve name-dropping through the info function",
+        "text": "Previously, the info function did not properly implement delayed name removal, and did not propagate the `dropName` flag properly. This PR makes the info function behave more consistently with other functions like `label_replace` with respect to delayed name removal. #### Which issue(s) does the PR fix: N/A Problem found in https://github.com/prometheus/prometheus/pull/19387 #### Release notes for end users (**ALL** commits must be considered). *Reviewers should verify clarity and quality.* ```release-notes [BUGFIX] PromQL: Preserve metric-name dropping through the info function when delayed name removal is enabled. ```",
+        "url": "https://github.com/prometheus/prometheus/pull/19413",
+        "createdAt": "2026-08-13T14:02:16Z",
+        "updatedAt": "2026-08-13T14:02:17Z",
+        "timestamp": "2026-08-13T14:02:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "zenador",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
       }
     }
   ]

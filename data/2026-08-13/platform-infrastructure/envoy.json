@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "platform-infrastructure",
@@ -30,9 +30,62 @@
     "defaultBranch": "main",
     "stars": 28771,
     "forks": 5553,
-    "openIssues": 1836,
+    "openIssues": 1835,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:03.434222+00:00"
+    "collectedAt": "2026-08-13T16:19:25.199487+00:00"
+  },
+  "news": {
+    "repository": "envoyproxy/envoy",
+    "collectedAt": "2026-08-13T16:19:25.199487+00:00",
+    "latestRelease": {
+      "repository": "envoyproxy/envoy",
+      "tag": "v1.39.0",
+      "title": "v1.39.0",
+      "url": "https://github.com/envoyproxy/envoy/releases/tag/v1.39.0",
+      "publishedAt": "2026-07-14T22:03:18Z",
+      "notes": "## Summary of changes\r\n\r\n## Breaking changes\r\n\r\n- **build**: Envoy now uses Bazel 8. Because Envoy still uses WORKSPACE mode, `--enable_workspace` and `--noenable_bzlmod` are required and have been added to `.bazelrc`; external-repository runfiles now appear directly under the runfiles root.\r\n- **build**: the Intel DLB connection balancer (`envoy.network.connection_balance.dlb`) is disabled for all builds due to a broken source archive.\r\n- **TLS**: `enforce_rsa_key_usage` is deprecated and ignored; Envoy now always enforces the certificate `keyUsage` extension.\r\n- **TLS inspector**: client TLS versions are validated and must be between TLS 1.0 and TLS 1.3 (revertible via `envoy.reloadable_features.tls_inspector_enforce_client_tls_version`).\r\n- **OpenTelemetry tracing**: the tracer now honors Envoy's request-entry sampling decision, including `overall_sampling`, even when propagated trace context or the configured sampler requests sampling. This may reduce exported spans.\r\n\r\n### Security\r\n- HTTP/2 now counts uncompressed cookies toward header-size and header-count limits (**CVE-2026-47774**), strengthens PRIORITY/WINDOW_UPDATE flood protection, and adds configurable nghttp2 RST_STREAM rate limits.\r\n- HTTP/3 fixes cover QPACK blocked-decoding denial of service (**GHSA-p7c7-7c47-pwch**) and inconsistent headers-only `content-length` handling (**CVE-2026-48743**).\r\n- Security fixes were added for ext_authz (**CVE-2026-47205**), ext_proc (**CVE-2026-47207**), gRPC stats (**CVE-2026-47204**), internal redirects (**CVE-2026-47221**), and OAuth2 lifecycle handling (**CVE-2026-48090**).\r\n- OAuth2 adds AES-256-GCM cookie encryption to address **CVE-2026-47775**. Migration is opt-in: enable `oauth2_use_gcm_encryption`, monitor `oauth_legacy_cbc_decrypt`, then disable `oauth2_legacy_cbc_decrypt_compat`.\r\n- Additional fixes cover DNS query validation (**CVE-2026-48497**), JSON nesting limits (**CVE-2026-48042**), PROXY protocol TLV smuggling (**CVE-2026-47692**), formatter crashes (**CVE-2026-47220**), TCP StatsD overflow (**CVE-2026-48706**), TLS SAN NUL handling (**CVE-2026-47778**), and Zstd decompression memory exhaustion (**CVE-2026-48044**).\r\n- New upstream RBAC and dynamic-forward-proxy resolved-address filtering provide CIDR-based protection against SSRF after DNS resolution and host selection.\r\n\r\n### Dynamic modules\r\n- New extension points: access-log/header formatters, downstream and upstream transport sockets, active health checkers, and stats sinks.\r\n- Cluster load balancers can read host stats, read and write dynamic metadata and filter state, and publish main-thread state to worker-local slots.\r\n- Modules can emit metrics from configuration and background contexts; loading and initialization failures now expose server-wide counters tagged by extension instance.\r\n- Added validation-mode detection, network/listener attribute access, batched header and metadata APIs, effective log-level access, and zero-copy borrowed buffers in the Rust SDK.\r\n- Fixed listener HTTP-callout crashes, watermark initialization, streaming-response re-entry, independent decode/encode continuation, CatchUnwind re-entry, `Struct` configuration handling, and HTTP/TCP bridge buffer overflow with more than 64 slices.\r\n\r\n### MCP (Model Context Protocol) and AI protocols\r\n- Added a Wuffs-backed streaming JSON parser for MCP, A2A, OpenAI, Anthropic, and related protocols, with bounded field capture, incremental parsing, no DOM allocation, and duplicate-key detection.\r\n- MCP filtering now exposes processing status, supports configurable duplicate-key rejection, and improves oversized-body behavior for pass-through and rejection modes.\r\n- MCP router adds elicitation and server-to-client request routing, plus lazy per-backend initialization.\r\n- MCP JSON REST Bridge adds per-route tool configuration and locally generated `tools/list` responses.\r\n\r\n### HTTP, routing and protocol\r\n- New HTTP filters provide weighted bandwidth sharing and selectable sub-filter chains with per-route configuration.\r\n- `HeaderMatcher` now evaluates separately supplied header values individually instead of matching only their comma-joined representation (revertible via `envoy.reloadable_features.match_headers_individually`).\r\n- HTTP inspector uses Balsa by default and now fast-fails invalid non-HTTP method bytes instead of buffering up to 64 KiB.\r\n- Added drain-timeout and maximum-connection-duration jitter to reduce synchronized reconnect spikes.\r\n- Routing gains cluster refresh on retries, weighted-cluster reselection, formatter/CEL-based redirect paths, and mixed literal/variable URI-template segments.\r\n- Fixed connection-pool re-entrancy, connectivity-grid teardown and duplicate-attempt bugs, stale on-demand cluster information, and handling of HTTP/2 or HTTP/3 `RST_STREAM(NO_ERROR)` after complete responses.\r\n\r\n### TLS, authentication and authorization\r\n- Added CNSA 1.0/2.0 compliance policies, TLS group formatters for identifying post-quantum key exchange, and suppression of oversized client CA lists.\r\n- QUIC supports opt-in TLS key logging and session-ticket resumption.\r\n- TLS certificate compression via the brotli runtime guard is disabled by default; TLS sockets also gain improved connection-reset reporting.\r\n- OAuth2 adds `PRIVATE_KEY_JWT`, ID-token forwarding, configurable post-logout redirects, access-token-based cookie lifetime, and safe original-request URI formatting with redirect-domain allowlists.\r\n- BasicAuth supports missing-credential pass-through and authenticated-username metadata; JWT extraction can mark forwarded claims whose signatures were not verified.\r\n\r\n### DNS, load balancing and upstream\r\n- The unified DNS cluster implementation is enabled by default; equivalent c-ares resolvers can be shared across clusters to support shared qcache.\r\n- DNS clusters gain a minimum TTL refresh floor, while dynamic forward proxy sub-clusters can use `DnsCluster` configuration and resolved-address CIDR filtering.\r\n- Client-side weighted round robin adds out-of-band ORCA reporting with configurable port, authority, and transport socket matching.\r\n- Least-request load balancing can optionally account for pending requests, with a new per-endpoint pending-request gauge.\r\n- Fixed EDS hostname updates, load reports containing only custom metrics or completed requests, and dynamic-forward-proxy lookup teardown.\r\n\r\n### Networking and system performance\r\n- Linux deployments gain worker CPU affinity and an `SO_REUSEPORT` BPF connection balancer for CPU-local connection steering.\r\n- Added a Linux sockmap socket interface for accelerating same-host TCP traffic through eBPF.\r\n- io_uring adds multishot receives, adaptive read buffers, and configurable write backpressure.\r\n- Reverse tunnels gain opt-in GOAWAY-aware draining and replacement; MySQL proxy adds downstream TLS termination with `caching_sha2_password` mediation.\r\n- Added UDP proxy external authorization, network ext_proc metadata reception, and early external-processor stream closure.\r\n\r\n### Observability\r\n- New access-log data includes upstream TLS SNI and HTTP/TCP downstream/upstream connection duration points; gRPC access logging adds delivery success/failure counters.\r\n- Added dynamic-module and Wasm programmable stats sinks, OpenTelemetry metric request chunking, endpoint observability names, and default-tag overrides.\r\n- Prometheus scraping and large-scale stat-reference release are substantially faster; `/peak_heap_dump` exposes tcmalloc's peak heap profile.\r\n- Added process-wide Lua and Wasm VM gauges, single-entry stack traces, and an Envoy-version log-format token.\r\n- Tap now honors configured runtime sampling and reports sampled-out requests/connections.\r\n\r\n### Rate limiting and configuration\r\n- Rate limiting adds static and dynamic per-descriptor limit overrides, zero-token always-reject behavior, and configurable response-metadata namespaces.\r\n- GCP authentication supports bound access tokens, bound JWTs, and unbound access tokens from the metadata server.\r\n- Added file-backed IP tagging, in-place watched-file modification events, runtime-adjustable fixed-heap limits, health-check HTTP status events, and xDS unsubscribe callbacks.\r\n- Redis proxy adds Redis 7.4 hash-field expiry commands and permits custom commands inside transactions.\r\n\r\n### Other notable changes and fixes\r\n- Fixed Hickory DNS resolver leaks and use-after-free, file-server cancellation use-after-free, Golang filter re-entry, outlier-detection teardown, missing network namespaces, and asynchronous TLS close handling.\r\n- Fixed RTDS guard removal, VHDS subscriptions, Wasm VM cache invalidation when environment variables change, and upstream Wasm metric scoping.\r\n- Improved UDP proxy attempted-host and address logging, Zipkin timestamp trace IDs, gRPC access-log failure accounting, and health-check event detail.\r\n- Added TCP proxy delayed route selection, drain-close handling, and connection-duration access logging.\r\n\r\n**Docker images**:\r\n    https://hub.docker.com/r/envoyproxy/envoy/tags?page=1&name=v1.39.0\r\n**Docs**:\r\n    https://www.envoyproxy.io/docs/envoy/v1.39.0/\r\n**Release notes**:\r\n    https://www.envoyproxy.io/docs/envoy/v1.39.0/version_history/v1.39/v1.39.0\r\n**Full changelog**:\r\n    https://github.com/envoyproxy/envoy/compare/v1.38.0...v1.39.0\r\n\r\n\r\nSigned-off-by: Kateryna Nezdolii [kateryna.nezdolii@gmail.com](mailto:kateryna.nezdolii@gmail.com)\r\nSigned-off-by: Ryan Northey [ryan@synca.io](mailto:ryan@synca.io)\r\nSigned-off-by: Jonh Wendell [jwendell@redhat.com](mailto:jwendell@redhat.com)\r\n",
+      "highlights": [
+        "Summary of changes",
+        "Breaking changes",
+        "build: Envoy now uses Bazel 8. Because Envoy still uses WORKSPACE mode, --enableworkspace and --noenablebzlmod are required and have been added to .bazelrc; external-repository runfiles now appear directly under the runfiles root.",
+        "build: the Intel DLB connection balancer (envoy.network.connectionbalance.dlb) is disabled for all builds due to a broken source archive.",
+        "TLS: enforcersakeyusage is deprecated and ignored; Envoy now always enforces the certificate keyUsage extension.",
+        "TLS inspector: client TLS versions are validated and must be between TLS 1.0 and TLS 1.3 (revertible via envoy.reloadablefeatures.tlsinspectorenforceclienttlsversion)."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "envoyproxy/envoy",
+        "kind": "milestone",
+        "title": "Publicly available signed binaries/releases",
+        "url": "https://github.com/envoyproxy/envoy/milestone/36",
+        "description": "",
+        "progress": 78,
+        "openIssues": 2,
+        "closedIssues": 7
+      },
+      {
+        "repository": "envoyproxy/envoy",
+        "kind": "milestone",
+        "title": "Stabilizing the Golang filter",
+        "url": "https://github.com/envoyproxy/envoy/milestone/48",
+        "description": "The recently added Golang filter has a number of steps in its roadmap, some known issues and is going through some initial burnin. This milestone is to group issues and PRs",
+        "progress": 92,
+        "openIssues": 1,
+        "closedIssues": 12
+      },
+      {
+        "repository": "envoyproxy/envoy",
+        "kind": "milestone",
+        "title": "Switch to bzlmod",
+        "url": "https://github.com/envoyproxy/envoy/milestone/106",
+        "description": "",
+        "progress": 50,
+        "openIssues": 1,
+        "closedIssues": 1
+      }
+    ]
   },
   "runs": [
     {
@@ -46,6 +99,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 65,
       "changedCount": 65
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 64,
+      "changedCount": 19
     }
   ],
   "signals": [
@@ -74,8 +133,7 @@
       "state": "open",
       "assignees": [
         "jwendell"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:issue:41065",
@@ -103,8 +161,7 @@
       "state": "closed",
       "assignees": [
         "agrawroh"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:issue:45866",
@@ -129,8 +186,7 @@
       ],
       "author": "SHWETHABHAT1",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:46104",
@@ -156,8 +212,7 @@
       "state": "open",
       "assignees": [
         "jwendell"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:issue:46114",
@@ -180,8 +235,7 @@
       ],
       "author": "zhaohuabing",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:46505",
@@ -205,8 +259,7 @@
       ],
       "author": "guy-with-a-why",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:46531",
@@ -230,8 +283,7 @@
       ],
       "author": "syntax-case",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:46539",
@@ -276,8 +328,7 @@
       ],
       "author": "petedmarsh",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:46665",
@@ -351,8 +402,7 @@
       "state": "open",
       "assignees": [
         "aakugan"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:issue:46678",
@@ -376,8 +426,7 @@
       ],
       "author": "Sukhdev841",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:46680",
@@ -402,8 +451,7 @@
       ],
       "author": "github-actions[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:46681",
@@ -428,8 +476,7 @@
       ],
       "author": "github-actions[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:issue:6614",
@@ -455,8 +502,7 @@
       "state": "open",
       "assignees": [
         "Mythra"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:issue:7468",
@@ -479,8 +525,7 @@
       ],
       "author": "zyfjeff",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:42890",
@@ -508,8 +553,7 @@
       "state": "open",
       "assignees": [
         "RyanTheOptimist"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:43255",
@@ -521,8 +565,8 @@
       "text": "this provides some of the compatibility required for bzlmod, without breaking workspace mode will follow up to fully enable bzlmod (as non-default in subsequent pr)",
       "url": "https://github.com/envoyproxy/envoy/pull/43255",
       "createdAt": "2026-02-01T01:15:57Z",
-      "updatedAt": "2026-08-13T13:41:03Z",
-      "timestamp": "2026-08-13T13:41:03Z",
+      "updatedAt": "2026-08-13T15:10:28Z",
+      "timestamp": "2026-08-13T15:10:28Z",
       "metrics": {
         "reactions": 0,
         "comments": 3
@@ -590,8 +634,32 @@
       "state": "open",
       "assignees": [
         "phlax"
+      ]
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:45073",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "c-ares: make qcache_max_ttl configurable",
+      "text": "Commit Message: c-ares: make qcache_max_ttl configurable Additional Description: expose the qcache_max_ttl setting and share DNSResolver if cares config is the same so the qcache can be shared. runtime guard \"envoy.restart_features.shared_cares_dns_resolver\" is set to true by default to enable sharing DNSResolver if cares config of the clusters are the same. Set to false to disable this behavior. AI is used to generate the tests and write some of the comment but I did review and tune/modify all the tests added. All other code are hand written. Risk Level: Low Testing: unit test and manual test using tcpdump to verify multiple clusters with the same host (different port) only generate 1 dns lookup most of the time. Docs Changes: None Release Notes: Added qcache_max_ttl field to CaresDnsResolverConfig Platform Specific Features: None [Optional Runtime guard:] \"envoy.restart_features.shared_cares_dns_resolver\" is set to true by default to enable sharing DNSResolver if cares config of the clusters are the same. Set to false to disable this behavior.",
+      "url": "https://github.com/envoyproxy/envoy/pull/45073",
+      "createdAt": "2026-05-14T17:09:02Z",
+      "updatedAt": "2026-08-13T13:54:26Z",
+      "timestamp": "2026-08-13T13:54:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 15
+      },
+      "labels": [],
+      "author": "andy-fong",
+      "state": "closed",
+      "assignees": [
+        "yanavlasov",
+        "markdroth"
       ],
-      "change": "updated"
+      "change": "new"
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:45674",
@@ -603,8 +671,8 @@
       "text": "**Commit Message:** hot restart: propagate programmatic stat tags across restart **Additional Description:** Stats created with programmatic tags (via `Scope::*FromStatNameWithTags` / the tag-aware `*FromTaggedName` API) embed their tag *values* into the flat stat name while keeping a clean `tagExtractedName` and a set of tags. This works on a fresh process, but breaks across a hot restart: - The parent serializes each counter/gauge to the child as **name string → value** only (`HotRestartingParent::Internal::exportStatsToChild`); `tags()` / `tagExtractedName()` are dropped. - The child's `StatMerger::mergeCounters` re-creates the stat from the name alone, which runs only regex tag extraction. With no matching `stats_tags` regex, the merged stat gets **empty tags** and `tagExtractedName == the full mangled name`. - That no-tags stat is created **before** the child's own code first touches the stat, so it wins the central-cache slot. The later tagged creation returns the already-mangled stat (stats are immutable post-creation). The tag values end up baked into the metric name with empty labels (e.g. as exported to Prometheus). This is the gap behind the long-standing `// TODO(snowp): Propagate tag values during hot restarts` in `stat_merger.cc`. Regex-extracted tags survive only because extraction re-derives them from the name; programmatic tags have nothing to re-derive from. This change actually propagates the tags: - `hot_restart.proto`: new `TaggedMetric` (tag-extracted name + repeated `Tag`) and `counter_tags` / `gauge_tags` maps on `Reply.Stats`. - The parent emits an entry **only for tags the child could not re-derive from the name**: it re-runs the store's `TagProducer` on the flat name and skips the stat when extraction reproduces the stored tags (the common case — including all default tag regexes). The stats transfer payload is therefore unchanged except for stats that actually carry programmatic tags. A nullable `Store::tagProducer()` accessor (default `nullptr`; only `ThreadLocalStoreImpl` overrides) supports the comparison. - The child decodes the metadata and `StatMerger` re-creates the stat with the original tags via new `Scope::counterFromMergedStatName` / `gaugeFromMergedStatName`. Following #45146 these have non-virtual-breaking defaults that delegate to the tag-aware `counterFromTaggedName` / `gaugeFromTaggedName` (which retain the metadata on tag-aware scopes and `IsolatedStoreImpl`); the legacy `ThreadLocalStore` `ScopeImpl` — which intentionally drops tag metadata on the `*FromTaggedName` path because it cannot compose tag-extracted names with its prefix in general — overrides them to honor the components, which arrive fully resolved. The full name is still reconstructed via `DynamicContext` (dynamic spans preserved), so the cache key matches the stat the child independently creates — the fix removes the first-write-wins poisoning rather than working around it. **Risk Level:** Medium — changes stats labels after a hot restart for tag-bearing stats. Runtime guarded. **Testing:** New tests: `stat_merger_test` (`ProgrammaticTagsSurviveMerge`, `ProgrammaticGaugeTagsSurviveMerge`, `ProgrammaticTagsLostWithoutMetadata` pinning the pre-fix symptom), `hot_restarting_parent_test` (`ExportsTagMetadataOnlyWhenNotRederivable`, `TagMetadataAppliedToMergedStats` end-to-end, `TagMetadataIgnoredWhenRuntimeFlagDisabled`), and `thread_local_store_test` (`MergedStatNameHonorsSuppliedTags` on both the legacy and tag-aware scopes). Built/run via RBE. **Docs Changes:** N/A **Release Notes:** Added (`changelogs/current/bug_fixes/stats__hot-restart-propagate-programmatic-stat-tags.rst`). **Runtime guard:** `envoy.reloadable_features.hot_restart_propagate_stat_tags` (revert to legacy name-derived behavior).",
       "url": "https://github.com/envoyproxy/envoy/pull/45674",
       "createdAt": "2026-06-16T23:12:06Z",
-      "updatedAt": "2026-08-13T12:57:04Z",
-      "timestamp": "2026-08-13T12:57:04Z",
+      "updatedAt": "2026-08-13T15:26:38Z",
+      "timestamp": "2026-08-13T15:26:38Z",
       "metrics": {
         "reactions": 0,
         "comments": 14
@@ -616,7 +684,7 @@
         "wbpcode",
         "paul-r-gall"
       ],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:45882",
@@ -642,8 +710,7 @@
       "state": "closed",
       "assignees": [
         "yanavlasov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:45914",
@@ -741,8 +808,7 @@
       "assignees": [
         "yanavlasov",
         "Copilot"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46113",
@@ -767,8 +833,7 @@
       ],
       "author": "dependabot[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46138",
@@ -793,8 +858,7 @@
       "state": "open",
       "assignees": [
         "adisuissa"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46300",
@@ -819,8 +883,7 @@
         "penguingao",
         "yanavlasov",
         "agrawroh"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46308",
@@ -832,8 +895,8 @@
       "text": "## Commit Message composite: fail over to the next sub-cluster when a sub-cluster has no hosts The composite cluster failed a request with 503 no_healthy_upstream when the sub-cluster mapped to the current attempt had no host available, for example because DNS resolution returned an empty endpoint list or because all of its hosts had been ejected. Host selection now advances to the following sub-clusters in the configured list within the same attempt, and only fails when none of them can provide a host. Guarded by `envoy.reloadable_features.composite_cluster_skip_clusters_without_hosts`. ## Additional Description ### Documented behavior vs. actual behavior The `composite_cluster` [docs](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/composite_cluster) stated: > *\"If a selected sub-cluster has no healthy hosts available, the request will fail according to that sub-cluster's load balancing behavior, **potentially triggering another retry attempt if configured**.\"* In practice that retry path was unreachable: `no_healthy_upstream` is a routing-level rejection raised before any upstream connection attempt, and no `retry_on` condition covers it. A composite cluster whose first sub-cluster had zero endpoints failed with `503 no_healthy_upstream` regardless of the retry policy, so per-request failover did not work at all in that scenario. ### Change from the previous revision of this PR The first revision of this PR added a core `no-healthy-upstream` retry condition (`RETRY_ON_NO_HEALTHY_UPSTREAM`) plus a hook in `Filter::createConnPoolOrHandleFailure()`. Per review feedback from @wbpcode and @agrawroh, that a core feature serving one extension is the wrong layer, and that the composite cluster should pick a sub-cluster that has healthy hosts itself. The previous approach has been fully reverted and the fix now lives entirely in the extension. Reverted back to `main`: `envoy/router/router.h`, `source/common/http/headers.h`, `source/common/router/retry_state_impl.{h,cc}`, `source/common/router/router.cc`, `test/common/router/{router_test,retry_state_impl_test}.cc`, `test/mocks/router/mocks.{h,cc}`, `api/envoy/config/route/v3/route_components.proto`, `docs/root/configuration/http/http_filters/router_filter.rst`. ### Fix `CompositeClusterLoadBalancer::chooseHost()` still maps the attempt count to a starting cluster index, but host selection now runs through a new `selectHostWithFailover()` helper that walks forward from that index: * A sub-cluster is skipped when it is not present in the cluster manager, or when its load balancer returns no host. * Selection returns immediately when a host is selected, or when the sub-cluster started asynchronous host selection (`HostSelectionResponse::cancelable` set), so an in-flight async selection is not abandoned or duplicated. * When no sub-cluster can provide a host, the `details` and `failure_status` of the last sub-cluster tried are propagated, so the resulting local reply keeps the same diagnostics as before. Availability is determined by asking the sub-cluster's load balancer rather than by inspecting its priority set, so nested composite/aggregate sub-clusters, `CLUSTER_PROVIDED` sub-clusters, panic mode and override-host behavior all keep working. When a sub-cluster can serve the attempt, its load balancer is the only one invoked, so there are no wasted host selections on the happy path. ### Behavior notes * Selection remains driven by the attempt count: an attempt that failed over to a later sub-cluster does not shift the mapping of subsequent attempts. With `[primary, secondary, fallback]` and an empty `primary`, attempt 1 uses `secondary` and attempt 2 also maps to `secondary`. This is documented in the arch overview. If reviewers prefer that a failover also advance the following attempts, that can be done by recording the used index in filter state — happy to add it here or as a follow-up. * `peekAnotherHost()` and `selectExistingConnection()` keep the plain attempt mapping. Every in-tree `selectExistingConnection()` implementation returns `nullopt`, so there is no practical mismatch, and prefetching does not need the failover. ### Minimal reproduction A minimal Docker Compose reproduction of the original bug is available at: https://github.com/JonSchaeffer/playground/tree/main/envoy/composite-bug-minimal-repro ## Risk Level Low — the change is scoped to the composite cluster extension, and it is behind a reloadable runtime guard. ## Testing * Unit tests in `test/extensions/clusters/composite/cluster_test.cc`: failover when the selected sub-cluster has no host, failover when the selected sub-cluster is missing from the cluster manager, no host plus preserved failure details when no sub-cluster can serve the request, asynchronous host selection returned without trying other sub-clusters, and legacy behavior with the runtime guard disabled. * Integration tests in `test/extensions/clusters/composite/cluster_integration_test.cc`: failover with `num_retries: 0` (proving no retry is involved), failover across two consecutive sub-clusters without endpoints, `503` when no sub-cluster has endpoints, and `503` with the runtime guard disabled. The two `no-healthy-upstream` retry tests from the previous revision were removed. * Format and spelling checks: `bazel run //tools/code_format:check_format` and `bazel run //tools/spelling:check_spelling_pedantic` both pass. ## Docs Changes * `docs/root/intro/arch_overview/upstream/composite_cluster.rst`: new \"Hosts availability\" section, updated the sub-cluster health / deterministic routing considerations, and documented the runtime guard and the attempt-progression caveat. * `api/envoy/extensions/clusters/composite/v3/cluster.proto`: comment-only update describing the failover. No field or type changes. ## Release Notes `changelogs/current/bug_fixes/composite_cluster__skip-clusters-without-hosts.rst`. ## Runtime guard `envoy.reloadable_features.composite_cluster_skip_clusters_without_hosts` (enabled by default). Setting it to `false` restores the previous behavior of failing the attempt when the sub-cluster mapped to that attempt has no host available. --- > **Note:** This PR was developed with AI assistance (Claude). The author has reviewed and > understands all changes.",
       "url": "https://github.com/envoyproxy/envoy/pull/46308",
       "createdAt": "2026-07-22T12:31:41Z",
-      "updatedAt": "2026-08-13T13:45:04Z",
-      "timestamp": "2026-08-13T13:45:04Z",
+      "updatedAt": "2026-08-13T13:51:19Z",
+      "timestamp": "2026-08-13T13:51:19Z",
       "metrics": {
         "reactions": 0,
         "comments": 9
@@ -846,6 +909,36 @@
       "assignees": [
         "agrawroh",
         "wbpcode"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46318",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "ext_proc: adding direct mode_override support",
+      "text": "This is a follow up implementation for https://github.com/envoyproxy/envoy/pull/46315",
+      "url": "https://github.com/envoyproxy/envoy/pull/46318",
+      "createdAt": "2026-07-22T21:30:10Z",
+      "updatedAt": "2026-08-13T15:45:55Z",
+      "timestamp": "2026-08-13T15:45:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 10
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "yanjunxiang-google",
+      "state": "open",
+      "assignees": [
+        "stevenzzzz",
+        "adisuissa",
+        "yanavlasov",
+        "rshriram",
+        "tyxia"
       ],
       "change": "new"
     },
@@ -870,8 +963,7 @@
       "state": "open",
       "assignees": [
         "nezdolik"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46460",
@@ -895,8 +987,7 @@
       "assignees": [
         "phlax",
         "RyanTheOptimist"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46461",
@@ -920,8 +1011,7 @@
       "assignees": [
         "phlax",
         "RyanTheOptimist"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46479",
@@ -945,8 +1035,7 @@
       "assignees": [
         "adisuissa",
         "botengyao"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46496",
@@ -969,8 +1058,7 @@
       "state": "open",
       "assignees": [
         "yanavlasov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46502",
@@ -982,8 +1070,8 @@
       "text": "Commit Message: udp: Support hot restart handoff for connectionless UDP flows Additional Description: The parent instance keeps serving established UDP flows while draining and forwards packets of unknown flows to the child over the hot restart RPC, instead of going dark between drain start and parent shutdown. Risk Level: Medium Testing: Added unit and integration tests, manual Docs Changes: - Added `envoy.resource_limits.listener.<name of listener>.udp_flow_limit`. - Added `downstream_flows_active, Gauge`, if equal to the limit, flows might get misrouted during hotrestart Release Notes: Added new_features entry Platform Specific Features: N/A Fixes #34732",
       "url": "https://github.com/envoyproxy/envoy/pull/46502",
       "createdAt": "2026-08-01T12:28:12Z",
-      "updatedAt": "2026-08-13T13:03:38Z",
-      "timestamp": "2026-08-13T13:03:38Z",
+      "updatedAt": "2026-08-13T15:36:59Z",
+      "timestamp": "2026-08-13T15:36:59Z",
       "metrics": {
         "reactions": 0,
         "comments": 7
@@ -1020,8 +1108,7 @@
       "state": "open",
       "assignees": [
         "tyxia"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46545",
@@ -1047,8 +1134,7 @@
       "assignees": [
         "mkbehr",
         "tyxia"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46549",
@@ -1074,8 +1160,7 @@
       "assignees": [
         "krinkinmu",
         "kyessenov"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46552",
@@ -1096,8 +1181,7 @@
       "labels": [],
       "author": "botengyao",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46558",
@@ -1122,8 +1206,7 @@
         "phlax",
         "tyxia",
         "yanjunxiang-google"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46560",
@@ -1135,8 +1218,8 @@
       "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
       "url": "https://github.com/envoyproxy/envoy/pull/46560",
       "createdAt": "2026-08-06T14:24:17Z",
-      "updatedAt": "2026-08-13T02:03:13Z",
-      "timestamp": "2026-08-13T02:03:13Z",
+      "updatedAt": "2026-08-13T14:51:50Z",
+      "timestamp": "2026-08-13T14:51:50Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -1168,8 +1251,7 @@
       "state": "open",
       "assignees": [
         "botengyao"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46601",
@@ -1181,13 +1263,15 @@
       "text": "The FMT_UNICODE is a Windows MSVC specific option. It has not effect on Linux build. Risk Level: none Testing: unit tests Docs Changes: no Release Notes: no Platform Specific Features: Windows specific",
       "url": "https://github.com/envoyproxy/envoy/pull/46601",
       "createdAt": "2026-08-09T17:39:36Z",
-      "updatedAt": "2026-08-12T15:04:19Z",
-      "timestamp": "2026-08-12T15:04:19Z",
+      "updatedAt": "2026-08-13T15:49:00Z",
+      "timestamp": "2026-08-13T15:49:00Z",
       "metrics": {
         "reactions": 0,
-        "comments": 3
+        "comments": 5
       },
-      "labels": [],
+      "labels": [
+        "no stalebot"
+      ],
       "author": "yanavlasov",
       "state": "open",
       "assignees": [],
@@ -1217,8 +1301,7 @@
       "assignees": [
         "penguingao",
         "wbpcode"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46607",
@@ -1249,16 +1332,19 @@
       "text": "Preserve empty datagrams across all UDP send paths. Justification: RFC 768 permits UDP datagrams with an empty payload: the minimum UDP Length is 8 octets, corresponding to the UDP header alone. Envoy currently treats these valid datagrams as no-op writes and silently drops them. This change ensures they reach the socket send operation for connected and unconnected UDP sockets. Commit Message: Additional Description: Risk Level: Testing: Done Docs Changes: Release Notes: Platform Specific Features:",
       "url": "https://github.com/envoyproxy/envoy/pull/46613",
       "createdAt": "2026-08-10T13:37:06Z",
-      "updatedAt": "2026-08-12T14:38:16Z",
-      "timestamp": "2026-08-12T14:38:16Z",
+      "updatedAt": "2026-08-13T14:42:44Z",
+      "timestamp": "2026-08-13T14:42:44Z",
       "metrics": {
         "reactions": 0,
-        "comments": 1
+        "comments": 2
       },
       "labels": [],
       "author": "nezdolik",
       "state": "open",
-      "assignees": [],
+      "assignees": [
+        "kyessenov",
+        "agrawroh"
+      ],
       "change": "updated"
     },
     {
@@ -1279,6 +1365,53 @@
         "api"
       ],
       "author": "aakugan",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46621",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "quic: promote HTTP/3 API status from alpha to stable",
+      "text": "QUIC/HTTP3 is well-supported both internally and externally in Envoy. CVEs in it are treated with the highest priority. It's long-overdue to take it out of alpha. Changes: - Remove 'QUIC upstream support is currently not ready for internet use' warnings from http_protocol_options.proto (ExplicitHttpConfig, UseDownstreamHttpConfig, AutoHttpConfig). - Remove stale '(soon)' qualifier from AutoHttpConfig comment. - Remove 'QUIC implementation is not production ready yet' comment from the HTTP3 CodecClientType enum in http.proto. - Remove the alpha/not-production-ready warning from the HTTP/3 arch overview documentation. - Promote all QUIC extensions from alpha to stable in extensions_metadata.yaml: - envoy.quic.proof_source.filter_chain - envoy.quic.server_preferred_address.fixed - envoy.quic.server_preferred_address.datasource - envoy.quic.deterministic_connection_id_generator - envoy.quic.connection_id_generator.quic_lb - envoy.quic.crypto_stream.server.quiche - envoy.quic.connection_debug_visitor.basic - envoy.quic.connection_debug_visitor.quic_stats Risk Level: Low (documentation and metadata only) Testing: N/A (no code changes) Created with AI",
+      "url": "https://github.com/envoyproxy/envoy/pull/46621",
+      "createdAt": "2026-08-10T22:48:31Z",
+      "updatedAt": "2026-08-13T15:59:15Z",
+      "timestamp": "2026-08-13T15:59:15Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "abeyad",
+      "state": "closed",
+      "assignees": [
+        "adisuissa",
+        "RyanTheOptimist"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46622",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "c-ares: disable shared resolver by default",
+      "text": "Commit Message: c-ares: disable shared resolver by default Additional Description: DnsFilter would call createDnsResolver() from a workerthread that would cause a race when sharing dns resolvers. Turn off this feature until the race is fixed. Relates to https://github.com/envoyproxy/envoy/pull/46577 and https://github.com/envoyproxy/envoy/pull/45073 Risk Level: low Testing: Docs Changes: Release Notes: Platform Specific Features:",
+      "url": "https://github.com/envoyproxy/envoy/pull/46622",
+      "createdAt": "2026-08-10T23:28:22Z",
+      "updatedAt": "2026-08-13T15:35:31Z",
+      "timestamp": "2026-08-13T15:35:31Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "andy-fong",
+      "state": "closed",
       "assignees": [],
       "change": "new"
     },
@@ -1375,8 +1508,7 @@
       "assignees": [
         "yanavlasov",
         "tyxia"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46656",
@@ -1399,8 +1531,7 @@
       "state": "open",
       "assignees": [
         "phlax"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46657",
@@ -1440,8 +1571,7 @@
       "labels": [],
       "author": "jwendell",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46663",
@@ -1464,8 +1594,7 @@
       "state": "open",
       "assignees": [
         "botengyao"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46664",
@@ -1488,8 +1617,7 @@
       "state": "open",
       "assignees": [
         "htuch"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46667",
@@ -1510,8 +1638,7 @@
       "labels": [],
       "author": "yuehaii",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46668",
@@ -1523,8 +1650,8 @@
       "text": "The main change is in the source/common/common/base_logger.h, moving the Levels enum out of the Logger class into the outer Logger namespace. This is intermediate step to using this enum in Envoy's interfaces in the envoy/ directory. This will prevent leaking of the spdlog dependency to proprietary components that need to manipulate Envoy's log level programmatically. Risk Level: low Testing: unit tests Docs Changes: no Release Notes: no Platform Specific Features: no",
       "url": "https://github.com/envoyproxy/envoy/pull/46668",
       "createdAt": "2026-08-12T15:37:40Z",
-      "updatedAt": "2026-08-12T23:13:51Z",
-      "timestamp": "2026-08-12T23:13:51Z",
+      "updatedAt": "2026-08-13T15:35:25Z",
+      "timestamp": "2026-08-13T15:35:25Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -1554,8 +1681,7 @@
       "labels": [],
       "author": "jukie",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46670",
@@ -1580,8 +1706,7 @@
       "state": "open",
       "assignees": [
         "markdroth"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46671",
@@ -1606,8 +1731,7 @@
       "state": "open",
       "assignees": [
         "wbpcode"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46672",
@@ -1619,8 +1743,8 @@
       "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
       "url": "https://github.com/envoyproxy/envoy/pull/46672",
       "createdAt": "2026-08-12T21:04:40Z",
-      "updatedAt": "2026-08-12T21:04:45Z",
-      "timestamp": "2026-08-12T21:04:45Z",
+      "updatedAt": "2026-08-13T14:11:02Z",
+      "timestamp": "2026-08-13T14:11:02Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -1641,8 +1765,8 @@
       "text": "Commit Message: Fix flaky order-dependent stats_test failures via physical test file separation Additional Description: The tests `NonNumberValueFormatted` and `GaugeNonNumberValueFormatted` both trigger identical error logs emitted via `ENVOY_LOG_PERIODIC_MISC` in `stats.cc`. Because this macro rate-limits logging to prevent log spam, running these tests consecutively in the same target process led to one suppressing the other, causing flaky test failures under randomized execution ordering. Risk Level: low Testing: NA Docs Changes: NA Release Notes: NA Platform Specific Features: NA",
       "url": "https://github.com/envoyproxy/envoy/pull/46673",
       "createdAt": "2026-08-12T21:06:33Z",
-      "updatedAt": "2026-08-12T22:54:18Z",
-      "timestamp": "2026-08-12T22:54:18Z",
+      "updatedAt": "2026-08-13T15:20:30Z",
+      "timestamp": "2026-08-13T15:20:30Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -1672,8 +1796,7 @@
       "labels": [],
       "author": "eformat",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46675",
@@ -1694,8 +1817,7 @@
       "labels": [],
       "author": "glennc24",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46676",
@@ -1704,11 +1826,11 @@
       "project": "envoyproxy/envoy",
       "kind": "pull_request",
       "title": "Allow connection teardown even when cert selection is not yet complete",
-      "text": "https://github.com/envoyproxy/envoy/pull/45755 allowed the socket state to transition to `ShutdownSent` before cert selection is complete (as intended). However, this could cause `ENVOY_BUG` to be thrown when `SslSocket::onAsynchronousCertificateSelectionComplete()` is invoked. This patch updates `SslSocket::onAsynchronousCertificateSelectionComplete` to allow this socket state which is consistent with the implementation of `SslSocket::onAsynchronousCertValidationComplete`. Change-Id: I155b874accd54affa65bfa0b744ff99154060570 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "text": "https://github.com/envoyproxy/envoy/pull/45755 allowed the socket state to transition to `ShutdownSent` before cert selection is complete (as intended). However, this could cause `ENVOY_BUG` to be thrown when `SslSocket::onAsynchronousCertificateSelectionComplete()` is invoked. This patch updates `SslSocket::onAsynchronousCertificateSelectionComplete` to allow this socket state which is consistent with the implementation of `SslSocket::onAsynchronousCertValidationComplete` and avoids the `ENVOY_BUG` in the case of valid states such as `ShutdownSent`. Change-Id: I155b874accd54affa65bfa0b744ff99154060570 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
       "url": "https://github.com/envoyproxy/envoy/pull/46676",
       "createdAt": "2026-08-13T01:58:15Z",
-      "updatedAt": "2026-08-13T12:55:38Z",
-      "timestamp": "2026-08-13T12:55:38Z",
+      "updatedAt": "2026-08-13T15:40:27Z",
+      "timestamp": "2026-08-13T15:40:27Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -1742,8 +1864,7 @@
       "state": "open",
       "assignees": [
         "mattklein123"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46682",
@@ -1755,8 +1876,8 @@
       "text": "... so that it runs only on Envoy gRPC Change-Id: If3ff45c3ee9db39b14ed506a7ef85ae00ec7db24 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
       "url": "https://github.com/envoyproxy/envoy/pull/46682",
       "createdAt": "2026-08-13T12:13:50Z",
-      "updatedAt": "2026-08-13T12:14:09Z",
-      "timestamp": "2026-08-13T12:14:09Z",
+      "updatedAt": "2026-08-13T15:02:57Z",
+      "timestamp": "2026-08-13T15:02:57Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -1773,12 +1894,56 @@
       "group": "platform-infrastructure",
       "project": "envoyproxy/envoy",
       "kind": "pull_request",
-      "title": "Use deterministic routes in load aware locality tests",
-      "text": "Change-Id: Ie40b5278387dab7c2dea9e43416b68dbec9b1af0 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "title": "Ensure upstream hosts have rebalanced utilization",
+      "text": "... before asserting new traffic patterns in test <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
       "url": "https://github.com/envoyproxy/envoy/pull/46683",
       "createdAt": "2026-08-13T13:14:57Z",
-      "updatedAt": "2026-08-13T13:15:45Z",
-      "timestamp": "2026-08-13T13:15:45Z",
+      "updatedAt": "2026-08-13T15:38:58Z",
+      "timestamp": "2026-08-13T15:38:58Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "etruong42",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46684",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "coroutine: add ASSIGN_OR_CO_RETURN and CO_RETURN_IF_ERROR macros",
+      "text": "Commit Message: These are the macros that mirror directly `RETURN_IF_ERROR` and `ASSIGN_OR_RETURN` but for `Envoy::Coroutine::Task<absl::Status>` and `Envoy::Coroutine::Task<absl::StatusOr<T>>` coroutines. Additional Description: Risk Level: low Testing: unit test Docs Changes: N/A Release Notes: no - internal helper utilities Platform Specific Features: N/A",
+      "url": "https://github.com/envoyproxy/envoy/pull/46684",
+      "createdAt": "2026-08-13T14:19:38Z",
+      "updatedAt": "2026-08-13T16:00:32Z",
+      "timestamp": "2026-08-13T16:00:32Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "penguingao",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46685",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Create Snapshot of runtime stats before incrementing counter",
+      "text": "The stats_.load_success_ counter is incremented before the Snapshot of runtime metrics is taken. This leads to a small window where a client can request runtime metrics after load_success_ counter indicates a successful load but before the latest runtime metrics are available. Change-Id: Iac433fdf7637eec59186cfa44f2e065d367fc73f <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46685",
+      "createdAt": "2026-08-13T14:48:02Z",
+      "updatedAt": "2026-08-13T14:49:08Z",
+      "timestamp": "2026-08-13T14:49:08Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -3863,6 +4028,628 @@
         "author": "zuercher",
         "state": "closed",
         "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6b859f9c4fdc26611047",
+      "signalId": "github:envoyproxy/envoy:pull_request:46684",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46684",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "coroutine: add ASSIGN_OR_CO_RETURN and CO_RETURN_IF_ERROR macros",
+        "text": "Commit Message: These are the macros that mirror directly `RETURN_IF_ERROR` and `ASSIGN_OR_RETURN` but for `Envoy::Coroutine::Task<absl::Status>` and `Envoy::Coroutine::Task<absl::StatusOr<T>>` coroutines. Additional Description: Risk Level: low Testing: unit test Docs Changes: N/A Release Notes: no - internal helper utilities Platform Specific Features: N/A",
+        "url": "https://github.com/envoyproxy/envoy/pull/46684",
+        "createdAt": "2026-08-13T14:19:38Z",
+        "updatedAt": "2026-08-13T16:00:32Z",
+        "timestamp": "2026-08-13T16:00:32Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "penguingao",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0565b5f6151cbeda5f61",
+      "signalId": "github:envoyproxy/envoy:pull_request:46621",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46621",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "quic: promote HTTP/3 API status from alpha to stable",
+        "text": "QUIC/HTTP3 is well-supported both internally and externally in Envoy. CVEs in it are treated with the highest priority. It's long-overdue to take it out of alpha. Changes: - Remove 'QUIC upstream support is currently not ready for internet use' warnings from http_protocol_options.proto (ExplicitHttpConfig, UseDownstreamHttpConfig, AutoHttpConfig). - Remove stale '(soon)' qualifier from AutoHttpConfig comment. - Remove 'QUIC implementation is not production ready yet' comment from the HTTP3 CodecClientType enum in http.proto. - Remove the alpha/not-production-ready warning from the HTTP/3 arch overview documentation. - Promote all QUIC extensions from alpha to stable in extensions_metadata.yaml: - envoy.quic.proof_source.filter_chain - envoy.quic.server_preferred_address.fixed - envoy.quic.server_preferred_address.datasource - envoy.quic.deterministic_connection_id_generator - envoy.quic.connection_id_generator.quic_lb - envoy.quic.crypto_stream.server.quiche - envoy.quic.connection_debug_visitor.basic - envoy.quic.connection_debug_visitor.quic_stats Risk Level: Low (documentation and metadata only) Testing: N/A (no code changes) Created with AI",
+        "url": "https://github.com/envoyproxy/envoy/pull/46621",
+        "createdAt": "2026-08-10T22:48:31Z",
+        "updatedAt": "2026-08-13T15:59:15Z",
+        "timestamp": "2026-08-13T15:59:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "abeyad",
+        "state": "closed",
+        "assignees": [
+          "adisuissa",
+          "RyanTheOptimist"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:61cf38366a3c3d705ea5",
+      "signalId": "github:envoyproxy/envoy:pull_request:46601",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46601",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Disable fmtlib Unicode support on Windows",
+        "text": "The FMT_UNICODE is a Windows MSVC specific option. It has not effect on Linux build. Risk Level: none Testing: unit tests Docs Changes: no Release Notes: no Platform Specific Features: Windows specific",
+        "url": "https://github.com/envoyproxy/envoy/pull/46601",
+        "createdAt": "2026-08-09T17:39:36Z",
+        "updatedAt": "2026-08-13T15:49:00Z",
+        "timestamp": "2026-08-13T15:49:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [
+          "no stalebot"
+        ],
+        "author": "yanavlasov",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1c9fa945bc41d15dda5c",
+      "signalId": "github:envoyproxy/envoy:pull_request:46318",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46318",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "ext_proc: adding direct mode_override support",
+        "text": "This is a follow up implementation for https://github.com/envoyproxy/envoy/pull/46315",
+        "url": "https://github.com/envoyproxy/envoy/pull/46318",
+        "createdAt": "2026-07-22T21:30:10Z",
+        "updatedAt": "2026-08-13T15:45:55Z",
+        "timestamp": "2026-08-13T15:45:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 10
+        },
+        "labels": [
+          "api"
+        ],
+        "author": "yanjunxiang-google",
+        "state": "open",
+        "assignees": [
+          "stevenzzzz",
+          "adisuissa",
+          "yanavlasov",
+          "rshriram",
+          "tyxia"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ef804325a5ea8179cf71",
+      "signalId": "github:envoyproxy/envoy:pull_request:46676",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46676",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Allow connection teardown even when cert selection is not yet complete",
+        "text": "https://github.com/envoyproxy/envoy/pull/45755 allowed the socket state to transition to `ShutdownSent` before cert selection is complete (as intended). However, this could cause `ENVOY_BUG` to be thrown when `SslSocket::onAsynchronousCertificateSelectionComplete()` is invoked. This patch updates `SslSocket::onAsynchronousCertificateSelectionComplete` to allow this socket state which is consistent with the implementation of `SslSocket::onAsynchronousCertValidationComplete` and avoids the `ENVOY_BUG` in the case of valid states such as `ShutdownSent`. Change-Id: I155b874accd54affa65bfa0b744ff99154060570 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+        "url": "https://github.com/envoyproxy/envoy/pull/46676",
+        "createdAt": "2026-08-13T01:58:15Z",
+        "updatedAt": "2026-08-13T15:40:27Z",
+        "timestamp": "2026-08-13T15:40:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "etruong42",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:27214612422af7cb28d1",
+      "signalId": "github:envoyproxy/envoy:pull_request:46683",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46683",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Ensure upstream hosts have rebalanced utilization",
+        "text": "... before asserting new traffic patterns in test <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+        "url": "https://github.com/envoyproxy/envoy/pull/46683",
+        "createdAt": "2026-08-13T13:14:57Z",
+        "updatedAt": "2026-08-13T15:38:58Z",
+        "timestamp": "2026-08-13T15:38:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "etruong42",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:823ebce12c31386b5fec",
+      "signalId": "github:envoyproxy/envoy:pull_request:46502",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46502",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Support hot restart handoff for connectionless UDP flows",
+        "text": "Commit Message: udp: Support hot restart handoff for connectionless UDP flows Additional Description: The parent instance keeps serving established UDP flows while draining and forwards packets of unknown flows to the child over the hot restart RPC, instead of going dark between drain start and parent shutdown. Risk Level: Medium Testing: Added unit and integration tests, manual Docs Changes: - Added `envoy.resource_limits.listener.<name of listener>.udp_flow_limit`. - Added `downstream_flows_active, Gauge`, if equal to the limit, flows might get misrouted during hotrestart Release Notes: Added new_features entry Platform Specific Features: N/A Fixes #34732",
+        "url": "https://github.com/envoyproxy/envoy/pull/46502",
+        "createdAt": "2026-08-01T12:28:12Z",
+        "updatedAt": "2026-08-13T15:36:59Z",
+        "timestamp": "2026-08-13T15:36:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "api"
+        ],
+        "author": "filipcacky",
+        "state": "open",
+        "assignees": [
+          "nezdolik",
+          "markdroth"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f4d12256acf7c5ae7b8b",
+      "signalId": "github:envoyproxy/envoy:pull_request:46622",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46622",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "c-ares: disable shared resolver by default",
+        "text": "Commit Message: c-ares: disable shared resolver by default Additional Description: DnsFilter would call createDnsResolver() from a workerthread that would cause a race when sharing dns resolvers. Turn off this feature until the race is fixed. Relates to https://github.com/envoyproxy/envoy/pull/46577 and https://github.com/envoyproxy/envoy/pull/45073 Risk Level: low Testing: Docs Changes: Release Notes: Platform Specific Features:",
+        "url": "https://github.com/envoyproxy/envoy/pull/46622",
+        "createdAt": "2026-08-10T23:28:22Z",
+        "updatedAt": "2026-08-13T15:35:31Z",
+        "timestamp": "2026-08-13T15:35:31Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "andy-fong",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0e26f6ffb13cd815dbea",
+      "signalId": "github:envoyproxy/envoy:pull_request:46668",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46668",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Rescope Logger::Levels enum so it can be moved to envoy/ directory",
+        "text": "The main change is in the source/common/common/base_logger.h, moving the Levels enum out of the Logger class into the outer Logger namespace. This is intermediate step to using this enum in Envoy's interfaces in the envoy/ directory. This will prevent leaking of the spdlog dependency to proprietary components that need to manipulate Envoy's log level programmatically. Risk Level: low Testing: unit tests Docs Changes: no Release Notes: no Platform Specific Features: no",
+        "url": "https://github.com/envoyproxy/envoy/pull/46668",
+        "createdAt": "2026-08-12T15:37:40Z",
+        "updatedAt": "2026-08-13T15:35:25Z",
+        "timestamp": "2026-08-13T15:35:25Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "yanavlasov",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:79600f902a3e75dc7c92",
+      "signalId": "github:envoyproxy/envoy:pull_request:45674",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:45674",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "hot restart: propagate programmatic stat tags across restart",
+        "text": "**Commit Message:** hot restart: propagate programmatic stat tags across restart **Additional Description:** Stats created with programmatic tags (via `Scope::*FromStatNameWithTags` / the tag-aware `*FromTaggedName` API) embed their tag *values* into the flat stat name while keeping a clean `tagExtractedName` and a set of tags. This works on a fresh process, but breaks across a hot restart: - The parent serializes each counter/gauge to the child as **name string → value** only (`HotRestartingParent::Internal::exportStatsToChild`); `tags()` / `tagExtractedName()` are dropped. - The child's `StatMerger::mergeCounters` re-creates the stat from the name alone, which runs only regex tag extraction. With no matching `stats_tags` regex, the merged stat gets **empty tags** and `tagExtractedName == the full mangled name`. - That no-tags stat is created **before** the child's own code first touches the stat, so it wins the central-cache slot. The later tagged creation returns the already-mangled stat (stats are immutable post-creation). The tag values end up baked into the metric name with empty labels (e.g. as exported to Prometheus). This is the gap behind the long-standing `// TODO(snowp): Propagate tag values during hot restarts` in `stat_merger.cc`. Regex-extracted tags survive only because extraction re-derives them from the name; programmatic tags have nothing to re-derive from. This change actually propagates the tags: - `hot_restart.proto`: new `TaggedMetric` (tag-extracted name + repeated `Tag`) and `counter_tags` / `gauge_tags` maps on `Reply.Stats`. - The parent emits an entry **only for tags the child could not re-derive from the name**: it re-runs the store's `TagProducer` on the flat name and skips the stat when extraction reproduces the stored tags (the common case — including all default tag regexes). The stats transfer payload is therefore unchanged except for stats that actually carry programmatic tags. A nullable `Store::tagProducer()` accessor (default `nullptr`; only `ThreadLocalStoreImpl` overrides) supports the comparison. - The child decodes the metadata and `StatMerger` re-creates the stat with the original tags via new `Scope::counterFromMergedStatName` / `gaugeFromMergedStatName`. Following #45146 these have non-virtual-breaking defaults that delegate to the tag-aware `counterFromTaggedName` / `gaugeFromTaggedName` (which retain the metadata on tag-aware scopes and `IsolatedStoreImpl`); the legacy `ThreadLocalStore` `ScopeImpl` — which intentionally drops tag metadata on the `*FromTaggedName` path because it cannot compose tag-extracted names with its prefix in general — overrides them to honor the components, which arrive fully resolved. The full name is still reconstructed via `DynamicContext` (dynamic spans preserved), so the cache key matches the stat the child independently creates — the fix removes the first-write-wins poisoning rather than working around it. **Risk Level:** Medium — changes stats labels after a hot restart for tag-bearing stats. Runtime guarded. **Testing:** New tests: `stat_merger_test` (`ProgrammaticTagsSurviveMerge`, `ProgrammaticGaugeTagsSurviveMerge`, `ProgrammaticTagsLostWithoutMetadata` pinning the pre-fix symptom), `hot_restarting_parent_test` (`ExportsTagMetadataOnlyWhenNotRederivable`, `TagMetadataAppliedToMergedStats` end-to-end, `TagMetadataIgnoredWhenRuntimeFlagDisabled`), and `thread_local_store_test` (`MergedStatNameHonorsSuppliedTags` on both the legacy and tag-aware scopes). Built/run via RBE. **Docs Changes:** N/A **Release Notes:** Added (`changelogs/current/bug_fixes/stats__hot-restart-propagate-programmatic-stat-tags.rst`). **Runtime guard:** `envoy.reloadable_features.hot_restart_propagate_stat_tags` (revert to legacy name-derived behavior).",
+        "url": "https://github.com/envoyproxy/envoy/pull/45674",
+        "createdAt": "2026-06-16T23:12:06Z",
+        "updatedAt": "2026-08-13T15:26:38Z",
+        "timestamp": "2026-08-13T15:26:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 14
+        },
+        "labels": [],
+        "author": "bpalermo",
+        "state": "open",
+        "assignees": [
+          "wbpcode",
+          "paul-r-gall"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f6db8e5e14d4e601151f",
+      "signalId": "github:envoyproxy/envoy:pull_request:46673",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46673",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Order dependent bug",
+        "text": "Commit Message: Fix flaky order-dependent stats_test failures via physical test file separation Additional Description: The tests `NonNumberValueFormatted` and `GaugeNonNumberValueFormatted` both trigger identical error logs emitted via `ENVOY_LOG_PERIODIC_MISC` in `stats.cc`. Because this macro rate-limits logging to prevent log spam, running these tests consecutively in the same target process led to one suppressing the other, causing flaky test failures under randomized execution ordering. Risk Level: low Testing: NA Docs Changes: NA Release Notes: NA Platform Specific Features: NA",
+        "url": "https://github.com/envoyproxy/envoy/pull/46673",
+        "createdAt": "2026-08-12T21:06:33Z",
+        "updatedAt": "2026-08-13T15:20:30Z",
+        "timestamp": "2026-08-13T15:20:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "Wenwei-Zhao",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ce808368e4ead47e858b",
+      "signalId": "github:envoyproxy/envoy:pull_request:43255",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:43255",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "[WIP] bazel: Add compatibility stubs for bzlmod",
+        "text": "this provides some of the compatibility required for bzlmod, without breaking workspace mode will follow up to fully enable bzlmod (as non-default in subsequent pr)",
+        "url": "https://github.com/envoyproxy/envoy/pull/43255",
+        "createdAt": "2026-02-01T01:15:57Z",
+        "updatedAt": "2026-08-13T15:10:28Z",
+        "timestamp": "2026-08-13T15:10:28Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "no stalebot",
+          "deps",
+          "ai:assisted"
+        ],
+        "author": "phlax",
+        "state": "open",
+        "assignees": [
+          "RyanTheOptimist"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ca582d2dcface51f7695",
+      "signalId": "github:envoyproxy/envoy:pull_request:46682",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46682",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Restrict local reply streaming integration tests",
+        "text": "... so that it runs only on Envoy gRPC Change-Id: If3ff45c3ee9db39b14ed506a7ef85ae00ec7db24 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+        "url": "https://github.com/envoyproxy/envoy/pull/46682",
+        "createdAt": "2026-08-13T12:13:50Z",
+        "updatedAt": "2026-08-13T15:02:57Z",
+        "timestamp": "2026-08-13T15:02:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "etruong42",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:979639cbfdc04a47b52b",
+      "signalId": "github:envoyproxy/envoy:pull_request:46560",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46560",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Avoid excessive hashing for well-known header lookups",
+        "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+        "url": "https://github.com/envoyproxy/envoy/pull/46560",
+        "createdAt": "2026-08-06T14:24:17Z",
+        "updatedAt": "2026-08-13T14:51:50Z",
+        "timestamp": "2026-08-13T14:51:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "etruong42",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4440958a68b1c3152ca5",
+      "signalId": "github:envoyproxy/envoy:pull_request:46685",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46685",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Create Snapshot of runtime stats before incrementing counter",
+        "text": "The stats_.load_success_ counter is incremented before the Snapshot of runtime metrics is taken. This leads to a small window where a client can request runtime metrics after load_success_ counter indicates a successful load but before the latest runtime metrics are available. Change-Id: Iac433fdf7637eec59186cfa44f2e065d367fc73f <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+        "url": "https://github.com/envoyproxy/envoy/pull/46685",
+        "createdAt": "2026-08-13T14:48:02Z",
+        "updatedAt": "2026-08-13T14:49:08Z",
+        "timestamp": "2026-08-13T14:49:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "etruong42",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:dd3e2185486b25c40944",
+      "signalId": "github:envoyproxy/envoy:pull_request:46613",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "assignees"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46613",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "network: send zero-length UDP datagrams",
+        "text": "Preserve empty datagrams across all UDP send paths. Justification: RFC 768 permits UDP datagrams with an empty payload: the minimum UDP Length is 8 octets, corresponding to the UDP header alone. Envoy currently treats these valid datagrams as no-op writes and silently drops them. This change ensures they reach the socket send operation for connected and unconnected UDP sockets. Commit Message: Additional Description: Risk Level: Testing: Done Docs Changes: Release Notes: Platform Specific Features:",
+        "url": "https://github.com/envoyproxy/envoy/pull/46613",
+        "createdAt": "2026-08-10T13:37:06Z",
+        "updatedAt": "2026-08-13T14:42:44Z",
+        "timestamp": "2026-08-13T14:42:44Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "nezdolik",
+        "state": "open",
+        "assignees": [
+          "kyessenov",
+          "agrawroh"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f7e86554f5cf577576d7",
+      "signalId": "github:envoyproxy/envoy:pull_request:46672",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46672",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "[draft] dym: go sdk for udp listener filter",
+        "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+        "url": "https://github.com/envoyproxy/envoy/pull/46672",
+        "createdAt": "2026-08-12T21:04:40Z",
+        "updatedAt": "2026-08-13T14:11:02Z",
+        "timestamp": "2026-08-13T14:11:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "ovadiagal",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d9983e912280cd71a67d",
+      "signalId": "github:envoyproxy/envoy:pull_request:45073",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:45073",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "c-ares: make qcache_max_ttl configurable",
+        "text": "Commit Message: c-ares: make qcache_max_ttl configurable Additional Description: expose the qcache_max_ttl setting and share DNSResolver if cares config is the same so the qcache can be shared. runtime guard \"envoy.restart_features.shared_cares_dns_resolver\" is set to true by default to enable sharing DNSResolver if cares config of the clusters are the same. Set to false to disable this behavior. AI is used to generate the tests and write some of the comment but I did review and tune/modify all the tests added. All other code are hand written. Risk Level: Low Testing: unit test and manual test using tcpdump to verify multiple clusters with the same host (different port) only generate 1 dns lookup most of the time. Docs Changes: None Release Notes: Added qcache_max_ttl field to CaresDnsResolverConfig Platform Specific Features: None [Optional Runtime guard:] \"envoy.restart_features.shared_cares_dns_resolver\" is set to true by default to enable sharing DNSResolver if cares config of the clusters are the same. Set to false to disable this behavior.",
+        "url": "https://github.com/envoyproxy/envoy/pull/45073",
+        "createdAt": "2026-05-14T17:09:02Z",
+        "updatedAt": "2026-08-13T13:54:26Z",
+        "timestamp": "2026-08-13T13:54:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 15
+        },
+        "labels": [],
+        "author": "andy-fong",
+        "state": "closed",
+        "assignees": [
+          "yanavlasov",
+          "markdroth"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2a715a4529a67e6f4af1",
+      "signalId": "github:envoyproxy/envoy:pull_request:46308",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46308",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "composite: fail over to the next sub-cluster when a sub-cluster has no hosts",
+        "text": "## Commit Message composite: fail over to the next sub-cluster when a sub-cluster has no hosts The composite cluster failed a request with 503 no_healthy_upstream when the sub-cluster mapped to the current attempt had no host available, for example because DNS resolution returned an empty endpoint list or because all of its hosts had been ejected. Host selection now advances to the following sub-clusters in the configured list within the same attempt, and only fails when none of them can provide a host. Guarded by `envoy.reloadable_features.composite_cluster_skip_clusters_without_hosts`. ## Additional Description ### Documented behavior vs. actual behavior The `composite_cluster` [docs](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/composite_cluster) stated: > *\"If a selected sub-cluster has no healthy hosts available, the request will fail according to that sub-cluster's load balancing behavior, **potentially triggering another retry attempt if configured**.\"* In practice that retry path was unreachable: `no_healthy_upstream` is a routing-level rejection raised before any upstream connection attempt, and no `retry_on` condition covers it. A composite cluster whose first sub-cluster had zero endpoints failed with `503 no_healthy_upstream` regardless of the retry policy, so per-request failover did not work at all in that scenario. ### Change from the previous revision of this PR The first revision of this PR added a core `no-healthy-upstream` retry condition (`RETRY_ON_NO_HEALTHY_UPSTREAM`) plus a hook in `Filter::createConnPoolOrHandleFailure()`. Per review feedback from @wbpcode and @agrawroh, that a core feature serving one extension is the wrong layer, and that the composite cluster should pick a sub-cluster that has healthy hosts itself. The previous approach has been fully reverted and the fix now lives entirely in the extension. Reverted back to `main`: `envoy/router/router.h`, `source/common/http/headers.h`, `source/common/router/retry_state_impl.{h,cc}`, `source/common/router/router.cc`, `test/common/router/{router_test,retry_state_impl_test}.cc`, `test/mocks/router/mocks.{h,cc}`, `api/envoy/config/route/v3/route_components.proto`, `docs/root/configuration/http/http_filters/router_filter.rst`. ### Fix `CompositeClusterLoadBalancer::chooseHost()` still maps the attempt count to a starting cluster index, but host selection now runs through a new `selectHostWithFailover()` helper that walks forward from that index: * A sub-cluster is skipped when it is not present in the cluster manager, or when its load balancer returns no host. * Selection returns immediately when a host is selected, or when the sub-cluster started asynchronous host selection (`HostSelectionResponse::cancelable` set), so an in-flight async selection is not abandoned or duplicated. * When no sub-cluster can provide a host, the `details` and `failure_status` of the last sub-cluster tried are propagated, so the resulting local reply keeps the same diagnostics as before. Availability is determined by asking the sub-cluster's load balancer rather than by inspecting its priority set, so nested composite/aggregate sub-clusters, `CLUSTER_PROVIDED` sub-clusters, panic mode and override-host behavior all keep working. When a sub-cluster can serve the attempt, its load balancer is the only one invoked, so there are no wasted host selections on the happy path. ### Behavior notes * Selection remains driven by the attempt count: an attempt that failed over to a later sub-cluster does not shift the mapping of subsequent attempts. With `[primary, secondary, fallback]` and an empty `primary`, attempt 1 uses `secondary` and attempt 2 also maps to `secondary`. This is documented in the arch overview. If reviewers prefer that a failover also advance the following attempts, that can be done by recording the used index in filter state — happy to add it here or as a follow-up. * `peekAnotherHost()` and `selectExistingConnection()` keep the plain attempt mapping. Every in-tree `selectExistingConnection()` implementation returns `nullopt`, so there is no practical mismatch, and prefetching does not need the failover. ### Minimal reproduction A minimal Docker Compose reproduction of the original bug is available at: https://github.com/JonSchaeffer/playground/tree/main/envoy/composite-bug-minimal-repro ## Risk Level Low — the change is scoped to the composite cluster extension, and it is behind a reloadable runtime guard. ## Testing * Unit tests in `test/extensions/clusters/composite/cluster_test.cc`: failover when the selected sub-cluster has no host, failover when the selected sub-cluster is missing from the cluster manager, no host plus preserved failure details when no sub-cluster can serve the request, asynchronous host selection returned without trying other sub-clusters, and legacy behavior with the runtime guard disabled. * Integration tests in `test/extensions/clusters/composite/cluster_integration_test.cc`: failover with `num_retries: 0` (proving no retry is involved), failover across two consecutive sub-clusters without endpoints, `503` when no sub-cluster has endpoints, and `503` with the runtime guard disabled. The two `no-healthy-upstream` retry tests from the previous revision were removed. * Format and spelling checks: `bazel run //tools/code_format:check_format` and `bazel run //tools/spelling:check_spelling_pedantic` both pass. ## Docs Changes * `docs/root/intro/arch_overview/upstream/composite_cluster.rst`: new \"Hosts availability\" section, updated the sub-cluster health / deterministic routing considerations, and documented the runtime guard and the attempt-progression caveat. * `api/envoy/extensions/clusters/composite/v3/cluster.proto`: comment-only update describing the failover. No field or type changes. ## Release Notes `changelogs/current/bug_fixes/composite_cluster__skip-clusters-without-hosts.rst`. ## Runtime guard `envoy.reloadable_features.composite_cluster_skip_clusters_without_hosts` (enabled by default). Setting it to `false` restores the previous behavior of failing the attempt when the sub-cluster mapped to that attempt has no host available. --- > **Note:** This PR was developed with AI assistance (Claude). The author has reviewed and > understands all changes.",
+        "url": "https://github.com/envoyproxy/envoy/pull/46308",
+        "createdAt": "2026-07-22T12:31:41Z",
+        "updatedAt": "2026-08-13T13:51:19Z",
+        "timestamp": "2026-08-13T13:51:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [
+          "api"
+        ],
+        "author": "JonSchaeffer",
+        "state": "open",
+        "assignees": [
+          "agrawroh",
+          "wbpcode"
+        ],
         "change": "updated"
       }
     }

@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "developer-infrastructure",
@@ -32,9 +32,70 @@
     "defaultBranch": "main",
     "stars": 16155,
     "forks": 910,
-    "openIssues": 138,
+    "openIssues": 140,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:13.362007+00:00"
+    "collectedAt": "2026-08-13T16:19:35.031931+00:00"
+  },
+  "news": {
+    "repository": "dagger/dagger",
+    "collectedAt": "2026-08-13T16:19:35.031931+00:00",
+    "latestRelease": {
+      "repository": "dagger/dagger",
+      "tag": "v0.21.8",
+      "title": "v0.21.8",
+      "url": "https://github.com/dagger/dagger/releases/tag/v0.21.8",
+      "publishedAt": "2026-07-29T17:07:24Z",
+      "notes": "## v0.21.8 - 2026-07-29\n\n### Changed\n\n- Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in\n  https://github.com/dagger/dagger/pull/13615\n\n### Fixed\n\n- Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: `COPY`-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content\n  actually changes. by @marcosnils in https://github.com/dagger/dagger/pull/13765\n- The `--x-release` CLI re-exec so `_EXPERIMENTAL_DAGGER_RUNNER_HOST` is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by\n  @tiborvass in https://github.com/dagger/dagger/pull/13752\n- Silent SDK sessions no longer retain frontend telemetry in memory while Cloud and OTLP export remain enabled. `DAGGER_SILENT` is now honored as the equivalent of `--silent`. by @sipsma in\n  https://github.com/dagger/dagger/pull/13762\n\n### What to do next?\n\n- Read the [documentation](https://docs.dagger.io)\n- Join our [Discord server](https://discord.gg/dagger-io)\n- Follow us on [Twitter](https://twitter.com/dagger_io)\n\n",
+      "highlights": [
+        "v0.21.8 - 2026-07-29",
+        "Changed",
+        "Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in",
+        "Fixed",
+        "Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: COPY-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content",
+        "The --x-release CLI re-exec so EXPERIMENTALDAGGERRUNNERHOST is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "vsometime",
+        "url": "https://github.com/dagger/dagger/milestone/37",
+        "description": "High-priority issues that should be released soon, but are not strict blockers for the immediate next release.",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 36
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.1",
+        "url": "https://github.com/dagger/dagger/milestone/130",
+        "progress": 0,
+        "openIssues": 1,
+        "closedIssues": 0
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.0-beta.8",
+        "url": "https://github.com/dagger/dagger/milestone/131",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 9
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v0.21.9",
+        "url": "https://github.com/dagger/dagger/milestone/132",
+        "description": "",
+        "progress": 75,
+        "openIssues": 1,
+        "closedIssues": 3
+      }
+    ]
   },
   "runs": [
     {
@@ -48,6 +109,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 21,
       "changedCount": 21
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 17,
+      "changedCount": 3
     }
   ],
   "signals": [
@@ -215,8 +282,7 @@
       "labels": [],
       "author": "kpenfound",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:issue:13883",
@@ -237,8 +303,7 @@
       "labels": [],
       "author": "kpenfound",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:issue:13889",
@@ -259,8 +324,7 @@
       "labels": [],
       "author": "eunomie",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13754",
@@ -300,8 +364,7 @@
       "labels": [],
       "author": "TomChv",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13851",
@@ -322,8 +385,7 @@
       "labels": [],
       "author": "sipsma",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13854",
@@ -344,8 +406,7 @@
       "labels": [],
       "author": "grouville",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13855",
@@ -366,8 +427,7 @@
       "labels": [],
       "author": "grouville",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13865",
@@ -388,8 +448,7 @@
       "labels": [],
       "author": "matipan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13870",
@@ -429,8 +488,7 @@
       "labels": [],
       "author": "matipan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13882",
@@ -473,8 +531,7 @@
       "labels": [],
       "author": "sipsma",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13885",
@@ -495,8 +552,7 @@
       "labels": [],
       "author": "sipsma",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13886",
@@ -517,8 +573,7 @@
       "labels": [],
       "author": "sipsma",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13887",
@@ -539,8 +594,7 @@
       "labels": [],
       "author": "sipsma",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13888",
@@ -561,8 +615,73 @@
       "labels": [],
       "author": "sipsma",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13890",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix: make `dagger module init` work from a subdirectory workspace",
+      "text": "# fix: make `dagger module init` work from a subdirectory workspace Fixes #13889. ## The bug With a `dagger.toml` in a subdirectory of the git repo — the monorepo layout, several projects under one root — `dagger module init` fails outright: ```console $ mkdir repo && cd repo && git init && mkdir common && touch common/dagger.toml $ cd common && dagger sdk install go $ dagger module init go hello -y Error: sdk module init: failed to call sdk module initModule: workspace path .dagger/modules/hello is outside changeset root common ``` And the workaround that avoids the error is worse: `--path common/hello` writes the engine's `dagger-module.toml` to `common/hello/` while the SDK's `main.go` lands in `hello/` — a split, non-loadable module, with no error at all. ## Root cause Two path conventions disagree once the caller is not standing at the workspace root, which a subdirectory `dagger.toml` guarantees: workspace root detection walks up to `.git` and a `dagger.toml` does not define the root, so selecting `common/dagger.toml` always means root = git root and `Workspace.cwd = common`. 1. **The engine resolves init paths workspace-root-relative and applies the changeset at the workspace root.** `Workspace.export` writes to `ExportHostPath()`, which is the workspace root. Self-consistent. 2. **An SDK's `initModule` stages files relative to `Workspace.cwd`.** The polyfill's workspace fork (`github.com/dagger/polyfill`, `workspace-fork.dang` → `clientPath`) rebases a root-relative path onto the cwd and raises when the path is not under it, because a changeset returned from an ordinary function call *is* applied at the caller's cwd (`changeset.Export(ctx, \".\")` resolves against the client's OS cwd). The polyfill is right for the second apply base and wrong for the first, and the engine is the layer that both chooses the workspace it shows the SDK and calls `Workspace.export` at the root. So the reconciliation belongs here. This is a founding assumption rather than a regression: the cwd rebasing arrived with the polyfill's root commit (`dagger/sdk-sdk` `732835f`, \"Add SDK development polyfill module\", 2026-05-18, later spun out to `github.com/dagger/polyfill`); the later \"read cwd from Workspace.cwd\" only changed where the cwd came from, not the semantics. Monorepo layouts are simply the first thing to exercise a non-root cwd through init. ## The fix (engine only — no SDK or polyfill change) **Hand the SDK a root-anchored workspace during init.** New `rootAnchoredWorkspace` in `core/schema/workspace_sdk_init.go` returns the workspace with `cwd = \".\"` (built through the `withWorkdir` field so the result stays an attached dagql result, the same way `scopedStagedWorkspace` does it for generators). `initModuleChanges` and `initClientChanges` pass that to the SDK instead of the caller's workspace, so the cwd the SDK sees matches where the changeset actually lands, and the polyfill's rebasing becomes the no-op it already is at the root. Nothing about the generic `changeset.Export(\".\")` path — `dagger generate` included — changes. **Anchor the default module path at the `dagger.toml` being edited.** `.dagger/modules/<name>` was joined against the workspace root. Since `[modules.<name>].source` is resolved against the config directory, a root-anchored default under `common/dagger.toml` would have recorded an entry pointing outside its own project. The default is now `<config dir>/.dagger/modules/<name>` and the recorded source is made config-dir-relative with `filepath.Rel`, the same conversion `dagger install` already performs for a local ref. At the workspace root — every existing workspace — both are unchanged. `--path` keeps its documented workspace-root-relative meaning; only the split it used to produce is fixed. The CLI help and the Go SDK page now say so explicitly — `--path ci` from a subdirectory means `<workspace root>/ci`, not `./ci` — and the generated CLI reference is updated to match. ## Verification New engine integration test `TestGenerators/TestInitFromSubdirectoryWorkspace`, against a fixture SDK whose `initModule`/`initClient` mirror the polyfill's cwd rebasing (so the test reproduces the real failure, not a synthetic one): - `dagger module init` from `common/` puts `dagger-module.toml`, the SDK scaffold and the generator output together under `common/.dagger/modules/newmod/`, records `source = \".dagger/modules/newmod\"` and `path = \"common/.dagger/modules/newmod\"`, and writes nothing at the git root. - `--path common/hello` from `common/` puts both files under `common/hello/` and nothing at `hello/`. - `--path tools/hello` from `common/` — a path *outside* the caller's cwd — puts both files under `tools/`, which is what separates root-anchoring from a cwd-scoped reroot. - `dagger api client init` from `common/` scaffolds at the requested path. Confirmed the test fails on the unfixed engine with the reported `outside changeset root` error, and passes with the fix. The existing root-workspace init tests (`TestModuleInitGeneratesForNewModuleOnly`, `TestAPIClientInitGeneratesForNewClientOnly`) still pass unchanged. ## Noted, not fixed Two adjacent inconsistencies found while tracing this, both out of scope here: - `dagger api client init` cannot take a workspace-root-relative module ref that contains a `.` segment (e.g. `common/.dagger/init-fixture`): `workspace.IsLocalRef` classifies it as remote. Unrelated to cwd; the test fixture sidesteps it by living at a dot-free path. - `workspace.AddMigratedModuleSDK` (used by `dagger setup`) writes `as-sdk.modules[].path` relative to the owning config directory, while every consumer — `sdkOwnersByModulePath`, `removeSDKManagedModuleReference`, and the Go SDK's `modules(ws)` — reads it workspace-root-relative. Identical only when the config is at the root.",
+      "url": "https://github.com/dagger/dagger/pull/13890",
+      "createdAt": "2026-08-13T14:55:18Z",
+      "updatedAt": "2026-08-13T16:14:53Z",
+      "timestamp": "2026-08-13T16:14:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13891",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "ci: unpin helm from the retired wolfi helm 3.x package",
+      "text": "> [!NOTE] > This unblocks CI repo-wide. `main` and every open PR are currently red. Chainguard moved the wolfi `helm` apk package to the 4.x line, so every `helm~3.18.4` constraint fails to resolve: ``` ERROR: unable to select packages: helm-4-4.2.3-r1: breaks: world[helm~3.18.4] ``` That breaks `ci:bootstrap`, `golang:test-all` (via `e2e/helm`), `helm:lint` and `helm:assert-template`. No repo code is at fault — reproduced with a bare `apk add`. Available wolfi packages are now `helm-4.0.1-r0` (bare `helm`), `helm-3-3.19.2-r2`, `helm-4-4.2.3-r1`. ## Fix - The paths that **package/ship** our chart move to the versioned package so they stay on Helm 3: `helm~3.18.4` → `helm-3~3.19.2` in `.dagger/modules/release/helm.go` and `e2e/helm/helm_test.go`. - `helm:lint` / `helm:assert-template` don't come from those pins — they come from the external `github.com/dagger/helm` module, which hardcodes `apk add \"helm~\" + version`, so 3.x is unselectable there without an upstream change. Its `[modules.helm.settings] version` is set to `4.0.1` (verified it lints/templates our chart fine). Follow-up (not this PR): teach `github.com/dagger/helm` to select the `helm-3` package so the checker can go back to 3.x. ## Verified locally (dev engine) - `helm lint` and `helm assert-template` → PASS (were ERROR). - `e2e/helm`: `TestCustomProbes`, `TestPackageDryRun`, `TestInstallK3S` (all 4 subtests: default/port daemonset, default/port statefulset) → PASS. - `helm-3~3.19.2` install → `helm version` v3.19.2; `helm package .` → `dagger-helm-1.0.0-beta.10.tgz` OK. `docs/versioned_docs/version-0.21.7/modules/helm.mdx` still references `3.18.4` and is left untouched — versioned docs are frozen snapshots.",
+      "url": "https://github.com/dagger/dagger/pull/13891",
+      "createdAt": "2026-08-13T15:35:09Z",
+      "updatedAt": "2026-08-13T16:11:27Z",
+      "timestamp": "2026-08-13T16:11:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13892",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix(setup): anchor migrated as-sdk module paths at the workspace root",
+      "text": "## What `dagger.toml` carries two path conventions that only coincide when the config file sits at the workspace root: - `[modules.<name>].source` resolves against the **config directory** (`ResolveModuleEntrySource`). - `[[modules.<sdk>.as-sdk.modules]].path` is **workspace-root-relative**, everywhere it is read: module→SDK ownership (`sdkOwnersByModulePathFromConfig`), uninstall (`removeSDKManagedModuleReference`), the workspace SDK listing (`workspaceSDKFromEntry`), and `currentModule.asSDK.modules`, which the SDKs themselves consume (including the out-of-repo `dagger/go-sdk`). The migration writer disagreed. `workspaceMigrationInstallDiscoveredModuleSDKs` recorded a discovered local module with `filepath.Rel(owner, projectRoot)` — relative to the config that owns it, not to the workspace root. This patch anchors it at the workspace root via the existing `workspaceMigrationProjectRootRelPath` helper, and states the anchor on the config types (plus the regenerated public JSON schema). ## Is anything broken today? No — and the change is deliberately framed as hardening rather than a user-visible fix. Migration plans every workspace config at `ws.HostPath()`: `PlanMigration` sets `plan.ProjectRoot` to the workspace root when hoisted, and otherwise the project root *is* the workspace root; synthesized parent plans land at the workspace root too. So `owner` always equals the workspace root and the two anchors produce the same string. The mismatch only bites the day migration can plan a config below the workspace root — which the `FIXME(workspace-migrate)` about scanning for legacy child `dagger.json` files points straight at. Fixing the writer rather than the readers is the small, safe side of the mismatch: the readers' contract is depended on by SDKs living in other repos. ## Tests - `core/schema` unit test pinning the anchor for a config planned below the workspace root. It is the only test that fails against the old writer; its comment is explicit that the shape is not reachable through `dagger setup` today. - `core/integration` assertions on the existing subdirectory-toolchains migration: the discovered toolchain is recorded by a workspace-root-relative path, and `dagger uninstall` resolves that path back to its as-sdk entry — end-to-end coverage of the contract in the monorepo layout.",
+      "url": "https://github.com/dagger/dagger/pull/13892",
+      "createdAt": "2026-08-13T15:44:40Z",
+      "updatedAt": "2026-08-13T16:17:10Z",
+      "timestamp": "2026-08-13T16:17:10Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     }
   ],
   "events": [
@@ -1186,6 +1305,93 @@
           "vito"
         ],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:a83d9cd224ad48e73733",
+      "signalId": "github:dagger/dagger:pull_request:13892",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13892",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "fix(setup): anchor migrated as-sdk module paths at the workspace root",
+        "text": "## What `dagger.toml` carries two path conventions that only coincide when the config file sits at the workspace root: - `[modules.<name>].source` resolves against the **config directory** (`ResolveModuleEntrySource`). - `[[modules.<sdk>.as-sdk.modules]].path` is **workspace-root-relative**, everywhere it is read: module→SDK ownership (`sdkOwnersByModulePathFromConfig`), uninstall (`removeSDKManagedModuleReference`), the workspace SDK listing (`workspaceSDKFromEntry`), and `currentModule.asSDK.modules`, which the SDKs themselves consume (including the out-of-repo `dagger/go-sdk`). The migration writer disagreed. `workspaceMigrationInstallDiscoveredModuleSDKs` recorded a discovered local module with `filepath.Rel(owner, projectRoot)` — relative to the config that owns it, not to the workspace root. This patch anchors it at the workspace root via the existing `workspaceMigrationProjectRootRelPath` helper, and states the anchor on the config types (plus the regenerated public JSON schema). ## Is anything broken today? No — and the change is deliberately framed as hardening rather than a user-visible fix. Migration plans every workspace config at `ws.HostPath()`: `PlanMigration` sets `plan.ProjectRoot` to the workspace root when hoisted, and otherwise the project root *is* the workspace root; synthesized parent plans land at the workspace root too. So `owner` always equals the workspace root and the two anchors produce the same string. The mismatch only bites the day migration can plan a config below the workspace root — which the `FIXME(workspace-migrate)` about scanning for legacy child `dagger.json` files points straight at. Fixing the writer rather than the readers is the small, safe side of the mismatch: the readers' contract is depended on by SDKs living in other repos. ## Tests - `core/schema` unit test pinning the anchor for a config planned below the workspace root. It is the only test that fails against the old writer; its comment is explicit that the shape is not reachable through `dagger setup` today. - `core/integration` assertions on the existing subdirectory-toolchains migration: the discovered toolchain is recorded by a workspace-root-relative path, and `dagger uninstall` resolves that path back to its as-sdk entry — end-to-end coverage of the contract in the monorepo layout.",
+        "url": "https://github.com/dagger/dagger/pull/13892",
+        "createdAt": "2026-08-13T15:44:40Z",
+        "updatedAt": "2026-08-13T16:17:10Z",
+        "timestamp": "2026-08-13T16:17:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "eunomie",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:85e9c2068de2908cf915",
+      "signalId": "github:dagger/dagger:pull_request:13890",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13890",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "fix: make `dagger module init` work from a subdirectory workspace",
+        "text": "# fix: make `dagger module init` work from a subdirectory workspace Fixes #13889. ## The bug With a `dagger.toml` in a subdirectory of the git repo — the monorepo layout, several projects under one root — `dagger module init` fails outright: ```console $ mkdir repo && cd repo && git init && mkdir common && touch common/dagger.toml $ cd common && dagger sdk install go $ dagger module init go hello -y Error: sdk module init: failed to call sdk module initModule: workspace path .dagger/modules/hello is outside changeset root common ``` And the workaround that avoids the error is worse: `--path common/hello` writes the engine's `dagger-module.toml` to `common/hello/` while the SDK's `main.go` lands in `hello/` — a split, non-loadable module, with no error at all. ## Root cause Two path conventions disagree once the caller is not standing at the workspace root, which a subdirectory `dagger.toml` guarantees: workspace root detection walks up to `.git` and a `dagger.toml` does not define the root, so selecting `common/dagger.toml` always means root = git root and `Workspace.cwd = common`. 1. **The engine resolves init paths workspace-root-relative and applies the changeset at the workspace root.** `Workspace.export` writes to `ExportHostPath()`, which is the workspace root. Self-consistent. 2. **An SDK's `initModule` stages files relative to `Workspace.cwd`.** The polyfill's workspace fork (`github.com/dagger/polyfill`, `workspace-fork.dang` → `clientPath`) rebases a root-relative path onto the cwd and raises when the path is not under it, because a changeset returned from an ordinary function call *is* applied at the caller's cwd (`changeset.Export(ctx, \".\")` resolves against the client's OS cwd). The polyfill is right for the second apply base and wrong for the first, and the engine is the layer that both chooses the workspace it shows the SDK and calls `Workspace.export` at the root. So the reconciliation belongs here. This is a founding assumption rather than a regression: the cwd rebasing arrived with the polyfill's root commit (`dagger/sdk-sdk` `732835f`, \"Add SDK development polyfill module\", 2026-05-18, later spun out to `github.com/dagger/polyfill`); the later \"read cwd from Workspace.cwd\" only changed where the cwd came from, not the semantics. Monorepo layouts are simply the first thing to exercise a non-root cwd through init. ## The fix (engine only — no SDK or polyfill change) **Hand the SDK a root-anchored workspace during init.** New `rootAnchoredWorkspace` in `core/schema/workspace_sdk_init.go` returns the workspace with `cwd = \".\"` (built through the `withWorkdir` field so the result stays an attached dagql result, the same way `scopedStagedWorkspace` does it for generators). `initModuleChanges` and `initClientChanges` pass that to the SDK instead of the caller's workspace, so the cwd the SDK sees matches where the changeset actually lands, and the polyfill's rebasing becomes the no-op it already is at the root. Nothing about the generic `changeset.Export(\".\")` path — `dagger generate` included — changes. **Anchor the default module path at the `dagger.toml` being edited.** `.dagger/modules/<name>` was joined against the workspace root. Since `[modules.<name>].source` is resolved against the config directory, a root-anchored default under `common/dagger.toml` would have recorded an entry pointing outside its own project. The default is now `<config dir>/.dagger/modules/<name>` and the recorded source is made config-dir-relative with `filepath.Rel`, the same conversion `dagger install` already performs for a local ref. At the workspace root — every existing workspace — both are unchanged. `--path` keeps its documented workspace-root-relative meaning; only the split it used to produce is fixed. The CLI help and the Go SDK page now say so explicitly — `--path ci` from a subdirectory means `<workspace root>/ci`, not `./ci` — and the generated CLI reference is updated to match. ## Verification New engine integration test `TestGenerators/TestInitFromSubdirectoryWorkspace`, against a fixture SDK whose `initModule`/`initClient` mirror the polyfill's cwd rebasing (so the test reproduces the real failure, not a synthetic one): - `dagger module init` from `common/` puts `dagger-module.toml`, the SDK scaffold and the generator output together under `common/.dagger/modules/newmod/`, records `source = \".dagger/modules/newmod\"` and `path = \"common/.dagger/modules/newmod\"`, and writes nothing at the git root. - `--path common/hello` from `common/` puts both files under `common/hello/` and nothing at `hello/`. - `--path tools/hello` from `common/` — a path *outside* the caller's cwd — puts both files under `tools/`, which is what separates root-anchoring from a cwd-scoped reroot. - `dagger api client init` from `common/` scaffolds at the requested path. Confirmed the test fails on the unfixed engine with the reported `outside changeset root` error, and passes with the fix. The existing root-workspace init tests (`TestModuleInitGeneratesForNewModuleOnly`, `TestAPIClientInitGeneratesForNewClientOnly`) still pass unchanged. ## Noted, not fixed Two adjacent inconsistencies found while tracing this, both out of scope here: - `dagger api client init` cannot take a workspace-root-relative module ref that contains a `.` segment (e.g. `common/.dagger/init-fixture`): `workspace.IsLocalRef` classifies it as remote. Unrelated to cwd; the test fixture sidesteps it by living at a dot-free path. - `workspace.AddMigratedModuleSDK` (used by `dagger setup`) writes `as-sdk.modules[].path` relative to the owning config directory, while every consumer — `sdkOwnersByModulePath`, `removeSDKManagedModuleReference`, and the Go SDK's `modules(ws)` — reads it workspace-root-relative. Identical only when the config is at the root.",
+        "url": "https://github.com/dagger/dagger/pull/13890",
+        "createdAt": "2026-08-13T14:55:18Z",
+        "updatedAt": "2026-08-13T16:14:53Z",
+        "timestamp": "2026-08-13T16:14:53Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "eunomie",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:df514da6a7f2288fd370",
+      "signalId": "github:dagger/dagger:pull_request:13891",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13891",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "ci: unpin helm from the retired wolfi helm 3.x package",
+        "text": "> [!NOTE] > This unblocks CI repo-wide. `main` and every open PR are currently red. Chainguard moved the wolfi `helm` apk package to the 4.x line, so every `helm~3.18.4` constraint fails to resolve: ``` ERROR: unable to select packages: helm-4-4.2.3-r1: breaks: world[helm~3.18.4] ``` That breaks `ci:bootstrap`, `golang:test-all` (via `e2e/helm`), `helm:lint` and `helm:assert-template`. No repo code is at fault — reproduced with a bare `apk add`. Available wolfi packages are now `helm-4.0.1-r0` (bare `helm`), `helm-3-3.19.2-r2`, `helm-4-4.2.3-r1`. ## Fix - The paths that **package/ship** our chart move to the versioned package so they stay on Helm 3: `helm~3.18.4` → `helm-3~3.19.2` in `.dagger/modules/release/helm.go` and `e2e/helm/helm_test.go`. - `helm:lint` / `helm:assert-template` don't come from those pins — they come from the external `github.com/dagger/helm` module, which hardcodes `apk add \"helm~\" + version`, so 3.x is unselectable there without an upstream change. Its `[modules.helm.settings] version` is set to `4.0.1` (verified it lints/templates our chart fine). Follow-up (not this PR): teach `github.com/dagger/helm` to select the `helm-3` package so the checker can go back to 3.x. ## Verified locally (dev engine) - `helm lint` and `helm assert-template` → PASS (were ERROR). - `e2e/helm`: `TestCustomProbes`, `TestPackageDryRun`, `TestInstallK3S` (all 4 subtests: default/port daemonset, default/port statefulset) → PASS. - `helm-3~3.19.2` install → `helm version` v3.19.2; `helm package .` → `dagger-helm-1.0.0-beta.10.tgz` OK. `docs/versioned_docs/version-0.21.7/modules/helm.mdx` still references `3.18.4` and is left untouched — versioned docs are frozen snapshots.",
+        "url": "https://github.com/dagger/dagger/pull/13891",
+        "createdAt": "2026-08-13T15:35:09Z",
+        "updatedAt": "2026-08-13T16:11:27Z",
+        "timestamp": "2026-08-13T16:11:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "eunomie",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
       }
     }
   ]

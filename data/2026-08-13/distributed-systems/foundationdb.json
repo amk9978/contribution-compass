@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "distributed-systems",
@@ -29,7 +29,41 @@
     "forks": 1546,
     "openIssues": 767,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:03.414571+00:00"
+    "collectedAt": "2026-08-13T16:19:24.637063+00:00"
+  },
+  "news": {
+    "repository": "apple/foundationdb",
+    "collectedAt": "2026-08-13T16:19:24.637063+00:00",
+    "latestRelease": {
+      "repository": "apple/foundationdb",
+      "tag": "7.3.77",
+      "title": "Release 7.3.77",
+      "url": "https://github.com/apple/foundationdb/releases/tag/7.3.77",
+      "publishedAt": "2026-04-16T19:24:36Z",
+      "notes": "Same code as 7.3.76 but with avx enabled.",
+      "highlights": [],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.79",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.79",
+        "description": "Same code as 7.3.78 but with avx enabled.",
+        "tag": "7.3.79",
+        "publishedAt": "2026-07-15T20:13:35Z"
+      },
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.78",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.78",
+        "description": "This release is compiled without avx instructions.",
+        "tag": "7.3.78",
+        "publishedAt": "2026-07-15T20:13:34Z"
+      }
+    ]
   },
   "runs": [
     {
@@ -43,6 +77,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 16,
       "changedCount": 16
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 13,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -85,8 +125,7 @@
       "labels": [],
       "author": "mo74m3ed",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:issue:13858",
@@ -107,8 +146,7 @@
       "labels": [],
       "author": "mo74m3ed",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:issue:13859",
@@ -128,8 +166,7 @@
       "labels": [],
       "author": "mo74m3ed",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:issue:13860",
@@ -149,8 +186,7 @@
       "labels": [],
       "author": "mo74m3ed",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13748",
@@ -171,8 +207,7 @@
       "labels": [],
       "author": "hxu",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13800",
@@ -193,8 +228,7 @@
       "labels": [],
       "author": "tclinkenbeard-oai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13815",
@@ -240,8 +274,7 @@
       "labels": [],
       "author": "edameki",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13848",
@@ -262,8 +295,7 @@
       "labels": [],
       "author": "tclinkenbeard-oai",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13849",
@@ -284,8 +316,7 @@
       "labels": [],
       "author": "tclinkenbeard-oai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13850",
@@ -306,8 +337,7 @@
       "labels": [],
       "author": "tclinkenbeard-oai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13851",
@@ -350,8 +380,7 @@
       "labels": [],
       "author": "tclinkenbeard-oai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13855",
@@ -372,8 +401,7 @@
       "labels": [],
       "author": "ploxiln",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13856",
@@ -394,8 +422,7 @@
       "labels": [],
       "author": "tclinkenbeard-oai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     }
   ],
   "events": [

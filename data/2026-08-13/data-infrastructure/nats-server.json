@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "data-infrastructure",
@@ -35,11 +35,33 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 20488,
+    "stars": 20490,
     "forks": 1904,
-    "openIssues": 544,
+    "openIssues": 541,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:10.895765+00:00"
+    "collectedAt": "2026-08-13T16:19:30.103887+00:00"
+  },
+  "news": {
+    "repository": "nats-io/nats-server",
+    "collectedAt": "2026-08-13T16:19:30.103887+00:00",
+    "latestRelease": {
+      "repository": "nats-io/nats-server",
+      "tag": "v2.14.5",
+      "title": "Release v2.14.5",
+      "url": "https://github.com/nats-io/nats-server/releases/tag/v2.14.5",
+      "publishedAt": "2026-08-12T15:31:27Z",
+      "notes": "## Changelog\r\n\r\nRefer to the [2.14 Upgrade Guide](https://docs.nats.io/release-notes/whats_new/whats_new_214) for backwards compatibility notes with 2.12.x. Please note that the 2.13.x version was skipped.\r\n\r\n### Go Version\r\n\r\n- 1.26.5\r\n\r\n### Dependencies\r\n\r\n- github.com/klauspost/compress v1.19.2 (#8459)\r\n- golang.org/x/crypto v0.55.0 (#8459)\r\n\r\n### Added\r\n\r\nLeafnodes\r\n\r\n- New `dial_timeout` option can be specified in the `leafnode` config block or for specific remotes in the configuration, allowing it to be increased above the default 1 second for high-latency links (#8427)\r\n\r\n### Fixed\r\n\r\nGeneral\r\n\r\n- Fixed a deadlock that could occur in the logger when a close error occurs (#8430)\r\n\r\nJetStream\r\n\r\n- Fix a bug that could result in potential data loss when handling idempotent stream creates when an offline node catches up from a metalayer snapshot, caused by an incorrect update to the create time in the stream assignment (#8449)\r\n\r\n### Complete Changes\r\n \r\nhttps://github.com/nats-io/nats-server/compare/v2.14.4...v2.14.5",
+      "highlights": [
+        "Changelog",
+        "Go Version",
+        "1.26.5",
+        "Dependencies",
+        "github.com/klauspost/compress v1.19.2 (#8459)",
+        "golang.org/x/crypto v0.55.0 (#8459)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": []
   },
   "runs": [
     {
@@ -53,6 +75,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 15,
       "changedCount": 15
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 13,
+      "changedCount": 4
     }
   ],
   "signals": [
@@ -78,8 +106,58 @@
       ],
       "author": "SomeshDaga",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:nats-io/nats-server:issue:6206",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "JetStream stream source stalls/is out of sync after sourced stream is re-created for unrelated reason [v2.10.20]",
+      "text": "### Observed behavior Setup: basic hub spoke with leafnodes. hub is a single jetstream enabled server in its own domain, so are the leaf nodes. On the hub, there is a stream named match_events that sources from the match_events stream in each leaf node. Symptoms: Sourcing from match_events on one leafnode stopped working. Despite new messages being added to it, no data is sent to match_events in the hub. Cause: I believe we ran into a crash during recovery that sounds similar to one fixed in a release candidate of 2.10.23. In order to recover from this issue, we renamed the data directory, which resulted in data loss but allowed the system to become functional again. On the leaf node with the issue, sequence numbers in the stream are less than 80. Create time is right after the time when the jetstream data directory got renamed and everything started to seemingly function again. On the hub node, stream info showed the edge connected with low lag. But when subscribing to the consumer create message of that leaf, we noticed that the requested start seq no is 995 and hence way bigger than 80. Meaning 995 was the sequence number the previous incarnation of match_events had on that leaf and 79 is the value of the current incarnation This would explain why there seems to be no data flow ... yet. Failed workaround: We edited the match_events stream in the hub to remove the source corresponding to the leaf. Then we re-added it. This did not seem to work as we recorded the consumer create messages and the sequence number remained at the old value it had before the source got removed & re-added. I then edited the source to set the op_start_seq to 1. This didn't work either, as presumably a higher sequence number was still in memory. A few hours later we restarted the hub server. After that the sequence number was reset to one. ---------------------- Logs: Hub consumer create messages: ``` [#13] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.FEkNK9Is\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.l2lkXkVm\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} [#21] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.3L70SiTW\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.qyIUgE5D\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} ``` Leafnode match_events stream: ``` > nats stream ls -a ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮ │ Streams │ ├─────────────────────┬────────────────────────────────────────────┬─────────────────────┬───────────┬─────────┬──────────────┤ │ Name │ Description │ Created │ Messages │ Size │ Last Message │ ├─────────────────────┼────────────────────────────────────────────┼─────────────────────┼───────────┼─────────┼──────────────┤ ... │ match_events │ │ 2024-11-27 17:53:49 │ 79 │ 15 MiB │ 25m10s │ ... ╰─────────────────────┴────────────────────────────────────────────┴─────────────────────┴───────────┴─────────┴──────────────╯ > nats stream info match_events Information for Stream match_events created 2024-11-27 17:53:49 Subjects: faceio.match.> Replicas: 1 Storage: File Options: Retention: Limits Acknowledgments: true Discard Policy: Old Duplicate Window: 2m0s Allows Msg Delete: true Allows Purge: true Allows Rollups: false Limits: Maximum Messages: unlimited Maximum Per Subject: unlimited Maximum Bytes: unlimited Maximum Age: 7d0h0m0s Maximum Message Size: unlimited Maximum Consumers: unlimited Cluster Information: Name: edge-652efb2da425e854a1e8d203 Leader: edge-652efb2da425e854a1e8d203 State: Messages: 79 Bytes: 15 MiB First Sequence: 1 @ 2024-11-27 18:13:14 Last Sequence: 79 @ 2024-12-02 17:57:52 Active Consumers: 1 Number of Subjects: 79 > ``` Hub consumer create messages for failed workaround: The first message was received after re-creating the source. The second message was received after editing opt_start_seq of the source. In both cases, opt_start_seq in the request remains at the last old value. ``` >nats sub \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" 10:44:28 Subscribing on $JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events [#1] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.XoBsIZ61\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.58t1cta4\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} [#2] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.h5dA0pYu\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.j4aQssSi\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} ``` Hub consumer create messages after hub nats server restart show opt_start_seq=1. ``` [#7] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.snChCWwx\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.6U6FCNWD\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} 15:19:43 Disconnected due to: read tcp 127.0.0.1:32592->127.0.0.1:4222: wsarecv: An existing connection was forcibly closed by the remote host., will attempt reconnect 15:20:09 Reconnected [nats://ff-queue-user:LtJQaah4Y2PUGAUyx8_oLZ@127.0.0.1:4222] [#8] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.hwd0hutm\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":1,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.ZoqTXdlB\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} ``` Hub match_events stream taken right after consumer create [#2] from above, showing start seqno 1 ``` Information for Stream match_events created 2024-11-15 10:45:14 Subjects: faceio.match.> Replicas: 1 Storage: File Options: Retention: Limits Acknowledgments: true Discard Policy: Old Duplicate Window: 2m0s Allows Msg Delete: true Allows Purge: true Allows Rollups: false Limits: Maximum Messages: unlimited Maximum Per Subject: unlimited Maximum Bytes: unlimited Maximum Age: 7d0h0m0s Maximum Message Size: unlimited Maximum Consumers: unlimited Replication: Sources: ... match_events, Start Seq: 1, API Prefix: $JS.edge-652efb2da425e854a1e8d203.API, Delivery Prefix: deliver.edge-652efb2da425e854a1e8d203.match_events ... Source Information: ... Stream Name: match_events Lag: 0 Last Seen: 934ms Ext. API Prefix: $JS.edge-652efb2da425e854a1e8d203.API Ext. Delivery Prefix: deliver.edge-652efb2da425e854a1e8d203.match_events ... State: Messages: 40,303 Bytes: 7.4 GiB First Sequence: 505,520 @ 2024-11-26 11:02:59 Last Sequence: 545,822 @ 2024-12-03 11:02:56 Active Consumers: 1 Number of Subjects: 37,538 ``` Leafnode nats-server logs showing restart loop: nats server basically starts and exits right away. (within same second. different from being killed because it's taking too long) ``` [15052] 2024/11/27 17:43:00.113089 [INF] Starting nats-server [15052] 2024/11/27 17:43:00.113621 [INF] Version: 2.10.20 [15052] 2024/11/27 17:43:00.113621 [INF] Git: [7140387] [15052] 2024/11/27 17:43:00.113621 [INF] Cluster: edge-652efb2da425e854a1e8d203 [15052] 2024/11/27 17:43:00.113621 [INF] Name: edge-652efb2da425e854a1e8d203 [15052] 2024/11/27 17:43:00.113621 [INF] Node: cSXjN80e [15052] 2024/11/27 17:43:00.113621 [INF] ID: NCPMUJYVKW6V742BE4GN4RH2V6LCIFTB5MESCYDKJKURJMXCVQWJQXOQ [15052] 2024/11/27 17:43:00.113671 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [15052] 2024/11/27 17:43:00.114322 [INF] Starting http monitor on 127.0.0.1:8223 [15052] 2024/11/27 17:43:00.114322 [INF] Starting JetStream [15052] 2024/11/27 17:43:00.114827 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [15052] 2024/11/27 17:43:00.114884 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [15052] 2024/11/27 17:43:00.114884 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [15052] 2024/11/27 17:43:00.114884 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [15052] 2024/11/27 17:43:00.114884 [INF] [15052] 2024/11/27 17:43:00.114884 [INF] https://docs.nats.io/jetstream [15052] 2024/11/27 17:43:00.114884 [INF] [15052] 2024/11/27 17:43:00.114884 [INF] ---------------- JETSTREAM ---------------- [15052] 2024/11/27 17:43:00.114884 [INF] Max Memory: 23.94 GB [15052] 2024/11/27 17:43:00.114884 [INF] Max Storage: 1.00 TB [15052] 2024/11/27 17:43:00.114884 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [15052] 2024/11/27 17:43:00.114884 [INF] Domain: edge-652efb2da425e854a1e8d203 [15052] 2024/11/27 17:43:00.114884 [INF] ------------------------------------------- [15052] 2024/11/27 17:43:00.115438 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [15052] 2024/11/27 17:43:00.166680 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 51ms [15052] 2024/11/27 17:43:00.166680 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [15052] 2024/11/27 17:43:00.208948 [WRN] Filestore [KV_media] loadBlock error: message block data missing [15052] 2024/11/27 17:43:00.211651 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [15052] 2024/11/27 17:43:00.238941 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 72ms [15052] 2024/11/27 17:43:00.239938 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [15052] 2024/11/27 17:43:00.239938 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [15052] 2024/11/27 17:43:00.240936 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [17012] 2024/11/27 17:45:03.817424 [INF] Starting nats-server [17012] 2024/11/27 17:45:03.818469 [INF] Version: 2.10.20 [17012] 2024/11/27 17:45:03.818469 [INF] Git: [7140387] [17012] 2024/11/27 17:45:03.818469 [INF] Cluster: edge-652efb2da425e854a1e8d203 [17012] 2024/11/27 17:45:03.818469 [INF] Name: edge-652efb2da425e854a1e8d203 [17012] 2024/11/27 17:45:03.818469 [INF] Node: cSXjN80e [17012] 2024/11/27 17:45:03.818469 [INF] ID: NBZL4XFOC64CKXUWPM7ZCS7NNDI5X25LSMHXWZOCCB7XVM4UTOP6TD66 [17012] 2024/11/27 17:45:03.818469 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [17012] 2024/11/27 17:45:03.819454 [INF] Starting http monitor on 127.0.0.1:8223 [17012] 2024/11/27 17:45:03.819454 [INF] Starting JetStream [17012] 2024/11/27 17:45:03.819977 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [17012] 2024/11/27 17:45:03.819977 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [17012] 2024/11/27 17:45:03.819977 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [17012] 2024/11/27 17:45:03.819977 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [17012] 2024/11/27 17:45:03.819977 [INF] [17012] 2024/11/27 17:45:03.819977 [INF] https://docs.nats.io/jetstream [17012] 2024/11/27 17:45:03.819977 [INF] [17012] 2024/11/27 17:45:03.819977 [INF] ---------------- JETSTREAM ---------------- [17012] 2024/11/27 17:45:03.819977 [INF] Max Memory: 23.94 GB [17012] 2024/11/27 17:45:03.819977 [INF] Max Storage: 1.00 TB [17012] 2024/11/27 17:45:03.819977 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [17012] 2024/11/27 17:45:03.819977 [INF] Domain: edge-652efb2da425e854a1e8d203 [17012] 2024/11/27 17:45:03.819977 [INF] ------------------------------------------- [17012] 2024/11/27 17:45:03.821034 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [17012] 2024/11/27 17:45:03.878169 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 57ms [17012] 2024/11/27 17:45:03.878169 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [17012] 2024/11/27 17:45:03.879175 [WRN] Filestore [KV_media] loadBlock error: message block data missing [17012] 2024/11/27 17:45:03.882158 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [17012] 2024/11/27 17:45:03.911169 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 33ms [17012] 2024/11/27 17:45:03.911169 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [17012] 2024/11/27 17:45:03.911169 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [17012] 2024/11/27 17:45:03.912166 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [14928] 2024/11/27 17:47:06.923509 [INF] Starting nats-server [14928] 2024/11/27 17:47:06.924012 [INF] Version: 2.10.20 [14928] 2024/11/27 17:47:06.924068 [INF] Git: [7140387] [14928] 2024/11/27 17:47:06.924068 [INF] Cluster: edge-652efb2da425e854a1e8d203 [14928] 2024/11/27 17:47:06.924068 [INF] Name: edge-652efb2da425e854a1e8d203 [14928] 2024/11/27 17:47:06.924068 [INF] Node: cSXjN80e [14928] 2024/11/27 17:47:06.924068 [INF] ID: NBNOJN5SXYFVUKV73CCNICSKU22K2TBCLHQW2GG5ATAQAHIWI2GMWYDA [14928] 2024/11/27 17:47:06.924109 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [14928] 2024/11/27 17:47:06.924644 [INF] Starting http monitor on 127.0.0.1:8223 [14928] 2024/11/27 17:47:06.924644 [INF] Starting JetStream [14928] 2024/11/27 17:47:06.925157 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [14928] 2024/11/27 17:47:06.925157 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [14928] 2024/11/27 17:47:06.925157 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [14928] 2024/11/27 17:47:06.925157 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [14928] 2024/11/27 17:47:06.925157 [INF] [14928] 2024/11/27 17:47:06.925157 [INF] https://docs.nats.io/jetstream [14928] 2024/11/27 17:47:06.925157 [INF] [14928] 2024/11/27 17:47:06.925157 [INF] ---------------- JETSTREAM ---------------- [14928] 2024/11/27 17:47:06.925157 [INF] Max Memory: 23.94 GB [14928] 2024/11/27 17:47:06.925157 [INF] Max Storage: 1.00 TB [14928] 2024/11/27 17:47:06.925157 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [14928] 2024/11/27 17:47:06.925157 [INF] Domain: edge-652efb2da425e854a1e8d203 [14928] 2024/11/27 17:47:06.925157 [INF] ------------------------------------------- [14928] 2024/11/27 17:47:06.926284 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [14928] 2024/11/27 17:47:06.977355 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 51ms [14928] 2024/11/27 17:47:06.977355 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [14928] 2024/11/27 17:47:06.978352 [WRN] Filestore [KV_media] loadBlock error: message block data missing [14928] 2024/11/27 17:47:06.981374 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [14928] 2024/11/27 17:47:07.008302 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 31ms [14928] 2024/11/27 17:47:07.009270 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [14928] 2024/11/27 17:47:07.009270 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [14928] 2024/11/27 17:47:07.009270 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [11864] 2024/11/27 17:49:10.535479 [INF] Starting nats-server [11864] 2024/11/27 17:49:10.536034 [INF] Version: 2.10.20 [11864] 2024/11/27 17:49:10.536034 [INF] Git: [7140387] [11864] 2024/11/27 17:49:10.536034 [INF] Cluster: edge-652efb2da425e854a1e8d203 [11864] 2024/11/27 17:49:10.536034 [INF] Name: edge-652efb2da425e854a1e8d203 [11864] 2024/11/27 17:49:10.536034 [INF] Node: cSXjN80e [11864] 2024/11/27 17:49:10.536034 [INF] ID: NCP5BHETIHWEQ6UR7G6GKEVMF23YRHRMDP56QJ5HHQX7ROZ7MB6PBXD3 [11864] 2024/11/27 17:49:10.536034 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [11864] 2024/11/27 17:49:10.537076 [INF] Starting http monitor on 127.0.0.1:8223 [11864] 2024/11/27 17:49:10.537076 [INF] Starting JetStream [11864] 2024/11/27 17:49:10.537076 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [11864] 2024/11/27 17:49:10.537076 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [11864] 2024/11/27 17:49:10.537076 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [11864] 2024/11/27 17:49:10.537076 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [11864] 2024/11/27 17:49:10.537076 [INF] [11864] 2024/11/27 17:49:10.537076 [INF] https://docs.nats.io/jetstream [11864] 2024/11/27 17:49:10.537076 [INF] [11864] 2024/11/27 17:49:10.537076 [INF] ---------------- JETSTREAM ---------------- [11864] 2024/11/27 17:49:10.537585 [INF] Max Memory: 23.94 GB [11864] 2024/11/27 17:49:10.537585 [INF] Max Storage: 1.00 TB [11864] 2024/11/27 17:49:10.537585 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [11864] 2024/11/27 17:49:10.537612 [INF] Domain: edge-652efb2da425e854a1e8d203 [11864] 2024/11/27 17:49:10.537612 [INF] ------------------------------------------- [11864] 2024/11/27 17:49:10.538210 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [11864] 2024/11/27 17:49:10.592603 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 54ms [11864] 2024/11/27 17:49:10.592603 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [11864] 2024/11/27 17:49:10.593601 [WRN] Filestore [KV_media] loadBlock error: message block data missing [11864] 2024/11/27 17:49:10.596593 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [11864] 2024/11/27 17:49:10.623551 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 31ms [11864] 2024/11/27 17:49:10.624519 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [11864] 2024/11/27 17:49:10.624519 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [11864] 2024/11/27 17:49:10.625523 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [7624] 2024/11/27 17:51:13.625652 [INF] Starting nats-server [7624] 2024/11/27 17:51:13.625652 [INF] Version: 2.10.20 [7624] 2024/11/27 17:51:13.625652 [INF] Git: [7140387] [7624] 2024/11/27 17:51:13.625652 [INF] Cluster: edge-652efb2da425e854a1e8d203 [7624] 2024/11/27 17:51:13.625652 [INF] Name: edge-652efb2da425e854a1e8d203 [7624] 2024/11/27 17:51:13.625652 [INF] Node: cSXjN80e [7624] 2024/11/27 17:51:13.626155 [INF] ID: NAI7ED2WRL3F2QVFHDTH7VKDAMONEN5ONZHVLMFLMDV4GVT3VGRSHPKP [7624] 2024/11/27 17:51:13.626160 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [7624] 2024/11/27 17:51:13.626671 [INF] Starting http monitor on 127.0.0.1:8223 [7624] 2024/11/27 17:51:13.626671 [INF] Starting JetStream [7624] 2024/11/27 17:51:13.627179 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [7624] 2024/11/27 17:51:13.627179 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [7624] 2024/11/27 17:51:13.627179 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [7624] 2024/11/27 17:51:13.627179 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [7624] 2024/11/27 17:51:13.627179 [INF] [7624] 2024/11/27 17:51:13.627179 [INF] https://docs.nats.io/jetstream [7624] 2024/11/27 17:51:13.627179 [INF] [7624] 2024/11/27 17:51:13.627179 [INF] ---------------- JETSTREAM ---------------- [7624] 2024/11/27 17:51:13.627179 [INF] Max Memory: 23.94 GB [7624] 2024/11/27 17:51:13.627179 [INF] Max Storage: 1.00 TB [7624] 2024/11/27 17:51:13.627179 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [7624] 2024/11/27 17:51:13.627179 [INF] Domain: edge-652efb2da425e854a1e8d203 [7624] 2024/11/27 17:51:13.627179 [INF] ------------------------------------------- [7624] 2024/11/27 17:51:13.628405 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [7624] 2024/11/27 17:51:13.678519 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 50ms [7624] 2024/11/27 17:51:13.678519 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [7624] 2024/11/27 17:51:13.679484 [WRN] Filestore [KV_media] loadBlock error: message block data missing [7624] 2024/11/27 17:51:13.682459 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [7624] 2024/11/27 17:51:13.710384 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 32ms [7624] 2024/11/27 17:51:13.711381 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [7624] 2024/11/27 17:51:13.711381 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [7624] 2024/11/27 17:51:13.711381 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' ``` ### Expected behavior The problem is that jetstream at the core does not differentiate between the old and new version of the stream match_events. If the source stream where to receive and keep track of the remote stream's create time and included that time in the consumer create, the remote server can check if the time submitted differs from the create time of the stream and return an error instead. This error could be the signal for the hub jetstream to start over by resetting the sequence number, obtain and update the new timestamp, create the new consumer again. This probably has implications for mirroring as well. There a differing timestamp should probably result in deleting the current content prior to starting at 0 again. ### Server and client version 2.10.20 & 2.10.23 ### Host environment _No response_ ### Steps to reproduce _No response_",
+      "url": "https://github.com/nats-io/nats-server/issues/6206",
+      "createdAt": "2024-12-03T21:02:39Z",
+      "updatedAt": "2026-08-13T14:19:34Z",
+      "timestamp": "2026-08-13T14:19:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "defect"
+      ],
+      "author": "facefirstMH",
+      "state": "closed",
+      "assignees": [
+        "neilalexander",
+        "jnmoyne"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:issue:8346",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "JetStream sourced stream reports lag=0 after source stream recreation but no longer ingests new messages",
+      "text": "### Observed behavior We have a JetStream deployment where a destination stream sources data from many remote JetStream domains using external stream sources. For one source, after the source stream was recreated, the destination stream stopped ingesting new messages from that source. However, stream info continues to report: lag: 0 no error non-zero active making the source appear healthy even though no new messages are arriving. Simplified topology <img width=\"413\" height=\"296\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/eb91a0d6-6d8a-4257-94f5-4be0da4ab5e7\" /> ORDERS sources from many remote JetStream domains. All sources continue functioning normally except H1314. Configuration The destination stream contains a source similar to: ```json { \"name\": \"H1314\", \"external\": { \"api\": \"$JS.H1314.API\" }, \"opt_start_time\": \"2026-06-30T00:00:00Z\" } ``` What happened The source stream H1314 was recreated. The recreated source stream continues receiving new messages. For example: nats sub EXAMPLE.SUBJECT --last --js-domain H1314 Source stream: H1314 Sequence: 1029746 Timestamp: 2026-06-30 17:47:54 UTC Subject: EXAMPLE.SUBJECT However, the most recent message for the same subject in the destination stream remains from the previous day: nats sub EXAMPLE.SUBJECT --stream ORDERS --last Destination stream: ORDERS Timestamp: 2026-06-29 21:24:36 UTC Subject: EXAMPLE.SUBJECT The copied message still contains a header similar to: Nats-Stream-Source: H1314:<consumer> 12002532 > > EXAMPLE.SUBJECT which references the previous incarnation of the source stream. Observed behavior nats stream info ORDERS -j reports: ```json { \"name\": \"H1314\", \"lag\": 0, \"active\": 265738727 } ``` There is no reported error. Despite this, no new messages from H1314 are arriving in ORDERS. I tested creating a new stream TEST1314 with a single source [\"H1314\"] and it replicated into the new stream just fine. ### Expected behavior The destination stream reconnects to the recreated source stream and resumes sourcing automatically. or JetStream reports that sourcing has failed (non-zero lag or an error condition). Reporting lag=0 while the destination stream is no longer ingesting messages makes the problem difficult to diagnose. ### Server and client version nats-server: v2.14.0 (all nodes) CLI version v0.4.0 ### Host environment _No response_ ### Steps to reproduce _No response_",
+      "url": "https://github.com/nats-io/nats-server/issues/8346",
+      "createdAt": "2026-07-01T14:12:57Z",
+      "updatedAt": "2026-08-13T14:19:34Z",
+      "timestamp": "2026-08-13T14:19:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "defect"
+      ],
+      "author": "ordeneaux",
+      "state": "closed",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8133",
@@ -100,8 +178,7 @@
       "labels": [],
       "author": "officialasishkumar",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8384",
@@ -113,15 +190,15 @@
       "text": "Previously if you started sourcing from a stream that was recreated, it would wait for the recreated stream's sequence to move back up to the last sourced sequence before it accepted new messages. This PR detects a stream being recreated by noticing a changed `Nats-Stream-Identity`, which is the hash of the stream's created time. There exists no unique identifier for a stream/consumer lifetime apart from the created time, so that's used and is the most practical since collisions are unlikely enough. - This hash is appended to the source header to know what \"identity\" of the stream was associated with the highest sequence for that source. (source header before: `TEST 1 > > foo`, after: `TEST 1 > > foo sLkPMPK6`) - This identity is passed in the consumer create request to prevent a consumer from being created based on sequences derived from the previous stream. An error is returned (`JSConsumerStreamIdentityMismatch`) if a mismatch is detected, the request is then retried with reset sequences to allow sourcing from the beginning. - The consumer reset request does not allow for the identity to be passed in, and instead relies on the caller to notice a different identity and subsequent in-memory state reset. This prevents unnecessary churn of requests since the reset will always happen based on a consumer that already exists and needs to be reset anyway. - Both the consumer create and reset responses contain this identity to get informed of the latest identity of the stream, which is then passed into the source header. This PR additionally requires that the starting sequence for a consumer is respected, even for sourcing consumers that were previously (incorrectly) clamped within the sourced stream's first/last sequence range. Upgrade note: the servers on both ends will need to be updated for this mechanism to kick in. A downgrade should ignore the extra appended identity from the header and fall back to the previous behavior. Resolves https://github.com/nats-io/nats-server/issues/8346, https://github.com/nats-io/nats-server/issues/6206, https://github.com/nats-io/nats-server/issues/5847",
       "url": "https://github.com/nats-io/nats-server/pull/8384",
       "createdAt": "2026-07-15T15:39:20Z",
-      "updatedAt": "2026-08-13T11:26:27Z",
-      "timestamp": "2026-08-13T11:26:27Z",
+      "updatedAt": "2026-08-13T14:19:35Z",
+      "timestamp": "2026-08-13T14:19:35Z",
       "metrics": {
         "reactions": 2,
         "comments": 9
       },
       "labels": [],
       "author": "MauriceVanVeen",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -144,8 +221,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8437",
@@ -166,8 +242,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8439",
@@ -188,8 +263,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8443",
@@ -210,8 +284,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8452",
@@ -232,8 +305,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8453",
@@ -363,8 +435,8 @@
       "text": "This PR fixes two remaining issues, and removes the final two FIXMEs: - Migrations would add peers as fast as possible, without checking whether the peer being added was even online. Adding an offline peer grows the quorum size, which could drop the group out of quorum until enough nodes came online. `selectPeerToAdd` now prefers the candidate we've heard from most recently, and only adds an unheard peer if the live members still reach quorum in the grown group. - Migrations also didn't wait for upper-layer stream catchup to complete before removing old peers. An old peer is now only removed if the group left after the removal retains a store-current majority, based on `Current`/`Lag` and the stream's active `catchupPeers`. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8460",
       "createdAt": "2026-08-12T16:02:04Z",
-      "updatedAt": "2026-08-13T11:56:54Z",
-      "timestamp": "2026-08-13T11:56:54Z",
+      "updatedAt": "2026-08-13T14:28:17Z",
+      "timestamp": "2026-08-13T14:28:17Z",
       "metrics": {
         "reactions": 1,
         "comments": 3
@@ -394,8 +466,7 @@
       "labels": [],
       "author": "sciascid",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8462",
@@ -415,8 +486,7 @@
       "labels": [],
       "author": "sciascid",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:release:369333995",
@@ -906,6 +976,134 @@
         "labels": [],
         "author": "github-actions[bot]",
         "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d6fc0db29c448ff572ec",
+      "signalId": "github:nats-io/nats-server:pull_request:8460",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8460",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] Migration added offline peers & removed peers before catchup",
+        "text": "This PR fixes two remaining issues, and removes the final two FIXMEs: - Migrations would add peers as fast as possible, without checking whether the peer being added was even online. Adding an offline peer grows the quorum size, which could drop the group out of quorum until enough nodes came online. `selectPeerToAdd` now prefers the candidate we've heard from most recently, and only adds an unheard peer if the live members still reach quorum in the grown group. - Migrations also didn't wait for upper-layer stream catchup to complete before removing old peers. An old peer is now only removed if the group left after the removal retains a store-current majority, based on `Current`/`Lag` and the stream's active `catchupPeers`. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8460",
+        "createdAt": "2026-08-12T16:02:04Z",
+        "updatedAt": "2026-08-13T14:28:17Z",
+        "timestamp": "2026-08-13T14:28:17Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0965a649e3387ef85af2",
+      "signalId": "github:nats-io/nats-server:pull_request:8384",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8384",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [IMPROVED] Source stream recreation detection",
+        "text": "Previously if you started sourcing from a stream that was recreated, it would wait for the recreated stream's sequence to move back up to the last sourced sequence before it accepted new messages. This PR detects a stream being recreated by noticing a changed `Nats-Stream-Identity`, which is the hash of the stream's created time. There exists no unique identifier for a stream/consumer lifetime apart from the created time, so that's used and is the most practical since collisions are unlikely enough. - This hash is appended to the source header to know what \"identity\" of the stream was associated with the highest sequence for that source. (source header before: `TEST 1 > > foo`, after: `TEST 1 > > foo sLkPMPK6`) - This identity is passed in the consumer create request to prevent a consumer from being created based on sequences derived from the previous stream. An error is returned (`JSConsumerStreamIdentityMismatch`) if a mismatch is detected, the request is then retried with reset sequences to allow sourcing from the beginning. - The consumer reset request does not allow for the identity to be passed in, and instead relies on the caller to notice a different identity and subsequent in-memory state reset. This prevents unnecessary churn of requests since the reset will always happen based on a consumer that already exists and needs to be reset anyway. - Both the consumer create and reset responses contain this identity to get informed of the latest identity of the stream, which is then passed into the source header. This PR additionally requires that the starting sequence for a consumer is respected, even for sourcing consumers that were previously (incorrectly) clamped within the sourced stream's first/last sequence range. Upgrade note: the servers on both ends will need to be updated for this mechanism to kick in. A downgrade should ignore the extra appended identity from the header and fall back to the previous behavior. Resolves https://github.com/nats-io/nats-server/issues/8346, https://github.com/nats-io/nats-server/issues/6206, https://github.com/nats-io/nats-server/issues/5847",
+        "url": "https://github.com/nats-io/nats-server/pull/8384",
+        "createdAt": "2026-07-15T15:39:20Z",
+        "updatedAt": "2026-08-13T14:19:35Z",
+        "timestamp": "2026-08-13T14:19:35Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 9
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6f01dc171abd14b96859",
+      "signalId": "github:nats-io/nats-server:issue:8346",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:8346",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "JetStream sourced stream reports lag=0 after source stream recreation but no longer ingests new messages",
+        "text": "### Observed behavior We have a JetStream deployment where a destination stream sources data from many remote JetStream domains using external stream sources. For one source, after the source stream was recreated, the destination stream stopped ingesting new messages from that source. However, stream info continues to report: lag: 0 no error non-zero active making the source appear healthy even though no new messages are arriving. Simplified topology <img width=\"413\" height=\"296\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/eb91a0d6-6d8a-4257-94f5-4be0da4ab5e7\" /> ORDERS sources from many remote JetStream domains. All sources continue functioning normally except H1314. Configuration The destination stream contains a source similar to: ```json { \"name\": \"H1314\", \"external\": { \"api\": \"$JS.H1314.API\" }, \"opt_start_time\": \"2026-06-30T00:00:00Z\" } ``` What happened The source stream H1314 was recreated. The recreated source stream continues receiving new messages. For example: nats sub EXAMPLE.SUBJECT --last --js-domain H1314 Source stream: H1314 Sequence: 1029746 Timestamp: 2026-06-30 17:47:54 UTC Subject: EXAMPLE.SUBJECT However, the most recent message for the same subject in the destination stream remains from the previous day: nats sub EXAMPLE.SUBJECT --stream ORDERS --last Destination stream: ORDERS Timestamp: 2026-06-29 21:24:36 UTC Subject: EXAMPLE.SUBJECT The copied message still contains a header similar to: Nats-Stream-Source: H1314:<consumer> 12002532 > > EXAMPLE.SUBJECT which references the previous incarnation of the source stream. Observed behavior nats stream info ORDERS -j reports: ```json { \"name\": \"H1314\", \"lag\": 0, \"active\": 265738727 } ``` There is no reported error. Despite this, no new messages from H1314 are arriving in ORDERS. I tested creating a new stream TEST1314 with a single source [\"H1314\"] and it replicated into the new stream just fine. ### Expected behavior The destination stream reconnects to the recreated source stream and resumes sourcing automatically. or JetStream reports that sourcing has failed (non-zero lag or an error condition). Reporting lag=0 while the destination stream is no longer ingesting messages makes the problem difficult to diagnose. ### Server and client version nats-server: v2.14.0 (all nodes) CLI version v0.4.0 ### Host environment _No response_ ### Steps to reproduce _No response_",
+        "url": "https://github.com/nats-io/nats-server/issues/8346",
+        "createdAt": "2026-07-01T14:12:57Z",
+        "updatedAt": "2026-08-13T14:19:34Z",
+        "timestamp": "2026-08-13T14:19:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "defect"
+        ],
+        "author": "ordeneaux",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8f20c3e3774c525ef340",
+      "signalId": "github:nats-io/nats-server:issue:6206",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:6206",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "JetStream stream source stalls/is out of sync after sourced stream is re-created for unrelated reason [v2.10.20]",
+        "text": "### Observed behavior Setup: basic hub spoke with leafnodes. hub is a single jetstream enabled server in its own domain, so are the leaf nodes. On the hub, there is a stream named match_events that sources from the match_events stream in each leaf node. Symptoms: Sourcing from match_events on one leafnode stopped working. Despite new messages being added to it, no data is sent to match_events in the hub. Cause: I believe we ran into a crash during recovery that sounds similar to one fixed in a release candidate of 2.10.23. In order to recover from this issue, we renamed the data directory, which resulted in data loss but allowed the system to become functional again. On the leaf node with the issue, sequence numbers in the stream are less than 80. Create time is right after the time when the jetstream data directory got renamed and everything started to seemingly function again. On the hub node, stream info showed the edge connected with low lag. But when subscribing to the consumer create message of that leaf, we noticed that the requested start seq no is 995 and hence way bigger than 80. Meaning 995 was the sequence number the previous incarnation of match_events had on that leaf and 79 is the value of the current incarnation This would explain why there seems to be no data flow ... yet. Failed workaround: We edited the match_events stream in the hub to remove the source corresponding to the leaf. Then we re-added it. This did not seem to work as we recorded the consumer create messages and the sequence number remained at the old value it had before the source got removed & re-added. I then edited the source to set the op_start_seq to 1. This didn't work either, as presumably a higher sequence number was still in memory. A few hours later we restarted the hub server. After that the sequence number was reset to one. ---------------------- Logs: Hub consumer create messages: ``` [#13] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.FEkNK9Is\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.l2lkXkVm\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} [#21] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.3L70SiTW\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.qyIUgE5D\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} ``` Leafnode match_events stream: ``` > nats stream ls -a ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮ │ Streams │ ├─────────────────────┬────────────────────────────────────────────┬─────────────────────┬───────────┬─────────┬──────────────┤ │ Name │ Description │ Created │ Messages │ Size │ Last Message │ ├─────────────────────┼────────────────────────────────────────────┼─────────────────────┼───────────┼─────────┼──────────────┤ ... │ match_events │ │ 2024-11-27 17:53:49 │ 79 │ 15 MiB │ 25m10s │ ... ╰─────────────────────┴────────────────────────────────────────────┴─────────────────────┴───────────┴─────────┴──────────────╯ > nats stream info match_events Information for Stream match_events created 2024-11-27 17:53:49 Subjects: faceio.match.> Replicas: 1 Storage: File Options: Retention: Limits Acknowledgments: true Discard Policy: Old Duplicate Window: 2m0s Allows Msg Delete: true Allows Purge: true Allows Rollups: false Limits: Maximum Messages: unlimited Maximum Per Subject: unlimited Maximum Bytes: unlimited Maximum Age: 7d0h0m0s Maximum Message Size: unlimited Maximum Consumers: unlimited Cluster Information: Name: edge-652efb2da425e854a1e8d203 Leader: edge-652efb2da425e854a1e8d203 State: Messages: 79 Bytes: 15 MiB First Sequence: 1 @ 2024-11-27 18:13:14 Last Sequence: 79 @ 2024-12-02 17:57:52 Active Consumers: 1 Number of Subjects: 79 > ``` Hub consumer create messages for failed workaround: The first message was received after re-creating the source. The second message was received after editing opt_start_seq of the source. In both cases, opt_start_seq in the request remains at the last old value. ``` >nats sub \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" 10:44:28 Subscribing on $JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events [#1] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.XoBsIZ61\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.58t1cta4\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} [#2] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.h5dA0pYu\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.j4aQssSi\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} ``` Hub consumer create messages after hub nats server restart show opt_start_seq=1. ``` [#7] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.snChCWwx\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":995,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.6U6FCNWD\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} 15:19:43 Disconnected due to: read tcp 127.0.0.1:32592->127.0.0.1:4222: wsarecv: An existing connection was forcibly closed by the remote host., will attempt reconnect 15:20:09 Reconnected [nats://ff-queue-user:LtJQaah4Y2PUGAUyx8_oLZ@127.0.0.1:4222] [#8] Received on \"$JS.edge-652efb2da425e854a1e8d203.API.CONSUMER.CREATE.match_events\" with reply \"$JSC.R.hwd0hutm\" {\"stream_name\":\"match_events\",\"config\":{\"deliver_policy\":\"by_start_sequence\",\"opt_start_seq\":1,\"ack_policy\":\"none\",\"ack_wait\":79200000000000,\"max_deliver\":1,\"replay_policy\":\"instant\",\"idle_heartbeat\":1000000000,\"flow_control\":true,\"deliver_subject\":\"deliver.edge-652efb2da425e854a1e8d203.match_events.S.ZoqTXdlB\",\"inactive_threshold\":10000000000,\"num_replicas\":0,\"direct\":true},\"action\":\"\"} ``` Hub match_events stream taken right after consumer create [#2] from above, showing start seqno 1 ``` Information for Stream match_events created 2024-11-15 10:45:14 Subjects: faceio.match.> Replicas: 1 Storage: File Options: Retention: Limits Acknowledgments: true Discard Policy: Old Duplicate Window: 2m0s Allows Msg Delete: true Allows Purge: true Allows Rollups: false Limits: Maximum Messages: unlimited Maximum Per Subject: unlimited Maximum Bytes: unlimited Maximum Age: 7d0h0m0s Maximum Message Size: unlimited Maximum Consumers: unlimited Replication: Sources: ... match_events, Start Seq: 1, API Prefix: $JS.edge-652efb2da425e854a1e8d203.API, Delivery Prefix: deliver.edge-652efb2da425e854a1e8d203.match_events ... Source Information: ... Stream Name: match_events Lag: 0 Last Seen: 934ms Ext. API Prefix: $JS.edge-652efb2da425e854a1e8d203.API Ext. Delivery Prefix: deliver.edge-652efb2da425e854a1e8d203.match_events ... State: Messages: 40,303 Bytes: 7.4 GiB First Sequence: 505,520 @ 2024-11-26 11:02:59 Last Sequence: 545,822 @ 2024-12-03 11:02:56 Active Consumers: 1 Number of Subjects: 37,538 ``` Leafnode nats-server logs showing restart loop: nats server basically starts and exits right away. (within same second. different from being killed because it's taking too long) ``` [15052] 2024/11/27 17:43:00.113089 [INF] Starting nats-server [15052] 2024/11/27 17:43:00.113621 [INF] Version: 2.10.20 [15052] 2024/11/27 17:43:00.113621 [INF] Git: [7140387] [15052] 2024/11/27 17:43:00.113621 [INF] Cluster: edge-652efb2da425e854a1e8d203 [15052] 2024/11/27 17:43:00.113621 [INF] Name: edge-652efb2da425e854a1e8d203 [15052] 2024/11/27 17:43:00.113621 [INF] Node: cSXjN80e [15052] 2024/11/27 17:43:00.113621 [INF] ID: NCPMUJYVKW6V742BE4GN4RH2V6LCIFTB5MESCYDKJKURJMXCVQWJQXOQ [15052] 2024/11/27 17:43:00.113671 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [15052] 2024/11/27 17:43:00.114322 [INF] Starting http monitor on 127.0.0.1:8223 [15052] 2024/11/27 17:43:00.114322 [INF] Starting JetStream [15052] 2024/11/27 17:43:00.114827 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [15052] 2024/11/27 17:43:00.114884 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [15052] 2024/11/27 17:43:00.114884 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [15052] 2024/11/27 17:43:00.114884 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [15052] 2024/11/27 17:43:00.114884 [INF] [15052] 2024/11/27 17:43:00.114884 [INF] https://docs.nats.io/jetstream [15052] 2024/11/27 17:43:00.114884 [INF] [15052] 2024/11/27 17:43:00.114884 [INF] ---------------- JETSTREAM ---------------- [15052] 2024/11/27 17:43:00.114884 [INF] Max Memory: 23.94 GB [15052] 2024/11/27 17:43:00.114884 [INF] Max Storage: 1.00 TB [15052] 2024/11/27 17:43:00.114884 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [15052] 2024/11/27 17:43:00.114884 [INF] Domain: edge-652efb2da425e854a1e8d203 [15052] 2024/11/27 17:43:00.114884 [INF] ------------------------------------------- [15052] 2024/11/27 17:43:00.115438 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [15052] 2024/11/27 17:43:00.166680 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 51ms [15052] 2024/11/27 17:43:00.166680 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [15052] 2024/11/27 17:43:00.208948 [WRN] Filestore [KV_media] loadBlock error: message block data missing [15052] 2024/11/27 17:43:00.211651 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [15052] 2024/11/27 17:43:00.238941 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 72ms [15052] 2024/11/27 17:43:00.239938 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [15052] 2024/11/27 17:43:00.239938 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [15052] 2024/11/27 17:43:00.240936 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [17012] 2024/11/27 17:45:03.817424 [INF] Starting nats-server [17012] 2024/11/27 17:45:03.818469 [INF] Version: 2.10.20 [17012] 2024/11/27 17:45:03.818469 [INF] Git: [7140387] [17012] 2024/11/27 17:45:03.818469 [INF] Cluster: edge-652efb2da425e854a1e8d203 [17012] 2024/11/27 17:45:03.818469 [INF] Name: edge-652efb2da425e854a1e8d203 [17012] 2024/11/27 17:45:03.818469 [INF] Node: cSXjN80e [17012] 2024/11/27 17:45:03.818469 [INF] ID: NBZL4XFOC64CKXUWPM7ZCS7NNDI5X25LSMHXWZOCCB7XVM4UTOP6TD66 [17012] 2024/11/27 17:45:03.818469 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [17012] 2024/11/27 17:45:03.819454 [INF] Starting http monitor on 127.0.0.1:8223 [17012] 2024/11/27 17:45:03.819454 [INF] Starting JetStream [17012] 2024/11/27 17:45:03.819977 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [17012] 2024/11/27 17:45:03.819977 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [17012] 2024/11/27 17:45:03.819977 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [17012] 2024/11/27 17:45:03.819977 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [17012] 2024/11/27 17:45:03.819977 [INF] [17012] 2024/11/27 17:45:03.819977 [INF] https://docs.nats.io/jetstream [17012] 2024/11/27 17:45:03.819977 [INF] [17012] 2024/11/27 17:45:03.819977 [INF] ---------------- JETSTREAM ---------------- [17012] 2024/11/27 17:45:03.819977 [INF] Max Memory: 23.94 GB [17012] 2024/11/27 17:45:03.819977 [INF] Max Storage: 1.00 TB [17012] 2024/11/27 17:45:03.819977 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [17012] 2024/11/27 17:45:03.819977 [INF] Domain: edge-652efb2da425e854a1e8d203 [17012] 2024/11/27 17:45:03.819977 [INF] ------------------------------------------- [17012] 2024/11/27 17:45:03.821034 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [17012] 2024/11/27 17:45:03.878169 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 57ms [17012] 2024/11/27 17:45:03.878169 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [17012] 2024/11/27 17:45:03.879175 [WRN] Filestore [KV_media] loadBlock error: message block data missing [17012] 2024/11/27 17:45:03.882158 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [17012] 2024/11/27 17:45:03.911169 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 33ms [17012] 2024/11/27 17:45:03.911169 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [17012] 2024/11/27 17:45:03.911169 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [17012] 2024/11/27 17:45:03.912166 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [14928] 2024/11/27 17:47:06.923509 [INF] Starting nats-server [14928] 2024/11/27 17:47:06.924012 [INF] Version: 2.10.20 [14928] 2024/11/27 17:47:06.924068 [INF] Git: [7140387] [14928] 2024/11/27 17:47:06.924068 [INF] Cluster: edge-652efb2da425e854a1e8d203 [14928] 2024/11/27 17:47:06.924068 [INF] Name: edge-652efb2da425e854a1e8d203 [14928] 2024/11/27 17:47:06.924068 [INF] Node: cSXjN80e [14928] 2024/11/27 17:47:06.924068 [INF] ID: NBNOJN5SXYFVUKV73CCNICSKU22K2TBCLHQW2GG5ATAQAHIWI2GMWYDA [14928] 2024/11/27 17:47:06.924109 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [14928] 2024/11/27 17:47:06.924644 [INF] Starting http monitor on 127.0.0.1:8223 [14928] 2024/11/27 17:47:06.924644 [INF] Starting JetStream [14928] 2024/11/27 17:47:06.925157 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [14928] 2024/11/27 17:47:06.925157 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [14928] 2024/11/27 17:47:06.925157 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [14928] 2024/11/27 17:47:06.925157 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [14928] 2024/11/27 17:47:06.925157 [INF] [14928] 2024/11/27 17:47:06.925157 [INF] https://docs.nats.io/jetstream [14928] 2024/11/27 17:47:06.925157 [INF] [14928] 2024/11/27 17:47:06.925157 [INF] ---------------- JETSTREAM ---------------- [14928] 2024/11/27 17:47:06.925157 [INF] Max Memory: 23.94 GB [14928] 2024/11/27 17:47:06.925157 [INF] Max Storage: 1.00 TB [14928] 2024/11/27 17:47:06.925157 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [14928] 2024/11/27 17:47:06.925157 [INF] Domain: edge-652efb2da425e854a1e8d203 [14928] 2024/11/27 17:47:06.925157 [INF] ------------------------------------------- [14928] 2024/11/27 17:47:06.926284 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [14928] 2024/11/27 17:47:06.977355 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 51ms [14928] 2024/11/27 17:47:06.977355 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [14928] 2024/11/27 17:47:06.978352 [WRN] Filestore [KV_media] loadBlock error: message block data missing [14928] 2024/11/27 17:47:06.981374 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [14928] 2024/11/27 17:47:07.008302 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 31ms [14928] 2024/11/27 17:47:07.009270 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [14928] 2024/11/27 17:47:07.009270 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [14928] 2024/11/27 17:47:07.009270 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [11864] 2024/11/27 17:49:10.535479 [INF] Starting nats-server [11864] 2024/11/27 17:49:10.536034 [INF] Version: 2.10.20 [11864] 2024/11/27 17:49:10.536034 [INF] Git: [7140387] [11864] 2024/11/27 17:49:10.536034 [INF] Cluster: edge-652efb2da425e854a1e8d203 [11864] 2024/11/27 17:49:10.536034 [INF] Name: edge-652efb2da425e854a1e8d203 [11864] 2024/11/27 17:49:10.536034 [INF] Node: cSXjN80e [11864] 2024/11/27 17:49:10.536034 [INF] ID: NCP5BHETIHWEQ6UR7G6GKEVMF23YRHRMDP56QJ5HHQX7ROZ7MB6PBXD3 [11864] 2024/11/27 17:49:10.536034 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [11864] 2024/11/27 17:49:10.537076 [INF] Starting http monitor on 127.0.0.1:8223 [11864] 2024/11/27 17:49:10.537076 [INF] Starting JetStream [11864] 2024/11/27 17:49:10.537076 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [11864] 2024/11/27 17:49:10.537076 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [11864] 2024/11/27 17:49:10.537076 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [11864] 2024/11/27 17:49:10.537076 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [11864] 2024/11/27 17:49:10.537076 [INF] [11864] 2024/11/27 17:49:10.537076 [INF] https://docs.nats.io/jetstream [11864] 2024/11/27 17:49:10.537076 [INF] [11864] 2024/11/27 17:49:10.537076 [INF] ---------------- JETSTREAM ---------------- [11864] 2024/11/27 17:49:10.537585 [INF] Max Memory: 23.94 GB [11864] 2024/11/27 17:49:10.537585 [INF] Max Storage: 1.00 TB [11864] 2024/11/27 17:49:10.537585 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [11864] 2024/11/27 17:49:10.537612 [INF] Domain: edge-652efb2da425e854a1e8d203 [11864] 2024/11/27 17:49:10.537612 [INF] ------------------------------------------- [11864] 2024/11/27 17:49:10.538210 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [11864] 2024/11/27 17:49:10.592603 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 54ms [11864] 2024/11/27 17:49:10.592603 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [11864] 2024/11/27 17:49:10.593601 [WRN] Filestore [KV_media] loadBlock error: message block data missing [11864] 2024/11/27 17:49:10.596593 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [11864] 2024/11/27 17:49:10.623551 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 31ms [11864] 2024/11/27 17:49:10.624519 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [11864] 2024/11/27 17:49:10.624519 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [11864] 2024/11/27 17:49:10.625523 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' [7624] 2024/11/27 17:51:13.625652 [INF] Starting nats-server [7624] 2024/11/27 17:51:13.625652 [INF] Version: 2.10.20 [7624] 2024/11/27 17:51:13.625652 [INF] Git: [7140387] [7624] 2024/11/27 17:51:13.625652 [INF] Cluster: edge-652efb2da425e854a1e8d203 [7624] 2024/11/27 17:51:13.625652 [INF] Name: edge-652efb2da425e854a1e8d203 [7624] 2024/11/27 17:51:13.625652 [INF] Node: cSXjN80e [7624] 2024/11/27 17:51:13.626155 [INF] ID: NAI7ED2WRL3F2QVFHDTH7VKDAMONEN5ONZHVLMFLMDV4GVT3VGRSHPKP [7624] 2024/11/27 17:51:13.626160 [INF] Using configuration file: C:\\Program Files\\FaceFirst\\FaceFirst-MessageBroker-Edge\\conf\\edge.conf [7624] 2024/11/27 17:51:13.626671 [INF] Starting http monitor on 127.0.0.1:8223 [7624] 2024/11/27 17:51:13.626671 [INF] Starting JetStream [7624] 2024/11/27 17:51:13.627179 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [7624] 2024/11/27 17:51:13.627179 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [7624] 2024/11/27 17:51:13.627179 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [7624] 2024/11/27 17:51:13.627179 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [7624] 2024/11/27 17:51:13.627179 [INF] [7624] 2024/11/27 17:51:13.627179 [INF] https://docs.nats.io/jetstream [7624] 2024/11/27 17:51:13.627179 [INF] [7624] 2024/11/27 17:51:13.627179 [INF] ---------------- JETSTREAM ---------------- [7624] 2024/11/27 17:51:13.627179 [INF] Max Memory: 23.94 GB [7624] 2024/11/27 17:51:13.627179 [INF] Max Storage: 1.00 TB [7624] 2024/11/27 17:51:13.627179 [INF] Store Directory: \"D:\\ProgramData\\FaceFirst\\FaceFirst-MessageBroker-Edge\\data-store\\jetstream\" [7624] 2024/11/27 17:51:13.627179 [INF] Domain: edge-652efb2da425e854a1e8d203 [7624] 2024/11/27 17:51:13.627179 [INF] ------------------------------------------- [7624] 2024/11/27 17:51:13.628405 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_enrollments' [7624] 2024/11/27 17:51:13.678519 [INF] Restored 69,478 messages for stream 'FF-QUEUE-ACC > KV_enrollments' in 50ms [7624] 2024/11/27 17:51:13.678519 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_media' [7624] 2024/11/27 17:51:13.679484 [WRN] Filestore [KV_media] loadBlock error: message block data missing [7624] 2024/11/27 17:51:13.682459 [WRN] Filestore [KV_media] Detected skew in subject-based total (64) vs raw total (58), rebuilding [7624] 2024/11/27 17:51:13.710384 [INF] Restored 58 messages for stream 'FF-QUEUE-ACC > KV_media' in 32ms [7624] 2024/11/27 17:51:13.711381 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_settings' [7624] 2024/11/27 17:51:13.711381 [INF] Restored 42 messages for stream 'FF-QUEUE-ACC > KV_settings' in 0s [7624] 2024/11/27 17:51:13.711381 [INF] Starting restore for stream 'FF-QUEUE-ACC > KV_visitors' ``` ### Expected behavior The problem is that jetstream at the core does not differentiate between the old and new version of the stream match_events. If the source stream where to receive and keep track of the remote stream's create time and included that time in the consumer create, the remote server can check if the time submitted differs from the create time of the stream and return an error instead. This error could be the signal for the hub jetstream to start over by resetting the sequence number, obtain and update the new timestamp, create the new consumer again. This probably has implications for mirroring as well. There a differing timestamp should probably result in deleting the current content prior to starting at 0 again. ### Server and client version 2.10.20 & 2.10.23 ### Host environment _No response_ ### Steps to reproduce _No response_",
+        "url": "https://github.com/nats-io/nats-server/issues/6206",
+        "createdAt": "2024-12-03T21:02:39Z",
+        "updatedAt": "2026-08-13T14:19:34Z",
+        "timestamp": "2026-08-13T14:19:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "defect"
+        ],
+        "author": "facefirstMH",
+        "state": "closed",
+        "assignees": [
+          "neilalexander",
+          "jnmoyne"
+        ],
         "change": "new"
       }
     }

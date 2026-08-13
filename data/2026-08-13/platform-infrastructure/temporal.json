@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "platform-infrastructure",
@@ -36,11 +36,33 @@
     ],
     "license": "MIT",
     "defaultBranch": "main",
-    "stars": 22280,
+    "stars": 22283,
     "forks": 1808,
     "openIssues": 890,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:03.745807+00:00"
+    "collectedAt": "2026-08-13T16:19:25.677674+00:00"
+  },
+  "news": {
+    "repository": "temporalio/temporal",
+    "collectedAt": "2026-08-13T16:19:25.677674+00:00",
+    "latestRelease": {
+      "repository": "temporalio/temporal",
+      "tag": "v1.31.2",
+      "title": "v1.31.2",
+      "url": "https://github.com/temporalio/temporal/releases/tag/v1.31.2",
+      "publishedAt": "2026-07-08T17:10:11Z",
+      "notes": "## What's Changed\r\n* Bump defaultCliVersion to 1.7.2 for v1.31.1 admin-tools \r\n* Cherry-pick #9917, \"Cover replication streaming endpoint with authorization\"\r\n* Update Alpine to 3.23.5\r\n\r\n\r\n### Potential Breaking Change \r\nIf using authorization with replication setup, set `system.disableStreamingAuthorizer` dynamic config to `true` to opt out from changes in this release and avoid replication traffic connection errors. Check the linked CVE for implications of opting out.\r\n\r\n### **Security**\r\n- Addresses [CVE-2026-5724](https://www.cve.org/cverecord?id=CVE-2026-5724), MEDIUM\r\n\r\n**Full Changelog**: https://github.com/temporalio/temporal/compare/v1.31.1...v1.31.2",
+      "highlights": [
+        "What's Changed",
+        "Bump defaultCliVersion to 1.7.2 for v1.31.1 admin-tools",
+        "Cherry-pick #9917, \"Cover replication streaming endpoint with authorization\"",
+        "Update Alpine to 3.23.5",
+        "Potential Breaking Change",
+        "Security"
+      ],
+      "prerelease": false
+    },
+    "upcoming": []
   },
   "runs": [
     {
@@ -54,6 +76,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 88,
       "changedCount": 88
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 92,
+      "changedCount": 29
     }
   ],
   "signals": [
@@ -78,8 +106,7 @@
       "state": "open",
       "assignees": [
         "chaptersix"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:temporalio/temporal:issue:10841",
@@ -104,8 +131,7 @@
       "state": "open",
       "assignees": [
         "yycptt"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:temporalio/temporal:issue:11314",
@@ -128,8 +154,7 @@
       ],
       "author": "bschoening",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:issue:11497",
@@ -171,8 +196,7 @@
       "labels": [],
       "author": "Aminkbi",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:issue:11539",
@@ -193,8 +217,29 @@
       "labels": [],
       "author": "noamyehudai",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:temporalio/temporal:issue:11547",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "issue",
+      "title": "A brief `Unavailable` blip resets History queue backoff, causing a sustained retry storm",
+      "text": "### Summary When a History cluster is running at its system persistence-QPS limit, the fleet stays stable only because `ResourceExhausted` errors put queue readers/task executables onto their long reschedule backoff, which spreads persistence load out over time. If persistence briefly returns a *different* transient error (`Unavailable`, or context deadline exceeded) - e.g. during a database failover/switchover - readers/executables fall back to their fast retry path, the fleet's long-backoff state is effectively reset, and on recovery every shard re-fires in a synchronized burst. The aggregate read QPS then exceeds the system persistence limiter, ack-level advancement is starved, and the queues settle into a saturated equilibrium instead of draining. ### Environment - Temporal Server version: **v1.30.2** (behavior also present, byte-identical in the relevant code, on v1.31.1 and `main` - see code pointers) - Persistence: Aurora PostgreSQL - History service running at/near its configured **system** persistence-QPS limit ### Current behavior 1. Under chronic system-QPS pressure, a fraction of persistence ops trip `ResourceExhausted`. Readers/executables detect this specific class via `IsResourceExhausted(err)` and reschedule on the long `ResourceExhausted` backoff curve (`CreateTaskResourceExhaustedReschedulePolicy`: initial ~3s, coefficient 1.5, max ~5m), which naturally de-synchronizes the fleet. `RangeCompleteHistoryTasks` slips through often enough to keep ack levels advancing. No customer impact, but zero headroom. 2. A brief persistence interruption (observed ~60s during a DB switchover) returns `Unavailable` / context-deadline for calls - the incident logs show this window as `Unavailable`/deadline, not `ResourceExhausted`. 3. The long backoff is engaged **only** when the error is `ResourceExhausted`: - Readers: on `ResourceExhausted` they wait a fixed throttle delay; for any other transient error they use the fast exponential retrier (~50ms initial → ~1s max), which is then reset once a call succeeds. - Executables: they increment a per-task `resourceExhaustedCount` and take the long reschedule **only** while that error is `ResourceExhausted`; any other error path resets `resourceExhaustedCount = 0` and falls back to the default reschedule policy (~1s initial, 1.1 coefficient, ~3m max). For the duration of the blip, every reader/executable on every shard retries on its fast/default path and the accumulated long-backoff state is discarded fleet-wide. 4. On recovery, each shard's first successful read returns a full batch with `MoreTasks=true`, which triggers an immediate re-notification (no throttle between that batch and the next read). Thousands of shards across multiple scheduled queue categories become eligible at once. Each individual reader is still gated by its own rate limiter, so this is not a single reader spinning with zero gap - it is an **aggregate, fleet-wide** synchronized burst whose combined read QPS exceeds the system persistence cap. 5. `RangeCompleteHistoryTasks` (advances ack levels by deleting completed task ranges) goes through the **same** persistence rate limiter as the reads: `GetHistoryTasks`, `CompleteHistoryTask`, and `RangeCompleteHistoryTasks` all funnel through the same `allow()` gate (system + namespace + shard limiters). Under saturation it is throttled/failed alongside the reads, so ack levels don't advance, readers re-read the same ranges every cycle, and the limiter stays saturated. Archival tasks (which read history from persistence before writing the blob) fail the same way and reschedule, compounding read load. 6. Result: a stable \"saturated\" equilibrium. Individual task executions can succeed, but queues do not logically drain. Recovery only happens by scaling persistence and/or raising the QPS limit; the backlog then drains slowly. ### Expected behavior A short-lived `Unavailable`/deadline condition on a cluster that is otherwise persistence-rate-limited should not collapse the fleet's backoff and cause a persistent retry storm. Specifically: - Transient non-`ResourceExhausted` persistence errors should not discard readers'/executables' long-backoff state in a way that synchronizes the whole fleet on recovery. - Ack-level advancement (`RangeCompleteHistoryTasks`) should not have to compete on equal footing with the same reader load it is trying to relieve - otherwise there is no escape path from saturation. ### Impact Extended (multi-hour) stall of workflow progress across all shards on the affected cluster: workflow starts, signals, workflow-task completions, timer fires, and archival all intermittently fail or make no progress, even though the database itself is healthy after the blip. Frontend availability metrics understate the impact because affected shards make zero forward progress regardless of client retries. ### Suggested directions (for discussion) 1. Apply the congestion-style long/jittered backoff to a broader set of transient persistence errors - at minimum `Unavailable` and context-deadline - not just `ResourceExhausted`, so a brief outage doesn't reset the fleet to the fast curve. 2. Add jitter / de-synchronization to reader re-fire after recovery so shards don't dispatch in lockstep when persistence returns. 3. Give ack-level advancement (`RangeCompleteHistoryTasks`) priority or a separate budget from read traffic through the persistence limiter, so the queue always has an escape path from saturation. 4. Gate immediate `MoreTasks=true` re-fires (e.g. small jittered delay) so a synchronized fleet of recovery batches can't collectively produce a read burst that exceeds the persistence cap. ### Relevant code pointers - `common/util.go`: `CreateTaskResourceExhaustedReschedulePolicy` (the long backoff, applied specifically for resource-exhausted); `IsResourceExhausted` (the actual decision point that selects the long curve); `IsPersistenceTransientError` (treats both `Unavailable` and `ResourceExhausted` as transient/retryable, but only the latter gets the long reschedule). - `service/history/queues/reader.go`: fixed throttle delay on `ResourceExhausted` vs. the fast exponential retrier for other errors; `MoreTasks()` immediate re-notification. - `service/history/queues/executable.go`: `resourceExhaustedCount` (incremented only on `ResourceExhausted`, reset to `0` on any other outcome) selecting the long reschedule. - `common/persistence/persistence_rate_limited_clients.go`: `GetHistoryTasks`, `CompleteHistoryTask`, and `RangeCompleteHistoryTasks` all pass through the same `allow()` gate (shared system/namespace/shard rate limiters) - so ack-advancement competes with reads for the same budget. *(Code paths above verified identical at tags `v1.30.2`, `v1.31.1`, and `main`.)*",
+      "url": "https://github.com/temporalio/temporal/issues/11547",
+      "createdAt": "2026-08-13T16:15:43Z",
+      "updatedAt": "2026-08-13T16:19:14Z",
+      "timestamp": "2026-08-13T16:19:14Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "ggbata",
+      "state": "open",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
     },
     {
       "id": "github:temporalio/temporal:issue:2341",
@@ -246,8 +291,7 @@
       "state": "open",
       "assignees": [
         "chaptersix"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:temporalio/temporal:issue:8087",
@@ -274,8 +318,7 @@
       "state": "open",
       "assignees": [
         "chaptersix"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:temporalio/temporal:issue:8490",
@@ -301,8 +344,7 @@
       "state": "open",
       "assignees": [
         "chaptersix"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:temporalio/temporal:issue:9522",
@@ -325,8 +367,7 @@
       ],
       "author": "ByulentMehmed",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:10129",
@@ -349,8 +390,7 @@
       ],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:10200",
@@ -362,8 +402,8 @@
       "text": "## What changed? Opt-in validator that exhaustively validate all protobuf fields in 1 place. ## Why? Adds semantic validation for protobufs as a thin layer before the proto request reaches actual business logic. ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
       "url": "https://github.com/temporalio/temporal/pull/10200",
       "createdAt": "2026-05-08T01:12:05Z",
-      "updatedAt": "2026-08-13T01:34:50Z",
-      "timestamp": "2026-08-13T01:34:50Z",
+      "updatedAt": "2026-08-13T15:39:41Z",
+      "timestamp": "2026-08-13T15:39:41Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -393,8 +433,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:10417",
@@ -415,8 +454,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:10643",
@@ -428,8 +466,8 @@
       "text": "## What changed? Only use 4-core ARM runners instead of 8-core; and increase shard size for test sharding. ## Why? 8-core runners have - at least during peak hours - very long provisioning time (several minutes). By using 4-core we reduce that time, but risk OOM kills as they have less memory. To counter that, we increase the number of test shards so that fewer tests are run per shard.",
       "url": "https://github.com/temporalio/temporal/pull/10643",
       "createdAt": "2026-06-10T17:58:11Z",
-      "updatedAt": "2026-08-13T02:55:03Z",
-      "timestamp": "2026-08-13T02:55:03Z",
+      "updatedAt": "2026-08-13T14:57:11Z",
+      "timestamp": "2026-08-13T14:57:11Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -438,7 +476,7 @@
         "test-all-dbs"
       ],
       "author": "stephanos",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -461,8 +499,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:10992",
@@ -493,8 +530,8 @@
       "text": "Makes test execution return an exit code and error instead of terminating inside the orchestration loop. This lets final artifact failures, retry-validation failures, execution errors, timeouts, and normal pass/fail outcomes be tested directly while `Main` remains the only process-exit boundary. Stack: depends on #11518 and completes the canonical `go test -json` reporting pipeline.",
       "url": "https://github.com/temporalio/temporal/pull/11033",
       "createdAt": "2026-07-13T19:38:51Z",
-      "updatedAt": "2026-08-13T10:11:48Z",
-      "timestamp": "2026-08-13T10:11:48Z",
+      "updatedAt": "2026-08-13T15:30:46Z",
+      "timestamp": "2026-08-13T15:30:46Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -518,8 +555,8 @@
       "text": "## What changed? - `WithRequestID` now applies to `UpdateComponent`, enabling execution-level idempotency guarding via request ID. - When a request ID is passed as part of an `UpdateComponent` call (via API handler), it is persisted upon successful updateFn call. If it is already present, instead, `UpdateComponent` fails with a `FailedPrecondition`. - When a request ID is not passed in, a generated ID is still created for error tracing purposes, but it is not written to mutable state. - On transaction close, mutable state will sweep the oldest RequestIDs (with an `attach_time`) upon hitting the configured limit. - This will sweep both entries below a configurable max age, as well as past a certain hard length limit. ## Why? - Scheduler's `UpdateSchedule` and `PatchSchedule` are implemented as handlers that persist a signal in V1. V1 signals provide idempotency via their request IDs. Scheduler V2 doesn't make use of signals, so instead, it must record request IDs explicitly. - We reuse the existing map within mutable state. - We *must* fail with an explicit error (`FailedPrecondition`) instead of simply returning a zero value (as Signals would on repeated successful requests). This is because `UpdateComponent` can apply to API models that include response values (which we don't record, therefore, we can't return on subsequent calls). ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
       "url": "https://github.com/temporalio/temporal/pull/11169",
       "createdAt": "2026-07-21T00:51:10Z",
-      "updatedAt": "2026-08-12T20:27:04Z",
-      "timestamp": "2026-08-12T20:27:04Z",
+      "updatedAt": "2026-08-13T15:23:52Z",
+      "timestamp": "2026-08-13T15:23:52Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -551,8 +588,7 @@
       "labels": [],
       "author": "chaptersix",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11211",
@@ -573,8 +609,7 @@
       "labels": [],
       "author": "awln-temporal",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11302",
@@ -605,22 +640,23 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Add replication stream lane wire protocol and receiver-side lane routing",
-      "text": "> **Part 3 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > #11302 (reader group) has merged, so this PR's diff is now standalone against `main`. · **Next in series: #11304** (isolation manager). ## What changed? The wire-level building blocks for per-namespace lane isolation, receiver side only: - **Proto**: `SyncReplicationState` gains `pause_high_namespace_ids` (namespaces the receiver reports as overwhelming the HIGH lane — the priority lives in the field name, so a future LOW extension adds its own field rather than widening this one), `isolated_lane_states` (per-lane applied watermarks keyed by namespace ID — with the documented caveat that a missing key is ambiguous between \"not tracked yet\" and \"retired and drained\", so a sender must never treat absence alone as drain proof), and `supports_namespace_isolation` (capability advertisement, so a sender never emits lane-tagged traffic to a receiver that would misroute it). `WorkflowReplicationMessages` gains `isolated_namespace_id` — when set, the batch belongs to that namespace's dedicated lane — and `retire_isolated_lane`, marking a lane's final message. - **Receiver**: lane-tagged batches route to lazily-created per-namespace task trackers. Each lane is its own monotonic stream for the life of the connection — there is no rewind or rotation machinery, because the sender-side design (later in the series) gives every lane a single owner cursor that never goes backwards. Member-lane watermarks fold into the overall ack minimum (cleanup safety) and are reported per lane; member-lane backlogs count toward HIGH flow control. Lane lifecycle is defensive about ordering: a batch's tasks are tracked BEFORE its retire flag is applied (so the concurrent ack loop can never delete a lane whose final batch is mid-track), a retiring lane is only dropped once it is drained AND has tracked at least one batch, and non-retire traffic arriving on a retiring lane revives it (the sender re-isolated the namespace before the lane drained). Lane-tagged traffic at any priority other than HIGH is a protocol violation and fails the stream rather than silently mis-acking (isolation splits the HIGH lane only). Lanes created concurrently with `Stop()` are pre-cancelled so no tasks run after shutdown. - **`NamespaceThrottler`** interface (default: noop, via fx) observes per-namespace HIGH-priority task load and decides which namespaces to report. The sender does not tag lanes yet, so this is inert until the sender-side isolation lands. ## Why? Isolation needs a wire contract before the sender can use it: capability advertisement, per-lane routing and progress reporting, and the throttled-namespace feedback channel. Landing the receiver first makes mixed-version clusters safe by construction. Compared to #10147, lanes are per-namespace rather than shared per severity tier — which is what eliminates that design's cursor rewinds and the watermark-regression/tracker-rotation protocol this PR previously needed to compensate for them. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) — lane routing (priority routing when unset, per-namespace tracker identity, non-HIGH rejection), retirement lifecycle (drop once drained, never-tracked retiring lane survives the ack snapshot, revive on re-isolation traffic, fresh lane after drop), and post-Stop lane creation being pre-cancelled - [x] added new functional test(s) — exercised end-to-end by the xdc test in the final PR of the series ## Potential risks Inert until a sender emits `isolated_namespace_id`, which is gated behind both a config flag and the capability advertisement. Receiver-side lane state is bounded by the sender's isolation cap (final PR). 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "text": "> **Part 3 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > #11302 (reader group) has merged, so this PR's diff is now standalone against `main`. · **Next in series: #11304** (isolation manager). ## What changed? The wire-level building blocks for per-namespace lane isolation, receiver side only: - **Proto**: `SyncReplicationState` gains `pause_high_namespace_ids` (namespaces the receiver reports as overwhelming the HIGH lane — the priority lives in the field name, so a future LOW extension adds its own field rather than widening this one), `isolated_lane_states` (per-lane applied watermarks keyed by namespace ID — with the documented caveat that a missing key is ambiguous between \"not tracked yet\" and \"retired and drained\", so a sender must never treat absence alone as drain proof), and `supports_namespace_isolation` (capability advertisement, so a sender never emits lane-tagged traffic to a receiver that would misroute it). `WorkflowReplicationMessages` gains `isolated_namespace_id` — when set, the batch belongs to that namespace's dedicated lane — and `retire_isolated_lane`, marking a lane's final message. - **Receiver**: lane-tagged batches route to lazily-created per-namespace task trackers. Each lane is its own monotonic stream for the life of the connection — there is no rewind or rotation machinery, because the sender-side design (later in the series) gives every lane a single owner cursor that never goes backwards. Member-lane watermarks fold into the overall ack minimum (cleanup safety) and are reported per lane; member-lane backlogs count toward HIGH flow control. Lane lifecycle is defensive about ordering: a batch's tasks are tracked BEFORE its retire flag is applied (so the concurrent ack loop can never delete a lane whose final batch is mid-track), a retiring lane is only dropped once it is drained AND has tracked at least one batch, and non-retire traffic arriving on a retiring lane revives it (the sender re-isolated the namespace before the lane drained). Lane-tagged traffic at any priority other than HIGH is a protocol violation and fails the stream rather than silently mis-acking (isolation splits the HIGH lane only). Lanes created concurrently with `Stop()` are pre-cancelled so no tasks run after shutdown. - **`NamespaceThrottler`** interface (default: noop, via fx) observes per-namespace HIGH-priority task load and decides which namespaces to report. The sender does not tag lanes yet, so this is inert until the sender-side isolation lands. ## Why? Isolation needs a wire contract before the sender can use it: capability advertisement, per-lane routing and progress reporting, and the throttled-namespace feedback channel. Landing the receiver first makes mixed-version clusters safe by construction. Compared to #10147, lanes are per-namespace rather than shared per severity tier — which is what eliminates that design's cursor rewinds and the watermark-regression/tracker-rotation protocol this PR previously needed to compensate for them. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) — lane routing (priority routing when unset, per-namespace tracker identity, non-HIGH rejection), retirement lifecycle (drop once drained, never-tracked retiring lane survives the ack snapshot, revive on re-isolation traffic, fresh lane after drop), and post-Stop lane creation being pre-cancelled - [x] added new functional test(s) — exercised end-to-end by the xdc test in the final PR of the series ## Potential risks Inert until a sender emits `isolated_namespace_id`, which is gated behind both a config flag and the capability advertisement. Receiver-side lane state is bounded by the sender's isolation cap (final PR). 🤖 Generated with [Claude Code](https://claude.com/claude-code) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Touches replication ack watermarks and task routing on a critical path, but lane traffic is unused until the sender lands and the default throttler is a noop. > > **Overview** > Adds the **wire contract and receiver behavior** for per-namespace HIGH-lane isolation on workflow replication streams, ahead of sender-side isolation in a follow-up PR. > > **Proto:** `SyncReplicationState` now carries `pause_high_namespace_ids` (shard-scoped throttle feedback), `isolated_lane_states` (per-namespace applied watermarks), and `supports_namespace_isolation` (tiered-stack capability). `WorkflowReplicationMessages` adds `isolated_namespace_id` and `retire_isolated_lane` for lane-tagged batches. > > **Receiver:** Lane-tagged HIGH traffic routes to lazily created per-namespace trackers; member-lane backlog counts toward HIGH flow control and member watermarks fold into the overall ack minimum. Acks report throttled namespaces via a new **`NamespaceThrottler`** hook (default **noop** in fx). Lifecycle handling covers track-before-retire ordering, drained retired lanes, re-isolation reviving retiring lanes, non-HIGH lane tags failing the stream, and post-`Stop()` lanes pre-cancelled. > > Behavior stays **inert** until a future sender emits `isolated_namespace_id` (gated on capability advertisement). > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 1140765a76ca8afc5b2c3f80dc6014abd8076182. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
       "url": "https://github.com/temporalio/temporal/pull/11303",
       "createdAt": "2026-07-27T12:22:32Z",
-      "updatedAt": "2026-08-13T12:52:24Z",
-      "timestamp": "2026-08-13T12:52:24Z",
+      "updatedAt": "2026-08-13T15:23:21Z",
+      "timestamp": "2026-08-13T15:23:21Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
       "labels": [
-        "team/cgs-foundation"
+        "team/cgs-foundation",
+        "reliability-2026"
       ],
       "author": "robholland",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11313",
@@ -641,8 +677,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11355",
@@ -663,8 +698,7 @@
       "labels": [],
       "author": "geraldw-ai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11380",
@@ -685,8 +719,7 @@
       "labels": [],
       "author": "chrsmith",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11397",
@@ -707,8 +740,7 @@
       "labels": [],
       "author": "geraldw-ai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11400",
@@ -754,8 +786,7 @@
       ],
       "author": "michaely520",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11413",
@@ -776,8 +807,7 @@
       "labels": [],
       "author": "chrsmith",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11415",
@@ -798,8 +828,7 @@
       "labels": [],
       "author": "chrsmith",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11419",
@@ -820,8 +849,7 @@
       "labels": [],
       "author": "chaptersix",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11422",
@@ -833,8 +861,8 @@
       "text": "## What changed? Skip unbuildable replication tasks on stream sender instead of blocking the stream. The skip is logged and new metric ReplicationTaskSendSkipped added. ## Why? When the replication stream sender cannot build (\"convert\") a task, it retries and, once the retry budget is exhausted, returns an error that tears the stream down. On reconnect the sender resumes from the same watermark, hits the same unbuildable task, and blocks the whole shard's stream indefinitely. This change skips the task to unblock and logs, add a metric for the skipped task so that it could be investigated later. ## How did you test it? - [x] built - [x] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
       "url": "https://github.com/temporalio/temporal/pull/11422",
       "createdAt": "2026-08-05T15:53:14Z",
-      "updatedAt": "2026-08-13T01:41:55Z",
-      "timestamp": "2026-08-13T01:41:55Z",
+      "updatedAt": "2026-08-13T15:42:36Z",
+      "timestamp": "2026-08-13T15:42:36Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -867,8 +895,7 @@
       "labels": [],
       "author": "chaptersix",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11446",
@@ -889,8 +916,7 @@
       "labels": [],
       "author": "dandavison",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11450",
@@ -913,8 +939,7 @@
       ],
       "author": "prathyushpv",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11456",
@@ -935,8 +960,7 @@
       "labels": [],
       "author": "chrsmith",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11458",
@@ -957,8 +981,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11459",
@@ -982,8 +1005,7 @@
       ],
       "author": "michaely520",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11461",
@@ -995,15 +1017,15 @@
       "text": "Standardize Claude review comment format, style and focus.",
       "url": "https://github.com/temporalio/temporal/pull/11461",
       "createdAt": "2026-08-10T22:54:30Z",
-      "updatedAt": "2026-08-13T02:04:53Z",
-      "timestamp": "2026-08-13T02:04:53Z",
+      "updatedAt": "2026-08-13T14:54:05Z",
+      "timestamp": "2026-08-13T14:54:05Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
       },
       "labels": [],
       "author": "stephanos",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -1026,8 +1048,7 @@
       "labels": [],
       "author": "davidporter-id-au",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11464",
@@ -1048,8 +1069,7 @@
       "labels": [],
       "author": "mavemuri",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11465",
@@ -1061,8 +1081,8 @@
       "text": "## Summary - give every testcore.NewEnv test a fresh cluster and tear it down with the test - bound concurrently live clusters to GOMAXPROCS by default, configurable with TEMPORAL_TEST_LIVE_CLUSTERS - preseed the primary and external namespaces for each cluster before server startup - preserve bounded legacy suite-owned cluster paths and suite-level worker-service requirements - retain lightweight optional JSONL lifecycle, boot-phase, runtime, and RSS reporting - build on #10643 for the lower-resource CI shard layout and its persistence prerequisites The shared pool, dedicated-cluster marker, warm spares, duplicate SQL/SQLite lease work, Cassandra reuse pool, and heavyweight report generator are intentionally removed from this PR. FASTBOOT.md retains the investigation history and current conclusions. ## Testing - make fmt lint - go test -race -tags=test_dep ./tests/testcore - go test -race -tags=test_dep ./tests -run ^TestClientDataConverterTestSuite$ -count=1 - go test -race -tags=test_dep ./tests -run ^TestWorkflowAliasSearchAttributeTestSuite$ -count=1",
       "url": "https://github.com/temporalio/temporal/pull/11465",
       "createdAt": "2026-08-11T02:58:59Z",
-      "updatedAt": "2026-08-13T02:55:03Z",
-      "timestamp": "2026-08-13T02:55:03Z",
+      "updatedAt": "2026-08-13T14:57:10Z",
+      "timestamp": "2026-08-13T14:57:10Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1094,8 +1114,7 @@
       "labels": [],
       "author": "wtg-peternguyen",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11471",
@@ -1116,8 +1135,7 @@
       "labels": [],
       "author": "temporal-cicd[bot]",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11474",
@@ -1141,8 +1159,7 @@
       ],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11479",
@@ -1166,8 +1183,7 @@
       ],
       "author": "michaely520",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11480",
@@ -1179,8 +1195,8 @@
       "text": "## What changed? Extract generic JUnit XML file reading and writing into `tools/common/junit`. ## Why? Centralizing format-level JUnit handling.",
       "url": "https://github.com/temporalio/temporal/pull/11480",
       "createdAt": "2026-08-11T20:57:07Z",
-      "updatedAt": "2026-08-13T02:03:46Z",
-      "timestamp": "2026-08-13T02:03:46Z",
+      "updatedAt": "2026-08-13T14:54:22Z",
+      "timestamp": "2026-08-13T14:54:22Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -1189,7 +1205,7 @@
         "request-claude-review"
       ],
       "author": "stephanos",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -1212,8 +1228,7 @@
       "labels": [],
       "author": "rkannan82",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11482",
@@ -1234,8 +1249,7 @@
       "labels": [],
       "author": "chrsmith",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11483",
@@ -1256,8 +1270,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11486",
@@ -1269,8 +1282,8 @@
       "text": "## What changed? Fixed bookkeeping of mutable state approximate size on the two paths that mutate an `ActivityInfo` without adding its bytes to the counter: `AddActivityTaskStartedEvent` (start), and the heartbeat handler, where `RetryLastWorkerIdentity` now moves into `UpdateActivityProgress`. ## Why? Both sites mutate the pointer `GetActivityInfo` returned, but don't alter the approximate size. ## How did you test it? - [X] built - [ ] run locally and tested manually - [ ] covered by existing tests - [X] added new unit test(s) - [ ] added new functional test(s) ## Potential risks The risk should be low. We will hit the mutable state size limit faster, but it would be proper accounting.",
       "url": "https://github.com/temporalio/temporal/pull/11486",
       "createdAt": "2026-08-11T22:57:47Z",
-      "updatedAt": "2026-08-13T08:13:39Z",
-      "timestamp": "2026-08-13T08:13:39Z",
+      "updatedAt": "2026-08-13T15:41:50Z",
+      "timestamp": "2026-08-13T15:41:50Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -1293,8 +1306,8 @@
       "text": "Runs `go test` directly with JSON output and records package-aware attempt results as the canonical execution facts. The recorder owns event attribution, diagnostics, timeouts, console output, and exact JUnit counters while the existing retry and merge path remains in place as a compatibility seam. Stack: depends on #11512. Canonical crash rendering and retry policy follow this one.",
       "url": "https://github.com/temporalio/temporal/pull/11487",
       "createdAt": "2026-08-11T23:31:23Z",
-      "updatedAt": "2026-08-13T08:09:31Z",
-      "timestamp": "2026-08-13T08:09:31Z",
+      "updatedAt": "2026-08-13T15:30:15Z",
+      "timestamp": "2026-08-13T15:30:15Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1315,8 +1328,8 @@
       "text": "Moves retry selection, argument rewriting, and missing-rerun validation from JUnit into a focused retry policy over canonical attempt results. The existing report merge remains presentation-only, isolating this PR to execution policy. Stack: depends on #11514. Canonical history persistence follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11488",
       "createdAt": "2026-08-11T23:31:31Z",
-      "updatedAt": "2026-08-13T08:10:23Z",
-      "timestamp": "2026-08-13T08:10:23Z",
+      "updatedAt": "2026-08-13T15:30:25Z",
+      "timestamp": "2026-08-13T15:30:25Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1346,8 +1359,7 @@
       "labels": [],
       "author": "stuart-wells",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11493",
@@ -1368,8 +1380,7 @@
       "labels": [],
       "author": "ks-temporal",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11494",
@@ -1390,8 +1401,7 @@
       "labels": [],
       "author": "feiyang3cat",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11500",
@@ -1412,8 +1422,7 @@
       "labels": [],
       "author": "Shivs11",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11502",
@@ -1436,8 +1445,7 @@
       ],
       "author": "bergundy",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11503",
@@ -1458,8 +1466,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11505",
@@ -1471,8 +1478,8 @@
       "text": "## What changed? Add process-lifetime baselines to `objectleak`, ignore tiny pointer-free allocations that the runtime cannot track individually, and allow asynchronous cleanup the full settle timeout. ## Why? Make object leak reports actionable by distinguishing process-lifetime objects from leaks and avoiding runtime-induced false positives. Replaces #11313.",
       "url": "https://github.com/temporalio/temporal/pull/11505",
       "createdAt": "2026-08-12T16:47:47Z",
-      "updatedAt": "2026-08-12T21:21:41Z",
-      "timestamp": "2026-08-12T21:21:41Z",
+      "updatedAt": "2026-08-13T15:25:51Z",
+      "timestamp": "2026-08-13T15:25:51Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -1502,8 +1509,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11507",
@@ -1524,8 +1530,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11508",
@@ -1537,15 +1542,15 @@
       "text": "## What changed? - Unregister process-global gRPC resolver and OpenTelemetry logger state during lifecycle shutdown. - Close the test matching client RPC factory and clear removed test references. - Remove every `WithExpected` entry from `objectLeakOpts`. ## Why? The leak test was suppressing the cluster graph instead of enforcing that cluster-owned objects become collectible. These lifecycle fixes leave only the protobuf traversal prune. ## Testing - `go test -count=1 -tags test_dep ./common/membership -run 'TestGRPCResolver'` - `go test -count=1 ./temporal` - `go test -count=1 ./tests/testcore -run 'TestSharedClusterT_RemoveTestReleasesTest'` - `go test -count=1 ./tests/leakcheck -run '^$'` Replaces #11503.",
       "url": "https://github.com/temporalio/temporal/pull/11508",
       "createdAt": "2026-08-12T16:47:54Z",
-      "updatedAt": "2026-08-12T16:47:54Z",
-      "timestamp": "2026-08-12T16:47:54Z",
+      "updatedAt": "2026-08-13T15:55:24Z",
+      "timestamp": "2026-08-13T15:55:24Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
       "labels": [],
       "author": "stephanos",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -1568,8 +1573,7 @@
       "labels": [],
       "author": "feiyang3cat",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11510",
@@ -1590,8 +1594,7 @@
       "labels": [],
       "author": "carlydf",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11511",
@@ -1612,8 +1615,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11512",
@@ -1625,8 +1627,8 @@
       "text": "Moves the testrunner's report input and output boundaries onto `tools/common/junit.Testsuites`. The existing retry merger remains unchanged behind that seam, so this is a behavior-preserving preparation for canonical attempt rendering. Stack: depends on #11513. The canonical attempt-results PR follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11512",
       "createdAt": "2026-08-12T22:00:08Z",
-      "updatedAt": "2026-08-12T22:43:00Z",
-      "timestamp": "2026-08-12T22:43:00Z",
+      "updatedAt": "2026-08-13T15:30:10Z",
+      "timestamp": "2026-08-13T15:30:10Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1647,8 +1649,8 @@
       "text": "Strengthens the shared JUnit module's I/O contract. Reads reject trailing XML and include the source path in errors, while writes atomically replace the destination so interrupted writes cannot corrupt an existing report. It also exposes counter validation for canonical report renderers without imposing that invariant on legacy producers yet. Stack: depends on #11480. The testrunner boundary cleanup follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11513",
       "createdAt": "2026-08-12T22:05:45Z",
-      "updatedAt": "2026-08-12T22:42:51Z",
-      "timestamp": "2026-08-12T22:42:51Z",
+      "updatedAt": "2026-08-13T15:31:33Z",
+      "timestamp": "2026-08-13T15:31:33Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1669,8 +1671,8 @@
       "text": "Routes the `report-crash` command through the canonical JUnit renderer introduced with attempt results. The command test now compares the parsed document semantically, and the obsolete legacy XML fixture is removed. Stack: depends on #11487. The retry-policy PR follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11514",
       "createdAt": "2026-08-12T22:10:10Z",
-      "updatedAt": "2026-08-13T08:09:50Z",
-      "timestamp": "2026-08-13T08:09:50Z",
+      "updatedAt": "2026-08-13T15:30:20Z",
+      "timestamp": "2026-08-13T15:30:20Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1691,8 +1693,8 @@
       "text": "Persists completed attempt history directly through the canonical JUnit renderer for both intermediate and final reports. The testrunner write boundary now rejects inconsistent counters, while the legacy merger remains present but unused so its deletion can be reviewed separately. Stack: depends on #11488. Legacy JUnit cleanup follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11515",
       "createdAt": "2026-08-12T22:12:35Z",
-      "updatedAt": "2026-08-13T09:54:10Z",
-      "timestamp": "2026-08-13T09:54:10Z",
+      "updatedAt": "2026-08-13T15:30:29Z",
+      "timestamp": "2026-08-13T15:30:29Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1713,8 +1715,8 @@
       "text": "Deletes the now-unused legacy JUnit wrapper, synthetic-report builder, retry merger, and tree helper. Tests consume shared `Testsuites` documents directly, and summary fixtures explicitly model the already-canonical failure details they exercise. Stack: depends on #11515. Runner orchestration follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11516",
       "createdAt": "2026-08-12T22:14:53Z",
-      "updatedAt": "2026-08-13T10:11:34Z",
-      "timestamp": "2026-08-13T10:11:34Z",
+      "updatedAt": "2026-08-13T15:30:33Z",
+      "timestamp": "2026-08-13T15:30:33Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1735,8 +1737,8 @@
       "text": "Removes the temporary runner-level `attempt` wrapper now that execution facts live in `attemptResult`. The runner stores result history directly and computes per-attempt coverage paths without changing retry, persistence, or exit behavior. Stack: depends on #11516. Fallible runner orchestration follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11517",
       "createdAt": "2026-08-12T22:18:31Z",
-      "updatedAt": "2026-08-13T10:11:39Z",
-      "timestamp": "2026-08-13T10:11:39Z",
+      "updatedAt": "2026-08-13T15:30:38Z",
+      "timestamp": "2026-08-13T15:30:38Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1757,8 +1759,8 @@
       "text": "Makes crash and attempt-history persistence return errors to their callers. Intermediate writes remain best effort, final writes remain mandatory, and a focused test covers crash-report write failure without changing runner exit behavior yet. Stack: depends on #11517. Fallible runner orchestration follows this one.",
       "url": "https://github.com/temporalio/temporal/pull/11518",
       "createdAt": "2026-08-12T22:21:21Z",
-      "updatedAt": "2026-08-13T10:11:43Z",
-      "timestamp": "2026-08-13T10:11:43Z",
+      "updatedAt": "2026-08-13T15:30:41Z",
+      "timestamp": "2026-08-13T15:30:41Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1788,8 +1790,7 @@
       "labels": [],
       "author": "chrsmith",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11522",
@@ -1810,8 +1811,7 @@
       "labels": [],
       "author": "chaptersix",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11523",
@@ -1832,8 +1832,7 @@
       "labels": [],
       "author": "chaptersix",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11524",
@@ -1854,8 +1853,7 @@
       "labels": [],
       "author": "chaptersix",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11526",
@@ -1866,15 +1864,15 @@
       "title": "Fix flakereport incomplete JUnit failures",
       "url": "https://github.com/temporalio/temporal/pull/11526",
       "createdAt": "2026-08-13T01:11:18Z",
-      "updatedAt": "2026-08-13T01:11:18Z",
-      "timestamp": "2026-08-13T01:11:18Z",
+      "updatedAt": "2026-08-13T14:53:28Z",
+      "timestamp": "2026-08-13T14:53:28Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
       "labels": [],
       "author": "stephanos",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -1897,8 +1895,7 @@
       "labels": [],
       "author": "rkannan82",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11528",
@@ -1919,8 +1916,7 @@
       "labels": [],
       "author": "chaptersix",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11529",
@@ -1941,8 +1937,7 @@
       "labels": [],
       "author": "wtg-peternguyen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11530",
@@ -1963,8 +1958,7 @@
       "labels": [],
       "author": "davidporter-id-au",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11531",
@@ -1985,8 +1979,7 @@
       "labels": [],
       "author": "davidporter-id-au",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11532",
@@ -2007,8 +2000,7 @@
       "labels": [],
       "author": "davidporter-id-au",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11533",
@@ -2020,15 +2012,15 @@
       "text": "Automatically generated by the optimize-test-sharding workflow.",
       "url": "https://github.com/temporalio/temporal/pull/11533",
       "createdAt": "2026-08-13T07:33:14Z",
-      "updatedAt": "2026-08-13T07:33:16Z",
-      "timestamp": "2026-08-13T07:33:16Z",
+      "updatedAt": "2026-08-13T15:03:18Z",
+      "timestamp": "2026-08-13T15:03:18Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
       "labels": [],
       "author": "temporal-cicd[bot]",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -2053,8 +2045,7 @@
       ],
       "author": "robholland",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11536",
@@ -2075,8 +2066,7 @@
       "labels": [],
       "author": "Aminkbi",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11537",
@@ -2097,8 +2087,7 @@
       "labels": [],
       "author": "Aminkbi",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11538",
@@ -2119,8 +2108,117 @@
       "labels": [],
       "author": "temporal-cicd[bot]",
       "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11541",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Attribute queue reader stuck attempts to a slice",
+      "text": "## What changed? - count reader stuck attempts per slice and per owning reader instead of per wall clock second (`SetReaderWatermark` -> `SetSliceReadWatermark`) - report each stuck window once, and only when the alert was actually queued - track read progress for every reader rather than only the default one, and stop creating readers at `MaxReaderCount` - only split slices that genuinely overlap the stuck range, via a new `Range.CanSplitStrictly` ## Why? The attempt counter was keyed on the truncated fire time of the last loaded task. A shard that keeps generating tasks gets a new slice per notification and several of them can land in the same second, so every read made progress in its own slice while the shared counter still climbed — the policy fired on healthy shards. That is why `history.queueReaderStuckCriticalAttempts` is currently raised high enough to disable it in practice. Attributing attempts to a slice only counts repeated reads that fail to move past one fire time window *within a single slice*, which is the condition worth splitting out, and it needs no extra time threshold to tell the two apart. Progress is also keyed on the owning reader, so a slice moved whole to the next reader is judged on that reader's own reads instead of being demoted again on its first one. `Range.CanSplit` is inclusive at both bounds, so slices merely adjacent to the stuck window were split into empty pieces and merged into the next reader, creating that reader for nothing. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) `action_reader_stuck.go` had no test file before. The new table test covers every overlap shape, the reader count bound, and the merge into an existing next reader; each fix was confirmed to fail against the pre-fix logic. ## Potential risks Reader stuck is effectively disabled by config today, so this only changes production behaviour once `queueReaderStuckCriticalAttempts` is lowered again. Known limitation worth a decision before that happens: slice identity is not stable. `processNewRange` merges each new range into the reader's slices, and `MergeWithSlice` destroys and rebuilds them, so the attempt count restarts. That is safe in the sense that it can only delay detection, never cause a false positive, but on a shard that keeps generating timers the merge cadence can outrun `ReaderStuckCriticalAttempts` reads and hold detection off. Carrying progress across split/merge, or keying it on `(readerID, watermark, Range.InclusiveMin)` which survives a merge, would close that gap — both need their own eviction story, so they are left out of this change.",
+      "url": "https://github.com/temporalio/temporal/pull/11541",
+      "createdAt": "2026-08-13T15:41:46Z",
+      "updatedAt": "2026-08-13T16:19:21Z",
+      "timestamp": "2026-08-13T16:19:21Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "prathyushpv",
+      "state": "open",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11542",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Release removed shared cluster test references",
+      "text": "## What changed? Clear removed tests from the shared cluster's backing slice. ## Why? `sharedClusterT` shortened `activeTests` without clearing the removed interface slot. The backing array could therefore retain completed tests and their functional test state.",
+      "url": "https://github.com/temporalio/temporal/pull/11542",
+      "createdAt": "2026-08-13T15:47:53Z",
+      "updatedAt": "2026-08-13T16:12:39Z",
+      "timestamp": "2026-08-13T16:12:39Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11543",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Release process-global lifecycle registrations",
+      "text": "## What changed? Tie test gRPC resolver registrations and OTEL logger registrations to Fx lifecycle hooks. Test matching clients also close their RPC factories during cleanup. The leak test drops the corresponding logger and host expectations. ## Why? The process-global resolver map and OTEL error handler retained cluster-owned state after shutdown. Lifecycle-owned registrations make startup and shutdown ownership explicit, including concurrent OTEL registrations. ## Testing - `go test -count=1 ./common/membership -run '^TestGRPCResolver'` - `go test -count=1 ./temporal -run '^TestOTELLoggerErrorHandler'` - `make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=10s LEAK_TIMEOUT=3m leak-test` Stacked on #11542.",
+      "url": "https://github.com/temporalio/temporal/pull/11543",
+      "createdAt": "2026-08-13T15:50:19Z",
+      "updatedAt": "2026-08-13T15:50:19Z",
+      "timestamp": "2026-08-13T15:50:19Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11544",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Enforce zero expected object leaks",
+      "text": "## What changed? Remove the final `FunctionalTestBase.testCluster.testBase*` expectation. `objectLeakOpts` now contains only the protobuf traversal prune and no expected leaks. ## Why? The preceding stack releases shared-test and process-global references. Together with the persistence ownership fixes in #11506 and #11507, functional test clusters become fully collectible. ## Testing - `go test -count=1 ./tests/leakcheck -run '^$'` - With #11506 and #11507 applied: `make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=10s LEAK_TIMEOUT=3m leak-test` Stacked on #11543. Also depends on #11506 and #11507.",
+      "url": "https://github.com/temporalio/temporal/pull/11544",
+      "createdAt": "2026-08-13T15:51:29Z",
+      "updatedAt": "2026-08-13T15:51:29Z",
+      "timestamp": "2026-08-13T15:51:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11546",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "fix(batcher): scope deterministic request IDs to the batch job ID",
+      "text": "## What changed? Use the `jobID` parameter in the `deterministicRequestID` function to allow multiple batch operations to signal the same workflow. ## Why? Two batch operations that send the same signal to the same workflow/run ID will only send one signal, the second will be de-duped in the signal logic because the request ID was hashed from workflow id / run id / signal name. Including the batch job ID gives proper hashing to prevent these separate signals from being de-duped ## How did you test it? - [x] added new unit test(s) - [x] added new functional test(s) ## Potential risks NA, this is a bug fix.",
+      "url": "https://github.com/temporalio/temporal/pull/11546",
+      "createdAt": "2026-08-13T16:13:40Z",
+      "updatedAt": "2026-08-13T16:18:00Z",
+      "timestamp": "2026-08-13T16:18:00Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "spkane31",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     }
   ],
   "events": [
@@ -4739,6 +4837,919 @@
         "labels": [],
         "author": "picatz",
         "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9987c9b4a83a6ed241ab",
+      "signalId": "github:temporalio/temporal:issue:11547",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:issue:11547",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "issue",
+        "title": "A brief `Unavailable` blip resets History queue backoff, causing a sustained retry storm",
+        "text": "### Summary When a History cluster is running at its system persistence-QPS limit, the fleet stays stable only because `ResourceExhausted` errors put queue readers/task executables onto their long reschedule backoff, which spreads persistence load out over time. If persistence briefly returns a *different* transient error (`Unavailable`, or context deadline exceeded) - e.g. during a database failover/switchover - readers/executables fall back to their fast retry path, the fleet's long-backoff state is effectively reset, and on recovery every shard re-fires in a synchronized burst. The aggregate read QPS then exceeds the system persistence limiter, ack-level advancement is starved, and the queues settle into a saturated equilibrium instead of draining. ### Environment - Temporal Server version: **v1.30.2** (behavior also present, byte-identical in the relevant code, on v1.31.1 and `main` - see code pointers) - Persistence: Aurora PostgreSQL - History service running at/near its configured **system** persistence-QPS limit ### Current behavior 1. Under chronic system-QPS pressure, a fraction of persistence ops trip `ResourceExhausted`. Readers/executables detect this specific class via `IsResourceExhausted(err)` and reschedule on the long `ResourceExhausted` backoff curve (`CreateTaskResourceExhaustedReschedulePolicy`: initial ~3s, coefficient 1.5, max ~5m), which naturally de-synchronizes the fleet. `RangeCompleteHistoryTasks` slips through often enough to keep ack levels advancing. No customer impact, but zero headroom. 2. A brief persistence interruption (observed ~60s during a DB switchover) returns `Unavailable` / context-deadline for calls - the incident logs show this window as `Unavailable`/deadline, not `ResourceExhausted`. 3. The long backoff is engaged **only** when the error is `ResourceExhausted`: - Readers: on `ResourceExhausted` they wait a fixed throttle delay; for any other transient error they use the fast exponential retrier (~50ms initial → ~1s max), which is then reset once a call succeeds. - Executables: they increment a per-task `resourceExhaustedCount` and take the long reschedule **only** while that error is `ResourceExhausted`; any other error path resets `resourceExhaustedCount = 0` and falls back to the default reschedule policy (~1s initial, 1.1 coefficient, ~3m max). For the duration of the blip, every reader/executable on every shard retries on its fast/default path and the accumulated long-backoff state is discarded fleet-wide. 4. On recovery, each shard's first successful read returns a full batch with `MoreTasks=true`, which triggers an immediate re-notification (no throttle between that batch and the next read). Thousands of shards across multiple scheduled queue categories become eligible at once. Each individual reader is still gated by its own rate limiter, so this is not a single reader spinning with zero gap - it is an **aggregate, fleet-wide** synchronized burst whose combined read QPS exceeds the system persistence cap. 5. `RangeCompleteHistoryTasks` (advances ack levels by deleting completed task ranges) goes through the **same** persistence rate limiter as the reads: `GetHistoryTasks`, `CompleteHistoryTask`, and `RangeCompleteHistoryTasks` all funnel through the same `allow()` gate (system + namespace + shard limiters). Under saturation it is throttled/failed alongside the reads, so ack levels don't advance, readers re-read the same ranges every cycle, and the limiter stays saturated. Archival tasks (which read history from persistence before writing the blob) fail the same way and reschedule, compounding read load. 6. Result: a stable \"saturated\" equilibrium. Individual task executions can succeed, but queues do not logically drain. Recovery only happens by scaling persistence and/or raising the QPS limit; the backlog then drains slowly. ### Expected behavior A short-lived `Unavailable`/deadline condition on a cluster that is otherwise persistence-rate-limited should not collapse the fleet's backoff and cause a persistent retry storm. Specifically: - Transient non-`ResourceExhausted` persistence errors should not discard readers'/executables' long-backoff state in a way that synchronizes the whole fleet on recovery. - Ack-level advancement (`RangeCompleteHistoryTasks`) should not have to compete on equal footing with the same reader load it is trying to relieve - otherwise there is no escape path from saturation. ### Impact Extended (multi-hour) stall of workflow progress across all shards on the affected cluster: workflow starts, signals, workflow-task completions, timer fires, and archival all intermittently fail or make no progress, even though the database itself is healthy after the blip. Frontend availability metrics understate the impact because affected shards make zero forward progress regardless of client retries. ### Suggested directions (for discussion) 1. Apply the congestion-style long/jittered backoff to a broader set of transient persistence errors - at minimum `Unavailable` and context-deadline - not just `ResourceExhausted`, so a brief outage doesn't reset the fleet to the fast curve. 2. Add jitter / de-synchronization to reader re-fire after recovery so shards don't dispatch in lockstep when persistence returns. 3. Give ack-level advancement (`RangeCompleteHistoryTasks`) priority or a separate budget from read traffic through the persistence limiter, so the queue always has an escape path from saturation. 4. Gate immediate `MoreTasks=true` re-fires (e.g. small jittered delay) so a synchronized fleet of recovery batches can't collectively produce a read burst that exceeds the persistence cap. ### Relevant code pointers - `common/util.go`: `CreateTaskResourceExhaustedReschedulePolicy` (the long backoff, applied specifically for resource-exhausted); `IsResourceExhausted` (the actual decision point that selects the long curve); `IsPersistenceTransientError` (treats both `Unavailable` and `ResourceExhausted` as transient/retryable, but only the latter gets the long reschedule). - `service/history/queues/reader.go`: fixed throttle delay on `ResourceExhausted` vs. the fast exponential retrier for other errors; `MoreTasks()` immediate re-notification. - `service/history/queues/executable.go`: `resourceExhaustedCount` (incremented only on `ResourceExhausted`, reset to `0` on any other outcome) selecting the long reschedule. - `common/persistence/persistence_rate_limited_clients.go`: `GetHistoryTasks`, `CompleteHistoryTask`, and `RangeCompleteHistoryTasks` all pass through the same `allow()` gate (shared system/namespace/shard rate limiters) - so ack-advancement competes with reads for the same budget. *(Code paths above verified identical at tags `v1.30.2`, `v1.31.1`, and `main`.)*",
+        "url": "https://github.com/temporalio/temporal/issues/11547",
+        "createdAt": "2026-08-13T16:15:43Z",
+        "updatedAt": "2026-08-13T16:19:14Z",
+        "timestamp": "2026-08-13T16:19:14Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "ggbata",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0e38c9bc6a9b481597b9",
+      "signalId": "github:temporalio/temporal:pull_request:11546",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11546",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "fix(batcher): scope deterministic request IDs to the batch job ID",
+        "text": "## What changed? Use the `jobID` parameter in the `deterministicRequestID` function to allow multiple batch operations to signal the same workflow. ## Why? Two batch operations that send the same signal to the same workflow/run ID will only send one signal, the second will be de-duped in the signal logic because the request ID was hashed from workflow id / run id / signal name. Including the batch job ID gives proper hashing to prevent these separate signals from being de-duped ## How did you test it? - [x] added new unit test(s) - [x] added new functional test(s) ## Potential risks NA, this is a bug fix.",
+        "url": "https://github.com/temporalio/temporal/pull/11546",
+        "createdAt": "2026-08-13T16:13:40Z",
+        "updatedAt": "2026-08-13T16:18:00Z",
+        "timestamp": "2026-08-13T16:18:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "spkane31",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9402210b0344e5b7f4f1",
+      "signalId": "github:temporalio/temporal:pull_request:11542",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11542",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Release removed shared cluster test references",
+        "text": "## What changed? Clear removed tests from the shared cluster's backing slice. ## Why? `sharedClusterT` shortened `activeTests` without clearing the removed interface slot. The backing array could therefore retain completed tests and their functional test state.",
+        "url": "https://github.com/temporalio/temporal/pull/11542",
+        "createdAt": "2026-08-13T15:47:53Z",
+        "updatedAt": "2026-08-13T16:12:39Z",
+        "timestamp": "2026-08-13T16:12:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:76aa31aafb143e8bddae",
+      "signalId": "github:temporalio/temporal:pull_request:11541",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11541",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Attribute queue reader stuck attempts to a slice",
+        "text": "## What changed? - count reader stuck attempts per slice and per owning reader instead of per wall clock second (`SetReaderWatermark` -> `SetSliceReadWatermark`) - report each stuck window once, and only when the alert was actually queued - track read progress for every reader rather than only the default one, and stop creating readers at `MaxReaderCount` - only split slices that genuinely overlap the stuck range, via a new `Range.CanSplitStrictly` ## Why? The attempt counter was keyed on the truncated fire time of the last loaded task. A shard that keeps generating tasks gets a new slice per notification and several of them can land in the same second, so every read made progress in its own slice while the shared counter still climbed — the policy fired on healthy shards. That is why `history.queueReaderStuckCriticalAttempts` is currently raised high enough to disable it in practice. Attributing attempts to a slice only counts repeated reads that fail to move past one fire time window *within a single slice*, which is the condition worth splitting out, and it needs no extra time threshold to tell the two apart. Progress is also keyed on the owning reader, so a slice moved whole to the next reader is judged on that reader's own reads instead of being demoted again on its first one. `Range.CanSplit` is inclusive at both bounds, so slices merely adjacent to the stuck window were split into empty pieces and merged into the next reader, creating that reader for nothing. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) `action_reader_stuck.go` had no test file before. The new table test covers every overlap shape, the reader count bound, and the merge into an existing next reader; each fix was confirmed to fail against the pre-fix logic. ## Potential risks Reader stuck is effectively disabled by config today, so this only changes production behaviour once `queueReaderStuckCriticalAttempts` is lowered again. Known limitation worth a decision before that happens: slice identity is not stable. `processNewRange` merges each new range into the reader's slices, and `MergeWithSlice` destroys and rebuilds them, so the attempt count restarts. That is safe in the sense that it can only delay detection, never cause a false positive, but on a shard that keeps generating timers the merge cadence can outrun `ReaderStuckCriticalAttempts` reads and hold detection off. Carrying progress across split/merge, or keying it on `(readerID, watermark, Range.InclusiveMin)` which survives a merge, would close that gap — both need their own eviction story, so they are left out of this change.",
+        "url": "https://github.com/temporalio/temporal/pull/11541",
+        "createdAt": "2026-08-13T15:41:46Z",
+        "updatedAt": "2026-08-13T16:19:21Z",
+        "timestamp": "2026-08-13T16:19:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "prathyushpv",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:04655b2bdddd0e7d5249",
+      "signalId": "github:temporalio/temporal:pull_request:11508",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11508",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Eliminate expected object leak suppressions",
+        "text": "## What changed? - Unregister process-global gRPC resolver and OpenTelemetry logger state during lifecycle shutdown. - Close the test matching client RPC factory and clear removed test references. - Remove every `WithExpected` entry from `objectLeakOpts`. ## Why? The leak test was suppressing the cluster graph instead of enforcing that cluster-owned objects become collectible. These lifecycle fixes leave only the protobuf traversal prune. ## Testing - `go test -count=1 -tags test_dep ./common/membership -run 'TestGRPCResolver'` - `go test -count=1 ./temporal` - `go test -count=1 ./tests/testcore -run 'TestSharedClusterT_RemoveTestReleasesTest'` - `go test -count=1 ./tests/leakcheck -run '^$'` Replaces #11503.",
+        "url": "https://github.com/temporalio/temporal/pull/11508",
+        "createdAt": "2026-08-12T16:47:54Z",
+        "updatedAt": "2026-08-13T15:55:24Z",
+        "timestamp": "2026-08-13T15:55:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a47159212bf0dea06b2b",
+      "signalId": "github:temporalio/temporal:pull_request:11544",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11544",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Enforce zero expected object leaks",
+        "text": "## What changed? Remove the final `FunctionalTestBase.testCluster.testBase*` expectation. `objectLeakOpts` now contains only the protobuf traversal prune and no expected leaks. ## Why? The preceding stack releases shared-test and process-global references. Together with the persistence ownership fixes in #11506 and #11507, functional test clusters become fully collectible. ## Testing - `go test -count=1 ./tests/leakcheck -run '^$'` - With #11506 and #11507 applied: `make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=10s LEAK_TIMEOUT=3m leak-test` Stacked on #11543. Also depends on #11506 and #11507.",
+        "url": "https://github.com/temporalio/temporal/pull/11544",
+        "createdAt": "2026-08-13T15:51:29Z",
+        "updatedAt": "2026-08-13T15:51:29Z",
+        "timestamp": "2026-08-13T15:51:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:1fd4384536d2cee2d175",
+      "signalId": "github:temporalio/temporal:pull_request:11543",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11543",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Release process-global lifecycle registrations",
+        "text": "## What changed? Tie test gRPC resolver registrations and OTEL logger registrations to Fx lifecycle hooks. Test matching clients also close their RPC factories during cleanup. The leak test drops the corresponding logger and host expectations. ## Why? The process-global resolver map and OTEL error handler retained cluster-owned state after shutdown. Lifecycle-owned registrations make startup and shutdown ownership explicit, including concurrent OTEL registrations. ## Testing - `go test -count=1 ./common/membership -run '^TestGRPCResolver'` - `go test -count=1 ./temporal -run '^TestOTELLoggerErrorHandler'` - `make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=10s LEAK_TIMEOUT=3m leak-test` Stacked on #11542.",
+        "url": "https://github.com/temporalio/temporal/pull/11543",
+        "createdAt": "2026-08-13T15:50:19Z",
+        "updatedAt": "2026-08-13T15:50:19Z",
+        "timestamp": "2026-08-13T15:50:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:780adbcd1ee38a6aae9c",
+      "signalId": "github:temporalio/temporal:pull_request:11422",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11422",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Skip unbuildable replication tasks on stream sender instead of blocking",
+        "text": "## What changed? Skip unbuildable replication tasks on stream sender instead of blocking the stream. The skip is logged and new metric ReplicationTaskSendSkipped added. ## Why? When the replication stream sender cannot build (\"convert\") a task, it retries and, once the retry budget is exhausted, returns an error that tears the stream down. On reconnect the sender resumes from the same watermark, hits the same unbuildable task, and blocks the whole shard's stream indefinitely. This change skips the task to unblock and logs, add a metric for the skipped task so that it could be investigated later. ## How did you test it? - [x] built - [x] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+        "url": "https://github.com/temporalio/temporal/pull/11422",
+        "createdAt": "2026-08-05T15:53:14Z",
+        "updatedAt": "2026-08-13T15:42:36Z",
+        "timestamp": "2026-08-13T15:42:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "team/cgs-foundation",
+          "reliability-2026"
+        ],
+        "author": "qyc5937",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c07b1a1d7aa592158eb1",
+      "signalId": "github:temporalio/temporal:pull_request:11486",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11486",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Fix approximateSize undercounting on activity start and heartbeat paths",
+        "text": "## What changed? Fixed bookkeeping of mutable state approximate size on the two paths that mutate an `ActivityInfo` without adding its bytes to the counter: `AddActivityTaskStartedEvent` (start), and the heartbeat handler, where `RetryLastWorkerIdentity` now moves into `UpdateActivityProgress`. ## Why? Both sites mutate the pointer `GetActivityInfo` returned, but don't alter the approximate size. ## How did you test it? - [X] built - [ ] run locally and tested manually - [ ] covered by existing tests - [X] added new unit test(s) - [ ] added new functional test(s) ## Potential risks The risk should be low. We will hit the mutable state size limit faster, but it would be proper accounting.",
+        "url": "https://github.com/temporalio/temporal/pull/11486",
+        "createdAt": "2026-08-11T22:57:47Z",
+        "updatedAt": "2026-08-13T15:41:50Z",
+        "timestamp": "2026-08-13T15:41:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "reliability-2026"
+        ],
+        "author": "simvlad",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a12a546ec8ecfb4b1788",
+      "signalId": "github:temporalio/temporal:pull_request:10200",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:10200",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Validator generator [WiP]",
+        "text": "## What changed? Opt-in validator that exhaustively validate all protobuf fields in 1 place. ## Why? Adds semantic validation for protobufs as a thin layer before the proto request reaches actual business logic. ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+        "url": "https://github.com/temporalio/temporal/pull/10200",
+        "createdAt": "2026-05-08T01:12:05Z",
+        "updatedAt": "2026-08-13T15:39:41Z",
+        "timestamp": "2026-08-13T15:39:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b541fb85f70fb5a25185",
+      "signalId": "github:temporalio/temporal:pull_request:11513",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11513",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Harden shared JUnit report IO",
+        "text": "Strengthens the shared JUnit module's I/O contract. Reads reject trailing XML and include the source path in errors, while writes atomically replace the destination so interrupted writes cannot corrupt an existing report. It also exposes counter validation for canonical report renderers without imposing that invariant on legacy producers yet. Stack: depends on #11480. The testrunner boundary cleanup follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11513",
+        "createdAt": "2026-08-12T22:05:45Z",
+        "updatedAt": "2026-08-13T15:31:33Z",
+        "timestamp": "2026-08-13T15:31:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e932fa1bcc2faa6e3b42",
+      "signalId": "github:temporalio/temporal:pull_request:11033",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11033",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Return test runner orchestration outcomes",
+        "text": "Makes test execution return an exit code and error instead of terminating inside the orchestration loop. This lets final artifact failures, retry-validation failures, execution errors, timeouts, and normal pass/fail outcomes be tested directly while `Main` remains the only process-exit boundary. Stack: depends on #11518 and completes the canonical `go test -json` reporting pipeline.",
+        "url": "https://github.com/temporalio/temporal/pull/11033",
+        "createdAt": "2026-07-13T19:38:51Z",
+        "updatedAt": "2026-08-13T15:30:46Z",
+        "timestamp": "2026-08-13T15:30:46Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "test-all-dbs",
+          "request-claude-review"
+        ],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0daf03c08467e882230e",
+      "signalId": "github:temporalio/temporal:pull_request:11518",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11518",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Return report persistence errors",
+        "text": "Makes crash and attempt-history persistence return errors to their callers. Intermediate writes remain best effort, final writes remain mandatory, and a focused test covers crash-report write failure without changing runner exit behavior yet. Stack: depends on #11517. Fallible runner orchestration follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11518",
+        "createdAt": "2026-08-12T22:21:21Z",
+        "updatedAt": "2026-08-13T15:30:41Z",
+        "timestamp": "2026-08-13T15:30:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:dafc375e07eff7c4b5fc",
+      "signalId": "github:temporalio/temporal:pull_request:11517",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11517",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Simplify test runner attempt state",
+        "text": "Removes the temporary runner-level `attempt` wrapper now that execution facts live in `attemptResult`. The runner stores result history directly and computes per-attempt coverage paths without changing retry, persistence, or exit behavior. Stack: depends on #11516. Fallible runner orchestration follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11517",
+        "createdAt": "2026-08-12T22:18:31Z",
+        "updatedAt": "2026-08-13T15:30:38Z",
+        "timestamp": "2026-08-13T15:30:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:20f60a3ce2cb64522139",
+      "signalId": "github:temporalio/temporal:pull_request:11516",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11516",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Remove legacy JUnit report merger",
+        "text": "Deletes the now-unused legacy JUnit wrapper, synthetic-report builder, retry merger, and tree helper. Tests consume shared `Testsuites` documents directly, and summary fixtures explicitly model the already-canonical failure details they exercise. Stack: depends on #11515. Runner orchestration follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11516",
+        "createdAt": "2026-08-12T22:14:53Z",
+        "updatedAt": "2026-08-13T15:30:33Z",
+        "timestamp": "2026-08-13T15:30:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d69a00a7ea9642eae8b5",
+      "signalId": "github:temporalio/temporal:pull_request:11515",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11515",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Persist canonical test attempt history",
+        "text": "Persists completed attempt history directly through the canonical JUnit renderer for both intermediate and final reports. The testrunner write boundary now rejects inconsistent counters, while the legacy merger remains present but unused so its deletion can be reviewed separately. Stack: depends on #11488. Legacy JUnit cleanup follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11515",
+        "createdAt": "2026-08-12T22:12:35Z",
+        "updatedAt": "2026-08-13T15:30:29Z",
+        "timestamp": "2026-08-13T15:30:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3ff82ea90e95806e237e",
+      "signalId": "github:temporalio/temporal:pull_request:11488",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11488",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Drive test retries from attempt results",
+        "text": "Moves retry selection, argument rewriting, and missing-rerun validation from JUnit into a focused retry policy over canonical attempt results. The existing report merge remains presentation-only, isolating this PR to execution policy. Stack: depends on #11514. Canonical history persistence follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11488",
+        "createdAt": "2026-08-11T23:31:31Z",
+        "updatedAt": "2026-08-13T15:30:25Z",
+        "timestamp": "2026-08-13T15:30:25Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8df072ce4d76d4834d3b",
+      "signalId": "github:temporalio/temporal:pull_request:11514",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11514",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Render crash reports canonically",
+        "text": "Routes the `report-crash` command through the canonical JUnit renderer introduced with attempt results. The command test now compares the parsed document semantically, and the obsolete legacy XML fixture is removed. Stack: depends on #11487. The retry-policy PR follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11514",
+        "createdAt": "2026-08-12T22:10:10Z",
+        "updatedAt": "2026-08-13T15:30:20Z",
+        "timestamp": "2026-08-13T15:30:20Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:afaa942cd08555e5815e",
+      "signalId": "github:temporalio/temporal:pull_request:11487",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11487",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Record canonical Go test attempt results",
+        "text": "Runs `go test` directly with JSON output and records package-aware attempt results as the canonical execution facts. The recorder owns event attribution, diagnostics, timeouts, console output, and exact JUnit counters while the existing retry and merge path remains in place as a compatibility seam. Stack: depends on #11512. Canonical crash rendering and retry policy follow this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11487",
+        "createdAt": "2026-08-11T23:31:23Z",
+        "updatedAt": "2026-08-13T15:30:15Z",
+        "timestamp": "2026-08-13T15:30:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:48bdffa997d0e88d04fa",
+      "signalId": "github:temporalio/temporal:pull_request:11512",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11512",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Use generic JUnit documents at runner boundaries",
+        "text": "Moves the testrunner's report input and output boundaries onto `tools/common/junit.Testsuites`. The existing retry merger remains unchanged behind that seam, so this is a behavior-preserving preparation for canonical attempt rendering. Stack: depends on #11513. The canonical attempt-results PR follows this one.",
+        "url": "https://github.com/temporalio/temporal/pull/11512",
+        "createdAt": "2026-08-12T22:00:08Z",
+        "updatedAt": "2026-08-13T15:30:10Z",
+        "timestamp": "2026-08-13T15:30:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0724b5e3e573d44b8c9d",
+      "signalId": "github:temporalio/temporal:pull_request:11505",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11505",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Track process-lifetime object leak baselines",
+        "text": "## What changed? Add process-lifetime baselines to `objectleak`, ignore tiny pointer-free allocations that the runtime cannot track individually, and allow asynchronous cleanup the full settle timeout. ## Why? Make object leak reports actionable by distinguishing process-lifetime objects from leaks and avoiding runtime-induced false positives. Replaces #11313.",
+        "url": "https://github.com/temporalio/temporal/pull/11505",
+        "createdAt": "2026-08-12T16:47:47Z",
+        "updatedAt": "2026-08-13T15:25:51Z",
+        "timestamp": "2026-08-13T15:25:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:259141c25ee8db188049",
+      "signalId": "github:temporalio/temporal:pull_request:11169",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11169",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "[CHASM] Support WithRequestID on UpdateComponent",
+        "text": "## What changed? - `WithRequestID` now applies to `UpdateComponent`, enabling execution-level idempotency guarding via request ID. - When a request ID is passed as part of an `UpdateComponent` call (via API handler), it is persisted upon successful updateFn call. If it is already present, instead, `UpdateComponent` fails with a `FailedPrecondition`. - When a request ID is not passed in, a generated ID is still created for error tracing purposes, but it is not written to mutable state. - On transaction close, mutable state will sweep the oldest RequestIDs (with an `attach_time`) upon hitting the configured limit. - This will sweep both entries below a configurable max age, as well as past a certain hard length limit. ## Why? - Scheduler's `UpdateSchedule` and `PatchSchedule` are implemented as handlers that persist a signal in V1. V1 signals provide idempotency via their request IDs. Scheduler V2 doesn't make use of signals, so instead, it must record request IDs explicitly. - We reuse the existing map within mutable state. - We *must* fail with an explicit error (`FailedPrecondition`) instead of simply returning a zero value (as Signals would on repeated successful requests). This is because `UpdateComponent` can apply to API models that include response values (which we don't record, therefore, we can't return on subsequent calls). ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+        "url": "https://github.com/temporalio/temporal/pull/11169",
+        "createdAt": "2026-07-21T00:51:10Z",
+        "updatedAt": "2026-08-13T15:23:52Z",
+        "timestamp": "2026-08-13T15:23:52Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "lina-temporal",
+        "state": "open",
+        "assignees": [
+          "fretz12"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3d65f91432dee2006ba1",
+      "signalId": "github:temporalio/temporal:pull_request:11303",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11303",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Add replication stream lane wire protocol and receiver-side lane routing",
+        "text": "> **Part 3 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > #11302 (reader group) has merged, so this PR's diff is now standalone against `main`. · **Next in series: #11304** (isolation manager). ## What changed? The wire-level building blocks for per-namespace lane isolation, receiver side only: - **Proto**: `SyncReplicationState` gains `pause_high_namespace_ids` (namespaces the receiver reports as overwhelming the HIGH lane — the priority lives in the field name, so a future LOW extension adds its own field rather than widening this one), `isolated_lane_states` (per-lane applied watermarks keyed by namespace ID — with the documented caveat that a missing key is ambiguous between \"not tracked yet\" and \"retired and drained\", so a sender must never treat absence alone as drain proof), and `supports_namespace_isolation` (capability advertisement, so a sender never emits lane-tagged traffic to a receiver that would misroute it). `WorkflowReplicationMessages` gains `isolated_namespace_id` — when set, the batch belongs to that namespace's dedicated lane — and `retire_isolated_lane`, marking a lane's final message. - **Receiver**: lane-tagged batches route to lazily-created per-namespace task trackers. Each lane is its own monotonic stream for the life of the connection — there is no rewind or rotation machinery, because the sender-side design (later in the series) gives every lane a single owner cursor that never goes backwards. Member-lane watermarks fold into the overall ack minimum (cleanup safety) and are reported per lane; member-lane backlogs count toward HIGH flow control. Lane lifecycle is defensive about ordering: a batch's tasks are tracked BEFORE its retire flag is applied (so the concurrent ack loop can never delete a lane whose final batch is mid-track), a retiring lane is only dropped once it is drained AND has tracked at least one batch, and non-retire traffic arriving on a retiring lane revives it (the sender re-isolated the namespace before the lane drained). Lane-tagged traffic at any priority other than HIGH is a protocol violation and fails the stream rather than silently mis-acking (isolation splits the HIGH lane only). Lanes created concurrently with `Stop()` are pre-cancelled so no tasks run after shutdown. - **`NamespaceThrottler`** interface (default: noop, via fx) observes per-namespace HIGH-priority task load and decides which namespaces to report. The sender does not tag lanes yet, so this is inert until the sender-side isolation lands. ## Why? Isolation needs a wire contract before the sender can use it: capability advertisement, per-lane routing and progress reporting, and the throttled-namespace feedback channel. Landing the receiver first makes mixed-version clusters safe by construction. Compared to #10147, lanes are per-namespace rather than shared per severity tier — which is what eliminates that design's cursor rewinds and the watermark-regression/tracker-rotation protocol this PR previously needed to compensate for them. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) — lane routing (priority routing when unset, per-namespace tracker identity, non-HIGH rejection), retirement lifecycle (drop once drained, never-tracked retiring lane survives the ack snapshot, revive on re-isolation traffic, fresh lane after drop), and post-Stop lane creation being pre-cancelled - [x] added new functional test(s) — exercised end-to-end by the xdc test in the final PR of the series ## Potential risks Inert until a sender emits `isolated_namespace_id`, which is gated behind both a config flag and the capability advertisement. Receiver-side lane state is bounded by the sender's isolation cap (final PR). 🤖 Generated with [Claude Code](https://claude.com/claude-code) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Touches replication ack watermarks and task routing on a critical path, but lane traffic is unused until the sender lands and the default throttler is a noop. > > **Overview** > Adds the **wire contract and receiver behavior** for per-namespace HIGH-lane isolation on workflow replication streams, ahead of sender-side isolation in a follow-up PR. > > **Proto:** `SyncReplicationState` now carries `pause_high_namespace_ids` (shard-scoped throttle feedback), `isolated_lane_states` (per-namespace applied watermarks), and `supports_namespace_isolation` (tiered-stack capability). `WorkflowReplicationMessages` adds `isolated_namespace_id` and `retire_isolated_lane` for lane-tagged batches. > > **Receiver:** Lane-tagged HIGH traffic routes to lazily created per-namespace trackers; member-lane backlog counts toward HIGH flow control and member watermarks fold into the overall ack minimum. Acks report throttled namespaces via a new **`NamespaceThrottler`** hook (default **noop** in fx). Lifecycle handling covers track-before-retire ordering, drained retired lanes, re-isolation reviving retiring lanes, non-HIGH lane tags failing the stream, and post-`Stop()` lanes pre-cancelled. > > Behavior stays **inert** until a future sender emits `isolated_namespace_id` (gated on capability advertisement). > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 1140765a76ca8afc5b2c3f80dc6014abd8076182. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
+        "url": "https://github.com/temporalio/temporal/pull/11303",
+        "createdAt": "2026-07-27T12:22:32Z",
+        "updatedAt": "2026-08-13T15:23:21Z",
+        "timestamp": "2026-08-13T15:23:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "team/cgs-foundation",
+          "reliability-2026"
+        ],
+        "author": "robholland",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9e9740da10e3cda69e51",
+      "signalId": "github:temporalio/temporal:pull_request:11533",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11533",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Update test shard salt",
+        "text": "Automatically generated by the optimize-test-sharding workflow.",
+        "url": "https://github.com/temporalio/temporal/pull/11533",
+        "createdAt": "2026-08-13T07:33:14Z",
+        "updatedAt": "2026-08-13T15:03:18Z",
+        "timestamp": "2026-08-13T15:03:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "temporal-cicd[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:abac01697ee5c57805a3",
+      "signalId": "github:temporalio/temporal:pull_request:10643",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:10643",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Downscale test runner size, increase shards",
+        "text": "## What changed? Only use 4-core ARM runners instead of 8-core; and increase shard size for test sharding. ## Why? 8-core runners have - at least during peak hours - very long provisioning time (several minutes). By using 4-core we reduce that time, but risk OOM kills as they have less memory. To counter that, we increase the number of test shards so that fewer tests are run per shard.",
+        "url": "https://github.com/temporalio/temporal/pull/10643",
+        "createdAt": "2026-06-10T17:58:11Z",
+        "updatedAt": "2026-08-13T14:57:11Z",
+        "timestamp": "2026-08-13T14:57:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "test-all-dbs"
+        ],
+        "author": "stephanos",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ab22fe1a0c9ae1769b99",
+      "signalId": "github:temporalio/temporal:pull_request:11465",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11465",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Add isolated functional test clusters",
+        "text": "## Summary - give every testcore.NewEnv test a fresh cluster and tear it down with the test - bound concurrently live clusters to GOMAXPROCS by default, configurable with TEMPORAL_TEST_LIVE_CLUSTERS - preseed the primary and external namespaces for each cluster before server startup - preserve bounded legacy suite-owned cluster paths and suite-level worker-service requirements - retain lightweight optional JSONL lifecycle, boot-phase, runtime, and RSS reporting - build on #10643 for the lower-resource CI shard layout and its persistence prerequisites The shared pool, dedicated-cluster marker, warm spares, duplicate SQL/SQLite lease work, Cassandra reuse pool, and heavyweight report generator are intentionally removed from this PR. FASTBOOT.md retains the investigation history and current conclusions. ## Testing - make fmt lint - go test -race -tags=test_dep ./tests/testcore - go test -race -tags=test_dep ./tests -run ^TestClientDataConverterTestSuite$ -count=1 - go test -race -tags=test_dep ./tests -run ^TestWorkflowAliasSearchAttributeTestSuite$ -count=1",
+        "url": "https://github.com/temporalio/temporal/pull/11465",
+        "createdAt": "2026-08-11T02:58:59Z",
+        "updatedAt": "2026-08-13T14:57:10Z",
+        "timestamp": "2026-08-13T14:57:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "test-all-dbs"
+        ],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9ab8f4bd99248a9840f3",
+      "signalId": "github:temporalio/temporal:pull_request:11480",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11480",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Extract shared JUnit XML handling",
+        "text": "## What changed? Extract generic JUnit XML file reading and writing into `tools/common/junit`. ## Why? Centralizing format-level JUnit handling.",
+        "url": "https://github.com/temporalio/temporal/pull/11480",
+        "createdAt": "2026-08-11T20:57:07Z",
+        "updatedAt": "2026-08-13T14:54:22Z",
+        "timestamp": "2026-08-13T14:54:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "request-claude-review"
+        ],
+        "author": "stephanos",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:84f16993fb191a0f5297",
+      "signalId": "github:temporalio/temporal:pull_request:11461",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11461",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Standardize Claude review comments",
+        "text": "Standardize Claude review comment format, style and focus.",
+        "url": "https://github.com/temporalio/temporal/pull/11461",
+        "createdAt": "2026-08-10T22:54:30Z",
+        "updatedAt": "2026-08-13T14:54:05Z",
+        "timestamp": "2026-08-13T14:54:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1fd8a952342d4257f187",
+      "signalId": "github:temporalio/temporal:pull_request:11526",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11526",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Fix flakereport incomplete JUnit failures",
+        "url": "https://github.com/temporalio/temporal/pull/11526",
+        "createdAt": "2026-08-13T01:11:18Z",
+        "updatedAt": "2026-08-13T14:53:28Z",
+        "timestamp": "2026-08-13T14:53:28Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "closed",
         "assignees": [],
         "change": "updated"
       }

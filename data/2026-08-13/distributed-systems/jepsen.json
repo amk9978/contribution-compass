@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "distributed-systems",
@@ -17,11 +17,33 @@
     "language": "Clojure",
     "topics": [],
     "defaultBranch": "main",
-    "stars": 7470,
+    "stars": 7471,
     "forks": 754,
     "openIssues": 66,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:02.221190+00:00"
+    "collectedAt": "2026-08-13T16:19:23.903088+00:00"
+  },
+  "news": {
+    "repository": "jepsen-io/jepsen",
+    "collectedAt": "2026-08-13T16:19:23.903088+00:00",
+    "latestRelease": {
+      "repository": "jepsen-io/jepsen",
+      "tag": "v0.3.13",
+      "title": "0.3.13",
+      "url": "https://github.com/jepsen-io/jepsen/releases/tag/v0.3.13",
+      "publishedAt": "2026-07-31T00:45:15Z",
+      "notes": "This is a small release. It makes expensive generators more efficient with a\r\ncache, allows rw and append tests a final chance to detect data loss at the end\r\nof tests, and lets file snapshot nemeses run when `/tmp` is on a different\r\nkind of filesystem.\r\n\r\n### New Features\r\n\r\n- `generator/cache`: caches operations from an expensive generator to reduce\r\n  (e.g.) IO costs.\r\n- `tests.cycle.rw` and `append` now come with `:final-generator` and\r\n  `:wrap-generator` which, during the final phase of a test, can issue final\r\n   reads of all keys.\r\n- `snapshot-file-chunks` now works across filesystem types.\r\n\r\n### Minor Changes\r\n\r\n- `core/prepare-test`: Don't double-wrap generators in `Forgettable` when run as\r\na part of `test-all`. This didn't break anything, but it was unnecesary.\r\n",
+      "highlights": [
+        "New Features",
+        "generator/cache: caches operations from an expensive generator to reduce",
+        "tests.cycle.rw and append now come with :final-generator and",
+        "snapshot-file-chunks now works across filesystem types.",
+        "Minor Changes",
+        "core/prepare-test: Don't double-wrap generators in Forgettable when run as"
+      ],
+      "prerelease": false
+    },
+    "upcoming": []
   },
   "runs": [
     {
@@ -33,6 +55,12 @@
     {
       "collectedAt": "2026-08-13T13:48:00.446149Z",
       "since": "2026-08-12T13:48:00.446149Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 0,
       "changedCount": 0
     }

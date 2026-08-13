@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "ai-infrastructure",
@@ -35,11 +35,33 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 8784,
+    "stars": 8786,
     "forks": 1009,
     "openIssues": 202,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:12.591190+00:00"
+    "collectedAt": "2026-08-13T16:19:33.879204+00:00"
+  },
+  "news": {
+    "repository": "bentoml/BentoML",
+    "collectedAt": "2026-08-13T16:19:33.879204+00:00",
+    "latestRelease": {
+      "repository": "bentoml/BentoML",
+      "tag": "v1.4.39",
+      "title": "v1.4.39",
+      "url": "https://github.com/bentoml/BentoML/releases/tag/v1.4.39",
+      "publishedAt": "2026-05-07T10:37:29Z",
+      "notes": "## What's Changed\r\n* ci: pre-commit autoupdate [skip ci] by @pre-commit-ci[bot] in https://github.com/bentoml/BentoML/pull/5593\r\n* fix: prevent following symlinks when copying files in BentoStore by @frostming in https://github.com/bentoml/BentoML/pull/5598\r\n* fix: add sharing=locked to BuildKit cache mounts for multi-arch builds by @lawrence3699 in https://github.com/bentoml/BentoML/pull/5597\r\n* fix: enhance Dockerfile generation by normalizing base image lines and adding tests by @frostming in https://github.com/bentoml/BentoML/pull/5603\r\n* fix: defer prometheus_client import in bentoml.metrics to fix histogram collection in multiprocess mode by @ramkrishs in https://github.com/bentoml/BentoML/pull/5602\r\n* ci: pre-commit autoupdate [skip ci] by @pre-commit-ci[bot] in https://github.com/bentoml/BentoML/pull/5605\r\n* fix: handle string input in FileSchema by encoding to UTF-8 by @frostming in https://github.com/bentoml/BentoML/pull/5606\r\n\r\n## New Contributors\r\n* @lawrence3699 made their first contribution in https://github.com/bentoml/BentoML/pull/5597\r\n* @ramkrishs made their first contribution in https://github.com/bentoml/BentoML/pull/5602\r\n\r\n**Full Changelog**: https://github.com/bentoml/BentoML/compare/v1.4.38...v1.4.39",
+      "highlights": [
+        "What's Changed",
+        "ci: pre-commit autoupdate [skip ci] by @pre-commit-ci[bot] in https://github.com/bentoml/BentoML/pull/5593",
+        "fix: prevent following symlinks when copying files in BentoStore by @frostming in https://github.com/bentoml/BentoML/pull/5598",
+        "fix: add sharing=locked to BuildKit cache mounts for multi-arch builds by @lawrence3699 in https://github.com/bentoml/BentoML/pull/5597",
+        "fix: enhance Dockerfile generation by normalizing base image lines and adding tests by @frostming in https://github.com/bentoml/BentoML/pull/5603",
+        "fix: defer prometheusclient import in bentoml.metrics to fix histogram collection in multiprocess mode by @ramkrishs in https://github.com/bentoml/BentoML/pull/5602"
+      ],
+      "prerelease": false
+    },
+    "upcoming": []
   },
   "runs": [
     {
@@ -53,6 +75,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 3,
       "changedCount": 3
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 3,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -75,8 +103,7 @@
       "labels": [],
       "author": "Hasnaathussain",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:bentoml/BentoML:pull_request:5671",
@@ -97,8 +124,7 @@
       "labels": [],
       "author": "Hasnaathussain",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:bentoml/BentoML:pull_request:5673",
@@ -138,8 +164,7 @@
       "labels": [],
       "author": "seven7763",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     }
   ],
   "events": [

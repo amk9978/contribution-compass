@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "data-infrastructure",
@@ -34,9 +34,50 @@
     "defaultBranch": "dev",
     "stars": 12437,
     "forks": 784,
-    "openIssues": 615,
+    "openIssues": 616,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:07.171221+00:00"
+    "collectedAt": "2026-08-13T16:19:29.061084+00:00"
+  },
+  "news": {
+    "repository": "redpanda-data/redpanda",
+    "collectedAt": "2026-08-13T16:19:29.061084+00:00",
+    "latestRelease": {
+      "repository": "redpanda-data/redpanda",
+      "tag": "v26.1.15",
+      "title": "v26.1.15",
+      "url": "https://github.com/redpanda-data/redpanda/releases/tag/v26.1.15",
+      "publishedAt": "2026-08-07T03:37:58Z",
+      "notes": "## Bug Fixes\r\n* Fix the registered config name for  `leader_balancer_node_mute_timeout`. by @WillemKauf in [#31360](https://github.com/redpanda-data/redpanda/pull/31360)\r\n* Fixes a bug in which L0 batches in a cloud topic forgot to preserve `last_offset_delta` in their header, leading to an under-declared last offset which can stall consumers, skip records, or halt exact-offset replication. by @WillemKauf in [#31363](https://github.com/redpanda-data/redpanda/pull/31363)\r\n* Fixes a bug in which topics with `min.compaction.lag.ms` left unconfigured with produced batches holding timestamps in the future would be considered ineligible for compaction by @WillemKauf in [#31459](https://github.com/redpanda-data/redpanda/pull/31459)\r\n* Fixes a bug in which transient `TOPIC_AUTHORIZATION_FAILED` errors and SASL authentication failures were possible during application of a controller snapshot. by @WillemKauf in [#31437](https://github.com/redpanda-data/redpanda/pull/31437)\r\n* Fixes a bug where corrupted storage would not yield a bad CRC in returned record batches. by @andrwng in [#31388](https://github.com/redpanda-data/redpanda/pull/31388)\r\n* Fixes a bug where having a cloud topic read replica on a given cluster would prevent L0 objects on that cluster from being garbage collected. by @andrwng in [#31391](https://github.com/redpanda-data/redpanda/pull/31391)\r\n* Updating a Shadow Link that uses PLAIN authentication no longer fails when the password is omitted; the stored password is preserved. by @r-vasquez in [#31421](https://github.com/redpanda-data/redpanda/pull/31421)\r\n* [#31448](https://github.com/redpanda-data/redpanda/issues/31448) `rpk connect install --connect-version` no longer rejects versions with a\r\nsegment of three or more digits, which had blocked pinning any Redpanda Connect\r\nrelease since 4.100.0. Malformed versions with trailing characters are now\r\nrejected during validation rather than failing at download. by @prakhargarg105 in [#31449](https://github.com/redpanda-data/redpanda/pull/31449)\r\n* `rpk security secrets list` no longer truncates its output at 100 secrets. by @simon0191 in [#31436](https://github.com/redpanda-data/redpanda/pull/31436)\r\n* `rpk shadow create` no longer fails secret-reference validation on clusters\r\nwith more than one page of `REDPANDA_CLUSTER`-scoped secrets. by @simon0191 in [#31436](https://github.com/redpanda-data/redpanda/pull/31436)\r\n* `rpk shadow update` in editor mode now replaces the entire Shadow Link configuration instead of merging changed fields, so list-valued fields (e.g. topic filters) can shrink or be cleared. by @r-vasquez in [#31421](https://github.com/redpanda-data/redpanda/pull/31421)\r\n\r\n## Improvements\r\n* [#31335](https://github.com/redpanda-data/redpanda/issues/31335) Fixes an issue where `/v1/usage` responses could cause oversized allocations for clusters with a large number of Iceberg-enabled topics. by @WillemKauf in [#31337](https://github.com/redpanda-data/redpanda/pull/31337)\r\n* `rpk cluster health` will now display any nodes that may be in maintenance mode. by @alextreichler in [#31352](https://github.com/redpanda-data/redpanda/pull/31352)\r\n\r\n**Full Changelog**: https://github.com/redpanda-data/redpanda/compare/v26.1.14...v26.1.15",
+      "highlights": [
+        "Bug Fixes",
+        "Fix the registered config name for leaderbalancernodemutetimeout. by @WillemKauf in #31360",
+        "Fixes a bug in which L0 batches in a cloud topic forgot to preserve lastoffsetdelta in their header, leading to an under-declared last offset which can stall consumers, skip records, or halt exact-offset replication. by @WillemKauf in #3136",
+        "Fixes a bug in which topics with min.compaction.lag.ms left unconfigured with produced batches holding timestamps in the future would be considered ineligible for compaction by @WillemKauf in #31459",
+        "Fixes a bug in which transient TOPICAUTHORIZATIONFAILED errors and SASL authentication failures were possible during application of a controller snapshot. by @WillemKauf in #31437",
+        "Fixes a bug where corrupted storage would not yield a bad CRC in returned record batches. by @andrwng in #31388"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "redpanda-data/redpanda",
+        "kind": "milestone",
+        "title": "v26.2.x-next",
+        "url": "https://github.com/redpanda-data/redpanda/milestone/329",
+        "progress": 88,
+        "openIssues": 8,
+        "closedIssues": 57
+      },
+      {
+        "repository": "redpanda-data/redpanda",
+        "kind": "milestone",
+        "title": "v26.1.16",
+        "url": "https://github.com/redpanda-data/redpanda/milestone/332",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 9
+      }
+    ]
   },
   "runs": [
     {
@@ -50,6 +91,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 56,
       "changedCount": 56
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 45,
+      "changedCount": 12
     }
   ],
   "signals": [
@@ -76,8 +123,7 @@
       ],
       "author": "Licenser",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:issue:31545",
@@ -122,8 +168,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:issue:31550",
@@ -146,8 +191,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:issue:31552",
@@ -170,8 +214,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:issue:4191",
@@ -197,8 +240,7 @@
       "state": "closed",
       "assignees": [
         "birdayz"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:29258",
@@ -273,8 +315,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:30314",
@@ -299,8 +340,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:30531",
@@ -478,8 +518,7 @@
       ],
       "author": "nvartolomei",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31156",
@@ -580,8 +619,7 @@
       ],
       "author": "travisdowns",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31365",
@@ -593,8 +631,8 @@
       "text": "Revives #8570 (rebased onto dev, see #8565 for the original motivation): put the seastar memory diagnostics dump, which is emitted at ERROR level when a node runs out of memory, on the default log allow list so an OOM surfaces as the \"redpanda crashed\" diagnostic rather than a BadLogLines about the dump. Also clarifies in the raise_on_bad_logs docstrings that allow-list regexes are unanchored. The main value over the old PR is the meta-test: a new debug-only `oom` type for the `/v1/debug/trigger_crash` admin API that allocates until the seastar allocator gives out, plus a ducktape self-test (alongside the existing segfault/assert ones) that runs a node out of memory and checks the harness reports it as a NodeCrash. With the system allocator (sanitized builds) there is no seastar memory limit and unbounded allocation would exhaust host memory instead, so there the API refuses the request, and the self-test verifies the refusal and that the node survives. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.1.x - [ ] v25.3.x - [ ] v25.2.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31365",
       "createdAt": "2026-07-30T14:45:49Z",
-      "updatedAt": "2026-08-13T04:53:33Z",
-      "timestamp": "2026-08-13T04:53:33Z",
+      "updatedAt": "2026-08-13T15:20:55Z",
+      "timestamp": "2026-08-13T15:20:55Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -617,8 +655,8 @@
       "text": "Schema Registry API sync only propagates changes on its periodic full sync, so a registration can wait a whole interval and every propagation costs a whole-registry scan of both sides. This adds a change feed: the link consumes the source's _schemas topic over the Kafka API and re-reads only the targets whose records it saw, reconciling them by the same per-subject path a full sync uses - so replay is harmless and semantics are identical. A CONTEXT record instead re-lists the source's contexts, since deletion is decided against the whole set. Full syncs still run on their interval as the backstop. A source that does not expose _schemas over Kafka - Confluent Cloud, Redpanda Serverless, or one too old for ListOffsets v4 - never arms. One that exposes it but refuses the fetch, e.g. a missing READ ACL, arms and then stops on its first poll. Either way the link keeps replicating on its full-sync interval alone. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes ### Improvements * Schema Registry API sync now propagates source changes by tailing the source's `_schemas` topic rather than waiting for the next full sync. Requires the link's Kafka credentials to have READ on `_schemas`; without it the link falls back to full syncs alone.",
       "url": "https://github.com/redpanda-data/redpanda/pull/31366",
       "createdAt": "2026-07-30T16:23:55Z",
-      "updatedAt": "2026-08-13T12:39:57Z",
-      "timestamp": "2026-08-13T12:39:57Z",
+      "updatedAt": "2026-08-13T14:13:02Z",
+      "timestamp": "2026-08-13T14:13:02Z",
       "metrics": {
         "reactions": 0,
         "comments": 8
@@ -644,8 +682,8 @@
       "text": "## Problem On the RPC audit sink (the default since v25.3), `create_internal_topic()` is the **entire** configure step of `audit_client::initialize()`, and it unconditionally sends `CreateTopics` to the controller — so every audit enable/startup requires a reachable controller leader, even when the audit topic already exists. `topics_frontend::autocreate_topics` returns `no_leader_controller` immediately when no controller leader is elected (it does not wait for one), so initialization loops for as long as the leaderless state lasts. Transient churn (ordinary elections, rolling restarts with quorum) is absorbed by retries and the per-shard queues; but when the leaderless state outlasts that absorption (~90 s at default queue sizes — prolonged states of this kind are observed in production, e.g. CORE-15946), the drain timer is never armed, the queues fill and stay full, and with `audit_failure_policy=reject` authentication and the admin API are refused cluster-wide until a leader returns. This failure mode reproduces on HEAD. The Kafka-client sink (all pre-25.3 deployments, and the pre-25.3 → 25.3+ mixed-version upgrade window) has the same controller dependency twice over — its ACL write and its `CreateTopics` both need an elected leader — plus a credential-propagation design that this PR also fixes (below). Production history of this failure class: INC-2362 / CORE-15822 and CORE-12785 (full RCA with log evidence in [CORE-15822]). In both, the audit topic already existed and the produce path was viable the whole time. Those incidents ran the legacy Kafka-client sink, where initialization had an additional independent blocker (the client's all-or-nothing metadata bootstrap, fixed separately by the client rewrite in v25.2). ## Change ### RPC sink Check the local topic table (controller-log-backed, replicated to every node) before creating: if `_redpanda.audit_log` is already known, skip `CreateTopics` entirely. With the topic present — i.e. every enable/startup except the first in a cluster's life — RPC-sink initialization becomes dependency-free. ### Kafka-client sink The first version of this PR left this sink out, because its `CreateTopics` doubled as the ephemeral-credential bootstrap: the create's `sasl_authentication_failed` was the only trigger for `inform()`, which propagates the `__auditing` credential to brokers. Skipping the create without replacing that mechanism breaks authentication outright (an earlier skip-only revision failed 48 of 51 failing cases in a full audit-suite run with exactly that signature). Three changes make the sink leader-independent safely: 1. **Proactive `inform`-all** in `do_configure()`, right after minting the credential and before any broker contact. Credential propagation no longer rides on a create failure. This also fixes a standalone wedge reproduced while testing this PR: a broker that mints a fresh credential while its peers are unreachable (e.g. restarting into a leaderless window) keeps failing SASL against the returning peers (`Invalid credentials`); the kafka client aggregates those per-broker failures into `broker_error({node: -1}, broker_not_available)`, which is not `sasl_authentication_failed`, so `mitigate_error()` rethrows and `inform()` never runs — initialization loops forever (observed for minutes at the 75 s backoff cap) until a broker restart, which is exactly how the production incidents were remediated. Informs to unreachable peers are best-effort (logged, not thrown) and covered on demand by the existing mitigation path. 2. **ACL exists-skip**: `set_auditing_permissions()` returns early when both `__auditing` bindings (create + write on the audit topic) are readable in the local authorizer, eliding a raft-0 write that needs an elected leader. A stale-negative read is benign — `create_acls` is idempotent. The `create_acls` results are now also checked: its errors come back in-band (e.g. `no_leader_controller`) and were previously discarded, which the skip would have turned into a real hole — initialization could succeed with the topic present but no write ACL installed. Failing loudly keeps `initialize()` retrying until the ACL write lands. 3. **Topic exists-skip**, same as the RPC sink. Safe now that (1) owns credential propagation; and without a leader the request could not even be dispatched — `CreateTopics` must be routed to the controller broker. ### New error code handled in `update_status`: `topic_authorization_failed` Added to both the `_misconfigured` entry condition and `failed_codes`, alongside `illegal_sasl_state`. Why: if the `__auditing` ACL bindings are ever missing while auditing runs — the runtime deletion case, or the ACL exists-skip reading a stale positive — audit produces start failing authorization. Previously that state was **silent**: batches were dropped with only a WARN and the errors counter. Now it flips `_misconfigured`, so the enqueue gate degrades loudly (`Audit message rejected due to misconfigured authorization`, failure policy applied) and recovers automatically once the bindings are back. The exposure is narrow — `__auditing` is an `ephemeral_user` principal, a type the Kafka ACL API cannot express, so the bindings cannot be deleted by a principal-targeted filter — but a principal-less (wildcard) `DeleteAcls` on the topic does match them, and a silent-drop failure mode is the wrong default either way. Semantics notes: - `CreateTopics` never reconciled or altered an existing topic (`topic_already_exists` was a no-op), so skipping it cannot regress any re-creation path; a deleted topic is absent from the table and re-enable recreates it as before; - stale-negative table read (lagging, topic exists): falls through to the old path, controller answers `topic_already_exists` — degradation to today's behavior; - stale-positive read (topic deleted mid-enable): same exposure as today's create-then-delete race; recoverable by toggling `audit_enabled`; - stale-positive ACL read: degrades loudly via `topic_authorization_failed` above, recoverable by toggling `audit_enabled` (the skip then sees the bindings are gone and recreates them). ## The flow this fixes **Before** — a broker (re)starts, or auditing re-initializes, while the controller group has no elected leader: ``` init -> create_internal_topic -> needs controller-group leader -> no_leader_controller (immediately, no waiting) -> initialize() loops -> drain timer never armed -> per-shard queues fill (~90 s) -> reject refuses authn + admin API cluster-wide until a leader returns ``` **After** — same conditions, both sinks: ``` init -> exists-skips (local topic-table + authorizer reads, no network) -> configure() complete: no controller-group dependency -> drain armed -> produce goes to the audit partitions' own leaders (independent raft groups; commit = quorum of THEIR replicas) -> auditing fully functional with no controller leader at any step ``` The two paths use different leaders from different elections: `CreateTopics` needs the leader of the controller group (raft group 0), while writing audit records needs only the leaders of the `_redpanda.audit_log` partitions — which is why in both analyzed incidents the write path was healthy the entire time the init path was stuck. After this change the audit subsystem touches the controller group only for one-off events (the very first topic creation in a cluster's life, config changes), never for steady-state operation. Fine print: the very first enable still requires a controller leader (the topic and ACLs genuinely must be created), and flipping `audit_enabled` itself is a metadata mutation; the audit partitions must have elected leaders, but their elections are per-partition and do not involve the controller group. ## Testing All ducktape, all PASS on this branch: - `AuditLogLeaderlessControllerTest` (matrix over both transports): 5 brokers, the single audit partition pinned to the first three; stopping 3 of 5 leaves raft group 0 leaderless while the audit partition keeps 2/3 replicas. A surviving broker restarts into that window and must initialize through the exists-skips (no CreateTopics, no failure/retry loop, fibers start; the Kafka-client case additionally pins the ACL skip), and an admin request issued **during the window** must be consumed back from the audit topic **while the controller is still leaderless** — the end-to-end proof that a leaderless controller does not block auditing. After quorum returns, a controller-dependent event flows too, with no extra restart (the incidents required one). - `AuditLogTopicRecreateTest` (matrix over both transports): false-positive guard — with the audit topic genuinely deleted (auditing disabled, topic de-listed from `kafka_nodelete_topics`, then deleted), the skip must NOT fire; re-enable goes through `CreateTopics` and recreates it, and events flow. - `AuditLogTopicExistsTest` (matrix over both transports): re-enable with the topic present initializes without `CreateTopics` and still delivers; the Kafka-client case additionally pins the ACL skip and the proactive inform-all (`Informed:` logs). ## Backports Required - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [x] v26.1.x - [x] v25.3.x v25.2.x / v25.1.x are not in the standard list, but if demand materializes they are now feasible as-is: this PR contains the Kafka-client variant (proactive inform + both skips), which those release lines run. ## Release Notes ### Improvements * Audit logging no longer requires controller availability on startup/enable when the audit topic already exists — on both the RPC transport (default since v25.3) and the Kafka-client transport. * A missing-ACL state for the audit principal now surfaces as rejected/permitted-per-policy audit events (misconfigured-authorization) instead of silently dropping records. 🤖 Generated with [Claude Code](https://claude.com/claude-code) [CORE-15822]: https://redpandadata.atlassian.net/browse/CORE-15822?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
       "url": "https://github.com/redpanda-data/redpanda/pull/31411",
       "createdAt": "2026-08-04T15:30:22Z",
-      "updatedAt": "2026-08-13T13:40:44Z",
-      "timestamp": "2026-08-13T13:40:44Z",
+      "updatedAt": "2026-08-13T14:54:39Z",
+      "timestamp": "2026-08-13T14:54:39Z",
       "metrics": {
         "reactions": 0,
         "comments": 9
@@ -678,8 +716,7 @@
       "labels": [],
       "author": "bartoszpiekny-redpanda",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31483",
@@ -705,8 +742,7 @@
       "state": "open",
       "assignees": [
         "oleiman"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31502",
@@ -729,8 +765,7 @@
       ],
       "author": "nvartolomei",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31512",
@@ -753,8 +788,7 @@
       ],
       "author": "nvartolomei",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31517",
@@ -778,8 +812,7 @@
       ],
       "author": "dotnwat",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31521",
@@ -843,8 +876,7 @@
       "labels": [],
       "author": "travisdowns",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31538",
@@ -867,8 +899,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31539",
@@ -915,8 +946,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31542",
@@ -940,8 +970,7 @@
       ],
       "author": "WillemKauf",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31544",
@@ -967,8 +996,7 @@
       "state": "open",
       "assignees": [
         "oleiman"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31546",
@@ -1015,8 +1043,7 @@
       ],
       "author": "nvartolomei",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31549",
@@ -1040,8 +1067,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31551",
@@ -1065,8 +1091,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31553",
@@ -1090,8 +1115,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31554",
@@ -1115,8 +1139,7 @@
       ],
       "author": "travisdowns",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31555",
@@ -1141,8 +1164,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31556",
@@ -1165,8 +1187,7 @@
       ],
       "author": "r-vasquez",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31557",
@@ -1190,8 +1211,7 @@
       ],
       "author": "r-vasquez",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31558",
@@ -1215,8 +1235,7 @@
       ],
       "author": "travisdowns",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31559",
@@ -1228,8 +1247,8 @@
       "text": "Schema Registry brokers abort when a request fails before its deferred authorization check. With `schema_registry_enable_authorization` set, a few endpoints only learn which resource to check against partway through handling, so the check runs inside the handler. Three individually reasonable things interact badly: 1. `request_auth_result` protects against handlers that never run an authorization check: if it is destroyed without being checked, it throws and fails the request with a 500 so that a reply which skipped authorization cannot reach the client. The throw is suppressed when another exception is already in flight (the request is already failing for some other reason). 2. The deferred-authorization handlers take a `request_auth_result` as a by-value coroutine parameter. 3. A coroutine destroys its parameters during frame teardown, which runs after the handler's own exception has already been captured into its future (meaning the handler's exception is no longer \"in flight\"), and inside the reactor's noexcept task entry point. So when a deferred-check handler fails before it can check the `request_auth_result`, the handler's exception gets caught by the coroutine machinery and stored in the future it returned. By the time the `request_auth_result` parameter is destroyed, no exception is in flight: the suppression in `request_auth_result`'s destructor does not apply, and the destructor throws a second exception in a noexcept context. `std::terminate` aborts the broker instead of the request returning an error. The fix stops the destructor from throwing (it becomes noexcept and log-only) and moves enforcement into the route wrapper, which now shares the auth result with the handler and inspects it once the handler completes: a failed handler keeps its original error, and a reply produced without the check is discarded and replaced with a 500. The admin server is unaffected because it authorizes eagerly at dispatch. Covered by unit tests and two ducktape tests. One of the ducktape tests exercises the described failure (an unreachable `_schemas` partition makes the handler throw before the auth result can be checked) and asserts the request fails with an error response while the broker keeps serving; on an unfixed build it fails with the broker abort described above. Fixes [CORE-17034](https://redpandadata.atlassian.net/browse/CORE-17034) ## Backports Required - [x] v26.2.x - [x] v26.1.x - [x] v25.3.x ## Release Notes ### Bug Fixes * Fixed Schema Registry aborting the broker when a request failed before its deferred authorization check with `schema_registry_enable_authorization` enabled. Such requests now return an error response. [CORE-17034]: https://redpandadata.atlassian.net/browse/CORE-17034?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
       "url": "https://github.com/redpanda-data/redpanda/pull/31559",
       "createdAt": "2026-08-12T23:01:13Z",
-      "updatedAt": "2026-08-13T09:50:18Z",
-      "timestamp": "2026-08-13T09:50:18Z",
+      "updatedAt": "2026-08-13T14:09:57Z",
+      "timestamp": "2026-08-13T14:09:57Z",
       "metrics": {
         "reactions": 0,
         "comments": 4
@@ -1266,8 +1285,7 @@
       ],
       "author": "travisdowns",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31561",
@@ -1279,8 +1297,8 @@
       "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31512",
       "url": "https://github.com/redpanda-data/redpanda/pull/31561",
       "createdAt": "2026-08-13T00:34:49Z",
-      "updatedAt": "2026-08-13T02:20:02Z",
-      "timestamp": "2026-08-13T02:20:02Z",
+      "updatedAt": "2026-08-13T15:28:27Z",
+      "timestamp": "2026-08-13T15:28:27Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -1290,7 +1308,7 @@
         "kind/backport"
       ],
       "author": "vbotbuildovich",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -1315,8 +1333,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31563",
@@ -1339,8 +1356,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31564",
@@ -1363,8 +1379,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31565",
@@ -1385,8 +1400,7 @@
       "labels": [],
       "author": "StephanDollberg",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31566",
@@ -1398,8 +1412,8 @@
       "text": "`the_producer_lock_serializes_by_producer` asserted that two operations ran concurrently, which requires the first producer's operation to start before the second producer's runs. Both are scheduled as tasks in debug builds, and nothing ordered them: under `--@seastar//:shuffle_task_queue=true` the second can run to completion first (reproduced in 10/30 runs, 0/100 after the fix). Wait for the first operation to hold the lock instead. The mid-test checks also become non-fatal. `ASSERT_*_CORO` expands to `co_return`, which freed a coroutine frame the pending operations still referenced, so the assertion failure surfaced as a heap-use-after-free that masked it. Test-only change. ## Backports Required - [ ] none - papercut/not impactful enough to backport - [ ] none - not a bug fix - [ ] none - this is a backport - [x] none - issue does not exist in previous branches - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31566",
       "createdAt": "2026-08-13T13:39:22Z",
-      "updatedAt": "2026-08-13T13:42:16Z",
-      "timestamp": "2026-08-13T13:42:16Z",
+      "updatedAt": "2026-08-13T15:32:39Z",
+      "timestamp": "2026-08-13T15:32:39Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1410,7 +1424,7 @@
       "author": "nvartolomei",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31567",
@@ -1419,22 +1433,22 @@
       "project": "redpanda-data/redpanda",
       "kind": "pull_request",
       "title": "kafka/client/test: deflake data_queue blocking push test",
-      "text": "`DataQueueTest.TestBlockingPushWhenFull` asserted the queue size between a `pop()` and the resumption of a push that was blocked on the queue being full. `pop()` signals the condition variable the push waits on, so the push can complete before the test thread regains control — which task ordering under `--@seastar//:shuffle_task_queue=true` makes happen roughly a quarter of the time. The queue itself behaves correctly. Assert on the popped value instead. The checks after `push_future.get()` still cover that the pop unblocked the push. 300 runs of the suite with shuffling enabled, no failures. ## Backports Required - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [x] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
+      "text": "`TestBlockingPushWhenFull` asserted the queue size between a `pop()` and the resumption of a push blocked on a full queue. `pop()` signals the condition variable the push waits on, so the push can resume first, which `--@seastar//:shuffle_task_queue=true` exposes about a quarter of the time. The queue itself is fine. Assert on the popped value instead, and drain the task queue before checking that the push has not completed. ## Backports Required - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31567",
       "createdAt": "2026-08-13T13:39:43Z",
-      "updatedAt": "2026-08-13T13:41:33Z",
-      "timestamp": "2026-08-13T13:41:33Z",
+      "updatedAt": "2026-08-13T16:08:57Z",
+      "timestamp": "2026-08-13T16:08:57Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "area/redpanda"
       ],
       "author": "nvartolomei",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31568",
@@ -1443,20 +1457,123 @@
       "project": "redpanda-data/redpanda",
       "kind": "pull_request",
       "title": "storage: bump segment_concatenation_test timeout",
-      "text": "`segment_concatenation_test` is declared `timeout = \"short\"` (60s), but the two 100-segment params take ~11s each locally, putting the whole target at 36s — 61% of its budget. The test is fsync-bound (`fsync::yes` appends plus sanitized file config), so on a CI host with slower syncs it runs past 60s and bazel kills it mid-test, which reads as a flake. Bumping to `moderate` (300s) gives ~3x headroom over the slowest observed run. `shuffle_task_queue` was incidental: measured locally it costs ~3%. ## Backports Required - [x] v26.2.x ## Release Notes * none",
+      "text": "`segment_concatenation_test` is declared `timeout = \"short\"` (60s), but the two 100-segment params take ~11s each locally, putting the whole target at 36s — 61% of its budget. The test is fsync-bound (`fsync::yes` appends plus sanitized file config), so on a CI host with slower syncs it runs past 60s and bazel kills it mid-test, which reads as a flake. Bumping to `moderate` (300s) gives ~3x headroom over the slowest observed run. `shuffle_task_queue` was incidental: measured locally it costs ~3%. The test carries the same `short` timeout and 100-segment params on all three release branches, so the flake applies there too. ## Backports Required - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [x] v26.1.x - [x] v25.3.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31568",
       "createdAt": "2026-08-13T13:40:03Z",
-      "updatedAt": "2026-08-13T13:45:22Z",
-      "timestamp": "2026-08-13T13:45:22Z",
+      "updatedAt": "2026-08-13T15:15:40Z",
+      "timestamp": "2026-08-13T15:15:40Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 4
       },
       "labels": [
         "area/build",
         "area/redpanda"
       ],
       "author": "nvartolomei",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:redpanda-data/redpanda:pull_request:31569",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "redpanda-data/redpanda",
+      "kind": "pull_request",
+      "title": "[v25.3.x] storage: bump segment_concatenation_test timeout",
+      "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+      "url": "https://github.com/redpanda-data/redpanda/pull/31569",
+      "createdAt": "2026-08-13T15:17:14Z",
+      "updatedAt": "2026-08-13T15:18:38Z",
+      "timestamp": "2026-08-13T15:18:38Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "area/build",
+        "area/redpanda",
+        "kind/backport"
+      ],
+      "author": "vbotbuildovich",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:redpanda-data/redpanda:pull_request:31570",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "redpanda-data/redpanda",
+      "kind": "pull_request",
+      "title": "[v26.2.x] storage: bump segment_concatenation_test timeout",
+      "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+      "url": "https://github.com/redpanda-data/redpanda/pull/31570",
+      "createdAt": "2026-08-13T15:17:15Z",
+      "updatedAt": "2026-08-13T15:18:45Z",
+      "timestamp": "2026-08-13T15:18:45Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "area/build",
+        "area/redpanda",
+        "kind/backport"
+      ],
+      "author": "vbotbuildovich",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:redpanda-data/redpanda:pull_request:31571",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "redpanda-data/redpanda",
+      "kind": "pull_request",
+      "title": "[v26.1.x] storage: bump segment_concatenation_test timeout",
+      "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+      "url": "https://github.com/redpanda-data/redpanda/pull/31571",
+      "createdAt": "2026-08-13T15:17:19Z",
+      "updatedAt": "2026-08-13T15:18:29Z",
+      "timestamp": "2026-08-13T15:18:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "area/build",
+        "area/redpanda",
+        "kind/backport"
+      ],
+      "author": "vbotbuildovich",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:redpanda-data/redpanda:pull_request:31572",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "redpanda-data/redpanda",
+      "kind": "pull_request",
+      "title": "[v26.2.x] kafka/client/test: deflake data_queue blocking push test",
+      "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31567",
+      "url": "https://github.com/redpanda-data/redpanda/pull/31572",
+      "createdAt": "2026-08-13T16:10:51Z",
+      "updatedAt": "2026-08-13T16:14:06Z",
+      "timestamp": "2026-08-13T16:14:06Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "area/redpanda",
+        "kind/backport"
+      ],
+      "author": "vbotbuildovich",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -3241,6 +3358,417 @@
         "author": "vbotbuildovich",
         "state": "closed",
         "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:960e083175b79352f733",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31572",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31572",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.2.x] kafka/client/test: deflake data_queue blocking push test",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31567",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31572",
+        "createdAt": "2026-08-13T16:10:51Z",
+        "updatedAt": "2026-08-13T16:14:06Z",
+        "timestamp": "2026-08-13T16:14:06Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c00935382a6598c12d82",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31567",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31567",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "kafka/client/test: deflake data_queue blocking push test",
+        "text": "`TestBlockingPushWhenFull` asserted the queue size between a `pop()` and the resumption of a push blocked on a full queue. `pop()` signals the condition variable the push waits on, so the push can resume first, which `--@seastar//:shuffle_task_queue=true` exposes about a quarter of the time. The queue itself is fine. Assert on the popped value instead, and drain the task queue before checking that the push has not completed. ## Backports Required - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31567",
+        "createdAt": "2026-08-13T13:39:43Z",
+        "updatedAt": "2026-08-13T16:08:57Z",
+        "timestamp": "2026-08-13T16:08:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "area/redpanda"
+        ],
+        "author": "nvartolomei",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0cf640c7b91748b5725e",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31566",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31566",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "k/s/tests: deflake the offset_store producer lock test",
+        "text": "`the_producer_lock_serializes_by_producer` asserted that two operations ran concurrently, which requires the first producer's operation to start before the second producer's runs. Both are scheduled as tasks in debug builds, and nothing ordered them: under `--@seastar//:shuffle_task_queue=true` the second can run to completion first (reproduced in 10/30 runs, 0/100 after the fix). Wait for the first operation to hold the lock instead. The mid-test checks also become non-fatal. `ASSERT_*_CORO` expands to `co_return`, which freed a coroutine frame the pending operations still referenced, so the assertion failure surfaced as a heap-use-after-free that masked it. Test-only change. ## Backports Required - [ ] none - papercut/not impactful enough to backport - [ ] none - not a bug fix - [ ] none - this is a backport - [x] none - issue does not exist in previous branches - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31566",
+        "createdAt": "2026-08-13T13:39:22Z",
+        "updatedAt": "2026-08-13T15:32:39Z",
+        "timestamp": "2026-08-13T15:32:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/redpanda"
+        ],
+        "author": "nvartolomei",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e12c31ff9e017de0be60",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31561",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31561",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.2.x] k/s/tests: deflake fetch_memory_units cross-shard test",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31512",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31561",
+        "createdAt": "2026-08-13T00:34:49Z",
+        "updatedAt": "2026-08-13T15:28:27Z",
+        "timestamp": "2026-08-13T15:28:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:7bc40b92ec820774c2b5",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31365",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31365",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "rptest: add OOM crash self-test; allow-list memory diagnostics",
+        "text": "Revives #8570 (rebased onto dev, see #8565 for the original motivation): put the seastar memory diagnostics dump, which is emitted at ERROR level when a node runs out of memory, on the default log allow list so an OOM surfaces as the \"redpanda crashed\" diagnostic rather than a BadLogLines about the dump. Also clarifies in the raise_on_bad_logs docstrings that allow-list regexes are unanchored. The main value over the old PR is the meta-test: a new debug-only `oom` type for the `/v1/debug/trigger_crash` admin API that allocates until the seastar allocator gives out, plus a ducktape self-test (alongside the existing segfault/assert ones) that runs a node out of memory and checks the harness reports it as a NodeCrash. With the system allocator (sanitized builds) there is no seastar memory limit and unbounded allocation would exhaust host memory instead, so there the API refuses the request, and the self-test verifies the refusal and that the node survives. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.1.x - [ ] v25.3.x - [ ] v25.2.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31365",
+        "createdAt": "2026-07-30T14:45:49Z",
+        "updatedAt": "2026-08-13T15:20:55Z",
+        "timestamp": "2026-08-13T15:20:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "area/redpanda"
+        ],
+        "author": "travisdowns",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:920e8cd1d140790de685",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31570",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31570",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.2.x] storage: bump segment_concatenation_test timeout",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31570",
+        "createdAt": "2026-08-13T15:17:15Z",
+        "updatedAt": "2026-08-13T15:18:45Z",
+        "timestamp": "2026-08-13T15:18:45Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:574e857005b4c4c2a6f4",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31569",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31569",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v25.3.x] storage: bump segment_concatenation_test timeout",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31569",
+        "createdAt": "2026-08-13T15:17:14Z",
+        "updatedAt": "2026-08-13T15:18:38Z",
+        "timestamp": "2026-08-13T15:18:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:3d2af8edf3bc19e902ce",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31571",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31571",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.1.x] storage: bump segment_concatenation_test timeout",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31571",
+        "createdAt": "2026-08-13T15:17:19Z",
+        "updatedAt": "2026-08-13T15:18:29Z",
+        "timestamp": "2026-08-13T15:18:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b849a41311488ee6a139",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31568",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31568",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "storage: bump segment_concatenation_test timeout",
+        "text": "`segment_concatenation_test` is declared `timeout = \"short\"` (60s), but the two 100-segment params take ~11s each locally, putting the whole target at 36s — 61% of its budget. The test is fsync-bound (`fsync::yes` appends plus sanitized file config), so on a CI host with slower syncs it runs past 60s and bazel kills it mid-test, which reads as a flake. Bumping to `moderate` (300s) gives ~3x headroom over the slowest observed run. `shuffle_task_queue` was incidental: measured locally it costs ~3%. The test carries the same `short` timeout and 100-segment params on all three release branches, so the flake applies there too. ## Backports Required - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [x] v26.1.x - [x] v25.3.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31568",
+        "createdAt": "2026-08-13T13:40:03Z",
+        "updatedAt": "2026-08-13T15:15:40Z",
+        "timestamp": "2026-08-13T15:15:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda"
+        ],
+        "author": "nvartolomei",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f6613f0b0eed00f56805",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31411",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31411",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[CORE-15822] security/audit: make audit initialization controller-leader independent",
+        "text": "## Problem On the RPC audit sink (the default since v25.3), `create_internal_topic()` is the **entire** configure step of `audit_client::initialize()`, and it unconditionally sends `CreateTopics` to the controller — so every audit enable/startup requires a reachable controller leader, even when the audit topic already exists. `topics_frontend::autocreate_topics` returns `no_leader_controller` immediately when no controller leader is elected (it does not wait for one), so initialization loops for as long as the leaderless state lasts. Transient churn (ordinary elections, rolling restarts with quorum) is absorbed by retries and the per-shard queues; but when the leaderless state outlasts that absorption (~90 s at default queue sizes — prolonged states of this kind are observed in production, e.g. CORE-15946), the drain timer is never armed, the queues fill and stay full, and with `audit_failure_policy=reject` authentication and the admin API are refused cluster-wide until a leader returns. This failure mode reproduces on HEAD. The Kafka-client sink (all pre-25.3 deployments, and the pre-25.3 → 25.3+ mixed-version upgrade window) has the same controller dependency twice over — its ACL write and its `CreateTopics` both need an elected leader — plus a credential-propagation design that this PR also fixes (below). Production history of this failure class: INC-2362 / CORE-15822 and CORE-12785 (full RCA with log evidence in [CORE-15822]). In both, the audit topic already existed and the produce path was viable the whole time. Those incidents ran the legacy Kafka-client sink, where initialization had an additional independent blocker (the client's all-or-nothing metadata bootstrap, fixed separately by the client rewrite in v25.2). ## Change ### RPC sink Check the local topic table (controller-log-backed, replicated to every node) before creating: if `_redpanda.audit_log` is already known, skip `CreateTopics` entirely. With the topic present — i.e. every enable/startup except the first in a cluster's life — RPC-sink initialization becomes dependency-free. ### Kafka-client sink The first version of this PR left this sink out, because its `CreateTopics` doubled as the ephemeral-credential bootstrap: the create's `sasl_authentication_failed` was the only trigger for `inform()`, which propagates the `__auditing` credential to brokers. Skipping the create without replacing that mechanism breaks authentication outright (an earlier skip-only revision failed 48 of 51 failing cases in a full audit-suite run with exactly that signature). Three changes make the sink leader-independent safely: 1. **Proactive `inform`-all** in `do_configure()`, right after minting the credential and before any broker contact. Credential propagation no longer rides on a create failure. This also fixes a standalone wedge reproduced while testing this PR: a broker that mints a fresh credential while its peers are unreachable (e.g. restarting into a leaderless window) keeps failing SASL against the returning peers (`Invalid credentials`); the kafka client aggregates those per-broker failures into `broker_error({node: -1}, broker_not_available)`, which is not `sasl_authentication_failed`, so `mitigate_error()` rethrows and `inform()` never runs — initialization loops forever (observed for minutes at the 75 s backoff cap) until a broker restart, which is exactly how the production incidents were remediated. Informs to unreachable peers are best-effort (logged, not thrown) and covered on demand by the existing mitigation path. 2. **ACL exists-skip**: `set_auditing_permissions()` returns early when both `__auditing` bindings (create + write on the audit topic) are readable in the local authorizer, eliding a raft-0 write that needs an elected leader. A stale-negative read is benign — `create_acls` is idempotent. The `create_acls` results are now also checked: its errors come back in-band (e.g. `no_leader_controller`) and were previously discarded, which the skip would have turned into a real hole — initialization could succeed with the topic present but no write ACL installed. Failing loudly keeps `initialize()` retrying until the ACL write lands. 3. **Topic exists-skip**, same as the RPC sink. Safe now that (1) owns credential propagation; and without a leader the request could not even be dispatched — `CreateTopics` must be routed to the controller broker. ### New error code handled in `update_status`: `topic_authorization_failed` Added to both the `_misconfigured` entry condition and `failed_codes`, alongside `illegal_sasl_state`. Why: if the `__auditing` ACL bindings are ever missing while auditing runs — the runtime deletion case, or the ACL exists-skip reading a stale positive — audit produces start failing authorization. Previously that state was **silent**: batches were dropped with only a WARN and the errors counter. Now it flips `_misconfigured`, so the enqueue gate degrades loudly (`Audit message rejected due to misconfigured authorization`, failure policy applied) and recovers automatically once the bindings are back. The exposure is narrow — `__auditing` is an `ephemeral_user` principal, a type the Kafka ACL API cannot express, so the bindings cannot be deleted by a principal-targeted filter — but a principal-less (wildcard) `DeleteAcls` on the topic does match them, and a silent-drop failure mode is the wrong default either way. Semantics notes: - `CreateTopics` never reconciled or altered an existing topic (`topic_already_exists` was a no-op), so skipping it cannot regress any re-creation path; a deleted topic is absent from the table and re-enable recreates it as before; - stale-negative table read (lagging, topic exists): falls through to the old path, controller answers `topic_already_exists` — degradation to today's behavior; - stale-positive read (topic deleted mid-enable): same exposure as today's create-then-delete race; recoverable by toggling `audit_enabled`; - stale-positive ACL read: degrades loudly via `topic_authorization_failed` above, recoverable by toggling `audit_enabled` (the skip then sees the bindings are gone and recreates them). ## The flow this fixes **Before** — a broker (re)starts, or auditing re-initializes, while the controller group has no elected leader: ``` init -> create_internal_topic -> needs controller-group leader -> no_leader_controller (immediately, no waiting) -> initialize() loops -> drain timer never armed -> per-shard queues fill (~90 s) -> reject refuses authn + admin API cluster-wide until a leader returns ``` **After** — same conditions, both sinks: ``` init -> exists-skips (local topic-table + authorizer reads, no network) -> configure() complete: no controller-group dependency -> drain armed -> produce goes to the audit partitions' own leaders (independent raft groups; commit = quorum of THEIR replicas) -> auditing fully functional with no controller leader at any step ``` The two paths use different leaders from different elections: `CreateTopics` needs the leader of the controller group (raft group 0), while writing audit records needs only the leaders of the `_redpanda.audit_log` partitions — which is why in both analyzed incidents the write path was healthy the entire time the init path was stuck. After this change the audit subsystem touches the controller group only for one-off events (the very first topic creation in a cluster's life, config changes), never for steady-state operation. Fine print: the very first enable still requires a controller leader (the topic and ACLs genuinely must be created), and flipping `audit_enabled` itself is a metadata mutation; the audit partitions must have elected leaders, but their elections are per-partition and do not involve the controller group. ## Testing All ducktape, all PASS on this branch: - `AuditLogLeaderlessControllerTest` (matrix over both transports): 5 brokers, the single audit partition pinned to the first three; stopping 3 of 5 leaves raft group 0 leaderless while the audit partition keeps 2/3 replicas. A surviving broker restarts into that window and must initialize through the exists-skips (no CreateTopics, no failure/retry loop, fibers start; the Kafka-client case additionally pins the ACL skip), and an admin request issued **during the window** must be consumed back from the audit topic **while the controller is still leaderless** — the end-to-end proof that a leaderless controller does not block auditing. After quorum returns, a controller-dependent event flows too, with no extra restart (the incidents required one). - `AuditLogTopicRecreateTest` (matrix over both transports): false-positive guard — with the audit topic genuinely deleted (auditing disabled, topic de-listed from `kafka_nodelete_topics`, then deleted), the skip must NOT fire; re-enable goes through `CreateTopics` and recreates it, and events flow. - `AuditLogTopicExistsTest` (matrix over both transports): re-enable with the topic present initializes without `CreateTopics` and still delivers; the Kafka-client case additionally pins the ACL skip and the proactive inform-all (`Informed:` logs). ## Backports Required - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [x] v26.1.x - [x] v25.3.x v25.2.x / v25.1.x are not in the standard list, but if demand materializes they are now feasible as-is: this PR contains the Kafka-client variant (proactive inform + both skips), which those release lines run. ## Release Notes ### Improvements * Audit logging no longer requires controller availability on startup/enable when the audit topic already exists — on both the RPC transport (default since v25.3) and the Kafka-client transport. * A missing-ACL state for the audit principal now surfaces as rejected/permitted-per-policy audit events (misconfigured-authorization) instead of silently dropping records. 🤖 Generated with [Claude Code](https://claude.com/claude-code) [CORE-15822]: https://redpandadata.atlassian.net/browse/CORE-15822?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31411",
+        "createdAt": "2026-08-04T15:30:22Z",
+        "updatedAt": "2026-08-13T14:54:39Z",
+        "timestamp": "2026-08-13T14:54:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda"
+        ],
+        "author": "bartoszpiekny-redpanda",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:366177146fd639f4fc68",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31366",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31366",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[CORE-16604] cluster_link: incremental Schema Registry sync by tailing _schemas",
+        "text": "Schema Registry API sync only propagates changes on its periodic full sync, so a registration can wait a whole interval and every propagation costs a whole-registry scan of both sides. This adds a change feed: the link consumes the source's _schemas topic over the Kafka API and re-reads only the targets whose records it saw, reconciling them by the same per-subject path a full sync uses - so replay is harmless and semantics are identical. A CONTEXT record instead re-lists the source's contexts, since deletion is decided against the whole set. Full syncs still run on their interval as the backstop. A source that does not expose _schemas over Kafka - Confluent Cloud, Redpanda Serverless, or one too old for ListOffsets v4 - never arms. One that exposes it but refuses the fetch, e.g. a missing READ ACL, arms and then stops on its first poll. Either way the link keeps replicating on its full-sync interval alone. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes ### Improvements * Schema Registry API sync now propagates source changes by tailing the source's `_schemas` topic rather than waiting for the next full sync. Requires the link's Kafka credentials to have READ on `_schemas`; without it the link falls back to full syncs alone.",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31366",
+        "createdAt": "2026-07-30T16:23:55Z",
+        "updatedAt": "2026-08-13T14:13:02Z",
+        "timestamp": "2026-08-13T14:13:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda"
+        ],
+        "author": "mnajda-redpanda",
+        "state": "open",
+        "assignees": [
+          "mnajda-redpanda"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1211b2d767c71909ef01",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31559",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31559",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "sr: fix broker abort when a request fails before its deferred authz check",
+        "text": "Schema Registry brokers abort when a request fails before its deferred authorization check. With `schema_registry_enable_authorization` set, a few endpoints only learn which resource to check against partway through handling, so the check runs inside the handler. Three individually reasonable things interact badly: 1. `request_auth_result` protects against handlers that never run an authorization check: if it is destroyed without being checked, it throws and fails the request with a 500 so that a reply which skipped authorization cannot reach the client. The throw is suppressed when another exception is already in flight (the request is already failing for some other reason). 2. The deferred-authorization handlers take a `request_auth_result` as a by-value coroutine parameter. 3. A coroutine destroys its parameters during frame teardown, which runs after the handler's own exception has already been captured into its future (meaning the handler's exception is no longer \"in flight\"), and inside the reactor's noexcept task entry point. So when a deferred-check handler fails before it can check the `request_auth_result`, the handler's exception gets caught by the coroutine machinery and stored in the future it returned. By the time the `request_auth_result` parameter is destroyed, no exception is in flight: the suppression in `request_auth_result`'s destructor does not apply, and the destructor throws a second exception in a noexcept context. `std::terminate` aborts the broker instead of the request returning an error. The fix stops the destructor from throwing (it becomes noexcept and log-only) and moves enforcement into the route wrapper, which now shares the auth result with the handler and inspects it once the handler completes: a failed handler keeps its original error, and a reply produced without the check is discarded and replaced with a 500. The admin server is unaffected because it authorizes eagerly at dispatch. Covered by unit tests and two ducktape tests. One of the ducktape tests exercises the described failure (an unreachable `_schemas` partition makes the handler throw before the auth result can be checked) and asserts the request fails with an error response while the broker keeps serving; on an unfixed build it fails with the broker abort described above. Fixes [CORE-17034](https://redpandadata.atlassian.net/browse/CORE-17034) ## Backports Required - [x] v26.2.x - [x] v26.1.x - [x] v25.3.x ## Release Notes ### Bug Fixes * Fixed Schema Registry aborting the broker when a request failed before its deferred authorization check with `schema_registry_enable_authorization` enabled. Such requests now return an error response. [CORE-17034]: https://redpandadata.atlassian.net/browse/CORE-17034?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31559",
+        "createdAt": "2026-08-12T23:01:13Z",
+        "updatedAt": "2026-08-13T14:09:57Z",
+        "timestamp": "2026-08-13T14:09:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda"
+        ],
+        "author": "nguyen-andrew",
+        "state": "open",
+        "assignees": [
+          "nguyen-andrew"
+        ],
         "change": "updated"
       }
     }

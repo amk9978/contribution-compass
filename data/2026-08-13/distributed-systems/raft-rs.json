@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "distributed-systems",
@@ -27,7 +27,27 @@
     "forks": 465,
     "openIssues": 78,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:01.502203+00:00"
+    "collectedAt": "2026-08-13T16:19:23.091312+00:00"
+  },
+  "news": {
+    "repository": "tikv/raft-rs",
+    "collectedAt": "2026-08-13T16:19:23.091312+00:00",
+    "latestRelease": {
+      "repository": "tikv/raft-rs",
+      "tag": "v0.7.0",
+      "title": "0.7.0",
+      "url": "https://github.com/tikv/raft-rs/releases/tag/v0.7.0",
+      "publishedAt": "2023-03-07T09:22:26Z",
+      "notes": "- Update prost to 0.11 (#496)\r\n- Make priority an i64 so a lower than default priority can be configured (#495)\r\n- Allow fetching entries in asynchronous manner (#459)\r\n- Support setting max-inflight-msgs in runtime to reduce memory usage (#450)",
+      "highlights": [
+        "Update prost to 0.11 (#496)",
+        "Make priority an i64 so a lower than default priority can be configured (#495)",
+        "Allow fetching entries in asynchronous manner (#459)",
+        "Support setting max-inflight-msgs in runtime to reduce memory usage (#450)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": []
   },
   "runs": [
     {
@@ -39,6 +59,12 @@
     {
       "collectedAt": "2026-08-13T13:48:00.446149Z",
       "since": "2026-08-12T13:48:00.446149Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 0,
       "changedCount": 0
     }

@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "distributed-systems",
@@ -26,7 +26,33 @@
     "forks": 269,
     "openIssues": 85,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:01.474796+00:00"
+    "collectedAt": "2026-08-13T16:19:23.176333+00:00"
+  },
+  "news": {
+    "repository": "etcd-io/raft",
+    "collectedAt": "2026-08-13T16:19:23.176333+00:00",
+    "latestRelease": {
+      "repository": "etcd-io/raft",
+      "tag": "v3.7.0",
+      "title": "v3.7.0",
+      "url": "https://github.com/etcd-io/raft/releases/tag/v3.7.0",
+      "publishedAt": "2026-06-23T13:40:04Z",
+      "notes": "See the [CHANGELOG/v3.7.0](https://github.com/etcd-io/raft/blob/main/CHANGELOG/CHANGELOG-3.7.md#v3702026-06-21) for more details.",
+      "highlights": [],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "etcd-io/raft",
+        "kind": "milestone",
+        "title": "v4.0.0",
+        "url": "https://github.com/etcd-io/raft/milestone/2",
+        "description": "",
+        "progress": 0,
+        "openIssues": 4,
+        "closedIssues": 0
+      }
+    ]
   },
   "runs": [
     {
@@ -38,6 +64,12 @@
     {
       "collectedAt": "2026-08-13T13:48:00.446149Z",
       "since": "2026-08-12T13:48:00.446149Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 0,
       "changedCount": 0
     }

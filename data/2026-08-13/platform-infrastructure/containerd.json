@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "date": "2026-08-13",
   "group": {
     "id": "platform-infrastructure",
@@ -28,11 +28,54 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 21113,
+    "stars": 21114,
     "forks": 4059,
-    "openIssues": 489,
+    "openIssues": 488,
     "archived": false,
-    "collectedAt": "2026-08-13T13:48:05.944963+00:00"
+    "collectedAt": "2026-08-13T16:19:26.915530+00:00"
+  },
+  "news": {
+    "repository": "containerd/containerd",
+    "collectedAt": "2026-08-13T16:19:26.915530+00:00",
+    "latestRelease": {
+      "repository": "containerd/containerd",
+      "tag": "v2.3.4",
+      "title": "containerd 2.3.4",
+      "url": "https://github.com/containerd/containerd/releases/tag/v2.3.4",
+      "publishedAt": "2026-08-12T17:59:47Z",
+      "notes": "Welcome to the v2.3.4 release of containerd!\n\nThe fourth patch release for containerd 2.3 contains various fixes and updates.\n\n### Highlights\n\n#### Container Runtime Interface (CRI)\n\n* Disable checkpoint restore in CreateContainer by default, requiring the enable_experimental_restore_via_create configuration option to enable ([#13913](https://github.com/containerd/containerd/pull/13913))\n* Set default runtimeFeatures.UserNamespacesHostNetwork to true in CRI ([#13914](https://github.com/containerd/containerd/pull/13914))\n* Deprecate checkpoint restore in CreateContainer ([#13868](https://github.com/containerd/containerd/pull/13868))\n* Support non-UTF-8 binary environment variable values in CRI ([#13454](https://github.com/containerd/containerd/pull/13454))\n* Enable OCI runtime feature introspection for non-runc runtimes in CRI ([#13778](https://github.com/containerd/containerd/pull/13778))\n* Disable checkpoint restore codepaths when CRIU is not installed and add enable_criu configuration option ([#13734](https://github.com/containerd/containerd/pull/13734))\n* Normalize sandbox image references in CRI to resolve images without domain prefixes ([#13759](https://github.com/containerd/containerd/pull/13759))\n\n#### Node Resource Interface (NRI)\n\n* Emit deprecation warnings for plugins using deprecated NRI interfaces ([#13935](https://github.com/containerd/containerd/pull/13935))\n\n#### Runtime\n\n* Enable log scrubbing by default on Windows ([#13904](https://github.com/containerd/containerd/pull/13904))\n* Fix memory leak in OOM watcher map when stopping container monitoring ([#13870](https://github.com/containerd/containerd/pull/13870))\n* Avoid orphaning shims on transient errors when loading process IDs ([#13857](https://github.com/containerd/containerd/pull/13857))\n* Fix corruption of binary protobuf shim start responses caused by premature whitespace trimming ([#13803](https://github.com/containerd/containerd/pull/13803))\n\n#### Snapshotters\n\n* Fix EROFS snapshotter dropping lower layers stacked above merged filesystem metadata ([#13876](https://github.com/containerd/containerd/pull/13876))\n\n#### Breaking\n\n* Disable checkpoint restore in CreateContainer by default, requiring the enable_experimental_restore_via_create configuration option to enable ([#13913](https://github.com/containerd/containerd/pull/13913))\n\n#### Deprecations\n\n* Deprecate checkpoint restore in CreateContainer ([#13868](https://github.com/containerd/containerd/pull/13868))\n\nPlease try out the release binaries and report any issues at\nhttps://github.com/containerd/containerd/issues.\n\n### Contributors\n\n* Samuel Karp\n* Maksym Pavlenko\n* Mike Brown\n* Akihiro Suda\n* Derek McGowan\n* Jordan Liggitt\n* Paweł Gronowski\n* Amir Alavi\n* Andrew Halaney\n* Bing Hongtao\n* Chris Henzie\n* Harshal Patel\n* Krisztian Litkey\n* Phil Estes\n* Wei Fu\n* ningmingxiao\n\n### Changes\n<details><summary>35 commits</summary>\n<p>\n\n  * [`c1f5360ef`](https://github.com/containerd/containerd/commit/c1f5360ef7b9afb748d4119ad7be665ba5144480) Prepare release notes for v2.3.4\n* cri: disable restore in CreateContainer by default ([#13913](https://github.com/containerd/containerd/pull/13913))\n  * [`928c03c68`](https://github.com/containerd/containerd/commit/928c03c6898cad95f795300281fdff0dbc55a32f) cri: disable restore in CreateContainer by default\n* nri,deprecation: record and emit warnings for NRI deprecations. ([#13935](https://github.com/containerd/containerd/pull/13935))\n  * [`5966e2edb`](https://github.com/containerd/containerd/commit/5966e2edb15bb939aa2bb73649fbad73a2b04094) nri,deprecation: emit warnings for old NRI plugins.\n* Set the default of runtimeFeatures.UserNamespacesHostNetwork to true ([#13914](https://github.com/containerd/containerd/pull/13914))\n  * [`ab52c58f1`](https://github.com/containerd/containerd/commit/ab52c58f16ac50bb6724354bf36cbb4da480c2a2) Set the default of runtimeFeatures.UserNamespacesHostNetwork to true\n* Use ScrubLogs by default on Windows ([#13904](https://github.com/containerd/containerd/pull/13904))\n  * [`0c255158a`](https://github.com/containerd/containerd/commit/0c255158aa1ecab40aafc42269cfc018a46eb627) ctr: add --scrub-logs flag for Windows\n  * [`1c2b13dc9`](https://github.com/containerd/containerd/commit/1c2b13dc975468197e57321e25fd09163f78a75a) cri/config: use ScrubLogs by default on Windows\n* snapshots/erofs: keep lowers stacked above a merged fsmeta ([#13876](https://github.com/containerd/containerd/pull/13876))\n  * [`0c511e068`](https://github.com/containerd/containerd/commit/0c511e068b7d6dd815418185a235b3ba3347c65a) snapshots/erofs: keep lowers stacked above a merged fsmeta\n* cri: deprecate restore in CreateContainer ([#13868](https://github.com/containerd/containerd/pull/13868))\n  * [`dc98141df`](https://github.com/containerd/containerd/commit/dc98141df70d3d72d46125c6f30de0d2de648086) cri: deprecate restore in CreateContainer\n* internal/oom: Fix memory leak by removing watcher from map on Stop ([#13870](https://github.com/containerd/containerd/pull/13870))\n  * [`537d82d54`](https://github.com/containerd/containerd/commit/537d82d545759d4a072d564d4937707af2650163) internal/oom: Fix memory leak by removing watcher from map on Stop\n* shim_load: Consider shim leaked only if we can't find pids ([#13857](https://github.com/containerd/containerd/pull/13857))\n  * [`decf97a9c`](https://github.com/containerd/containerd/commit/decf97a9c7c26f92391d2c862d35832e0a291e80) shim_load: Consider shim leaked only if we can't find pids\n* core/runtime/v2: Drop checkpointctl module dependency ([#13840](https://github.com/containerd/containerd/pull/13840))\n  * [`796f07dc8`](https://github.com/containerd/containerd/commit/796f07dc853d9ae8a3a1278fe47436755a4bc3b7) core/runtime/v2: Drop checkpointctl module dependency\n* Handle []byte envvar value for CRI ([#13454](https://github.com/containerd/containerd/pull/13454))\n  * [`751fddddb`](https://github.com/containerd/containerd/commit/751fddddbb630631e12fd63e5dac4a9530188822) Handle []byte envvar value\n  * [`0bce9060e`](https://github.com/containerd/containerd/commit/0bce9060ef3401e690b541dd6d2008c2abc50b0d) update to v0.36.x kubernetes dependencies\n* fix(cri): introspect OCI runtime features for non-runc runtimes ([#13778](https://github.com/containerd/containerd/pull/13778))\n  * [`61a8f6f45`](https://github.com/containerd/containerd/commit/61a8f6f45e34660d787988e8a7e7a218f556369c) fix(cri): introspect OCI runtime features for non-runc runtimes\n* core/runtime/v2: Preserve protobuf shim response bytes ([#13803](https://github.com/containerd/containerd/pull/13803))\n  * [`1d28017be`](https://github.com/containerd/containerd/commit/1d28017be295005bfa3aee1d47afe86341d391b6) core/runtime/v2: Preserve protobuf shim response bytes\n* Disable checkpoint restore codepath when CRIU is not installed ([#13734](https://github.com/containerd/containerd/pull/13734))\n  * [`374091d67`](https://github.com/containerd/containerd/commit/374091d67c1966969b772594ba96a74f4357bc7a) github/workflows: install criu in node-e2e\n  * [`db03e3968`](https://github.com/containerd/containerd/commit/db03e39685448a1d87025a2ca3a1e4e42713102d) cri: add enable_criu configuration option\n  * [`dacd4c7d0`](https://github.com/containerd/containerd/commit/dacd4c7d00f4a5fd71197e67afdb6355e8536e4f) cri: validate CRIU availability and version early\n* ci: bound Go fuzzing by execution count ([#13785](https://github.com/containerd/containerd/pull/13785))\n  * [`890a9c86c`](https://github.com/containerd/containerd/commit/890a9c86cd9918e53c1ef1b57c6539a943196cd5) ci: bound Go fuzzing by execution count\n* cri: auto-add prefix for pause image ([#13759](https://github.com/containerd/containerd/pull/13759))\n  * [`0b2f1d078`](https://github.com/containerd/containerd/commit/0b2f1d078124b52f4c8030dc686f2d65c1dfc17c) cri: auto-add prefix for pause image\n</p>\n</details>\n\n### Dependency Changes\n\n* **k8s.io/api**                            v0.36.0 -> v0.36.3\n* **k8s.io/apimachinery**                   v0.36.0 -> v0.36.3\n* **k8s.io/client-go**                      v0.36.0 -> v0.36.3\n* **k8s.io/component-base**                 v0.36.0 -> v0.36.3\n* **k8s.io/cri-api**                        v0.36.0 -> v0.36.3\n* **k8s.io/cri-client**                     v0.36.0 -> v0.36.3\n* **k8s.io/cri-streaming**                  v0.36.0 -> v0.36.3\n* **sigs.k8s.io/structured-merge-diff/v6**  v6.3.2 -> v6.3.3\n\nPrevious release can be found at [v2.3.3](https://github.com/containerd/containerd/releases/tag/v2.3.3)\n### Which file should I download?\n* `containerd-<VERSION>-<OS>-<ARCH>.tar.gz`:         ✅Recommended. Dynamically linked with glibc 2.35 (Ubuntu 22.04).\n* `containerd-static-<VERSION>-<OS>-<ARCH>.tar.gz`:  Statically linked. Expected to be used on Linux distributions that do not use glibc >= 2.35. Not position-independent.\n\nIn addition to containerd, typically you will have to install [runc](https://github.com/opencontainers/runc/releases)\nand [CNI plugins](https://github.com/containernetworking/plugins/releases) from their official sites too.\n\nSee also the [Getting Started](https://github.com/containerd/containerd/blob/main/docs/getting-started.md) documentation.\n",
+      "highlights": [
+        "Highlights",
+        "Container Runtime Interface (CRI)",
+        "Disable checkpoint restore in CreateContainer by default, requiring the enableexperimentalrestoreviacreate configuration option to enable (#13913)",
+        "Set default runtimeFeatures.UserNamespacesHostNetwork to true in CRI (#13914)",
+        "Deprecate checkpoint restore in CreateContainer (#13868)",
+        "Support non-UTF-8 binary environment variable values in CRI (#13454)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "containerd/containerd",
+        "kind": "milestone",
+        "title": "2.5",
+        "url": "https://github.com/containerd/containerd/milestone/52",
+        "description": "",
+        "openIssues": 0,
+        "closedIssues": 0
+      },
+      {
+        "repository": "containerd/containerd",
+        "kind": "milestone",
+        "title": "2.4",
+        "url": "https://github.com/containerd/containerd/milestone/51",
+        "description": "",
+        "dueAt": "2026-08-26T00:00:00Z",
+        "progress": 34,
+        "openIssues": 37,
+        "closedIssues": 19
+      }
+    ]
   },
   "runs": [
     {
@@ -46,6 +89,12 @@
       "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 40,
       "changedCount": 40
+    },
+    {
+      "collectedAt": "2026-08-13T16:19:22.035158Z",
+      "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 41,
+      "changedCount": 5
     }
   ],
   "signals": [
@@ -95,8 +144,33 @@
       ],
       "author": "sdg002",
       "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:containerd/containerd:issue:12280",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Support container checkpoint/restore for gVisor runtime",
+      "text": "### What is the problem you're trying to solve Hey containerd-maintainers team! I am trying to enable container checkpoint/restore support using the gVisor (runsc) runtime. Currently, the CheckpointContainer method is not implemented in both containerd’s CRI service and the containerd-runsc-shim I am working on implementing the missing functionality in containerd-runsc-shim (https://github.com/google/gvisor/issues/11810), but without CRI support in containerd, checkpoint cannot be enabled. Probably the same relates to restore as well. ### Describe the solution you'd like Implement the CheckpointContainer method in the CRI service: https://github.com/containerd/containerd/blob/61ab051136c53fe2b9dc0681c326dc86897a59de/internal/cri/server/container_checkpoint.go#L46 I would appreciate guidance on: - Any known challenges with adding this method. - Whether there are related discussions or design considerations that I should be aware of. - If there are existing efforts or plans for CRI checkpoint/restore support. ### Additional context _No response_",
+      "url": "https://github.com/containerd/containerd/issues/12280",
+      "createdAt": "2025-09-08T09:50:28Z",
+      "updatedAt": "2026-08-13T16:08:48Z",
+      "timestamp": "2026-08-13T16:08:48Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 7
+      },
+      "labels": [
+        "kind/feature",
+        "area/cri",
+        "Stale"
+      ],
+      "author": "samorojy",
+      "state": "open",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
     },
     {
       "id": "github:containerd/containerd:issue:12517",
@@ -123,8 +197,7 @@
       "state": "closed",
       "assignees": [
         "R3hankhan123"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:containerd/containerd:issue:12728",
@@ -150,8 +223,7 @@
       ],
       "author": "957446525",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12738",
@@ -175,8 +247,7 @@
       ],
       "author": "spy16x",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12752",
@@ -200,8 +271,7 @@
       ],
       "author": "ChengyuZhu6",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12760",
@@ -226,8 +296,7 @@
       ],
       "author": "willmyrs",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12973",
@@ -251,8 +320,32 @@
       ],
       "author": "ningmingxiao",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:containerd/containerd:issue:13129",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Cannot run OPA image in user namespace on GKE",
+      "text": "## Short description `opa:1.14.1-envoy` image fails to start with `hostUsers: false` (Kubernetes user namespaces) due to missing `/dev/console` `containerd: 2.1.5` ``` $ kubectl version -o yaml clientVersion: buildDate: \"2026-03-18T18:30:07Z\" compiler: gc gitCommit: 6c1cd99aef09161ddb07b8ade6c9564e9b9bfe27 gitTreeState: clean gitVersion: v1.35.3 goVersion: go1.26.1 major: \"1\" minor: \"35\" platform: darwin/arm64 kustomizeVersion: v5.7.1 serverVersion: buildDate: \"2026-02-27T01:05:58Z\" compiler: gc emulationMajor: \"1\" emulationMinor: \"34\" gitCommit: f72eca22c700e6c114f9243d3ca6a1706e45c2a0 gitTreeState: clean gitVersion: v1.34.5-gke.1076000 goVersion: go1.24.13 X:boringcrypto major: \"1\" minCompatibilityMajor: \"1\" minCompatibilityMinor: \"33\" minor: \"34\" platform: linux/amd64 ``` ## Steps To Reproduce - Deploy this pod ``` apiVersion: v1 kind: Pod metadata: name: opa-userns-test spec: hostUsers: false securityContext: runAsUser: 1000 runAsGroup: 1000 runAsNonRoot: true fsGroup: 1000 containers: - name: opa image: openpolicyagent/opa:1.14.1-envoy args: - run - --server - --diagnostic-addr=0.0.0.0:8282 securityContext: allowPrivilegeEscalation: false capabilities: drop: - ALL runAsNonRoot: true ``` - It gets `CreateContainerError` - Set `hostUsers: true` (default) and re-deploy - works ## Expected behavior The above pod spec works in user namespace, i.e. with `hostUsers: false` ## Additional context I built a custom OPA image with the following `Dockerfile`. This image works with `hostUsers: false`. ``` FROM openpolicyagent/opa:1.14.1-envoy AS opa FROM busybox AS setup COPY --from=opa / /opa-root/ RUN mkdir -p /opa-root/dev && touch /opa-root/dev/console FROM openpolicyagent/opa:1.14.1-envoy COPY --from=setup /opa-root/ / ```",
+      "url": "https://github.com/containerd/containerd/issues/13129",
+      "createdAt": "2026-03-26T14:46:42Z",
+      "updatedAt": "2026-08-13T16:08:46Z",
+      "timestamp": "2026-08-13T16:08:46Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [
+        "kind/support",
+        "Stale"
+      ],
+      "author": "savitha-qs",
+      "state": "open",
       "assignees": [],
-      "change": "updated"
+      "change": "new"
     },
     {
       "id": "github:containerd/containerd:issue:13529",
@@ -276,8 +369,7 @@
       ],
       "author": "hakman",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:13909",
@@ -301,8 +393,7 @@
       ],
       "author": "naoki9911",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:13952",
@@ -326,8 +417,7 @@
       ],
       "author": "olyazavr",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:5708",
@@ -350,8 +440,7 @@
       ],
       "author": "dany74q",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:11458",
@@ -377,8 +466,7 @@
       ],
       "author": "yylt",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:11477",
@@ -406,8 +494,7 @@
       ],
       "author": "ningmingxiao",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:12889",
@@ -436,8 +523,7 @@
       ],
       "author": "1seal",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13294",
@@ -446,18 +532,17 @@
       "project": "containerd/containerd",
       "kind": "pull_request",
       "title": "vendor: github.com/sirupsen/logrus v1.10.0",
-      "text": "Not tagged yet; - https://github.com/sirupsen/logrus/pull/1568 full diff: https://github.com/sirupsen/logrus/compare/v1.9.4...84cedf9d8b02e719f44be1b8a384be724ad49097",
+      "text": "### vendor: github.com/sirupsen/logrus v1.10.0 Notable changes: - Add bidirectional `log/slog` integration with a Logrus hook and `slog.Handler`. - Add minimal, composable logging interfaces for individual log levels. - Fix reentrant logging deadlocks and improve concurrency safety around formatters, hooks, and entries. - Fix generic `Log`, `Logf`, `Logln`, and `LogFn` methods unexpectedly panicking at `PanicLevel`. - Allow `Entry.Caller` to be set explicitly and preserved across derived entries. - Improve `TextFormatter` performance and reduce allocations significantly. - Improve common Logger and Entry hot paths and caller-reporting performance. - Update `TextFormatter` handling for `[]byte`, debug/trace colors, and Windows ANSI terminals. - Raise the minimum supported Go version to Go 1.23. - Deprecate `Entry.HasCaller` and `MutexWrap`. release-notes: https://github.com/sirupsen/logrus/releases/tag/v1.10.0 full diff: https://github.com/sirupsen/logrus/compare/v1.9.4...v1.10.0",
       "url": "https://github.com/containerd/containerd/pull/13294",
       "createdAt": "2026-04-27T13:41:27Z",
-      "updatedAt": "2026-08-13T10:57:00Z",
-      "timestamp": "2026-08-13T10:57:00Z",
+      "updatedAt": "2026-08-13T15:55:43Z",
+      "timestamp": "2026-08-13T15:55:43Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
       },
       "labels": [
-        "size/XXL",
-        "do-not-merge/work-in-progress"
+        "size/XXL"
       ],
       "author": "thaJeztah",
       "state": "open",
@@ -486,8 +571,7 @@
       ],
       "author": "lauralorenz",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13635",
@@ -513,8 +597,7 @@
       "state": "open",
       "assignees": [
         "fuweid"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:containerd/containerd:pull_request:13653",
@@ -537,8 +620,7 @@
       ],
       "author": "ningmingxiao",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13705",
@@ -561,8 +643,7 @@
       ],
       "author": "ningmingxiao",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13775",
@@ -585,8 +666,7 @@
       ],
       "author": "aysha-afrah26",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13799",
@@ -610,8 +690,7 @@
       ],
       "author": "NahumLitvin",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13830",
@@ -634,8 +713,7 @@
       ],
       "author": "locker95",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13910",
@@ -661,8 +739,7 @@
       "state": "open",
       "assignees": [
         "vvoland"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:containerd/containerd:pull_request:13915",
@@ -685,8 +762,7 @@
       ],
       "author": "mabdelmalek-ant",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13924",
@@ -711,8 +787,7 @@
       ],
       "author": "RohithPariki",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13928",
@@ -739,6 +814,30 @@
       "change": "updated"
     },
     {
+      "id": "github:containerd/containerd:pull_request:13941",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "erofs: instrument warm up cache",
+      "text": "It'd good go understand: - Rate of cache lookups. - How many cache hits alone / layer bytes served from cache. - Amount of time spent converting layers on cache miss",
+      "url": "https://github.com/containerd/containerd/pull/13941",
+      "createdAt": "2026-08-11T18:50:53Z",
+      "updatedAt": "2026-08-13T15:35:21Z",
+      "timestamp": "2026-08-13T15:35:21Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "size/M"
+      ],
+      "author": "mxpv",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:containerd/containerd:pull_request:13942",
       "source": "github",
       "group": "platform-infrastructure",
@@ -759,8 +858,7 @@
       ],
       "author": "samuelkarp",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13943",
@@ -807,8 +905,7 @@
       ],
       "author": "hsiangkao",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13946",
@@ -831,8 +928,7 @@
       ],
       "author": "samuelkarp",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13948",
@@ -855,8 +951,7 @@
       ],
       "author": "rawahars",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13949",
@@ -882,8 +977,7 @@
       "state": "open",
       "assignees": [
         "MikeZappa87"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:containerd/containerd:pull_request:13950",
@@ -895,8 +989,8 @@
       "text": "Cherry-pick of https://github.com/containerd/containerd/pull/13932",
       "url": "https://github.com/containerd/containerd/pull/13950",
       "createdAt": "2026-08-12T16:31:43Z",
-      "updatedAt": "2026-08-13T11:52:05Z",
-      "timestamp": "2026-08-13T11:52:05Z",
+      "updatedAt": "2026-08-13T13:50:20Z",
+      "timestamp": "2026-08-13T13:50:20Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -905,7 +999,7 @@
         "size/M"
       ],
       "author": "hsiangkao",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -930,8 +1024,7 @@
       ],
       "author": "olyazavr",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13953",
@@ -954,8 +1047,7 @@
       ],
       "author": "MikeZappa87",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13954",
@@ -978,8 +1070,7 @@
       ],
       "author": "austinvazquez",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13955",
@@ -1002,8 +1093,7 @@
       ],
       "author": "austinvazquez",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13956",
@@ -1026,8 +1116,7 @@
       ],
       "author": "ningmingxiao",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:release:369432727",
@@ -1043,8 +1132,7 @@
       "timestamp": "2026-08-12T17:59:47Z",
       "labels": [],
       "author": "github-actions[bot]",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:release:369434467",
@@ -1060,8 +1148,7 @@
       "timestamp": "2026-08-12T18:02:25Z",
       "labels": [],
       "author": "github-actions[bot]",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:release:https://github.com/containerd/containerd/releases/tag/v2.2.7",
@@ -2364,6 +2451,171 @@
         "author": "github-actions[bot]",
         "assignees": [],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:406e2ffc6975a8cc24cc",
+      "signalId": "github:containerd/containerd:issue:12280",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:12280",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Support container checkpoint/restore for gVisor runtime",
+        "text": "### What is the problem you're trying to solve Hey containerd-maintainers team! I am trying to enable container checkpoint/restore support using the gVisor (runsc) runtime. Currently, the CheckpointContainer method is not implemented in both containerd’s CRI service and the containerd-runsc-shim I am working on implementing the missing functionality in containerd-runsc-shim (https://github.com/google/gvisor/issues/11810), but without CRI support in containerd, checkpoint cannot be enabled. Probably the same relates to restore as well. ### Describe the solution you'd like Implement the CheckpointContainer method in the CRI service: https://github.com/containerd/containerd/blob/61ab051136c53fe2b9dc0681c326dc86897a59de/internal/cri/server/container_checkpoint.go#L46 I would appreciate guidance on: - Any known challenges with adding this method. - Whether there are related discussions or design considerations that I should be aware of. - If there are existing efforts or plans for CRI checkpoint/restore support. ### Additional context _No response_",
+        "url": "https://github.com/containerd/containerd/issues/12280",
+        "createdAt": "2025-09-08T09:50:28Z",
+        "updatedAt": "2026-08-13T16:08:48Z",
+        "timestamp": "2026-08-13T16:08:48Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 7
+        },
+        "labels": [
+          "kind/feature",
+          "area/cri",
+          "Stale"
+        ],
+        "author": "samorojy",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:e8adf0c668065777ad07",
+      "signalId": "github:containerd/containerd:issue:13129",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:13129",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Cannot run OPA image in user namespace on GKE",
+        "text": "## Short description `opa:1.14.1-envoy` image fails to start with `hostUsers: false` (Kubernetes user namespaces) due to missing `/dev/console` `containerd: 2.1.5` ``` $ kubectl version -o yaml clientVersion: buildDate: \"2026-03-18T18:30:07Z\" compiler: gc gitCommit: 6c1cd99aef09161ddb07b8ade6c9564e9b9bfe27 gitTreeState: clean gitVersion: v1.35.3 goVersion: go1.26.1 major: \"1\" minor: \"35\" platform: darwin/arm64 kustomizeVersion: v5.7.1 serverVersion: buildDate: \"2026-02-27T01:05:58Z\" compiler: gc emulationMajor: \"1\" emulationMinor: \"34\" gitCommit: f72eca22c700e6c114f9243d3ca6a1706e45c2a0 gitTreeState: clean gitVersion: v1.34.5-gke.1076000 goVersion: go1.24.13 X:boringcrypto major: \"1\" minCompatibilityMajor: \"1\" minCompatibilityMinor: \"33\" minor: \"34\" platform: linux/amd64 ``` ## Steps To Reproduce - Deploy this pod ``` apiVersion: v1 kind: Pod metadata: name: opa-userns-test spec: hostUsers: false securityContext: runAsUser: 1000 runAsGroup: 1000 runAsNonRoot: true fsGroup: 1000 containers: - name: opa image: openpolicyagent/opa:1.14.1-envoy args: - run - --server - --diagnostic-addr=0.0.0.0:8282 securityContext: allowPrivilegeEscalation: false capabilities: drop: - ALL runAsNonRoot: true ``` - It gets `CreateContainerError` - Set `hostUsers: true` (default) and re-deploy - works ## Expected behavior The above pod spec works in user namespace, i.e. with `hostUsers: false` ## Additional context I built a custom OPA image with the following `Dockerfile`. This image works with `hostUsers: false`. ``` FROM openpolicyagent/opa:1.14.1-envoy AS opa FROM busybox AS setup COPY --from=opa / /opa-root/ RUN mkdir -p /opa-root/dev && touch /opa-root/dev/console FROM openpolicyagent/opa:1.14.1-envoy COPY --from=setup /opa-root/ / ```",
+        "url": "https://github.com/containerd/containerd/issues/13129",
+        "createdAt": "2026-03-26T14:46:42Z",
+        "updatedAt": "2026-08-13T16:08:46Z",
+        "timestamp": "2026-08-13T16:08:46Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [
+          "kind/support",
+          "Stale"
+        ],
+        "author": "savitha-qs",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:57810638a610bd56bd3d",
+      "signalId": "github:containerd/containerd:pull_request:13294",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13294",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "vendor: github.com/sirupsen/logrus v1.10.0",
+        "text": "### vendor: github.com/sirupsen/logrus v1.10.0 Notable changes: - Add bidirectional `log/slog` integration with a Logrus hook and `slog.Handler`. - Add minimal, composable logging interfaces for individual log levels. - Fix reentrant logging deadlocks and improve concurrency safety around formatters, hooks, and entries. - Fix generic `Log`, `Logf`, `Logln`, and `LogFn` methods unexpectedly panicking at `PanicLevel`. - Allow `Entry.Caller` to be set explicitly and preserved across derived entries. - Improve `TextFormatter` performance and reduce allocations significantly. - Improve common Logger and Entry hot paths and caller-reporting performance. - Update `TextFormatter` handling for `[]byte`, debug/trace colors, and Windows ANSI terminals. - Raise the minimum supported Go version to Go 1.23. - Deprecate `Entry.HasCaller` and `MutexWrap`. release-notes: https://github.com/sirupsen/logrus/releases/tag/v1.10.0 full diff: https://github.com/sirupsen/logrus/compare/v1.9.4...v1.10.0",
+        "url": "https://github.com/containerd/containerd/pull/13294",
+        "createdAt": "2026-04-27T13:41:27Z",
+        "updatedAt": "2026-08-13T15:55:43Z",
+        "timestamp": "2026-08-13T15:55:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/XXL"
+        ],
+        "author": "thaJeztah",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ab0d40177310cd057cea",
+      "signalId": "github:containerd/containerd:pull_request:13941",
+      "event": "discovered",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13941",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "erofs: instrument warm up cache",
+        "text": "It'd good go understand: - Rate of cache lookups. - How many cache hits alone / layer bytes served from cache. - Amount of time spent converting layers on cache miss",
+        "url": "https://github.com/containerd/containerd/pull/13941",
+        "createdAt": "2026-08-11T18:50:53Z",
+        "updatedAt": "2026-08-13T15:35:21Z",
+        "timestamp": "2026-08-13T15:35:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/M"
+        ],
+        "author": "mxpv",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0553bd625602df7cb4e0",
+      "signalId": "github:containerd/containerd:pull_request:13950",
+      "event": "changed",
+      "observedAt": "2026-08-13T16:19:22.035158Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13950",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "[release/2.2] snapshots/erofs: protect snapshot staging from cleanup",
+        "text": "Cherry-pick of https://github.com/containerd/containerd/pull/13932",
+        "url": "https://github.com/containerd/containerd/pull/13950",
+        "createdAt": "2026-08-12T16:31:43Z",
+        "updatedAt": "2026-08-13T13:50:20Z",
+        "timestamp": "2026-08-13T13:50:20Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/M"
+        ],
+        "author": "hsiangkao",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
       }
     }
   ]
