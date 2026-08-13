@@ -15,6 +15,8 @@ normalized, deduplicated signals
     ↓
 data/YYYY-MM-DD/<group>/<repository>.json
 reports/YYYY-MM-DD/<group>.md
+    ↓
+static date/group/repository pages + RSS
 ```
 
 ## What it collects
@@ -63,6 +65,31 @@ file per configured group. They contain no generated interpretation.
 `.state/github.json` contains fingerprints used to avoid emitting unchanged observations again.
 The scheduled workflow commits all three locations.
 
+## Static site and RSS
+
+GitHub Pages publishes a visual explorer at
+[amk9978.github.io/engineering-radar](https://amk9978.github.io/engineering-radar/). It is generated
+entirely from the checked-in `data/` folders and provides:
+
+- an activity overview for the newest collection;
+- an archive page for each date;
+- a separate page for every group;
+- a searchable, filterable page for every repository;
+- direct links from every displayed item to its original GitHub evidence;
+- light and dark themes; and
+- an [RSS 2.0 feed](https://amk9978.github.io/engineering-radar/feed.xml) containing the 100 most
+  recent signals.
+
+This display layer does not combine the stored datasets or perform analysis. The generated `.site/`
+directory is a build artifact and is not committed. Build it locally with:
+
+```bash
+pnpm site:build
+```
+
+For local browsing, serve `.site/` with any static file server. To override links for a custom Pages
+domain, set `SITE_URL` before building.
+
 ## Configuration
 
 Repository groups are arbitrary and data-driven:
@@ -107,6 +134,7 @@ pnpm lint
 pnpm format:check
 pnpm typecheck
 pnpm test
+pnpm site:build
 ```
 
 Tests use mocked API responses and do not depend on live GitHub calls.
@@ -115,12 +143,19 @@ Tests use mocked API responses and do not depend on live GitHub calls.
 
 The workflow in `.github/workflows/radar.yml` runs daily and supports `workflow_dispatch`. It uses
 GitHub Actions' built-in `GITHUB_TOKEN`, runs the collector, and commits `data/`, `reports/`, and
-`.state/` back to the current repository.
+`.state/` back to the current repository. The separate `.github/workflows/pages.yml` workflow builds
+and deploys the website and RSS after a successful radar run or a relevant push.
 
 After pushing the project, enable Actions read/write permissions under:
 
 ```text
 Repository Settings → Actions → General → Workflow permissions → Read and write permissions
+```
+
+Enable GitHub Pages with **GitHub Actions** as its source under:
+
+```text
+Repository Settings → Pages → Build and deployment → Source → GitHub Actions
 ```
 
 Then trigger the first scan:
@@ -130,7 +165,9 @@ gh workflow run radar.yml
 gh run watch
 ```
 
-No additional Actions secrets or variables are required.
+No additional Actions secrets or variables are required. The site URL is calculated from the fork's
+owner and repository name, so changing `config.yml` and enabling the two workflows is sufficient for
+a fork. If you use a custom domain, create an Actions variable named `SITE_URL` with its full origin.
 
 ## Consuming the data elsewhere
 
@@ -149,6 +186,7 @@ src/sources      GitHub REST collection and bounded pagination
 src/signals      normalized signal types and GitHub mapping
 src/storage      fingerprints and daily JSON persistence
 src/reports      deterministic Markdown update log
+src/site         static HTML, search/filter assets, sitemap, and RSS generation
 src/index.ts     collection orchestration
 src/__tests__    mocked unit tests
 ```

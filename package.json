@@ -10,6 +10,7 @@
   "packageManager": "pnpm@10.15.0",
   "scripts": {
     "start": "tsx src/index.ts",
+    "site:build": "tsx src/site/generate.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

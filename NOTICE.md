@@ -4,7 +4,9 @@ Engineering Radar includes or adapts portions and implementation patterns from
 [agents-radar](https://github.com/duanyytop/agents-radar), originally copyright
 Dylan and licensed under the MIT License.
 
-Adapted areas include bounded GitHub pagination and GitHub Actions workflow patterns.
+Adapted areas include bounded GitHub pagination, GitHub Actions workflow patterns, and the idea of
+a lightweight static report browser with an RSS feed. Engineering Radar's multi-page site generator
+and presentation are independent implementations over its repository-separated datasets.
 The architecture, configuration model, normalization, state, and dataset pipeline in
 this repository are specific to Engineering Radar.
 
