@@ -14,6 +14,8 @@ export interface GitHubSignal {
   reactions?: number;
   labels?: string[];
   author?: string;
+  state?: "open" | "closed";
+  assignees?: string[];
 }
 
 interface GitHubUser {
@@ -35,6 +37,8 @@ interface GitHubIssueResponse {
   reactions?: { total_count?: number };
   labels?: Array<GitHubLabel | string>;
   user?: GitHubUser | null;
+  state?: "open" | "closed";
+  assignees?: GitHubUser[];
   pull_request?: unknown;
 }
 
@@ -88,6 +92,10 @@ function toIssueSignal(item: GitHubIssueResponse, repo: string, group: string): 
     reactions: item.reactions?.total_count ?? 0,
     labels: labelsOf(item.labels),
     ...(item.user?.login ? { author: item.user.login } : {}),
+    ...(item.state ? { state: item.state } : {}),
+    assignees: (item.assignees ?? [])
+      .map((assignee) => assignee.login)
+      .filter((login): login is string => Boolean(login)),
   };
 }
 

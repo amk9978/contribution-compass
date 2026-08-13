@@ -18,6 +18,8 @@ export function normalizeGitHub(signal: GitHubSignal): Signal {
     title: signal.title,
     ...(text ? { text } : {}),
     url: signal.url,
+    ...(signal.createdAt ? { createdAt: signal.createdAt } : {}),
+    ...(signal.updatedAt ? { updatedAt: signal.updatedAt } : {}),
     ...(signal.updatedAt || signal.createdAt
       ? { timestamp: signal.updatedAt ?? signal.createdAt }
       : {}),
@@ -26,5 +28,7 @@ export function normalizeGitHub(signal: GitHubSignal): Signal {
       : { metrics: { comments: signal.comments ?? 0, reactions: signal.reactions ?? 0 } }),
     ...(signal.labels ? { labels: signal.labels } : {}),
     ...(signal.author ? { author: signal.author } : {}),
+    ...(signal.state ? { state: signal.state } : {}),
+    ...(signal.assignees ? { assignees: signal.assignees } : {}),
   };
 }

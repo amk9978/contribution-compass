@@ -17,9 +17,13 @@ export interface Signal {
   title: string;
   text?: string;
   url: string;
+  createdAt?: string;
+  updatedAt?: string;
   timestamp?: string;
   metrics?: SignalMetrics;
   labels?: string[];
   author?: string;
+  state?: "open" | "closed";
+  assignees?: string[];
   change?: "new" | "updated";
 }

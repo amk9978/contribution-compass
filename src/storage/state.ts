@@ -21,6 +21,8 @@ function fingerprint(signal: Signal): string {
     metrics: signal.metrics,
     labels: signal.labels,
     url: signal.url,
+    state: signal.state,
+    assignees: signal.assignees,
   };
   return createHash("sha256").update(JSON.stringify(stable)).digest("hex");
 }

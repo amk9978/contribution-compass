@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "data/**"
+      - "src/contributions/**"
       - "src/site/**"
       - "package.json"
       - "pnpm-lock.yaml"

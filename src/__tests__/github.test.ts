@@ -29,6 +29,8 @@ describe("GitHub collection", () => {
             reactions: { total_count: 4 },
             labels: [{ name: "bug" }],
             user: { login: "dev" },
+            state: "open",
+            assignees: [],
           },
           {
             number: 2,
@@ -40,6 +42,8 @@ describe("GitHub collection", () => {
             reactions: { total_count: 1 },
             labels: ["cleanup"],
             user: { login: "fixer" },
+            state: "closed",
+            assignees: [{ login: "maintainer" }],
             pull_request: { url: "api-url" },
           },
         ]),
@@ -56,8 +60,11 @@ describe("GitHub collection", () => {
       reactions: 4,
       comments: 7,
       author: "dev",
+      state: "open",
+      assignees: [],
       updatedAt: "2026-08-13T01:00:00Z",
     });
+    expect(signals[1]).toMatchObject({ state: "closed", assignees: ["maintainer"] });
   });
 
   it("stops pagination when the oldest item predates the cutoff", async () => {

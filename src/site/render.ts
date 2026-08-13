@@ -9,6 +9,7 @@ import {
   truncate,
 } from "./format.js";
 import type { SiteContext, SiteDate, SiteGroup, SiteModel, SiteRepository } from "./model.js";
+import { latestContributionLeads, type LocatedContributionLead } from "./contributions.js";
 
 interface Stats {
   total: number;
@@ -37,7 +38,7 @@ function page(
   description: string,
   content: string,
   context: SiteContext,
-  options: { bodyClass?: string } = {},
+  options: { bodyClass?: string; apiUrl?: string } = {},
 ): string {
   return `<!doctype html>
 <html lang="en" data-theme="dark">
@@ -49,19 +50,24 @@ function page(
   <title>${escapeHtml(title)} · Engineering Radar</title>
   <link rel="icon" href="${context.siteUrl}/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/rss+xml" title="Engineering Radar RSS" href="${context.siteUrl}/feed.xml">
+  <link rel="alternate" type="application/feed+json" title="Engineering Radar JSON Feed" href="${context.siteUrl}/feed.json">
+  <link rel="alternate" type="application/json" title="Engineering Radar API" href="${options.apiUrl ?? `${context.siteUrl}/api/v1/index.json`}">
   <link rel="stylesheet" href="${context.siteUrl}/assets/styles.css">
+  <link rel="stylesheet" href="${context.siteUrl}/assets/contributions.css">
 </head>
 <body class="${escapeHtml(options.bodyClass ?? "")}">
   <header class="topbar">
     <a class="brand" href="${context.siteUrl}/"><span class="brand-mark" aria-hidden="true">◉</span><span>engineering/<strong>radar</strong></span></a>
     <nav class="topnav" aria-label="Primary">
-      <a href="${context.siteUrl}/feed.xml">RSS</a>
-      <a href="${context.repositoryUrl}">GitHub</a>
+      <a href="${context.siteUrl}/contribute/">Contribute</a>
+      <a href="${context.siteUrl}/api/v1/index.json">Data</a>
+      <a class="secondary-nav" href="${context.siteUrl}/feed.xml">RSS</a>
+      <a class="secondary-nav" href="${context.repositoryUrl}">GitHub</a>
       <button class="theme-toggle" type="button" aria-label="Toggle color theme">◐</button>
     </nav>
   </header>
   ${content}
-  <footer class="footer"><span>Collected from primary GitHub evidence.</span><span>No generated analysis.</span></footer>
+  <footer class="footer"><span>Collected from primary GitHub evidence. No generated analysis.</span><span><a href="${context.siteUrl}/llms.txt">LLM guide</a> · <a href="${context.siteUrl}/api/v1/index.json">JSON API</a></span></footer>
   <script src="${context.siteUrl}/assets/app.js" defer></script>
 </body>
 </html>`;
@@ -106,11 +112,39 @@ function signalRow(signal: Signal): string {
     ${body ? `<p>${escapeHtml(body)}</p>` : ""}
     <div class="signal-meta">
       ${signal.author ? `<span>@${escapeHtml(signal.author)}</span>` : ""}
+      ${signal.state ? `<span>${escapeHtml(signal.state)}</span>` : ""}
+      ${signal.assignees?.length ? `<span>assigned to ${signal.assignees.map((assignee) => `@${escapeHtml(assignee)}`).join(", ")}</span>` : ""}
       ${signal.metrics?.comments !== undefined ? `<span>${signal.metrics.comments} comments</span>` : ""}
       ${signal.metrics?.reactions !== undefined ? `<span>${signal.metrics.reactions} reactions</span>` : ""}
       ${labels.map((label) => `<span class="label">${escapeHtml(label)}</span>`).join("")}
       <a class="evidence" href="${safeUrl(signal.url)}">Original evidence ↗</a>
     </div>
+  </article>`;
+}
+
+function contributionCard(lead: LocatedContributionLead, context: SiteContext): string {
+  const pageUrl = `${context.siteUrl}/updates/${lead.date}/${lead.groupId}/${lead.repositoryId}.html#${signalAnchor(lead.signal)}`;
+  const labels = (lead.signal.labels ?? []).slice(0, 5);
+  const search = [
+    lead.signal.title,
+    lead.repository,
+    lead.repositoryName,
+    lead.groupName,
+    ...labels,
+  ]
+    .join(" ")
+    .toLowerCase();
+  return `<article class="contribution-card" data-tier="${lead.tier}" data-contribution-search="${escapeHtml(search)}">
+    <div class="contribution-head"><span class="lead-tier ${lead.tier}">${lead.tier === "maintainer-invited" ? "Maintainer invited" : "Triage lead"}</span><span>${escapeHtml(lead.repository)}</span></div>
+    <h3><a href="${safeUrl(lead.signal.url)}">${escapeHtml(lead.signal.title)}</a></h3>
+    <div class="lead-reasons">${lead.reasons.map((reason) => `<span>${escapeHtml(reason)}</span>`).join("")}</div>
+    <div class="signal-meta">
+      ${lead.signal.metrics?.comments !== undefined ? `<span>${lead.signal.metrics.comments} comments</span>` : ""}
+      ${lead.signal.metrics?.reactions !== undefined ? `<span>${lead.signal.metrics.reactions} reactions</span>` : ""}
+      ${labels.map((label) => `<span class="label">${escapeHtml(label)}</span>`).join("")}
+    </div>
+    <p class="lead-caveat">${escapeHtml(lead.caveat)}</p>
+    <div class="lead-actions"><a href="${safeUrl(lead.signal.url)}">Check live issue ↗</a><a href="${pageUrl}">Collected context →</a></div>
   </article>`;
 }
 
@@ -126,6 +160,8 @@ export function renderHome(model: SiteModel, context: SiteContext): string {
   }
 
   const signals = allSignals(latest);
+  const contributionLeads = latestContributionLeads(model);
+  const invitedLeads = contributionLeads.filter((lead) => lead.tier === "maintainer-invited");
   const totals = stats(signals);
   const activeRepositories = latest.groups
     .flatMap((group) => group.repositories)
@@ -144,14 +180,14 @@ export function renderHome(model: SiteModel, context: SiteContext): string {
   );
   const content = `<main>
     <section class="hero shell">
-      <div><span class="eyebrow">LATEST COLLECTION · ${escapeHtml(latest.date)}</span><h1>Open-source engineering,<br><em>as it changes.</em></h1><p>Issues, pull requests, and releases collected from ${latest.groups.reduce((sum, group) => sum + group.repositories.length, 0)} curated repositories. Every update links to primary evidence.</p></div>
+      <div><span class="eyebrow">LATEST COLLECTION · ${escapeHtml(latest.date)}</span><h1>Find where open source<br><em>needs hands.</em></h1><p>Contribution leads and recent engineering activity from ${latest.groups.reduce((sum, group) => sum + group.repositories.length, 0)} curated repositories. Every lead explains why it surfaced and links to primary evidence.</p></div>
       <a class="date-chip" href="${context.siteUrl}/updates/${latest.date}/"><span>Browse snapshot</span><strong>${escapeHtml(formatDate(latest.date))}</strong></a>
     </section>
     <section class="metrics shell" aria-label="Latest collection statistics">
       ${metricCard("Signals", totals.total, "new or changed")}
+      ${metricCard("Contribution leads", contributionLeads.length, "evidence-qualified")}
+      ${metricCard("Maintainer invited", invitedLeads.length, "explicitly labeled")}
       ${metricCard("Repositories", activeRepositories, "with activity")}
-      ${metricCard("Issues", totals.issues, "tracked updates")}
-      ${metricCard("Pull requests", totals.pullRequests, "tracked updates")}
       ${metricCard("Releases", totals.releases, "published versions")}
     </section>
     <section class="section shell">
@@ -166,14 +202,27 @@ export function renderHome(model: SiteModel, context: SiteContext): string {
             const groupStats = stats(
               group.repositories.flatMap((repository) => repository.signals),
             );
+            const groupLeads = contributionLeads.filter((lead) => lead.groupId === group.id).length;
             return `<a class="group-card" href="${context.siteUrl}/updates/${latest.date}/${group.id}/">
               <div class="group-title"><h3>${escapeHtml(group.name)}</h3><strong>${compactNumber(count)}</strong></div>
               <div class="activity-bar"><span style="width:${Math.max(1, Math.round((count / maxGroup) * 100))}%"></span></div>
-              <div class="group-meta"><span>${group.repositories.length} repos</span><span>${groupStats.issues} issues · ${groupStats.pullRequests} PRs · ${groupStats.releases} releases</span></div>
+              <div class="group-meta"><span>${group.repositories.length} repos · ${groupLeads} contribution leads</span><span>${groupStats.issues} issues · ${groupStats.pullRequests} PRs · ${groupStats.releases} releases</span></div>
             </a>`;
           })
           .join("")}
       </div>
+    </section>
+    <section class="section shell contribution-preview">
+      <div class="section-heading"><div><span class="eyebrow">CONTRIBUTION RADAR</span><h2>Evidence-backed places to help</h2></div><a href="${context.siteUrl}/contribute/">View all leads →</a></div>
+      <p class="section-intro">Maintainer invitations are shown separately from lower-confidence triage leads. Always confirm current scope on the live issue.</p>
+      ${
+        contributionLeads.length
+          ? `<div class="contribution-grid">${contributionLeads
+              .slice(0, 6)
+              .map((lead) => contributionCard(lead, context))
+              .join("")}</div>`
+          : '<div class="no-leads">No open, unassigned contribution leads with sufficient evidence were found in this collection.</div>'
+      }
     </section>
     <section class="section shell">
       <div class="section-heading"><div><span class="eyebrow">LATEST EVIDENCE</span><h2>Recently updated</h2></div><a href="${context.siteUrl}/updates/${latest.date}/">View full snapshot →</a></div>
@@ -190,10 +239,39 @@ export function renderHome(model: SiteModel, context: SiteContext): string {
     </section>
   </main>`;
   return page(
-    "Engineering updates",
-    "Daily issues, pull requests, and releases from curated open-source projects",
+    "Open-source contribution radar",
+    "Evidence-backed contribution leads and engineering activity from curated open-source projects",
     content,
     context,
+  );
+}
+
+export function renderContributionPage(model: SiteModel, context: SiteContext): string {
+  const latest = model.dates[0];
+  const leads = latestContributionLeads(model);
+  const invited = leads.filter((lead) => lead.tier === "maintainer-invited");
+  const triage = leads.filter((lead) => lead.tier === "triage-lead");
+  const content = `<main class="shell detail-page contribution-page">
+    ${breadcrumb([{ label: "Radar", url: `${context.siteUrl}/` }, { label: "Contribute" }])}
+    <section class="detail-hero"><span class="eyebrow">CONTRIBUTION RADAR · ${escapeHtml(latest?.date ?? "AWAITING DATA")}</span><h1>Find a concrete place<br>to contribute.</h1><p>These are discovery leads, not generated project ideas. Every result is an open, unassigned GitHub issue and includes the exact evidence used to surface it.</p></section>
+    <section class="lead-method" aria-label="Contribution lead methodology">
+      <div><strong>${invited.length}</strong><span>Maintainer-invited</span><p>Explicit labels such as “good first issue” or “help wanted.”</p></div>
+      <div><strong>${triage.length}</strong><span>Triage leads</span><p>Documentation or engaged defects without an explicit invitation.</p></div>
+      <div><strong>Live check</strong><span>Required</span><p>Confirm state, assignment, scope, and contribution policy before starting.</p></div>
+    </section>
+    <section class="filter-bar contribution-filter" aria-label="Filter contribution leads"><input id="contribution-search" type="search" placeholder="Search project, issue, group, or label…" autocomplete="off"><div class="filter-buttons"><button type="button" class="active" data-contribution-filter="all">All</button><button type="button" data-contribution-filter="maintainer-invited">Maintainer invited</button><button type="button" data-contribution-filter="triage-lead">Triage leads</button></div><span id="contribution-count">${leads.length} shown</span></section>
+    <section class="contribution-grid" id="contribution-list">${leads.length ? leads.map((lead) => contributionCard(lead, context)).join("") : '<div class="no-leads">No evidence-qualified leads are available yet. The next collection will re-evaluate open issue state and assignments.</div>'}</section>
+    <section class="methodology"><h2>How leads are selected</h2><p>Closed, assigned, stale, duplicate, invalid, blocked, question, needs-info, and needs-reproduction issues are excluded. Ranking uses explicit labels and visible engagement only. It does not estimate difficulty or predict maintainer acceptance.</p><p><a href="${context.siteUrl}/api/v1/opportunities.json">Read the same leads as JSON →</a></p></section>
+  </main>`;
+  return page(
+    "Contribution radar",
+    "Evidence-backed open-source contribution leads from curated engineering projects",
+    content,
+    context,
+    {
+      bodyClass: "contribution-page",
+      apiUrl: `${context.siteUrl}/api/v1/opportunities.json`,
+    },
   );
 }
 
@@ -218,6 +296,7 @@ export function renderDatePage(date: SiteDate, context: SiteContext): string {
     `Collected GitHub updates for ${date.date}`,
     content,
     context,
+    { apiUrl: `${context.siteUrl}/api/v1/dates/${date.date}/index.json` },
   );
 }
 
@@ -242,6 +321,9 @@ export function renderGroupPage(date: SiteDate, group: SiteGroup, context: SiteC
     `${group.name} GitHub updates for ${date.date}`,
     content,
     context,
+    {
+      apiUrl: `${context.siteUrl}/api/v1/dates/${date.date}/groups/${group.id}/index.json`,
+    },
   );
 }
 
@@ -273,6 +355,9 @@ export function renderRepositoryPage(
     `${repository.repo} GitHub updates collected on ${date.date}`,
     content,
     context,
-    { bodyClass: "repository-page" },
+    {
+      bodyClass: "repository-page",
+      apiUrl: `${context.siteUrl}/api/v1/dates/${date.date}/groups/${group.id}/repositories/${repository.id}.json`,
+    },
   );
 }

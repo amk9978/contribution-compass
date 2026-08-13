@@ -45,3 +45,35 @@ for (const button of filterButtons) {
     applyFilters();
   });
 }
+
+const contributionSearch = document.querySelector("#contribution-search");
+const contributionButtons = [...document.querySelectorAll("[data-contribution-filter]")];
+const contributionCards = [...document.querySelectorAll(".contribution-card")];
+const contributionCount = document.querySelector("#contribution-count");
+let activeTier = "all";
+
+function applyContributionFilters() {
+  const query = contributionSearch?.value.trim().toLowerCase() ?? "";
+  let visible = 0;
+
+  for (const card of contributionCards) {
+    const tierMatches = activeTier === "all" || card.dataset.tier === activeTier;
+    const textMatches = !query || (card.dataset.contributionSearch ?? "").includes(query);
+    const show = tierMatches && textMatches;
+    card.classList.toggle("hidden", !show);
+    if (show) visible += 1;
+  }
+
+  if (contributionCount) contributionCount.textContent = `${visible} shown`;
+}
+
+contributionSearch?.addEventListener("input", applyContributionFilters);
+for (const button of contributionButtons) {
+  button.addEventListener("click", () => {
+    activeTier = button.dataset.contributionFilter ?? "all";
+    for (const candidate of contributionButtons) {
+      candidate.classList.toggle("active", candidate === button);
+    }
+    applyContributionFilters();
+  });
+}

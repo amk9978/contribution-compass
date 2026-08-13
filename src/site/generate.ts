@@ -3,7 +3,24 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadSiteModel } from "./load.js";
 import type { SiteContext, SiteOptions } from "./model.js";
-import { renderDatePage, renderGroupPage, renderHome, renderRepositoryPage } from "./render.js";
+import {
+  renderApiIndex,
+  renderApiSchema,
+  renderDateApi,
+  renderGroupApi,
+  renderJsonFeed,
+  renderOpportunitiesApi,
+  renderRepositoryApi,
+} from "./api.js";
+import { latestContributionLeads } from "./contributions.js";
+import { renderLlmsFull, renderLlmsGuide } from "./llms.js";
+import {
+  renderContributionPage,
+  renderDatePage,
+  renderGroupPage,
+  renderHome,
+  renderRepositoryPage,
+} from "./render.js";
 import { renderRss, renderSitemap } from "./rss.js";
 
 const sourceDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -45,17 +62,31 @@ export async function generateSite(options: SiteOptions = {}): Promise<{
     repositoryUrl: withoutTrailingSlash(options.repositoryUrl ?? defaults.repositoryUrl),
   };
   const model = await loadSiteModel(dataRoot);
-  let pages = 1;
+  const leads = latestContributionLeads(model);
+  let pages = 2;
 
   await rm(resolvedOutput, { recursive: true, force: true });
   await mkdir(resolvedOutput, { recursive: true });
   await Promise.all([
     output(path.join(outputRoot, "index.html"), renderHome(model, context)),
+    output(
+      path.join(outputRoot, "contribute", "index.html"),
+      renderContributionPage(model, context),
+    ),
     output(path.join(outputRoot, "feed.xml"), renderRss(model, context)),
+    output(path.join(outputRoot, "feed.json"), renderJsonFeed(model, context)),
     output(path.join(outputRoot, "sitemap.xml"), renderSitemap(model, context)),
+    output(path.join(outputRoot, "llms.txt"), renderLlmsGuide(context)),
+    output(path.join(outputRoot, "llms-full.txt"), renderLlmsFull(model, context, leads)),
+    output(path.join(outputRoot, "api", "v1", "index.json"), renderApiIndex(model, context, leads)),
+    output(path.join(outputRoot, "api", "v1", "schema.json"), renderApiSchema(context)),
+    output(
+      path.join(outputRoot, "api", "v1", "opportunities.json"),
+      renderOpportunitiesApi(model, context, leads),
+    ),
     output(
       path.join(outputRoot, "robots.txt"),
-      `User-agent: *\nAllow: /\nSitemap: ${context.siteUrl}/sitemap.xml\n`,
+      `User-agent: *\nAllow: /\n\nSitemap: ${context.siteUrl}/sitemap.xml\n# LLM navigation: ${context.siteUrl}/llms.txt\n# Machine API: ${context.siteUrl}/api/v1/index.json\n`,
     ),
     output(path.join(outputRoot, ".nojekyll"), ""),
     cp(path.join(sourceDirectory, "assets"), path.join(outputRoot, "assets"), {
@@ -68,17 +99,39 @@ export async function generateSite(options: SiteOptions = {}): Promise<{
       path.join(outputRoot, "updates", date.date, "index.html"),
       renderDatePage(date, context),
     );
+    await output(
+      path.join(outputRoot, "api", "v1", "dates", date.date, "index.json"),
+      renderDateApi(date, context),
+    );
     pages += 1;
     for (const group of date.groups) {
       await output(
         path.join(outputRoot, "updates", date.date, group.id, "index.html"),
         renderGroupPage(date, group, context),
       );
+      await output(
+        path.join(outputRoot, "api", "v1", "dates", date.date, "groups", group.id, "index.json"),
+        renderGroupApi(date, group, context),
+      );
       pages += 1;
       for (const repository of group.repositories) {
         await output(
           path.join(outputRoot, "updates", date.date, group.id, `${repository.id}.html`),
           renderRepositoryPage(date, group, repository, context),
+        );
+        await output(
+          path.join(
+            outputRoot,
+            "api",
+            "v1",
+            "dates",
+            date.date,
+            "groups",
+            group.id,
+            "repositories",
+            `${repository.id}.json`,
+          ),
+          renderRepositoryApi(date, group, repository, context),
         );
         pages += 1;
       }

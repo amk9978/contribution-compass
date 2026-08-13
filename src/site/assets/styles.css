@@ -12,6 +12,7 @@
   --accent-soft: rgb(126 231 135 / 12%);
   --blue: #79c0ff;
   --purple: #d2a8ff;
+  --orange: #ffa657;
   --shadow: 0 18px 50px rgb(0 0 0 / 24%);
   font-family:
     Inter,
@@ -37,6 +38,7 @@
   --accent-soft: rgb(26 127 55 / 10%);
   --blue: #0969da;
   --purple: #8250df;
+  --orange: #bc4c00;
   --shadow: 0 18px 50px rgb(31 35 40 / 10%);
 }
 

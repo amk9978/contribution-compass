@@ -73,6 +73,7 @@ ${items}
 export function renderSitemap(model: SiteModel, context: SiteContext): string {
   const urls = [
     `${context.siteUrl}/`,
+    `${context.siteUrl}/contribute/`,
     ...model.dates.flatMap((date) => [
       `${context.siteUrl}/updates/${date.date}/`,
       ...date.groups.flatMap((group) => [
