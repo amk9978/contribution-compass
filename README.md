@@ -25,6 +25,8 @@ optional evidence-citing Inference Extensions
 A list of repository activity is not enough. Contribution Compass helps answer:
 
 - What important projects changed recently?
+- What major developments shipped in their latest stable releases?
+- What prereleases or milestones publicly indicate where a project is heading?
 - Which issues explicitly invite community help?
 - Which unassigned issues may be worth discussing with maintainers?
 - What context surrounds the project and issue?
@@ -48,8 +50,9 @@ Each repository dataset contains:
 - Project Context: description, topics, language, license, default branch, stars, forks, and activity;
 - normalized issue, pull-request, and release Signals;
 - direct URLs to original GitHub evidence;
-- append-only Observation Events containing discovered/changed snapshots and changed fields; and
-- collection-run metadata.
+- append-only Observation Events containing discovered/changed snapshots and changed fields;
+- collection-run metadata; and
+- a Project News Snapshot with its latest stable release and publicly visible upcoming items.
 
 ```text
 data/
@@ -67,7 +70,11 @@ loader never inserts hidden defaults.
 
 - Website: <https://amk9978.github.io/contribution-compass/>
 - Contribution view: <https://amk9978.github.io/contribution-compass/contribute/>
+- Project news: <https://amk9978.github.io/contribution-compass/news/>
 - Machine catalog: <https://amk9978.github.io/contribution-compass/api/v1/index.json>
+- Project news API: <https://amk9978.github.io/contribution-compass/api/v1/news.json>
+- Project news JSON Feed: <https://amk9978.github.io/contribution-compass/news/feed.json>
+- Project news RSS: <https://amk9978.github.io/contribution-compass/news/feed.xml>
 - Contribution leads: <https://amk9978.github.io/contribution-compass/api/v1/opportunities.json>
 - JSON Feed: <https://amk9978.github.io/contribution-compass/feed.json>
 - RSS: <https://amk9978.github.io/contribution-compass/feed.xml>
@@ -131,6 +138,7 @@ Query without MCP:
 
 ```bash
 uv run contribution-compass query opportunities --limit 10
+uv run contribution-compass query news --query performance
 uv run contribution-compass query updates --query cancellation
 uv run contribution-compass query timeline 'github:owner/repo:issue:123'
 ```

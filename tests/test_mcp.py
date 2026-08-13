@@ -35,6 +35,7 @@ def test_mcp_exposes_typed_tools_and_resources_in_memory() -> None:
             tools = await client.list_tools()
             names = {tool.name for tool in tools.tools}
             assert "find_contribution_opportunities" in names
+            assert "get_project_news" in names
             assert "get_signal_timeline" in names
             result = await client.call_tool(
                 "find_contribution_opportunities", {"project": "acme/widget"}
@@ -47,6 +48,11 @@ def test_mcp_exposes_typed_tools_and_resources_in_memory() -> None:
             assert context.structured_content is not None
             assert len(context.structured_content["importantSignals"]) == 1
             assert context.structured_content["signalCount"] == 1
+            news = await client.call_tool("get_project_news", {"project": "acme/widget"})
+            assert news.structured_content is not None
+            assert news.structured_content["result"][0]["news"]["latestRelease"]["tag"] == (
+                "v2.0.0"
+            )
             resource = await client.read_resource("compass://opportunities/latest")
             assert "good first issue" in resource.contents[0].text
 

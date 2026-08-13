@@ -9,6 +9,7 @@ from typing import Any
 from xml.sax.saxutils import escape, quoteattr
 
 from contribution_compass.application.catalog import CatalogQueries
+from contribution_compass.application.news import NewsQueries, ProjectNewsEntry
 from contribution_compass.domain.importance import importance_score
 from contribution_compass.domain.models import ContributionLead, RepositoryDataset, Signal
 from contribution_compass.ports import Catalog
@@ -42,6 +43,7 @@ class MachineView:
     def __init__(self, catalog: Catalog, context: SiteContext) -> None:
         self.catalog = catalog
         self.queries = CatalogQueries(catalog)
+        self.news_queries = NewsQueries(catalog)
         self.context = context
         self.generated_at = datetime.now(UTC).isoformat().replace("+00:00", "Z")
 
@@ -49,17 +51,21 @@ class MachineView:
         dates = self.catalog.dates()
         return json_text(
             {
-                "schemaVersion": 2,
+                "schemaVersion": 3,
                 "name": "Contribution Compass",
                 "generatedAt": self.generated_at,
                 "description": (
-                    "Factual project context, normalized GitHub signals, append-only observation "
-                    "events, and evidence-backed contribution leads."
+                    "Factual project context, release and public-roadmap news, normalized GitHub "
+                    "signals, append-only observation events, and evidence-backed contribution "
+                    "leads."
                 ),
                 "latestDate": dates[0] if dates else None,
                 "links": {
                     "website": f"{self.context.site_url}/",
                     "contributionLeads": f"{self.context.site_url}/api/v1/opportunities.json",
+                    "projectNews": f"{self.context.site_url}/api/v1/news.json",
+                    "newsJsonFeed": f"{self.context.site_url}/news/feed.json",
+                    "newsRssFeed": f"{self.context.site_url}/news/feed.xml",
                     "schema": f"{self.context.site_url}/api/v1/schema.json",
                     "jsonFeed": f"{self.context.site_url}/feed.json",
                     "rssFeed": f"{self.context.site_url}/feed.xml",
@@ -92,20 +98,22 @@ class MachineView:
                 "type": "object",
                 "required": ["schemaVersion", "dataset"],
                 "properties": {
-                    "schemaVersion": {"const": 2},
+                    "schemaVersion": {"const": 3},
                     "dataset": {
                         "type": "object",
                         "required": [
                             "date",
                             "repository",
-                            "groupId",
+                            "group",
                             "signals",
                             "events",
                         ],
                         "properties": {
                             "date": {"type": "string", "format": "date"},
-                            "repository": {"type": "string"},
+                            "group": {"type": "object"},
+                            "repository": {"type": "object"},
                             "context": {"type": ["object", "null"]},
+                            "news": {"type": ["object", "null"]},
                             "signals": {"type": "array", "items": {"type": "object"}},
                             "events": {"type": "array", "items": {"type": "object"}},
                         },
@@ -138,7 +146,7 @@ class MachineView:
             group["pageUrl"] = f"{self.context.site_url}/updates/{date}/{group['id']}/"
         return json_text(
             {
-                "schemaVersion": 2,
+                "schemaVersion": 3,
                 "date": date,
                 "signalCount": sum(len(dataset.signals) for dataset in datasets),
                 "eventCount": sum(len(dataset.events) for dataset in datasets),
@@ -152,7 +160,7 @@ class MachineView:
         ]
         return json_text(
             {
-                "schemaVersion": 2,
+                "schemaVersion": 3,
                 "date": date,
                 "group": {
                     "id": group_id,
@@ -181,7 +189,31 @@ class MachineView:
 
     @staticmethod
     def repository(dataset: RepositoryDataset) -> str:
-        return json_text({"schemaVersion": 2, "dataset": dataset.to_dict()})
+        return json_text({"schemaVersion": 3, "dataset": dataset.to_dict()})
+
+    def news(self) -> str:
+        entries = self.news_queries.list(limit=100)
+        return json_text(
+            {
+                "schemaVersion": 3,
+                "generatedAt": self.generated_at,
+                "description": (
+                    "Latest stable releases and publicly indicated upcoming work. Prereleases and "
+                    "milestones are evidence, not delivery commitments."
+                ),
+                "count": len(entries),
+                "projects": [self._news_entry(entry) for entry in entries],
+            }
+        )
+
+    def _news_entry(self, entry: ProjectNewsEntry) -> dict[str, Any]:
+        return {
+            **entry.to_dict(),
+            "pageUrl": (
+                f"{self.context.site_url}/updates/{entry.date}/{entry.group_id}/"
+                f"{entry.project_id}.html"
+            ),
+        }
 
     def opportunities(self) -> str:
         date = next(iter(self.catalog.dates()), None)
@@ -190,7 +222,7 @@ class MachineView:
         leads = self.queries.contribution_leads(limit=100)
         return json_text(
             {
-                "schemaVersion": 2,
+                "schemaVersion": 3,
                 "generatedAt": self.generated_at,
                 "date": date,
                 "description": "Evidence-backed leads from open, unassigned issues.",
@@ -260,8 +292,85 @@ class MachineView:
             }
         )
 
+    def news_json_feed(self) -> str:
+        items: list[dict[str, Any]] = []
+        for entry in self.news_queries.list(limit=100):
+            project_page = (
+                f"{self.context.site_url}/updates/{entry.date}/{entry.group_id}/"
+                f"{entry.project_id}.html"
+            )
+            release = entry.news.latest_release
+            if release:
+                items.append(
+                    {
+                        "id": f"release:{entry.repository}:{release.tag}",
+                        "url": project_page,
+                        "external_url": release.url,
+                        "title": f"[{entry.project_name}] {release.title}",
+                        "content_text": "\n".join(release.highlights)
+                        or "Open the original release notes for details.",
+                        "date_published": release.published_at,
+                        "tags": ["release", entry.group_id, entry.repository],
+                        "_contribution_compass": {
+                            "kind": "latest_stable_release",
+                            "project": entry.repository,
+                            "evidenceUrl": release.url,
+                        },
+                    }
+                )
+            for upcoming in entry.news.upcoming:
+                items.append(
+                    {
+                        "id": f"upcoming:{entry.repository}:{upcoming.kind}:{upcoming.url}",
+                        "url": project_page,
+                        "external_url": upcoming.url,
+                        "title": f"[{entry.project_name}] Public {upcoming.kind}: {upcoming.title}",
+                        "content_text": (
+                            (upcoming.description or "Publicly indicated upcoming work.")
+                            + " This is public evidence, not a delivery commitment."
+                        )[:1200],
+                        "date_published": upcoming.published_at or entry.news.collected_at,
+                        "tags": ["upcoming", upcoming.kind, entry.group_id, entry.repository],
+                        "_contribution_compass": {
+                            "kind": upcoming.kind,
+                            "project": entry.repository,
+                            "dueAt": upcoming.due_at,
+                            "progress": upcoming.progress,
+                            "evidenceUrl": upcoming.url,
+                        },
+                    }
+                )
+        items.sort(key=lambda item: str(item.get("date_published", "")), reverse=True)
+        return json_text(
+            {
+                "version": "https://jsonfeed.org/version/1.1",
+                "title": "Contribution Compass Project News",
+                "home_page_url": f"{self.context.site_url}/news/",
+                "feed_url": f"{self.context.site_url}/news/feed.json",
+                "description": "Latest stable releases and publicly indicated upcoming work.",
+                "items": items[:100],
+            }
+        )
+
     def rss(self) -> str:
-        feed = json.loads(self.json_feed())
+        return self._rss_document(
+            json.loads(self.json_feed()),
+            title="Contribution Compass",
+            description="Important OSS updates and contribution leads.",
+            feed_url=f"{self.context.site_url}/feed.xml",
+        )
+
+    def news_rss(self) -> str:
+        return self._rss_document(
+            json.loads(self.news_json_feed()),
+            title="Contribution Compass Project News",
+            description="Latest stable releases and publicly indicated upcoming work.",
+            feed_url=f"{self.context.site_url}/news/feed.xml",
+        )
+
+    def _rss_document(
+        self, feed: dict[str, Any], *, title: str, description: str, feed_url: str
+    ) -> str:
         items = []
         for item in feed["items"]:
             published = item.get("date_modified") or item.get("date_published")
@@ -290,10 +399,10 @@ class MachineView:
             '<?xml version="1.0" encoding="UTF-8"?>\n'
             '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
             "  <channel>\n"
-            "    <title>Contribution Compass</title>\n"
+            f"    <title>{escape(title)}</title>\n"
             f"    <link>{escape(self.context.site_url)}</link>\n"
-            "    <description>Important OSS updates and contribution leads.</description>\n"
-            f'    <atom:link href={quoteattr(f"{self.context.site_url}/feed.xml")} rel="self" '
+            f"    <description>{escape(description)}</description>\n"
+            f'    <atom:link href={quoteattr(feed_url)} rel="self" '
             'type="application/rss+xml"/>\n' + "\n".join(items) + "\n  </channel>\n</rss>\n"
         )
 
@@ -305,6 +414,9 @@ class MachineView:
 ## Start here
 
 - [Contribution leads]({self.context.site_url}/api/v1/opportunities.json)
+- [Project news]({self.context.site_url}/api/v1/news.json)
+- [Project news JSON Feed]({self.context.site_url}/news/feed.json)
+- [Project news RSS]({self.context.site_url}/news/feed.xml)
 - [Versioned catalog]({self.context.site_url}/api/v1/index.json)
 - [JSON Feed]({self.context.site_url}/feed.json)
 - [RSS Feed]({self.context.site_url}/feed.xml)
@@ -315,6 +427,7 @@ class MachineView:
 
 - Signal URLs are primary GitHub evidence.
 - Observation Events form the factual trail of discovered and changed Signals.
+- Release highlights are extracted from original notes; public upcoming items are not commitments.
 - Maintainer-Invited Leads have explicit invitation labels.
 - Triage Leads are lower-confidence and are not maintainer-approved work.
 - Re-check the live issue for state, assignment, scope, and contribution policy.

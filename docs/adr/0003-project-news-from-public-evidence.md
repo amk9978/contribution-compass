@@ -1,0 +1,25 @@
+# ADR-0003: Project news comes from public maintainer evidence
+
+Status: Accepted
+
+## Context
+
+Contribution Compass should keep contributors current on major released developments and publicly
+visible upcoming work without becoming a speculative news or LLM-summary pipeline.
+
+## Decision
+
+Collect a Project News Snapshot for each Project Sensor. Select the latest published stable GitHub
+release as the Release Bulletin. Treat published prereleases and open GitHub milestones as Upcoming
+Items. Extract a small set of headings and bullets from release notes deterministically for scanning,
+while retaining the original notes and evidence URL.
+
+The collection adapter owns GitHub response normalization. The domain news module owns evidence
+selection and highlight extraction. HTML, JSON, Markdown, CLI, and MCP views consume the same model.
+
+## Consequences
+
+News remains reproducible and requires no model credential. Projects without public releases,
+prereleases, or milestones clearly report that no supported public roadmap evidence was found.
+Milestones and prereleases are indications, not delivery commitments. Broader editorial analysis can
+still be added later as an Inference Extension that cites this evidence.

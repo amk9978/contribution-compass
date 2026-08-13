@@ -9,12 +9,13 @@ official Python MCP SDK. The MCP adapter performs no inference and never writes 
 |---|---|
 | `search_project_updates` | Search and rank factual issues, pull requests, and releases |
 | `find_contribution_opportunities` | Find open, unassigned leads with reasons and caveats |
+| `get_project_news` | Read latest stable releases and publicly indicated upcoming work |
 | `get_project_context` | Read repository metadata, Signals, and Observation Events |
 | `get_signal_timeline` | Reconstruct the discovered/changed trail for a stable Signal ID |
 | `list_monitored_projects` | List Project Sensors and available context |
 
-Resources provide the catalog, latest contribution leads, and per-project context under
-`compass://...` URIs.
+Resources provide the catalog, latest contribution leads, latest project news, and per-project
+context under `compass://...` URIs.
 
 ## Choose a data adapter
 

@@ -8,6 +8,7 @@ SignalState = Literal["open", "closed"]
 ChangeKind = Literal["new", "updated"]
 EventKind = Literal["discovered", "changed"]
 LeadTier = Literal["maintainer-invited", "triage-lead"]
+UpcomingKind = Literal["prerelease", "milestone"]
 
 
 def _without_none(value: Any) -> Any:
@@ -188,6 +189,136 @@ class ProjectContext:
 
 
 @dataclass(frozen=True, slots=True)
+class ReleaseBulletin:
+    repository: str
+    tag: str
+    title: str
+    url: str
+    published_at: str
+    notes: str | None = None
+    highlights: tuple[str, ...] = ()
+    prerelease: bool = False
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> Self:
+        return cls(
+            repository=str(value["repository"]),
+            tag=str(value["tag"]),
+            title=str(value["title"]),
+            url=str(value["url"]),
+            published_at=str(value["publishedAt"]),
+            notes=value.get("notes"),
+            highlights=tuple(str(item) for item in value.get("highlights", [])),
+            prerelease=bool(value.get("prerelease", False)),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return cast(
+            dict[str, Any],
+            _without_none(
+                {
+                    "repository": self.repository,
+                    "tag": self.tag,
+                    "title": self.title,
+                    "url": self.url,
+                    "publishedAt": self.published_at,
+                    "notes": self.notes,
+                    "highlights": list(self.highlights),
+                    "prerelease": self.prerelease,
+                }
+            ),
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class UpcomingItem:
+    repository: str
+    kind: UpcomingKind
+    title: str
+    url: str
+    description: str | None = None
+    due_at: str | None = None
+    progress: int | None = None
+    open_issues: int | None = None
+    closed_issues: int | None = None
+    tag: str | None = None
+    published_at: str | None = None
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> Self:
+        return cls(
+            repository=str(value["repository"]),
+            kind=value["kind"],
+            title=str(value["title"]),
+            url=str(value["url"]),
+            description=value.get("description"),
+            due_at=value.get("dueAt"),
+            progress=int(value["progress"]) if value.get("progress") is not None else None,
+            open_issues=(int(value["openIssues"]) if value.get("openIssues") is not None else None),
+            closed_issues=(
+                int(value["closedIssues"]) if value.get("closedIssues") is not None else None
+            ),
+            tag=value.get("tag"),
+            published_at=value.get("publishedAt"),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return cast(
+            dict[str, Any],
+            _without_none(
+                {
+                    "repository": self.repository,
+                    "kind": self.kind,
+                    "title": self.title,
+                    "url": self.url,
+                    "description": self.description,
+                    "dueAt": self.due_at,
+                    "progress": self.progress,
+                    "openIssues": self.open_issues,
+                    "closedIssues": self.closed_issues,
+                    "tag": self.tag,
+                    "publishedAt": self.published_at,
+                }
+            ),
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class ProjectNewsSnapshot:
+    repository: str
+    collected_at: str
+    latest_release: ReleaseBulletin | None = None
+    upcoming: tuple[UpcomingItem, ...] = ()
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> Self:
+        latest = value.get("latestRelease")
+        return cls(
+            repository=str(value["repository"]),
+            collected_at=str(value["collectedAt"]),
+            latest_release=(
+                ReleaseBulletin.from_dict(latest) if isinstance(latest, dict) else None
+            ),
+            upcoming=tuple(UpcomingItem.from_dict(item) for item in value.get("upcoming", [])),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return cast(
+            dict[str, Any],
+            _without_none(
+                {
+                    "repository": self.repository,
+                    "collectedAt": self.collected_at,
+                    "latestRelease": (
+                        self.latest_release.to_dict() if self.latest_release else None
+                    ),
+                    "upcoming": [item.to_dict() for item in self.upcoming],
+                }
+            ),
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class ObservationEvent:
     id: str
     signal_id: str
@@ -242,6 +373,7 @@ class CollectionBatch:
     signals: tuple[Signal, ...]
     contexts: tuple[ProjectContext, ...]
     failures: tuple[str, ...] = ()
+    news: tuple[ProjectNewsSnapshot, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -278,6 +410,7 @@ class RepositoryDataset:
     signals: list[Signal] = field(default_factory=list)
     events: list[ObservationEvent] = field(default_factory=list)
     context: ProjectContext | None = None
+    news: ProjectNewsSnapshot | None = None
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> Self:
@@ -304,6 +437,11 @@ class RepositoryDataset:
                 if isinstance(value.get("context"), dict)
                 else None
             ),
+            news=(
+                ProjectNewsSnapshot.from_dict(value["news"])
+                if isinstance(value.get("news"), dict)
+                else None
+            ),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -311,7 +449,7 @@ class RepositoryDataset:
             dict[str, Any],
             _without_none(
                 {
-                    "version": 2,
+                    "version": 3,
                     "date": self.date,
                     "group": {"id": self.group_id, "name": self.group_name},
                     "repository": {
@@ -320,6 +458,7 @@ class RepositoryDataset:
                         "name": self.repository_name,
                     },
                     "context": self.context.to_dict() if self.context else None,
+                    "news": self.news.to_dict() if self.news else None,
                     "runs": [run.to_dict() for run in self.runs],
                     "signals": [signal.to_dict() for signal in self.signals],
                     "events": [event.to_dict() for event in self.events],

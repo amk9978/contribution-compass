@@ -4,8 +4,11 @@ from contribution_compass.domain.models import (
     CrawlRun,
     ObservationEvent,
     ProjectContext,
+    ProjectNewsSnapshot,
+    ReleaseBulletin,
     RepositoryDataset,
     Signal,
+    UpcomingItem,
 )
 
 
@@ -65,5 +68,30 @@ def make_dataset(signal: Signal | None = None) -> RepositoryDataset:
             forks=12,
             open_issues=8,
             collected_at="2026-08-13T10:00:00Z",
+        ),
+        news=ProjectNewsSnapshot(
+            repository="acme/widget",
+            collected_at="2026-08-13T10:00:00Z",
+            latest_release=ReleaseBulletin(
+                repository="acme/widget",
+                tag="v2.0.0",
+                title="Widget 2.0",
+                url="https://github.com/acme/widget/releases/tag/v2.0.0",
+                published_at="2026-08-10T10:00:00Z",
+                notes="## Highlights\n- Faster cancellation cleanup",
+                highlights=("Highlights", "Faster cancellation cleanup"),
+            ),
+            upcoming=(
+                UpcomingItem(
+                    repository="acme/widget",
+                    kind="milestone",
+                    title="Widget 2.1",
+                    url="https://github.com/acme/widget/milestone/2",
+                    due_at="2026-09-01T00:00:00Z",
+                    progress=40,
+                    open_issues=6,
+                    closed_issues=4,
+                ),
+            ),
         ),
     )

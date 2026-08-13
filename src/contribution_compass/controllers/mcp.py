@@ -8,6 +8,7 @@ from pydantic import Field
 
 from contribution_compass.adapters.catalog import LocalJsonCatalog, RemoteJsonCatalog
 from contribution_compass.application.catalog import CatalogQueries
+from contribution_compass.application.news import NewsQueries
 from contribution_compass.ports import Catalog
 
 
@@ -25,6 +26,34 @@ def _lead_result(value: dict[str, object]) -> dict[str, object]:
     return value
 
 
+def _news_result(value: dict[str, object]) -> dict[str, object]:
+    news = value.get("news")
+    if not isinstance(news, dict):
+        return value
+    latest = news.get("latestRelease")
+    if isinstance(latest, dict):
+        notes = latest.get("notes")
+        if isinstance(notes, str) and len(notes) > 3000:
+            latest = {**latest, "notes": f"{notes[:3000]}…", "notesTruncated": True}
+    upcoming = news.get("upcoming")
+    if isinstance(upcoming, list):
+        upcoming = [
+            {
+                **item,
+                **(
+                    {"description": f"{item['description'][:1500]}…", "descriptionTruncated": True}
+                    if isinstance(item, dict)
+                    and isinstance(item.get("description"), str)
+                    and len(item["description"]) > 1500
+                    else {}
+                ),
+            }
+            for item in upcoming
+            if isinstance(item, dict)
+        ]
+    return {**value, "news": {**news, "latestRelease": latest, "upcoming": upcoming}}
+
+
 def catalog_from_environment() -> Catalog:
     remote = os.getenv("COMPASS_DATA_URL")
     if remote:
@@ -34,11 +63,13 @@ def catalog_from_environment() -> Catalog:
 
 def create_server(catalog: Catalog) -> MCPServer:
     queries = CatalogQueries(catalog)
+    news_queries = NewsQueries(catalog)
     server = MCPServer(
         "Contribution Compass",
         instructions=(
             "Use this server to inspect factual open-source project updates, contribution leads, "
-            "project context, and observation trails. Re-check primary GitHub evidence before "
+            "project news, project context, and observation trails. Re-check primary GitHub "
+            "evidence before "
             "recommending work. Treat triage leads as worth asking about, not maintainer-approved."
         ),
         website_url="https://amk9978.github.io/contribution-compass/",
@@ -91,6 +122,21 @@ def create_server(catalog: Catalog) -> MCPServer:
         ]
 
     @server.tool()
+    def get_project_news(
+        query: Annotated[
+            str, Field(description="Words to match across project, release, and upcoming items")
+        ] = "",
+        project: Annotated[str | None, Field(description="Exact owner/repository slug")] = None,
+        group: Annotated[str | None, Field(description="Exact configured project-group id")] = None,
+        limit: Annotated[int, Field(ge=1, le=100)] = 20,
+    ) -> list[dict[str, object]]:
+        """Get latest stable releases and publicly indicated prereleases or milestones."""
+        return [
+            _news_result(entry.to_dict())
+            for entry in news_queries.list(query=query, project=project, group=group, limit=limit)
+        ]
+
+    @server.tool()
     def get_project_context(
         repository: Annotated[str, Field(description="Exact owner/repository slug")],
         signal_limit: Annotated[int, Field(ge=1, le=100)] = 20,
@@ -132,6 +178,11 @@ def create_server(catalog: Catalog) -> MCPServer:
     def latest_opportunities() -> list[dict[str, object]]:
         """Latest evidence-qualified contribution leads."""
         return [_lead_result(lead.to_dict()) for lead in queries.contribution_leads(limit=100)]
+
+    @server.resource("compass://news/latest", mime_type="application/json")
+    def latest_news() -> list[dict[str, object]]:
+        """Latest release bulletins and public roadmap indications."""
+        return [_news_result(entry.to_dict()) for entry in news_queries.list(limit=100)]
 
     @server.resource("compass://projects/{project_id}", mime_type="application/json")
     def project_resource(project_id: str) -> dict[str, object]:

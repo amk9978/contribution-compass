@@ -29,6 +29,23 @@ reconstruct a factual trail.
 Collected repository metadata that helps a developer or model interpret Signals: description,
 topics, primary language, license, default branch, activity counts, and repository URL.
 
+### Project News Snapshot
+
+Factual public release and roadmap information for a Project Sensor at collection time. It contains
+the latest stable Release Bulletin and any publicly visible Upcoming Items. It is evidence, not a
+prediction that maintainers will deliver a plan on time.
+
+### Release Bulletin
+
+A published GitHub release with its original release notes and a direct evidence URL. Release-note
+highlights are deterministically extracted headings and bullets, not an inferred summary.
+
+### Upcoming Item
+
+A public prerelease or open GitHub milestone that may indicate upcoming work. Its wording must say
+“publicly indicated” rather than claiming a release commitment. Absence means no supported public
+evidence was found, not that the project has no private roadmap.
+
 ### Contribution Lead
 
 An open, unassigned issue surfaced by transparent deterministic rules. A Lead always contains its
@@ -53,6 +70,7 @@ evidence it used.
 ## Invariants
 
 - Every Signal and Contribution Lead retains a primary evidence URL.
+- Every Release Bulletin and Upcoming Item retains a primary evidence URL.
 - Collection does not require or invoke an LLM.
 - Observation Events are append-only; newer observations do not erase their trail.
 - Empty configured groups stay empty and no hidden Project Sensors appear.

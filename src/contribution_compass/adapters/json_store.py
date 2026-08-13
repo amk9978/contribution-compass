@@ -14,6 +14,7 @@ from contribution_compass.domain.models import (
     CrawlRun,
     ObservationEvent,
     ProjectContext,
+    ProjectNewsSnapshot,
     RepositoryDataset,
     Signal,
 )
@@ -134,10 +135,12 @@ class JsonDatasetWriter:
         observed: tuple[Signal, ...],
         changes: ChangeSet,
         contexts: tuple[ProjectContext, ...],
+        news: tuple[ProjectNewsSnapshot, ...],
     ) -> str:
         directory = self._root / date
         manifest_repositories: list[dict[str, Any]] = []
         context_by_repo = {context.repository: context for context in contexts}
+        news_by_repo = {snapshot.repository: snapshot for snapshot in news}
         event_by_repo: dict[str, list[ObservationEvent]] = {}
         for event in changes.events:
             if event.signal.project:
@@ -164,6 +167,7 @@ class JsonDatasetWriter:
                 )
                 dataset.signals = sorted(merged.values(), key=lambda signal: signal.id)
                 dataset.context = context_by_repo.get(repo.repo, dataset.context)
+                dataset.news = news_by_repo.get(repo.repo, dataset.news)
                 dataset.runs.append(
                     CrawlRun(
                         collected_at=collected_at.isoformat().replace("+00:00", "Z"),

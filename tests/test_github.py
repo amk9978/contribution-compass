@@ -27,7 +27,36 @@ def response(request: httpx.Request) -> httpx.Response:
             },
         )
     if request.url.path.endswith("/releases"):
-        return httpx.Response(200, json=[])
+        return httpx.Response(
+            200,
+            json=[
+                {
+                    "id": 7,
+                    "tag_name": "v2.0.0",
+                    "name": "Widget 2.0",
+                    "body": "## Highlights\n- Faster cleanup",
+                    "html_url": "https://github.com/acme/widget/releases/tag/v2.0.0",
+                    "published_at": "2026-08-13T03:00:00Z",
+                    "prerelease": False,
+                    "draft": False,
+                }
+            ],
+        )
+    if request.url.path.endswith("/milestones"):
+        return httpx.Response(
+            200,
+            json=[
+                {
+                    "number": 2,
+                    "title": "Widget 2.1",
+                    "description": "Cancellation improvements",
+                    "html_url": "https://github.com/acme/widget/milestone/2",
+                    "due_on": "2026-09-01T00:00:00Z",
+                    "open_issues": 6,
+                    "closed_issues": 4,
+                }
+            ],
+        )
     return httpx.Response(
         200,
         json=[
@@ -77,10 +106,13 @@ def test_github_normalizes_issues_prs_context_state_and_assignees() -> None:
             )
 
     batch = asyncio.run(collect())
-    assert [signal.kind for signal in batch.signals] == ["issue", "pull_request"]
+    assert [signal.kind for signal in batch.signals] == ["issue", "pull_request", "release"]
     assert batch.signals[0].state == "open"
     assert batch.signals[1].assignees == ("maintainer",)
     assert batch.contexts[0].language == "Python"
+    assert batch.news[0].latest_release is not None
+    assert batch.news[0].latest_release.highlights == ("Highlights", "Faster cleanup")
+    assert batch.news[0].upcoming[0].title == "Widget 2.1"
 
 
 def test_one_repository_failure_does_not_abort_other_repositories() -> None:
@@ -109,7 +141,7 @@ def test_one_repository_failure_does_not_abort_other_repositories() -> None:
             )
 
     batch = asyncio.run(collect())
-    assert len(batch.signals) == 2
+    assert len(batch.signals) == 3
     assert len(batch.failures) == 1
 
 
@@ -120,6 +152,8 @@ def test_paginated_repository_stops_at_configured_page_limit() -> None:
         if request.url.path == "/repos/acme/widget":
             return response(request)
         if request.url.path.endswith("/releases"):
+            return httpx.Response(200, json=[])
+        if request.url.path.endswith("/milestones"):
             return httpx.Response(200, json=[])
         page = int(request.url.params["page"])
         issue_pages.append(page)
