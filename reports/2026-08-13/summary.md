@@ -1,4 +1,4 @@
-# Engineering Radar Collection — 2026-08-13
+# Contribution Compass Collection — 2026-08-13
 
 > Collection summary only. Repository data is stored separately under `data/`.
 

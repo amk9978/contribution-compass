@@ -1,14 +1,13 @@
 # Attribution
 
-Engineering Radar includes or adapts portions and implementation patterns from
+Contribution Compass includes or adapts portions and implementation patterns from
 [agents-radar](https://github.com/duanyytop/agents-radar), originally copyright
 Dylan and licensed under the MIT License.
 
 Adapted areas include bounded GitHub pagination, GitHub Actions workflow patterns, and the idea of
-a lightweight static report browser with an RSS feed. Engineering Radar's multi-page site generator
-and presentation are independent implementations over its repository-separated datasets.
-The architecture, configuration model, normalization, state, and dataset pipeline in
-this repository are specific to Engineering Radar.
+a lightweight static report browser with feeds. Contribution Compass's Python architecture,
+configuration model, normalized evidence, event trail, contribution classification, MCP adapter,
+and multi-page publication are independent implementations.
 
 The upstream license notice is reproduced below:
 

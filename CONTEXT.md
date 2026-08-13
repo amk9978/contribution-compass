@@ -1,0 +1,60 @@
+# Contribution Compass Domain Context
+
+## Mission
+
+Contribution Compass keeps the developer community current on important activity in curated
+open-source projects and helps opportunistic contributors find evidence-backed places where their
+work may be useful.
+
+## Domain language
+
+### Project Sensor
+
+A configured GitHub repository monitored deeply over time. A Project Sensor belongs to an arbitrary
+Project Group. Avoid “built-in repository” or domain-specific repository taxonomies.
+
+### Signal
+
+A normalized issue, pull request, or release backed by a direct URL to its GitHub evidence. A Signal
+is factual collected data, not an interpretation.
+
+### Observation Event
+
+An append-only record that a Signal was first discovered or materially changed at a particular
+collection time. It contains the collected Signal snapshot and changed fields so consumers can
+reconstruct a factual trail.
+
+### Project Context
+
+Collected repository metadata that helps a developer or model interpret Signals: description,
+topics, primary language, license, default branch, activity counts, and repository URL.
+
+### Contribution Lead
+
+An open, unassigned issue surfaced by transparent deterministic rules. A Lead always contains its
+evidence, reasons, and caveat.
+
+### Maintainer-Invited Lead
+
+A Contribution Lead with an explicit invitation label such as `good first issue` or `help wanted`.
+It is still not a guarantee of acceptance or difficulty.
+
+### Triage Lead
+
+A lower-confidence Contribution Lead based on factual signals such as documentation labeling and
+visible engagement. It must never be represented as maintainer-approved work.
+
+### Inference Extension
+
+An optional consumer of Signals, Observation Events, Project Context, and Contribution Leads. It may
+produce hypotheses, but its output remains separate from collected evidence and must cite the
+evidence it used.
+
+## Invariants
+
+- Every Signal and Contribution Lead retains a primary evidence URL.
+- Collection does not require or invoke an LLM.
+- Observation Events are append-only; newer observations do not erase their trail.
+- Empty configured groups stay empty and no hidden Project Sensors appear.
+- MCP, CLI, static HTML, and JSON are adapters over the same application interface.
+- Inference output, when added, is distinguishable from direct evidence.
