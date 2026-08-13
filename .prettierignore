@@ -1,0 +1,5 @@
+node_modules
+reports
+data
+.state
+pnpm-lock.yaml
