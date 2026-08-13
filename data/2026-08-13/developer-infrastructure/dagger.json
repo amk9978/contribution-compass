@@ -32,13 +32,13 @@
     "defaultBranch": "main",
     "stars": 16155,
     "forks": 910,
-    "openIssues": 140,
+    "openIssues": 141,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:35.031931+00:00"
+    "collectedAt": "2026-08-13T17:43:34.138602+00:00"
   },
   "news": {
     "repository": "dagger/dagger",
-    "collectedAt": "2026-08-13T16:19:35.031931+00:00",
+    "collectedAt": "2026-08-13T17:43:34.138602+00:00",
     "latestRelease": {
       "repository": "dagger/dagger",
       "tag": "v0.21.8",
@@ -95,7 +95,8 @@
         "openIssues": 1,
         "closedIssues": 3
       }
-    ]
+    ],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -115,6 +116,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 17,
       "changedCount": 3
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 18,
+      "changedCount": 2
     }
   ],
   "signals": [
@@ -636,8 +643,7 @@
       "labels": [],
       "author": "eunomie",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13891",
@@ -658,8 +664,7 @@
       "labels": [],
       "author": "eunomie",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:dagger/dagger:pull_request:13892",
@@ -671,8 +676,30 @@
       "text": "## What `dagger.toml` carries two path conventions that only coincide when the config file sits at the workspace root: - `[modules.<name>].source` resolves against the **config directory** (`ResolveModuleEntrySource`). - `[[modules.<sdk>.as-sdk.modules]].path` is **workspace-root-relative**, everywhere it is read: module→SDK ownership (`sdkOwnersByModulePathFromConfig`), uninstall (`removeSDKManagedModuleReference`), the workspace SDK listing (`workspaceSDKFromEntry`), and `currentModule.asSDK.modules`, which the SDKs themselves consume (including the out-of-repo `dagger/go-sdk`). The migration writer disagreed. `workspaceMigrationInstallDiscoveredModuleSDKs` recorded a discovered local module with `filepath.Rel(owner, projectRoot)` — relative to the config that owns it, not to the workspace root. This patch anchors it at the workspace root via the existing `workspaceMigrationProjectRootRelPath` helper, and states the anchor on the config types (plus the regenerated public JSON schema). ## Is anything broken today? No — and the change is deliberately framed as hardening rather than a user-visible fix. Migration plans every workspace config at `ws.HostPath()`: `PlanMigration` sets `plan.ProjectRoot` to the workspace root when hoisted, and otherwise the project root *is* the workspace root; synthesized parent plans land at the workspace root too. So `owner` always equals the workspace root and the two anchors produce the same string. The mismatch only bites the day migration can plan a config below the workspace root — which the `FIXME(workspace-migrate)` about scanning for legacy child `dagger.json` files points straight at. Fixing the writer rather than the readers is the small, safe side of the mismatch: the readers' contract is depended on by SDKs living in other repos. ## Tests - `core/schema` unit test pinning the anchor for a config planned below the workspace root. It is the only test that fails against the old writer; its comment is explicit that the shape is not reachable through `dagger setup` today. - `core/integration` assertions on the existing subdirectory-toolchains migration: the discovered toolchain is recorded by a workspace-root-relative path, and `dagger uninstall` resolves that path back to its as-sdk entry — end-to-end coverage of the contract in the monorepo layout.",
       "url": "https://github.com/dagger/dagger/pull/13892",
       "createdAt": "2026-08-13T15:44:40Z",
-      "updatedAt": "2026-08-13T16:17:10Z",
-      "timestamp": "2026-08-13T16:17:10Z",
+      "updatedAt": "2026-08-13T16:22:51Z",
+      "timestamp": "2026-08-13T16:22:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13893",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix: classify dotted workspace-relative module refs as local",
+      "text": "# fix: classify dotted workspace-relative module refs as local ## Problem `dagger api client init <sdk> <client-path> <module-ref>` fails when the module ref is a workspace-root-relative path whose dot segment is not the first one: ```console $ dagger api client init go clients/api common/.dagger/mymod load module source: local path \"common/.dagger/mymod\" does not exist ``` This is the everyday shape in a monorepo: a module that is `.dagger/mymod` from the workspace root is `common/.dagger/mymod` from a subdirectory, and module refs are recorded relative to the workspace root. Prefixing `./` does not help — `resolveWorkspaceClientModuleRef` hands the *cleaned* form to the loader, so the `./` is gone before the ref is classified again. ## Cause `core/workspace.IsLocalRef` recognised a local ref by a leading `.` or `/`, and otherwise by the *absence* of a dot anywhere in the string — a proxy for \"this looks like a hostname\". `common/.dagger/mymod` has neither, so it was classified as a git ref and `resolveClientTargetModule` routed it to the git loader instead of resolving it against the workspace rootfs. The heuristic is shared well beyond client init (config parsing, install, uninstall, SDK init, migration), so it is fixed once, in place. ## Fix `IsLocalRef` moves to its own file and delegates to `core/gitref.FastKindCheck`, which already handles pins, leading `.`/`/`/`..`, and the `http`/`https`/`ssh` schemes, and returns \"unknown\" for the ambiguous dotted case. That case is now resolved by looking for a host only ahead of the first slash — the Go module path convention, where only the first element can be a domain. Two markers keep dot-free hosts remote: a colon (scp-like `git@internal:org/repo.git`, or a `host:port`) and a `/_git/` segment (Azure DevOps Server on-prem, per the matcher in `engine/vcs`). Nothing that was correctly classified local becomes remote: the refs that change are those with a dot-free, colon-free, `_git`-free host and a dot further down the path, which become local. One shape goes the other way, and is a fix too — a scheme-prefixed dot-free host (`ssh://internal/org/repo`) used to read as local because the string had no dot at all; `FastKindCheck` now calls it git, which is what it is. ## Converging the copies The heuristic had been written out four times, and the copies had drifted: | Implementation | Ambiguous-case rule | | | --- | --- | --- | | `core/gitref.FastKindCheck` | returns \"unknown\" by design | the primitive, kept | | `core/workspace.IsLocalRef` | whole-string dot | **fixed here** | | `core/schema.isLocalLegacyModuleRef` | whole-string dot (verbatim copy) | **deleted** | | `daggercmd.workspaceAddressLooksRemote` | whole-string dot | **same bug, fixed here** | | `daggercmd.isObviouslyRemoteWorkspaceRef` | first-segment dot | already correct | `isLocalLegacyModuleRef` drove `dagger update` for legacy `dagger.json` toolchains and blueprints. `workspaceAddressLooksRemote` drove `-W` workspace addresses, where it had the identical bug: a workspace at `services/api.v2` or `common/.dagger/mymod` read as a git ref. `isObviouslyRemoteWorkspaceRef` is worth calling out — it already looked for the dot in the first path segment only, which is exactly the rule `IsLocalRef` now adopts. The convention was already in the tree; this PR just makes it the only one. All four now route through `IsLocalRef`, each keeping only what is genuinely its own: `file://` stripping for a workspace address, and the host stat plus a \"needs a slash\" conservatism for an obviously-remote ref. Untouched on purpose: `auth/registry.go` classifies OCI registry domains under Docker's rules (`localhost`, `:port`), and `engine/vcs` validates hosts inside the VCS matcher. Different questions, deliberately separate. ### Known limitation (pre-existing, unchanged) A local module directory whose *own first path segment* carries the dot — `./mymod.v2` at the workspace root — is still classified as a git ref. The `./` is cleaned away before the ref is classified, and the cleaned form is what gets persisted as `as-sdk.clients.module`, so by the time a client is loaded again the evidence of local-ness is gone. Fixing it means persisting the disambiguating `./` rather than plumbing a kind hint — both `init` and every later load already share the same resolution seam. That is a config-format change, so it is left as a follow-up. Keep such a module under a dot-free first segment, or spell dot-free remote hosts with an explicit `ssh://`/`https://` scheme. Windows-style local paths are equally unchanged: `C:/src/mymod.git` still reads as remote, because the drive letter's colon is indistinguishable from scp-like syntax. It read as remote before this change too, for the dot. ## Tests - `core/workspace/localref_test.go` — table-driven matrix over the classifier: dotted-but-local paths, dot-free-but-remote-looking refs, leading `./`/`../`, absolute paths, `github.com/...` with and without `@version`, scp-style refs (dotted and dot-free hosts), `host:port`, both Azure DevOps shapes, and pins. The dotted-below-first-segment cases fail against the old implementation. - `TestGenerators/TestAPIClientInitDottedModulePath` — `dagger api client init` run from a workspace subdirectory against a module at `common/.dagger/target`, for both the bare and `./`-prefixed ref, asserting the scaffold, the generated client and the recorded config ref. Without the fix both subtests fail with the exact error above. - `internal/cmd/dagger` — `TestWorkspaceAddressLooksRemote` gains the dotted workspace-address cases, and `TestIsObviouslyRemoteWorkspaceRef` is new, pinning the \"needs a slash\" conservatism that keeps a lone `my.dir` local.",
+      "url": "https://github.com/dagger/dagger/pull/13893",
+      "createdAt": "2026-08-13T16:22:02Z",
+      "updatedAt": "2026-08-13T16:48:12Z",
+      "timestamp": "2026-08-13T16:48:12Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1392,6 +1419,66 @@
         "state": "closed",
         "assignees": [],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:f7100c42085dfe4bb2c3",
+      "signalId": "github:dagger/dagger:pull_request:13893",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13893",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "fix: classify dotted workspace-relative module refs as local",
+        "text": "# fix: classify dotted workspace-relative module refs as local ## Problem `dagger api client init <sdk> <client-path> <module-ref>` fails when the module ref is a workspace-root-relative path whose dot segment is not the first one: ```console $ dagger api client init go clients/api common/.dagger/mymod load module source: local path \"common/.dagger/mymod\" does not exist ``` This is the everyday shape in a monorepo: a module that is `.dagger/mymod` from the workspace root is `common/.dagger/mymod` from a subdirectory, and module refs are recorded relative to the workspace root. Prefixing `./` does not help — `resolveWorkspaceClientModuleRef` hands the *cleaned* form to the loader, so the `./` is gone before the ref is classified again. ## Cause `core/workspace.IsLocalRef` recognised a local ref by a leading `.` or `/`, and otherwise by the *absence* of a dot anywhere in the string — a proxy for \"this looks like a hostname\". `common/.dagger/mymod` has neither, so it was classified as a git ref and `resolveClientTargetModule` routed it to the git loader instead of resolving it against the workspace rootfs. The heuristic is shared well beyond client init (config parsing, install, uninstall, SDK init, migration), so it is fixed once, in place. ## Fix `IsLocalRef` moves to its own file and delegates to `core/gitref.FastKindCheck`, which already handles pins, leading `.`/`/`/`..`, and the `http`/`https`/`ssh` schemes, and returns \"unknown\" for the ambiguous dotted case. That case is now resolved by looking for a host only ahead of the first slash — the Go module path convention, where only the first element can be a domain. Two markers keep dot-free hosts remote: a colon (scp-like `git@internal:org/repo.git`, or a `host:port`) and a `/_git/` segment (Azure DevOps Server on-prem, per the matcher in `engine/vcs`). Nothing that was correctly classified local becomes remote: the refs that change are those with a dot-free, colon-free, `_git`-free host and a dot further down the path, which become local. One shape goes the other way, and is a fix too — a scheme-prefixed dot-free host (`ssh://internal/org/repo`) used to read as local because the string had no dot at all; `FastKindCheck` now calls it git, which is what it is. ## Converging the copies The heuristic had been written out four times, and the copies had drifted: | Implementation | Ambiguous-case rule | | | --- | --- | --- | | `core/gitref.FastKindCheck` | returns \"unknown\" by design | the primitive, kept | | `core/workspace.IsLocalRef` | whole-string dot | **fixed here** | | `core/schema.isLocalLegacyModuleRef` | whole-string dot (verbatim copy) | **deleted** | | `daggercmd.workspaceAddressLooksRemote` | whole-string dot | **same bug, fixed here** | | `daggercmd.isObviouslyRemoteWorkspaceRef` | first-segment dot | already correct | `isLocalLegacyModuleRef` drove `dagger update` for legacy `dagger.json` toolchains and blueprints. `workspaceAddressLooksRemote` drove `-W` workspace addresses, where it had the identical bug: a workspace at `services/api.v2` or `common/.dagger/mymod` read as a git ref. `isObviouslyRemoteWorkspaceRef` is worth calling out — it already looked for the dot in the first path segment only, which is exactly the rule `IsLocalRef` now adopts. The convention was already in the tree; this PR just makes it the only one. All four now route through `IsLocalRef`, each keeping only what is genuinely its own: `file://` stripping for a workspace address, and the host stat plus a \"needs a slash\" conservatism for an obviously-remote ref. Untouched on purpose: `auth/registry.go` classifies OCI registry domains under Docker's rules (`localhost`, `:port`), and `engine/vcs` validates hosts inside the VCS matcher. Different questions, deliberately separate. ### Known limitation (pre-existing, unchanged) A local module directory whose *own first path segment* carries the dot — `./mymod.v2` at the workspace root — is still classified as a git ref. The `./` is cleaned away before the ref is classified, and the cleaned form is what gets persisted as `as-sdk.clients.module`, so by the time a client is loaded again the evidence of local-ness is gone. Fixing it means persisting the disambiguating `./` rather than plumbing a kind hint — both `init` and every later load already share the same resolution seam. That is a config-format change, so it is left as a follow-up. Keep such a module under a dot-free first segment, or spell dot-free remote hosts with an explicit `ssh://`/`https://` scheme. Windows-style local paths are equally unchanged: `C:/src/mymod.git` still reads as remote, because the drive letter's colon is indistinguishable from scp-like syntax. It read as remote before this change too, for the dot. ## Tests - `core/workspace/localref_test.go` — table-driven matrix over the classifier: dotted-but-local paths, dot-free-but-remote-looking refs, leading `./`/`../`, absolute paths, `github.com/...` with and without `@version`, scp-style refs (dotted and dot-free hosts), `host:port`, both Azure DevOps shapes, and pins. The dotted-below-first-segment cases fail against the old implementation. - `TestGenerators/TestAPIClientInitDottedModulePath` — `dagger api client init` run from a workspace subdirectory against a module at `common/.dagger/target`, for both the bare and `./`-prefixed ref, asserting the scaffold, the generated client and the recorded config ref. Without the fix both subtests fail with the exact error above. - `internal/cmd/dagger` — `TestWorkspaceAddressLooksRemote` gains the dotted workspace-address cases, and `TestIsObviouslyRemoteWorkspaceRef` is new, pinning the \"needs a slash\" conservatism that keeps a lone `my.dir` local.",
+        "url": "https://github.com/dagger/dagger/pull/13893",
+        "createdAt": "2026-08-13T16:22:02Z",
+        "updatedAt": "2026-08-13T16:48:12Z",
+        "timestamp": "2026-08-13T16:48:12Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "eunomie",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c30e12611aa32a4012bb",
+      "signalId": "github:dagger/dagger:pull_request:13892",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13892",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "fix(setup): anchor migrated as-sdk module paths at the workspace root",
+        "text": "## What `dagger.toml` carries two path conventions that only coincide when the config file sits at the workspace root: - `[modules.<name>].source` resolves against the **config directory** (`ResolveModuleEntrySource`). - `[[modules.<sdk>.as-sdk.modules]].path` is **workspace-root-relative**, everywhere it is read: module→SDK ownership (`sdkOwnersByModulePathFromConfig`), uninstall (`removeSDKManagedModuleReference`), the workspace SDK listing (`workspaceSDKFromEntry`), and `currentModule.asSDK.modules`, which the SDKs themselves consume (including the out-of-repo `dagger/go-sdk`). The migration writer disagreed. `workspaceMigrationInstallDiscoveredModuleSDKs` recorded a discovered local module with `filepath.Rel(owner, projectRoot)` — relative to the config that owns it, not to the workspace root. This patch anchors it at the workspace root via the existing `workspaceMigrationProjectRootRelPath` helper, and states the anchor on the config types (plus the regenerated public JSON schema). ## Is anything broken today? No — and the change is deliberately framed as hardening rather than a user-visible fix. Migration plans every workspace config at `ws.HostPath()`: `PlanMigration` sets `plan.ProjectRoot` to the workspace root when hoisted, and otherwise the project root *is* the workspace root; synthesized parent plans land at the workspace root too. So `owner` always equals the workspace root and the two anchors produce the same string. The mismatch only bites the day migration can plan a config below the workspace root — which the `FIXME(workspace-migrate)` about scanning for legacy child `dagger.json` files points straight at. Fixing the writer rather than the readers is the small, safe side of the mismatch: the readers' contract is depended on by SDKs living in other repos. ## Tests - `core/schema` unit test pinning the anchor for a config planned below the workspace root. It is the only test that fails against the old writer; its comment is explicit that the shape is not reachable through `dagger setup` today. - `core/integration` assertions on the existing subdirectory-toolchains migration: the discovered toolchain is recorded by a workspace-root-relative path, and `dagger uninstall` resolves that path back to its as-sdk entry — end-to-end coverage of the contract in the monorepo layout.",
+        "url": "https://github.com/dagger/dagger/pull/13892",
+        "createdAt": "2026-08-13T15:44:40Z",
+        "updatedAt": "2026-08-13T16:22:51Z",
+        "timestamp": "2026-08-13T16:22:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "eunomie",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
       }
     }
   ]

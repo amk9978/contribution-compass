@@ -30,13 +30,13 @@
     "defaultBranch": "main",
     "stars": 28771,
     "forks": 5553,
-    "openIssues": 1835,
+    "openIssues": 1836,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:25.199487+00:00"
+    "collectedAt": "2026-08-13T17:43:24.295884+00:00"
   },
   "news": {
     "repository": "envoyproxy/envoy",
-    "collectedAt": "2026-08-13T16:19:25.199487+00:00",
+    "collectedAt": "2026-08-13T17:43:24.295884+00:00",
     "latestRelease": {
       "repository": "envoyproxy/envoy",
       "tag": "v1.39.0",
@@ -85,7 +85,8 @@
         "openIssues": 1,
         "closedIssues": 1
       }
-    ]
+    ],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -105,6 +106,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 64,
       "changedCount": 19
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 62,
+      "changedCount": 7
     }
   ],
   "signals": [
@@ -580,8 +587,7 @@
       "state": "open",
       "assignees": [
         "RyanTheOptimist"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:43355",
@@ -658,8 +664,7 @@
       "assignees": [
         "yanavlasov",
         "markdroth"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:45674",
@@ -683,8 +688,7 @@
       "assignees": [
         "wbpcode",
         "paul-r-gall"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:45882",
@@ -909,8 +913,7 @@
       "assignees": [
         "agrawroh",
         "wbpcode"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46318",
@@ -922,11 +925,11 @@
       "text": "This is a follow up implementation for https://github.com/envoyproxy/envoy/pull/46315",
       "url": "https://github.com/envoyproxy/envoy/pull/46318",
       "createdAt": "2026-07-22T21:30:10Z",
-      "updatedAt": "2026-08-13T15:45:55Z",
-      "timestamp": "2026-08-13T15:45:55Z",
+      "updatedAt": "2026-08-13T17:31:37Z",
+      "timestamp": "2026-08-13T17:31:37Z",
       "metrics": {
         "reactions": 0,
-        "comments": 10
+        "comments": 11
       },
       "labels": [
         "api"
@@ -940,7 +943,7 @@
         "rshriram",
         "tyxia"
       ],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46358",
@@ -1070,8 +1073,8 @@
       "text": "Commit Message: udp: Support hot restart handoff for connectionless UDP flows Additional Description: The parent instance keeps serving established UDP flows while draining and forwards packets of unknown flows to the child over the hot restart RPC, instead of going dark between drain start and parent shutdown. Risk Level: Medium Testing: Added unit and integration tests, manual Docs Changes: - Added `envoy.resource_limits.listener.<name of listener>.udp_flow_limit`. - Added `downstream_flows_active, Gauge`, if equal to the limit, flows might get misrouted during hotrestart Release Notes: Added new_features entry Platform Specific Features: N/A Fixes #34732",
       "url": "https://github.com/envoyproxy/envoy/pull/46502",
       "createdAt": "2026-08-01T12:28:12Z",
-      "updatedAt": "2026-08-13T15:36:59Z",
-      "timestamp": "2026-08-13T15:36:59Z",
+      "updatedAt": "2026-08-13T17:36:12Z",
+      "timestamp": "2026-08-13T17:36:12Z",
       "metrics": {
         "reactions": 0,
         "comments": 7
@@ -1088,6 +1091,32 @@
       "change": "updated"
     },
     {
+      "id": "github:envoyproxy/envoy:pull_request:46526",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "router: support building an SRDS scope key from filter state",
+      "text": "**Commit Message:** support building an SRDS scope key from filter state **Additional Description:** Scope keys could only be built from a request header. This adds a `filter_state` fragment type so a scope key can be built from a filter state object instead. This matters when the value selecting the route table is known at connection time: a network filter can store it in filter state, but a header set by an HTTP filter arrives after the filter chain is created, which is too late for per-route filter config. Connection life span objects are reachable from the stream, so a filter-state fragment resolves the scope on the first route resolution. Risk Level: Low Testing: Unit and Integration tests Docs Changes: Changelog added Release Notes: N.A Platform Specific Features: N.A",
+      "url": "https://github.com/envoyproxy/envoy/pull/46526",
+      "createdAt": "2026-08-04T02:17:18Z",
+      "updatedAt": "2026-08-13T17:31:19Z",
+      "timestamp": "2026-08-13T17:31:19Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "basundhara-c",
+      "state": "open",
+      "assignees": [
+        "adisuissa",
+        "markdroth",
+        "botengyao"
+      ],
+      "change": "new"
+    },
+    {
       "id": "github:envoyproxy/envoy:pull_request:46543",
       "source": "github",
       "group": "platform-infrastructure",
@@ -1097,18 +1126,19 @@
       "text": "Commit Message: mcp_transcoder: Fix Unbounded Recursion DoS Additional Description: This PR limits the maximum nesting depth for JSON query parameter processing in constructQueryParams to 100, which mitigates a stack overflow condition caused by maliciously crafted, deeply nested query parameters. Risk Level: Low Testing: Unit tests. Docs Changes: N/A Release Notes: N/A Platform Specific Features: N/A",
       "url": "https://github.com/envoyproxy/envoy/pull/46543",
       "createdAt": "2026-08-04T19:18:20Z",
-      "updatedAt": "2026-08-13T13:15:03Z",
-      "timestamp": "2026-08-13T13:15:03Z",
+      "updatedAt": "2026-08-13T17:42:38Z",
+      "timestamp": "2026-08-13T17:42:38Z",
       "metrics": {
         "reactions": 0,
-        "comments": 5
+        "comments": 6
       },
       "labels": [],
       "author": "guoyilin42",
       "state": "open",
       "assignees": [
         "tyxia"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46545",
@@ -1227,8 +1257,7 @@
       "labels": [],
       "author": "etruong42",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46573",
@@ -1274,8 +1303,7 @@
       ],
       "author": "yanavlasov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46603",
@@ -1344,8 +1372,7 @@
       "assignees": [
         "kyessenov",
         "agrawroh"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46614",
@@ -1390,8 +1417,7 @@
       "assignees": [
         "adisuissa",
         "RyanTheOptimist"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46622",
@@ -1412,8 +1438,7 @@
       "labels": [],
       "author": "andy-fong",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46640",
@@ -1659,8 +1684,7 @@
       "labels": [],
       "author": "yanavlasov",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46669",
@@ -1752,8 +1776,7 @@
       "labels": [],
       "author": "ovadiagal",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46673",
@@ -1765,16 +1788,19 @@
       "text": "Commit Message: Fix flaky order-dependent stats_test failures via physical test file separation Additional Description: The tests `NonNumberValueFormatted` and `GaugeNonNumberValueFormatted` both trigger identical error logs emitted via `ENVOY_LOG_PERIODIC_MISC` in `stats.cc`. Because this macro rate-limits logging to prevent log spam, running these tests consecutively in the same target process led to one suppressing the other, causing flaky test failures under randomized execution ordering. Risk Level: low Testing: NA Docs Changes: NA Release Notes: NA Platform Specific Features: NA",
       "url": "https://github.com/envoyproxy/envoy/pull/46673",
       "createdAt": "2026-08-12T21:06:33Z",
-      "updatedAt": "2026-08-13T15:20:30Z",
-      "timestamp": "2026-08-13T15:20:30Z",
+      "updatedAt": "2026-08-13T17:40:18Z",
+      "timestamp": "2026-08-13T17:40:18Z",
       "metrics": {
         "reactions": 0,
-        "comments": 2
+        "comments": 4
       },
       "labels": [],
       "author": "Wenwei-Zhao",
       "state": "open",
-      "assignees": [],
+      "assignees": [
+        "adisuissa",
+        "antoniovleonti"
+      ],
       "change": "updated"
     },
     {
@@ -1838,8 +1864,7 @@
       "labels": [],
       "author": "etruong42",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46679",
@@ -1851,8 +1876,8 @@
       "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> ### Commit Message Added support for custom exporters in the OpenTelemetry tracer. In implementing this feature, I also changed some existing code in opentelemetry_tracer_impl.cc to make it more thread safe, such as moving the instantiation of the gRPC client factory out of the worker threads and into the main thread. This means that if the factory creation returns an error, it won't crash the worker thread, and thereby the whole Envoy proxy. ### Additional Description AI was used to generate the code and tests in this PR. I have reviewed – and fully understand – the code. ### Risk Level Low ### Testing I've added unit tests testing both the control plane and data plane code flows. ### Docs Changes None required ### Release Notes Added a changelog under new_features (area: tracing) ### Platform Specific Features None",
       "url": "https://github.com/envoyproxy/envoy/pull/46679",
       "createdAt": "2026-08-13T07:48:06Z",
-      "updatedAt": "2026-08-13T08:30:05Z",
-      "timestamp": "2026-08-13T08:30:05Z",
+      "updatedAt": "2026-08-13T16:44:58Z",
+      "timestamp": "2026-08-13T16:44:58Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -1864,7 +1889,8 @@
       "state": "open",
       "assignees": [
         "mattklein123"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46682",
@@ -1885,8 +1911,7 @@
       "labels": [],
       "author": "etruong42",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46683",
@@ -1907,8 +1932,7 @@
       "labels": [],
       "author": "etruong42",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46684",
@@ -1929,8 +1953,7 @@
       "labels": [],
       "author": "penguingao",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46685",
@@ -1950,6 +1973,27 @@
       },
       "labels": [],
       "author": "etruong42",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46686",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Add support for `serverNameOverride` in ALTS and create `ServerNameDecoratorTransportSocketOptions`",
+      "text": "Commit Message: support `serverNameOverride` in ALTS and add `ServerNameDecoratingTransportSocketOptions` Additional Description: These two changes are in pursuit of eventually being able to pass the original target name to the TransportSocket 1) Create `ServerNameDecoratingTransportSocketOptions` as a `TransportSocketOptions` wrapper class that populates the `serverNameOverride` value. 2) Modify ALTS Transport Socket Options to use the `serverNameOverride` value and pass this `target_value` in to `StartHandshakeReq` Risk Level: Low (Creating decorator class in core network, and only new optional ALTS behavior with no-op defaults). Testing: `transport_socket_options_impl_test.cc` additions for `ServerNameDecoratingTransportSocketOptions`, `alts_proxy_test.cc`, `alts_tsi_handshaker_test.cc`, `tsi_socket_test.cc`, and `config_test.cc` for ALTS Transport Socket behavioral changes Docs Changes: n/a Release Notes: n/a Platform Specific Features: n/a",
+      "url": "https://github.com/envoyproxy/envoy/pull/46686",
+      "createdAt": "2026-08-13T16:56:41Z",
+      "updatedAt": "2026-08-13T16:56:47Z",
+      "timestamp": "2026-08-13T16:56:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "MichaelHDing",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -4649,6 +4693,249 @@
         "assignees": [
           "agrawroh",
           "wbpcode"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:07d3fff5c5ab82bdc526",
+      "signalId": "github:envoyproxy/envoy:pull_request:46543",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46543",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "mcp_transcoder: Fix Unbounded Recursion DoS",
+        "text": "Commit Message: mcp_transcoder: Fix Unbounded Recursion DoS Additional Description: This PR limits the maximum nesting depth for JSON query parameter processing in constructQueryParams to 100, which mitigates a stack overflow condition caused by maliciously crafted, deeply nested query parameters. Risk Level: Low Testing: Unit tests. Docs Changes: N/A Release Notes: N/A Platform Specific Features: N/A",
+        "url": "https://github.com/envoyproxy/envoy/pull/46543",
+        "createdAt": "2026-08-04T19:18:20Z",
+        "updatedAt": "2026-08-13T17:42:38Z",
+        "timestamp": "2026-08-13T17:42:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "guoyilin42",
+        "state": "open",
+        "assignees": [
+          "tyxia"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:97bb2f6bad662aea819a",
+      "signalId": "github:envoyproxy/envoy:pull_request:46673",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "assignees"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46673",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Order dependent bug",
+        "text": "Commit Message: Fix flaky order-dependent stats_test failures via physical test file separation Additional Description: The tests `NonNumberValueFormatted` and `GaugeNonNumberValueFormatted` both trigger identical error logs emitted via `ENVOY_LOG_PERIODIC_MISC` in `stats.cc`. Because this macro rate-limits logging to prevent log spam, running these tests consecutively in the same target process led to one suppressing the other, causing flaky test failures under randomized execution ordering. Risk Level: low Testing: NA Docs Changes: NA Release Notes: NA Platform Specific Features: NA",
+        "url": "https://github.com/envoyproxy/envoy/pull/46673",
+        "createdAt": "2026-08-12T21:06:33Z",
+        "updatedAt": "2026-08-13T17:40:18Z",
+        "timestamp": "2026-08-13T17:40:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "Wenwei-Zhao",
+        "state": "open",
+        "assignees": [
+          "adisuissa",
+          "antoniovleonti"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c8093d051386714f83f5",
+      "signalId": "github:envoyproxy/envoy:pull_request:46502",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46502",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Support hot restart handoff for connectionless UDP flows",
+        "text": "Commit Message: udp: Support hot restart handoff for connectionless UDP flows Additional Description: The parent instance keeps serving established UDP flows while draining and forwards packets of unknown flows to the child over the hot restart RPC, instead of going dark between drain start and parent shutdown. Risk Level: Medium Testing: Added unit and integration tests, manual Docs Changes: - Added `envoy.resource_limits.listener.<name of listener>.udp_flow_limit`. - Added `downstream_flows_active, Gauge`, if equal to the limit, flows might get misrouted during hotrestart Release Notes: Added new_features entry Platform Specific Features: N/A Fixes #34732",
+        "url": "https://github.com/envoyproxy/envoy/pull/46502",
+        "createdAt": "2026-08-01T12:28:12Z",
+        "updatedAt": "2026-08-13T17:36:12Z",
+        "timestamp": "2026-08-13T17:36:12Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "api"
+        ],
+        "author": "filipcacky",
+        "state": "open",
+        "assignees": [
+          "nezdolik",
+          "markdroth"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:00acc1690a4fb0c1ed03",
+      "signalId": "github:envoyproxy/envoy:pull_request:46318",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46318",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "ext_proc: adding direct mode_override support",
+        "text": "This is a follow up implementation for https://github.com/envoyproxy/envoy/pull/46315",
+        "url": "https://github.com/envoyproxy/envoy/pull/46318",
+        "createdAt": "2026-07-22T21:30:10Z",
+        "updatedAt": "2026-08-13T17:31:37Z",
+        "timestamp": "2026-08-13T17:31:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [
+          "api"
+        ],
+        "author": "yanjunxiang-google",
+        "state": "open",
+        "assignees": [
+          "stevenzzzz",
+          "adisuissa",
+          "yanavlasov",
+          "rshriram",
+          "tyxia"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1b32e72dbc606f74cdf6",
+      "signalId": "github:envoyproxy/envoy:pull_request:46526",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46526",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "router: support building an SRDS scope key from filter state",
+        "text": "**Commit Message:** support building an SRDS scope key from filter state **Additional Description:** Scope keys could only be built from a request header. This adds a `filter_state` fragment type so a scope key can be built from a filter state object instead. This matters when the value selecting the route table is known at connection time: a network filter can store it in filter state, but a header set by an HTTP filter arrives after the filter chain is created, which is too late for per-route filter config. Connection life span objects are reachable from the stream, so a filter-state fragment resolves the scope on the first route resolution. Risk Level: Low Testing: Unit and Integration tests Docs Changes: Changelog added Release Notes: N.A Platform Specific Features: N.A",
+        "url": "https://github.com/envoyproxy/envoy/pull/46526",
+        "createdAt": "2026-08-04T02:17:18Z",
+        "updatedAt": "2026-08-13T17:31:19Z",
+        "timestamp": "2026-08-13T17:31:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "basundhara-c",
+        "state": "open",
+        "assignees": [
+          "adisuissa",
+          "markdroth",
+          "botengyao"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c5f8278d7b3380c7552b",
+      "signalId": "github:envoyproxy/envoy:pull_request:46686",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46686",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Add support for `serverNameOverride` in ALTS and create `ServerNameDecoratorTransportSocketOptions`",
+        "text": "Commit Message: support `serverNameOverride` in ALTS and add `ServerNameDecoratingTransportSocketOptions` Additional Description: These two changes are in pursuit of eventually being able to pass the original target name to the TransportSocket 1) Create `ServerNameDecoratingTransportSocketOptions` as a `TransportSocketOptions` wrapper class that populates the `serverNameOverride` value. 2) Modify ALTS Transport Socket Options to use the `serverNameOverride` value and pass this `target_value` in to `StartHandshakeReq` Risk Level: Low (Creating decorator class in core network, and only new optional ALTS behavior with no-op defaults). Testing: `transport_socket_options_impl_test.cc` additions for `ServerNameDecoratingTransportSocketOptions`, `alts_proxy_test.cc`, `alts_tsi_handshaker_test.cc`, `tsi_socket_test.cc`, and `config_test.cc` for ALTS Transport Socket behavioral changes Docs Changes: n/a Release Notes: n/a Platform Specific Features: n/a",
+        "url": "https://github.com/envoyproxy/envoy/pull/46686",
+        "createdAt": "2026-08-13T16:56:41Z",
+        "updatedAt": "2026-08-13T16:56:47Z",
+        "timestamp": "2026-08-13T16:56:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "MichaelHDing",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:09fda104b67e9c598fac",
+      "signalId": "github:envoyproxy/envoy:pull_request:46679",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46679",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "Add extension point to OpenTelemetry tracer for custom exporters.",
+        "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> ### Commit Message Added support for custom exporters in the OpenTelemetry tracer. In implementing this feature, I also changed some existing code in opentelemetry_tracer_impl.cc to make it more thread safe, such as moving the instantiation of the gRPC client factory out of the worker threads and into the main thread. This means that if the factory creation returns an error, it won't crash the worker thread, and thereby the whole Envoy proxy. ### Additional Description AI was used to generate the code and tests in this PR. I have reviewed – and fully understand – the code. ### Risk Level Low ### Testing I've added unit tests testing both the control plane and data plane code flows. ### Docs Changes None required ### Release Notes Added a changelog under new_features (area: tracing) ### Platform Specific Features None",
+        "url": "https://github.com/envoyproxy/envoy/pull/46679",
+        "createdAt": "2026-08-13T07:48:06Z",
+        "updatedAt": "2026-08-13T16:44:58Z",
+        "timestamp": "2026-08-13T16:44:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "api"
+        ],
+        "author": "jakebennert",
+        "state": "open",
+        "assignees": [
+          "mattklein123"
         ],
         "change": "updated"
       }

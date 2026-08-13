@@ -18,3 +18,7 @@ Repository: [sgl-project/sglang](https://github.com/sgl-project/sglang)
 ## Publicly indicated upcoming work
 
 - **Milestone** [#13290, #13240](https://github.com/sgl-project/sglang/milestone/1)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

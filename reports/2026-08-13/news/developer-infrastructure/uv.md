@@ -18,3 +18,7 @@ Repository: [astral-sh/uv](https://github.com/astral-sh/uv)
 ## Publicly indicated upcoming work
 
 - **Milestone** [v0.13.0](https://github.com/astral-sh/uv/milestone/14)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

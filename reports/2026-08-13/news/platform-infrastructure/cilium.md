@@ -23,3 +23,7 @@ Repository: [cilium/cilium](https://github.com/cilium/cilium)
 - **Milestone** [loader refactor](https://github.com/cilium/cilium/milestone/46)
 - **Milestone** [ZTunnel Integration](https://github.com/cilium/cilium/milestone/54)
 - **Milestone** [1.22-feature-freeze](https://github.com/cilium/cilium/milestone/56)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

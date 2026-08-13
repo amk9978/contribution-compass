@@ -19,3 +19,7 @@ Repository: [redpanda-data/redpanda](https://github.com/redpanda-data/redpanda)
 
 - **Milestone** [v26.2.x-next](https://github.com/redpanda-data/redpanda/milestone/329)
 - **Milestone** [v26.1.16](https://github.com/redpanda-data/redpanda/milestone/332)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

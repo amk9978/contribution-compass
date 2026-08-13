@@ -28,13 +28,13 @@
     "defaultBranch": "main",
     "stars": 28722,
     "forks": 4091,
-    "openIssues": 1754,
+    "openIssues": 1753,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:29.608859+00:00"
+    "collectedAt": "2026-08-13T17:43:28.556337+00:00"
   },
   "news": {
     "repository": "grafana/loki",
-    "collectedAt": "2026-08-13T16:19:29.608859+00:00",
+    "collectedAt": "2026-08-13T17:43:28.556337+00:00",
     "latestRelease": {
       "repository": "grafana/loki",
       "tag": "v3.7.6",
@@ -49,7 +49,8 @@
       ],
       "prerelease": false
     },
-    "upcoming": []
+    "upcoming": [],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -69,6 +70,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 61,
       "changedCount": 10
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 60,
+      "changedCount": 3
     }
   ],
   "signals": [
@@ -105,11 +112,11 @@
       "text": "## Summary We currently have a linter rule that blocks usage of `sync/atomic` and forces us to use `go.uber.go/atomic` instead. This rule was originally added because `sync/atomic` required atomic operations on primitive types, which was considered error-prone. However, since **Go 1.19**, the standard library `sync/atomic` package now includes typed wrappers (e.g., `atomic.Uint32`, `atomic.Int64`, `atomic.Bool`, etc.) that provide the same safety guarantees as `go.uber.go/atomic`. This makes the uber package redundant. ## Context Prometheus is also making this transition: - Issue: https://github.com/prometheus/prometheus/issues/14866 - PR: https://github.com/prometheus/prometheus/pull/18009 ## Proposed Changes 1. **Remove the linter rule** that blocks `sync/atomic` 2. **Migrate all `go.uber.go/atomic` usage** to the standard library `sync/atomic` typed wrappers 3. **Configure a linter rule** to block the old-style atomic functions that operate on primitive types (e.g., `atomic.AddInt64`, `atomic.LoadUint32`) to ensure we only use the new typed wrappers and avoid accidental misuse This approach gives us: - Fewer external dependencies - Alignment with the broader Go ecosystem - Same safety guarantees we had with uber/atomic ## References - Go 1.19 release notes on atomic types: https://tip.golang.org/doc/go1.19#atomic_types - `sync/atomic` package docs: https://pkg.go.dev/sync/atomic",
       "url": "https://github.com/grafana/loki/issues/20673",
       "createdAt": "2026-02-04T12:44:57Z",
-      "updatedAt": "2026-08-12T15:39:16Z",
-      "timestamp": "2026-08-12T15:39:16Z",
+      "updatedAt": "2026-08-13T16:32:33Z",
+      "timestamp": "2026-08-13T16:32:33Z",
       "metrics": {
         "reactions": 0,
-        "comments": 5
+        "comments": 6
       },
       "labels": [
         "good first issue"
@@ -159,8 +166,7 @@
       "labels": [],
       "author": "renovate-sh-app[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:issue:23890",
@@ -186,6 +192,56 @@
       "assignees": [
         "pracucci"
       ]
+    },
+    {
+      "id": "github:grafana/loki:issue:6994",
+      "source": "github",
+      "group": "observability",
+      "project": "grafana/loki",
+      "kind": "issue",
+      "title": "grafana-loki lacks basic feature of extracting nested json labels",
+      "text": "<!-- Please keep the structure below, or your issue may be closed. --> **Is your feature request related to a problem? Please describe.** I am running a java spring-boot application on AWS ECS and want to ship logs to loki/grafana. In order to have the java stack trace as a single log line in grafana I log as json to console using ```xml <encoder class=\"net.logstash.logback.encoder.LogstashEncoder\"/> ``` The resulting json from AWS ECS looks like this: ```json { \"container_id\": \"ea7b47de37024af8a71629fc4c435e09-285964202\", \"container_name\": \"backend\", \"ecs_cluster\": \"dev-fargate\", \"ecs_task_arn\": \"arn:aws:ecs:eu-central-1:xxx:task/dev-fargate/ea7b47de37024af8a71629fc4c435e09\", \"ecs_task_definition\": \"dev-backend:72\", \"log\": { \"@timestamp\": \"2022-08-29T08:13:22.893Z\", \"@version\": \"1\", \"message\": \"Running with Spring Boot v2.7.3, Spring v5.3.22\", \"logger_name\": \"com.example.Application\", \"thread_name\": \"main\", \"level\": \"DEBUG\", \"level_value\": 10000 } } ``` **Describe the solution you'd like** I want to extract also lables from the log element, i.e. log level, logger name, ... and only keep the log.message as the log text. So therefore I need configuration like this (cloudformation yaml config), which is currently not working/supported: ```yaml ... LogConfiguration: LogDriver: awsfirelens Options: Name: grafana-loki Url: https://loki:3000/loki/api/v1/push Labels: \"{source=\\\"console\\\"}\" LabelKeys: container_id,ecs_task_arn,ecs_task_definition,ecs_cluster,container_name,log.level,log.logger_name,log.thread_name RemoveKeys: source,log.level_value,log.@version LineFormat: key_value insecure_skip_verify: true SecretOptions: - Name: TenantID ValueFrom: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/config/loki/tenant-id - Name: log_router Image: grafana/fluent-bit-plugin-loki:2.6.1-amd64 Essential: false Memory: 512 Cpu: 256 FirelensConfiguration: Type: fluentbit Options: enable-ecs-log-metadata: true LogConfiguration: LogDriver: awslogs Options: awslogs-stream-prefix: firelens awslogs-group: !Ref LogGroup awslogs-region: !Ref AWS::Region ... ``` **Describe alternatives you've considered** A clear and concise description of any alternative solutions or features you've considered. I have also tried using LabelMapPath, but this didn't work either. Also tried LineFormat=json but has same result. **Additional context** This is really a basic feature I bet a lot of people need! And maybe another option would be great to specify the final message target, i.e. \"log.message\" in my case... and other properties should be ignored. Would extremly ease the config avoiding the need of specifying tons of \"RemoveKeys\"...",
+      "url": "https://github.com/grafana/loki/issues/6994",
+      "createdAt": "2022-08-29T08:42:40Z",
+      "updatedAt": "2026-08-13T16:32:58Z",
+      "timestamp": "2026-08-13T16:32:58Z",
+      "metrics": {
+        "reactions": 9,
+        "comments": 12
+      },
+      "labels": [
+        "type/feature",
+        "good first issue",
+        "component/fluent-bit-plugin"
+      ],
+      "author": "sschmiedleitner",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:grafana/loki:pull_request:19059",
+      "source": "github",
+      "group": "observability",
+      "project": "grafana/loki",
+      "kind": "pull_request",
+      "title": "fix(CI): release scripts add newline",
+      "text": "**What this PR does / why we need it**: I previously tried to fix this in https://github.com/grafana/loki/pull/19011 but I now realize that it wasn't 100% correct. It solved an ephemeral issue that was remedied on the next release. Long term we need another newline in the release script. Demonstrated through a git-diff of the output. ``` ## Unreleased + ## 6.38.0 ``` **Which issue(s) this PR fixes**: Fixes #<issue number> **Special notes for your reviewer**: **Checklist** - [x] Reviewed the [`CONTRIBUTING.md`](https://github.com/grafana/loki/blob/main/CONTRIBUTING.md) guide (**required**) - [ ] Documentation added - [ ] Tests updated - [x] Title matches the required conventional commits format, see [here](https://www.conventionalcommits.org/en/v1.0.0/) - **Note** that Promtail is considered to be feature complete, and future development for logs collection will be in [Grafana Alloy](https://github.com/grafana/alloy). As such, `feat` PRs are unlikely to be accepted unless a case can be made for the feature actually being a bug fix to existing behavior. - [ ] Changes that require user attention or interaction to upgrade are documented in `docs/sources/setup/upgrade/_index.md` - [ ] If the change is deprecating or removing a configuration option, update the `deprecated-config.yaml` and `deleted-config.yaml` files respectively in the `tools/deprecated-config-checker` directory. [Example PR](https://github.com/grafana/loki/pull/10840/commits/0d4416a4b03739583349934b96f272fb4f685d15)",
+      "url": "https://github.com/grafana/loki/pull/19059",
+      "createdAt": "2025-08-28T16:49:40Z",
+      "updatedAt": "2026-08-13T16:23:27Z",
+      "timestamp": "2026-08-13T16:23:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "size/XS"
+      ],
+      "author": "TheRealNoob",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:grafana/loki:pull_request:21719",
@@ -459,8 +515,7 @@
       ],
       "author": "renovate-sh-app[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23641",
@@ -816,8 +871,7 @@
       ],
       "author": "renovate-sh-app[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23864",
@@ -1014,8 +1068,7 @@
       "labels": [],
       "author": "pracucci",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23910",
@@ -1404,8 +1457,7 @@
       ],
       "author": "trevorwhitney",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23933",
@@ -1452,8 +1504,7 @@
       ],
       "author": "Yilialinn",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23935",
@@ -1581,8 +1632,7 @@
       "labels": [],
       "author": "pracucci",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23941",
@@ -1606,8 +1656,7 @@
       ],
       "author": "renovate-sh-app[bot]",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23942",
@@ -1628,8 +1677,7 @@
       "labels": [],
       "author": "pracucci",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:23943",
@@ -1650,8 +1698,7 @@
       "labels": [],
       "author": "pracucci",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [
@@ -3911,6 +3958,104 @@
         ],
         "author": "renovate-sh-app[bot]",
         "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:56295b12ff5d68d9cab5",
+      "signalId": "github:grafana/loki:issue:6994",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:grafana/loki:issue:6994",
+        "source": "github",
+        "group": "observability",
+        "project": "grafana/loki",
+        "kind": "issue",
+        "title": "grafana-loki lacks basic feature of extracting nested json labels",
+        "text": "<!-- Please keep the structure below, or your issue may be closed. --> **Is your feature request related to a problem? Please describe.** I am running a java spring-boot application on AWS ECS and want to ship logs to loki/grafana. In order to have the java stack trace as a single log line in grafana I log as json to console using ```xml <encoder class=\"net.logstash.logback.encoder.LogstashEncoder\"/> ``` The resulting json from AWS ECS looks like this: ```json { \"container_id\": \"ea7b47de37024af8a71629fc4c435e09-285964202\", \"container_name\": \"backend\", \"ecs_cluster\": \"dev-fargate\", \"ecs_task_arn\": \"arn:aws:ecs:eu-central-1:xxx:task/dev-fargate/ea7b47de37024af8a71629fc4c435e09\", \"ecs_task_definition\": \"dev-backend:72\", \"log\": { \"@timestamp\": \"2022-08-29T08:13:22.893Z\", \"@version\": \"1\", \"message\": \"Running with Spring Boot v2.7.3, Spring v5.3.22\", \"logger_name\": \"com.example.Application\", \"thread_name\": \"main\", \"level\": \"DEBUG\", \"level_value\": 10000 } } ``` **Describe the solution you'd like** I want to extract also lables from the log element, i.e. log level, logger name, ... and only keep the log.message as the log text. So therefore I need configuration like this (cloudformation yaml config), which is currently not working/supported: ```yaml ... LogConfiguration: LogDriver: awsfirelens Options: Name: grafana-loki Url: https://loki:3000/loki/api/v1/push Labels: \"{source=\\\"console\\\"}\" LabelKeys: container_id,ecs_task_arn,ecs_task_definition,ecs_cluster,container_name,log.level,log.logger_name,log.thread_name RemoveKeys: source,log.level_value,log.@version LineFormat: key_value insecure_skip_verify: true SecretOptions: - Name: TenantID ValueFrom: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/config/loki/tenant-id - Name: log_router Image: grafana/fluent-bit-plugin-loki:2.6.1-amd64 Essential: false Memory: 512 Cpu: 256 FirelensConfiguration: Type: fluentbit Options: enable-ecs-log-metadata: true LogConfiguration: LogDriver: awslogs Options: awslogs-stream-prefix: firelens awslogs-group: !Ref LogGroup awslogs-region: !Ref AWS::Region ... ``` **Describe alternatives you've considered** A clear and concise description of any alternative solutions or features you've considered. I have also tried using LabelMapPath, but this didn't work either. Also tried LineFormat=json but has same result. **Additional context** This is really a basic feature I bet a lot of people need! And maybe another option would be great to specify the final message target, i.e. \"log.message\" in my case... and other properties should be ignored. Would extremly ease the config avoiding the need of specifying tons of \"RemoveKeys\"...",
+        "url": "https://github.com/grafana/loki/issues/6994",
+        "createdAt": "2022-08-29T08:42:40Z",
+        "updatedAt": "2026-08-13T16:32:58Z",
+        "timestamp": "2026-08-13T16:32:58Z",
+        "metrics": {
+          "reactions": 9,
+          "comments": 12
+        },
+        "labels": [
+          "type/feature",
+          "good first issue",
+          "component/fluent-bit-plugin"
+        ],
+        "author": "sschmiedleitner",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:acdc0ad9cf31d5df9902",
+      "signalId": "github:grafana/loki:issue:20673",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:grafana/loki:issue:20673",
+        "source": "github",
+        "group": "observability",
+        "project": "grafana/loki",
+        "kind": "issue",
+        "title": "Replace `go.uber.go/atomic` with Go standard library `sync/atomic`",
+        "text": "## Summary We currently have a linter rule that blocks usage of `sync/atomic` and forces us to use `go.uber.go/atomic` instead. This rule was originally added because `sync/atomic` required atomic operations on primitive types, which was considered error-prone. However, since **Go 1.19**, the standard library `sync/atomic` package now includes typed wrappers (e.g., `atomic.Uint32`, `atomic.Int64`, `atomic.Bool`, etc.) that provide the same safety guarantees as `go.uber.go/atomic`. This makes the uber package redundant. ## Context Prometheus is also making this transition: - Issue: https://github.com/prometheus/prometheus/issues/14866 - PR: https://github.com/prometheus/prometheus/pull/18009 ## Proposed Changes 1. **Remove the linter rule** that blocks `sync/atomic` 2. **Migrate all `go.uber.go/atomic` usage** to the standard library `sync/atomic` typed wrappers 3. **Configure a linter rule** to block the old-style atomic functions that operate on primitive types (e.g., `atomic.AddInt64`, `atomic.LoadUint32`) to ensure we only use the new typed wrappers and avoid accidental misuse This approach gives us: - Fewer external dependencies - Alignment with the broader Go ecosystem - Same safety guarantees we had with uber/atomic ## References - Go 1.19 release notes on atomic types: https://tip.golang.org/doc/go1.19#atomic_types - `sync/atomic` package docs: https://pkg.go.dev/sync/atomic",
+        "url": "https://github.com/grafana/loki/issues/20673",
+        "createdAt": "2026-02-04T12:44:57Z",
+        "updatedAt": "2026-08-13T16:32:33Z",
+        "timestamp": "2026-08-13T16:32:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [
+          "good first issue"
+        ],
+        "author": "Segflow",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:903b2ad48cb045eb1b7f",
+      "signalId": "github:grafana/loki:pull_request:19059",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:grafana/loki:pull_request:19059",
+        "source": "github",
+        "group": "observability",
+        "project": "grafana/loki",
+        "kind": "pull_request",
+        "title": "fix(CI): release scripts add newline",
+        "text": "**What this PR does / why we need it**: I previously tried to fix this in https://github.com/grafana/loki/pull/19011 but I now realize that it wasn't 100% correct. It solved an ephemeral issue that was remedied on the next release. Long term we need another newline in the release script. Demonstrated through a git-diff of the output. ``` ## Unreleased + ## 6.38.0 ``` **Which issue(s) this PR fixes**: Fixes #<issue number> **Special notes for your reviewer**: **Checklist** - [x] Reviewed the [`CONTRIBUTING.md`](https://github.com/grafana/loki/blob/main/CONTRIBUTING.md) guide (**required**) - [ ] Documentation added - [ ] Tests updated - [x] Title matches the required conventional commits format, see [here](https://www.conventionalcommits.org/en/v1.0.0/) - **Note** that Promtail is considered to be feature complete, and future development for logs collection will be in [Grafana Alloy](https://github.com/grafana/alloy). As such, `feat` PRs are unlikely to be accepted unless a case can be made for the feature actually being a bug fix to existing behavior. - [ ] Changes that require user attention or interaction to upgrade are documented in `docs/sources/setup/upgrade/_index.md` - [ ] If the change is deprecating or removing a configuration option, update the `deprecated-config.yaml` and `deleted-config.yaml` files respectively in the `tools/deprecated-config-checker` directory. [Example PR](https://github.com/grafana/loki/pull/10840/commits/0d4416a4b03739583349934b96f272fb4f685d15)",
+        "url": "https://github.com/grafana/loki/pull/19059",
+        "createdAt": "2025-08-28T16:49:40Z",
+        "updatedAt": "2026-08-13T16:23:27Z",
+        "timestamp": "2026-08-13T16:23:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/XS"
+        ],
+        "author": "TheRealNoob",
+        "state": "closed",
         "assignees": [],
         "change": "new"
       }

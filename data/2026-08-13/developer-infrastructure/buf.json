@@ -27,14 +27,14 @@
     "license": "Apache-2.0",
     "defaultBranch": "main",
     "stars": 11332,
-    "forks": 367,
+    "forks": 366,
     "openIssues": 58,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:37.098332+00:00"
+    "collectedAt": "2026-08-13T17:43:36.435801+00:00"
   },
   "news": {
     "repository": "bufbuild/buf",
-    "collectedAt": "2026-08-13T16:19:37.098332+00:00",
+    "collectedAt": "2026-08-13T17:43:36.435801+00:00",
     "latestRelease": {
       "repository": "bufbuild/buf",
       "tag": "v1.72.0",
@@ -49,7 +49,8 @@
       ],
       "prerelease": false
     },
-    "upcoming": []
+    "upcoming": [],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -67,6 +68,12 @@
     {
       "collectedAt": "2026-08-13T16:19:22.035158Z",
       "since": "2026-08-12T16:19:22.035158Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 0,
       "changedCount": 0
     }

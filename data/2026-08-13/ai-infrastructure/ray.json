@@ -40,15 +40,15 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "master",
-    "stars": 43509,
+    "stars": 43510,
     "forks": 7922,
-    "openIssues": 3488,
+    "openIssues": 3490,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:34.410995+00:00"
+    "collectedAt": "2026-08-13T17:43:33.125824+00:00"
   },
   "news": {
     "repository": "ray-project/ray",
-    "collectedAt": "2026-08-13T16:19:34.410995+00:00",
+    "collectedAt": "2026-08-13T17:43:33.125824+00:00",
     "latestRelease": {
       "repository": "ray-project/ray",
       "tag": "ray-2.57.0",
@@ -117,7 +117,8 @@
         "openIssues": 1,
         "closedIssues": 78
       }
-    ]
+    ],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -137,6 +138,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 93,
       "changedCount": 5
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 96,
+      "changedCount": 12
     }
   ],
   "signals": [
@@ -166,6 +173,36 @@
       "author": "krfricke",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:ray-project/ray:issue:45751",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "issue",
+      "title": "Ray Dashboard is susceptible to a Local File Inclusion bug with default settings",
+      "text": "### What happened + What you expected to happen **Description** Just as the title suggests, when initially starting up the Ray dashboard I can parse my local file system by supplying the `folder` HTTP parameter in GET requests to the `/logs` API endpoint in conjunction with relative file paths. **Expected Behavior** As a best practice, relative file paths should not be permitted, or should be ignored. Basic access controls should be implemented to prevent unauthorized users from being able to parse the underlying file system being used by Ray. **Useful Information** 1) Taking a cursory glance at the Ray GH Issues board, it appears that this issue was discussed (and addressed) [here](https://github.com/ray-project/ray/issues/39701) and [here](https://www.anyscale.com/blog/update-on-ray-cves-cve-2023-6019-cve-2023-6020-cve-2023-6021-cve-2023-48022-cve-2023-48023) 2) As seen in the provided script, the `nodeId` HTTP parameter must be included in GET requests. ![image](https://github.com/ray-project/ray/assets/45905457/2eeed262-caa0-4e0e-9f32-5a9604be16f6) ### Versions / Dependencies 2.9.1 and 2.23.0 ### Reproduction script from requests import get url = 'http://`<ip address>`:8265/#/logs' headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8', 'Accept-Encoding': 'gzip, deflate, br, zstd', } params = {'folder': '../../../../home', 'nodeId': '`<nodeId>`' } try: resp = get(url=url, params=params, headers=headers) except Exception as e: print(f'GET request failed: {str(e)}') if resp.status_code != 200: print('ERROR server responded with: {resp.status_code}, {resp.content}') else: print(f'Response\\n==========\\n{resp.content}') ### Issue Severity Medium: It is a significant difficulty but I can work around it.",
+      "url": "https://github.com/ray-project/ray/issues/45751",
+      "createdAt": "2024-06-05T12:04:49Z",
+      "updatedAt": "2026-08-13T16:46:16Z",
+      "timestamp": "2026-08-13T16:46:16Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [
+        "bug",
+        "P2",
+        "dashboard",
+        "observability",
+        "security"
+      ],
+      "author": "rmhowe425",
+      "state": "closed",
+      "assignees": [
+        "rmhowe425"
+      ],
+      "change": "new"
     },
     {
       "id": "github:ray-project/ray:issue:56431",
@@ -199,6 +236,35 @@
       ]
     },
     {
+      "id": "github:ray-project/ray:issue:64643",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "issue",
+      "title": "[serve] Enable mypy type checking on ray/serve to catch real production bugs (e.g. the rank-corruption bug in #64181)",
+      "text": "### What happened + What you expected to happen ### Description Ray Serve's controller code is fully type-annotated but never type-checked. The mypy pre-commit hook covers an allowlist of exactly 7 files repo-wide — from all of Serve, only `python/ray/serve/handle.py` and a handle-typing fixture: # .pre-commit-config.yaml - id: mypy args: ['--follow-imports=skip', '--ignore-missing-imports'] files: | (?x)^( python/ray/autoscaler/node_provider.py| ... python/ray/serve/handle.py| python/ray/serve/tests/typing_files/check_handle_typing.py ) Additionally, `--follow-imports=skip` degrades every cross-module type to `Any`, so even allowlisted files get almost no protection from wrong-type arguments: any parameter annotated with an imported class effectively becomes untyped. ### Motivating case: a production bug mypy flags exactly The rank-corruption bug behind #63862 (fixed in <PR link>) was a one-liner in `deployment_state.py` — the lightweight-reconfigure path passed `rank=current_rank.rank` (a bare `int`) where the callee declares `rank: ReplicaRank`. The int round-tripped through the replica and broke rank recovery on every controller restart, permanently corrupting the rank system (\"Rank system is in an invalid state\" loop). Running mypy 1.7.0 (the version already pinned in pre-commit) with import following enabled flags the bug precisely: deployment_state.py:3749: error: Argument \"rank\" to \"reconfigure\" of \"DeploymentReplica\" has incompatible type \"int\"; expected \"ReplicaRank\" [arg-type] With Ray's current flags (`--follow-imports=skip`), the same run reports 57 unrelated errors in the file and does NOT flag this line — `ReplicaRank` collapses to `Any`. So this isn't just \"add the file to the list\"; the flags matter too. The same run surfaces more latent inconsistencies in the rank system alone: deployment_state.py: error: Argument \"assign_rank_callback\" to \"start\" of \"DeploymentReplica\" has incompatible type \"Callable[[str, str], ReplicaRank]\"; expected \"Callable[[ReplicaID], ReplicaRank]\" [arg-type] (2 call sites) deployment_state.py: error: Argument 3 to \"recover_rank\" of \"DeploymentRankManager\" has incompatible type \"ReplicaRank | None\"; expected \"ReplicaRank\" [arg-type] This bug class — a raw value passed where a wrapper object is expected, then serialized across the controller/replica RPC boundary and only exploding much later during recovery — is essentially invisible to unit tests that mock the boundary, and exactly what static typing is for. ### Current scope of the debt (measured on master) `mypy --follow-imports=silent --ignore-missing-imports ray/serve/_private/`: - 1028 errors in 65 of 86 files - 237 of them are `[arg-type]` (the category that catches bugs like the above) ### Proposal (incremental, no big-bang) 1. Add a Serve-scoped mypy CI step (or extend the pre-commit hook) with `--follow-imports=silent` so imported types resolve, scoped initially to an error-free subset of `ray/serve/_private/` (per-file allowlist, same mechanism as today). 2. Burn down `[arg-type]` errors first in controller-critical modules (`deployment_state.py`, `replica.py`, `controller.py`, `application_state.py`) — these guard the state-checkpoint/recovery paths where type confusion becomes persistent state corruption. 3. Ratchet: once a file is clean, add it to the allowlist so it can't regress. ### Use case Prevent recurrence of 64181-style state-corruption bugs in Serve's controller, where type annotations already encode the contract but nothing enforces it. ### Versions / Dependencies ray[serve] 2.56.0 ### Reproduction script mypy --follow-imports=silent --ignore-missing-imports ray/serve/_private/ ### Issue Severity None",
+      "url": "https://github.com/ray-project/ray/issues/64643",
+      "createdAt": "2026-07-09T19:33:09Z",
+      "updatedAt": "2026-08-13T16:22:59Z",
+      "timestamp": "2026-08-13T16:22:59Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "bug",
+        "triage",
+        "serve",
+        "tech-debt"
+      ],
+      "author": "johntaylor-cell",
+      "state": "open",
+      "assignees": [
+        "johntaylor-cell"
+      ],
+      "change": "new"
+    },
+    {
       "id": "github:ray-project/ray:issue:64693",
       "source": "github",
       "group": "ai-infrastructure",
@@ -222,6 +288,32 @@
       "author": "logical-misha",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:ray-project/ray:issue:64992",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "issue",
+      "title": "[Core] Provide a way to disable the worker-log `(pid=…)` prefix without disabling driver forwarding or overriding the root logger",
+      "text": "### What happens With `log_to_driver=True` (the default), Ray prepends a prefix to every worker/actor stdout/stderr line it forwards to the driver: ``` (SegmentationActor pid=18654) {\"event\": \"segmenting batch\", \"job_id\": \"…\", \"level\": \"info\"} ``` Our workers emit **structured logs — one JSON object per line** — which a stdout-based collector ships to Loki/Grafana. The prepended `(… pid=…)` text means the line is **no longer valid JSON**, so structured parsing drops or mangles it. The logs are present in raw `kubectl logs` but effectively **invisible in the log backend** — a silent observability hole that is very expensive to notice (the pipeline \"goes quiet\" while thousands of lines land on pod stdout). The underlying issue: **Ray rewrites the bytes of a user's stdout/stderr lines by default.** Prepending text to a line silently breaks any line-oriented structured format. And there is no way to turn *only that* off. ### Why every existing option is unusable | Option | Result | |---|---| | `RAY_COLOR_PREFIX=0` | Removes only the ANSI color codes. The `(… pid=…)` text remains. | | `log_to_driver=False` | Removes the prefix — but also stops forwarding worker logs to the driver's stdout. They go to session files under `/tmp/ray/session_*/logs/`, which a stdout-based collector (the standard Kubernetes pattern) never sees. **The logs disappear entirely.** | | `logging_config=LoggingConfig(encoding=\"JSON\")` | Ray's own documented structured-logging recipe **pairs this with `log_to_driver=False`** (\"the redirected logs to the driver will include prefixes that made the logs not JSON parsable\") — i.e. it does **not** strip the prefix from forwarded logs either. Worse, it \"configures the **root loggers** for the driver process, Ray actors, and Ray tasks\" — it seizes the root logger, overrides the application's own logging configuration, and imposes Ray's JSON schema. For an app with an established structured-logging stack this is a non-starter — especially given Ray already tears down pre-configured logging handlers on import (#48846, #52371). | | `RAY_LOG_TO_STDERR=1` | Sends worker logs to the real (inherited) stderr with no prefix — but also dumps the raylet/GCS **C++ logs** (non-JSON) onto stderr, re-breaking the JSON stream, with known flooding problems (#47506). | So: **there is no way to keep worker logs on the driver's stdout, in the application's own format, without the prefix.** Every switch that removes the prefix either drops the logs or takes over the root logger. ### The request A first-class, **orthogonal** switch that keeps forwarding worker logs to the driver's stdout but leaves the **line content untouched** — for example: ```python ray.init(log_to_driver=True, worker_log_prefix=False) # or an env var, set before ray.init: # RAY_DISABLE_WORKER_LOG_PREFIX=1 ``` Log **forwarding** (a transport concern) and worker **attribution** (pid/actor identity) should not be entangled with the **byte content** of the user's log line. Attribution is already available structurally via `ray.get_runtime_context()` (`get_actor_id()` / `get_worker_id()` / `get_task_id()`); applications that want it can add it as a field or label. It should not be force-injected into the text of every line. Minimally: provide an opt-out for the prefix that does **not** require adopting `LoggingConfig` or disabling driver forwarding. More generally — a reasonable default would be to **not mutate the content of user log lines**; if the prefix stays the default, make it trivially disable-able in isolation. ### The switch already exists internally — it's just not exposed The prefix is added by `print_worker_logs()`, which already takes an `ignore_prefix` argument that skips it entirely (`python/ray/_private/worker.py`, v2.49.0): ```python def print_worker_logs(data, print_file, ignore_prefix: bool = False): # :2189 ... if ignore_prefix: # :2272 ... # emit the line unmodified, no \"(name pid=…)\" wrapper ``` But the only thing that ever sets it `True` is the presence of a job logging config — in both places that stream worker logs to the driver: ```python ignore_prefix = global_worker.job_logging_config is not None # :2632 ... ignore_prefix = worker.job_logging_config is not None # :2683 ``` So `ignore_prefix` is `True` **iff** a `LoggingConfig` is set — i.e. the capability we want is already implemented and working, but it can only be reached through the one option that also seizes the root logger. **Decoupling these two solves the whole problem with essentially no new machinery**: let `ignore_prefix` be set directly — a `ray.init(..., worker_log_prefix=False)` parameter, or an env var checked at lines 2632/2683 — instead of deriving it solely from `job_logging_config`. ### Environment - Ray 2.49.0, Python 3.13, Linux (Kubernetes / AKS) - Workers emit newline-delimited JSON to stdout; Grafana Alloy ships pod stdout to Loki - Current workaround: a regex `stage.replace` in the Alloy pipeline to strip the prefix before ingest — i.e. we are paying to undo, downstream, a mutation Ray made with no way to disable it. ### Related - #48846 — importing `ray.data` closes custom logging handlers - #52371 — import overwrites the ray logger; handlers deleted on init when `configure_logging=False` - #47506 — `RAY_LOG_TO_STDERR` floods the job API with head-node C++ logs - #21707 — support for directing *all* logs to stdout - #17467 — stdout logging for Ray head and worker nodes",
+      "url": "https://github.com/ray-project/ray/issues/64992",
+      "createdAt": "2026-07-24T14:07:54Z",
+      "updatedAt": "2026-08-13T17:00:26Z",
+      "timestamp": "2026-08-13T17:00:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [
+        "usability",
+        "core",
+        "community-backlog"
+      ],
+      "author": "Liquidmasl",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:ray-project/ray:issue:65259",
@@ -947,8 +1039,8 @@
       "text": "## Description This PR adds an opt-in callback that detects hanging distributed training jobs by polling NCCL's RAS (Reliability/Availability/Serviceability) subsystem. NCCL ≥ 2.24 runs a monitoring thread inside every NCCL process that forms a peer mesh tracking per-rank health and collective op-counts. By querying the `ncclras` client and diffing collective-counts between successive polls, Ray Train can automatically detect and act on hangs that would otherwise stall a job until a torch process group timeout occurs. As RAS gives a snapshot of the current NCCL state, to determine if the mismatch is a temporary issue or a permanent one, the callback polls RAS every N seconds. If a communicator is mismatched *and* makes no progress at all across multiple sequential polls, then this most likely indicates that a deadlock / wedge / hang is in progress for that communicator. Its important to note that its possible for NCCL to continue (not hang) with incorrect data depending on the nccl operation, tensor size, nccl version, etc. In these cases, users will observe the collective-count continue to increase but often with a constant mismatch. In this version of the callback, we are not detecting those issues and focusing on purely NCCL collective mismatches which cause hangs. The callback is disabled by default and enabled with `RAY_TRAIN_ENABLE_NCCL_HANG_DETECTOR=1`, as the detection heuristics still need validation against real-world hangs (spot preemptions, pipeline-parallel send/recv comms that legitimately sit skewed for long periods) before it can be considered for default-on. ### Requirements - RAS itself landed in 2.24, but the poller parses `ncclras -f json`, and the `-f` flag requires NCCL 2.28+. If the binary rejects `-f`, or isn't on PATH, the callback logs a warning once and disables itself for the rest of the run rather than retrying forever. - `ci/docker/base.gpu.Dockerfile` pins and holds `libnccl2`/`libnccl-dev` at `2.28.9-1+cuda12.9` (previously whatever the CUDA base image shipped) so `ncclras` is present and JSON-capable in GPU CI. The build fails fast if the pin doesn't stick or the client binary is missing. This affects all GPU CI images, not just Train tests. - `py-spy` (and `SYS_PTRACE` in the container) for native stack traces at hang time. When unavailable, the callback falls back to a Python-only traceback of every thread. ### How it works - `NCCLRASCallback` lives on the controller and polls `ncclras` on a worker (ras forms a mesh-network between ranks requiring that only one of the workers to be polled and receive the whole network's state). Workers are tried in turn until one returns a usable report, and the query runs on a background thread so it never blocks the controller's poll loop. - A communicator's frozen-streak only advances when the RAS report shows a collective-count mismatch, every rank in that communicator is `RUNNING`, and *no* rank advanced *any* collective since the previous poll. Any progress on any op resets that communicator's streak; streaks are tracked per communicator so each one is confirmed on its own. - A confirmed hang requires the streak to persist for `RAY_TRAIN_NCCL_RAS_CONFIRM_DURATION_S` (default 600s), converted to a consecutive-poll count using `RAY_TRAIN_NCCL_RAS_MIN_POLL_INTERVAL_S` (default 15s), 40 polls by default, to ensure that a mismatch isn't a snapshot issue. - Before confirmation there is an escalation ladder: a `WARNING` when a communicator first crosses ~60s frozen, then a periodic `WARNING` every ~120s naming every still-frozen communicator, its stalled duration, and (in `fail` mode) the time remaining until `NCCLHangError`, alongside the human-readable `ncclras -f text` report. A communicator that resumes progress after being suspected logs an explicit recovery message. - On a confirmed hang, the callback logs the `ncclras -f text` report and captures py-spy stack traces from all workers (uploaded to `<experiment_path>/nccl_ras_hang_stack_traces/` as `rank_<i>.log`), then depending on the callback mode, in \"fail\" a `NCCLHangError` is raised and in \"observe\", a detailed log message is produced but no more. `observe` is the default; set `RAY_TRAIN_NCCL_RAS_ACTION=fail` to fail the run. - `NCCLHangError` (a `WorkerGroupError` subclass, `DeveloperAPI`, exported as `ray.train.NCCLHangError`) is treated as non-retryable by the `DefaultFailurePolicy` regardless of the `max_failures` budget, since a desync hang is usually deterministic and a restart would just hang again. ### Configuration | Env var | Default | Read on | | --- | --- | --- | | `NCCL_RAS_ADDR` | `localhost:28028` | worker | | `RAY_TRAIN_ENABLE_NCCL_HANG_DETECTOR` | `0` | driver | | `RAY_TRAIN_NCCL_RAS_ACTION` | `observe` | driver | | `RAY_TRAIN_NCCL_RAS_MIN_POLL_INTERVAL_S` | `15` | driver | | `RAY_TRAIN_NCCL_RAS_CONFIRM_DURATION_S` | `600` | driver | | `RAY_TRAIN_NCCLRAS_PATH` | `ncclras` (PATH lookup) | driver | The `RAY_TRAIN_*` knobs are read once when the callback is constructed on the driver validated eagerly (invalid values raise at construction); `NCCL_RAS_ADDR` is NCCL's variable and is read on the worker at query time. ### Known limitations - **Symmetric in-collective hangs are not detected.** RAS reports collective *launch* counts, so if every rank launches the same collective and the fabric wedges mid-op, all counts match and skew is zero. - **A rank that exited early is not detected.** A communicator is only considered for detection when all of its ranks report `RUNNING`, so a `FINALIZE`/`ABORT` rank alongside frozen peers is currently skipped. This could be considered in this implementation but I believe the Ray health checker should catch this first. - `missing_ranks` (unresponsive / considered-dead peers) is parsed around but not yet used as a signal. - No metrics are emitted yet, and there is no culprit-rank attribution — `NCCLHangError.worker_failures` is empty; the RAS text report and stack traces are the only diagnostics. ### Testing - `test_nccl_ras_callback.py` — CPU unit coverage of RAS JSON parsing (including the malformed `missing_ranks[]` comma NCCL 2.28.9 emits), `NCCL_RAS_ADDR` parsing, frozen-vs- advancing classification, per-communicator streak independence, communicators appearing and disappearing between polls, poll throttling, confirm-duration → poll-count conversion, config validation, the escalation/observe messaging, and that a failed stack dump does not suppress the hang error. - `test_nccl_ras_hang_detection.py` — GPU end-to-end scenarios (`train_v2_gpu`) inducing real NCCL desyncs in a `TorchTrainer` with the detector configured for fast confirmation. Requires ≥ 2 visible GPUs and `ncclras` on PATH; the multi-communicator subset test requires 4 GPUs and skips otherwise. - `test_failure_policy.py` — added `test_nccl_hang_error_is_non_retryable`.",
       "url": "https://github.com/ray-project/ray/pull/64928",
       "createdAt": "2026-07-22T10:44:09Z",
-      "updatedAt": "2026-08-13T09:28:47Z",
-      "timestamp": "2026-08-13T09:28:47Z",
+      "updatedAt": "2026-08-13T17:20:01Z",
+      "timestamp": "2026-08-13T17:20:01Z",
       "metrics": {
         "reactions": 1,
         "comments": 2
@@ -958,7 +1050,8 @@
       ],
       "author": "pseudo-rnd-thoughts",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:ray-project/ray:pull_request:64986",
@@ -1085,6 +1178,34 @@
       "author": "violivei",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:ray-project/ray:pull_request:65072",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "pull_request",
+      "title": "[core] feat(rdt): enable driver-side ray.put with NIXL tensor transport",
+      "text": "Allow ray.put(value, _tensor_transport='nixl') from a driver process. Previously this failed because get_runtime_context().current_actor raises RuntimeError in a non-actor context. Changes: - Make RDTMeta.src_actor and TransferMetadata.src_actor Optional - Catch RuntimeError in put_object and set src_actor=None for driver - Reject two-sided transports (NCCL/GLOO) from driver with clear error - Guard src_actor dereferences in _abort_transport and transfer paths - Handle free_object_primary_copy locally for driver-owned objects - Raise ValueError for _use_object_store=True on driver-owned RDT objects - Align worker.py error to RuntimeError with 'one-sided transport' message Fixes ray-project/ray#64714 ## Tests Three new tests in `python/ray/tests/rdt/test_rdt_nixl.py`: ### `test_driver_put_nixl` End-to-end driver-side NIXL flow: 1. `ray.put(tensor, _tensor_transport=\"nixl\")` from the driver 2. Verify `src_actor is None` in RDT metadata 3. Verify tensor registered in NIXL transport 4. Actor consumes the driver-created ref via `actor.sum.remote(ref)` 5. Driver-local `ray.get(ref)` returns the original tensor 6. After `del ref` + `gc.collect()`, verify cleanup: tensor freed, RDT metadata removed, NIXL metadata removed, tensor descriptor cache cleared ### `test_driver_owned_rdt_rejects_object_store_fallback` Verify `_use_object_store=True` on a driver-owned RDT object raises `ValueError` matching `_use_object_store=True` instead of crashing with `AttributeError` on `None.__ray_call__`. ### `test_driver_rejects_two_sided_transport` Verify `ray.put(tensor, _tensor_transport=\"nccl\")` from the driver raises `RuntimeError` matching `one-sided transport`. Two-sided transports require an actor context to coordinate the send. ### Running ```bash # New driver tests pytest -sv python/ray/tests/rdt/test_rdt_nixl.py \\ -k \"test_driver_put_nixl or test_driver_rejects_two_sided_transport or test_driver_owned_rdt_rejects_object_store_fallback\" ``` ### Results | Test | Result | |------|--------| | `test_driver_put_nixl` | PASSED | | `test_driver_owned_rdt_rejects_object_store_fallback` | PASSED | | `test_driver_rejects_two_sided_transport` | PASSED |",
+      "url": "https://github.com/ray-project/ray/pull/65072",
+      "createdAt": "2026-07-28T10:28:32Z",
+      "updatedAt": "2026-08-13T17:02:53Z",
+      "timestamp": "2026-08-13T17:02:53Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 2
+      },
+      "labels": [
+        "core",
+        "community-contribution"
+      ],
+      "author": "n3sfan",
+      "state": "open",
+      "assignees": [
+        "stephanie-wang",
+        "Sparks0219"
+      ],
+      "change": "new"
     },
     {
       "id": "github:ray-project/ray:pull_request:65077",
@@ -1355,11 +1476,11 @@
       "text": "## Why this change Ray on Kubernetes docs describe Kubernetes API objects alongside Ray concepts, and the two vocabularies collide. Deployment, Job, and Service each name both a Kubernetes API object and a distinct Ray concept, so capitalization is the only thing telling them apart, and the style guide didn't say which form to use where. A contributor asking \"RayCluster or Ray cluster?\" had to derive the answer from two guides and adjudicate between them. This adds a `Writing Ray on Kubernetes and KubeRay docs` section to the style guide, scoped to the user-facing pages under `doc/source/cluster/kubernetes/` and the contributor-facing pages in [ray-project/kuberay](https://github.com/ray-project/kuberay). The approach is to extend this guide with a Kubernetes deference section rather than stand up a separate KubeRay style guide. The two guides already overlap heavily, and a forked guide would drift within a release or two. ## What the casing scan found The term list isn't invented. It comes from a prose-only scan of three corpora: 79 user-facing pages in this repo, 12 contributor pages in `ray-project/kuberay`, and 128 pages of `kubernetes/website` (`content/en/docs/concepts/`, commit `bb38117c0`). The scan strips front matter, fenced code blocks, inline code, MyST roles, and link targets before counting, so YAML field names and CLI output don't inflate the figures. Headline: **these docs already follow the Kubernetes casing rule.** Upstream Kubernetes capitalizes \"Pod\" in 71% of prose uses; the Ray-side KubeRay docs do so in 70%. So this PR documents a rule the docs mostly already follow, and does not propose a capitalization sweep. | Term | Ray-side KubeRay docs | Upstream Kubernetes | Read | |---|---|---|---| | Pod | 371/527 (70%) | 3712/5195 (71%) | Matches upstream almost exactly. | | ConfigMap | 20/21 (95%) | 119/130 (91%) | Healthy. | | Ingress | 8/15 (53%) | 148/242 (61%) | Roughly aligned. | | Service | 18/114 (15%) | 515/946 (54%) | Diverges by design. | | Job | 17/143 (11%) | 522/610 (85%) | Diverges by design. | | Deployment | 6/53 (11%) | 355/461 (77%) | Diverges by design. | The three \"diverges by design\" rows are the reason this section exists. Sampling shows the lowercase uses are Ray Serve deployments, Ray jobs, and Ray services, not Kubernetes API objects. That's a naming collision, not drift, so the fix is a disambiguation rule rather than a sweep. Kubernetes's own rule expects a mix (UpperCamelCase for the API object, sentence case for the general concept), which is why the upstream column isn't 100% either. The one genuine inconsistency the scan found is **\"Ray Autoscaler\" (44 uses) against \"Ray autoscaler\" (35)**, spread across at least eight files. This guide already says to lowercase generic nouns even when they name a Ray concept, so lowercase wins. Recording the rule here is the prerequisite for a mechanical follow-up cleanup. I've left that out of this PR to keep the rule change reviewable on its own. ## Open questions for reviewers I've deliberately written only the rules I can support from the two published guides plus the scan. These five are genuinely open, and I'd rather resolve them in review than assert them: 1. ~~**Confirm the custom-resource split.**~~ **Resolved** by @win5923: the split is intentional and consistent with Kubernetes terminology. Original question: The section documents `RayCluster` (the resource) versus \"Ray cluster\" (the running thing it produces), currently 335 against 106 uses in this repo. I read it as intentional and matching the Kubernetes API-object rule. Worth confirming rather than normalizing to one form. 1. ~~**\"head Pod\" versus \"head node.\"**~~ **Resolved** by @win5923: use \"head Pod\" consistently when a Ray cluster runs on Kubernetes. Original question: The section prefers \"head Pod\" for the Kubernetes-hosted case, since a node is a machine on Kubernetes. `doc/source/cluster/kubernetes/index.md` currently says \"a head node pod and a collection of worker node pods,\" which stacks both vocabularies. Reasonable, or is \"head node\" worth keeping for continuity with Ray's core architecture docs? 1. **Feature graduation phases.** Kubernetes uses start case (\"DRA is Beta\"); Ray docs lowercase feature stages. This bites on pages discussing a Kubernetes feature's stage and a Ray feature's stage in one paragraph. I left it out of the section rather than pick. Which wins? 1. **Field values.** Kubernetes wants unquoted, unstyled values (\"set `imagePullPolicy` to Always\"); this guide says to use backticks for configuration values and gives `num_replicas: 1`. These are closer than they look, since one is a bare value and the other a key-value pair, but the guidance should say which form applies where. 1. **\"Ray dashboard\" versus \"Ray Dashboard\"** (43 title-case against 18 lowercase). This guide implies lowercase, but the dashboard is arguably a named UI surface. Not addressed in the section pending a call. Two further items are out of scope here but worth flagging: - **Line wrapping in the `kuberay` repo.** This guide requires soft wrap. The Kubernetes guide requires manual wrap, justified by localization teams diffing per line, which KubeRay doesn't have. Nothing in this PR changes that, since this guide already governs `doc/source/`. But `kuberay`'s `.markdownlint.yaml` sets `MD013` to 120 characters via pre-commit, which is a latent gate: 266 lines in its `docs/` already exceed it, it isn't enforced in CI, and it isn't auto-fixable, so contributors hit it unpredictably on whichever file they touch. Disabling it there would align the two repos, but that's a call for KubeRay maintainers in their own repo. - **Turning Vale enforcement on.** This PR now adds the ruleset but doesn't enforce it. See the section below. ## Staged Vale ruleset A later commit adds a Vale ruleset for these pages, following the pattern already used for the Ray Data docs. **Nothing is enforced yet.** The Vale hook in `.pre-commit-config.yaml` stays scoped to `^doc/source/data/.*`, so CI checks exactly what it checked before. - `.vale/styles/config/vocabularies/KubeRay/accept.txt` — the KubeRay custom resources, the Kubernetes and ecosystem API objects these pages reference, and project names. Skips what the `General` vocabulary already accepts (`Kubernetes`, `kubectl`, `CRD(s)?`, `namespace`). - `.vale/styles/KubeRay/Terms.yml` — a `substitution` rule at `warning` level covering only the casing forms the new style-guide section settles, with `vocab: false` (see below). The open questions above are deliberately absent. - `.vale.ini` — registers the vocabulary and scopes the style to `doc/source/cluster/kubernetes/`. Registering a vocabulary that the hook doesn't exercise matches existing practice here: `RLlib` and `Train` are already in `Vocab` while the hook only runs on `doc/source/data/`. Contributors can run it by hand today: ``` vale doc/source/cluster/kubernetes/ ``` To enforce later, widen the `files` pattern on the `vale` hook. I'd still hold that until the open questions land. ### What I verified Vale 3.12.0 locally. **Path scoping works.** The KubeRay rules fire on a file under `doc/source/cluster/kubernetes/` and stay silent on identical content at the repo root. **Current state of these pages** — 146 `KubeRay.Terms` alerts, which lines up with the casing scan: | Alert | Count | |---|---| | Use 'Ray autoscaler' instead of 'Ray Autoscaler' | 42 | | Use 'head Pod' instead of 'head pod' | 20 | | Use 'worker Pod' instead of 'worker pod' | 7 | | Use 'Ray job' instead of 'ray job' | 2 | | Use 'Ray Serve' instead of 'Ray serve' | 1 | | Use 'Ray cluster' instead of 'ray cluster' | 1 | | Use 'KubeRay' instead of 'Kuberay' | 1 | | Use 'GCS fault tolerance' instead of 'GCS FT' | 1 | The 42 matches the scan's count for these pages exactly, which is a useful cross-check on both. None of it is enforced, so nothing here has to be fixed in this PR. **No regression on the gated path.** Alert count on `doc/source/data/` goes 174 → 173, deterministic across repeated runs in both states, with no new alerts. A `Vocab` list is global, so it can only widen what's accepted. The single alert that disappears is a `Google.Parens` hit in `concurrent-dataset-execution.md`; no term in the new vocabulary appears on that line, so I'm reporting that as observed rather than claiming I understand the mechanism. It's a reduction either way, so it can't break the gate. ### The vocabulary shadowing trap Worth knowing if you write Vale rules here: a `Vocab` accept entry shadows its token for **every** rule, case-insensitively. A substitution whose target appears in an accept list silently never fires, and nothing warns you. This bit the `Ray Autoscaler` swap, because `autoscaler` is accepted in `config/vocabularies/Data/accept.txt`. The fix is `vocab: false` on the rule, which opts out of the filtering without touching the Data vocabulary. The rule carries a comment saying so. Credit to Bugbot for catching it. I'd first shipped that swap commented out, having concluded the only way to enable it was dropping `autoscaler` from the Data vocabulary and accepting new spelling alerts on the gated path. That was wrong, and `vocab: false` avoids the tradeoff entirely. ## Added after review Two rules that review surfaced, both in the style-guide section plus the Vale ruleset. **Node stays lowercase.** Node is a Kubernetes API object, so \"capitalize Kubernetes API objects\" read literally tells contributors to write \"Kubernetes Node.\" These pages almost always mean the machine, and all 24 uses are correctly lowercase today, so a literal reading of the rule would have someone \"fix\" working prose into wrongness. Kubernetes applies the same two-part rule it applies elsewhere, capitalizing Node only for the resource, and the section now says so. **Don't write \"Ray Pod.\"** This answers the casing question raised in review, and the answer turned out to be neither casing. A Pod is a Kubernetes host that contains a Ray node plus any sidecars, so naming it after Ray overstates what it is. \"TPU Pod\" also already occupies the qualified-Pod form in these pages and means a group of TPU chips rather than a Kubernetes object. The term had no settled form to preserve either: across the 55 prose lines using it, casing split four ways at 20, 16, 16, and 15. Stating that alone would be a trap, because a bare \"Pod\" isn't always an adequate replacement, so the section gives the test that separates the cases: - Qualify when the qualifier distinguishes two referents. That's why \"Ray node\" against \"Kubernetes node\" is correct and should stay. - Don't qualify when it relabels one thing. - Keep the scope explicit where a page also describes Pods the RayCluster doesn't own, such as the operator, Redis, or a `curl` Pod, and where a nearby command filters by label. \"List all Pods\" and \"List the Ray cluster's Pods\" describe different commands and shouldn't read the same way. The cleanup is #65423, which removes all 89 uses from the docs and is reviewable on its own. This PR is the rule; that one is the sweep. Vale picks up four swaps for the retired forms. Plurals get their own entries, for the word-boundary reason @win5923 identified on the `head pod` swaps. Verified that they don't fire on \"Ray head Pod\" or \"Ray worker Pods\", and that the gated `doc/source/data/` path holds at 173 alerts. ## Not a duplicate Checked open PRs for this area before starting: ``` gh pr list --repo ray-project/ray --state open --search \"writing-style\" gh pr list --repo ray-project/ray --state open --search \"style guide in:title\" gh pr list --repo ray-project/ray --state open --search \"kuberay style\" ``` No open PR touches `doc/source/ray-contribute/writing-style.md` or proposes KubeRay style guidance. The `writing-style` matches were all false positives on `write_delta`. This extends the guide added in #64518. ## Testing ``` pre-commit run --files doc/source/ray-contribute/writing-style.md ``` Passes, but as a no-op on the Markdown: every hook reports \"no files to check,\" because no pre-commit hook applies to Markdown under `doc/source/` and Vale is scoped to `doc/source/data/`. Stating that plainly instead of claiming coverage it doesn't give. The Vale config files do have hook coverage, and those checks ran for real: ``` pre-commit run --files .vale.ini .vale/styles/KubeRay/Terms.yml .vale/styles/config/vocabularies/KubeRay/accept.txt ``` `trim trailing whitespace`, `fix end of files`, `check for added large files`, and `semgrep` all pass. Vale verification for the ruleset is in the section above: path scoping, the 31-alert current state, and the 174 → 173 no-regression check on the gated path. Verified by hand: the new `(kubernetes-docs-style)=` anchor doesn't collide with any existing target in `doc/source/`, and the section uses the same MyST anchor form and Markdown pipe-table style already used elsewhere in this file. Rendering is verified by the Read the Docs preview build on this PR. No code, no API, no behavior change. The prose is a contributor guide; the Vale files add configuration without widening what CI enforces. ## AI assistance Written with AI assistance (Claude). I've reviewed every changed line, generated and inspected the casing counts myself, and can defend the change end to end. The scan scripts that produced the numbers live outside this repo; happy to share the methodology or re-run against a different corpus if a reviewer wants to check a figure. --- ### Update: the vocabulary now covers the ecosystem terms these pages use (555ebdad) Running `vale doc/source/cluster/kubernetes/`, which this PR's `.vale.ini` comment tells contributors to do, produced 215 `Vale.Spelling` alerts on correctly spelled terms. The accept list covered API objects, the custom resources, and project names, but not the wider ecosystem vocabulary the pages actually contain. Left as is, a contributor following the instruction learns to ignore Vale on exactly the paths this PR wants gated. Added: the ecosystem projects (Istio, Kiali, gVisor, Kata, Krew, Kustomize, Bottlerocket, Aliyun, GCSFuse, Promtail, Fluentd, Filebeat, Alertmanager), the Gateway API `HTTPRoute`, and the Kubernetes and infrastructure terms in use (cgroup, finalizer, kubeconfig, kubelet, namespaced, namespaces, toleration, upscaling, downscaling, vCPU, FQDN, AMI, subnet, syscall, hostname, cron, CA, autoscalers). **Excluded on purpose, since an accept list shouldn't launder a defect.** `CR` and `CRs`, 12 uses, because this PR's own guidance says to write \"custom resource\" and to define CustomResourceDefinition then use CRD. Real misspellings: `heterogenous`, `replicaset` for ReplicaSet, `Deepseek` for DeepSeek, `nodepool` for node pool. `gsutil`, which `gcloud storage` supersedes. Unbackticked code identifiers, which are a formatting defect rather than a vocabulary gap: `podSpec`, `podSelector`, `nodeSelector`, `jsonPointers`, `intervalSeconds`, `workerGroup`, `ignoreDifferences`, `HTTPMode`, `args`, `yaml`. And generic English that Vale's dictionary lacks, which belongs in the General vocabulary rather than a KubeRay-specific one. Three entries are case-tolerant (`[Tt]oleration(s)?`, `[Uu]pscaling`, `[Dd]ownscaling`). A lowercase-only entry makes `Vale.Terms` flag the legitimate sentence-start capitalization. **Verification**, deterministic across repeated runs: - `doc/source/cluster/kubernetes/`: 1329 alerts to 1178. `Vale.Spelling` drops from 215 to 72. `KubeRay.Terms` is unchanged at 160, confirming no swap got shadowed by a new accept entry, which is the trap the `Ray Autoscaler` comment in `Terms.yml` documents. - `doc/source/data/`, the only path the pre-commit hook gates: 173 to 170, with **no new alerts**. A `Vocab` is global, so it can only widen what's accepted. - One candidate entry was dropped for exactly that reason. A `runtime(s)?` entry made `Vale.Terms` flag \"Runtime\" in `doc/source/data/monitoring-your-workload.rst`, a new alert on the gated path. Four new `Vale.Terms` alerts do appear on the KubeRay paths, and all four are genuine casing defects in existing pages rather than noise: \"Kubelet\" twice in `configuring-ippr.md`, lowercase \"istio\" naming the project in `rayservice-incremental-upgrade.md`, and \"Cgroups\" in the `resource-isolation-with-writable-cgroups.md` H1, which is also title case. Those are content fixes for a separate change, not this one. AI assistance was used for this commit, including the Vale sweep and the before-and-after verification above.",
       "url": "https://github.com/ray-project/ray/pull/65239",
       "createdAt": "2026-08-05T19:50:41Z",
-      "updatedAt": "2026-08-12T19:01:06Z",
-      "timestamp": "2026-08-12T19:01:06Z",
+      "updatedAt": "2026-08-13T17:41:41Z",
+      "timestamp": "2026-08-13T17:41:41Z",
       "metrics": {
         "reactions": 1,
-        "comments": 2
+        "comments": 3
       },
       "labels": [
         "docs",
@@ -1368,7 +1489,8 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:ray-project/ray:pull_request:65245",
@@ -1698,8 +1820,7 @@
       ],
       "author": "upadhyay74aman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65375",
@@ -2469,11 +2590,11 @@
       "text": "## Description https://github.com/ray-project/kuberay/pull/5121 updated the env var from `RAY_ROOT_DIR` to `STORAGE_ROOT_DIR`. The default storage root dir is now the bucket root itself, so updated example and file structure in the documentation. ## Related issues Related to https://github.com/ray-project/kuberay/pull/5121 ## Additional information",
       "url": "https://github.com/ray-project/ray/pull/65441",
       "createdAt": "2026-08-12T22:15:06Z",
-      "updatedAt": "2026-08-13T11:18:33Z",
-      "timestamp": "2026-08-13T11:18:33Z",
+      "updatedAt": "2026-08-13T17:19:26Z",
+      "timestamp": "2026-08-13T17:19:26Z",
       "metrics": {
         "reactions": 1,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "core",
@@ -2482,7 +2603,8 @@
       ],
       "author": "chiayi",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:ray-project/ray:pull_request:65442",
@@ -2571,7 +2693,7 @@
       "updatedAt": "2026-08-13T13:34:06Z",
       "timestamp": "2026-08-13T13:34:06Z",
       "metrics": {
-        "reactions": 1,
+        "reactions": 2,
         "comments": 0
       },
       "labels": [
@@ -2580,7 +2702,8 @@
       ],
       "author": "OneSizeFitsQuorum",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:ray-project/ray:pull_request:65448",
@@ -2664,8 +2787,8 @@
       "text": "## Description Ray Data can read ORC files, but it can't write them. This adds `Dataset.write_orc()`, backed by a new `ORCDatasink` that writes each output block with `pyarrow.orc.write_table`. The API forwards PyArrow ORC writer options and supports `min_rows_per_file` through the existing block-based file datasink infrastructure. ## Related issues Follow-up to #64600 ## Additional information Mirrors the `write_csv` / `write_json` APIs. PyArrow ORC writer options can be passed directly to `write_orc()`. No new dependency (`pyarrow` already ships `pyarrow.orc`). Adds write tests in `test_orc.py` and API docs in `saving_data.rst`. ```python import ray ds = ray.data.range(100) ds.write_orc(\"s3://bucket/path/\", compression=\"zstd\")",
       "url": "https://github.com/ray-project/ray/pull/65453",
       "createdAt": "2026-08-13T09:53:45Z",
-      "updatedAt": "2026-08-13T13:59:52Z",
-      "timestamp": "2026-08-13T13:59:52Z",
+      "updatedAt": "2026-08-13T16:44:39Z",
+      "timestamp": "2026-08-13T16:44:39Z",
       "metrics": {
         "reactions": 1,
         "comments": 1
@@ -2802,8 +2925,7 @@
       "labels": [],
       "author": "dstrodtman",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65460",
@@ -2812,11 +2934,11 @@
       "project": "ray-project/ray",
       "kind": "pull_request",
       "title": "[doc] Render the Jobs API spec with sphinxcontrib-openapi instead of ReDoc",
-      "text": "> **Stacked PR.** Targets `doc-1513-declare-openapi-303` (#65458), which targets #65457. Review order is #65457 → #65458 → this. GitHub retargets automatically as each merges. > > **Conflicts with #65456 by design.** That PR pins `redoc_uri` to a specific ReDoc version; this one deletes `redoc_uri` entirely. If #65456 lands first I'll resolve the conflict here. If this lands, #65456 becomes moot and should be closed. Either order works — #65456 is worth keeping as the safe fix in case this one stalls in review. ## Why this change is needed `sphinxcontrib-redoc` is unmaintained. 1.6.0 is the latest release and dates from 2020; the `2.0.0a1` alpha still imports `pkg_resources`. Keeping it costs this repo three things: | Cost | Location | | --- | --- | | A `setuptools<82` ceiling, because the extension imports `pkg_resources` at module load and setuptools 82 removed it | `doc/requirements-doc.txt` | | A `misc.copy_overwrite` entry in `suppress_warnings`, because the extension redundantly copies its own bundled asset | `doc/source/conf.py` | | The renderer fetched from a third-party CDN at page-view time | `doc/source/conf.py` | All of that buys exactly one page. The Jobs API spec is the only consumer: `conf.py` had one `redoc` entry and there's no other OpenAPI document in the repo. There's a second, larger reason. **The current page is a client-rendered JavaScript island.** ReDoc has no source file at all — the extension synthesizes `api.html` from `conf.py`. So today the page: - is in **no toctree**, and - is reachable only through a hardcoded `` `... <api.html>`_ `` link at `rest.rst:94`, and - has **none of its endpoint content in the built HTML**, so it can't participate in Sphinx search or cross-referencing. ## Related changes Fourth in the chain above. Supersedes the \"record why we stay on ReDoc\" PR (#65459), which I'll close — its conclusion is obsolete now that this works. ## What changes - Swap `sphinxcontrib.redoc` → `sphinxcontrib.openapi` (0.9.0) in `conf.py` and `doc/requirements-doc.txt`, and regenerate the deplock. - Add a real `api.rst`, put it in the `job-submission` toctree, and replace the raw `<api.html>` link with a `:ref:`. - Drop the now-unneeded `misc.copy_overwrite` suppression. - Change two operation `summary` fields from YAML block scalars to plain scalars (see below). - Update the `setuptools` comment: the `<82` ceiling's cause is gone. The pin itself is left in place, since unpinning is a separate resolve worth verifying on its own. `sphinxcontrib-openapi` is pure Python, from the same `sphinx-contrib` org, and needs no `pkg_resources`. The deplock diff is `-sphinxcontrib-redoc` and `+sphinxcontrib-openapi` plus its five dependencies (`sphinxcontrib-httpdomain`, `sphinx-mdinclude`, `deepmerge`, `mistune`, `picobox`). ## Verification Built with `make -C doc rtd-build`, which runs the RtD-faithful clean build with `-W`, matching `fail_on_warning: true`: ``` build succeeded. ``` Exit 0, and **zero `WARNING:`/`ERROR:` lines in the whole log**. `raydepsets --check` on `docbuild_depset_311` reports \"Lock files are up to date.\" Checked against the built `api.html` rather than inferred: | Check | Result | | --- | --- | | Request/response schemas rendered | Yes — `Request JSON Object` and `Response JSON Object` field lists, with `entrypoint`, `runtime_env`, `metadata`, and the rest, including types and required flags | | `$ref` and `allOf` resolution | Resolved, including through `JobDetails` | | Literal `**` on the page | None — zero docutils `problematic` nodes | | `http-routingtable` index | Generated | | Page in the sidebar, with prev/next pagination | Yes | ## Two non-obvious configuration details Both are commented at their sites in the diff, because both fail quietly. **The renderer is selected via `openapi_default_renderer`, not by the directive spelling.** Writing `.. openapi:httpdomain::` in the page adds an `unknown directive name` warning, which is fatal under `fail_on_warning`. Selecting it in `conf.py` and using a plain `.. openapi::` avoids that. **The default renderer emits no request or response schemas at all** — just paths, parameters, and status codes. So leaving `openapi_default_renderer` unset would silently drop most of the reference content while still building green. That's the trap worth knowing about if anyone touches this later. ## Why the summary fields change `sphinxcontrib-openapi`'s renderer interpolates an operation's `summary` into `**...**` without stripping it. A YAML block scalar (`summary: |`) leaves a trailing newline in the value, so the markup opens on one line and closes on the next, docutils can't pair it, and readers see literal asterisks. Filed upstream as [sphinx-contrib/openapi#173](https://github.com/sphinx-contrib/openapi/issues/173). Two operations used block scalars (`GET /api/version` and `POST /api/jobs`); the other six already used plain scalars. Converting those two is the whole fix and changes no rendered text. ## What this gives up, honestly **Request and response samples.** ReDoc rendered example payloads; this doesn't. It isn't a configuration choice — both routes to examples are blocked by upstream bugs, and I've confirmed each against this spec: - `:generate-examples-from-schemas:` crashes with `ValueError: dictionary update sequence element #0 has length 1; 2 is required` ([#166](https://github.com/sphinx-contrib/openapi/issues/166)). Example generation can't handle an `allOf` that targets a non-object schema, which is exactly how `JobDetails` attaches descriptions to the `JobType` and `JobStatus` string enums. - `:response-examples-for:` is rejected as an unknown option ([#165](https://github.com/sphinx-contrib/openapi/issues/165)). `api.rst` carries a comment recording this so nobody re-derives it, and I've added the reproduction detail to both upstream issues. Weighed against gaining search, cross-referencing, navigation, a dependency that's actually maintained, and no third-party CDN at page-view time, losing sample payloads seemed like the right trade — but it is a real loss, and it's reasonable to want the upstream fixes first instead. I've also filed [#171](https://github.com/sphinx-contrib/openapi/issues/171), [#172](https://github.com/sphinx-contrib/openapi/issues/172), and [#173](https://github.com/sphinx-contrib/openapi/issues/173), each with a minimal reproducer, and am planning PRs for them. ## Checks - [x] `make -C doc rtd-build`: build succeeded, zero warnings. - [x] `raydepsets --check`: lock files up to date. - [x] Built page inspected for schema content, `allOf`/`$ref` resolution, and stray markup. - [x] `pre-commit run` clean. - [ ] Read the Docs preview reviewed for the appearance change.",
+      "text": "> **Stacked PR.** Targets `doc-1513-declare-openapi-303` (#65458), which targets #65457. Review order is #65457 → #65458 → this. GitHub retargets automatically as each merges. > > **Conflicts with #65456 by design.** That PR pins `redoc_uri` to a specific ReDoc version; this one deletes `redoc_uri` entirely. If #65456 lands first I'll resolve the conflict here. If this lands, #65456 becomes moot and should be closed. Either order works — #65456 is worth keeping as the safe fix in case this one stalls in review. ## Why this change is needed `sphinxcontrib-redoc` is unmaintained. 1.6.0 is the latest release and dates from 2020; the `2.0.0a1` alpha still imports `pkg_resources`. Keeping it costs this repo three things: | Cost | Location | | --- | --- | | A `setuptools<82` ceiling, because the extension imports `pkg_resources` at module load and setuptools 82 removed it | `doc/requirements-doc.txt` | | A `misc.copy_overwrite` entry in `suppress_warnings`, because the extension redundantly copies its own bundled asset | `doc/source/conf.py` | | The renderer fetched from a third-party CDN at page-view time | `doc/source/conf.py` | All of that buys exactly one page. The Jobs API spec is the only consumer: `conf.py` had one `redoc` entry and there's no other OpenAPI document in the repo. There's a second, larger reason. **The current page is a client-rendered JavaScript island.** ReDoc has no source file at all — the extension synthesizes `api.html` from `conf.py`. So today the page: - is in **no toctree**, and - is reachable only through a hardcoded `` `... <api.html>`_ `` link at `rest.rst:94`, and - has **none of its endpoint content in the built HTML**, so it can't participate in Sphinx search or cross-referencing. ## Related changes Fourth in the chain above. Supersedes the \"record why we stay on ReDoc\" PR (#65459), which I'll close — its conclusion is obsolete now that this works. ## What changes - Swap `sphinxcontrib.redoc` → `sphinxcontrib.openapi` (0.9.0) in `conf.py` and `doc/requirements-doc.txt`, and regenerate the deplock. - Add a real `api.md`, put it in the `job-submission` toctree, and replace the raw `<api.html>` link with a `:ref:`. - Drop the now-unneeded `misc.copy_overwrite` suppression. - Change two operation `summary` fields from YAML block scalars to plain scalars (see below). - Update the `setuptools` comment: the `<82` ceiling's cause is gone. The pin itself is left in place, since unpinning is a separate resolve worth verifying on its own. `sphinxcontrib-openapi` is pure Python, from the same `sphinx-contrib` org, and needs no `pkg_resources`. The deplock diff is `-sphinxcontrib-redoc` and `+sphinxcontrib-openapi` plus its five dependencies (`sphinxcontrib-httpdomain`, `sphinx-mdinclude`, `deepmerge`, `mistune`, `picobox`). ## Verification Built with `make -C doc rtd-build`, which runs the RtD-faithful clean build with `-W`, matching `fail_on_warning: true`: ``` build succeeded. ``` Exit 0, and **zero `WARNING:`/`ERROR:` lines in the whole log**. `raydepsets --check` on `docbuild_depset_311` reports \"Lock files are up to date.\" Checked against the built `api.html` rather than inferred: | Check | Result | | --- | --- | | Request/response schemas rendered | Yes — `Request JSON Object` and `Response JSON Object` field lists, with `entrypoint`, `runtime_env`, `metadata`, and the rest, including types and required flags | | `$ref` and `allOf` resolution | Resolved, including through `JobDetails` | | Literal `**` on the page | None — zero docutils `problematic` nodes | | `http-routingtable` index | Generated | | Page in the sidebar, with prev/next pagination | Yes | | MyST page equivalent to the `.rst` draft it replaced | Yes — 8 httpdomain operation objects, identical `Parameters` / `Request JSON Object` / `Response JSON Object` / `Status Codes` field lists, no leaked rST, and both `:ref:` directions resolving with the right link text | ## Three non-obvious configuration details All three are commented at their sites in the diff, because all three fail quietly. **The renderer is selected via `openapi_default_renderer`, not by the directive spelling.** Writing `.. openapi:httpdomain::` in the page adds an `unknown directive name` warning, which is fatal under `fail_on_warning`. Selecting it in `conf.py` and using a plain `.. openapi::` avoids that. **The default renderer emits no request or response schemas at all** — just paths, parameters, and status codes. So leaving `openapi_default_renderer` unset would silently drop most of the reference content while still building green. That's the trap worth knowing about if anyone touches this later. **The `openapi` directive can't be a bare MyST fence; it has to be wrapped in `eval-rst`.** `sphinxcontrib-openapi` emits reStructuredText into a `ViewList` and hands it to `nested_parse`, but MyST's `nested_parse` renders that content as Markdown. A ```` ```{openapi} ```` fence therefore builds green with zero warnings while silently degrading the entire page: every `.. http:get::` and `:resjson:` line renders as literal text, so nothing becomes an httpdomain object and the page has no field lists, no anchors, and no search or cross-referencing. That's a worse failure than the one above, and just as quiet. ## Why the summary fields change `sphinxcontrib-openapi`'s renderer interpolates an operation's `summary` into `**...**` without stripping it. A YAML block scalar (`summary: |`) leaves a trailing newline in the value, so the markup opens on one line and closes on the next, docutils can't pair it, and readers see literal asterisks. Filed upstream as [sphinx-contrib/openapi#173](https://github.com/sphinx-contrib/openapi/issues/173). Two operations used block scalars (`GET /api/version` and `POST /api/jobs`); the other six already used plain scalars. Converting those two is the whole fix and changes no rendered text. ## What this gives up, honestly **Request and response samples.** ReDoc rendered example payloads; this doesn't. It isn't a configuration choice — both routes to examples are blocked by upstream bugs, and I've confirmed each against this spec: - `:generate-examples-from-schemas:` crashes with `ValueError: dictionary update sequence element #0 has length 1; 2 is required` ([#166](https://github.com/sphinx-contrib/openapi/issues/166)). Example generation can't handle an `allOf` that targets a non-object schema, which is exactly how `JobDetails` attaches descriptions to the `JobType` and `JobStatus` string enums. - `:response-examples-for:` is rejected as an unknown option ([#165](https://github.com/sphinx-contrib/openapi/issues/165)). `api.md` carries a comment recording this so nobody re-derives it, and I've added the reproduction detail to both upstream issues. Weighed against gaining search, cross-referencing, navigation, a dependency that's actually maintained, and no third-party CDN at page-view time, losing sample payloads seemed like the right trade — but it is a real loss, and it's reasonable to want the upstream fixes first instead. I've also filed [#171](https://github.com/sphinx-contrib/openapi/issues/171), [#172](https://github.com/sphinx-contrib/openapi/issues/172), and [#173](https://github.com/sphinx-contrib/openapi/issues/173), each with a minimal reproducer, and am planning PRs for them. ## Checks - [x] `make -C doc rtd-build`: build succeeded, zero warnings. - [x] `raydepsets --check`: lock files up to date. - [x] Built page inspected for schema content, `allOf`/`$ref` resolution, and stray markup. - [x] `pre-commit run` clean. - [ ] Read the Docs preview reviewed for the appearance change.",
       "url": "https://github.com/ray-project/ray/pull/65460",
       "createdAt": "2026-08-13T14:03:32Z",
-      "updatedAt": "2026-08-13T14:05:12Z",
-      "timestamp": "2026-08-13T14:05:12Z",
+      "updatedAt": "2026-08-13T16:25:52Z",
+      "timestamp": "2026-08-13T16:25:52Z",
       "metrics": {
         "reactions": 1,
         "comments": 0
@@ -2825,7 +2947,7 @@
       "author": "dstrodtman",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:ray-project/ray:pull_request:65461",
@@ -2848,6 +2970,51 @@
         "docs-go"
       ],
       "author": "ronny-anyscale",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:ray-project/ray:pull_request:65462",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "pull_request",
+      "title": "[docs] Sync the vendored KubeRay CRD API reference",
+      "text": "## Why are these changes needed? Vendors the generated KubeRay CRD API reference at `doc/source/cluster/kubernetes/references/api.md` from `ray-project/kuberay` release tag v1.6.2, pinned at commit [`0a9eabd`](https://github.com/ray-project/kuberay/blob/0a9eabde561ab59ab4bbe626072c359da9214484/docs/reference/api.md). Opened automatically. The upstream file is a build artifact that `elastic/crd-ref-docs` generates from the Go CRD types in `ray-operator/apis/ray/`, and KubeRay's `ray-operator-verify-api-docs` CI job fails on drift between the two, so the content is verified upstream before it reaches here. That job covers `release-*` branches as well as `master`, so a release tag's artifact carries the same guarantee. This syncs from the latest KubeRay *release*, not from `master`. Master carries CRD surface that no release ships, and documenting it here would advertise fields a reader can't use. The `ray.io/v1alpha1` section is stripped on the way in. That API version is deprecated and on a removal runway (ray-project/kuberay#5124), and its cross-links collide with the v1 anchors (ray-project/kuberay#5091). With one package left, the `Packages` index and the `ray.io/v1` heading restate the page's own subject, so both are dropped and the headings under them move up to h2. Sphinx's right-hand page nav lists h2 only, so this is what puts the CRD types in it. Heading text is untouched, so the anchors cross-links resolve against don't move. A page intro replaces the generated package blurb those headings carried, naming the resource types read off the page's own index. ## Checks Content-only: the single changed file is documentation under `doc/`, so the `docs-go` scope guard applies cleanly. The Read the Docs preview build on this PR is the gate — a green build means the regenerated reference still renders and all of its in-page anchors resolve. Nothing else in this PR. If it contains any other change, something is wrong with the sync job.",
+      "url": "https://github.com/ray-project/ray/pull/65462",
+      "createdAt": "2026-08-13T16:20:13Z",
+      "updatedAt": "2026-08-13T16:23:14Z",
+      "timestamp": "2026-08-13T16:23:14Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [
+        "docs",
+        "docs-go"
+      ],
+      "author": "dstrodtman",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:ray-project/ray:pull_request:65463",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "ray-project/ray",
+      "kind": "pull_request",
+      "title": "core: release runtime env per-job loggers",
+      "url": "https://github.com/ray-project/ray/pull/65463",
+      "createdAt": "2026-08-13T17:27:57Z",
+      "updatedAt": "2026-08-13T17:32:13Z",
+      "timestamp": "2026-08-13T17:32:13Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "rohitsalla",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -6204,6 +6371,413 @@
           "community-contribution"
         ],
         "author": "WFY123wfy",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:84f189ad349a47489e6b",
+      "signalId": "github:ray-project/ray:pull_request:65239",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65239",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[docs] Add Kubernetes and KubeRay conventions to the style guide",
+        "text": "## Why this change Ray on Kubernetes docs describe Kubernetes API objects alongside Ray concepts, and the two vocabularies collide. Deployment, Job, and Service each name both a Kubernetes API object and a distinct Ray concept, so capitalization is the only thing telling them apart, and the style guide didn't say which form to use where. A contributor asking \"RayCluster or Ray cluster?\" had to derive the answer from two guides and adjudicate between them. This adds a `Writing Ray on Kubernetes and KubeRay docs` section to the style guide, scoped to the user-facing pages under `doc/source/cluster/kubernetes/` and the contributor-facing pages in [ray-project/kuberay](https://github.com/ray-project/kuberay). The approach is to extend this guide with a Kubernetes deference section rather than stand up a separate KubeRay style guide. The two guides already overlap heavily, and a forked guide would drift within a release or two. ## What the casing scan found The term list isn't invented. It comes from a prose-only scan of three corpora: 79 user-facing pages in this repo, 12 contributor pages in `ray-project/kuberay`, and 128 pages of `kubernetes/website` (`content/en/docs/concepts/`, commit `bb38117c0`). The scan strips front matter, fenced code blocks, inline code, MyST roles, and link targets before counting, so YAML field names and CLI output don't inflate the figures. Headline: **these docs already follow the Kubernetes casing rule.** Upstream Kubernetes capitalizes \"Pod\" in 71% of prose uses; the Ray-side KubeRay docs do so in 70%. So this PR documents a rule the docs mostly already follow, and does not propose a capitalization sweep. | Term | Ray-side KubeRay docs | Upstream Kubernetes | Read | |---|---|---|---| | Pod | 371/527 (70%) | 3712/5195 (71%) | Matches upstream almost exactly. | | ConfigMap | 20/21 (95%) | 119/130 (91%) | Healthy. | | Ingress | 8/15 (53%) | 148/242 (61%) | Roughly aligned. | | Service | 18/114 (15%) | 515/946 (54%) | Diverges by design. | | Job | 17/143 (11%) | 522/610 (85%) | Diverges by design. | | Deployment | 6/53 (11%) | 355/461 (77%) | Diverges by design. | The three \"diverges by design\" rows are the reason this section exists. Sampling shows the lowercase uses are Ray Serve deployments, Ray jobs, and Ray services, not Kubernetes API objects. That's a naming collision, not drift, so the fix is a disambiguation rule rather than a sweep. Kubernetes's own rule expects a mix (UpperCamelCase for the API object, sentence case for the general concept), which is why the upstream column isn't 100% either. The one genuine inconsistency the scan found is **\"Ray Autoscaler\" (44 uses) against \"Ray autoscaler\" (35)**, spread across at least eight files. This guide already says to lowercase generic nouns even when they name a Ray concept, so lowercase wins. Recording the rule here is the prerequisite for a mechanical follow-up cleanup. I've left that out of this PR to keep the rule change reviewable on its own. ## Open questions for reviewers I've deliberately written only the rules I can support from the two published guides plus the scan. These five are genuinely open, and I'd rather resolve them in review than assert them: 1. ~~**Confirm the custom-resource split.**~~ **Resolved** by @win5923: the split is intentional and consistent with Kubernetes terminology. Original question: The section documents `RayCluster` (the resource) versus \"Ray cluster\" (the running thing it produces), currently 335 against 106 uses in this repo. I read it as intentional and matching the Kubernetes API-object rule. Worth confirming rather than normalizing to one form. 1. ~~**\"head Pod\" versus \"head node.\"**~~ **Resolved** by @win5923: use \"head Pod\" consistently when a Ray cluster runs on Kubernetes. Original question: The section prefers \"head Pod\" for the Kubernetes-hosted case, since a node is a machine on Kubernetes. `doc/source/cluster/kubernetes/index.md` currently says \"a head node pod and a collection of worker node pods,\" which stacks both vocabularies. Reasonable, or is \"head node\" worth keeping for continuity with Ray's core architecture docs? 1. **Feature graduation phases.** Kubernetes uses start case (\"DRA is Beta\"); Ray docs lowercase feature stages. This bites on pages discussing a Kubernetes feature's stage and a Ray feature's stage in one paragraph. I left it out of the section rather than pick. Which wins? 1. **Field values.** Kubernetes wants unquoted, unstyled values (\"set `imagePullPolicy` to Always\"); this guide says to use backticks for configuration values and gives `num_replicas: 1`. These are closer than they look, since one is a bare value and the other a key-value pair, but the guidance should say which form applies where. 1. **\"Ray dashboard\" versus \"Ray Dashboard\"** (43 title-case against 18 lowercase). This guide implies lowercase, but the dashboard is arguably a named UI surface. Not addressed in the section pending a call. Two further items are out of scope here but worth flagging: - **Line wrapping in the `kuberay` repo.** This guide requires soft wrap. The Kubernetes guide requires manual wrap, justified by localization teams diffing per line, which KubeRay doesn't have. Nothing in this PR changes that, since this guide already governs `doc/source/`. But `kuberay`'s `.markdownlint.yaml` sets `MD013` to 120 characters via pre-commit, which is a latent gate: 266 lines in its `docs/` already exceed it, it isn't enforced in CI, and it isn't auto-fixable, so contributors hit it unpredictably on whichever file they touch. Disabling it there would align the two repos, but that's a call for KubeRay maintainers in their own repo. - **Turning Vale enforcement on.** This PR now adds the ruleset but doesn't enforce it. See the section below. ## Staged Vale ruleset A later commit adds a Vale ruleset for these pages, following the pattern already used for the Ray Data docs. **Nothing is enforced yet.** The Vale hook in `.pre-commit-config.yaml` stays scoped to `^doc/source/data/.*`, so CI checks exactly what it checked before. - `.vale/styles/config/vocabularies/KubeRay/accept.txt` — the KubeRay custom resources, the Kubernetes and ecosystem API objects these pages reference, and project names. Skips what the `General` vocabulary already accepts (`Kubernetes`, `kubectl`, `CRD(s)?`, `namespace`). - `.vale/styles/KubeRay/Terms.yml` — a `substitution` rule at `warning` level covering only the casing forms the new style-guide section settles, with `vocab: false` (see below). The open questions above are deliberately absent. - `.vale.ini` — registers the vocabulary and scopes the style to `doc/source/cluster/kubernetes/`. Registering a vocabulary that the hook doesn't exercise matches existing practice here: `RLlib` and `Train` are already in `Vocab` while the hook only runs on `doc/source/data/`. Contributors can run it by hand today: ``` vale doc/source/cluster/kubernetes/ ``` To enforce later, widen the `files` pattern on the `vale` hook. I'd still hold that until the open questions land. ### What I verified Vale 3.12.0 locally. **Path scoping works.** The KubeRay rules fire on a file under `doc/source/cluster/kubernetes/` and stay silent on identical content at the repo root. **Current state of these pages** — 146 `KubeRay.Terms` alerts, which lines up with the casing scan: | Alert | Count | |---|---| | Use 'Ray autoscaler' instead of 'Ray Autoscaler' | 42 | | Use 'head Pod' instead of 'head pod' | 20 | | Use 'worker Pod' instead of 'worker pod' | 7 | | Use 'Ray job' instead of 'ray job' | 2 | | Use 'Ray Serve' instead of 'Ray serve' | 1 | | Use 'Ray cluster' instead of 'ray cluster' | 1 | | Use 'KubeRay' instead of 'Kuberay' | 1 | | Use 'GCS fault tolerance' instead of 'GCS FT' | 1 | The 42 matches the scan's count for these pages exactly, which is a useful cross-check on both. None of it is enforced, so nothing here has to be fixed in this PR. **No regression on the gated path.** Alert count on `doc/source/data/` goes 174 → 173, deterministic across repeated runs in both states, with no new alerts. A `Vocab` list is global, so it can only widen what's accepted. The single alert that disappears is a `Google.Parens` hit in `concurrent-dataset-execution.md`; no term in the new vocabulary appears on that line, so I'm reporting that as observed rather than claiming I understand the mechanism. It's a reduction either way, so it can't break the gate. ### The vocabulary shadowing trap Worth knowing if you write Vale rules here: a `Vocab` accept entry shadows its token for **every** rule, case-insensitively. A substitution whose target appears in an accept list silently never fires, and nothing warns you. This bit the `Ray Autoscaler` swap, because `autoscaler` is accepted in `config/vocabularies/Data/accept.txt`. The fix is `vocab: false` on the rule, which opts out of the filtering without touching the Data vocabulary. The rule carries a comment saying so. Credit to Bugbot for catching it. I'd first shipped that swap commented out, having concluded the only way to enable it was dropping `autoscaler` from the Data vocabulary and accepting new spelling alerts on the gated path. That was wrong, and `vocab: false` avoids the tradeoff entirely. ## Added after review Two rules that review surfaced, both in the style-guide section plus the Vale ruleset. **Node stays lowercase.** Node is a Kubernetes API object, so \"capitalize Kubernetes API objects\" read literally tells contributors to write \"Kubernetes Node.\" These pages almost always mean the machine, and all 24 uses are correctly lowercase today, so a literal reading of the rule would have someone \"fix\" working prose into wrongness. Kubernetes applies the same two-part rule it applies elsewhere, capitalizing Node only for the resource, and the section now says so. **Don't write \"Ray Pod.\"** This answers the casing question raised in review, and the answer turned out to be neither casing. A Pod is a Kubernetes host that contains a Ray node plus any sidecars, so naming it after Ray overstates what it is. \"TPU Pod\" also already occupies the qualified-Pod form in these pages and means a group of TPU chips rather than a Kubernetes object. The term had no settled form to preserve either: across the 55 prose lines using it, casing split four ways at 20, 16, 16, and 15. Stating that alone would be a trap, because a bare \"Pod\" isn't always an adequate replacement, so the section gives the test that separates the cases: - Qualify when the qualifier distinguishes two referents. That's why \"Ray node\" against \"Kubernetes node\" is correct and should stay. - Don't qualify when it relabels one thing. - Keep the scope explicit where a page also describes Pods the RayCluster doesn't own, such as the operator, Redis, or a `curl` Pod, and where a nearby command filters by label. \"List all Pods\" and \"List the Ray cluster's Pods\" describe different commands and shouldn't read the same way. The cleanup is #65423, which removes all 89 uses from the docs and is reviewable on its own. This PR is the rule; that one is the sweep. Vale picks up four swaps for the retired forms. Plurals get their own entries, for the word-boundary reason @win5923 identified on the `head pod` swaps. Verified that they don't fire on \"Ray head Pod\" or \"Ray worker Pods\", and that the gated `doc/source/data/` path holds at 173 alerts. ## Not a duplicate Checked open PRs for this area before starting: ``` gh pr list --repo ray-project/ray --state open --search \"writing-style\" gh pr list --repo ray-project/ray --state open --search \"style guide in:title\" gh pr list --repo ray-project/ray --state open --search \"kuberay style\" ``` No open PR touches `doc/source/ray-contribute/writing-style.md` or proposes KubeRay style guidance. The `writing-style` matches were all false positives on `write_delta`. This extends the guide added in #64518. ## Testing ``` pre-commit run --files doc/source/ray-contribute/writing-style.md ``` Passes, but as a no-op on the Markdown: every hook reports \"no files to check,\" because no pre-commit hook applies to Markdown under `doc/source/` and Vale is scoped to `doc/source/data/`. Stating that plainly instead of claiming coverage it doesn't give. The Vale config files do have hook coverage, and those checks ran for real: ``` pre-commit run --files .vale.ini .vale/styles/KubeRay/Terms.yml .vale/styles/config/vocabularies/KubeRay/accept.txt ``` `trim trailing whitespace`, `fix end of files`, `check for added large files`, and `semgrep` all pass. Vale verification for the ruleset is in the section above: path scoping, the 31-alert current state, and the 174 → 173 no-regression check on the gated path. Verified by hand: the new `(kubernetes-docs-style)=` anchor doesn't collide with any existing target in `doc/source/`, and the section uses the same MyST anchor form and Markdown pipe-table style already used elsewhere in this file. Rendering is verified by the Read the Docs preview build on this PR. No code, no API, no behavior change. The prose is a contributor guide; the Vale files add configuration without widening what CI enforces. ## AI assistance Written with AI assistance (Claude). I've reviewed every changed line, generated and inspected the casing counts myself, and can defend the change end to end. The scan scripts that produced the numbers live outside this repo; happy to share the methodology or re-run against a different corpus if a reviewer wants to check a figure. --- ### Update: the vocabulary now covers the ecosystem terms these pages use (555ebdad) Running `vale doc/source/cluster/kubernetes/`, which this PR's `.vale.ini` comment tells contributors to do, produced 215 `Vale.Spelling` alerts on correctly spelled terms. The accept list covered API objects, the custom resources, and project names, but not the wider ecosystem vocabulary the pages actually contain. Left as is, a contributor following the instruction learns to ignore Vale on exactly the paths this PR wants gated. Added: the ecosystem projects (Istio, Kiali, gVisor, Kata, Krew, Kustomize, Bottlerocket, Aliyun, GCSFuse, Promtail, Fluentd, Filebeat, Alertmanager), the Gateway API `HTTPRoute`, and the Kubernetes and infrastructure terms in use (cgroup, finalizer, kubeconfig, kubelet, namespaced, namespaces, toleration, upscaling, downscaling, vCPU, FQDN, AMI, subnet, syscall, hostname, cron, CA, autoscalers). **Excluded on purpose, since an accept list shouldn't launder a defect.** `CR` and `CRs`, 12 uses, because this PR's own guidance says to write \"custom resource\" and to define CustomResourceDefinition then use CRD. Real misspellings: `heterogenous`, `replicaset` for ReplicaSet, `Deepseek` for DeepSeek, `nodepool` for node pool. `gsutil`, which `gcloud storage` supersedes. Unbackticked code identifiers, which are a formatting defect rather than a vocabulary gap: `podSpec`, `podSelector`, `nodeSelector`, `jsonPointers`, `intervalSeconds`, `workerGroup`, `ignoreDifferences`, `HTTPMode`, `args`, `yaml`. And generic English that Vale's dictionary lacks, which belongs in the General vocabulary rather than a KubeRay-specific one. Three entries are case-tolerant (`[Tt]oleration(s)?`, `[Uu]pscaling`, `[Dd]ownscaling`). A lowercase-only entry makes `Vale.Terms` flag the legitimate sentence-start capitalization. **Verification**, deterministic across repeated runs: - `doc/source/cluster/kubernetes/`: 1329 alerts to 1178. `Vale.Spelling` drops from 215 to 72. `KubeRay.Terms` is unchanged at 160, confirming no swap got shadowed by a new accept entry, which is the trap the `Ray Autoscaler` comment in `Terms.yml` documents. - `doc/source/data/`, the only path the pre-commit hook gates: 173 to 170, with **no new alerts**. A `Vocab` is global, so it can only widen what's accepted. - One candidate entry was dropped for exactly that reason. A `runtime(s)?` entry made `Vale.Terms` flag \"Runtime\" in `doc/source/data/monitoring-your-workload.rst`, a new alert on the gated path. Four new `Vale.Terms` alerts do appear on the KubeRay paths, and all four are genuine casing defects in existing pages rather than noise: \"Kubelet\" twice in `configuring-ippr.md`, lowercase \"istio\" naming the project in `rayservice-incremental-upgrade.md`, and \"Cgroups\" in the `resource-isolation-with-writable-cgroups.md` H1, which is also title case. Those are content fixes for a separate change, not this one. AI assistance was used for this commit, including the Vale sweep and the before-and-after verification above.",
+        "url": "https://github.com/ray-project/ray/pull/65239",
+        "createdAt": "2026-08-05T19:50:41Z",
+        "updatedAt": "2026-08-13T17:41:41Z",
+        "timestamp": "2026-08-13T17:41:41Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [
+          "docs",
+          "core",
+          "go"
+        ],
+        "author": "dstrodtman",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b6329021146f05fc21c5",
+      "signalId": "github:ray-project/ray:pull_request:65463",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65463",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "core: release runtime env per-job loggers",
+        "url": "https://github.com/ray-project/ray/pull/65463",
+        "createdAt": "2026-08-13T17:27:57Z",
+        "updatedAt": "2026-08-13T17:32:13Z",
+        "timestamp": "2026-08-13T17:32:13Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "rohitsalla",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:beba4006abb71fc95a18",
+      "signalId": "github:ray-project/ray:pull_request:64928",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:64928",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[Train] Add NCCL RAS health callback",
+        "text": "## Description This PR adds an opt-in callback that detects hanging distributed training jobs by polling NCCL's RAS (Reliability/Availability/Serviceability) subsystem. NCCL ≥ 2.24 runs a monitoring thread inside every NCCL process that forms a peer mesh tracking per-rank health and collective op-counts. By querying the `ncclras` client and diffing collective-counts between successive polls, Ray Train can automatically detect and act on hangs that would otherwise stall a job until a torch process group timeout occurs. As RAS gives a snapshot of the current NCCL state, to determine if the mismatch is a temporary issue or a permanent one, the callback polls RAS every N seconds. If a communicator is mismatched *and* makes no progress at all across multiple sequential polls, then this most likely indicates that a deadlock / wedge / hang is in progress for that communicator. Its important to note that its possible for NCCL to continue (not hang) with incorrect data depending on the nccl operation, tensor size, nccl version, etc. In these cases, users will observe the collective-count continue to increase but often with a constant mismatch. In this version of the callback, we are not detecting those issues and focusing on purely NCCL collective mismatches which cause hangs. The callback is disabled by default and enabled with `RAY_TRAIN_ENABLE_NCCL_HANG_DETECTOR=1`, as the detection heuristics still need validation against real-world hangs (spot preemptions, pipeline-parallel send/recv comms that legitimately sit skewed for long periods) before it can be considered for default-on. ### Requirements - RAS itself landed in 2.24, but the poller parses `ncclras -f json`, and the `-f` flag requires NCCL 2.28+. If the binary rejects `-f`, or isn't on PATH, the callback logs a warning once and disables itself for the rest of the run rather than retrying forever. - `ci/docker/base.gpu.Dockerfile` pins and holds `libnccl2`/`libnccl-dev` at `2.28.9-1+cuda12.9` (previously whatever the CUDA base image shipped) so `ncclras` is present and JSON-capable in GPU CI. The build fails fast if the pin doesn't stick or the client binary is missing. This affects all GPU CI images, not just Train tests. - `py-spy` (and `SYS_PTRACE` in the container) for native stack traces at hang time. When unavailable, the callback falls back to a Python-only traceback of every thread. ### How it works - `NCCLRASCallback` lives on the controller and polls `ncclras` on a worker (ras forms a mesh-network between ranks requiring that only one of the workers to be polled and receive the whole network's state). Workers are tried in turn until one returns a usable report, and the query runs on a background thread so it never blocks the controller's poll loop. - A communicator's frozen-streak only advances when the RAS report shows a collective-count mismatch, every rank in that communicator is `RUNNING`, and *no* rank advanced *any* collective since the previous poll. Any progress on any op resets that communicator's streak; streaks are tracked per communicator so each one is confirmed on its own. - A confirmed hang requires the streak to persist for `RAY_TRAIN_NCCL_RAS_CONFIRM_DURATION_S` (default 600s), converted to a consecutive-poll count using `RAY_TRAIN_NCCL_RAS_MIN_POLL_INTERVAL_S` (default 15s), 40 polls by default, to ensure that a mismatch isn't a snapshot issue. - Before confirmation there is an escalation ladder: a `WARNING` when a communicator first crosses ~60s frozen, then a periodic `WARNING` every ~120s naming every still-frozen communicator, its stalled duration, and (in `fail` mode) the time remaining until `NCCLHangError`, alongside the human-readable `ncclras -f text` report. A communicator that resumes progress after being suspected logs an explicit recovery message. - On a confirmed hang, the callback logs the `ncclras -f text` report and captures py-spy stack traces from all workers (uploaded to `<experiment_path>/nccl_ras_hang_stack_traces/` as `rank_<i>.log`), then depending on the callback mode, in \"fail\" a `NCCLHangError` is raised and in \"observe\", a detailed log message is produced but no more. `observe` is the default; set `RAY_TRAIN_NCCL_RAS_ACTION=fail` to fail the run. - `NCCLHangError` (a `WorkerGroupError` subclass, `DeveloperAPI`, exported as `ray.train.NCCLHangError`) is treated as non-retryable by the `DefaultFailurePolicy` regardless of the `max_failures` budget, since a desync hang is usually deterministic and a restart would just hang again. ### Configuration | Env var | Default | Read on | | --- | --- | --- | | `NCCL_RAS_ADDR` | `localhost:28028` | worker | | `RAY_TRAIN_ENABLE_NCCL_HANG_DETECTOR` | `0` | driver | | `RAY_TRAIN_NCCL_RAS_ACTION` | `observe` | driver | | `RAY_TRAIN_NCCL_RAS_MIN_POLL_INTERVAL_S` | `15` | driver | | `RAY_TRAIN_NCCL_RAS_CONFIRM_DURATION_S` | `600` | driver | | `RAY_TRAIN_NCCLRAS_PATH` | `ncclras` (PATH lookup) | driver | The `RAY_TRAIN_*` knobs are read once when the callback is constructed on the driver validated eagerly (invalid values raise at construction); `NCCL_RAS_ADDR` is NCCL's variable and is read on the worker at query time. ### Known limitations - **Symmetric in-collective hangs are not detected.** RAS reports collective *launch* counts, so if every rank launches the same collective and the fabric wedges mid-op, all counts match and skew is zero. - **A rank that exited early is not detected.** A communicator is only considered for detection when all of its ranks report `RUNNING`, so a `FINALIZE`/`ABORT` rank alongside frozen peers is currently skipped. This could be considered in this implementation but I believe the Ray health checker should catch this first. - `missing_ranks` (unresponsive / considered-dead peers) is parsed around but not yet used as a signal. - No metrics are emitted yet, and there is no culprit-rank attribution — `NCCLHangError.worker_failures` is empty; the RAS text report and stack traces are the only diagnostics. ### Testing - `test_nccl_ras_callback.py` — CPU unit coverage of RAS JSON parsing (including the malformed `missing_ranks[]` comma NCCL 2.28.9 emits), `NCCL_RAS_ADDR` parsing, frozen-vs- advancing classification, per-communicator streak independence, communicators appearing and disappearing between polls, poll throttling, confirm-duration → poll-count conversion, config validation, the escalation/observe messaging, and that a failed stack dump does not suppress the hang error. - `test_nccl_ras_hang_detection.py` — GPU end-to-end scenarios (`train_v2_gpu`) inducing real NCCL desyncs in a `TorchTrainer` with the detector configured for fast confirmation. Requires ≥ 2 visible GPUs and `ncclras` on PATH; the multi-communicator subset test requires 4 GPUs and skips otherwise. - `test_failure_policy.py` — added `test_nccl_hang_error_is_non_retryable`.",
+        "url": "https://github.com/ray-project/ray/pull/64928",
+        "createdAt": "2026-07-22T10:44:09Z",
+        "updatedAt": "2026-08-13T17:20:01Z",
+        "timestamp": "2026-08-13T17:20:01Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [
+          "train"
+        ],
+        "author": "pseudo-rnd-thoughts",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b34aeeb653209f369330",
+      "signalId": "github:ray-project/ray:pull_request:65441",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65441",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[doc][History server] Update doc for history server for `RAY_ROOT_DIR` -> `STORAGE_ROOT_DIR`",
+        "text": "## Description https://github.com/ray-project/kuberay/pull/5121 updated the env var from `RAY_ROOT_DIR` to `STORAGE_ROOT_DIR`. The default storage root dir is now the bucket root itself, so updated example and file structure in the documentation. ## Related issues Related to https://github.com/ray-project/kuberay/pull/5121 ## Additional information",
+        "url": "https://github.com/ray-project/ray/pull/65441",
+        "createdAt": "2026-08-12T22:15:06Z",
+        "updatedAt": "2026-08-13T17:19:26Z",
+        "timestamp": "2026-08-13T17:19:26Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "core",
+          "go",
+          "community-contribution"
+        ],
+        "author": "chiayi",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e382f866a1758851c75a",
+      "signalId": "github:ray-project/ray:pull_request:65072",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65072",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[core] feat(rdt): enable driver-side ray.put with NIXL tensor transport",
+        "text": "Allow ray.put(value, _tensor_transport='nixl') from a driver process. Previously this failed because get_runtime_context().current_actor raises RuntimeError in a non-actor context. Changes: - Make RDTMeta.src_actor and TransferMetadata.src_actor Optional - Catch RuntimeError in put_object and set src_actor=None for driver - Reject two-sided transports (NCCL/GLOO) from driver with clear error - Guard src_actor dereferences in _abort_transport and transfer paths - Handle free_object_primary_copy locally for driver-owned objects - Raise ValueError for _use_object_store=True on driver-owned RDT objects - Align worker.py error to RuntimeError with 'one-sided transport' message Fixes ray-project/ray#64714 ## Tests Three new tests in `python/ray/tests/rdt/test_rdt_nixl.py`: ### `test_driver_put_nixl` End-to-end driver-side NIXL flow: 1. `ray.put(tensor, _tensor_transport=\"nixl\")` from the driver 2. Verify `src_actor is None` in RDT metadata 3. Verify tensor registered in NIXL transport 4. Actor consumes the driver-created ref via `actor.sum.remote(ref)` 5. Driver-local `ray.get(ref)` returns the original tensor 6. After `del ref` + `gc.collect()`, verify cleanup: tensor freed, RDT metadata removed, NIXL metadata removed, tensor descriptor cache cleared ### `test_driver_owned_rdt_rejects_object_store_fallback` Verify `_use_object_store=True` on a driver-owned RDT object raises `ValueError` matching `_use_object_store=True` instead of crashing with `AttributeError` on `None.__ray_call__`. ### `test_driver_rejects_two_sided_transport` Verify `ray.put(tensor, _tensor_transport=\"nccl\")` from the driver raises `RuntimeError` matching `one-sided transport`. Two-sided transports require an actor context to coordinate the send. ### Running ```bash # New driver tests pytest -sv python/ray/tests/rdt/test_rdt_nixl.py \\ -k \"test_driver_put_nixl or test_driver_rejects_two_sided_transport or test_driver_owned_rdt_rejects_object_store_fallback\" ``` ### Results | Test | Result | |------|--------| | `test_driver_put_nixl` | PASSED | | `test_driver_owned_rdt_rejects_object_store_fallback` | PASSED | | `test_driver_rejects_two_sided_transport` | PASSED |",
+        "url": "https://github.com/ray-project/ray/pull/65072",
+        "createdAt": "2026-07-28T10:28:32Z",
+        "updatedAt": "2026-08-13T17:02:53Z",
+        "timestamp": "2026-08-13T17:02:53Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [
+          "core",
+          "community-contribution"
+        ],
+        "author": "n3sfan",
+        "state": "open",
+        "assignees": [
+          "stephanie-wang",
+          "Sparks0219"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8de8c752c439cd7c4dc3",
+      "signalId": "github:ray-project/ray:issue:64992",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:issue:64992",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "issue",
+        "title": "[Core] Provide a way to disable the worker-log `(pid=…)` prefix without disabling driver forwarding or overriding the root logger",
+        "text": "### What happens With `log_to_driver=True` (the default), Ray prepends a prefix to every worker/actor stdout/stderr line it forwards to the driver: ``` (SegmentationActor pid=18654) {\"event\": \"segmenting batch\", \"job_id\": \"…\", \"level\": \"info\"} ``` Our workers emit **structured logs — one JSON object per line** — which a stdout-based collector ships to Loki/Grafana. The prepended `(… pid=…)` text means the line is **no longer valid JSON**, so structured parsing drops or mangles it. The logs are present in raw `kubectl logs` but effectively **invisible in the log backend** — a silent observability hole that is very expensive to notice (the pipeline \"goes quiet\" while thousands of lines land on pod stdout). The underlying issue: **Ray rewrites the bytes of a user's stdout/stderr lines by default.** Prepending text to a line silently breaks any line-oriented structured format. And there is no way to turn *only that* off. ### Why every existing option is unusable | Option | Result | |---|---| | `RAY_COLOR_PREFIX=0` | Removes only the ANSI color codes. The `(… pid=…)` text remains. | | `log_to_driver=False` | Removes the prefix — but also stops forwarding worker logs to the driver's stdout. They go to session files under `/tmp/ray/session_*/logs/`, which a stdout-based collector (the standard Kubernetes pattern) never sees. **The logs disappear entirely.** | | `logging_config=LoggingConfig(encoding=\"JSON\")` | Ray's own documented structured-logging recipe **pairs this with `log_to_driver=False`** (\"the redirected logs to the driver will include prefixes that made the logs not JSON parsable\") — i.e. it does **not** strip the prefix from forwarded logs either. Worse, it \"configures the **root loggers** for the driver process, Ray actors, and Ray tasks\" — it seizes the root logger, overrides the application's own logging configuration, and imposes Ray's JSON schema. For an app with an established structured-logging stack this is a non-starter — especially given Ray already tears down pre-configured logging handlers on import (#48846, #52371). | | `RAY_LOG_TO_STDERR=1` | Sends worker logs to the real (inherited) stderr with no prefix — but also dumps the raylet/GCS **C++ logs** (non-JSON) onto stderr, re-breaking the JSON stream, with known flooding problems (#47506). | So: **there is no way to keep worker logs on the driver's stdout, in the application's own format, without the prefix.** Every switch that removes the prefix either drops the logs or takes over the root logger. ### The request A first-class, **orthogonal** switch that keeps forwarding worker logs to the driver's stdout but leaves the **line content untouched** — for example: ```python ray.init(log_to_driver=True, worker_log_prefix=False) # or an env var, set before ray.init: # RAY_DISABLE_WORKER_LOG_PREFIX=1 ``` Log **forwarding** (a transport concern) and worker **attribution** (pid/actor identity) should not be entangled with the **byte content** of the user's log line. Attribution is already available structurally via `ray.get_runtime_context()` (`get_actor_id()` / `get_worker_id()` / `get_task_id()`); applications that want it can add it as a field or label. It should not be force-injected into the text of every line. Minimally: provide an opt-out for the prefix that does **not** require adopting `LoggingConfig` or disabling driver forwarding. More generally — a reasonable default would be to **not mutate the content of user log lines**; if the prefix stays the default, make it trivially disable-able in isolation. ### The switch already exists internally — it's just not exposed The prefix is added by `print_worker_logs()`, which already takes an `ignore_prefix` argument that skips it entirely (`python/ray/_private/worker.py`, v2.49.0): ```python def print_worker_logs(data, print_file, ignore_prefix: bool = False): # :2189 ... if ignore_prefix: # :2272 ... # emit the line unmodified, no \"(name pid=…)\" wrapper ``` But the only thing that ever sets it `True` is the presence of a job logging config — in both places that stream worker logs to the driver: ```python ignore_prefix = global_worker.job_logging_config is not None # :2632 ... ignore_prefix = worker.job_logging_config is not None # :2683 ``` So `ignore_prefix` is `True` **iff** a `LoggingConfig` is set — i.e. the capability we want is already implemented and working, but it can only be reached through the one option that also seizes the root logger. **Decoupling these two solves the whole problem with essentially no new machinery**: let `ignore_prefix` be set directly — a `ray.init(..., worker_log_prefix=False)` parameter, or an env var checked at lines 2632/2683 — instead of deriving it solely from `job_logging_config`. ### Environment - Ray 2.49.0, Python 3.13, Linux (Kubernetes / AKS) - Workers emit newline-delimited JSON to stdout; Grafana Alloy ships pod stdout to Loki - Current workaround: a regex `stage.replace` in the Alloy pipeline to strip the prefix before ingest — i.e. we are paying to undo, downstream, a mutation Ray made with no way to disable it. ### Related - #48846 — importing `ray.data` closes custom logging handlers - #52371 — import overwrites the ray logger; handlers deleted on init when `configure_logging=False` - #47506 — `RAY_LOG_TO_STDERR` floods the job API with head-node C++ logs - #21707 — support for directing *all* logs to stdout - #17467 — stdout logging for Ray head and worker nodes",
+        "url": "https://github.com/ray-project/ray/issues/64992",
+        "createdAt": "2026-07-24T14:07:54Z",
+        "updatedAt": "2026-08-13T17:00:26Z",
+        "timestamp": "2026-08-13T17:00:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [
+          "usability",
+          "core",
+          "community-backlog"
+        ],
+        "author": "Liquidmasl",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:6ffc750d3cb5f184f69f",
+      "signalId": "github:ray-project/ray:issue:45751",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:issue:45751",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "issue",
+        "title": "Ray Dashboard is susceptible to a Local File Inclusion bug with default settings",
+        "text": "### What happened + What you expected to happen **Description** Just as the title suggests, when initially starting up the Ray dashboard I can parse my local file system by supplying the `folder` HTTP parameter in GET requests to the `/logs` API endpoint in conjunction with relative file paths. **Expected Behavior** As a best practice, relative file paths should not be permitted, or should be ignored. Basic access controls should be implemented to prevent unauthorized users from being able to parse the underlying file system being used by Ray. **Useful Information** 1) Taking a cursory glance at the Ray GH Issues board, it appears that this issue was discussed (and addressed) [here](https://github.com/ray-project/ray/issues/39701) and [here](https://www.anyscale.com/blog/update-on-ray-cves-cve-2023-6019-cve-2023-6020-cve-2023-6021-cve-2023-48022-cve-2023-48023) 2) As seen in the provided script, the `nodeId` HTTP parameter must be included in GET requests. ![image](https://github.com/ray-project/ray/assets/45905457/2eeed262-caa0-4e0e-9f32-5a9604be16f6) ### Versions / Dependencies 2.9.1 and 2.23.0 ### Reproduction script from requests import get url = 'http://`<ip address>`:8265/#/logs' headers = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:126.0) Gecko/20100101 Firefox/126.0', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8', 'Accept-Encoding': 'gzip, deflate, br, zstd', } params = {'folder': '../../../../home', 'nodeId': '`<nodeId>`' } try: resp = get(url=url, params=params, headers=headers) except Exception as e: print(f'GET request failed: {str(e)}') if resp.status_code != 200: print('ERROR server responded with: {resp.status_code}, {resp.content}') else: print(f'Response\\n==========\\n{resp.content}') ### Issue Severity Medium: It is a significant difficulty but I can work around it.",
+        "url": "https://github.com/ray-project/ray/issues/45751",
+        "createdAt": "2024-06-05T12:04:49Z",
+        "updatedAt": "2026-08-13T16:46:16Z",
+        "timestamp": "2026-08-13T16:46:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [
+          "bug",
+          "P2",
+          "dashboard",
+          "observability",
+          "security"
+        ],
+        "author": "rmhowe425",
+        "state": "closed",
+        "assignees": [
+          "rmhowe425"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9acef0b32fdf0d0dfaa0",
+      "signalId": "github:ray-project/ray:pull_request:65453",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65453",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[Data] Add support for writing ORC files",
+        "text": "## Description Ray Data can read ORC files, but it can't write them. This adds `Dataset.write_orc()`, backed by a new `ORCDatasink` that writes each output block with `pyarrow.orc.write_table`. The API forwards PyArrow ORC writer options and supports `min_rows_per_file` through the existing block-based file datasink infrastructure. ## Related issues Follow-up to #64600 ## Additional information Mirrors the `write_csv` / `write_json` APIs. PyArrow ORC writer options can be passed directly to `write_orc()`. No new dependency (`pyarrow` already ships `pyarrow.orc`). Adds write tests in `test_orc.py` and API docs in `saving_data.rst`. ```python import ray ds = ray.data.range(100) ds.write_orc(\"s3://bucket/path/\", compression=\"zstd\")",
+        "url": "https://github.com/ray-project/ray/pull/65453",
+        "createdAt": "2026-08-13T09:53:45Z",
+        "updatedAt": "2026-08-13T16:44:39Z",
+        "timestamp": "2026-08-13T16:44:39Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "docs",
+          "data",
+          "community-contribution"
+        ],
+        "author": "WFY123wfy",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f6d18e01d48f53848222",
+      "signalId": "github:ray-project/ray:pull_request:65460",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65460",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[doc] Render the Jobs API spec with sphinxcontrib-openapi instead of ReDoc",
+        "text": "> **Stacked PR.** Targets `doc-1513-declare-openapi-303` (#65458), which targets #65457. Review order is #65457 → #65458 → this. GitHub retargets automatically as each merges. > > **Conflicts with #65456 by design.** That PR pins `redoc_uri` to a specific ReDoc version; this one deletes `redoc_uri` entirely. If #65456 lands first I'll resolve the conflict here. If this lands, #65456 becomes moot and should be closed. Either order works — #65456 is worth keeping as the safe fix in case this one stalls in review. ## Why this change is needed `sphinxcontrib-redoc` is unmaintained. 1.6.0 is the latest release and dates from 2020; the `2.0.0a1` alpha still imports `pkg_resources`. Keeping it costs this repo three things: | Cost | Location | | --- | --- | | A `setuptools<82` ceiling, because the extension imports `pkg_resources` at module load and setuptools 82 removed it | `doc/requirements-doc.txt` | | A `misc.copy_overwrite` entry in `suppress_warnings`, because the extension redundantly copies its own bundled asset | `doc/source/conf.py` | | The renderer fetched from a third-party CDN at page-view time | `doc/source/conf.py` | All of that buys exactly one page. The Jobs API spec is the only consumer: `conf.py` had one `redoc` entry and there's no other OpenAPI document in the repo. There's a second, larger reason. **The current page is a client-rendered JavaScript island.** ReDoc has no source file at all — the extension synthesizes `api.html` from `conf.py`. So today the page: - is in **no toctree**, and - is reachable only through a hardcoded `` `... <api.html>`_ `` link at `rest.rst:94`, and - has **none of its endpoint content in the built HTML**, so it can't participate in Sphinx search or cross-referencing. ## Related changes Fourth in the chain above. Supersedes the \"record why we stay on ReDoc\" PR (#65459), which I'll close — its conclusion is obsolete now that this works. ## What changes - Swap `sphinxcontrib.redoc` → `sphinxcontrib.openapi` (0.9.0) in `conf.py` and `doc/requirements-doc.txt`, and regenerate the deplock. - Add a real `api.md`, put it in the `job-submission` toctree, and replace the raw `<api.html>` link with a `:ref:`. - Drop the now-unneeded `misc.copy_overwrite` suppression. - Change two operation `summary` fields from YAML block scalars to plain scalars (see below). - Update the `setuptools` comment: the `<82` ceiling's cause is gone. The pin itself is left in place, since unpinning is a separate resolve worth verifying on its own. `sphinxcontrib-openapi` is pure Python, from the same `sphinx-contrib` org, and needs no `pkg_resources`. The deplock diff is `-sphinxcontrib-redoc` and `+sphinxcontrib-openapi` plus its five dependencies (`sphinxcontrib-httpdomain`, `sphinx-mdinclude`, `deepmerge`, `mistune`, `picobox`). ## Verification Built with `make -C doc rtd-build`, which runs the RtD-faithful clean build with `-W`, matching `fail_on_warning: true`: ``` build succeeded. ``` Exit 0, and **zero `WARNING:`/`ERROR:` lines in the whole log**. `raydepsets --check` on `docbuild_depset_311` reports \"Lock files are up to date.\" Checked against the built `api.html` rather than inferred: | Check | Result | | --- | --- | | Request/response schemas rendered | Yes — `Request JSON Object` and `Response JSON Object` field lists, with `entrypoint`, `runtime_env`, `metadata`, and the rest, including types and required flags | | `$ref` and `allOf` resolution | Resolved, including through `JobDetails` | | Literal `**` on the page | None — zero docutils `problematic` nodes | | `http-routingtable` index | Generated | | Page in the sidebar, with prev/next pagination | Yes | | MyST page equivalent to the `.rst` draft it replaced | Yes — 8 httpdomain operation objects, identical `Parameters` / `Request JSON Object` / `Response JSON Object` / `Status Codes` field lists, no leaked rST, and both `:ref:` directions resolving with the right link text | ## Three non-obvious configuration details All three are commented at their sites in the diff, because all three fail quietly. **The renderer is selected via `openapi_default_renderer`, not by the directive spelling.** Writing `.. openapi:httpdomain::` in the page adds an `unknown directive name` warning, which is fatal under `fail_on_warning`. Selecting it in `conf.py` and using a plain `.. openapi::` avoids that. **The default renderer emits no request or response schemas at all** — just paths, parameters, and status codes. So leaving `openapi_default_renderer` unset would silently drop most of the reference content while still building green. That's the trap worth knowing about if anyone touches this later. **The `openapi` directive can't be a bare MyST fence; it has to be wrapped in `eval-rst`.** `sphinxcontrib-openapi` emits reStructuredText into a `ViewList` and hands it to `nested_parse`, but MyST's `nested_parse` renders that content as Markdown. A ```` ```{openapi} ```` fence therefore builds green with zero warnings while silently degrading the entire page: every `.. http:get::` and `:resjson:` line renders as literal text, so nothing becomes an httpdomain object and the page has no field lists, no anchors, and no search or cross-referencing. That's a worse failure than the one above, and just as quiet. ## Why the summary fields change `sphinxcontrib-openapi`'s renderer interpolates an operation's `summary` into `**...**` without stripping it. A YAML block scalar (`summary: |`) leaves a trailing newline in the value, so the markup opens on one line and closes on the next, docutils can't pair it, and readers see literal asterisks. Filed upstream as [sphinx-contrib/openapi#173](https://github.com/sphinx-contrib/openapi/issues/173). Two operations used block scalars (`GET /api/version` and `POST /api/jobs`); the other six already used plain scalars. Converting those two is the whole fix and changes no rendered text. ## What this gives up, honestly **Request and response samples.** ReDoc rendered example payloads; this doesn't. It isn't a configuration choice — both routes to examples are blocked by upstream bugs, and I've confirmed each against this spec: - `:generate-examples-from-schemas:` crashes with `ValueError: dictionary update sequence element #0 has length 1; 2 is required` ([#166](https://github.com/sphinx-contrib/openapi/issues/166)). Example generation can't handle an `allOf` that targets a non-object schema, which is exactly how `JobDetails` attaches descriptions to the `JobType` and `JobStatus` string enums. - `:response-examples-for:` is rejected as an unknown option ([#165](https://github.com/sphinx-contrib/openapi/issues/165)). `api.md` carries a comment recording this so nobody re-derives it, and I've added the reproduction detail to both upstream issues. Weighed against gaining search, cross-referencing, navigation, a dependency that's actually maintained, and no third-party CDN at page-view time, losing sample payloads seemed like the right trade — but it is a real loss, and it's reasonable to want the upstream fixes first instead. I've also filed [#171](https://github.com/sphinx-contrib/openapi/issues/171), [#172](https://github.com/sphinx-contrib/openapi/issues/172), and [#173](https://github.com/sphinx-contrib/openapi/issues/173), each with a minimal reproducer, and am planning PRs for them. ## Checks - [x] `make -C doc rtd-build`: build succeeded, zero warnings. - [x] `raydepsets --check`: lock files up to date. - [x] Built page inspected for schema content, `allOf`/`$ref` resolution, and stray markup. - [x] `pre-commit run` clean. - [ ] Read the Docs preview reviewed for the appearance change.",
+        "url": "https://github.com/ray-project/ray/pull/65460",
+        "createdAt": "2026-08-13T14:03:32Z",
+        "updatedAt": "2026-08-13T16:25:52Z",
+        "timestamp": "2026-08-13T16:25:52Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "dstrodtman",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b91b4feb01e696b0891b",
+      "signalId": "github:ray-project/ray:pull_request:65462",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65462",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[docs] Sync the vendored KubeRay CRD API reference",
+        "text": "## Why are these changes needed? Vendors the generated KubeRay CRD API reference at `doc/source/cluster/kubernetes/references/api.md` from `ray-project/kuberay` release tag v1.6.2, pinned at commit [`0a9eabd`](https://github.com/ray-project/kuberay/blob/0a9eabde561ab59ab4bbe626072c359da9214484/docs/reference/api.md). Opened automatically. The upstream file is a build artifact that `elastic/crd-ref-docs` generates from the Go CRD types in `ray-operator/apis/ray/`, and KubeRay's `ray-operator-verify-api-docs` CI job fails on drift between the two, so the content is verified upstream before it reaches here. That job covers `release-*` branches as well as `master`, so a release tag's artifact carries the same guarantee. This syncs from the latest KubeRay *release*, not from `master`. Master carries CRD surface that no release ships, and documenting it here would advertise fields a reader can't use. The `ray.io/v1alpha1` section is stripped on the way in. That API version is deprecated and on a removal runway (ray-project/kuberay#5124), and its cross-links collide with the v1 anchors (ray-project/kuberay#5091). With one package left, the `Packages` index and the `ray.io/v1` heading restate the page's own subject, so both are dropped and the headings under them move up to h2. Sphinx's right-hand page nav lists h2 only, so this is what puts the CRD types in it. Heading text is untouched, so the anchors cross-links resolve against don't move. A page intro replaces the generated package blurb those headings carried, naming the resource types read off the page's own index. ## Checks Content-only: the single changed file is documentation under `doc/`, so the `docs-go` scope guard applies cleanly. The Read the Docs preview build on this PR is the gate — a green build means the regenerated reference still renders and all of its in-page anchors resolve. Nothing else in this PR. If it contains any other change, something is wrong with the sync job.",
+        "url": "https://github.com/ray-project/ray/pull/65462",
+        "createdAt": "2026-08-13T16:20:13Z",
+        "updatedAt": "2026-08-13T16:23:14Z",
+        "timestamp": "2026-08-13T16:23:14Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [
+          "docs",
+          "docs-go"
+        ],
+        "author": "dstrodtman",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5a59445acd02eb85db01",
+      "signalId": "github:ray-project/ray:issue:64643",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ray-project/ray:issue:64643",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "issue",
+        "title": "[serve] Enable mypy type checking on ray/serve to catch real production bugs (e.g. the rank-corruption bug in #64181)",
+        "text": "### What happened + What you expected to happen ### Description Ray Serve's controller code is fully type-annotated but never type-checked. The mypy pre-commit hook covers an allowlist of exactly 7 files repo-wide — from all of Serve, only `python/ray/serve/handle.py` and a handle-typing fixture: # .pre-commit-config.yaml - id: mypy args: ['--follow-imports=skip', '--ignore-missing-imports'] files: | (?x)^( python/ray/autoscaler/node_provider.py| ... python/ray/serve/handle.py| python/ray/serve/tests/typing_files/check_handle_typing.py ) Additionally, `--follow-imports=skip` degrades every cross-module type to `Any`, so even allowlisted files get almost no protection from wrong-type arguments: any parameter annotated with an imported class effectively becomes untyped. ### Motivating case: a production bug mypy flags exactly The rank-corruption bug behind #63862 (fixed in <PR link>) was a one-liner in `deployment_state.py` — the lightweight-reconfigure path passed `rank=current_rank.rank` (a bare `int`) where the callee declares `rank: ReplicaRank`. The int round-tripped through the replica and broke rank recovery on every controller restart, permanently corrupting the rank system (\"Rank system is in an invalid state\" loop). Running mypy 1.7.0 (the version already pinned in pre-commit) with import following enabled flags the bug precisely: deployment_state.py:3749: error: Argument \"rank\" to \"reconfigure\" of \"DeploymentReplica\" has incompatible type \"int\"; expected \"ReplicaRank\" [arg-type] With Ray's current flags (`--follow-imports=skip`), the same run reports 57 unrelated errors in the file and does NOT flag this line — `ReplicaRank` collapses to `Any`. So this isn't just \"add the file to the list\"; the flags matter too. The same run surfaces more latent inconsistencies in the rank system alone: deployment_state.py: error: Argument \"assign_rank_callback\" to \"start\" of \"DeploymentReplica\" has incompatible type \"Callable[[str, str], ReplicaRank]\"; expected \"Callable[[ReplicaID], ReplicaRank]\" [arg-type] (2 call sites) deployment_state.py: error: Argument 3 to \"recover_rank\" of \"DeploymentRankManager\" has incompatible type \"ReplicaRank | None\"; expected \"ReplicaRank\" [arg-type] This bug class — a raw value passed where a wrapper object is expected, then serialized across the controller/replica RPC boundary and only exploding much later during recovery — is essentially invisible to unit tests that mock the boundary, and exactly what static typing is for. ### Current scope of the debt (measured on master) `mypy --follow-imports=silent --ignore-missing-imports ray/serve/_private/`: - 1028 errors in 65 of 86 files - 237 of them are `[arg-type]` (the category that catches bugs like the above) ### Proposal (incremental, no big-bang) 1. Add a Serve-scoped mypy CI step (or extend the pre-commit hook) with `--follow-imports=silent` so imported types resolve, scoped initially to an error-free subset of `ray/serve/_private/` (per-file allowlist, same mechanism as today). 2. Burn down `[arg-type]` errors first in controller-critical modules (`deployment_state.py`, `replica.py`, `controller.py`, `application_state.py`) — these guard the state-checkpoint/recovery paths where type confusion becomes persistent state corruption. 3. Ratchet: once a file is clean, add it to the allowlist so it can't regress. ### Use case Prevent recurrence of 64181-style state-corruption bugs in Serve's controller, where type annotations already encode the contract but nothing enforces it. ### Versions / Dependencies ray[serve] 2.56.0 ### Reproduction script mypy --follow-imports=silent --ignore-missing-imports ray/serve/_private/ ### Issue Severity None",
+        "url": "https://github.com/ray-project/ray/issues/64643",
+        "createdAt": "2026-07-09T19:33:09Z",
+        "updatedAt": "2026-08-13T16:22:59Z",
+        "timestamp": "2026-08-13T16:22:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "bug",
+          "triage",
+          "serve",
+          "tech-debt"
+        ],
+        "author": "johntaylor-cell",
+        "state": "open",
+        "assignees": [
+          "johntaylor-cell"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:4c629863ce1f16a8cf35",
+      "signalId": "github:ray-project/ray:pull_request:65447",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:ray-project/ray:pull_request:65447",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "ray-project/ray",
+        "kind": "pull_request",
+        "title": "[train] Share PlacementGroupCleaner across Train runs",
+        "text": "## Description Ray Train v2 currently creates one detached `PlacementGroupCleaner` actor per Train controller. Since cleaners are pinned to the head node, their memory use grows linearly with concurrent Train runs. In the workload described in #65443, 24 cleaners use approximately 14.4 GB on the head node. This PR replaces the per-controller actors with one cluster-wide shared cleaner. The cleaner tracks controllers independently, so a failed controller only triggers cleanup for its own placement groups. The shared cleaner: - uses a fixed, versioned name and internal namespace with `get_if_exists=True`; - remains detached, pinned to the head node, and scheduled outside captured placement groups; - persists controller and placement-group registrations in GCS internal KV; - restores active and incomplete cleanup records after actor restart; - rejects late placement-group registration after controller death; - isolates State API and placement-group cleanup failures between controllers; - scopes State API queries to its own cluster when multiple clusters are active. ## Related issues Fixes #65443. ## Testing ```text PYTHONPATH=\"$PWD/python\" python -m pytest -q \\ python/ray/train/v2/tests/test_placement_group_cleaner.py # 15 passed PYTHONPATH=\"$PWD/python\" python -m pytest -q \\ python/ray/train/v2/tests/test_controller_callback_behaviour.py # 10 passed pre-commit run --files \\ python/ray/train/v2/_internal/callbacks/placement_group_callback.py \\ python/ray/train/v2/_internal/execution/controller/placement_group_cleaner.py \\ python/ray/train/v2/_internal/state/util.py \\ python/ray/train/v2/tests/test_placement_group_cleaner.py # Passed git diff --check origin/master...HEAD # Passed ``` A local end-to-end multi-job scenario used two independent drivers, each running a real Train v2 `DataParallelTrainer` with a controller, worker, and placement group. Both runs shared one cleaner. After one driver was killed, only its placement group was removed; the other run remained active and completed normally. The cleaner stayed alive throughout. ## Contribution notes No other open PR referencing #65443 or matching this PlacementGroupCleaner change was found before requesting review. AI assistance was used for implementation, testing, and self-review of this change.",
+        "url": "https://github.com/ray-project/ray/pull/65447",
+        "createdAt": "2026-08-13T05:34:32Z",
+        "updatedAt": "2026-08-13T13:34:06Z",
+        "timestamp": "2026-08-13T13:34:06Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 0
+        },
+        "labels": [
+          "train",
+          "community-contribution"
+        ],
+        "author": "OneSizeFitsQuorum",
         "state": "open",
         "assignees": [],
         "change": "updated"

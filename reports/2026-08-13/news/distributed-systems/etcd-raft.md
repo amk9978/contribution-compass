@@ -12,3 +12,7 @@ Repository: [etcd-io/raft](https://github.com/etcd-io/raft)
 ## Publicly indicated upcoming work
 
 - **Milestone** [v4.0.0](https://github.com/etcd-io/raft/milestone/2)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

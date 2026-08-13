@@ -39,11 +39,11 @@
     "forks": 1904,
     "openIssues": 541,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:30.103887+00:00"
+    "collectedAt": "2026-08-13T17:43:29.653990+00:00"
   },
   "news": {
     "repository": "nats-io/nats-server",
-    "collectedAt": "2026-08-13T16:19:30.103887+00:00",
+    "collectedAt": "2026-08-13T17:43:29.653990+00:00",
     "latestRelease": {
       "repository": "nats-io/nats-server",
       "tag": "v2.14.5",
@@ -61,7 +61,8 @@
       ],
       "prerelease": false
     },
-    "upcoming": []
+    "upcoming": [],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -81,6 +82,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 13,
       "changedCount": 4
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 13,
+      "changedCount": 3
     }
   ],
   "signals": [
@@ -132,8 +139,7 @@
       "assignees": [
         "neilalexander",
         "jnmoyne"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:nats-io/nats-server:issue:8346",
@@ -156,8 +162,7 @@
       ],
       "author": "ordeneaux",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8133",
@@ -199,8 +204,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8432",
@@ -275,8 +279,8 @@
       "text": "This PR wires peer removals and additions into desired state. - `reconcilePeerAssignments` runs on a meta leader change, so proposals that were missed or only partially applied can be retried by the next leader. - Peer additions through `processAddPeer` now also obey the rules of `cc.selectPeerGroup`, which requires waiting for STATSZ info if it isn't yet available for the newly added node. - A new set of \"peer evacuate\" endpoints (`$JS.API.STREAM.PEER.EVACUATE.<stream>` and, for the system account, `$JS.API.SERVER.EVACUATE`) offers the same semantics as peer-remove while not immediately removing the peer, so it can cooperate in catching up the new peer. This also allows evacuating all R1 streams of a server that is to be decommissioned ahead of time, whereas a peer-remove of a server hosting an R1 stream does get a new server assigned but would otherwise lose all data. `reconcilePeerAssignments` scans every stream and consumer assignment on each meta leader change and peer add, benchmarked locally at ~100-290 ms for 100k streams/500k consumers, under `js.mu`. That is purely a no-op scan; actually reconciling is significantly more expensive, since each affected assignment's proposal needs to be retried. A large contributor is `selectPeerGroup`, which loops over all stream assignments per call to determine HA asset counts. This is not addressed in this PR, but noted for clarity, and `selectPeerGroup` can only be made faster once all `meta.ForwardProposal` calls are gone since we can then purely rely on atomics. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8443",
       "createdAt": "2026-08-07T18:06:36Z",
-      "updatedAt": "2026-08-13T12:07:45Z",
-      "timestamp": "2026-08-13T12:07:45Z",
+      "updatedAt": "2026-08-13T17:32:19Z",
+      "timestamp": "2026-08-13T17:32:19Z",
       "metrics": {
         "reactions": 0,
         "comments": 3
@@ -284,7 +288,8 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8452",
@@ -296,16 +301,17 @@
       "text": "If a stream/consumer Raft group was below quorum, it wasn't possible to safely peer-remove nodes to get into quorum again. This PR fixes that by allowing nodes to be evicted when below quorum, but only those nodes that were explicitly peer-removed. Given a R3 stream without quorum due to 2 nodes being offline, it's now possible to peer-remove those two offline nodes and the stream will become operational again, albeit it at R1. If new peers were assigned to the stream, the stream would automatically scale up to R3, but on the new peers. The desired state gets a new `rg.Desired.Removed` field that contains the set of explicitly peer-removed nodes, which are eligible for eviction if below quorum. Eviction is only allowed if this node thinks the stream/consumer Raft group is leaderless, it is not leaderless on the meta layer, it has desired state that specifies removed peers, and the node itself is still part of the group's peer set. A safety check also prevents eviction if the remaining peers could form a disjoint majority. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8452",
       "createdAt": "2026-08-11T14:10:44Z",
-      "updatedAt": "2026-08-13T12:03:41Z",
-      "timestamp": "2026-08-13T12:03:41Z",
+      "updatedAt": "2026-08-13T17:30:14Z",
+      "timestamp": "2026-08-13T17:30:14Z",
       "metrics": {
-        "reactions": 1,
+        "reactions": 0,
         "comments": 3
       },
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8453",
@@ -435,10 +441,10 @@
       "text": "This PR fixes two remaining issues, and removes the final two FIXMEs: - Migrations would add peers as fast as possible, without checking whether the peer being added was even online. Adding an offline peer grows the quorum size, which could drop the group out of quorum until enough nodes came online. `selectPeerToAdd` now prefers the candidate we've heard from most recently, and only adds an unheard peer if the live members still reach quorum in the grown group. - Migrations also didn't wait for upper-layer stream catchup to complete before removing old peers. An old peer is now only removed if the group left after the removal retains a store-current majority, based on `Current`/`Lag` and the stream's active `catchupPeers`. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8460",
       "createdAt": "2026-08-12T16:02:04Z",
-      "updatedAt": "2026-08-13T14:28:17Z",
-      "timestamp": "2026-08-13T14:28:17Z",
+      "updatedAt": "2026-08-13T17:27:16Z",
+      "timestamp": "2026-08-13T17:27:16Z",
       "metrics": {
-        "reactions": 1,
+        "reactions": 0,
         "comments": 3
       },
       "labels": [],
@@ -1105,6 +1111,101 @@
           "jnmoyne"
         ],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:ef3f5a4719329d48d58f",
+      "signalId": "github:nats-io/nats-server:pull_request:8443",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8443",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [ADDED] Peer evacuation and reconciliation of assignments",
+        "text": "This PR wires peer removals and additions into desired state. - `reconcilePeerAssignments` runs on a meta leader change, so proposals that were missed or only partially applied can be retried by the next leader. - Peer additions through `processAddPeer` now also obey the rules of `cc.selectPeerGroup`, which requires waiting for STATSZ info if it isn't yet available for the newly added node. - A new set of \"peer evacuate\" endpoints (`$JS.API.STREAM.PEER.EVACUATE.<stream>` and, for the system account, `$JS.API.SERVER.EVACUATE`) offers the same semantics as peer-remove while not immediately removing the peer, so it can cooperate in catching up the new peer. This also allows evacuating all R1 streams of a server that is to be decommissioned ahead of time, whereas a peer-remove of a server hosting an R1 stream does get a new server assigned but would otherwise lose all data. `reconcilePeerAssignments` scans every stream and consumer assignment on each meta leader change and peer add, benchmarked locally at ~100-290 ms for 100k streams/500k consumers, under `js.mu`. That is purely a no-op scan; actually reconciling is significantly more expensive, since each affected assignment's proposal needs to be retried. A large contributor is `selectPeerGroup`, which loops over all stream assignments per call to determine HA asset counts. This is not addressed in this PR, but noted for clarity, and `selectPeerGroup` can only be made faster once all `meta.ForwardProposal` calls are gone since we can then purely rely on atomics. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8443",
+        "createdAt": "2026-08-07T18:06:36Z",
+        "updatedAt": "2026-08-13T17:32:19Z",
+        "timestamp": "2026-08-13T17:32:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:32cb212cb1eee39bc869",
+      "signalId": "github:nats-io/nats-server:pull_request:8452",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8452",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] Evict peer-removed peers for group below quorum",
+        "text": "If a stream/consumer Raft group was below quorum, it wasn't possible to safely peer-remove nodes to get into quorum again. This PR fixes that by allowing nodes to be evicted when below quorum, but only those nodes that were explicitly peer-removed. Given a R3 stream without quorum due to 2 nodes being offline, it's now possible to peer-remove those two offline nodes and the stream will become operational again, albeit it at R1. If new peers were assigned to the stream, the stream would automatically scale up to R3, but on the new peers. The desired state gets a new `rg.Desired.Removed` field that contains the set of explicitly peer-removed nodes, which are eligible for eviction if below quorum. Eviction is only allowed if this node thinks the stream/consumer Raft group is leaderless, it is not leaderless on the meta layer, it has desired state that specifies removed peers, and the node itself is still part of the group's peer set. A safety check also prevents eviction if the remaining peers could form a disjoint majority. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8452",
+        "createdAt": "2026-08-11T14:10:44Z",
+        "updatedAt": "2026-08-13T17:30:14Z",
+        "timestamp": "2026-08-13T17:30:14Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:46406dd424430a683aa9",
+      "signalId": "github:nats-io/nats-server:pull_request:8460",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8460",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] Migration added offline peers & removed peers before catchup",
+        "text": "This PR fixes two remaining issues, and removes the final two FIXMEs: - Migrations would add peers as fast as possible, without checking whether the peer being added was even online. Adding an offline peer grows the quorum size, which could drop the group out of quorum until enough nodes came online. `selectPeerToAdd` now prefers the candidate we've heard from most recently, and only adds an unheard peer if the live members still reach quorum in the grown group. - Migrations also didn't wait for upper-layer stream catchup to complete before removing old peers. An old peer is now only removed if the group left after the removal retains a store-current majority, based on `Current`/`Lag` and the stream's active `catchupPeers`. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8460",
+        "createdAt": "2026-08-12T16:02:04Z",
+        "updatedAt": "2026-08-13T17:27:16Z",
+        "timestamp": "2026-08-13T17:27:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
       }
     }
   ]

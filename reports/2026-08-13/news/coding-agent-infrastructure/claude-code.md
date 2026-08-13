@@ -16,3 +16,9 @@ Repository: [anthropics/claude-code](https://github.com/anthropics/claude-code)
 - **Milestone** [P1](https://github.com/anthropics/claude-code/milestone/1)
 - **Milestone** [P2](https://github.com/anthropics/claude-code/milestone/2)
 - **Milestone** [P3](https://github.com/anthropics/claude-code/milestone/3)
+
+## Hacker News discussions
+
+- [Launch HN: Bullet (YC S26) – A Faster Coding Agent](https://www.codewithbullet.com) — [16 points · 17 comments](https://news.ycombinator.com/item?id=49283063)
+
+Community discussion; not maintainer evidence.

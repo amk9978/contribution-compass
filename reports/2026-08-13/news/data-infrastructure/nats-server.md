@@ -18,3 +18,7 @@ Repository: [nats-io/nats-server](https://github.com/nats-io/nats-server)
 ## Publicly indicated upcoming work
 
 No public prerelease or open milestone was found.
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

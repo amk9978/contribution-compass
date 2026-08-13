@@ -35,15 +35,15 @@
     ],
     "license": "NOASSERTION",
     "defaultBranch": "main",
-    "stars": 30991,
+    "stars": 30992,
     "forks": 1226,
     "openIssues": 300,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:30.632795+00:00"
+    "collectedAt": "2026-08-13T17:43:29.993856+00:00"
   },
   "news": {
     "repository": "dragonflydb/dragonfly",
-    "collectedAt": "2026-08-13T16:19:30.632795+00:00",
+    "collectedAt": "2026-08-13T17:43:29.993856+00:00",
     "latestRelease": {
       "repository": "dragonflydb/dragonfly",
       "tag": "v1.40.1",
@@ -82,7 +82,8 @@
         "openIssues": 7,
         "closedIssues": 1
       }
-    ]
+    ],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -102,6 +103,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 29,
       "changedCount": 8
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 29,
+      "changedCount": 1
     }
   ],
   "signals": [
@@ -177,8 +184,7 @@
       "labels": [],
       "author": "dragonclaw-dragonflydb",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8028",
@@ -208,8 +214,7 @@
         "kostasrim",
         "dranikpg",
         "vyavdoshenko"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:issue:8056",
@@ -512,8 +517,7 @@
       "labels": [],
       "author": "rounaknandanwar",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:7997",
@@ -557,8 +561,7 @@
       "labels": [],
       "author": "BorysTheDev",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8026",
@@ -665,8 +668,7 @@
       "labels": [],
       "author": "Shikha-code36",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8054",
@@ -687,8 +689,7 @@
       "labels": [],
       "author": "Shikha-code36",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8058",
@@ -763,8 +764,8 @@
       "text": "Deleting a key because its newly set expiration is already in the past emitted no `__keyevent@<db>__:expired` notification, so a subscriber waiting for the event was blocked forever (found via the upstream Valkey pubsub TCL suite: \"expired event (Expiration time is already expired)\" hangs). This covers the `DbSlice::UpdateExpire` funnel: EXPIRE/PEXPIRE/(P)EXPIREAT, GETEX, and memcached GAT/GATS.",
       "url": "https://github.com/dragonflydb/dragonfly/pull/8065",
       "createdAt": "2026-08-13T06:51:10Z",
-      "updatedAt": "2026-08-13T13:04:35Z",
-      "timestamp": "2026-08-13T13:04:35Z",
+      "updatedAt": "2026-08-13T16:35:07Z",
+      "timestamp": "2026-08-13T16:35:07Z",
       "metrics": {
         "reactions": 0,
         "comments": 4
@@ -774,7 +775,8 @@
       "state": "open",
       "assignees": [
         "vyavdoshenko"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8066",
@@ -816,8 +818,7 @@
       "labels": [],
       "author": "glevkovich",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8077",
@@ -861,8 +862,7 @@
       "state": "closed",
       "assignees": [
         "kostasrim"
-      ],
-      "change": "new"
+      ]
     }
   ],
   "events": [
@@ -1945,6 +1945,39 @@
         "author": "glevkovich",
         "state": "open",
         "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1780f97d8c5d88a2a40c",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8065",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8065",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(server): emit expired keyspace events for already-past expirations",
+        "text": "Deleting a key because its newly set expiration is already in the past emitted no `__keyevent@<db>__:expired` notification, so a subscriber waiting for the event was blocked forever (found via the upstream Valkey pubsub TCL suite: \"expired event (Expiration time is already expired)\" hangs). This covers the `DbSlice::UpdateExpire` funnel: EXPIRE/PEXPIRE/(P)EXPIREAT, GETEX, and memcached GAT/GATS.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8065",
+        "createdAt": "2026-08-13T06:51:10Z",
+        "updatedAt": "2026-08-13T16:35:07Z",
+        "timestamp": "2026-08-13T16:35:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "vyavdoshenko",
+        "state": "open",
+        "assignees": [
+          "vyavdoshenko"
+        ],
         "change": "updated"
       }
     }

@@ -16,3 +16,7 @@ Repository: [tikv/raft-rs](https://github.com/tikv/raft-rs)
 ## Publicly indicated upcoming work
 
 No public prerelease or open milestone was found.
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

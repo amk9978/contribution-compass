@@ -20,3 +20,7 @@ Repository: [openai/codex](https://github.com/openai/codex)
 - **Prerelease** [0.148.0-alpha.12](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.12)
 - **Prerelease** [0.148.0-alpha.11](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.11)
 - **Prerelease** [0.148.0-alpha.9](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.9)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

@@ -13,3 +13,7 @@ Repository: [apple/foundationdb](https://github.com/apple/foundationdb)
 
 - **Prerelease** [Release 7.3.79](https://github.com/apple/foundationdb/releases/tag/7.3.79)
 - **Prerelease** [Release 7.3.78](https://github.com/apple/foundationdb/releases/tag/7.3.78)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

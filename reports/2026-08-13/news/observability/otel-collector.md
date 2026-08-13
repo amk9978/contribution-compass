@@ -22,3 +22,7 @@ Repository: [open-telemetry/opentelemetry-collector](https://github.com/open-tel
 - **Milestone** [go.opentelemetry.io/collector/config/configgrpc 1.0](https://github.com/open-telemetry/opentelemetry-collector/milestone/61)
 - **Milestone** [go.opentelemetry.io/collector/configauth 1.0](https://github.com/open-telemetry/opentelemetry-collector/milestone/62)
 - **Milestone** [go.opentelemetry.io/service 1.0](https://github.com/open-telemetry/opentelemetry-collector/milestone/70)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

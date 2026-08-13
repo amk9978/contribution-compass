@@ -32,15 +32,15 @@
       "streaming"
     ],
     "defaultBranch": "dev",
-    "stars": 12437,
+    "stars": 12438,
     "forks": 784,
-    "openIssues": 616,
+    "openIssues": 612,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:29.061084+00:00"
+    "collectedAt": "2026-08-13T17:43:28.179108+00:00"
   },
   "news": {
     "repository": "redpanda-data/redpanda",
-    "collectedAt": "2026-08-13T16:19:29.061084+00:00",
+    "collectedAt": "2026-08-13T17:43:28.179108+00:00",
     "latestRelease": {
       "repository": "redpanda-data/redpanda",
       "tag": "v26.1.15",
@@ -75,9 +75,10 @@
         "url": "https://github.com/redpanda-data/redpanda/milestone/332",
         "progress": 100,
         "openIssues": 0,
-        "closedIssues": 9
+        "closedIssues": 11
       }
-    ]
+    ],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -97,6 +98,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 45,
       "changedCount": 12
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 43,
+      "changedCount": 11
     }
   ],
   "signals": [
@@ -631,11 +638,11 @@
       "text": "Revives #8570 (rebased onto dev, see #8565 for the original motivation): put the seastar memory diagnostics dump, which is emitted at ERROR level when a node runs out of memory, on the default log allow list so an OOM surfaces as the \"redpanda crashed\" diagnostic rather than a BadLogLines about the dump. Also clarifies in the raise_on_bad_logs docstrings that allow-list regexes are unanchored. The main value over the old PR is the meta-test: a new debug-only `oom` type for the `/v1/debug/trigger_crash` admin API that allocates until the seastar allocator gives out, plus a ducktape self-test (alongside the existing segfault/assert ones) that runs a node out of memory and checks the harness reports it as a NodeCrash. With the system allocator (sanitized builds) there is no seastar memory limit and unbounded allocation would exhaust host memory instead, so there the API refuses the request, and the self-test verifies the refusal and that the node survives. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.1.x - [ ] v25.3.x - [ ] v25.2.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31365",
       "createdAt": "2026-07-30T14:45:49Z",
-      "updatedAt": "2026-08-13T15:20:55Z",
-      "timestamp": "2026-08-13T15:20:55Z",
+      "updatedAt": "2026-08-13T17:12:15Z",
+      "timestamp": "2026-08-13T17:12:15Z",
       "metrics": {
         "reactions": 0,
-        "comments": 2
+        "comments": 4
       },
       "labels": [
         "area/redpanda"
@@ -669,8 +676,7 @@
       "state": "open",
       "assignees": [
         "mnajda-redpanda"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31411",
@@ -694,8 +700,7 @@
       ],
       "author": "bartoszpiekny-redpanda",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31461",
@@ -824,8 +829,8 @@
       "text": "## Summary Copyedits surfaced by auditing the docs team's rpk description overrides (`docs-data/rpk-overrides.json` in redpanda-data/docs) against rpk's source text — these are cases where the docs override exists only to paper over a source defect, so fixing the source lets the docs drop the override: - `profile clear`: \"unset **an prod** cluster profile\" → \"a production\" - `registry mode get`/`set`, `registry compatibility-level`: fix the \"global mode**, alternatively** you can…\" comma splice (same pattern in all three) - `security acl delete --cluster`: ACLs are removed *for*, not *to*, the cluster - `security acl list --registry-global`/`--registry-subject`: the list command **matches** ACLs, it doesn't **grant** them (text was copied from `acl create`, where \"grant\" is correct and unchanged) - `container start --retries`, `topic consume --fetch-max-bytes`/`--fetch-max-partition-bytes`: \"amount of\" → \"number of\" for countable nouns Help-text strings only; no behavior changes. Affected package tests pass. Related: #31520 (single-sources the `-X` flag docs from the same audit). 🤖 Generated with [Claude Code](https://claude.com/claude-code) ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31521",
       "createdAt": "2026-08-11T09:30:20Z",
-      "updatedAt": "2026-08-12T15:48:46Z",
-      "timestamp": "2026-08-12T15:48:46Z",
+      "updatedAt": "2026-08-13T16:41:50Z",
+      "timestamp": "2026-08-13T16:41:50Z",
       "metrics": {
         "reactions": 0,
         "comments": 7
@@ -834,7 +839,7 @@
         "area/rpk"
       ],
       "author": "JakeSCahill",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -935,8 +940,8 @@
       "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31537",
       "url": "https://github.com/redpanda-data/redpanda/pull/31540",
       "createdAt": "2026-08-11T17:40:18Z",
-      "updatedAt": "2026-08-12T17:09:19Z",
-      "timestamp": "2026-08-12T17:09:19Z",
+      "updatedAt": "2026-08-13T16:42:32Z",
+      "timestamp": "2026-08-13T16:42:32Z",
       "metrics": {
         "reactions": 0,
         "comments": 3
@@ -946,7 +951,8 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31542",
@@ -982,21 +988,23 @@
       "text": "<!-- See https://github.com/redpanda-data/redpanda/blob/dev/CONTRIBUTING.md#pull-request-body for more details and examples of what is expected in a PR body. Content in this top section is REQUIRED. Describe, in plain language, the motivation behind the change (bug fix, feature, improvement) in this PR and how the included commits address it. Add the GitHub keyword `Fixes` to link to bug(s) this PR will fix, e.g. Fixes #ISSUE-NUMBER, Fixes #ISSUE-NUMBER, ... If this PR is a backport, link to the original with `Backport of PR`, e.g. Backport of PR #PR-NUMBER --> A .cannotrecover file is a segment that failed startup recovery. The presence of these is a consistent source of confusion for support engineers. This PR adds some new metrics, naming, and logging around unrecoverable segments. - gauge for unrecoverable segments on disk, labelled by whether the segment was the tail of its log at recovery time (tail, mid_log, or unknown for files an older version left behind) - counted during the open_segments directory walk during recovery - try to surface a reason we couldn't recover the segment (not enough bytes, zero header, crc error, etc.) - put the reason and the position in the filename: `<segment>.<stop_reason>.<tail|mid_log>.cannotrecover`, so both are still there after the log line that reported them rotates away - in addition to the filename, log the size on disk, `log_replayer` checkpoint (incl the stop reason), and where the segment sat in the log - for non-tail segments, log at warn, otherwise keep logging at info as before. The idea here is to give a bit more signal to support or oncallers trying to determine whether cannotrecover files might indicate data loss, where to look, etc. Also adds some code to clean up previously orphaned index files from unrecoverable segments that could otherwise prevent partition removal from fully removing partition directories. Covers .base_index and .compaction_index, plus the compaction staging variant of each. ## Backports Required <!-- Checking at least one of the checkboxes is REQUIRED if this PR is not a backport. --> - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [x] v26.1.x - [ ] v25.3.x ## Release Notes ### Improvements * Improves observability and logging around unrecoverable segments. <!-- If the changes in this PR do not need to be mentioned in the release notes, then don't add a sub-section and simply list `none`, e.g. * none Otherwise, adding a sub-section or `none` is REQUIRED if the PR is not a backport PR. If this is a backport PR, adding contents to this section will override the release notes section inherited from the original PR to dev. Add one or more of the sub-sections with a short description bullet point of the change, e.g. ### Bug Fixes * Short description of the bug fix if this is a PR to `dev` branch. ### Features * Short description of the feature. Explain how to configure. ### Improvements * Short description of how this PR improves existing behavior. -->",
       "url": "https://github.com/redpanda-data/redpanda/pull/31544",
       "createdAt": "2026-08-12T00:24:39Z",
-      "updatedAt": "2026-08-13T06:06:07Z",
-      "timestamp": "2026-08-13T06:06:07Z",
+      "updatedAt": "2026-08-13T17:29:34Z",
+      "timestamp": "2026-08-13T17:29:34Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
       },
       "labels": [
         "area/build",
-        "area/redpanda"
+        "area/redpanda",
+        "claude-review"
       ],
       "author": "oleiman",
       "state": "open",
       "assignees": [
         "oleiman"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31546",
@@ -1079,8 +1087,8 @@
       "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31546 Fixes: https://github.com/redpanda-data/redpanda/issues/31550,",
       "url": "https://github.com/redpanda-data/redpanda/pull/31551",
       "createdAt": "2026-08-12T15:52:55Z",
-      "updatedAt": "2026-08-12T17:34:57Z",
-      "timestamp": "2026-08-12T17:34:57Z",
+      "updatedAt": "2026-08-13T16:42:31Z",
+      "timestamp": "2026-08-13T16:42:31Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1091,7 +1099,8 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31553",
@@ -1176,8 +1185,8 @@
       "text": "Particularly interested in replacing golang.org/x/crypto/pbkdf2 with the stdlib one. <!-- See https://github.com/redpanda-data/redpanda/blob/dev/CONTRIBUTING.md#pull-request-body for more details and examples of what is expected in a PR body. Content in this top section is REQUIRED. Describe, in plain language, the motivation behind the change (bug fix, feature, improvement) in this PR and how the included commits address it. Add the GitHub keyword `Fixes` to link to bug(s) this PR will fix, e.g. Fixes #ISSUE-NUMBER, Fixes #ISSUE-NUMBER, ... If this PR is a backport, link to the original with `Backport of PR`, e.g. Backport of PR #PR-NUMBER --> ## Backports Required <!-- Checking at least one of the checkboxes is REQUIRED if this PR is not a backport. --> - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31556",
       "createdAt": "2026-08-12T18:44:39Z",
-      "updatedAt": "2026-08-12T21:12:18Z",
-      "timestamp": "2026-08-12T21:12:18Z",
+      "updatedAt": "2026-08-13T17:14:35Z",
+      "timestamp": "2026-08-13T17:14:35Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -1186,8 +1195,9 @@
         "area/rpk"
       ],
       "author": "r-vasquez",
-      "state": "open",
-      "assignees": []
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31557",
@@ -1261,8 +1271,7 @@
       "state": "open",
       "assignees": [
         "nguyen-andrew"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31560",
@@ -1274,18 +1283,19 @@
       "text": "The sysroot's `linux-libc-dev` decides which kernel uapi constants the build can see, no matter which kernel the broker actually runs on. Ours is built from Ubuntu 22.04, which pins that at 5.15 and costs us every addition since October 2021. Two of those we already reach for and do not find, and in both cases someone worked around it locally rather than the gap being caught by a build failure: - **`MADV_COLLAPSE` (6.1) is a live functional loss.** Seastar's memory prefaulter asks the kernel to synchronously collapse the freshly-populated seastar heap into transparent huge pages, guarded on `#ifdef MADV_COLLAPSE` in `src/core/smp.cc`. The constant is absent from the 22.04 sysroot, so that call is not compiled into anything we ship and the heap only gets whatever khugepaged does in the background. It is visible in the object code: `smp.pic.o` carries one `madvise` immediate (`$0x17`, `MADV_POPULATE_WRITE`) in every 22.04-built tree I have, and gains `$0x19` (25, `MADV_COLLAPSE`) with this change. Note `syschecks/hugepages.cc` already carries a local `#define MADV_COLLAPSE 25` for `promote_code_to_hugepages()`, so the gap was hit and patched in one translation unit while the seastar call site stayed dark. - **`STATX_DIOALIGN` (6.1) is no longer a functional loss, but its safety net is cut.** Seastar queries DIO alignment through a hand-rolled 256-byte `struct statx` stand-in with a local `0x2000`, so this works today (CORE-16295 / #30443). What does not work is the check on it: both `static_assert`s validating the stand-in's layout against the real struct sit inside the same `#ifdef`, so the hand-written padding has never been verified. Against real 6.8 headers they compile and pass, so there is no latent bug hiding behind them today, but nothing was keeping it that way. 24.04 carries 6.8 headers, which covers both. Two things worth stating explicitly because they look like risks and are not. **The glibc move is not one:** `//bazel/packaging` ships the sysroot's shared libraries and repoints the binaries' interpreter at the bundled loader, so the host's glibc is never consulted, and the loader's own minimum kernel is 3.2.0 on both 2.35 and 2.39. **io_uring is not gated by the sysroot** either, despite being the largest relevant slice of the header diff (74 new identifiers): seastar's backend goes through `@liburing`, which vendors its own `io_uring.h` already carrying `IORING_SETUP_SINGLE_ISSUER`, `DEFER_TASKRUN`, `REGISTER_RING_FDS` and `OP_SEND_ZC`. Bumping liburing is that lever, not this. 26.04 was measured too (glibc 2.43, 7.0 headers, same 3.2.0 floor) and deliberately skipped for now: it covers strictly more, but 24.04 clears both findings and is the smaller step for an input that invalidates every action in the build. The commits are (1) `Dockerfile.sysroot` onto `ubuntu:noble` with gcc's runtime dir moving 12 -> 13, plus README notes on the two floors a distro choice sets, and (2) the `repositories.bzl` / `MODULE.bazel.lock` pin. Verification, beyond the build passing: the tarball's file set outside `usr/include` is identical to the 22.04 sysroot on x86_64, and on aarch64 gains exactly gcc-13's `crtoffload{begin,end,table}.o` via the existing `*crt*.o` glob (additive, never linked unless offloading is used); no absolute symlinks are left for bazel's directory artifacts to reject; and `bazel build //src/v/base` builds all of seastar plus openssl and hwloc against it from scratch. **This is a draft because the tarballs are not published yet.** The third commit is marked DO NOT MERGE and carries them in-tree, handed to bazel through a distdir so the not-yet-existing `_SYSROOT_URL` is never fetched; it is here so CI can exercise the branch before anything is published. Reverting that one commit is the entire cleanup, because the pinned sha256s are already the final ones - a tarball's hash does not depend on where it is hosted. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31560",
       "createdAt": "2026-08-12T23:02:50Z",
-      "updatedAt": "2026-08-13T04:32:01Z",
-      "timestamp": "2026-08-13T04:32:01Z",
+      "updatedAt": "2026-08-13T17:29:33Z",
+      "timestamp": "2026-08-13T17:29:33Z",
       "metrics": {
         "reactions": 0,
-        "comments": 10
+        "comments": 11
       },
       "labels": [
         "area/build"
       ],
       "author": "travisdowns",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31561",
@@ -1309,8 +1319,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31562",
@@ -1412,8 +1421,8 @@
       "text": "`the_producer_lock_serializes_by_producer` asserted that two operations ran concurrently, which requires the first producer's operation to start before the second producer's runs. Both are scheduled as tasks in debug builds, and nothing ordered them: under `--@seastar//:shuffle_task_queue=true` the second can run to completion first (reproduced in 10/30 runs, 0/100 after the fix). Wait for the first operation to hold the lock instead. The mid-test checks also become non-fatal. `ASSERT_*_CORO` expands to `co_return`, which freed a coroutine frame the pending operations still referenced, so the assertion failure surfaced as a heap-use-after-free that masked it. Test-only change. ## Backports Required - [ ] none - papercut/not impactful enough to backport - [ ] none - not a bug fix - [ ] none - this is a backport - [x] none - issue does not exist in previous branches - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
       "url": "https://github.com/redpanda-data/redpanda/pull/31566",
       "createdAt": "2026-08-13T13:39:22Z",
-      "updatedAt": "2026-08-13T15:32:39Z",
-      "timestamp": "2026-08-13T15:32:39Z",
+      "updatedAt": "2026-08-13T17:02:37Z",
+      "timestamp": "2026-08-13T17:02:37Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1422,7 +1431,7 @@
         "area/redpanda"
       ],
       "author": "nvartolomei",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -1447,8 +1456,7 @@
       ],
       "author": "nvartolomei",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31568",
@@ -1472,8 +1480,7 @@
       ],
       "author": "nvartolomei",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31569",
@@ -1485,11 +1492,11 @@
       "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
       "url": "https://github.com/redpanda-data/redpanda/pull/31569",
       "createdAt": "2026-08-13T15:17:14Z",
-      "updatedAt": "2026-08-13T15:18:38Z",
-      "timestamp": "2026-08-13T15:18:38Z",
+      "updatedAt": "2026-08-13T16:52:45Z",
+      "timestamp": "2026-08-13T16:52:45Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "area/build",
@@ -1497,9 +1504,9 @@
         "kind/backport"
       ],
       "author": "vbotbuildovich",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31570",
@@ -1524,8 +1531,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31571",
@@ -1537,11 +1543,11 @@
       "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
       "url": "https://github.com/redpanda-data/redpanda/pull/31571",
       "createdAt": "2026-08-13T15:17:19Z",
-      "updatedAt": "2026-08-13T15:18:29Z",
-      "timestamp": "2026-08-13T15:18:29Z",
+      "updatedAt": "2026-08-13T17:01:41Z",
+      "timestamp": "2026-08-13T17:01:41Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "area/build",
@@ -1549,9 +1555,9 @@
         "kind/backport"
       ],
       "author": "vbotbuildovich",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31572",
@@ -1574,6 +1580,30 @@
         "kind/backport"
       ],
       "author": "vbotbuildovich",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:redpanda-data/redpanda:pull_request:31573",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "redpanda-data/redpanda",
+      "kind": "pull_request",
+      "title": "rpk: add stretch cluster grafana dashboard behind --cluster-type flag",
+      "text": "Adds a `--cluster-type` flag to `rpk generate grafana-dashboard`. The default value (`default`) leaves the existing `--dashboard` flow untouched; `stretch` prints a new embedded dashboard focused on stretch cluster observability: cross-cluster raft health, StretchCluster member status, and operator reconcile health. ``` rpk generate grafana-dashboard --cluster-type stretch ``` The dashboard is converted from the Redpanda operator repository's [`docs/operator-grafana-dashboard.json`](https://github.com/redpanda-data/redpanda-operator/blob/main/docs/operator-grafana-dashboard.json), with the Prometheus datasource parameterized as a `${DS_PROMETHEUS}` dashboard variable so it imports cleanly into any Grafana instance (matching the convention of the other embedded dashboards, e.g. serverless). It is embedded-only — not downloaded from the [observability](https://github.com/redpanda-data/observability) GitHub repository — so combining `--dashboard` with `--cluster-type stretch` is rejected with a clear error, as is any unrecognized `--cluster-type` value. Unit tests cover flag parsing/routing (`TestClusterTypeStretch`) and the embedded gzip's integrity via sha256 (extended `Test_embeddedDecompressAndPrint`). ## Backports Required - [x] none - not a bug fix ## Release Notes ### Features * `rpk generate grafana-dashboard` accepts a new `--cluster-type` flag. Passing `--cluster-type stretch` generates a Grafana dashboard for stretch clusters managed by the Redpanda Operator, covering cross-cluster raft health, StretchCluster member status, and operator reconcile health. 🤖 Generated with [Claude Code](https://claude.com/claude-code) [K8S-855](https://redpandadata.atlassian.net/browse/K8S-855) [K8S-855]: https://redpandadata.atlassian.net/browse/K8S-855?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+      "url": "https://github.com/redpanda-data/redpanda/pull/31573",
+      "createdAt": "2026-08-13T17:02:20Z",
+      "updatedAt": "2026-08-13T17:10:58Z",
+      "timestamp": "2026-08-13T17:10:58Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "area/rpk",
+        "area/build"
+      ],
+      "author": "RafalKorepta",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -3769,6 +3799,387 @@
         "assignees": [
           "nguyen-andrew"
         ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2a560f580bc557bc037e",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31544",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31544",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[CORE-12930] - Storage: Some observability improvements for unrecoverable segments",
+        "text": "<!-- See https://github.com/redpanda-data/redpanda/blob/dev/CONTRIBUTING.md#pull-request-body for more details and examples of what is expected in a PR body. Content in this top section is REQUIRED. Describe, in plain language, the motivation behind the change (bug fix, feature, improvement) in this PR and how the included commits address it. Add the GitHub keyword `Fixes` to link to bug(s) this PR will fix, e.g. Fixes #ISSUE-NUMBER, Fixes #ISSUE-NUMBER, ... If this PR is a backport, link to the original with `Backport of PR`, e.g. Backport of PR #PR-NUMBER --> A .cannotrecover file is a segment that failed startup recovery. The presence of these is a consistent source of confusion for support engineers. This PR adds some new metrics, naming, and logging around unrecoverable segments. - gauge for unrecoverable segments on disk, labelled by whether the segment was the tail of its log at recovery time (tail, mid_log, or unknown for files an older version left behind) - counted during the open_segments directory walk during recovery - try to surface a reason we couldn't recover the segment (not enough bytes, zero header, crc error, etc.) - put the reason and the position in the filename: `<segment>.<stop_reason>.<tail|mid_log>.cannotrecover`, so both are still there after the log line that reported them rotates away - in addition to the filename, log the size on disk, `log_replayer` checkpoint (incl the stop reason), and where the segment sat in the log - for non-tail segments, log at warn, otherwise keep logging at info as before. The idea here is to give a bit more signal to support or oncallers trying to determine whether cannotrecover files might indicate data loss, where to look, etc. Also adds some code to clean up previously orphaned index files from unrecoverable segments that could otherwise prevent partition removal from fully removing partition directories. Covers .base_index and .compaction_index, plus the compaction staging variant of each. ## Backports Required <!-- Checking at least one of the checkboxes is REQUIRED if this PR is not a backport. --> - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [x] v26.2.x - [x] v26.1.x - [ ] v25.3.x ## Release Notes ### Improvements * Improves observability and logging around unrecoverable segments. <!-- If the changes in this PR do not need to be mentioned in the release notes, then don't add a sub-section and simply list `none`, e.g. * none Otherwise, adding a sub-section or `none` is REQUIRED if the PR is not a backport PR. If this is a backport PR, adding contents to this section will override the release notes section inherited from the original PR to dev. Add one or more of the sub-sections with a short description bullet point of the change, e.g. ### Bug Fixes * Short description of the bug fix if this is a PR to `dev` branch. ### Features * Short description of the feature. Explain how to configure. ### Improvements * Short description of how this PR improves existing behavior. -->",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31544",
+        "createdAt": "2026-08-12T00:24:39Z",
+        "updatedAt": "2026-08-13T17:29:34Z",
+        "timestamp": "2026-08-13T17:29:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "claude-review"
+        ],
+        "author": "oleiman",
+        "state": "open",
+        "assignees": [
+          "oleiman"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d50441a65def85ca13a9",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31560",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31560",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "bazel: bump the toolchain sysroot to Ubuntu 24.04",
+        "text": "The sysroot's `linux-libc-dev` decides which kernel uapi constants the build can see, no matter which kernel the broker actually runs on. Ours is built from Ubuntu 22.04, which pins that at 5.15 and costs us every addition since October 2021. Two of those we already reach for and do not find, and in both cases someone worked around it locally rather than the gap being caught by a build failure: - **`MADV_COLLAPSE` (6.1) is a live functional loss.** Seastar's memory prefaulter asks the kernel to synchronously collapse the freshly-populated seastar heap into transparent huge pages, guarded on `#ifdef MADV_COLLAPSE` in `src/core/smp.cc`. The constant is absent from the 22.04 sysroot, so that call is not compiled into anything we ship and the heap only gets whatever khugepaged does in the background. It is visible in the object code: `smp.pic.o` carries one `madvise` immediate (`$0x17`, `MADV_POPULATE_WRITE`) in every 22.04-built tree I have, and gains `$0x19` (25, `MADV_COLLAPSE`) with this change. Note `syschecks/hugepages.cc` already carries a local `#define MADV_COLLAPSE 25` for `promote_code_to_hugepages()`, so the gap was hit and patched in one translation unit while the seastar call site stayed dark. - **`STATX_DIOALIGN` (6.1) is no longer a functional loss, but its safety net is cut.** Seastar queries DIO alignment through a hand-rolled 256-byte `struct statx` stand-in with a local `0x2000`, so this works today (CORE-16295 / #30443). What does not work is the check on it: both `static_assert`s validating the stand-in's layout against the real struct sit inside the same `#ifdef`, so the hand-written padding has never been verified. Against real 6.8 headers they compile and pass, so there is no latent bug hiding behind them today, but nothing was keeping it that way. 24.04 carries 6.8 headers, which covers both. Two things worth stating explicitly because they look like risks and are not. **The glibc move is not one:** `//bazel/packaging` ships the sysroot's shared libraries and repoints the binaries' interpreter at the bundled loader, so the host's glibc is never consulted, and the loader's own minimum kernel is 3.2.0 on both 2.35 and 2.39. **io_uring is not gated by the sysroot** either, despite being the largest relevant slice of the header diff (74 new identifiers): seastar's backend goes through `@liburing`, which vendors its own `io_uring.h` already carrying `IORING_SETUP_SINGLE_ISSUER`, `DEFER_TASKRUN`, `REGISTER_RING_FDS` and `OP_SEND_ZC`. Bumping liburing is that lever, not this. 26.04 was measured too (glibc 2.43, 7.0 headers, same 3.2.0 floor) and deliberately skipped for now: it covers strictly more, but 24.04 clears both findings and is the smaller step for an input that invalidates every action in the build. The commits are (1) `Dockerfile.sysroot` onto `ubuntu:noble` with gcc's runtime dir moving 12 -> 13, plus README notes on the two floors a distro choice sets, and (2) the `repositories.bzl` / `MODULE.bazel.lock` pin. Verification, beyond the build passing: the tarball's file set outside `usr/include` is identical to the 22.04 sysroot on x86_64, and on aarch64 gains exactly gcc-13's `crtoffload{begin,end,table}.o` via the existing `*crt*.o` glob (additive, never linked unless offloading is used); no absolute symlinks are left for bazel's directory artifacts to reject; and `bazel build //src/v/base` builds all of seastar plus openssl and hwloc against it from scratch. **This is a draft because the tarballs are not published yet.** The third commit is marked DO NOT MERGE and carries them in-tree, handed to bazel through a distdir so the not-yet-existing `_SYSROOT_URL` is never fetched; it is here so CI can exercise the branch before anything is published. Reverting that one commit is the entire cleanup, because the pinned sha256s are already the final ones - a tarball's hash does not depend on where it is hosted. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31560",
+        "createdAt": "2026-08-12T23:02:50Z",
+        "updatedAt": "2026-08-13T17:29:33Z",
+        "timestamp": "2026-08-13T17:29:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [
+          "area/build"
+        ],
+        "author": "travisdowns",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:595c669defaa22e5785c",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31556",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31556",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[UX-1427] chore: bump franz-go to 1.21.6",
+        "text": "Particularly interested in replacing golang.org/x/crypto/pbkdf2 with the stdlib one. <!-- See https://github.com/redpanda-data/redpanda/blob/dev/CONTRIBUTING.md#pull-request-body for more details and examples of what is expected in a PR body. Content in this top section is REQUIRED. Describe, in plain language, the motivation behind the change (bug fix, feature, improvement) in this PR and how the included commits address it. Add the GitHub keyword `Fixes` to link to bug(s) this PR will fix, e.g. Fixes #ISSUE-NUMBER, Fixes #ISSUE-NUMBER, ... If this PR is a backport, link to the original with `Backport of PR`, e.g. Backport of PR #PR-NUMBER --> ## Backports Required <!-- Checking at least one of the checkboxes is REQUIRED if this PR is not a backport. --> - [ ] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31556",
+        "createdAt": "2026-08-12T18:44:39Z",
+        "updatedAt": "2026-08-13T17:14:35Z",
+        "timestamp": "2026-08-13T17:14:35Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "area/rpk"
+        ],
+        "author": "r-vasquez",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:624d131a5b6decdfd1f0",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31365",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31365",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "rptest: add OOM crash self-test; allow-list memory diagnostics",
+        "text": "Revives #8570 (rebased onto dev, see #8565 for the original motivation): put the seastar memory diagnostics dump, which is emitted at ERROR level when a node runs out of memory, on the default log allow list so an OOM surfaces as the \"redpanda crashed\" diagnostic rather than a BadLogLines about the dump. Also clarifies in the raise_on_bad_logs docstrings that allow-list regexes are unanchored. The main value over the old PR is the meta-test: a new debug-only `oom` type for the `/v1/debug/trigger_crash` admin API that allocates until the seastar allocator gives out, plus a ducktape self-test (alongside the existing segfault/assert ones) that runs a node out of memory and checks the harness reports it as a NodeCrash. With the system allocator (sanitized builds) there is no seastar memory limit and unbounded allocation would exhaust host memory instead, so there the API refuses the request, and the self-test verifies the refusal and that the node survives. ## Backports Required - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.1.x - [ ] v25.3.x - [ ] v25.2.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31365",
+        "createdAt": "2026-07-30T14:45:49Z",
+        "updatedAt": "2026-08-13T17:12:15Z",
+        "timestamp": "2026-08-13T17:12:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "area/redpanda"
+        ],
+        "author": "travisdowns",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d171fb8b9d07ac31530a",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31573",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31573",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "rpk: add stretch cluster grafana dashboard behind --cluster-type flag",
+        "text": "Adds a `--cluster-type` flag to `rpk generate grafana-dashboard`. The default value (`default`) leaves the existing `--dashboard` flow untouched; `stretch` prints a new embedded dashboard focused on stretch cluster observability: cross-cluster raft health, StretchCluster member status, and operator reconcile health. ``` rpk generate grafana-dashboard --cluster-type stretch ``` The dashboard is converted from the Redpanda operator repository's [`docs/operator-grafana-dashboard.json`](https://github.com/redpanda-data/redpanda-operator/blob/main/docs/operator-grafana-dashboard.json), with the Prometheus datasource parameterized as a `${DS_PROMETHEUS}` dashboard variable so it imports cleanly into any Grafana instance (matching the convention of the other embedded dashboards, e.g. serverless). It is embedded-only — not downloaded from the [observability](https://github.com/redpanda-data/observability) GitHub repository — so combining `--dashboard` with `--cluster-type stretch` is rejected with a clear error, as is any unrecognized `--cluster-type` value. Unit tests cover flag parsing/routing (`TestClusterTypeStretch`) and the embedded gzip's integrity via sha256 (extended `Test_embeddedDecompressAndPrint`). ## Backports Required - [x] none - not a bug fix ## Release Notes ### Features * `rpk generate grafana-dashboard` accepts a new `--cluster-type` flag. Passing `--cluster-type stretch` generates a Grafana dashboard for stretch clusters managed by the Redpanda Operator, covering cross-cluster raft health, StretchCluster member status, and operator reconcile health. 🤖 Generated with [Claude Code](https://claude.com/claude-code) [K8S-855](https://redpandadata.atlassian.net/browse/K8S-855) [K8S-855]: https://redpandadata.atlassian.net/browse/K8S-855?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31573",
+        "createdAt": "2026-08-13T17:02:20Z",
+        "updatedAt": "2026-08-13T17:10:58Z",
+        "timestamp": "2026-08-13T17:10:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/rpk",
+          "area/build"
+        ],
+        "author": "RafalKorepta",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:3997a8d83abd39851bb0",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31566",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31566",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "k/s/tests: deflake the offset_store producer lock test",
+        "text": "`the_producer_lock_serializes_by_producer` asserted that two operations ran concurrently, which requires the first producer's operation to start before the second producer's runs. Both are scheduled as tasks in debug builds, and nothing ordered them: under `--@seastar//:shuffle_task_queue=true` the second can run to completion first (reproduced in 10/30 runs, 0/100 after the fix). Wait for the first operation to hold the lock instead. The mid-test checks also become non-fatal. `ASSERT_*_CORO` expands to `co_return`, which freed a coroutine frame the pending operations still referenced, so the assertion failure surfaced as a heap-use-after-free that masked it. Test-only change. ## Backports Required - [ ] none - papercut/not impactful enough to backport - [ ] none - not a bug fix - [ ] none - this is a backport - [x] none - issue does not exist in previous branches - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31566",
+        "createdAt": "2026-08-13T13:39:22Z",
+        "updatedAt": "2026-08-13T17:02:37Z",
+        "timestamp": "2026-08-13T17:02:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/redpanda"
+        ],
+        "author": "nvartolomei",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2cecc05030fcdb04b122",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31571",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31571",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.1.x] storage: bump segment_concatenation_test timeout",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31571",
+        "createdAt": "2026-08-13T15:17:19Z",
+        "updatedAt": "2026-08-13T17:01:41Z",
+        "timestamp": "2026-08-13T17:01:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f985cae819c65124beed",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31569",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31569",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v25.3.x] storage: bump segment_concatenation_test timeout",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31569",
+        "createdAt": "2026-08-13T15:17:14Z",
+        "updatedAt": "2026-08-13T16:52:45Z",
+        "timestamp": "2026-08-13T16:52:45Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:99b1a3c62cf58d165cd0",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31540",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31540",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.1.x] bazel: define an empty ci-remote-cache config",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31537",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31540",
+        "createdAt": "2026-08-11T17:40:18Z",
+        "updatedAt": "2026-08-13T16:42:32Z",
+        "timestamp": "2026-08-13T16:42:32Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:25de712cfcf86133808c",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31551",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31551",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.1.x] rpk/connect: don't cap version segments at two digits in VersionFromString",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31546 Fixes: https://github.com/redpanda-data/redpanda/issues/31550,",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31551",
+        "createdAt": "2026-08-12T15:52:55Z",
+        "updatedAt": "2026-08-13T16:42:31Z",
+        "timestamp": "2026-08-13T16:42:31Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/rpk",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9773c951fc06b42c7935",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31521",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31521",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "rpk: fix grammar and wording defects in help text",
+        "text": "## Summary Copyedits surfaced by auditing the docs team's rpk description overrides (`docs-data/rpk-overrides.json` in redpanda-data/docs) against rpk's source text — these are cases where the docs override exists only to paper over a source defect, so fixing the source lets the docs drop the override: - `profile clear`: \"unset **an prod** cluster profile\" → \"a production\" - `registry mode get`/`set`, `registry compatibility-level`: fix the \"global mode**, alternatively** you can…\" comma splice (same pattern in all three) - `security acl delete --cluster`: ACLs are removed *for*, not *to*, the cluster - `security acl list --registry-global`/`--registry-subject`: the list command **matches** ACLs, it doesn't **grant** them (text was copied from `acl create`, where \"grant\" is correct and unchanged) - `container start --retries`, `topic consume --fetch-max-bytes`/`--fetch-max-partition-bytes`: \"amount of\" → \"number of\" for countable nouns Help-text strings only; no behavior changes. Affected package tests pass. Related: #31520 (single-sources the `-X` flag docs from the same audit). 🤖 Generated with [Claude Code](https://claude.com/claude-code) ## Release Notes * none",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31521",
+        "createdAt": "2026-08-11T09:30:20Z",
+        "updatedAt": "2026-08-13T16:41:50Z",
+        "timestamp": "2026-08-13T16:41:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "area/rpk"
+        ],
+        "author": "JakeSCahill",
+        "state": "closed",
+        "assignees": [],
         "change": "updated"
       }
     }

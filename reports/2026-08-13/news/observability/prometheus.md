@@ -17,3 +17,7 @@ Repository: [prometheus/prometheus](https://github.com/prometheus/prometheus)
 - **Prerelease** [3.14.0-rc.0 / 2026-08-06](https://github.com/prometheus/prometheus/releases/tag/v3.14.0-rc.0)
 - **Milestone** [Native Histograms](https://github.com/prometheus/prometheus/milestone/10)
 - **Milestone** [OTEL Support](https://github.com/prometheus/prometheus/milestone/12)
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

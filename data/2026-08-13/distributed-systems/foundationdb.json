@@ -26,14 +26,14 @@
     "license": "Apache-2.0",
     "defaultBranch": "main",
     "stars": 16602,
-    "forks": 1546,
-    "openIssues": 767,
+    "forks": 1547,
+    "openIssues": 768,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:24.637063+00:00"
+    "collectedAt": "2026-08-13T17:43:23.647942+00:00"
   },
   "news": {
     "repository": "apple/foundationdb",
-    "collectedAt": "2026-08-13T16:19:24.637063+00:00",
+    "collectedAt": "2026-08-13T17:43:23.647942+00:00",
     "latestRelease": {
       "repository": "apple/foundationdb",
       "tag": "7.3.77",
@@ -63,7 +63,8 @@
         "tag": "7.3.78",
         "publishedAt": "2026-07-15T20:13:34Z"
       }
-    ]
+    ],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -83,6 +84,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 13,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 14,
+      "changedCount": 2
     }
   ],
   "signals": [
@@ -187,6 +194,28 @@
       "author": "mo74m3ed",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:12549",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Update the base image to RockyLinux 10.2",
+      "text": "RockyLinux 10 adds new architecture riscv64, a per-requisite for building riscv64 releases. * Update the base image to RockyLinux 10.1 # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [x] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches If this PR is made against a release-branch, please also check the following: - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
+      "url": "https://github.com/apple/foundationdb/pull/12549",
+      "createdAt": "2025-11-12T15:03:42Z",
+      "updatedAt": "2026-08-13T17:35:39Z",
+      "timestamp": "2026-08-13T17:35:39Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "eshattow",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13748",
@@ -423,6 +452,28 @@
       "author": "tclinkenbeard-oai",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13861",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "documentation: release-notes titles, consolidate pre-1.0",
+      "text": "Append Major.Minor to titles of release-notes pages so they better distinguish themselves. URLs do not change, they are based on filename. Consolidate pre-1.0 alpha and beta release notes into the 1.0 page (subjective 🤷) Latest release-notes-740 keep version-less title because of links to \"latest Release Notes\" elsewhere in the docs site that would be affected by the title change. -------- The main place these updated titles can be appreciated is in the Previous Releases page (which might only be linked from the entire site index anyway): Before: <img width=\"1166\" height=\"826\" alt=\"Screenshot 2026-08-13 at 1 21 32 PM\" src=\"https://github.com/user-attachments/assets/9a247e5e-a1bf-45c7-8bbb-2c3692a98c26\" /> After: <img width=\"1187\" height=\"749\" alt=\"Screenshot 2026-08-13 at 1 20 47 PM\" src=\"https://github.com/user-attachments/assets/a5a6fb7d-8123-4334-9a16-c328a5701698\" />",
+      "url": "https://github.com/apple/foundationdb/pull/13861",
+      "createdAt": "2026-08-13T17:33:00Z",
+      "updatedAt": "2026-08-13T17:33:00Z",
+      "timestamp": "2026-08-13T17:33:00Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     }
   ],
   "events": [
@@ -887,6 +938,64 @@
         "state": "closed",
         "assignees": [],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:af8c5f9a8a335b8a4e1e",
+      "signalId": "github:apple/foundationdb:pull_request:12549",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:12549",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Update the base image to RockyLinux 10.2",
+        "text": "RockyLinux 10 adds new architecture riscv64, a per-requisite for building riscv64 releases. * Update the base image to RockyLinux 10.1 # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [x] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches If this PR is made against a release-branch, please also check the following: - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
+        "url": "https://github.com/apple/foundationdb/pull/12549",
+        "createdAt": "2025-11-12T15:03:42Z",
+        "updatedAt": "2026-08-13T17:35:39Z",
+        "timestamp": "2026-08-13T17:35:39Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "eshattow",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d2830693ebe4d5a34d8f",
+      "signalId": "github:apple/foundationdb:pull_request:13861",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13861",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: release-notes titles, consolidate pre-1.0",
+        "text": "Append Major.Minor to titles of release-notes pages so they better distinguish themselves. URLs do not change, they are based on filename. Consolidate pre-1.0 alpha and beta release notes into the 1.0 page (subjective 🤷) Latest release-notes-740 keep version-less title because of links to \"latest Release Notes\" elsewhere in the docs site that would be affected by the title change. -------- The main place these updated titles can be appreciated is in the Previous Releases page (which might only be linked from the entire site index anyway): Before: <img width=\"1166\" height=\"826\" alt=\"Screenshot 2026-08-13 at 1 21 32 PM\" src=\"https://github.com/user-attachments/assets/9a247e5e-a1bf-45c7-8bbb-2c3692a98c26\" /> After: <img width=\"1187\" height=\"749\" alt=\"Screenshot 2026-08-13 at 1 20 47 PM\" src=\"https://github.com/user-attachments/assets/a5a6fb7d-8123-4334-9a16-c328a5701698\" />",
+        "url": "https://github.com/apple/foundationdb/pull/13861",
+        "createdAt": "2026-08-13T17:33:00Z",
+        "updatedAt": "2026-08-13T17:33:00Z",
+        "timestamp": "2026-08-13T17:33:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
       }
     }
   ]

@@ -19,3 +19,7 @@ Repository: [containerd/containerd](https://github.com/containerd/containerd)
 
 - **Milestone** [2.5](https://github.com/containerd/containerd/milestone/52)
 - **Milestone** [2.4](https://github.com/containerd/containerd/milestone/51) — due 2026-08-26T00:00:00Z
+
+## Hacker News discussions
+
+No matching current Hacker News discussion was found.

@@ -9,7 +9,8 @@ No evidence-qualified contribution leads changed in this collection.
 
 ### [FoundationDB](https://github.com/apple/foundationdb)
 
-No new or materially changed signals.
+- **Pull Request** [Update the base image to RockyLinux 10.2](https://github.com/apple/foundationdb/pull/12549) — 5 comments · 1 reactions · open
+- **Pull Request** [documentation: release-notes titles, consolidate pre-1.0](https://github.com/apple/foundationdb/pull/13861) — 0 comments · 0 reactions · open
 
 ### [TigerBeetle](https://github.com/tigerbeetle/tigerbeetle)
 

@@ -32,11 +32,11 @@
     "forks": 4059,
     "openIssues": 488,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:26.915530+00:00"
+    "collectedAt": "2026-08-13T17:43:26.145118+00:00"
   },
   "news": {
     "repository": "containerd/containerd",
-    "collectedAt": "2026-08-13T16:19:26.915530+00:00",
+    "collectedAt": "2026-08-13T17:43:26.145118+00:00",
     "latestRelease": {
       "repository": "containerd/containerd",
       "tag": "v2.3.4",
@@ -75,7 +75,8 @@
         "openIssues": 37,
         "closedIssues": 19
       }
-    ]
+    ],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -95,6 +96,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 41,
       "changedCount": 5
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 38,
+      "changedCount": 2
     }
   ],
   "signals": [
@@ -169,8 +176,7 @@
       ],
       "author": "samorojy",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12517",
@@ -344,8 +350,7 @@
       ],
       "author": "savitha-qs",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:13529",
@@ -441,6 +446,33 @@
       "author": "dany74q",
       "state": "closed",
       "assignees": []
+    },
+    {
+      "id": "github:containerd/containerd:issue:8893",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "TaskOOM event lost",
+      "text": "### Description https://github.com/kubernetes/kubernetes/issues/119600 When I was troubleshooting the problem that the Reason was not OOMKilled, I found that the container lost the TaskOOM event. ### Steps to reproduce the issue e2e: https://prow.k8s.io/view/gs/kubernetes-jenkins/logs/ci-containerd-node-e2e-1-7/1683184526936772608 logfile: https://storage.googleapis.com/kubernetes-jenkins/logs/ci-containerd-node-e2e-1-7/1683184526936772608/artifacts/tmp-node-e2e-92a26bb7-cos-97-16919-353-1-system.log containerd_id: 98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54 containerd_name: oomkill-multi-target-container 1. kernel having trigger oom ``` Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 kernel: oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=cri-containerd-98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54.scope,mems_allowed=0,oom_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod17efb6ec_09ab_4eec_8ad6_f953eb1a7466.slice,task_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod17efb6ec_09ab_4eec_8ad6_f953eb1a7466.slice/cri-containerd-98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54.scope,task=dd,pid=38287,uid=0 Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 kernel: Memory cgroup out of memory: Killed process 38287 (dd) total-vm:21724kB, anon-rss:14744kB, file-rss:508kB, shmem-rss:0kB, UID:0 pgtables:68kB oom_score_adj:997 Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 kernel: Tasks in /kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod17efb6ec_09ab_4eec_8ad6_f953eb1a7466.slice/cri-containerd-98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54.scope are going to be killed due to memory.oom.group set ``` 2. and then containerd exit shim ``` Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 containerd[910]: time=\"2023-07-23T18:56:46.329304474Z\" level=debug msg=\"received exit event container_id:\\\"98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54\\\" id:\\\"98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54\\\" pid:38265 exit_status:137 exited_at:{seconds:1690138606 nanos:325950236}\" Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 containerd[910]: time=\"2023-07-23T18:56:46.389869167Z\" level=info msg=\"shim disconnected\" id=98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54 namespace=k8s.io Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 containerd[910]: time=\"2023-07-23T18:56:46.390142692Z\" level=warning msg=\"cleaning up after shim disconnected\" id=98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54 namespace=k8s.io ``` 3. After that, no TaskOOM event was received until container delete. ### Describe the results you received and expected Expect to receive TaskOOM event. ### What version of containerd are you using? 1.7 ### Any other relevant information ubuntu ### Show configuration if it is related to CRI plugin. no",
+      "url": "https://github.com/containerd/containerd/issues/8893",
+      "createdAt": "2023-07-30T15:02:09Z",
+      "updatedAt": "2026-08-13T16:54:10Z",
+      "timestamp": "2026-08-13T16:54:10Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 17
+      },
+      "labels": [
+        "Stale"
+      ],
+      "author": "lengrongfu",
+      "state": "open",
+      "assignees": [
+        "lengrongfu",
+        "fuweid"
+      ],
+      "change": "new"
     },
     {
       "id": "github:containerd/containerd:pull_request:11458",
@@ -546,8 +578,7 @@
       ],
       "author": "thaJeztah",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13359",
@@ -834,8 +865,7 @@
       ],
       "author": "mxpv",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13942",
@@ -1000,8 +1030,7 @@
       ],
       "author": "hsiangkao",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13951",
@@ -1082,18 +1111,19 @@
       "text": "This change adds fallback image entries for Fedora's canonical dl.fedoraproject.org.",
       "url": "https://github.com/containerd/containerd/pull/13955",
       "createdAt": "2026-08-13T01:08:22Z",
-      "updatedAt": "2026-08-13T01:52:47Z",
-      "timestamp": "2026-08-13T01:52:47Z",
+      "updatedAt": "2026-08-13T17:05:15Z",
+      "timestamp": "2026-08-13T17:05:15Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "size/S"
       ],
       "author": "austinvazquez",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:containerd/containerd:pull_request:13956",
@@ -2616,6 +2646,74 @@
         "state": "closed",
         "assignees": [],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:e0c6cf3adc088db3ad15",
+      "signalId": "github:containerd/containerd:pull_request:13955",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13955",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "ci: add lima image list for fedora images",
+        "text": "This change adds fallback image entries for Fedora's canonical dl.fedoraproject.org.",
+        "url": "https://github.com/containerd/containerd/pull/13955",
+        "createdAt": "2026-08-13T01:08:22Z",
+        "updatedAt": "2026-08-13T17:05:15Z",
+        "timestamp": "2026-08-13T17:05:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/S"
+        ],
+        "author": "austinvazquez",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:268065bf0ce8f87d4b96",
+      "signalId": "github:containerd/containerd:issue:8893",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:8893",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "TaskOOM event lost",
+        "text": "### Description https://github.com/kubernetes/kubernetes/issues/119600 When I was troubleshooting the problem that the Reason was not OOMKilled, I found that the container lost the TaskOOM event. ### Steps to reproduce the issue e2e: https://prow.k8s.io/view/gs/kubernetes-jenkins/logs/ci-containerd-node-e2e-1-7/1683184526936772608 logfile: https://storage.googleapis.com/kubernetes-jenkins/logs/ci-containerd-node-e2e-1-7/1683184526936772608/artifacts/tmp-node-e2e-92a26bb7-cos-97-16919-353-1-system.log containerd_id: 98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54 containerd_name: oomkill-multi-target-container 1. kernel having trigger oom ``` Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 kernel: oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=cri-containerd-98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54.scope,mems_allowed=0,oom_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod17efb6ec_09ab_4eec_8ad6_f953eb1a7466.slice,task_memcg=/kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod17efb6ec_09ab_4eec_8ad6_f953eb1a7466.slice/cri-containerd-98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54.scope,task=dd,pid=38287,uid=0 Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 kernel: Memory cgroup out of memory: Killed process 38287 (dd) total-vm:21724kB, anon-rss:14744kB, file-rss:508kB, shmem-rss:0kB, UID:0 pgtables:68kB oom_score_adj:997 Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 kernel: Tasks in /kubepods.slice/kubepods-burstable.slice/kubepods-burstable-pod17efb6ec_09ab_4eec_8ad6_f953eb1a7466.slice/cri-containerd-98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54.scope are going to be killed due to memory.oom.group set ``` 2. and then containerd exit shim ``` Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 containerd[910]: time=\"2023-07-23T18:56:46.329304474Z\" level=debug msg=\"received exit event container_id:\\\"98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54\\\" id:\\\"98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54\\\" pid:38265 exit_status:137 exited_at:{seconds:1690138606 nanos:325950236}\" Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 containerd[910]: time=\"2023-07-23T18:56:46.389869167Z\" level=info msg=\"shim disconnected\" id=98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54 namespace=k8s.io Jul 23 18:56:46 tmp-node-e2e-92a26bb7-cos-97-16919-353-1 containerd[910]: time=\"2023-07-23T18:56:46.390142692Z\" level=warning msg=\"cleaning up after shim disconnected\" id=98bac6c4b73cfd4c647647aa80248208b67de059874d4ddfdd1aa43ea3967e54 namespace=k8s.io ``` 3. After that, no TaskOOM event was received until container delete. ### Describe the results you received and expected Expect to receive TaskOOM event. ### What version of containerd are you using? 1.7 ### Any other relevant information ubuntu ### Show configuration if it is related to CRI plugin. no",
+        "url": "https://github.com/containerd/containerd/issues/8893",
+        "createdAt": "2023-07-30T15:02:09Z",
+        "updatedAt": "2026-08-13T16:54:10Z",
+        "timestamp": "2026-08-13T16:54:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 17
+        },
+        "labels": [
+          "Stale"
+        ],
+        "author": "lengrongfu",
+        "state": "open",
+        "assignees": [
+          "lengrongfu",
+          "fuweid"
+        ],
+        "change": "new"
       }
     }
   ]

@@ -36,15 +36,15 @@
     ],
     "license": "MIT",
     "defaultBranch": "main",
-    "stars": 22283,
+    "stars": 22285,
     "forks": 1808,
-    "openIssues": 890,
+    "openIssues": 889,
     "archived": false,
-    "collectedAt": "2026-08-13T16:19:25.677674+00:00"
+    "collectedAt": "2026-08-13T17:43:24.543478+00:00"
   },
   "news": {
     "repository": "temporalio/temporal",
-    "collectedAt": "2026-08-13T16:19:25.677674+00:00",
+    "collectedAt": "2026-08-13T17:43:24.543478+00:00",
     "latestRelease": {
       "repository": "temporalio/temporal",
       "tag": "v1.31.2",
@@ -62,7 +62,8 @@
       ],
       "prerelease": false
     },
-    "upcoming": []
+    "upcoming": [],
+    "communityDiscussions": []
   },
   "runs": [
     {
@@ -82,6 +83,12 @@
       "since": "2026-08-12T16:19:22.035158Z",
       "observedCount": 92,
       "changedCount": 29
+    },
+    {
+      "collectedAt": "2026-08-13T17:43:20.785491Z",
+      "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 87,
+      "changedCount": 20
     }
   ],
   "signals": [
@@ -238,8 +245,7 @@
       "labels": [],
       "author": "ggbata",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:issue:2341",
@@ -411,8 +417,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:10377",
@@ -477,8 +482,7 @@
       ],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:10781",
@@ -527,11 +531,11 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Return test runner orchestration outcomes",
-      "text": "Makes test execution return an exit code and error instead of terminating inside the orchestration loop. This lets final artifact failures, retry-validation failures, execution errors, timeouts, and normal pass/fail outcomes be tested directly while `Main` remains the only process-exit boundary. Stack: depends on #11518 and completes the canonical `go test -json` reporting pipeline.",
+      "text": "Makes test execution return an exit code and error instead of terminating inside the orchestration loop. Final artifact failures, retry-validation failures, execution errors, timeouts, and normal pass/fail outcomes are tested directly while Main remains the process-exit seam. Stack: depends on #11518 and completes the canonical Go test JSON reporting pipeline.",
       "url": "https://github.com/temporalio/temporal/pull/11033",
       "createdAt": "2026-07-13T19:38:51Z",
-      "updatedAt": "2026-08-13T15:30:46Z",
-      "timestamp": "2026-08-13T15:30:46Z",
+      "updatedAt": "2026-08-13T17:32:26Z",
+      "timestamp": "2026-08-13T17:32:26Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -566,8 +570,7 @@
       "state": "open",
       "assignees": [
         "fretz12"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:temporalio/temporal:pull_request:11204",
@@ -640,11 +643,11 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Add replication stream lane wire protocol and receiver-side lane routing",
-      "text": "> **Part 3 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > #11302 (reader group) has merged, so this PR's diff is now standalone against `main`. · **Next in series: #11304** (isolation manager). ## What changed? The wire-level building blocks for per-namespace lane isolation, receiver side only: - **Proto**: `SyncReplicationState` gains `pause_high_namespace_ids` (namespaces the receiver reports as overwhelming the HIGH lane — the priority lives in the field name, so a future LOW extension adds its own field rather than widening this one), `isolated_lane_states` (per-lane applied watermarks keyed by namespace ID — with the documented caveat that a missing key is ambiguous between \"not tracked yet\" and \"retired and drained\", so a sender must never treat absence alone as drain proof), and `supports_namespace_isolation` (capability advertisement, so a sender never emits lane-tagged traffic to a receiver that would misroute it). `WorkflowReplicationMessages` gains `isolated_namespace_id` — when set, the batch belongs to that namespace's dedicated lane — and `retire_isolated_lane`, marking a lane's final message. - **Receiver**: lane-tagged batches route to lazily-created per-namespace task trackers. Each lane is its own monotonic stream for the life of the connection — there is no rewind or rotation machinery, because the sender-side design (later in the series) gives every lane a single owner cursor that never goes backwards. Member-lane watermarks fold into the overall ack minimum (cleanup safety) and are reported per lane; member-lane backlogs count toward HIGH flow control. Lane lifecycle is defensive about ordering: a batch's tasks are tracked BEFORE its retire flag is applied (so the concurrent ack loop can never delete a lane whose final batch is mid-track), a retiring lane is only dropped once it is drained AND has tracked at least one batch, and non-retire traffic arriving on a retiring lane revives it (the sender re-isolated the namespace before the lane drained). Lane-tagged traffic at any priority other than HIGH is a protocol violation and fails the stream rather than silently mis-acking (isolation splits the HIGH lane only). Lanes created concurrently with `Stop()` are pre-cancelled so no tasks run after shutdown. - **`NamespaceThrottler`** interface (default: noop, via fx) observes per-namespace HIGH-priority task load and decides which namespaces to report. The sender does not tag lanes yet, so this is inert until the sender-side isolation lands. ## Why? Isolation needs a wire contract before the sender can use it: capability advertisement, per-lane routing and progress reporting, and the throttled-namespace feedback channel. Landing the receiver first makes mixed-version clusters safe by construction. Compared to #10147, lanes are per-namespace rather than shared per severity tier — which is what eliminates that design's cursor rewinds and the watermark-regression/tracker-rotation protocol this PR previously needed to compensate for them. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) — lane routing (priority routing when unset, per-namespace tracker identity, non-HIGH rejection), retirement lifecycle (drop once drained, never-tracked retiring lane survives the ack snapshot, revive on re-isolation traffic, fresh lane after drop), and post-Stop lane creation being pre-cancelled - [x] added new functional test(s) — exercised end-to-end by the xdc test in the final PR of the series ## Potential risks Inert until a sender emits `isolated_namespace_id`, which is gated behind both a config flag and the capability advertisement. Receiver-side lane state is bounded by the sender's isolation cap (final PR). 🤖 Generated with [Claude Code](https://claude.com/claude-code) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Touches replication ack watermarks and task routing on a critical path, but lane traffic is unused until the sender lands and the default throttler is a noop. > > **Overview** > Adds the **wire contract and receiver behavior** for per-namespace HIGH-lane isolation on workflow replication streams, ahead of sender-side isolation in a follow-up PR. > > **Proto:** `SyncReplicationState` now carries `pause_high_namespace_ids` (shard-scoped throttle feedback), `isolated_lane_states` (per-namespace applied watermarks), and `supports_namespace_isolation` (tiered-stack capability). `WorkflowReplicationMessages` adds `isolated_namespace_id` and `retire_isolated_lane` for lane-tagged batches. > > **Receiver:** Lane-tagged HIGH traffic routes to lazily created per-namespace trackers; member-lane backlog counts toward HIGH flow control and member watermarks fold into the overall ack minimum. Acks report throttled namespaces via a new **`NamespaceThrottler`** hook (default **noop** in fx). Lifecycle handling covers track-before-retire ordering, drained retired lanes, re-isolation reviving retiring lanes, non-HIGH lane tags failing the stream, and post-`Stop()` lanes pre-cancelled. > > Behavior stays **inert** until a future sender emits `isolated_namespace_id` (gated on capability advertisement). > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 1140765a76ca8afc5b2c3f80dc6014abd8076182. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
+      "text": "> **Part 3 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > #11302 (reader group) has merged, so this PR's diff is now standalone against `main`. · **Next in series: #11304** (isolation manager). ## What changed? The wire-level building blocks for per-namespace lane isolation, receiver side only: - **Proto**: `SyncReplicationState` gains `pause_high_namespace_ids` (namespaces the receiver reports as overwhelming the HIGH lane — the priority lives in the field name, so a future LOW extension adds its own field rather than widening this one), `isolated_lane_states` (per-lane applied watermarks keyed by namespace ID — with the documented caveat that a missing key is ambiguous between \"not tracked yet\" and \"retired and drained\", so a sender must never treat absence alone as drain proof), and `supports_namespace_isolation` (capability advertisement, so a sender never emits lane-tagged traffic to a receiver that would misroute it). `WorkflowReplicationMessages` gains `isolated_namespace_id` — when set, the batch belongs to that namespace's dedicated lane — and `retire_isolated_lane`, marking a lane's final message. - **Receiver**: lane-tagged batches route to lazily-created per-namespace task trackers. Each lane is its own monotonic stream for the life of the connection — there is no rewind or rotation machinery, because the sender-side design (later in the series) gives every lane a single owner cursor that never goes backwards. Member-lane watermarks fold into the overall ack minimum (cleanup safety) and are reported per lane; member-lane backlogs count toward HIGH flow control. Lane lifecycle is defensive about ordering: a batch's tasks are tracked BEFORE its retire flag is applied (so the concurrent ack loop can never delete a lane whose final batch is mid-track), a retiring lane is only dropped once it is drained AND has tracked at least one batch, and non-retire traffic arriving on a retiring lane revives it (the sender re-isolated the namespace before the lane drained). Lane-tagged traffic at any priority other than HIGH is a protocol violation and fails the stream rather than silently mis-acking (isolation splits the HIGH lane only). Lanes created concurrently with `Stop()` are pre-cancelled so no tasks run after shutdown. - **`NamespaceThrottler`** interface (default: noop, via fx) observes per-namespace HIGH-priority task load and decides which namespaces to report. The sender does not tag lanes yet, so this is inert until the sender-side isolation lands. ## Why? Isolation needs a wire contract before the sender can use it: capability advertisement, per-lane routing and progress reporting, and the throttled-namespace feedback channel. Landing the receiver first makes mixed-version clusters safe by construction. Compared to #10147, lanes are per-namespace rather than shared per severity tier — which is what eliminates that design's cursor rewinds and the watermark-regression/tracker-rotation protocol this PR previously needed to compensate for them. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) — lane routing (priority routing when unset, per-namespace tracker identity, non-HIGH rejection), retirement lifecycle (drop once drained, never-tracked retiring lane survives the ack snapshot, revive on re-isolation traffic, fresh lane after drop), and post-Stop lane creation being pre-cancelled - [x] added new functional test(s) — exercised end-to-end by the xdc test in the final PR of the series ## Potential risks Inert until a sender emits `isolated_namespace_id`, which is gated behind both a config flag and the capability advertisement. Receiver-side lane state is bounded by the sender's isolation cap (final PR). 🤖 Generated with [Claude Code](https://claude.com/claude-code) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Touches replication ack watermarks and stream failure modes in tiered-stack mode, but lane traffic is unused until the sender ships and default throttler is noop. > > **Overview** > Adds the **wire contract and receiver-side behavior** for per-namespace replication stream isolation (sender lane tagging lands in a follow-up PR). > > **Proto** extends `SyncReplicationState` with `pause_high_namespace_ids`, per-namespace `isolated_lane_states`, and `supports_namespace_isolation`. `WorkflowReplicationMessages` gains `isolated_namespace_id` and `retire_isolated_lane` for lane-tagged batches and lane teardown. > > **Stream receiver** routes lane-tagged HIGH batches to lazily created per-namespace trackers, folds member-lane watermarks into the overall ack minimum, counts member-lane backlog in HIGH flow control, and reports throttled namespaces via a new **`NamespaceThrottler`** hook (default noop in fx). Tiered-stack acks advertise isolation support; non-HIGH lane-tagged traffic fails the stream. > > Behavior is **inert** until a sender sets `isolated_namespace_id`; existing streams unchanged. > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit b839cba487a681767dbe799bd66d3694b995beb5. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
       "url": "https://github.com/temporalio/temporal/pull/11303",
       "createdAt": "2026-07-27T12:22:32Z",
-      "updatedAt": "2026-08-13T15:23:21Z",
-      "timestamp": "2026-08-13T15:23:21Z",
+      "updatedAt": "2026-08-13T16:35:29Z",
+      "timestamp": "2026-08-13T16:35:29Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -657,6 +660,30 @@
       "state": "open",
       "assignees": [],
       "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11304",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Add isolation manager for per-namespace replication lanes",
+      "text": "> **Part 4 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > **Stacked on #11303** (lane wire protocol). This PR targets `main`, so until the earlier PRs in the series merge its diff also includes their commits — review after they land. · **Next in series: #11305** (sender isolation). ## What changed? `isolationManager`: the sender-side state machine for HIGH-lane namespace isolation. Each namespace the receiver reports as overwhelming the shared HIGH (live) lane is split onto its own dedicated lane — an independent read cursor and wire stream, paced by a throttled severity tier (a rate class). Because every member owns its cursor: - members never interact — joining, demoting, or graduating one namespace moves no other namespace's position; - **no cursor ever rewinds**, so there is no CAS machinery, no rewind-point arithmetic, and no receiver-side tracker rotation (all of which the shared-tier-cursor design in #10147 required); - demotion is purely a rate-class change that moves no data. Lane transitions still anchor on applied (acked) watermarks so ordered HIGH events never straddle a hand-off with a gap: a split floors the member at the shared lane's acked watermark, and graduation is gated on the member's lane having applied up to the shared cursor — and never fires while the shared cursor is still unknown (0), which would make the gate vacuous. Graduated members are queued for the send loop to emit a lane-retirement marker; a re-split cancels any not-yet-emitted marker (it would retire the NEW lane). **Lane generations:** each lane incarnation carries a generation number, because a namespace can graduate and later re-split. Cursor advances are generation-checked, so a tier loop finishing a batch from before a graduation can never fast-forward the new incarnation's cursor past tasks it hasn't sent (the classic ABA hazard). Member acked watermarks are monotonic — a stale receiver report can't rewind a persisted resume point. Member scopes reuse the multi-cursor queue framework (`queues.Scope`, `tasks.NamespacePredicate`), and the persisted reader-state codec round-trips through `queues.ToPersistenceScope`/`FromPersistenceScope`: scope 0 = overall min, 1 = shared HIGH excluding isolated namespaces, 2 = LOW, 3+ = one scope per member resuming at its applied watermark. **Scope 0 is clamped to the minimum over member resume positions**: replication task cleanup deletes strictly below `Scopes[0]` and reads no other scope, while the receiver's folded watermark cannot vouch for windows its connection has never seen (e.g. right after a reconnect, before member lanes re-form) — without the clamp, cleanup could delete a restored member's unsent window. The isolated set is capped by `maxIsolated`; restored members are kept above a lowered cap (dropping them would gap their lanes), severity resets to tier 1 on reconnect, and config inputs are clamped to sane minimums (tierCount ≥ 1 etc.) so misconfiguration cannot strand namespaces. State machine only; the stream sender is wired to it in the next PR. ## Why? This is the heart of the design, reviewable in isolation as a pure, unit-tested state machine. The per-member-lane shape is what the shared read-through buffer (first in the series) makes affordable — per-lane scans at the tip are in-memory passes — and in exchange the entire rewind/rotation protocol of the shared-cursor design disappears. ## How did you test it? - [x] built - [x] added new unit test(s) — split floors and lane scopes, member independence, the isolation cap (including slot reuse after graduation), demotion as a rate-class change capped at the deepest tier, merge-back gating on applied watermarks with cooldown and re-throttle reset (including never graduating against an unset shared cursor), retirement queueing and re-split cancellation, generation-checked and monotonic cursor advances, monotonic acked watermarks, the scope-0 cleanup clamp, config clamping, and a persistence round-trip including legacy 3-scope states ## Potential risks No production code paths reference the manager yet (wired next PR), so this PR is behaviorally inert. Merge-back remains best-effort: a calm namespace stays isolated while its lane lags the gate — harmless while calm, reset by any reconnect. The scope-0 clamp pins replication task cleanup at the slowest member lane's resume position; that retention is bounded by the lane's tier pacing and is exactly the window cleanup must not delete. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "url": "https://github.com/temporalio/temporal/pull/11304",
+      "createdAt": "2026-07-27T12:22:34Z",
+      "updatedAt": "2026-08-13T16:21:07Z",
+      "timestamp": "2026-08-13T16:21:07Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "team/cgs-foundation"
+      ],
+      "author": "robholland",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11313",
@@ -873,8 +900,7 @@
       ],
       "author": "qyc5937",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11439",
@@ -1026,8 +1052,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11463",
@@ -1092,8 +1117,7 @@
       ],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11470",
@@ -1206,8 +1230,7 @@
       ],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11481",
@@ -1219,8 +1242,8 @@
       "text": "## What Skip worker commands task queues (`temporal-sys/worker-commands/...`) when checking for missing task queues during version promotion (SetCurrent / SetRamping). ## Why An SDK bug caused version attributes to be set on worker commands queues, registering them in a deployment version. These queues are ephemeral and don't support versioning, so `IsVersionMissingTaskQueues` would incorrectly flag them as missing and block version promotion. ## How did you test it? Unit tests for `checkForMissingTaskQueues`: - Worker commands TQ in prev version is excluded from missing list - User TQ missing from new version is still reported - All TQs present returns empty",
       "url": "https://github.com/temporalio/temporal/pull/11481",
       "createdAt": "2026-08-11T22:22:30Z",
-      "updatedAt": "2026-08-12T21:13:09Z",
-      "timestamp": "2026-08-12T21:13:09Z",
+      "updatedAt": "2026-08-13T17:05:59Z",
+      "timestamp": "2026-08-13T17:05:59Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1228,7 +1251,8 @@
       "labels": [],
       "author": "rkannan82",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11482",
@@ -1293,8 +1317,7 @@
       ],
       "author": "simvlad",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11487",
@@ -1302,12 +1325,12 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Record canonical Go test attempt results",
-      "text": "Runs `go test` directly with JSON output and records package-aware attempt results as the canonical execution facts. The recorder owns event attribution, diagnostics, timeouts, console output, and exact JUnit counters while the existing retry and merge path remains in place as a compatibility seam. Stack: depends on #11512. Canonical crash rendering and retry policy follow this one.",
+      "title": "Separate test diagnostics and timeout parsing",
+      "text": "Separates diagnostic parsing and timeout parsing into focused files without changing behavior. Existing comments and tests move with their implementations so the later canonical conversion is a semantic diff instead of a delete-and-add rewrite. Stack: depends on #11512. The canonical result model follows in #11514.",
       "url": "https://github.com/temporalio/temporal/pull/11487",
       "createdAt": "2026-08-11T23:31:23Z",
-      "updatedAt": "2026-08-13T15:30:15Z",
-      "timestamp": "2026-08-13T15:30:15Z",
+      "updatedAt": "2026-08-13T17:28:37Z",
+      "timestamp": "2026-08-13T17:28:37Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1324,12 +1347,12 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Drive test retries from attempt results",
-      "text": "Moves retry selection, argument rewriting, and missing-rerun validation from JUnit into a focused retry policy over canonical attempt results. The existing report merge remains presentation-only, isolating this PR to execution policy. Stack: depends on #11514. Canonical history persistence follows this one.",
+      "title": "Scope test diagnostics to canonical results",
+      "text": "Converts test output analysis to package-aware canonical diagnostics and failure evidence. The existing runner reaches the new implementation through a temporary compatibility adapter, so there is still one parser implementation while the production cutover remains isolated. Stack: depends on #11514. The Go test JSON recorder follows in #11515.",
       "url": "https://github.com/temporalio/temporal/pull/11488",
       "createdAt": "2026-08-11T23:31:31Z",
-      "updatedAt": "2026-08-13T15:30:25Z",
-      "timestamp": "2026-08-13T15:30:25Z",
+      "updatedAt": "2026-08-13T17:28:40Z",
+      "timestamp": "2026-08-13T17:28:40Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1487,8 +1510,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11506",
@@ -1551,8 +1573,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11509",
@@ -1624,11 +1645,11 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Use generic JUnit documents at runner boundaries",
-      "text": "Moves the testrunner's report input and output boundaries onto `tools/common/junit.Testsuites`. The existing retry merger remains unchanged behind that seam, so this is a behavior-preserving preparation for canonical attempt rendering. Stack: depends on #11513. The canonical attempt-results PR follows this one.",
+      "text": "Moves testrunner report inputs, outputs, and summaries onto the shared JUnit document types. The existing reporting behavior remains unchanged behind that seam. Stack: depends on #11513. Parser separation follows in #11487.",
       "url": "https://github.com/temporalio/temporal/pull/11512",
       "createdAt": "2026-08-12T22:00:08Z",
-      "updatedAt": "2026-08-13T15:30:10Z",
-      "timestamp": "2026-08-13T15:30:10Z",
+      "updatedAt": "2026-08-13T17:28:36Z",
+      "timestamp": "2026-08-13T17:28:36Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1646,11 +1667,11 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Harden shared JUnit report IO",
-      "text": "Strengthens the shared JUnit module's I/O contract. Reads reject trailing XML and include the source path in errors, while writes atomically replace the destination so interrupted writes cannot corrupt an existing report. It also exposes counter validation for canonical report renderers without imposing that invariant on legacy producers yet. Stack: depends on #11480. The testrunner boundary cleanup follows this one.",
+      "text": "Strengthens shared JUnit reads and writes. Reads reject trailing XML and include the source path in errors. Writes validate counters and atomically replace the destination so interrupted writes cannot corrupt an existing report. This is the bottom of the testrunner reporting stack.",
       "url": "https://github.com/temporalio/temporal/pull/11513",
       "createdAt": "2026-08-12T22:05:45Z",
-      "updatedAt": "2026-08-13T15:31:33Z",
-      "timestamp": "2026-08-13T15:31:33Z",
+      "updatedAt": "2026-08-13T17:28:34Z",
+      "timestamp": "2026-08-13T17:28:34Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1667,12 +1688,12 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Render crash reports canonically",
-      "text": "Routes the `report-crash` command through the canonical JUnit renderer introduced with attempt results. The command test now compares the parsed document semantically, and the obsolete legacy XML fixture is removed. Stack: depends on #11487. The retry-policy PR follows this one.",
+      "title": "Define canonical Go test attempt results",
+      "text": "Defines the package-aware canonical attempt model and its queries for failed leaves, incomplete executions, package aborts, runtime failures, process failures, and retry safety. Tests construct results directly and pin these invariants before production uses the model. Stack: depends on #11487. Scoped canonical diagnostics follow in #11488.",
       "url": "https://github.com/temporalio/temporal/pull/11514",
       "createdAt": "2026-08-12T22:10:10Z",
-      "updatedAt": "2026-08-13T15:30:20Z",
-      "timestamp": "2026-08-13T15:30:20Z",
+      "updatedAt": "2026-08-13T17:28:38Z",
+      "timestamp": "2026-08-13T17:28:38Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1689,12 +1710,12 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Persist canonical test attempt history",
-      "text": "Persists completed attempt history directly through the canonical JUnit renderer for both intermediate and final reports. The testrunner write boundary now rejects inconsistent counters, while the legacy merger remains present but unused so its deletion can be reviewed separately. Stack: depends on #11488. Legacy JUnit cleanup follows this one.",
+      "title": "Record canonical Go test attempt results",
+      "text": "Runs Go tests directly with JSON output and records package-aware canonical attempt results. The recorder owns event attribution, build failures, diagnostics, timeouts, console output, process state, and coverage-path handling, with focused unit and subprocess tests. Stack: depends on #11488. Retry policy follows in #11516.",
       "url": "https://github.com/temporalio/temporal/pull/11515",
       "createdAt": "2026-08-12T22:12:35Z",
-      "updatedAt": "2026-08-13T15:30:29Z",
-      "timestamp": "2026-08-13T15:30:29Z",
+      "updatedAt": "2026-08-13T17:32:16Z",
+      "timestamp": "2026-08-13T17:32:16Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1711,12 +1732,12 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Remove legacy JUnit report merger",
-      "text": "Deletes the now-unused legacy JUnit wrapper, synthetic-report builder, retry merger, and tree helper. Tests consume shared `Testsuites` documents directly, and summary fixtures explicitly model the already-canonical failure details they exercise. Stack: depends on #11515. Runner orchestration follows this one.",
+      "title": "Plan test retries from canonical results",
+      "text": "Moves retry selection, argument rewriting, and missing-rerun validation into a focused policy over canonical attempt results. The current runner still owns orchestration, so this PR changes the decision module without switching the reporting pipeline. Stack: depends on #11515. Canonical JUnit rendering follows in #11517.",
       "url": "https://github.com/temporalio/temporal/pull/11516",
       "createdAt": "2026-08-12T22:14:53Z",
-      "updatedAt": "2026-08-13T15:30:33Z",
-      "timestamp": "2026-08-13T15:30:33Z",
+      "updatedAt": "2026-08-13T17:32:18Z",
+      "timestamp": "2026-08-13T17:32:18Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1733,12 +1754,12 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Simplify test runner attempt state",
-      "text": "Removes the temporary runner-level `attempt` wrapper now that execution facts live in `attemptResult`. The runner stores result history directly and computes per-attempt coverage paths without changing retry, persistence, or exit behavior. Stack: depends on #11516. Fallible runner orchestration follows this one.",
+      "title": "Render JUnit from canonical attempt results",
+      "text": "Adds the pure canonical attempt-history renderer, including parent-failure suppression, diagnostics, timeouts, aborts, build errors, retry suffixes, crash reports, exact counters, and numeric durations. Integration coverage verifies the persisted JUnit shape and the downstream sharding consumer. Stack: depends on #11516. The production cutover follows in #11518.",
       "url": "https://github.com/temporalio/temporal/pull/11517",
       "createdAt": "2026-08-12T22:18:31Z",
-      "updatedAt": "2026-08-13T15:30:38Z",
-      "timestamp": "2026-08-13T15:30:38Z",
+      "updatedAt": "2026-08-13T17:32:21Z",
+      "timestamp": "2026-08-13T17:32:21Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1755,12 +1776,12 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Return report persistence errors",
-      "text": "Makes crash and attempt-history persistence return errors to their callers. Intermediate writes remain best effort, final writes remain mandatory, and a focused test covers crash-report write failure without changing runner exit behavior yet. Stack: depends on #11517. Fallible runner orchestration follows this one.",
+      "title": "Adopt canonical test reporting pipeline",
+      "text": "Switches orchestration to canonical attempt results and JUnit rendering, then removes the legacy JUnit merger and temporary diagnostic adapter in the same PR. Intermediate and final artifacts come from one attempt history, and report writes reject inconsistent counters. Stack: depends on #11517. Explicit orchestration outcomes follow in #11033.",
       "url": "https://github.com/temporalio/temporal/pull/11518",
       "createdAt": "2026-08-12T22:21:21Z",
-      "updatedAt": "2026-08-13T15:30:41Z",
-      "timestamp": "2026-08-13T15:30:41Z",
+      "updatedAt": "2026-08-13T17:32:23Z",
+      "timestamp": "2026-08-13T17:32:23Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1873,8 +1894,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11527",
@@ -1886,8 +1906,8 @@
       "text": "## What Skip the versioning attribution logic when computing stats for sticky queues. Otherwise, we end up with 0 value for add and dispatch rates. This breaks poller autoscaling for sticky queues: 0/0 = NaN, and NaN > threshold is always false, so no +1 scaling signals are ever emitted. Background DescribeTaskQueue returns stats like add_rate and dispatch_rate. For versioned task queues, these stats are obtained from the unversioned physical queue. So when we query the stats for the unversioned queue, we subtract the stats already attributed to the versioned queue. This way, we don't double count. Sticky queues on the other hand are not versioned; they only have the unversioned physical queue. So the above logic is not applicable. Since sticky queue inherits the user data from the normal queue, it was incorrectly treated as versioned. ## How did you test it? Unit tests 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
       "url": "https://github.com/temporalio/temporal/pull/11527",
       "createdAt": "2026-08-13T01:42:36Z",
-      "updatedAt": "2026-08-13T02:34:09Z",
-      "timestamp": "2026-08-13T02:34:09Z",
+      "updatedAt": "2026-08-13T17:26:40Z",
+      "timestamp": "2026-08-13T17:26:40Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1895,7 +1915,8 @@
       "labels": [],
       "author": "rkannan82",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11528",
@@ -2021,8 +2042,7 @@
       "labels": [],
       "author": "temporal-cicd[bot]",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11535",
@@ -2031,11 +2051,11 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Update Selected API list.",
-      "text": "## What changed? Added more state-effecting API calls to the forwarding list. ## Why? The intent is for passive to always forward those APIs it cannot handle locally. ## How did you test it? - [x] built - [ ] run locally and tested manually - [x] covered by existing tests - [ ] added new unit test(s) - [ ] added new functional test(s) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Changes which global-namespace RPCs are auto-forwarded across clusters; incorrect routing could affect multi-DC control operations, though behavior follows the existing whitelist pattern with updated unit tests. > > **Overview** > Expands **selected-apis-forwarding** so more **state-effecting** workflow RPCs on passive clusters are routed to the namespace’s active cluster. > > The whitelist in `selectedAPIsForwardingRedirectionPolicyWhitelistedAPIs` now includes `UpdateWorkflowExecution`, pause/unpause/reset workflow, and `ExecuteMultiOperation`. Policy comments now point at that map instead of an inline API list. > > Tests add `TestSelectedAPIs` to lock the full whitelist (workflow, standalone activity, and Nexus operation APIs). The non-whitelisted API case is fixed by using suffixed API names and a setup where the active cluster is remote, so only non-listed RPCs are asserted to stay local. > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit e065106ed0518e0df2f2f2b9a07464d603ce3f81. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
+      "text": "## What changed? Added more state-effecting API calls to the forwarding list. ## Why? The intent is for passive to always forward those APIs it cannot handle locally. ## How did you test it? - [x] built - [ ] run locally and tested manually - [x] covered by existing tests - [ ] added new unit test(s) - [ ] added new functional test(s) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Changes which cross-cluster RPCs are auto-forwarded for global namespaces; misconfiguration could leave state changes on passive clusters or alter failover behavior for new API types. > > **Overview** > Expands **selected-apis-forwarding** so passive clusters forward additional **state-effecting** RPCs to the namespace’s active cluster. > > **Workflow APIs** newly whitelisted: `UpdateWorkflowExecution`, `PauseWorkflowExecution`, `UnpauseWorkflowExecution`, `ResetWorkflowExecution`, and `ExecuteMultiOperation`. Policy comments now describe forwarding as state-effecting APIs and point readers at `selectedAPIsForwardingRedirectionPolicyWhitelistedAPIs` instead of an inline list. > > Tests add **`TestSelectedAPIs`** to assert the full whitelist (workflow, standalone activity, and Nexus operation APIs). The non-whitelisted API case is fixed by suffixing API names with `_notwhitelisted` and using a global namespace whose active cluster is remote, so forwarding tests no longer accidentally exercise whitelisted names. > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 07fed6a663b2075bbf4a241043dbda346847d619. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
       "url": "https://github.com/temporalio/temporal/pull/11535",
       "createdAt": "2026-08-13T11:31:39Z",
-      "updatedAt": "2026-08-13T11:31:57Z",
-      "timestamp": "2026-08-13T11:31:57Z",
+      "updatedAt": "2026-08-13T16:22:10Z",
+      "timestamp": "2026-08-13T16:22:10Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -2045,7 +2065,8 @@
       ],
       "author": "robholland",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11536",
@@ -2117,11 +2138,11 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Attribute queue reader stuck attempts to a slice",
-      "text": "## What changed? - count reader stuck attempts per slice and per owning reader instead of per wall clock second (`SetReaderWatermark` -> `SetSliceReadWatermark`) - report each stuck window once, and only when the alert was actually queued - track read progress for every reader rather than only the default one, and stop creating readers at `MaxReaderCount` - only split slices that genuinely overlap the stuck range, via a new `Range.CanSplitStrictly` ## Why? The attempt counter was keyed on the truncated fire time of the last loaded task. A shard that keeps generating tasks gets a new slice per notification and several of them can land in the same second, so every read made progress in its own slice while the shared counter still climbed — the policy fired on healthy shards. That is why `history.queueReaderStuckCriticalAttempts` is currently raised high enough to disable it in practice. Attributing attempts to a slice only counts repeated reads that fail to move past one fire time window *within a single slice*, which is the condition worth splitting out, and it needs no extra time threshold to tell the two apart. Progress is also keyed on the owning reader, so a slice moved whole to the next reader is judged on that reader's own reads instead of being demoted again on its first one. `Range.CanSplit` is inclusive at both bounds, so slices merely adjacent to the stuck window were split into empty pieces and merged into the next reader, creating that reader for nothing. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) `action_reader_stuck.go` had no test file before. The new table test covers every overlap shape, the reader count bound, and the merge into an existing next reader; each fix was confirmed to fail against the pre-fix logic. ## Potential risks Reader stuck is effectively disabled by config today, so this only changes production behaviour once `queueReaderStuckCriticalAttempts` is lowered again. Known limitation worth a decision before that happens: slice identity is not stable. `processNewRange` merges each new range into the reader's slices, and `MergeWithSlice` destroys and rebuilds them, so the attempt count restarts. That is safe in the sense that it can only delay detection, never cause a false positive, but on a shard that keeps generating timers the merge cadence can outrun `ReaderStuckCriticalAttempts` reads and hold detection off. Carrying progress across split/merge, or keying it on `(readerID, watermark, Range.InclusiveMin)` which survives a merge, would close that gap — both need their own eviction story, so they are left out of this change.",
+      "text": "## What changed? - count reader stuck attempts per slice and per owning reader instead of per wall clock second (`SetReaderWatermark` -> `SetSliceReadWatermark`) - report each stuck window once, and only when the alert was actually queued - track read progress for every reader rather than only the default one, and stop creating readers at `MaxReaderCount` - only split slices that genuinely overlap the stuck range, via a new `Range.CanSplitStrictly` ## Why? The attempt counter was keyed on the truncated fire time of the last loaded task. A shard that keeps generating tasks gets a new slice per notification and several of them can land in the same second, so every read made progress in its own slice while the shared counter still climbed — the policy fired on healthy shards. That is why `history.queueReaderStuckCriticalAttempts` is currently raised high enough to disable it in practice. Attributing attempts to a slice only counts repeated reads that fail to move past one fire time window *within a single slice*, which is the condition worth splitting out, and it needs no extra time threshold to tell the two apart. Progress is also keyed on the owning reader, so a slice moved whole to the next reader is judged on that reader's own reads instead of being demoted again on its first one. `Range.CanSplit` is inclusive at both bounds, so slices merely adjacent to the stuck window were split into empty pieces and merged into the next reader, creating that reader for nothing. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) `action_reader_stuck.go` had no test file before. The new table test covers every overlap shape, the reader count bound, and the merge into an existing next reader. Each fix was confirmed to fail against the pre-fix logic, including that the reader attributes progress to the slice and reader it actually read with. ## Potential risks Reader stuck is effectively disabled by config today, so this only changes production behaviour once `queueReaderStuckCriticalAttempts` is lowered again. Tracking non-default readers means the last reader can now alert for a window nothing can be done about, since there is no lower priority reader to move it to. The report-once latch bounds that to one alert per slice and window, but each one still costs a checkpoint. Known limitation worth a decision before the config is lowered: slice identity is not stable. `processNewRange` merges each new range into the reader's slices, and `MergeWithSlice` destroys and rebuilds them, so the attempt count restarts. That can only delay detection, never cause a false positive, but on a shard that keeps generating timers the merge cadence can outrun `ReaderStuckCriticalAttempts` reads and hold detection off. Carrying progress across split/merge, or keying it on `(readerID, watermark, Range.InclusiveMin)` which survives a merge, would close the gap — both need their own eviction story, so they are left out here.",
       "url": "https://github.com/temporalio/temporal/pull/11541",
       "createdAt": "2026-08-13T15:41:46Z",
-      "updatedAt": "2026-08-13T16:19:21Z",
-      "timestamp": "2026-08-13T16:19:21Z",
+      "updatedAt": "2026-08-13T16:43:30Z",
+      "timestamp": "2026-08-13T16:43:30Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -2130,7 +2151,7 @@
       "author": "prathyushpv",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11542",
@@ -2151,8 +2172,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11543",
@@ -2161,11 +2181,11 @@
       "project": "temporalio/temporal",
       "kind": "pull_request",
       "title": "Release process-global lifecycle registrations",
-      "text": "## What changed? Tie test gRPC resolver registrations and OTEL logger registrations to Fx lifecycle hooks. Test matching clients also close their RPC factories during cleanup. The leak test drops the corresponding logger and host expectations. ## Why? The process-global resolver map and OTEL error handler retained cluster-owned state after shutdown. Lifecycle-owned registrations make startup and shutdown ownership explicit, including concurrent OTEL registrations. ## Testing - `go test -count=1 ./common/membership -run '^TestGRPCResolver'` - `go test -count=1 ./temporal -run '^TestOTELLoggerErrorHandler'` - `make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=10s LEAK_TIMEOUT=3m leak-test` Stacked on #11542.",
+      "text": "## What changed? Tie gRPC resolver registrations and OTEL logger registrations to their owners. Test resolver callers now receive and register cleanup directly, and matching test clients close their RPC factories during cluster shutdown. The leak test drops the corresponding logger, host, and final testBase expectations, so it no longer allows expected object leaks. ## Why? The process-global resolver map and OTEL error handler retained cluster-owned state after shutdown. Explicit cleanup releases those references while preserving resolver availability during Fx graph construction. ## Testing - go test -race -tags disable_grpc_modules,test_dep ./common/membership ./common/rpc/test ./temporal ./tests/testcore -count=1 - make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=30s LEAK_TIMEOUT=4m leak-test The package tests pass. The zero-expected-leak gate depends on the persistence ownership fixes in #11506 and #11507; without them, the leak test reports the remaining testBase persistence graph. Stacked on #11542.",
       "url": "https://github.com/temporalio/temporal/pull/11543",
       "createdAt": "2026-08-13T15:50:19Z",
-      "updatedAt": "2026-08-13T15:50:19Z",
-      "timestamp": "2026-08-13T15:50:19Z",
+      "updatedAt": "2026-08-13T17:42:59Z",
+      "timestamp": "2026-08-13T17:42:59Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -2174,7 +2194,7 @@
       "author": "stephanos",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11544",
@@ -2186,17 +2206,17 @@
       "text": "## What changed? Remove the final `FunctionalTestBase.testCluster.testBase*` expectation. `objectLeakOpts` now contains only the protobuf traversal prune and no expected leaks. ## Why? The preceding stack releases shared-test and process-global references. Together with the persistence ownership fixes in #11506 and #11507, functional test clusters become fully collectible. ## Testing - `go test -count=1 ./tests/leakcheck -run '^$'` - With #11506 and #11507 applied: `make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=10s LEAK_TIMEOUT=3m leak-test` Stacked on #11543. Also depends on #11506 and #11507.",
       "url": "https://github.com/temporalio/temporal/pull/11544",
       "createdAt": "2026-08-13T15:51:29Z",
-      "updatedAt": "2026-08-13T15:51:29Z",
-      "timestamp": "2026-08-13T15:51:29Z",
+      "updatedAt": "2026-08-13T17:01:38Z",
+      "timestamp": "2026-08-13T17:01:38Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [],
       "author": "stephanos",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11546",
@@ -2208,14 +2228,38 @@
       "text": "## What changed? Use the `jobID` parameter in the `deterministicRequestID` function to allow multiple batch operations to signal the same workflow. ## Why? Two batch operations that send the same signal to the same workflow/run ID will only send one signal, the second will be de-duped in the signal logic because the request ID was hashed from workflow id / run id / signal name. Including the batch job ID gives proper hashing to prevent these separate signals from being de-duped ## How did you test it? - [x] added new unit test(s) - [x] added new functional test(s) ## Potential risks NA, this is a bug fix.",
       "url": "https://github.com/temporalio/temporal/pull/11546",
       "createdAt": "2026-08-13T16:13:40Z",
-      "updatedAt": "2026-08-13T16:18:00Z",
-      "timestamp": "2026-08-13T16:18:00Z",
+      "updatedAt": "2026-08-13T17:38:09Z",
+      "timestamp": "2026-08-13T17:38:09Z",
       "metrics": {
         "reactions": 0,
-        "comments": 1
+        "comments": 2
+      },
+      "labels": [
+        "reliability-2026"
+      ],
+      "author": "spkane31",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11548",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "fix time-skipping flaky tests",
+      "text": "## What changed? fix the flaky test of time skipping`CanceledTimerNotUsedAsSkipTarget`",
+      "url": "https://github.com/temporalio/temporal/pull/11548",
+      "createdAt": "2026-08-13T16:34:53Z",
+      "updatedAt": "2026-08-13T17:11:56Z",
+      "timestamp": "2026-08-13T17:11:56Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
       },
       "labels": [],
-      "author": "spkane31",
+      "author": "feiyang3cat",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -5752,6 +5796,660 @@
         "state": "closed",
         "assignees": [],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:c0e419aa5e889894b61b",
+      "signalId": "github:temporalio/temporal:pull_request:11543",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11543",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Release process-global lifecycle registrations",
+        "text": "## What changed? Tie gRPC resolver registrations and OTEL logger registrations to their owners. Test resolver callers now receive and register cleanup directly, and matching test clients close their RPC factories during cluster shutdown. The leak test drops the corresponding logger, host, and final testBase expectations, so it no longer allows expected object leaks. ## Why? The process-global resolver map and OTEL error handler retained cluster-owned state after shutdown. Explicit cleanup releases those references while preserving resolver availability during Fx graph construction. ## Testing - go test -race -tags disable_grpc_modules,test_dep ./common/membership ./common/rpc/test ./temporal ./tests/testcore -count=1 - make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=30s LEAK_TIMEOUT=4m leak-test The package tests pass. The zero-expected-leak gate depends on the persistence ownership fixes in #11506 and #11507; without them, the leak test reports the remaining testBase persistence graph. Stacked on #11542.",
+        "url": "https://github.com/temporalio/temporal/pull/11543",
+        "createdAt": "2026-08-13T15:50:19Z",
+        "updatedAt": "2026-08-13T17:42:59Z",
+        "timestamp": "2026-08-13T17:42:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c5d22ab6554b21774fcd",
+      "signalId": "github:temporalio/temporal:pull_request:11546",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "labels",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11546",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "fix(batcher): scope deterministic request IDs to the batch job ID",
+        "text": "## What changed? Use the `jobID` parameter in the `deterministicRequestID` function to allow multiple batch operations to signal the same workflow. ## Why? Two batch operations that send the same signal to the same workflow/run ID will only send one signal, the second will be de-duped in the signal logic because the request ID was hashed from workflow id / run id / signal name. Including the batch job ID gives proper hashing to prevent these separate signals from being de-duped ## How did you test it? - [x] added new unit test(s) - [x] added new functional test(s) ## Potential risks NA, this is a bug fix.",
+        "url": "https://github.com/temporalio/temporal/pull/11546",
+        "createdAt": "2026-08-13T16:13:40Z",
+        "updatedAt": "2026-08-13T17:38:09Z",
+        "timestamp": "2026-08-13T17:38:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "reliability-2026"
+        ],
+        "author": "spkane31",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:7a2dc2d10b261a644c0d",
+      "signalId": "github:temporalio/temporal:pull_request:11033",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11033",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Return test runner orchestration outcomes",
+        "text": "Makes test execution return an exit code and error instead of terminating inside the orchestration loop. Final artifact failures, retry-validation failures, execution errors, timeouts, and normal pass/fail outcomes are tested directly while Main remains the process-exit seam. Stack: depends on #11518 and completes the canonical Go test JSON reporting pipeline.",
+        "url": "https://github.com/temporalio/temporal/pull/11033",
+        "createdAt": "2026-07-13T19:38:51Z",
+        "updatedAt": "2026-08-13T17:32:26Z",
+        "timestamp": "2026-08-13T17:32:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "test-all-dbs",
+          "request-claude-review"
+        ],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1b51bd0b601e3973d99c",
+      "signalId": "github:temporalio/temporal:pull_request:11518",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11518",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Adopt canonical test reporting pipeline",
+        "text": "Switches orchestration to canonical attempt results and JUnit rendering, then removes the legacy JUnit merger and temporary diagnostic adapter in the same PR. Intermediate and final artifacts come from one attempt history, and report writes reject inconsistent counters. Stack: depends on #11517. Explicit orchestration outcomes follow in #11033.",
+        "url": "https://github.com/temporalio/temporal/pull/11518",
+        "createdAt": "2026-08-12T22:21:21Z",
+        "updatedAt": "2026-08-13T17:32:23Z",
+        "timestamp": "2026-08-13T17:32:23Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ef6a8a0419ea9170b2b1",
+      "signalId": "github:temporalio/temporal:pull_request:11517",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11517",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Render JUnit from canonical attempt results",
+        "text": "Adds the pure canonical attempt-history renderer, including parent-failure suppression, diagnostics, timeouts, aborts, build errors, retry suffixes, crash reports, exact counters, and numeric durations. Integration coverage verifies the persisted JUnit shape and the downstream sharding consumer. Stack: depends on #11516. The production cutover follows in #11518.",
+        "url": "https://github.com/temporalio/temporal/pull/11517",
+        "createdAt": "2026-08-12T22:18:31Z",
+        "updatedAt": "2026-08-13T17:32:21Z",
+        "timestamp": "2026-08-13T17:32:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:78c8cf28477f47369442",
+      "signalId": "github:temporalio/temporal:pull_request:11516",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11516",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Plan test retries from canonical results",
+        "text": "Moves retry selection, argument rewriting, and missing-rerun validation into a focused policy over canonical attempt results. The current runner still owns orchestration, so this PR changes the decision module without switching the reporting pipeline. Stack: depends on #11515. Canonical JUnit rendering follows in #11517.",
+        "url": "https://github.com/temporalio/temporal/pull/11516",
+        "createdAt": "2026-08-12T22:14:53Z",
+        "updatedAt": "2026-08-13T17:32:18Z",
+        "timestamp": "2026-08-13T17:32:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:75ed4a81bae28bd632a6",
+      "signalId": "github:temporalio/temporal:pull_request:11515",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11515",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Record canonical Go test attempt results",
+        "text": "Runs Go tests directly with JSON output and records package-aware canonical attempt results. The recorder owns event attribution, build failures, diagnostics, timeouts, console output, process state, and coverage-path handling, with focused unit and subprocess tests. Stack: depends on #11488. Retry policy follows in #11516.",
+        "url": "https://github.com/temporalio/temporal/pull/11515",
+        "createdAt": "2026-08-12T22:12:35Z",
+        "updatedAt": "2026-08-13T17:32:16Z",
+        "timestamp": "2026-08-13T17:32:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:97149a7826f49beb57f3",
+      "signalId": "github:temporalio/temporal:pull_request:11488",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11488",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Scope test diagnostics to canonical results",
+        "text": "Converts test output analysis to package-aware canonical diagnostics and failure evidence. The existing runner reaches the new implementation through a temporary compatibility adapter, so there is still one parser implementation while the production cutover remains isolated. Stack: depends on #11514. The Go test JSON recorder follows in #11515.",
+        "url": "https://github.com/temporalio/temporal/pull/11488",
+        "createdAt": "2026-08-11T23:31:31Z",
+        "updatedAt": "2026-08-13T17:28:40Z",
+        "timestamp": "2026-08-13T17:28:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:dc86d06509eacf7ad4b1",
+      "signalId": "github:temporalio/temporal:pull_request:11487",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11487",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Separate test diagnostics and timeout parsing",
+        "text": "Separates diagnostic parsing and timeout parsing into focused files without changing behavior. Existing comments and tests move with their implementations so the later canonical conversion is a semantic diff instead of a delete-and-add rewrite. Stack: depends on #11512. The canonical result model follows in #11514.",
+        "url": "https://github.com/temporalio/temporal/pull/11487",
+        "createdAt": "2026-08-11T23:31:23Z",
+        "updatedAt": "2026-08-13T17:28:37Z",
+        "timestamp": "2026-08-13T17:28:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2bbc46a6d0e836b33713",
+      "signalId": "github:temporalio/temporal:pull_request:11512",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11512",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Use generic JUnit documents at runner boundaries",
+        "text": "Moves testrunner report inputs, outputs, and summaries onto the shared JUnit document types. The existing reporting behavior remains unchanged behind that seam. Stack: depends on #11513. Parser separation follows in #11487.",
+        "url": "https://github.com/temporalio/temporal/pull/11512",
+        "createdAt": "2026-08-12T22:00:08Z",
+        "updatedAt": "2026-08-13T17:28:36Z",
+        "timestamp": "2026-08-13T17:28:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a22a32e30e4bee2b1ed7",
+      "signalId": "github:temporalio/temporal:pull_request:11513",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11513",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Harden shared JUnit report IO",
+        "text": "Strengthens shared JUnit reads and writes. Reads reject trailing XML and include the source path in errors. Writes validate counters and atomically replace the destination so interrupted writes cannot corrupt an existing report. This is the bottom of the testrunner reporting stack.",
+        "url": "https://github.com/temporalio/temporal/pull/11513",
+        "createdAt": "2026-08-12T22:05:45Z",
+        "updatedAt": "2026-08-13T17:28:34Z",
+        "timestamp": "2026-08-13T17:28:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9c5074190e0ec00d730d",
+      "signalId": "github:temporalio/temporal:pull_request:11514",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11514",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Define canonical Go test attempt results",
+        "text": "Defines the package-aware canonical attempt model and its queries for failed leaves, incomplete executions, package aborts, runtime failures, process failures, and retry safety. Tests construct results directly and pin these invariants before production uses the model. Stack: depends on #11487. Scoped canonical diagnostics follow in #11488.",
+        "url": "https://github.com/temporalio/temporal/pull/11514",
+        "createdAt": "2026-08-12T22:10:10Z",
+        "updatedAt": "2026-08-13T17:28:38Z",
+        "timestamp": "2026-08-13T17:28:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:bce75df4e291b5440cbc",
+      "signalId": "github:temporalio/temporal:pull_request:11527",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11527",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Fix sticky queue stats zeroed out",
+        "text": "## What Skip the versioning attribution logic when computing stats for sticky queues. Otherwise, we end up with 0 value for add and dispatch rates. This breaks poller autoscaling for sticky queues: 0/0 = NaN, and NaN > threshold is always false, so no +1 scaling signals are ever emitted. Background DescribeTaskQueue returns stats like add_rate and dispatch_rate. For versioned task queues, these stats are obtained from the unversioned physical queue. So when we query the stats for the unversioned queue, we subtract the stats already attributed to the versioned queue. This way, we don't double count. Sticky queues on the other hand are not versioned; they only have the unversioned physical queue. So the above logic is not applicable. Since sticky queue inherits the user data from the normal queue, it was incorrectly treated as versioned. ## How did you test it? Unit tests 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+        "url": "https://github.com/temporalio/temporal/pull/11527",
+        "createdAt": "2026-08-13T01:42:36Z",
+        "updatedAt": "2026-08-13T17:26:40Z",
+        "timestamp": "2026-08-13T17:26:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "rkannan82",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a75adc000fdb49f791d1",
+      "signalId": "github:temporalio/temporal:pull_request:11548",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11548",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "fix time-skipping flaky tests",
+        "text": "## What changed? fix the flaky test of time skipping`CanceledTimerNotUsedAsSkipTarget`",
+        "url": "https://github.com/temporalio/temporal/pull/11548",
+        "createdAt": "2026-08-13T16:34:53Z",
+        "updatedAt": "2026-08-13T17:11:56Z",
+        "timestamp": "2026-08-13T17:11:56Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "feiyang3cat",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b79f34dc28cfe2182328",
+      "signalId": "github:temporalio/temporal:pull_request:11481",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11481",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Skip worker commands task queues in missing TQ check",
+        "text": "## What Skip worker commands task queues (`temporal-sys/worker-commands/...`) when checking for missing task queues during version promotion (SetCurrent / SetRamping). ## Why An SDK bug caused version attributes to be set on worker commands queues, registering them in a deployment version. These queues are ephemeral and don't support versioning, so `IsVersionMissingTaskQueues` would incorrectly flag them as missing and block version promotion. ## How did you test it? Unit tests for `checkForMissingTaskQueues`: - Worker commands TQ in prev version is excluded from missing list - User TQ missing from new version is still reported - All TQs present returns empty",
+        "url": "https://github.com/temporalio/temporal/pull/11481",
+        "createdAt": "2026-08-11T22:22:30Z",
+        "updatedAt": "2026-08-13T17:05:59Z",
+        "timestamp": "2026-08-13T17:05:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "rkannan82",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6a6802bb6ee59f771245",
+      "signalId": "github:temporalio/temporal:pull_request:11544",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11544",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Enforce zero expected object leaks",
+        "text": "## What changed? Remove the final `FunctionalTestBase.testCluster.testBase*` expectation. `objectLeakOpts` now contains only the protobuf traversal prune and no expected leaks. ## Why? The preceding stack releases shared-test and process-global references. Together with the persistence ownership fixes in #11506 and #11507, functional test clusters become fully collectible. ## Testing - `go test -count=1 ./tests/leakcheck -run '^$'` - With #11506 and #11507 applied: `make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=10s LEAK_TIMEOUT=3m leak-test` Stacked on #11543. Also depends on #11506 and #11507.",
+        "url": "https://github.com/temporalio/temporal/pull/11544",
+        "createdAt": "2026-08-13T15:51:29Z",
+        "updatedAt": "2026-08-13T17:01:38Z",
+        "timestamp": "2026-08-13T17:01:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8fddd660b47e46340bee",
+      "signalId": "github:temporalio/temporal:pull_request:11541",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11541",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Attribute queue reader stuck attempts to a slice",
+        "text": "## What changed? - count reader stuck attempts per slice and per owning reader instead of per wall clock second (`SetReaderWatermark` -> `SetSliceReadWatermark`) - report each stuck window once, and only when the alert was actually queued - track read progress for every reader rather than only the default one, and stop creating readers at `MaxReaderCount` - only split slices that genuinely overlap the stuck range, via a new `Range.CanSplitStrictly` ## Why? The attempt counter was keyed on the truncated fire time of the last loaded task. A shard that keeps generating tasks gets a new slice per notification and several of them can land in the same second, so every read made progress in its own slice while the shared counter still climbed — the policy fired on healthy shards. That is why `history.queueReaderStuckCriticalAttempts` is currently raised high enough to disable it in practice. Attributing attempts to a slice only counts repeated reads that fail to move past one fire time window *within a single slice*, which is the condition worth splitting out, and it needs no extra time threshold to tell the two apart. Progress is also keyed on the owning reader, so a slice moved whole to the next reader is judged on that reader's own reads instead of being demoted again on its first one. `Range.CanSplit` is inclusive at both bounds, so slices merely adjacent to the stuck window were split into empty pieces and merged into the next reader, creating that reader for nothing. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) `action_reader_stuck.go` had no test file before. The new table test covers every overlap shape, the reader count bound, and the merge into an existing next reader. Each fix was confirmed to fail against the pre-fix logic, including that the reader attributes progress to the slice and reader it actually read with. ## Potential risks Reader stuck is effectively disabled by config today, so this only changes production behaviour once `queueReaderStuckCriticalAttempts` is lowered again. Tracking non-default readers means the last reader can now alert for a window nothing can be done about, since there is no lower priority reader to move it to. The report-once latch bounds that to one alert per slice and window, but each one still costs a checkpoint. Known limitation worth a decision before the config is lowered: slice identity is not stable. `processNewRange` merges each new range into the reader's slices, and `MergeWithSlice` destroys and rebuilds them, so the attempt count restarts. That can only delay detection, never cause a false positive, but on a shard that keeps generating timers the merge cadence can outrun `ReaderStuckCriticalAttempts` reads and hold detection off. Carrying progress across split/merge, or keying it on `(readerID, watermark, Range.InclusiveMin)` which survives a merge, would close the gap — both need their own eviction story, so they are left out here.",
+        "url": "https://github.com/temporalio/temporal/pull/11541",
+        "createdAt": "2026-08-13T15:41:46Z",
+        "updatedAt": "2026-08-13T16:43:30Z",
+        "timestamp": "2026-08-13T16:43:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "prathyushpv",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:565c1aafc0c210519138",
+      "signalId": "github:temporalio/temporal:pull_request:11303",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11303",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Add replication stream lane wire protocol and receiver-side lane routing",
+        "text": "> **Part 3 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > #11302 (reader group) has merged, so this PR's diff is now standalone against `main`. · **Next in series: #11304** (isolation manager). ## What changed? The wire-level building blocks for per-namespace lane isolation, receiver side only: - **Proto**: `SyncReplicationState` gains `pause_high_namespace_ids` (namespaces the receiver reports as overwhelming the HIGH lane — the priority lives in the field name, so a future LOW extension adds its own field rather than widening this one), `isolated_lane_states` (per-lane applied watermarks keyed by namespace ID — with the documented caveat that a missing key is ambiguous between \"not tracked yet\" and \"retired and drained\", so a sender must never treat absence alone as drain proof), and `supports_namespace_isolation` (capability advertisement, so a sender never emits lane-tagged traffic to a receiver that would misroute it). `WorkflowReplicationMessages` gains `isolated_namespace_id` — when set, the batch belongs to that namespace's dedicated lane — and `retire_isolated_lane`, marking a lane's final message. - **Receiver**: lane-tagged batches route to lazily-created per-namespace task trackers. Each lane is its own monotonic stream for the life of the connection — there is no rewind or rotation machinery, because the sender-side design (later in the series) gives every lane a single owner cursor that never goes backwards. Member-lane watermarks fold into the overall ack minimum (cleanup safety) and are reported per lane; member-lane backlogs count toward HIGH flow control. Lane lifecycle is defensive about ordering: a batch's tasks are tracked BEFORE its retire flag is applied (so the concurrent ack loop can never delete a lane whose final batch is mid-track), a retiring lane is only dropped once it is drained AND has tracked at least one batch, and non-retire traffic arriving on a retiring lane revives it (the sender re-isolated the namespace before the lane drained). Lane-tagged traffic at any priority other than HIGH is a protocol violation and fails the stream rather than silently mis-acking (isolation splits the HIGH lane only). Lanes created concurrently with `Stop()` are pre-cancelled so no tasks run after shutdown. - **`NamespaceThrottler`** interface (default: noop, via fx) observes per-namespace HIGH-priority task load and decides which namespaces to report. The sender does not tag lanes yet, so this is inert until the sender-side isolation lands. ## Why? Isolation needs a wire contract before the sender can use it: capability advertisement, per-lane routing and progress reporting, and the throttled-namespace feedback channel. Landing the receiver first makes mixed-version clusters safe by construction. Compared to #10147, lanes are per-namespace rather than shared per severity tier — which is what eliminates that design's cursor rewinds and the watermark-regression/tracker-rotation protocol this PR previously needed to compensate for them. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) — lane routing (priority routing when unset, per-namespace tracker identity, non-HIGH rejection), retirement lifecycle (drop once drained, never-tracked retiring lane survives the ack snapshot, revive on re-isolation traffic, fresh lane after drop), and post-Stop lane creation being pre-cancelled - [x] added new functional test(s) — exercised end-to-end by the xdc test in the final PR of the series ## Potential risks Inert until a sender emits `isolated_namespace_id`, which is gated behind both a config flag and the capability advertisement. Receiver-side lane state is bounded by the sender's isolation cap (final PR). 🤖 Generated with [Claude Code](https://claude.com/claude-code) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Touches replication ack watermarks and stream failure modes in tiered-stack mode, but lane traffic is unused until the sender ships and default throttler is noop. > > **Overview** > Adds the **wire contract and receiver-side behavior** for per-namespace replication stream isolation (sender lane tagging lands in a follow-up PR). > > **Proto** extends `SyncReplicationState` with `pause_high_namespace_ids`, per-namespace `isolated_lane_states`, and `supports_namespace_isolation`. `WorkflowReplicationMessages` gains `isolated_namespace_id` and `retire_isolated_lane` for lane-tagged batches and lane teardown. > > **Stream receiver** routes lane-tagged HIGH batches to lazily created per-namespace trackers, folds member-lane watermarks into the overall ack minimum, counts member-lane backlog in HIGH flow control, and reports throttled namespaces via a new **`NamespaceThrottler`** hook (default noop in fx). Tiered-stack acks advertise isolation support; non-HIGH lane-tagged traffic fails the stream. > > Behavior is **inert** until a sender sets `isolated_namespace_id`; existing streams unchanged. > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit b839cba487a681767dbe799bd66d3694b995beb5. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
+        "url": "https://github.com/temporalio/temporal/pull/11303",
+        "createdAt": "2026-07-27T12:22:32Z",
+        "updatedAt": "2026-08-13T16:35:29Z",
+        "timestamp": "2026-08-13T16:35:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "team/cgs-foundation",
+          "reliability-2026"
+        ],
+        "author": "robholland",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:7814121d9279d77323f9",
+      "signalId": "github:temporalio/temporal:pull_request:11535",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11535",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Update Selected API list.",
+        "text": "## What changed? Added more state-effecting API calls to the forwarding list. ## Why? The intent is for passive to always forward those APIs it cannot handle locally. ## How did you test it? - [x] built - [ ] run locally and tested manually - [x] covered by existing tests - [ ] added new unit test(s) - [ ] added new functional test(s) <!-- CURSOR_SUMMARY --> --- > [!NOTE] > **Medium Risk** > Changes which cross-cluster RPCs are auto-forwarded for global namespaces; misconfiguration could leave state changes on passive clusters or alter failover behavior for new API types. > > **Overview** > Expands **selected-apis-forwarding** so passive clusters forward additional **state-effecting** RPCs to the namespace’s active cluster. > > **Workflow APIs** newly whitelisted: `UpdateWorkflowExecution`, `PauseWorkflowExecution`, `UnpauseWorkflowExecution`, `ResetWorkflowExecution`, and `ExecuteMultiOperation`. Policy comments now describe forwarding as state-effecting APIs and point readers at `selectedAPIsForwardingRedirectionPolicyWhitelistedAPIs` instead of an inline list. > > Tests add **`TestSelectedAPIs`** to assert the full whitelist (workflow, standalone activity, and Nexus operation APIs). The non-whitelisted API case is fixed by suffixing API names with `_notwhitelisted` and using a global namespace whose active cluster is remote, so forwarding tests no longer accidentally exercise whitelisted names. > > <sup>Reviewed by [Cursor Bugbot](https://cursor.com/bugbot) for commit 07fed6a663b2075bbf4a241043dbda346847d619. Bugbot is set up for automated code reviews on this repo. Configure [here](https://www.cursor.com/dashboard/bugbot).</sup> <!-- /CURSOR_SUMMARY -->",
+        "url": "https://github.com/temporalio/temporal/pull/11535",
+        "createdAt": "2026-08-13T11:31:39Z",
+        "updatedAt": "2026-08-13T16:22:10Z",
+        "timestamp": "2026-08-13T16:22:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "team/cgs-foundation"
+        ],
+        "author": "robholland",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1280d99b78c7ade91744",
+      "signalId": "github:temporalio/temporal:pull_request:11304",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:43:20.785491Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11304",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Add isolation manager for per-namespace replication lanes",
+        "text": "> **Part 4 of a 5-PR series** building to replication stream namespace isolation (a restructuring of #10147): read buffer → reader group → lane protocol → isolation manager → sender isolation. > **Stacked on #11303** (lane wire protocol). This PR targets `main`, so until the earlier PRs in the series merge its diff also includes their commits — review after they land. · **Next in series: #11305** (sender isolation). ## What changed? `isolationManager`: the sender-side state machine for HIGH-lane namespace isolation. Each namespace the receiver reports as overwhelming the shared HIGH (live) lane is split onto its own dedicated lane — an independent read cursor and wire stream, paced by a throttled severity tier (a rate class). Because every member owns its cursor: - members never interact — joining, demoting, or graduating one namespace moves no other namespace's position; - **no cursor ever rewinds**, so there is no CAS machinery, no rewind-point arithmetic, and no receiver-side tracker rotation (all of which the shared-tier-cursor design in #10147 required); - demotion is purely a rate-class change that moves no data. Lane transitions still anchor on applied (acked) watermarks so ordered HIGH events never straddle a hand-off with a gap: a split floors the member at the shared lane's acked watermark, and graduation is gated on the member's lane having applied up to the shared cursor — and never fires while the shared cursor is still unknown (0), which would make the gate vacuous. Graduated members are queued for the send loop to emit a lane-retirement marker; a re-split cancels any not-yet-emitted marker (it would retire the NEW lane). **Lane generations:** each lane incarnation carries a generation number, because a namespace can graduate and later re-split. Cursor advances are generation-checked, so a tier loop finishing a batch from before a graduation can never fast-forward the new incarnation's cursor past tasks it hasn't sent (the classic ABA hazard). Member acked watermarks are monotonic — a stale receiver report can't rewind a persisted resume point. Member scopes reuse the multi-cursor queue framework (`queues.Scope`, `tasks.NamespacePredicate`), and the persisted reader-state codec round-trips through `queues.ToPersistenceScope`/`FromPersistenceScope`: scope 0 = overall min, 1 = shared HIGH excluding isolated namespaces, 2 = LOW, 3+ = one scope per member resuming at its applied watermark. **Scope 0 is clamped to the minimum over member resume positions**: replication task cleanup deletes strictly below `Scopes[0]` and reads no other scope, while the receiver's folded watermark cannot vouch for windows its connection has never seen (e.g. right after a reconnect, before member lanes re-form) — without the clamp, cleanup could delete a restored member's unsent window. The isolated set is capped by `maxIsolated`; restored members are kept above a lowered cap (dropping them would gap their lanes), severity resets to tier 1 on reconnect, and config inputs are clamped to sane minimums (tierCount ≥ 1 etc.) so misconfiguration cannot strand namespaces. State machine only; the stream sender is wired to it in the next PR. ## Why? This is the heart of the design, reviewable in isolation as a pure, unit-tested state machine. The per-member-lane shape is what the shared read-through buffer (first in the series) makes affordable — per-lane scans at the tip are in-memory passes — and in exchange the entire rewind/rotation protocol of the shared-cursor design disappears. ## How did you test it? - [x] built - [x] added new unit test(s) — split floors and lane scopes, member independence, the isolation cap (including slot reuse after graduation), demotion as a rate-class change capped at the deepest tier, merge-back gating on applied watermarks with cooldown and re-throttle reset (including never graduating against an unset shared cursor), retirement queueing and re-split cancellation, generation-checked and monotonic cursor advances, monotonic acked watermarks, the scope-0 cleanup clamp, config clamping, and a persistence round-trip including legacy 3-scope states ## Potential risks No production code paths reference the manager yet (wired next PR), so this PR is behaviorally inert. Merge-back remains best-effort: a calm namespace stays isolated while its lane lags the gate — harmless while calm, reset by any reconnect. The scope-0 clamp pins replication task cleanup at the slowest member lane's resume position; that retention is bounded by the lane's tier pacing and is exactly the window cleanup must not delete. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+        "url": "https://github.com/temporalio/temporal/pull/11304",
+        "createdAt": "2026-07-27T12:22:34Z",
+        "updatedAt": "2026-08-13T16:21:07Z",
+        "timestamp": "2026-08-13T16:21:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "team/cgs-foundation"
+        ],
+        "author": "robholland",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
       }
     }
   ]
