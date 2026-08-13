@@ -7,6 +7,7 @@ from conftest import make_dataset
 
 from contribution_compass.adapters.catalog import LocalJsonCatalog
 from contribution_compass.application.catalog import CatalogQueries
+from contribution_compass.application.news import NewsQueries
 from contribution_compass.views.site import StaticSitePublisher
 
 
@@ -18,7 +19,7 @@ def write_catalog(root: Path) -> LocalJsonCatalog:
     (root / "2026-08-13/manifest.json").write_text(
         json.dumps(
             {
-                "version": 2,
+                "version": 3,
                 "date": "2026-08-13",
                 "repositories": [{"group": "runtime-tools", "path": "runtime-tools/widget.json"}],
             }
@@ -33,6 +34,9 @@ def test_catalog_queries_preserve_context_evidence_and_timeline(tmp_path: Path) 
     assert queries.list_projects()[0].context["language"] == "Python"  # type: ignore[index]
     assert queries.contribution_leads()[0].signal.url.endswith("/issues/42")
     assert queries.signal_timeline("github:acme/widget:issue:42")[0].event == "discovered"
+    assert NewsQueries(write_catalog(tmp_path / "news-data")).list()[0].news.latest_release.tag == (
+        "v2.0.0"
+    )
 
 
 def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
@@ -47,6 +51,7 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
 
     home = (output / "index.html").read_text()
     contribution = (output / "contribute/index.html").read_text()
+    news_page = (output / "news/index.html").read_text()
     repository = (output / "updates/2026-08-13/runtime-tools/widget.html").read_text()
     api = json.loads((output / "api/v1/index.json").read_text())
     opportunities = json.loads((output / "api/v1/opportunities.json").read_text())
@@ -56,14 +61,27 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
         ).read_text()
     )
 
-    assert build.pages == 5
+    assert build.pages == 6
     assert "Follow important projects" in home
     assert "Maintainer invited" in contribution
+    assert "Widget 2.0" in news_page
+    assert "Widget 2.1" in news_page
     assert "Observation trail" in repository
     assert "https://github.com/acme/widget/issues/42" in repository
-    assert api["schemaVersion"] == 2
+    assert api["schemaVersion"] == 3
     assert opportunities["leads"][0]["evidenceUrl"].endswith("/issues/42")
     assert repository_api["dataset"]["events"][0]["event"] == "discovered"
+    assert repository_api["dataset"]["news"]["latestRelease"]["tag"] == "v2.0.0"
+    assert (
+        json.loads((output / "api/v1/news.json").read_text())["projects"][0]["news"]["upcoming"][0][
+            "title"
+        ]
+        == "Widget 2.1"
+    )
+    assert json.loads((output / "news/feed.json").read_text())["items"][0][
+        "external_url"
+    ].startswith("https://github.com/acme/widget/")
+    assert "Project News" in (output / "news/feed.xml").read_text()
     assert json.loads((output / "api/v1/schema.json").read_text())["title"].startswith(
         "Contribution Compass"
     )
@@ -72,4 +90,5 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
     )
     assert "+0000" in (output / "feed.xml").read_text()
     assert "widget.html" in (output / "sitemap.xml").read_text()
+    assert "/news/" in (output / "sitemap.xml").read_text()
     assert "Observation Events" in (output / "llms.txt").read_text()

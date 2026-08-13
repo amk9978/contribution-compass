@@ -92,6 +92,7 @@ class CatalogQueries:
                 "group": {"id": dataset.group_id, "name": dataset.group_name},
             },
             "context": dataset.context.to_dict() if dataset.context else None,
+            "news": dataset.news.to_dict() if dataset.news else None,
             "runCount": len(dataset.runs),
             "signalCount": len(dataset.signals),
             "eventCount": len(dataset.events),

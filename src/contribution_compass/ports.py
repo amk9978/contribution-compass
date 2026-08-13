@@ -10,6 +10,7 @@ from contribution_compass.domain.models import (
     ContributionLead,
     ObservationEvent,
     ProjectContext,
+    ProjectNewsSnapshot,
     RepoGroup,
     RepositoryDataset,
     Signal,
@@ -35,6 +36,7 @@ class DatasetWriter(Protocol):
         observed: tuple[Signal, ...],
         changes: ChangeSet,
         contexts: tuple[ProjectContext, ...],
+        news: tuple[ProjectNewsSnapshot, ...],
     ) -> str: ...
 
 
@@ -46,6 +48,7 @@ class ReportWriter(Protocol):
         config: CompassConfig,
         signals: tuple[Signal, ...],
         leads: tuple[ContributionLead, ...],
+        news: tuple[ProjectNewsSnapshot, ...],
     ) -> str: ...
 
 

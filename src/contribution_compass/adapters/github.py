@@ -10,12 +10,14 @@ import httpx
 from contribution_compass.domain.models import (
     CollectionBatch,
     ProjectContext,
+    ProjectNewsSnapshot,
     RepoConfig,
     RepoGroup,
     Signal,
     SignalKind,
     SignalMetrics,
 )
+from contribution_compass.domain.news import build_project_news
 
 LOGGER = logging.getLogger(__name__)
 
@@ -142,9 +144,10 @@ class GitHubCollector:
         repo: RepoConfig,
         group: RepoGroup,
         since: datetime,
-    ) -> tuple[list[Signal], ProjectContext]:
+    ) -> tuple[list[Signal], ProjectContext, ProjectNewsSnapshot]:
         max_pages = self._max_pages if repo.paginated else 1
         signals: list[Signal] = []
+        release_items: list[dict[str, Any]] = []
         context_raw = await self._json(client, f"/repos/{repo.repo}")
 
         for page in range(1, max_pages + 1):
@@ -175,6 +178,7 @@ class GitHubCollector:
                 f"/repos/{repo.repo}/releases",
                 {"per_page": str(self._page_size), "page": str(page)},
             )
+            release_items.extend(releases)
             recent = [
                 item
                 for item in releases
@@ -194,7 +198,27 @@ class GitHubCollector:
             ):
                 break
 
-        return signals, self._context(context_raw, datetime.now().astimezone().isoformat())
+        try:
+            milestones = await self._json(
+                client,
+                f"/repos/{repo.repo}/milestones",
+                {
+                    "state": "open",
+                    "sort": "due_on",
+                    "direction": "asc",
+                    "per_page": "5",
+                },
+            )
+        except Exception as error:
+            LOGGER.warning("[github] %s milestone news unavailable: %s", repo.repo, error)
+            milestones = []
+
+        collected_at = datetime.now().astimezone().isoformat()
+        return (
+            signals,
+            self._context(context_raw, collected_at),
+            build_project_news(repo.repo, release_items, milestones, collected_at),
+        )
 
     async def collect(self, groups: tuple[RepoGroup, ...], since: datetime) -> CollectionBatch:
         owns_client = self._client is None
@@ -203,16 +227,16 @@ class GitHubCollector:
 
         async def collect_one(
             group: RepoGroup, repo: RepoConfig
-        ) -> tuple[list[Signal], ProjectContext | None, str | None]:
+        ) -> tuple[list[Signal], ProjectContext | None, ProjectNewsSnapshot | None, str | None]:
             async with semaphore:
                 try:
-                    signals, context = await self._repository(client, repo, group, since)
+                    signals, context, news = await self._repository(client, repo, group, since)
                     LOGGER.info("[github] %s: %d recent signals", repo.repo, len(signals))
-                    return signals, context, None
+                    return signals, context, news, None
                 except Exception as error:
                     message = f"{repo.repo}: {error}"
                     LOGGER.error("[github] %s", message)
-                    return [], None, message
+                    return [], None, None, message
 
         try:
             results = await asyncio.gather(
@@ -223,7 +247,8 @@ class GitHubCollector:
                 await client.aclose()
 
         return CollectionBatch(
-            signals=tuple(signal for signals, _, _ in results for signal in signals),
-            contexts=tuple(context for _, context, _ in results if context is not None),
-            failures=tuple(failure for _, _, failure in results if failure is not None),
+            signals=tuple(signal for signals, _, _, _ in results for signal in signals),
+            contexts=tuple(context for _, context, _, _ in results if context is not None),
+            failures=tuple(failure for _, _, _, failure in results if failure is not None),
+            news=tuple(news for _, _, news, _ in results if news is not None),
         )

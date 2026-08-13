@@ -11,6 +11,7 @@ from contribution_compass.adapters.github import GitHubCollector
 from contribution_compass.adapters.json_store import JsonDatasetWriter, JsonObservationStore
 from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.collect import CollectUpdates
+from contribution_compass.application.news import NewsQueries
 from contribution_compass.config import load_config
 from contribution_compass.views.markdown import MarkdownReportWriter
 from contribution_compass.views.site import StaticSitePublisher, default_site_urls
@@ -55,7 +56,17 @@ def build_site(data_root: str, output_root: str) -> int:
 
 def query_catalog(arguments: argparse.Namespace) -> int:
     queries = CatalogQueries(LocalJsonCatalog(arguments.data_root))
-    if arguments.query_command == "opportunities":
+    if arguments.query_command == "news":
+        value = [
+            entry.to_dict()
+            for entry in NewsQueries(LocalJsonCatalog(arguments.data_root)).list(
+                query=arguments.query,
+                project=arguments.project,
+                group=arguments.group,
+                limit=arguments.limit,
+            )
+        ]
+    elif arguments.query_command == "opportunities":
         value = [
             lead.to_dict()
             for lead in queries.contribution_leads(
@@ -94,7 +105,7 @@ def parser() -> argparse.ArgumentParser:
     query = subcommands.add_parser("query", help="Query the local evidence catalog")
     query.add_argument("--data-root", default="data")
     query_subcommands = query.add_subparsers(dest="query_command", required=True)
-    for name in ("updates", "opportunities"):
+    for name in ("updates", "opportunities", "news"):
         command = query_subcommands.add_parser(name)
         command.add_argument("--query", default="")
         command.add_argument("--project")
@@ -102,7 +113,7 @@ def parser() -> argparse.ArgumentParser:
         command.add_argument("--limit", type=int, default=20)
         if name == "updates":
             command.add_argument("--kind", choices=("issue", "pull_request", "release"))
-        else:
+        elif name == "opportunities":
             command.add_argument("--tier", choices=("maintainer-invited", "triage-lead"))
     timeline = query_subcommands.add_parser("timeline")
     timeline.add_argument("signal_id")

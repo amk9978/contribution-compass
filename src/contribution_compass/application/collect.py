@@ -59,12 +59,14 @@ class CollectUpdates:
             observed=batch.signals,
             changes=changes,
             contexts=batch.contexts,
+            news=batch.news,
         )
         report_directory = self._reports.publish(
             date=date,
             config=config,
             signals=changes.signals,
             leads=leads,
+            news=batch.news,
         )
         return CollectionResult(
             date=date,

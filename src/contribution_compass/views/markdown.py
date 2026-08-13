@@ -3,7 +3,13 @@ from __future__ import annotations
 from pathlib import Path
 
 from contribution_compass.domain.importance import rank_updates
-from contribution_compass.domain.models import CompassConfig, ContributionLead, RepoGroup, Signal
+from contribution_compass.domain.models import (
+    CompassConfig,
+    ContributionLead,
+    ProjectNewsSnapshot,
+    RepoGroup,
+    Signal,
+)
 
 
 def _safe(value: str) -> str:
@@ -60,6 +66,38 @@ def render_group(
     return "\n".join(lines).rstrip() + "\n"
 
 
+def render_project_news(date: str, name: str, snapshot: ProjectNewsSnapshot) -> str:
+    lines = [
+        f"# {name} Project News — {date}",
+        "",
+        "> Public GitHub release and roadmap evidence. Upcoming items are indications, not commitments.",
+        "",
+        f"Repository: [{snapshot.repository}](https://github.com/{snapshot.repository})",
+        "",
+    ]
+    release = snapshot.latest_release
+    if release:
+        lines.extend(
+            (
+                f"## Latest stable: [{_safe(release.title)}]({release.url})",
+                "",
+                f"- Tag: `{_safe(release.tag)}`",
+                f"- Published: {release.published_at}",
+            )
+        )
+        lines.extend(f"- {_safe(item)}" for item in release.highlights)
+    else:
+        lines.append("No published stable GitHub release was found.")
+    lines.extend(("", "## Publicly indicated upcoming work", ""))
+    if snapshot.upcoming:
+        for item in snapshot.upcoming:
+            detail = f" — due {item.due_at}" if item.due_at else ""
+            lines.append(f"- **{item.kind.title()}** [{_safe(item.title)}]({item.url}){detail}")
+    else:
+        lines.append("No public prerelease or open milestone was found.")
+    return "\n".join(lines).rstrip() + "\n"
+
+
 class MarkdownReportWriter:
     def __init__(self, root: str | Path = "reports") -> None:
         self._root = Path(root)
@@ -71,6 +109,7 @@ class MarkdownReportWriter:
         config: CompassConfig,
         signals: tuple[Signal, ...],
         leads: tuple[ContributionLead, ...],
+        news: tuple[ProjectNewsSnapshot, ...],
     ) -> str:
         directory = self._root / date
         directory.mkdir(parents=True, exist_ok=True)
@@ -79,6 +118,10 @@ class MarkdownReportWriter:
             "",
             f"- {len(signals)} new or materially changed signals",
             f"- {len(leads)} evidence-qualified contribution leads",
+            f"- {sum(item.latest_release is not None for item in news)} projects with release news",
+            f"- {sum(bool(item.upcoming) for item in news)} projects with public upcoming items",
+            "",
+            "- [Project news](./news/index.md)",
             "",
             "## Project Groups",
             "",
@@ -92,5 +135,22 @@ class MarkdownReportWriter:
             summary.append(
                 f"- [{group.name}](./{group.id}.md) — {group_signals} updates, {group_leads} leads"
             )
+        news_by_repo = {snapshot.repository: snapshot for snapshot in news}
+        news_index = ["# Project News", ""]
+        for group in config.repo_groups:
+            for repo in group.repos:
+                snapshot = news_by_repo.get(repo.repo)
+                if snapshot is None:
+                    continue
+                relative = Path(group.id) / f"{repo.id}.md"
+                destination = directory / "news" / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_text(
+                    render_project_news(date, repo.name, snapshot), encoding="utf-8"
+                )
+                news_index.append(f"- [{repo.name}](./{relative.as_posix()})")
+        news_directory = directory / "news"
+        news_directory.mkdir(parents=True, exist_ok=True)
+        (news_directory / "index.md").write_text("\n".join(news_index) + "\n", encoding="utf-8")
         (directory / "summary.md").write_text("\n".join(summary) + "\n", encoding="utf-8")
         return str(directory)

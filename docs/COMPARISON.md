@@ -11,6 +11,7 @@ pagination, workflow, static browsing, and feed patterns, but serves a different
 | LLM dependency | None; inference is an optional extension | Providers and prompts are central to digest generation |
 | Evidence model | Normalized Signals, Project Context, and append-only Observation Events | Generated Markdown reports and daily highlight artifacts |
 | Contribution discovery | Explicit Maintainer-Invited vs. lower-confidence Triage Leads with caveats | Not the central data model |
+| Project news | Stable release notes plus public prereleases/milestones, kept per project | Broader editorial/news-source digest |
 | Configuration | Arbitrary groups; empty means empty; no hidden defaults | Specialized categories and documented fallback defaults |
 | MCP | Reads local or hosted structured evidence; includes context and timelines | Hosted report listing, retrieval, and text search |
 | Breadth | Deliberately GitHub-first and deep | Ten broad AI/news sources |
