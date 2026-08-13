@@ -650,6 +650,35 @@ input {
   display: none;
 }
 
+.pagination {
+  display: grid;
+  align-items: center;
+  gap: 16px;
+  margin: 32px 0 70px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.pagination a {
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pagination a:last-child,
+.pagination .disabled:last-child {
+  text-align: right;
+}
+
+.pagination > span {
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
 .no-signals,
 .empty-state {
   display: grid;
@@ -709,6 +738,15 @@ input {
   .filter-bar {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .pagination {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pagination > span:nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 1;
   }
 
   .filter-buttons {

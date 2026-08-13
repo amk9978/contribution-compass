@@ -6,6 +6,7 @@ from typing import Protocol
 from contribution_compass.domain.models import (
     ChangeSet,
     CollectionBatch,
+    CommunityNewsBatch,
     CompassConfig,
     ContributionLead,
     ObservationEvent,
@@ -19,6 +20,16 @@ from contribution_compass.domain.models import (
 
 class SignalCollector(Protocol):
     async def collect(self, groups: tuple[RepoGroup, ...], since: datetime) -> CollectionBatch: ...
+
+
+class CommunityNewsCollector(Protocol):
+    async def collect(
+        self,
+        groups: tuple[RepoGroup, ...],
+        since: datetime,
+        *,
+        story_limit: int,
+    ) -> CommunityNewsBatch: ...
 
 
 class ObservationStore(Protocol):

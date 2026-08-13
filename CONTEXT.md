@@ -31,9 +31,17 @@ topics, primary language, license, default branch, activity counts, and reposito
 
 ### Project News Snapshot
 
-Factual public release and roadmap information for a Project Sensor at collection time. It contains
-the latest stable Release Bulletin and any publicly visible Upcoming Items. It is evidence, not a
-prediction that maintainers will deliver a plan on time.
+Factual public release and roadmap information plus separately labeled Community Discussions for a
+Project Sensor at collection time. It contains the latest stable Release Bulletin and any publicly
+visible Upcoming Items. It is evidence, not a prediction that maintainers will deliver a plan on
+time.
+
+### Community Discussion
+
+A current Hacker News story matched to a configured Project Sensor by explicit keywords or an exact
+repository reference. It retains both article and discussion URLs, score, comment count, author, and
+match reason. It is community evidence, not maintainer evidence or endorsement. Avoid “project
+announcement” unless the source itself establishes that fact.
 
 ### Release Bulletin
 
@@ -71,6 +79,7 @@ evidence it used.
 
 - Every Signal and Contribution Lead retains a primary evidence URL.
 - Every Release Bulletin and Upcoming Item retains a primary evidence URL.
+- Every Community Discussion retains its article and Hacker News discussion URLs.
 - Collection does not require or invoke an LLM.
 - Observation Events are append-only; newer observations do not erase their trail.
 - Empty configured groups stay empty and no hidden Project Sensors appear.

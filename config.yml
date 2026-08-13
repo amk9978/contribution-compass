@@ -1,5 +1,9 @@
 lookback_hours: 24
 
+hackernews:
+  enabled: true
+  story_limit: 200
+
 repo_groups:
   distributed-systems:
     name: Distributed Systems & Correctness
@@ -8,18 +12,23 @@ repo_groups:
         repo: apple/foundationdb
         name: FoundationDB
         paginated: true
+        hackernews_keywords: [FoundationDB]
       - id: tigerbeetle
         repo: tigerbeetle/tigerbeetle
         name: TigerBeetle
+        hackernews_keywords: [TigerBeetle]
       - id: etcd-raft
         repo: etcd-io/raft
         name: etcd Raft
+        hackernews_keywords: [etcd raft]
       - id: raft-rs
         repo: tikv/raft-rs
         name: raft-rs
+        hackernews_keywords: [raft-rs]
       - id: jepsen
         repo: jepsen-io/jepsen
         name: Jepsen
+        hackernews_keywords: [Jepsen]
 
   platform-infrastructure:
     name: Platform / Networking / Runtime Infrastructure
@@ -28,17 +37,21 @@ repo_groups:
         repo: cilium/cilium
         name: Cilium
         paginated: true
+        hackernews_keywords: [Cilium]
       - id: envoy
         repo: envoyproxy/envoy
         name: Envoy
         paginated: true
+        hackernews_keywords: [Envoy Proxy]
       - id: temporal
         repo: temporalio/temporal
         name: Temporal
         paginated: true
+        hackernews_keywords: [Temporal.io, Temporal workflow]
       - id: containerd
         repo: containerd/containerd
         name: containerd
+        hackernews_keywords: [containerd]
 
   observability:
     name: Observability & Reliability
@@ -47,17 +60,21 @@ repo_groups:
         repo: open-telemetry/opentelemetry-collector
         name: OpenTelemetry Collector
         paginated: true
+        hackernews_keywords: [OpenTelemetry Collector, OpenTelemetry]
       - id: datadog-agent
         repo: DataDog/datadog-agent
         name: Datadog Agent
         paginated: true
+        hackernews_keywords: [Datadog Agent]
       - id: prometheus
         repo: prometheus/prometheus
         name: Prometheus
+        hackernews_keywords: [Prometheus monitoring]
       - id: loki
         repo: grafana/loki
         name: Loki
         paginated: true
+        hackernews_keywords: [Grafana Loki]
 
   data-infrastructure:
     name: Data / Messaging / Storage Infrastructure
@@ -65,17 +82,21 @@ repo_groups:
       - id: nats-server
         repo: nats-io/nats-server
         name: NATS Server
+        hackernews_keywords: [NATS server, NATS.io]
       - id: redpanda
         repo: redpanda-data/redpanda
         name: Redpanda
         paginated: true
+        hackernews_keywords: [Redpanda]
       - id: clickhouse
         repo: ClickHouse/ClickHouse
         name: ClickHouse
         paginated: true
+        hackernews_keywords: [ClickHouse]
       - id: dragonfly
         repo: dragonflydb/dragonfly
         name: Dragonfly
+        hackernews_keywords: [DragonflyDB]
 
   ai-infrastructure:
     name: AI Infrastructure
@@ -84,21 +105,26 @@ repo_groups:
         repo: BerriAI/litellm
         name: LiteLLM
         paginated: true
+        hackernews_keywords: [LiteLLM]
       - id: vllm
         repo: vllm-project/vllm
         name: vLLM
         paginated: true
+        hackernews_keywords: [vLLM]
       - id: sglang
         repo: sgl-project/sglang
         name: SGLang
         paginated: true
+        hackernews_keywords: [SGLang]
       - id: ray
         repo: ray-project/ray
         name: Ray
         paginated: true
+        hackernews_keywords: [Ray distributed computing, Ray framework]
       - id: bentoml
         repo: bentoml/BentoML
         name: BentoML
+        hackernews_keywords: [BentoML]
 
   developer-infrastructure:
     name: Developer Infrastructure
@@ -106,16 +132,20 @@ repo_groups:
       - id: dagger
         repo: dagger/dagger
         name: Dagger
+        hackernews_keywords: [Dagger CI]
       - id: uv
         repo: astral-sh/uv
         name: uv
         paginated: true
+        hackernews_keywords: [Astral uv, uv Python]
       - id: testcontainers-go
         repo: testcontainers/testcontainers-go
         name: Testcontainers for Go
+        hackernews_keywords: [Testcontainers]
       - id: buf
         repo: bufbuild/buf
         name: Buf
+        hackernews_keywords: [Buf protobuf, Buf Schema Registry]
 
   coding-agent-infrastructure:
     name: Coding-Agent Infrastructure
@@ -124,14 +154,18 @@ repo_groups:
         repo: anthropics/claude-code
         name: Claude Code
         paginated: true
+        hackernews_keywords: [Claude Code]
       - id: codex
         repo: openai/codex
         name: Codex
         paginated: true
+        hackernews_keywords: [OpenAI Codex]
       - id: opencode
         repo: anomalyco/opencode
         name: OpenCode
         paginated: true
+        hackernews_keywords: [OpenCode]
       - id: hermes-agent
         repo: NousResearch/hermes-agent
         name: Hermes Agent
+        hackernews_keywords: [Hermes Agent]

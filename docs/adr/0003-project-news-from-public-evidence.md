@@ -1,4 +1,4 @@
-# ADR-0003: Project news comes from public maintainer evidence
+# ADR-0003: Project news distinguishes maintainer evidence from community discussion
 
 Status: Accepted
 
@@ -14,7 +14,12 @@ release as the Release Bulletin. Treat published prereleases and open GitHub mil
 Items. Extract a small set of headings and bullets from release notes deterministically for scanning,
 while retaining the original notes and evidence URL.
 
-The collection adapter owns GitHub response normalization. The domain news module owns evidence
+Also collect current Hacker News stories matched to configured projects by explicit per-project
+keywords or exact repository references. Store the article URL, HN discussion URL, score, comment
+count, timestamp, and match reason. Present these as Community Discussions in a separate labeled
+section; never treat them as maintainer roadmap or release evidence. Do not crawl the comment tree.
+
+The GitHub and Hacker News adapters own source normalization. The domain news module owns evidence
 selection and highlight extraction. HTML, JSON, Markdown, CLI, and MCP views consume the same model.
 
 ## Consequences
@@ -23,3 +28,7 @@ News remains reproducible and requires no model credential. Projects without pub
 prereleases, or milestones clearly report that no supported public roadmap evidence was found.
 Milestones and prereleases are indications, not delivery commitments. Broader editorial analysis can
 still be added later as an Inference Extension that cites this evidence.
+
+Hacker News matching may miss stories or produce an occasional false-positive keyword match. The
+stored match reason makes this visible, and maintainers can tune or empty each repository's keyword
+list in `config.yml`.

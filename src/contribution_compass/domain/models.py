@@ -25,6 +25,7 @@ class RepoConfig:
     repo: str
     name: str
     paginated: bool = False
+    hackernews_keywords: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,6 +40,8 @@ class RepoGroup:
 class CompassConfig:
     repo_groups: tuple[RepoGroup, ...]
     lookback_hours: int = 24
+    hackernews_enabled: bool = False
+    hackernews_story_limit: int = 200
 
 
 @dataclass(frozen=True, slots=True)
@@ -284,11 +287,63 @@ class UpcomingItem:
 
 
 @dataclass(frozen=True, slots=True)
+class CommunityDiscussion:
+    id: str
+    source: Literal["hackernews"]
+    repository: str
+    title: str
+    url: str
+    discussion_url: str
+    published_at: str
+    score: int = 0
+    comments: int = 0
+    author: str | None = None
+    matched_by: tuple[str, ...] = ()
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> Self:
+        return cls(
+            id=str(value["id"]),
+            source="hackernews",
+            repository=str(value["repository"]),
+            title=str(value["title"]),
+            url=str(value["url"]),
+            discussion_url=str(value["discussionUrl"]),
+            published_at=str(value["publishedAt"]),
+            score=int(value.get("score", 0)),
+            comments=int(value.get("comments", 0)),
+            author=value.get("author"),
+            matched_by=tuple(str(item) for item in value.get("matchedBy", [])),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return cast(
+            dict[str, Any],
+            _without_none(
+                {
+                    "id": self.id,
+                    "source": self.source,
+                    "repository": self.repository,
+                    "title": self.title,
+                    "url": self.url,
+                    "discussionUrl": self.discussion_url,
+                    "publishedAt": self.published_at,
+                    "score": self.score,
+                    "comments": self.comments,
+                    "author": self.author,
+                    "matchedBy": list(self.matched_by),
+                }
+            ),
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class ProjectNewsSnapshot:
     repository: str
     collected_at: str
     latest_release: ReleaseBulletin | None = None
     upcoming: tuple[UpcomingItem, ...] = ()
+    community_discussions: tuple[CommunityDiscussion, ...] = ()
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> Self:
@@ -300,6 +355,10 @@ class ProjectNewsSnapshot:
                 ReleaseBulletin.from_dict(latest) if isinstance(latest, dict) else None
             ),
             upcoming=tuple(UpcomingItem.from_dict(item) for item in value.get("upcoming", [])),
+            community_discussions=tuple(
+                CommunityDiscussion.from_dict(item)
+                for item in value.get("communityDiscussions", [])
+            ),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -313,6 +372,7 @@ class ProjectNewsSnapshot:
                         self.latest_release.to_dict() if self.latest_release else None
                     ),
                     "upcoming": [item.to_dict() for item in self.upcoming],
+                    "communityDiscussions": [item.to_dict() for item in self.community_discussions],
                 }
             ),
         )
@@ -374,6 +434,12 @@ class CollectionBatch:
     contexts: tuple[ProjectContext, ...]
     failures: tuple[str, ...] = ()
     news: tuple[ProjectNewsSnapshot, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class CommunityNewsBatch:
+    discussions: tuple[CommunityDiscussion, ...]
+    failures: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

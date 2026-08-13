@@ -11,10 +11,10 @@ pagination, workflow, static browsing, and feed patterns, but serves a different
 | LLM dependency | None; inference is an optional extension | Providers and prompts are central to digest generation |
 | Evidence model | Normalized Signals, Project Context, and append-only Observation Events | Generated Markdown reports and daily highlight artifacts |
 | Contribution discovery | Explicit Maintainer-Invited vs. lower-confidence Triage Leads with caveats | Not the central data model |
-| Project news | Stable release notes plus public prereleases/milestones, kept per project | Broader editorial/news-source digest |
+| Project news | Stable releases, public prereleases/milestones, and separately labeled matching HN discussions | Broader editorial/news-source digest |
 | Configuration | Arbitrary groups; empty means empty; no hidden defaults | Specialized categories and documented fallback defaults |
 | MCP | Reads local or hosted structured evidence; includes context and timelines | Hosted report listing, retrieval, and text search |
-| Breadth | Deliberately GitHub-first and deep | Ten broad AI/news sources |
+| Breadth | Configured GitHub projects plus matching Hacker News discussions | Ten broad AI/news sources |
 | Inference separation | Future inference must cite evidence and live in a separate namespace | Collection and LLM synthesis share the digest pipeline |
 
 See `NOTICE.md` for MIT attribution and the upstream copyright notice.

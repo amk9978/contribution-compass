@@ -163,7 +163,7 @@ class CatalogQueries:
                     )
                 ).casefold()
             )
-        ][: min(max(limit, 1), 100)]
+        ][: min(max(limit, 1), 1000)]
 
     def signal_timeline(self, signal_id: str) -> list[ObservationEvent]:
         return self._catalog.events(signal_id)
