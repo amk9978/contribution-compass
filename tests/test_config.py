@@ -37,7 +37,7 @@ def test_hackernews_collection_and_keywords_are_explicit_and_empty_stays_empty()
                             "id": "uv",
                             "repo": "astral-sh/uv",
                             "name": "uv",
-                            "hackernews_keywords": [],
+                            "keywords": [],
                         }
                     ],
                 }
@@ -46,7 +46,28 @@ def test_hackernews_collection_and_keywords_are_explicit_and_empty_stays_empty()
     )
     assert config.hackernews_enabled is True
     assert config.hackernews_story_limit == 75
-    assert config.repo_groups[0].repos[0].hackernews_keywords == ()
+    assert config.repo_groups[0].repos[0].keywords == ()
+
+
+def test_legacy_hackernews_keyword_name_loads_as_project_keywords() -> None:
+    config = parse_config(
+        {
+            "repo_groups": {
+                "tools": {
+                    "name": "Tools",
+                    "repos": [
+                        {
+                            "id": "widget",
+                            "repo": "acme/widget",
+                            "name": "Widget",
+                            "hackernews_keywords": ["Widget Runtime"],
+                        }
+                    ],
+                }
+            }
+        }
+    )
+    assert config.repo_groups[0].repos[0].keywords == ("Widget Runtime",)
 
 
 @pytest.mark.parametrize(
@@ -69,6 +90,25 @@ def test_hackernews_collection_and_keywords_are_explicit_and_empty_stays_empty()
                 "repo_groups": {},
             },
             "integer from 1 to 500",
+        ),
+        (
+            {
+                "repo_groups": {
+                    "tools": {
+                        "name": "Tools",
+                        "repos": [
+                            {
+                                "id": "widget",
+                                "repo": "acme/widget",
+                                "name": "Widget",
+                                "keywords": ["Widget"],
+                                "hackernews_keywords": ["Legacy Widget"],
+                            }
+                        ],
+                    }
+                }
+            },
+            "do not specify both keyword fields",
         ),
     ],
 )

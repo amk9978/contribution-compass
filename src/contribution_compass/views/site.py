@@ -354,8 +354,11 @@ class HtmlView:
 
     def repository(self, dataset: RepositoryDataset, page: int = 1, page_size: int = 50) -> str:
         context = dataset.context
+        configured_keywords = "".join(
+            f'<span class="label">keyword: {h(keyword)}</span>' for keyword in dataset.keywords
+        )
         context_html = (
-            f'<section class="project-context"><p>{h(context.description or "No repository description.")}</p><div class="signal-meta"><span>{compact(context.stars)} stars</span><span>{compact(context.forks)} forks</span><span>{h(context.language or "language unknown")}</span><span>{h(context.license or "license unknown")}</span>{"".join(f'<span class="label">{h(topic)}</span>' for topic in context.topics[:8])}</div></section>'
+            f'<section class="project-context"><p>{h(context.description or "No repository description.")}</p><div class="signal-meta"><span>{compact(context.stars)} stars</span><span>{compact(context.forks)} forks</span><span>{h(context.language or "language unknown")}</span><span>{h(context.license or "license unknown")}</span>{"".join(f'<span class="label">{h(topic)}</span>' for topic in context.topics[:8])}{configured_keywords}</div></section>'
             if context
             else '<section class="project-context"><p>Project context will be collected on the next run.</p></section>'
         )

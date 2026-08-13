@@ -112,7 +112,14 @@ class JsonDatasetWriter:
 
     @staticmethod
     def _read_dataset(
-        path: Path, date: str, group_id: str, group_name: str, repo_id: str, repo: str, name: str
+        path: Path,
+        date: str,
+        group_id: str,
+        group_name: str,
+        repo_id: str,
+        repo: str,
+        name: str,
+        keywords: tuple[str, ...],
     ) -> RepositoryDataset:
         if not path.exists():
             return RepositoryDataset(
@@ -122,6 +129,7 @@ class JsonDatasetWriter:
                 repository_id=repo_id,
                 repository=repo,
                 repository_name=name,
+                keywords=keywords,
             )
         return RepositoryDataset.from_dict(json.loads(path.read_text(encoding="utf-8")))
 
@@ -151,8 +159,16 @@ class JsonDatasetWriter:
                 relative = Path(group.id) / f"{repo.id}.json"
                 destination = directory / relative
                 dataset = self._read_dataset(
-                    destination, date, group.id, group.name, repo.id, repo.repo, repo.name
+                    destination,
+                    date,
+                    group.id,
+                    group.name,
+                    repo.id,
+                    repo.repo,
+                    repo.name,
+                    repo.keywords,
                 )
+                dataset.keywords = repo.keywords
                 observed_repo = [signal for signal in observed if signal.project == repo.repo]
                 changed_repo = [signal for signal in changes.signals if signal.project == repo.repo]
                 merged = {signal.id: signal for signal in dataset.signals}

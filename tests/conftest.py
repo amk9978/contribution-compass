@@ -54,6 +54,7 @@ def make_dataset(signal: Signal | None = None) -> RepositoryDataset:
         repository_id="widget",
         repository="acme/widget",
         repository_name="Widget",
+        keywords=("resource lifecycle", "async runtime"),
         runs=[CrawlRun("2026-08-13T10:00:00Z", "2026-08-12T10:00:00Z", 1, 1)],
         signals=[selected],
         events=[event],

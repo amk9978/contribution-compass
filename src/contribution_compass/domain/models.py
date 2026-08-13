@@ -25,7 +25,7 @@ class RepoConfig:
     repo: str
     name: str
     paginated: bool = False
-    hackernews_keywords: tuple[str, ...] = ()
+    keywords: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -472,6 +472,7 @@ class RepositoryDataset:
     repository_id: str
     repository: str
     repository_name: str
+    keywords: tuple[str, ...] = ()
     runs: list[CrawlRun] = field(default_factory=list)
     signals: list[Signal] = field(default_factory=list)
     events: list[ObservationEvent] = field(default_factory=list)
@@ -487,6 +488,7 @@ class RepositoryDataset:
             repository_id=str(value["repository"]["id"]),
             repository=str(value["repository"]["repo"]),
             repository_name=str(value["repository"]["name"]),
+            keywords=tuple(str(item) for item in value["repository"].get("keywords", [])),
             runs=[
                 CrawlRun(
                     collected_at=str(run["collectedAt"]),
@@ -522,6 +524,7 @@ class RepositoryDataset:
                         "id": self.repository_id,
                         "repo": self.repository,
                         "name": self.repository_name,
+                        "keywords": list(self.keywords),
                     },
                     "context": self.context.to_dict() if self.context else None,
                     "news": self.news.to_dict() if self.news else None,

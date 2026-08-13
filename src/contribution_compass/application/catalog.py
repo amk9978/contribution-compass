@@ -19,6 +19,7 @@ class ProjectSummary:
     repository: str
     name: str
     group: str
+    keywords: tuple[str, ...]
     signal_count: int
     event_count: int
     context: dict[str, object] | None
@@ -29,6 +30,7 @@ class ProjectSummary:
             "repository": self.repository,
             "name": self.name,
             "group": self.group,
+            "keywords": list(self.keywords),
             "signalCount": self.signal_count,
             "eventCount": self.event_count,
             "context": self.context,
@@ -56,6 +58,7 @@ class CatalogQueries:
                 repository=dataset.repository,
                 name=dataset.repository_name,
                 group=dataset.group_id,
+                keywords=dataset.keywords,
                 signal_count=len(dataset.signals),
                 event_count=len(dataset.events),
                 context=dataset.context.to_dict() if dataset.context else None,
@@ -89,6 +92,7 @@ class CatalogQueries:
                 "id": dataset.repository_id,
                 "repository": dataset.repository,
                 "name": dataset.repository_name,
+                "keywords": list(dataset.keywords),
                 "group": {"id": dataset.group_id, "name": dataset.group_name},
             },
             "context": dataset.context.to_dict() if dataset.context else None,
@@ -112,6 +116,9 @@ class CatalogQueries:
     ) -> list[Signal]:
         needle = query.casefold().strip()
         signals = self._catalog.signals(date)
+        project_keywords = {
+            dataset.repository: dataset.keywords for dataset in self._catalog.repositories(date)
+        }
         filtered = [
             signal
             for signal in signals
@@ -127,6 +134,7 @@ class CatalogQueries:
                         signal.text or "",
                         signal.project or "",
                         " ".join(signal.labels),
+                        " ".join(project_keywords.get(signal.project or "", ())),
                     )
                 ).casefold()
             )
@@ -144,6 +152,9 @@ class CatalogQueries:
         limit: int = 20,
     ) -> list[ContributionLead]:
         needle = query.casefold().strip()
+        project_keywords = {
+            dataset.repository: dataset.keywords for dataset in self._catalog.repositories(date)
+        }
         leads = rank_contributions(self._catalog.signals(date), 1000)
         return [
             lead
@@ -160,6 +171,7 @@ class CatalogQueries:
                         lead.signal.text or "",
                         lead.signal.project or "",
                         " ".join(lead.signal.labels),
+                        " ".join(project_keywords.get(lead.signal.project or "", ())),
                     )
                 ).casefold()
             )

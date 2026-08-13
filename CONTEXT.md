@@ -11,7 +11,14 @@ work may be useful.
 ### Project Sensor
 
 A configured GitHub repository monitored deeply over time. A Project Sensor belongs to an arbitrary
-Project Group. Avoid “built-in repository” or domain-specific repository taxonomies.
+Project Group and may carry maintainer-curated Keywords for search and Hacker News matching. Avoid
+“built-in repository” or domain-specific repository taxonomies.
+
+### Keyword
+
+A maintainer-curated phrase attached to a Project Sensor in `config.yml`. Keywords are persisted as
+project metadata and included in factual catalog searches. They may guide discovery but are not
+evidence that an individual Signal is about that phrase.
 
 ### Signal
 
@@ -83,5 +90,6 @@ evidence it used.
 - Collection does not require or invoke an LLM.
 - Observation Events are append-only; newer observations do not erase their trail.
 - Empty configured groups stay empty and no hidden Project Sensors appear.
+- Empty configured keyword lists stay empty and stored Keywords mirror `config.yml`.
 - MCP, CLI, static HTML, and JSON are adapters over the same application interface.
 - Inference output, when added, is distinguishable from direct evidence.

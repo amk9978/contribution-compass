@@ -79,7 +79,10 @@ def create_server(catalog: Catalog) -> MCPServer:
     @server.tool()
     def search_project_updates(
         query: Annotated[
-            str, Field(description="Words to match in title, body, project, or labels")
+            str,
+            Field(
+                description="Words to match in title, body, project, labels, or project keywords"
+            ),
         ] = "",
         project: Annotated[str | None, Field(description="Exact owner/repository slug")] = None,
         group: Annotated[str | None, Field(description="Exact configured project-group id")] = None,
@@ -100,7 +103,10 @@ def create_server(catalog: Catalog) -> MCPServer:
     @server.tool()
     def find_contribution_opportunities(
         query: Annotated[
-            str, Field(description="Words to match in title, body, project, or labels")
+            str,
+            Field(
+                description="Words to match in title, body, project, labels, or project keywords"
+            ),
         ] = "",
         project: Annotated[str | None, Field(description="Exact owner/repository slug")] = None,
         group: Annotated[str | None, Field(description="Exact configured project-group id")] = None,
@@ -125,7 +131,12 @@ def create_server(catalog: Catalog) -> MCPServer:
     @server.tool()
     def get_project_news(
         query: Annotated[
-            str, Field(description="Words to match across project, release, and upcoming items")
+            str,
+            Field(
+                description=(
+                    "Words to match across project keywords, releases, upcoming items, and HN stories"
+                )
+            ),
         ] = "",
         project: Annotated[str | None, Field(description="Exact owner/repository slug")] = None,
         group: Annotated[str | None, Field(description="Exact configured project-group id")] = None,

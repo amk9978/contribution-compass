@@ -34,7 +34,14 @@ def test_dataset_persists_context_events_and_folder_separation(tmp_path: Path) -
             "repo_groups": {
                 "runtime-tools": {
                     "name": "Runtime Tools",
-                    "repos": [{"id": "widget", "repo": "acme/widget", "name": "Widget"}],
+                    "repos": [
+                        {
+                            "id": "widget",
+                            "repo": "acme/widget",
+                            "name": "Widget",
+                            "keywords": ["resource lifecycle", "async runtime"],
+                        }
+                    ],
                 }
             }
         }
@@ -60,6 +67,7 @@ def test_dataset_persists_context_events_and_folder_separation(tmp_path: Path) -
     raw = json.loads(path.read_text())
     assert raw["version"] == 3
     assert raw["context"]["stars"] == 10
+    assert raw["repository"]["keywords"] == ["resource lifecycle", "async runtime"]
     assert raw["events"][0]["signalId"] == signal.id
     catalog = LocalJsonCatalog(root / "data")
     assert catalog.events(signal.id)[0].event == "discovered"
