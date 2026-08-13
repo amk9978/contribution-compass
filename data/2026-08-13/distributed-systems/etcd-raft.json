@@ -8,7 +8,10 @@
   "repository": {
     "id": "etcd-raft",
     "repo": "etcd-io/raft",
-    "name": "etcd Raft"
+    "name": "etcd Raft",
+    "keywords": [
+      "etcd raft"
+    ]
   },
   "context": {
     "repository": "etcd-io/raft",
@@ -26,11 +29,11 @@
     "forks": 269,
     "openIssues": 85,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:08.832458+00:00"
+    "collectedAt": "2026-08-13T18:01:56.517328+00:00"
   },
   "news": {
     "repository": "etcd-io/raft",
-    "collectedAt": "2026-08-13T17:47:08.832458+00:00",
+    "collectedAt": "2026-08-13T18:01:56.517328+00:00",
     "latestRelease": {
       "repository": "etcd-io/raft",
       "tag": "v3.7.0",
@@ -83,6 +86,12 @@
     {
       "collectedAt": "2026-08-13T17:47:07.884300Z",
       "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
       "observedCount": 0,
       "changedCount": 0
     }

@@ -9,7 +9,8 @@ No evidence-qualified contribution leads changed in this collection.
 
 ### [FoundationDB](https://github.com/apple/foundationdb)
 
-No new or materially changed signals.
+- **Pull Request** [Preserve DD maintenance start versions across transaction retries](https://github.com/apple/foundationdb/pull/13856) — 49 comments · 0 reactions · open
+- **Pull Request** [documentation: release-notes titles, consolidate pre-1.0](https://github.com/apple/foundationdb/pull/13861) — 1 comments · 0 reactions · open
 
 ### [TigerBeetle](https://github.com/tigerbeetle/tigerbeetle)
 

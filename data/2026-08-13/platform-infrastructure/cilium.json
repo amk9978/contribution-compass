@@ -8,7 +8,10 @@
   "repository": {
     "id": "cilium",
     "repo": "cilium/cilium",
-    "name": "Cilium"
+    "name": "Cilium",
+    "keywords": [
+      "Cilium"
+    ]
   },
   "context": {
     "repository": "cilium/cilium",
@@ -40,11 +43,11 @@
     "forks": 3962,
     "openIssues": 1083,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:11.024415+00:00"
+    "collectedAt": "2026-08-13T18:01:58.717486+00:00"
   },
   "news": {
     "repository": "cilium/cilium",
-    "collectedAt": "2026-08-13T17:47:11.024415+00:00",
+    "collectedAt": "2026-08-13T18:01:58.717486+00:00",
     "latestRelease": {
       "repository": "cilium/cilium",
       "tag": "v1.20.0",
@@ -154,6 +157,12 @@
       "collectedAt": "2026-08-13T17:47:07.884300Z",
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 142,
+      "changedCount": 4
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 140,
       "changedCount": 4
     }
   ],
@@ -745,8 +754,7 @@
       ],
       "author": "xandau",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:44913",
@@ -3223,8 +3231,8 @@
       "text": "## Description `EnqueueRequestForBackendService` lists TLSRoutes immediately after HTTPRoutes, and the error path of the TLSRoute call was copied from the HTTPRoute one above it without changing the message. A failure to list TLSRoutes is reported as `Failed to get related HTTPRoutes`, which points anyone reading the log at the wrong index and the wrong CRD. That same line is also the only `List` error handler in `operator/pkg/gateway-api/watch-handlers` that calls `Error` rather than `ErrorContext`, so it drops the context from the log record while all fourteen of its neighbours keep it. The sibling handler `EnqueueRequestForBackendServiceImport` already logs this exact failure as `Failed to get related TLSRoutes`, so this just makes the two agree. Found while looking at #47819. That issue also asks for a `helpers.HasTLSRouteSupport` guard around these two `List` calls. I left that out on purpose: on `main`, `TLSRouteKind` is in `helpers.RequiredGVKs`, and `checkCRDs` disables Gateway API entirely when a required CRD is missing, so the guard cannot be false here and would be dead code. Only the log line is wrong on `main`. ```release-note Log the correct route kind when the Gateway API operator fails to list TLSRoutes for a backend Service ```",
       "url": "https://github.com/cilium/cilium/pull/47826",
       "createdAt": "2026-08-06T19:15:38Z",
-      "updatedAt": "2026-08-13T17:38:45Z",
-      "timestamp": "2026-08-13T17:38:45Z",
+      "updatedAt": "2026-08-13T17:53:48Z",
+      "timestamp": "2026-08-13T17:53:48Z",
       "metrics": {
         "reactions": 2,
         "comments": 4
@@ -3240,7 +3248,8 @@
       ],
       "author": "mehrdadbn9",
       "state": "closed",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:cilium/cilium:pull_request:47838",
@@ -3411,11 +3420,11 @@
       "text": "Migrate the functions exposed from the k8s package to use the ClusterInfo struct to depends less on the legacy config. Sorry for the many codeowners involved, those k8s functions are called in a bunch of places unfortunately :sweat_smile:. I prepared this commit using AIL-2",
       "url": "https://github.com/cilium/cilium/pull/47854",
       "createdAt": "2026-08-08T16:54:06Z",
-      "updatedAt": "2026-08-13T17:46:44Z",
-      "timestamp": "2026-08-13T17:46:44Z",
+      "updatedAt": "2026-08-13T18:01:51Z",
+      "timestamp": "2026-08-13T18:01:51Z",
       "metrics": {
         "reactions": 2,
-        "comments": 10
+        "comments": 11
       },
       "labels": [
         "area/k8s",
@@ -3751,8 +3760,8 @@
       "text": "The Go stdlib `net.Interface*` family talks to the kernel over a netlink socket with no timeout, so it can block forever. This PR converts the two remaining offenders to `netlink/safenetlink` and add a forbidigo rule so new ones don't creep back in. Fixes: #15051",
       "url": "https://github.com/cilium/cilium/pull/47902",
       "createdAt": "2026-08-11T20:27:45Z",
-      "updatedAt": "2026-08-13T17:47:04Z",
-      "timestamp": "2026-08-13T17:47:04Z",
+      "updatedAt": "2026-08-13T18:00:21Z",
+      "timestamp": "2026-08-13T18:00:21Z",
       "metrics": {
         "reactions": 4,
         "comments": 1
@@ -4206,8 +4215,8 @@
       "text": "Explicitly configure a limit for the zstd decoder used to decode the ClusterEndpointSlice entries received over Cluster Mesh, to prevent the risk of unbounded memory usage in case of crafted payloads. I've marked the PR as `release-note/misc` because the logic ingesting ClusterEndpointSlices is incomplete and disabled behind a feature flag in v1.20. Reported-by: Secstant - Sigma Prime \\<secstant@sigmaprime.io>",
       "url": "https://github.com/cilium/cilium/pull/47932",
       "createdAt": "2026-08-13T08:30:58Z",
-      "updatedAt": "2026-08-13T17:46:22Z",
-      "timestamp": "2026-08-13T17:46:22Z",
+      "updatedAt": "2026-08-13T17:55:53Z",
+      "timestamp": "2026-08-13T17:55:53Z",
       "metrics": {
         "reactions": 2,
         "comments": 2
@@ -11330,6 +11339,151 @@
         ],
         "author": "xandau",
         "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b5544fac029739723ab5",
+      "signalId": "github:cilium/cilium:pull_request:47854",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:pull_request:47854",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "pull_request",
+        "title": "k8s: migrate from legacy config to ClusterInfo",
+        "text": "Migrate the functions exposed from the k8s package to use the ClusterInfo struct to depends less on the legacy config. Sorry for the many codeowners involved, those k8s functions are called in a bunch of places unfortunately :sweat_smile:. I prepared this commit using AIL-2",
+        "url": "https://github.com/cilium/cilium/pull/47854",
+        "createdAt": "2026-08-08T16:54:06Z",
+        "updatedAt": "2026-08-13T18:01:51Z",
+        "timestamp": "2026-08-13T18:01:51Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 11
+        },
+        "labels": [
+          "area/k8s",
+          "area/clustermesh",
+          "release-note/misc"
+        ],
+        "author": "MrFreezeex",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:efad1647d88486ba7562",
+      "signalId": "github:cilium/cilium:pull_request:47902",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:pull_request:47902",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "pull_request",
+        "title": "golangci-lint: Forbid stdlib `net.Interface*` functions",
+        "text": "The Go stdlib `net.Interface*` family talks to the kernel over a netlink socket with no timeout, so it can block forever. This PR converts the two remaining offenders to `netlink/safenetlink` and add a forbidigo rule so new ones don't creep back in. Fixes: #15051",
+        "url": "https://github.com/cilium/cilium/pull/47902",
+        "createdAt": "2026-08-11T20:27:45Z",
+        "updatedAt": "2026-08-13T18:00:21Z",
+        "timestamp": "2026-08-13T18:00:21Z",
+        "metrics": {
+          "reactions": 4,
+          "comments": 1
+        },
+        "labels": [
+          "ready-to-merge",
+          "release-note/misc"
+        ],
+        "author": "HadrienPatte",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ff3441946ae13906337e",
+      "signalId": "github:cilium/cilium:pull_request:47932",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:pull_request:47932",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "pull_request",
+        "title": "clustermesh/endpointslices: explicitly limit maximum decoder memory",
+        "text": "Explicitly configure a limit for the zstd decoder used to decode the ClusterEndpointSlice entries received over Cluster Mesh, to prevent the risk of unbounded memory usage in case of crafted payloads. I've marked the PR as `release-note/misc` because the logic ingesting ClusterEndpointSlices is incomplete and disabled behind a feature flag in v1.20. Reported-by: Secstant - Sigma Prime \\<secstant@sigmaprime.io>",
+        "url": "https://github.com/cilium/cilium/pull/47932",
+        "createdAt": "2026-08-13T08:30:58Z",
+        "updatedAt": "2026-08-13T17:55:53Z",
+        "timestamp": "2026-08-13T17:55:53Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 2
+        },
+        "labels": [
+          "ready-to-merge",
+          "area/clustermesh",
+          "release-note/misc",
+          "needs-backport/1.20"
+        ],
+        "author": "giorio94",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d0b5621c55c307b2b424",
+      "signalId": "github:cilium/cilium:pull_request:47826",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:pull_request:47826",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "pull_request",
+        "title": "gateway-api: log the right route kind when listing TLSRoutes fails",
+        "text": "## Description `EnqueueRequestForBackendService` lists TLSRoutes immediately after HTTPRoutes, and the error path of the TLSRoute call was copied from the HTTPRoute one above it without changing the message. A failure to list TLSRoutes is reported as `Failed to get related HTTPRoutes`, which points anyone reading the log at the wrong index and the wrong CRD. That same line is also the only `List` error handler in `operator/pkg/gateway-api/watch-handlers` that calls `Error` rather than `ErrorContext`, so it drops the context from the log record while all fourteen of its neighbours keep it. The sibling handler `EnqueueRequestForBackendServiceImport` already logs this exact failure as `Failed to get related TLSRoutes`, so this just makes the two agree. Found while looking at #47819. That issue also asks for a `helpers.HasTLSRouteSupport` guard around these two `List` calls. I left that out on purpose: on `main`, `TLSRouteKind` is in `helpers.RequiredGVKs`, and `checkCRDs` disables Gateway API entirely when a required CRD is missing, so the guard cannot be false here and would be dead code. Only the log line is wrong on `main`. ```release-note Log the correct route kind when the Gateway API operator fails to list TLSRoutes for a backend Service ```",
+        "url": "https://github.com/cilium/cilium/pull/47826",
+        "createdAt": "2026-08-06T19:15:38Z",
+        "updatedAt": "2026-08-13T17:53:48Z",
+        "timestamp": "2026-08-13T17:53:48Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 4
+        },
+        "labels": [
+          "kind/bug",
+          "release-note/bug",
+          "ready-to-merge",
+          "area/servicemesh",
+          "kind/community-contribution",
+          "feature/k8s-gateway-api",
+          "needs-backport/1.20"
+        ],
+        "author": "mehrdadbn9",
+        "state": "closed",
         "assignees": [],
         "change": "updated"
       }

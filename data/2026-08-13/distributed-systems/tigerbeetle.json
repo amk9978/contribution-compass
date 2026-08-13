@@ -8,7 +8,10 @@
   "repository": {
     "id": "tigerbeetle",
     "repo": "tigerbeetle/tigerbeetle",
-    "name": "TigerBeetle"
+    "name": "TigerBeetle",
+    "keywords": [
+      "TigerBeetle"
+    ]
   },
   "context": {
     "repository": "tigerbeetle/tigerbeetle",
@@ -23,11 +26,11 @@
     "forks": 885,
     "openIssues": 120,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:09.753017+00:00"
+    "collectedAt": "2026-08-13T18:01:57.196373+00:00"
   },
   "news": {
     "repository": "tigerbeetle/tigerbeetle",
-    "collectedAt": "2026-08-13T17:47:09.753017+00:00",
+    "collectedAt": "2026-08-13T18:01:57.196373+00:00",
     "latestRelease": {
       "repository": "tigerbeetle/tigerbeetle",
       "tag": "0.17.9",
@@ -76,6 +79,12 @@
     {
       "collectedAt": "2026-08-13T17:47:07.884300Z",
       "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 1,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
       "observedCount": 1,
       "changedCount": 0
     }

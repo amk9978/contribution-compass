@@ -8,7 +8,10 @@
   "repository": {
     "id": "loki",
     "repo": "grafana/loki",
-    "name": "Loki"
+    "name": "Loki",
+    "keywords": [
+      "Grafana Loki"
+    ]
   },
   "context": {
     "repository": "grafana/loki",
@@ -28,13 +31,13 @@
     "defaultBranch": "main",
     "stars": 28722,
     "forks": 4091,
-    "openIssues": 1753,
+    "openIssues": 1754,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:15.472234+00:00"
+    "collectedAt": "2026-08-13T18:02:03.296869+00:00"
   },
   "news": {
     "repository": "grafana/loki",
-    "collectedAt": "2026-08-13T17:47:15.472234+00:00",
+    "collectedAt": "2026-08-13T18:02:03.296869+00:00",
     "latestRelease": {
       "repository": "grafana/loki",
       "tag": "v3.7.6",
@@ -82,6 +85,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 60,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 61,
+      "changedCount": 1
     }
   ],
   "signals": [
@@ -1702,6 +1711,28 @@
       "author": "pracucci",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:grafana/loki:pull_request:23944",
+      "source": "github",
+      "group": "observability",
+      "project": "grafana/loki",
+      "kind": "pull_request",
+      "title": "perf: Lazy instantiation of drains for pattern ingesters",
+      "text": "**What this PR does / why we need it**: Lazily create per-`detected_level` Drain trees in the pattern ingester instead of always allocating all 8 at stream creation. Most streams only see 1–3 levels; unused trees previously paid idle RSS (root node, LRU, tokenizer) for every owned stream. Unknown/custom levels still fall back to the unknown Drain; observing all 8 known levels still creates all 8. **Which issue(s) this PR fixes**: Pattern-ingester OOMs track retained Drain state per owned stream. Cutting the per-stream floor (especially for single-level streams) reduces steady-state working set. **Special notes for your reviewer**: ``` BenchmarkStreamMemory_LazyDrain/single_level 1.000 drains/stream ~1024 retained_B/stream BenchmarkStreamMemory_LazyDrain/all_levels 8.000 drains/stream ~34816 retained_B/stream ``` **Checklist** - [X] Reviewed the [`CONTRIBUTING.md`](https://github.com/grafana/loki/blob/main/CONTRIBUTING.md) guide (**required**) - [ ] Documentation added - [X] Tests updated - [X] Title matches the required conventional commits format, see [here](https://www.conventionalcommits.org/en/v1.0.0/) - [ ] Changes that require user attention or interaction to upgrade are documented in `docs/sources/setup/upgrade/_index.md` - [ ] If the change is deprecating or removing a configuration option, update the `deprecated-config.yaml` and `deleted-config.yaml` files respectively in the `tools/deprecated-config-checker` directory. [Example PR](https://github.com/grafana/loki/pull/10840/commits/0d4416a4b03739583349934b96f272fb4f685d15)",
+      "url": "https://github.com/grafana/loki/pull/23944",
+      "createdAt": "2026-08-13T17:53:53Z",
+      "updatedAt": "2026-08-13T17:54:33Z",
+      "timestamp": "2026-08-13T17:54:33Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "paul1r",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     }
   ],
   "events": [
@@ -4059,6 +4090,35 @@
         ],
         "author": "TheRealNoob",
         "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:612571e6084da30b3861",
+      "signalId": "github:grafana/loki:pull_request:23944",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:grafana/loki:pull_request:23944",
+        "source": "github",
+        "group": "observability",
+        "project": "grafana/loki",
+        "kind": "pull_request",
+        "title": "perf: Lazy instantiation of drains for pattern ingesters",
+        "text": "**What this PR does / why we need it**: Lazily create per-`detected_level` Drain trees in the pattern ingester instead of always allocating all 8 at stream creation. Most streams only see 1–3 levels; unused trees previously paid idle RSS (root node, LRU, tokenizer) for every owned stream. Unknown/custom levels still fall back to the unknown Drain; observing all 8 known levels still creates all 8. **Which issue(s) this PR fixes**: Pattern-ingester OOMs track retained Drain state per owned stream. Cutting the per-stream floor (especially for single-level streams) reduces steady-state working set. **Special notes for your reviewer**: ``` BenchmarkStreamMemory_LazyDrain/single_level 1.000 drains/stream ~1024 retained_B/stream BenchmarkStreamMemory_LazyDrain/all_levels 8.000 drains/stream ~34816 retained_B/stream ``` **Checklist** - [X] Reviewed the [`CONTRIBUTING.md`](https://github.com/grafana/loki/blob/main/CONTRIBUTING.md) guide (**required**) - [ ] Documentation added - [X] Tests updated - [X] Title matches the required conventional commits format, see [here](https://www.conventionalcommits.org/en/v1.0.0/) - [ ] Changes that require user attention or interaction to upgrade are documented in `docs/sources/setup/upgrade/_index.md` - [ ] If the change is deprecating or removing a configuration option, update the `deprecated-config.yaml` and `deleted-config.yaml` files respectively in the `tools/deprecated-config-checker` directory. [Example PR](https://github.com/grafana/loki/pull/10840/commits/0d4416a4b03739583349934b96f272fb4f685d15)",
+        "url": "https://github.com/grafana/loki/pull/23944",
+        "createdAt": "2026-08-13T17:53:53Z",
+        "updatedAt": "2026-08-13T17:54:33Z",
+        "timestamp": "2026-08-13T17:54:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "paul1r",
+        "state": "open",
         "assignees": [],
         "change": "new"
       }

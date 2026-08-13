@@ -26,7 +26,8 @@ No new or materially changed signals.
 
 ### [uv](https://github.com/astral-sh/uv)
 
-No new or materially changed signals.
+- **Pull Request** [Fix relative indexes in PEP 723 scripts](https://github.com/astral-sh/uv/pull/21097) — 0 comments · 0 reactions · open
+- **Pull Request** [Add regression test for uv#21096](https://github.com/astral-sh/uv/pull/21098) — 0 comments · 0 reactions · open
 
 ### [Testcontainers for Go](https://github.com/testcontainers/testcontainers-go)
 

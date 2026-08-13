@@ -8,7 +8,10 @@
   "repository": {
     "id": "codex",
     "repo": "openai/codex",
-    "name": "Codex"
+    "name": "Codex",
+    "keywords": [
+      "OpenAI Codex"
+    ]
   },
   "context": {
     "repository": "openai/codex",
@@ -18,15 +21,15 @@
     "topics": [],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 105726,
+    "stars": 105729,
     "forks": 16037,
     "openIssues": 12486,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:32.236209+00:00"
+    "collectedAt": "2026-08-13T18:02:22.700129+00:00"
   },
   "news": {
     "repository": "openai/codex",
-    "collectedAt": "2026-08-13T17:47:32.236209+00:00",
+    "collectedAt": "2026-08-13T18:02:22.700129+00:00",
     "latestRelease": {
       "repository": "openai/codex",
       "tag": "rust-v0.147.0",
@@ -105,6 +108,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 405,
       "changedCount": 1
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 407,
+      "changedCount": 5
     }
   ],
   "signals": [
@@ -153,6 +162,31 @@
       "author": "guidedways",
       "state": "closed",
       "assignees": []
+    },
+    {
+      "id": "github:openai/codex:issue:11023",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "openai/codex",
+      "kind": "issue",
+      "title": "Codex desktop app for Linux",
+      "text": "### What variant of Codex are you using? App ### What feature would you like to see? I love the new codex app. However due to [this issue](https://github.com/openai/codex/issues/10432) it is almost unusable on my mac laptop. I would like to use the app on my linux desktop where power consumption is far less of an issue. ### Additional information _No response_",
+      "url": "https://github.com/openai/codex/issues/11023",
+      "createdAt": "2026-02-07T17:34:16Z",
+      "updatedAt": "2026-08-13T17:58:20Z",
+      "timestamp": "2026-08-13T17:58:20Z",
+      "metrics": {
+        "reactions": 1463,
+        "comments": 209
+      },
+      "labels": [
+        "enhancement",
+        "app"
+      ],
+      "author": "Suhaibinator",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:openai/codex:issue:11604",
@@ -3240,6 +3274,33 @@
       "change": "updated"
     },
     {
+      "id": "github:openai/codex:issue:32823",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "openai/codex",
+      "kind": "issue",
+      "title": "Missing `reasoning.mode` (for `pro` mode) setting for GPT 5.6 models",
+      "text": "### What variant of Codex are you using? CLI ### What feature would you like to see? Currently, codex has no way of setting the `reasoning.mode` parameter to `pro`. i.e. these should work (at least for those of us using API billing): ```sh codex exec -m gpt-5.6-sol -c model_reasoning_effort=xhigh -c model_reasoning_mode=pro \"Hello world\" codex exec -m gpt-5.6-luna -c model_reasoning_effort=medium -c model_reasoning_mode=pro \"Hello world\" ``` https://developers.openai.com/api/docs/guides/reasoning#reasoning-mode Related to (but not a duplicate of, as these issues are not talking about the reasoning _**mode**_, but rather the older GPT 5.5 Pro model, which does not use `reasoning.mode`): #27077 and #28709 ### Additional information This is a pretty simple fix. (Not going to waste my time doing a PR, since I know OpenAI's current policy is to refuse external PRs.)",
+      "url": "https://github.com/openai/codex/issues/32823",
+      "createdAt": "2026-07-13T15:41:23Z",
+      "updatedAt": "2026-08-13T17:52:07Z",
+      "timestamp": "2026-08-13T17:52:07Z",
+      "metrics": {
+        "reactions": 3,
+        "comments": 4
+      },
+      "labels": [
+        "enhancement",
+        "exec",
+        "CLI",
+        "config"
+      ],
+      "author": "Manouchehri",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:openai/codex:issue:32888",
       "source": "github",
       "group": "coding-agent-infrastructure",
@@ -4303,6 +4364,33 @@
       "author": "alex-sc7",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:openai/codex:issue:35234",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "openai/codex",
+      "kind": "issue",
+      "title": "Computer Use native pipe rejects signed in-app sender as unauthenticated on macOS 26.5.2",
+      "text": "### What happened? Computer Use is installed and enabled in the official macOS desktop app, but even the read-only `list_apps` call fails after the native Computer Use service starts. After a full app quit and relaunch, the tool reports: ```text Sky Computer Use native pipe startup failed Caused by: Sky Computer Use native pipe is unavailable: Sky Computer Use native pipe closed before response ``` The freshly started `SkyComputerUseService` process remains running, but its unified logs repeat: ```text [com.apple.securityd:security_exception] MacOS error: -67062 [inc.software.app:Computer Use] Sender process is not authenticated ``` macOS resolves `-67062` as: ```text code object is not signed at all ``` However, the app, Computer Use helper, packaged Node runtime, and `node_repl` launcher all pass code-signature verification and are signed by OpenAI. ### Environment - macOS: 26.5.2 (25F84) - Architecture: arm64 / Apple Silicon - Desktop app path: `/Applications/ChatGPT.app` - App bundle identifier: `com.openai.codex` - App version: `26.721.31836` - App build: `5828` - Computer Use plugin: `computer-use@openai-bundled` version `1.0.1000502` - Managed helper: `$HOME/.codex/computer-use/Codex Computer Use.app` - Helper bundle identifier: `com.openai.sky.CUAService` ### Configuration state `codex features list` reports: ```text apps stable true computer_use stable true plugins stable true ``` Relevant config: ```toml [features] apps = true [plugins.\"computer-use@openai-bundled\"] enabled = true ``` The managed helper exists, is arm64, and is running. Its Unix socket also exists at: ```text $HOME/Library/Group Containers/2DC432GLL2.com.openai.sky.CUAService/IPC/computeruse.sock ``` ### Signature verification The managed Computer Use app passes: ```text codesign --verify --deep --strict spctl -a -vvv -t execute ``` Relevant result: ```text accepted source=Notarized Developer ID origin=Developer ID Application: OpenAI OpCo, LLC (2DC432GLL2) TeamIdentifier=2DC432GLL2 ``` The packaged runtime binaries also pass `codesign --verify --strict`: ```text /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl ``` Both report: ```text Authority=Developer ID Application: OpenAI OpCo, LLC (2DC432GLL2) TeamIdentifier=2DC432GLL2 ``` No `SkyComputerUseClient` or `SkyComputerUseService` crash report is created. ### Steps to reproduce 1. Open the official `/Applications/ChatGPT.app` and select Codex. 2. Ensure the bundled Computer Use plugin is installed and enabled. 3. Fully quit the desktop app with Cmd+Q. 4. Relaunch it. 5. In a Codex thread, ask Computer Use to run the read-only `list_apps` operation or inspect Finder. 6. Observe `Sky Computer Use native pipe startup failed`. 7. Inspect unified logs for `SkyComputerUseService`; observe `MacOS error: -67062` and `Sender process is not authenticated`. ### Expected behavior The signed Computer Use client launched from the official signed desktop app should authenticate to `SkyComputerUseService`, complete the native-pipe handshake, and return the app list. ### Installation/update source The desktop app was originally installed declaratively through `nix-darwin` / `nix-homebrew` with the Homebrew cask: ```nix homebrew.casks = [ \"codex-app\" ]; ``` Current local package/application state: ```text brew list --cask --versions codex-app codex-app 26.623.141536 brew list --cask --versions chatgpt # not installed /Applications/Codex.app # absent /Applications/ChatGPT.app # present, version 26.721.31836 ``` Homebrew now reports `codex-app` as deprecated/discontinued upstream and recommends the replacement cask `chatgpt`. The Homebrew receipt is therefore older than the active `ChatGPT.app`; the exact update/migration mechanism was not confirmed. The Nix configuration also installs the `codex` CLI from nixpkgs, which resolves on the shell PATH outside the app. However, this reproduction occurs inside the official desktop app and uses its packaged runtime under `/Applications/ChatGPT.app/Contents/Resources/`, not the Nix CLI. ### Additional context This appears related to: - #18507 — same `Sender process is not authenticated` symptom, but reported from the CLI. - #19544 — Homebrew CLI fails while the app-bundled CLI succeeds. - #21200 — launch-constraint/signature failure outside the app process tree. This report is distinct because it reproduces from the current official desktop app process tree, not from Homebrew, an ACP adapter, or another third-party launcher. The app is now located at `/Applications/ChatGPT.app`, while its bundle identifier remains `com.openai.codex`.",
+      "url": "https://github.com/openai/codex/issues/35234",
+      "createdAt": "2026-07-24T18:57:21Z",
+      "updatedAt": "2026-08-13T17:54:53Z",
+      "timestamp": "2026-08-13T17:54:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "bug",
+        "auth",
+        "app",
+        "computer-use"
+      ],
+      "author": "Pape45",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:openai/codex:issue:35237",
@@ -5950,6 +6038,32 @@
       "assignees": []
     },
     {
+      "id": "github:openai/codex:issue:37729",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "openai/codex",
+      "kind": "issue",
+      "title": "Completed subagents appear active until their results are opened",
+      "text": "### What version of the Codex App are you using? The exact Codex Desktop build was not available to the agent. Observed on 2026-08-09. ### What subscription do you have? Not relevant to the UI behavior. ### What platform is your computer? macOS 26.6.1 (25G76), arm64. ### What issue are you seeing? Completed subagents can remain presented in the parent task UI as if they are still active. In this case, the UI appeared to show three active subagents, while the runtime agent-status query reported that every child agent was `completed` and only the parent agent was `running`. Opening each completed subagent caused its apparent active indicator to disappear. This suggests that the indicator represents an unread completion/result, but visually communicates ongoing execution instead. This is confusing because users may reasonably conclude that agents are still consuming model time or other resources. ### What steps can reproduce the bug? 1. Start one or more subagents from a parent task. 2. Let the subagents finish. 3. Return to the parent task without opening the completed subagent results. 4. Observe that the UI still appears to present some subagents as active. 5. Verify through agent runtime status that those subagents are `completed`. 6. Open the completed subagents one by one. 7. Observe that their indicators disappear after being viewed. ### What is the expected behavior? The UI should clearly distinguish: - `Running`: the subagent is still executing. - `Completed — unread result`: execution has ended, but its result has not been opened. - `Completed — read`: execution has ended and its result has been viewed. A label such as “3 unread subagent results” would avoid implying that three agents are still running. ### Additional information No continued execution was actually observed. The issue is the mismatch between the visual state and the runtime state, which made it necessary to inspect the agent status explicitly to determine whether resources were still being consumed.",
+      "url": "https://github.com/openai/codex/issues/37729",
+      "createdAt": "2026-08-09T19:08:19Z",
+      "updatedAt": "2026-08-13T17:51:23Z",
+      "timestamp": "2026-08-13T17:51:23Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 5
+      },
+      "labels": [
+        "bug",
+        "app",
+        "subagent"
+      ],
+      "author": "JoachimHollman",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:openai/codex:issue:37743",
       "source": "github",
       "group": "coding-agent-infrastructure",
@@ -6255,6 +6369,33 @@
       "author": "JJGGu",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:openai/codex:issue:37974",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "openai/codex",
+      "kind": "issue",
+      "title": "TUI: queued follow-up inputs are permanently stranded after a failed prompt-edit branch",
+      "text": "### What version of Codex CLI is running? codex-cli 0.147.0 ### What platform is your computer? Linux 5.15.120 x86_64 (also reproducible on other platforms — the bug is in the TUI prompt-edit/backtrack logic, not platform-specific) ### What issue are you seeing? When editing an earlier prompt (Esc-Esc backtrack → select a prompt → Enter), the TUI forks the thread *before* the selected turn. If that fork fails — e.g. the composer shows: ``` ■ Failed to branch before the selected prompt: the selected prompt was not found in the persisted thread ``` — then **any user inputs that were queued while the fork was in flight get permanently stranded**. They stay in \"Queued follow-up inputs\" forever and are never submitted, even after the composer returns to the `Ready` state. The queue just keeps growing with every new message and nothing is ever sent to the model. Note: the \"not found in the persisted thread\" guard itself is legitimate defensive behavior (the visible transcript projection can't always be matched back to a persisted turn — e.g. after history pagination, or when large context blocks are injected as user messages by a wrapper). The bug is purely in the **failure-handling path**, which forgets to re-drive the input queue. ### Root cause Every *successful* fork path re-drives the follow-up input queue via `maybe_send_next_queued_input()`: - the sibling `AppEvent::ForkSession` handler (`codex-rs/tui/src/app/event_dispatch.rs`), - the startup path (`handle_startup_thread_started`), - the thread-start path. But the branch-**failure** path does not. In `codex-rs/tui/src/app_backtrack.rs`: ```rust pub(crate) fn restore_backtrack_prompt_after_branch_error( &mut self, prompt: UserMessage, err: impl std::fmt::Display, ) { self.chat_widget.restore_user_message_to_composer(prompt); self.chat_widget.add_error_message(format!( \"Failed to branch before the selected prompt: {err}\" )); // <-- missing: maybe_send_next_queued_input(); the current thread is still live, // but queued follow-ups are never re-driven, so they stay stuck forever. } ``` Since the fork failed, the original thread stays live, but the queue is never flushed, so queued inputs are stranded. ### What steps can reproduce the bug? 1. In a live thread, enqueue one or more follow-up inputs (e.g. queue messages while a turn is running, or via a wrapper that injects inputs). 2. Trigger prompt editing (Esc-Esc backtrack) and select a prompt whose fork will fail — the reliable way to force the failure is any state where the selected transcript prompt can't be resolved back to a persisted turn (`the selected prompt was not found in the persisted thread`). 3. Observe that after the error, the composer returns to `Ready`, but the queued follow-up inputs remain in \"Queued follow-up inputs\" and are never submitted. ### What is the expected behavior? After a failed prompt-edit branch, since the current thread is still live, queued follow-up inputs should be submitted once the composer is idle — exactly like every successful fork path already does. ### Additional information I have a minimal fix and regression test ready (one-line fix + a test asserting the queued input is submitted after a failed prompt-edit branch, verified to fail without the fix and pass with it). openai/codex does not appear to accept PRs from external forks, so I'm filing this issue instead. Happy to share the patch/branch if useful: ```rust pub(crate) fn restore_backtrack_prompt_after_branch_error( &mut self, prompt: UserMessage, err: impl std::fmt::Display, ) { self.chat_widget.restore_user_message_to_composer(prompt); self.chat_widget.add_error_message(format!( \"Failed to branch before the selected prompt: {err}\" )); // The prompt edit never took effect, so the current thread stays live. Follow-up inputs // queued while the fork was in flight would otherwise remain stuck, because unlike the // successful fork paths this branch never re-drives the queue. Flush it here so queued // messages are submitted once the composer is idle again. self.chat_widget.maybe_send_next_queued_input(); } ```",
+      "url": "https://github.com/openai/codex/issues/37974",
+      "createdAt": "2026-08-11T09:42:39Z",
+      "updatedAt": "2026-08-13T17:59:47Z",
+      "timestamp": "2026-08-13T17:59:47Z",
+      "metrics": {
+        "reactions": 8,
+        "comments": 1
+      },
+      "labels": [
+        "bug",
+        "TUI",
+        "CLI",
+        "session"
+      ],
+      "author": "nil-err",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:openai/codex:issue:38003",
@@ -12372,8 +12513,7 @@
       "labels": [],
       "author": "copyberry[bot]",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:release:369661998",
@@ -28716,6 +28856,173 @@
         "state": "closed",
         "assignees": [],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:8fe95c12b2bd786c4418",
+      "signalId": "github:openai/codex:issue:37974",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:openai/codex:issue:37974",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "openai/codex",
+        "kind": "issue",
+        "title": "TUI: queued follow-up inputs are permanently stranded after a failed prompt-edit branch",
+        "text": "### What version of Codex CLI is running? codex-cli 0.147.0 ### What platform is your computer? Linux 5.15.120 x86_64 (also reproducible on other platforms — the bug is in the TUI prompt-edit/backtrack logic, not platform-specific) ### What issue are you seeing? When editing an earlier prompt (Esc-Esc backtrack → select a prompt → Enter), the TUI forks the thread *before* the selected turn. If that fork fails — e.g. the composer shows: ``` ■ Failed to branch before the selected prompt: the selected prompt was not found in the persisted thread ``` — then **any user inputs that were queued while the fork was in flight get permanently stranded**. They stay in \"Queued follow-up inputs\" forever and are never submitted, even after the composer returns to the `Ready` state. The queue just keeps growing with every new message and nothing is ever sent to the model. Note: the \"not found in the persisted thread\" guard itself is legitimate defensive behavior (the visible transcript projection can't always be matched back to a persisted turn — e.g. after history pagination, or when large context blocks are injected as user messages by a wrapper). The bug is purely in the **failure-handling path**, which forgets to re-drive the input queue. ### Root cause Every *successful* fork path re-drives the follow-up input queue via `maybe_send_next_queued_input()`: - the sibling `AppEvent::ForkSession` handler (`codex-rs/tui/src/app/event_dispatch.rs`), - the startup path (`handle_startup_thread_started`), - the thread-start path. But the branch-**failure** path does not. In `codex-rs/tui/src/app_backtrack.rs`: ```rust pub(crate) fn restore_backtrack_prompt_after_branch_error( &mut self, prompt: UserMessage, err: impl std::fmt::Display, ) { self.chat_widget.restore_user_message_to_composer(prompt); self.chat_widget.add_error_message(format!( \"Failed to branch before the selected prompt: {err}\" )); // <-- missing: maybe_send_next_queued_input(); the current thread is still live, // but queued follow-ups are never re-driven, so they stay stuck forever. } ``` Since the fork failed, the original thread stays live, but the queue is never flushed, so queued inputs are stranded. ### What steps can reproduce the bug? 1. In a live thread, enqueue one or more follow-up inputs (e.g. queue messages while a turn is running, or via a wrapper that injects inputs). 2. Trigger prompt editing (Esc-Esc backtrack) and select a prompt whose fork will fail — the reliable way to force the failure is any state where the selected transcript prompt can't be resolved back to a persisted turn (`the selected prompt was not found in the persisted thread`). 3. Observe that after the error, the composer returns to `Ready`, but the queued follow-up inputs remain in \"Queued follow-up inputs\" and are never submitted. ### What is the expected behavior? After a failed prompt-edit branch, since the current thread is still live, queued follow-up inputs should be submitted once the composer is idle — exactly like every successful fork path already does. ### Additional information I have a minimal fix and regression test ready (one-line fix + a test asserting the queued input is submitted after a failed prompt-edit branch, verified to fail without the fix and pass with it). openai/codex does not appear to accept PRs from external forks, so I'm filing this issue instead. Happy to share the patch/branch if useful: ```rust pub(crate) fn restore_backtrack_prompt_after_branch_error( &mut self, prompt: UserMessage, err: impl std::fmt::Display, ) { self.chat_widget.restore_user_message_to_composer(prompt); self.chat_widget.add_error_message(format!( \"Failed to branch before the selected prompt: {err}\" )); // The prompt edit never took effect, so the current thread stays live. Follow-up inputs // queued while the fork was in flight would otherwise remain stuck, because unlike the // successful fork paths this branch never re-drives the queue. Flush it here so queued // messages are submitted once the composer is idle again. self.chat_widget.maybe_send_next_queued_input(); } ```",
+        "url": "https://github.com/openai/codex/issues/37974",
+        "createdAt": "2026-08-11T09:42:39Z",
+        "updatedAt": "2026-08-13T17:59:47Z",
+        "timestamp": "2026-08-13T17:59:47Z",
+        "metrics": {
+          "reactions": 8,
+          "comments": 1
+        },
+        "labels": [
+          "bug",
+          "TUI",
+          "CLI",
+          "session"
+        ],
+        "author": "nil-err",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:68b299e13c76b6ecaa8e",
+      "signalId": "github:openai/codex:issue:11023",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:openai/codex:issue:11023",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "openai/codex",
+        "kind": "issue",
+        "title": "Codex desktop app for Linux",
+        "text": "### What variant of Codex are you using? App ### What feature would you like to see? I love the new codex app. However due to [this issue](https://github.com/openai/codex/issues/10432) it is almost unusable on my mac laptop. I would like to use the app on my linux desktop where power consumption is far less of an issue. ### Additional information _No response_",
+        "url": "https://github.com/openai/codex/issues/11023",
+        "createdAt": "2026-02-07T17:34:16Z",
+        "updatedAt": "2026-08-13T17:58:20Z",
+        "timestamp": "2026-08-13T17:58:20Z",
+        "metrics": {
+          "reactions": 1463,
+          "comments": 209
+        },
+        "labels": [
+          "enhancement",
+          "app"
+        ],
+        "author": "Suhaibinator",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:cba637efc38ad2781630",
+      "signalId": "github:openai/codex:issue:35234",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:openai/codex:issue:35234",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "openai/codex",
+        "kind": "issue",
+        "title": "Computer Use native pipe rejects signed in-app sender as unauthenticated on macOS 26.5.2",
+        "text": "### What happened? Computer Use is installed and enabled in the official macOS desktop app, but even the read-only `list_apps` call fails after the native Computer Use service starts. After a full app quit and relaunch, the tool reports: ```text Sky Computer Use native pipe startup failed Caused by: Sky Computer Use native pipe is unavailable: Sky Computer Use native pipe closed before response ``` The freshly started `SkyComputerUseService` process remains running, but its unified logs repeat: ```text [com.apple.securityd:security_exception] MacOS error: -67062 [inc.software.app:Computer Use] Sender process is not authenticated ``` macOS resolves `-67062` as: ```text code object is not signed at all ``` However, the app, Computer Use helper, packaged Node runtime, and `node_repl` launcher all pass code-signature verification and are signed by OpenAI. ### Environment - macOS: 26.5.2 (25F84) - Architecture: arm64 / Apple Silicon - Desktop app path: `/Applications/ChatGPT.app` - App bundle identifier: `com.openai.codex` - App version: `26.721.31836` - App build: `5828` - Computer Use plugin: `computer-use@openai-bundled` version `1.0.1000502` - Managed helper: `$HOME/.codex/computer-use/Codex Computer Use.app` - Helper bundle identifier: `com.openai.sky.CUAService` ### Configuration state `codex features list` reports: ```text apps stable true computer_use stable true plugins stable true ``` Relevant config: ```toml [features] apps = true [plugins.\"computer-use@openai-bundled\"] enabled = true ``` The managed helper exists, is arm64, and is running. Its Unix socket also exists at: ```text $HOME/Library/Group Containers/2DC432GLL2.com.openai.sky.CUAService/IPC/computeruse.sock ``` ### Signature verification The managed Computer Use app passes: ```text codesign --verify --deep --strict spctl -a -vvv -t execute ``` Relevant result: ```text accepted source=Notarized Developer ID origin=Developer ID Application: OpenAI OpCo, LLC (2DC432GLL2) TeamIdentifier=2DC432GLL2 ``` The packaged runtime binaries also pass `codesign --verify --strict`: ```text /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl ``` Both report: ```text Authority=Developer ID Application: OpenAI OpCo, LLC (2DC432GLL2) TeamIdentifier=2DC432GLL2 ``` No `SkyComputerUseClient` or `SkyComputerUseService` crash report is created. ### Steps to reproduce 1. Open the official `/Applications/ChatGPT.app` and select Codex. 2. Ensure the bundled Computer Use plugin is installed and enabled. 3. Fully quit the desktop app with Cmd+Q. 4. Relaunch it. 5. In a Codex thread, ask Computer Use to run the read-only `list_apps` operation or inspect Finder. 6. Observe `Sky Computer Use native pipe startup failed`. 7. Inspect unified logs for `SkyComputerUseService`; observe `MacOS error: -67062` and `Sender process is not authenticated`. ### Expected behavior The signed Computer Use client launched from the official signed desktop app should authenticate to `SkyComputerUseService`, complete the native-pipe handshake, and return the app list. ### Installation/update source The desktop app was originally installed declaratively through `nix-darwin` / `nix-homebrew` with the Homebrew cask: ```nix homebrew.casks = [ \"codex-app\" ]; ``` Current local package/application state: ```text brew list --cask --versions codex-app codex-app 26.623.141536 brew list --cask --versions chatgpt # not installed /Applications/Codex.app # absent /Applications/ChatGPT.app # present, version 26.721.31836 ``` Homebrew now reports `codex-app` as deprecated/discontinued upstream and recommends the replacement cask `chatgpt`. The Homebrew receipt is therefore older than the active `ChatGPT.app`; the exact update/migration mechanism was not confirmed. The Nix configuration also installs the `codex` CLI from nixpkgs, which resolves on the shell PATH outside the app. However, this reproduction occurs inside the official desktop app and uses its packaged runtime under `/Applications/ChatGPT.app/Contents/Resources/`, not the Nix CLI. ### Additional context This appears related to: - #18507 — same `Sender process is not authenticated` symptom, but reported from the CLI. - #19544 — Homebrew CLI fails while the app-bundled CLI succeeds. - #21200 — launch-constraint/signature failure outside the app process tree. This report is distinct because it reproduces from the current official desktop app process tree, not from Homebrew, an ACP adapter, or another third-party launcher. The app is now located at `/Applications/ChatGPT.app`, while its bundle identifier remains `com.openai.codex`.",
+        "url": "https://github.com/openai/codex/issues/35234",
+        "createdAt": "2026-07-24T18:57:21Z",
+        "updatedAt": "2026-08-13T17:54:53Z",
+        "timestamp": "2026-08-13T17:54:53Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "bug",
+          "auth",
+          "app",
+          "computer-use"
+        ],
+        "author": "Pape45",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:3f0f407d9afac16f57ba",
+      "signalId": "github:openai/codex:issue:32823",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:openai/codex:issue:32823",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "openai/codex",
+        "kind": "issue",
+        "title": "Missing `reasoning.mode` (for `pro` mode) setting for GPT 5.6 models",
+        "text": "### What variant of Codex are you using? CLI ### What feature would you like to see? Currently, codex has no way of setting the `reasoning.mode` parameter to `pro`. i.e. these should work (at least for those of us using API billing): ```sh codex exec -m gpt-5.6-sol -c model_reasoning_effort=xhigh -c model_reasoning_mode=pro \"Hello world\" codex exec -m gpt-5.6-luna -c model_reasoning_effort=medium -c model_reasoning_mode=pro \"Hello world\" ``` https://developers.openai.com/api/docs/guides/reasoning#reasoning-mode Related to (but not a duplicate of, as these issues are not talking about the reasoning _**mode**_, but rather the older GPT 5.5 Pro model, which does not use `reasoning.mode`): #27077 and #28709 ### Additional information This is a pretty simple fix. (Not going to waste my time doing a PR, since I know OpenAI's current policy is to refuse external PRs.)",
+        "url": "https://github.com/openai/codex/issues/32823",
+        "createdAt": "2026-07-13T15:41:23Z",
+        "updatedAt": "2026-08-13T17:52:07Z",
+        "timestamp": "2026-08-13T17:52:07Z",
+        "metrics": {
+          "reactions": 3,
+          "comments": 4
+        },
+        "labels": [
+          "enhancement",
+          "exec",
+          "CLI",
+          "config"
+        ],
+        "author": "Manouchehri",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9af8bd308131d910f397",
+      "signalId": "github:openai/codex:issue:37729",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:openai/codex:issue:37729",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "openai/codex",
+        "kind": "issue",
+        "title": "Completed subagents appear active until their results are opened",
+        "text": "### What version of the Codex App are you using? The exact Codex Desktop build was not available to the agent. Observed on 2026-08-09. ### What subscription do you have? Not relevant to the UI behavior. ### What platform is your computer? macOS 26.6.1 (25G76), arm64. ### What issue are you seeing? Completed subagents can remain presented in the parent task UI as if they are still active. In this case, the UI appeared to show three active subagents, while the runtime agent-status query reported that every child agent was `completed` and only the parent agent was `running`. Opening each completed subagent caused its apparent active indicator to disappear. This suggests that the indicator represents an unread completion/result, but visually communicates ongoing execution instead. This is confusing because users may reasonably conclude that agents are still consuming model time or other resources. ### What steps can reproduce the bug? 1. Start one or more subagents from a parent task. 2. Let the subagents finish. 3. Return to the parent task without opening the completed subagent results. 4. Observe that the UI still appears to present some subagents as active. 5. Verify through agent runtime status that those subagents are `completed`. 6. Open the completed subagents one by one. 7. Observe that their indicators disappear after being viewed. ### What is the expected behavior? The UI should clearly distinguish: - `Running`: the subagent is still executing. - `Completed — unread result`: execution has ended, but its result has not been opened. - `Completed — read`: execution has ended and its result has been viewed. A label such as “3 unread subagent results” would avoid implying that three agents are still running. ### Additional information No continued execution was actually observed. The issue is the mismatch between the visual state and the runtime state, which made it necessary to inspect the agent status explicitly to determine whether resources were still being consumed.",
+        "url": "https://github.com/openai/codex/issues/37729",
+        "createdAt": "2026-08-09T19:08:19Z",
+        "updatedAt": "2026-08-13T17:51:23Z",
+        "timestamp": "2026-08-13T17:51:23Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 5
+        },
+        "labels": [
+          "bug",
+          "app",
+          "subagent"
+        ],
+        "author": "JoachimHollman",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
       }
     }
   ]

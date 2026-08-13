@@ -1,16 +1,16 @@
 {
   "version": 2,
   "date": "2026-08-13",
-  "collectedAt": "2026-08-13T17:47:07.884300Z",
-  "since": "2026-08-12T17:47:07.884300Z",
+  "collectedAt": "2026-08-13T18:01:55.420671Z",
+  "since": "2026-08-12T18:01:55.420671Z",
   "repositories": [
     {
       "group": "distributed-systems",
       "repository": "apple/foundationdb",
       "path": "distributed-systems/foundationdb.json",
       "observedCount": 14,
-      "changedCount": 0,
-      "eventCount": 0
+      "changedCount": 2,
+      "eventCount": 2
     },
     {
       "group": "distributed-systems",
@@ -48,7 +48,7 @@
       "group": "platform-infrastructure",
       "repository": "cilium/cilium",
       "path": "platform-infrastructure/cilium.json",
-      "observedCount": 142,
+      "observedCount": 140,
       "changedCount": 4,
       "eventCount": 4
     },
@@ -57,22 +57,22 @@
       "repository": "envoyproxy/envoy",
       "path": "platform-infrastructure/envoy.json",
       "observedCount": 63,
-      "changedCount": 1,
-      "eventCount": 1
+      "changedCount": 0,
+      "eventCount": 0
     },
     {
       "group": "platform-infrastructure",
       "repository": "temporalio/temporal",
       "path": "platform-infrastructure/temporal.json",
-      "observedCount": 87,
-      "changedCount": 7,
-      "eventCount": 7
+      "observedCount": 89,
+      "changedCount": 8,
+      "eventCount": 8
     },
     {
       "group": "platform-infrastructure",
       "repository": "containerd/containerd",
       "path": "platform-infrastructure/containerd.json",
-      "observedCount": 38,
+      "observedCount": 35,
       "changedCount": 0,
       "eventCount": 0
     },
@@ -80,17 +80,17 @@
       "group": "observability",
       "repository": "open-telemetry/opentelemetry-collector",
       "path": "observability/otel-collector.json",
-      "observedCount": 21,
-      "changedCount": 1,
-      "eventCount": 1
+      "observedCount": 22,
+      "changedCount": 3,
+      "eventCount": 3
     },
     {
       "group": "observability",
       "repository": "DataDog/datadog-agent",
       "path": "observability/datadog-agent.json",
-      "observedCount": 185,
-      "changedCount": 7,
-      "eventCount": 7
+      "observedCount": 188,
+      "changedCount": 22,
+      "eventCount": 22
     },
     {
       "group": "observability",
@@ -104,9 +104,9 @@
       "group": "observability",
       "repository": "grafana/loki",
       "path": "observability/loki.json",
-      "observedCount": 60,
-      "changedCount": 0,
-      "eventCount": 0
+      "observedCount": 61,
+      "changedCount": 1,
+      "eventCount": 1
     },
     {
       "group": "data-infrastructure",
@@ -120,57 +120,57 @@
       "group": "data-infrastructure",
       "repository": "redpanda-data/redpanda",
       "path": "data-infrastructure/redpanda.json",
-      "observedCount": 42,
-      "changedCount": 0,
-      "eventCount": 0
+      "observedCount": 41,
+      "changedCount": 3,
+      "eventCount": 3
     },
     {
       "group": "data-infrastructure",
       "repository": "ClickHouse/ClickHouse",
       "path": "data-infrastructure/clickhouse.json",
       "observedCount": 500,
-      "changedCount": 13,
-      "eventCount": 13
+      "changedCount": 45,
+      "eventCount": 45
     },
     {
       "group": "data-infrastructure",
       "repository": "dragonflydb/dragonfly",
       "path": "data-infrastructure/dragonfly.json",
       "observedCount": 29,
-      "changedCount": 0,
-      "eventCount": 0
+      "changedCount": 1,
+      "eventCount": 1
     },
     {
       "group": "ai-infrastructure",
       "repository": "BerriAI/litellm",
       "path": "ai-infrastructure/litellm.json",
-      "observedCount": 338,
-      "changedCount": 2,
-      "eventCount": 2
+      "observedCount": 337,
+      "changedCount": 7,
+      "eventCount": 7
     },
     {
       "group": "ai-infrastructure",
       "repository": "vllm-project/vllm",
       "path": "ai-infrastructure/vllm.json",
       "observedCount": 500,
-      "changedCount": 2,
-      "eventCount": 2
+      "changedCount": 11,
+      "eventCount": 11
     },
     {
       "group": "ai-infrastructure",
       "repository": "sgl-project/sglang",
       "path": "ai-infrastructure/sglang.json",
       "observedCount": 500,
-      "changedCount": 4,
-      "eventCount": 4
+      "changedCount": 10,
+      "eventCount": 10
     },
     {
       "group": "ai-infrastructure",
       "repository": "ray-project/ray",
       "path": "ai-infrastructure/ray.json",
       "observedCount": 96,
-      "changedCount": 2,
-      "eventCount": 2
+      "changedCount": 0,
+      "eventCount": 0
     },
     {
       "group": "ai-infrastructure",
@@ -192,9 +192,9 @@
       "group": "developer-infrastructure",
       "repository": "astral-sh/uv",
       "path": "developer-infrastructure/uv.json",
-      "observedCount": 36,
-      "changedCount": 0,
-      "eventCount": 0
+      "observedCount": 37,
+      "changedCount": 2,
+      "eventCount": 2
     },
     {
       "group": "developer-infrastructure",
@@ -217,32 +217,32 @@
       "repository": "anthropics/claude-code",
       "path": "coding-agent-infrastructure/claude-code.json",
       "observedCount": 502,
-      "changedCount": 7,
-      "eventCount": 7
+      "changedCount": 11,
+      "eventCount": 11
     },
     {
       "group": "coding-agent-infrastructure",
       "repository": "openai/codex",
       "path": "coding-agent-infrastructure/codex.json",
-      "observedCount": 405,
-      "changedCount": 1,
-      "eventCount": 1
+      "observedCount": 407,
+      "changedCount": 5,
+      "eventCount": 5
     },
     {
       "group": "coding-agent-infrastructure",
       "repository": "anomalyco/opencode",
       "path": "coding-agent-infrastructure/opencode.json",
-      "observedCount": 492,
-      "changedCount": 2,
-      "eventCount": 2
+      "observedCount": 497,
+      "changedCount": 14,
+      "eventCount": 14
     },
     {
       "group": "coding-agent-infrastructure",
       "repository": "NousResearch/hermes-agent",
       "path": "coding-agent-infrastructure/hermes-agent.json",
       "observedCount": 100,
-      "changedCount": 20,
-      "eventCount": 20
+      "changedCount": 44,
+      "eventCount": 44
     }
   ]
 }

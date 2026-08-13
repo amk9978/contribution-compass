@@ -8,7 +8,10 @@
   "repository": {
     "id": "vllm",
     "repo": "vllm-project/vllm",
-    "name": "vLLM"
+    "name": "vLLM",
+    "keywords": [
+      "vLLM"
+    ]
   },
   "context": {
     "repository": "vllm-project/vllm",
@@ -41,14 +44,14 @@
     "license": "Apache-2.0",
     "defaultBranch": "main",
     "stars": 88978,
-    "forks": 20648,
-    "openIssues": 6542,
+    "forks": 20650,
+    "openIssues": 6543,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:20.819148+00:00"
+    "collectedAt": "2026-08-13T18:02:09.263295+00:00"
   },
   "news": {
     "repository": "vllm-project/vllm",
-    "collectedAt": "2026-08-13T17:47:20.819148+00:00",
+    "collectedAt": "2026-08-13T18:02:09.263295+00:00",
     "latestRelease": {
       "repository": "vllm-project/vllm",
       "tag": "v0.27.1",
@@ -94,6 +97,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 500,
       "changedCount": 2
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 500,
+      "changedCount": 11
     }
   ],
   "signals": [
@@ -4171,6 +4180,32 @@
       "assignees": []
     },
     {
+      "id": "github:vllm-project/vllm:pull_request:46424",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "vllm-project/vllm",
+      "kind": "pull_request",
+      "title": "[Bugfix][Mamba2] Fix assert crash when prefill-reclassified-as-decode occurs with no concurrent spec tokens",
+      "text": "## Summary When a Mamba2-attention hybrid model (e.g. NemotronH) is served with both `--enable-prefix-caching` and `--speculative-config`, the server can crash with: ``` AssertionError File \"vllm/model_executor/layers/mamba/mamba_mixer2.py\", line 963, in conv_ssm_forward assert block_idx_last_scheduled_token_prev_step_d is not None ``` ### Trigger condition 1. `--enable-prefix-caching` auto-sets `mamba_cache_mode=all` for models implementing `SupportsMambaPrefixCaching` (`config.py:352`). This makes `is_mamba_cache_all=True` in the model. 2. A request arrives whose prompt is exactly `N × block_size + 1` tokens and the N-block prefix is already cached. Only 1 token remains to prefill. `mamba_attn.py` reclassifies any single-query-token prefill with prior state (`seq_len > 1`) as a decode step. 3. No other concurrent request has active speculative tokens that scheduler step, so `use_spec_decode = len(scheduled_spec_decode_tokens) > 0` is **False**. The current code gates `prev_last_scheduled_idx` inside this check, so it is never forwarded to `Mamba2AttentionMetadataBuilder`. 4. `mamba_mixer2.py:963` asserts this value is non-None whenever `has_decode=True`, `is_mamba_cache_all=True`, and `num_spec > 0`. The assert fires and kills all TP ranks. The crash is intermittent under heavy traffic: if any concurrent decode request happens to have active spec tokens in the same step, `use_spec_decode=True` and the bug is silently avoided. ### Root cause PR #41233 added `mamba_prev_last_scheduled_idx` and per-step preprocessing but left the per-step `use_spec_decode` gate in place. The fix is incomplete: `prev_last_scheduled_idx` must be forwarded whenever the buffer exists, not only on steps where spec tokens are scheduled. In v0.21.0 the crash was impossible because `config.py` forced `mamba_cache_mode=align` (not `all`) when spec decode was also active, so `is_mamba_cache_all` was always False. ### Fix Move the `prev_last_scheduled_idx` assignment outside the `use_spec_decode` gate. The guard `self.mamba_prev_last_scheduled_idx is not None` ensures this only runs for spec-decode deployments with `mamba_cache_mode=all`. `Mamba2AttentionMetadataBuilder` already handles `prev_last_scheduled_idx < 0` via the fallback `(num_computed - 1) // mamba_block_size`, so passing unconditionally is safe. ## Duplicate check Searched open PRs for `mamba_mixer2 assert`, `mamba prev_last_scheduled_idx`, `mamba cache mode spec decode` — no existing PR found. Related: #41233 (introduced the incomplete fix this PR completes). ## Test plan Requires a Mamba2-attention hybrid model implementing `SupportsMambaPrefixCaching` (NemotronH family) served with both `--enable-prefix-caching` and `--speculative-config '{\"method\":\"mtp\",\"num_speculative_tokens\":N}'`: 1. Start vLLM. Find the effective `BLOCK_SIZE` in the startup log: `\"Setting attention block size to N tokens\"`. 2. Send a prompt of exactly `BLOCK_SIZE + 1` tokens. The server caches one full block. 3. Send the same prompt again while the server is otherwise idle. Without this fix: the assert fires immediately and all TP ranks crash. With this fix: the request succeeds. Verified on `vllm/vllm-openai:v0.22.0`, 4-way tensor parallel, NemotronH-class model. ## AI assistance disclosure This fix was developed with AI assistance (Claude Sonnet 4.6). The crash sequence, root cause analysis, and fix were verified by the human submitter against the live codebase and against a running deployment. Every changed line has been reviewed.",
+      "url": "https://github.com/vllm-project/vllm/pull/46424",
+      "createdAt": "2026-06-22T23:20:12Z",
+      "updatedAt": "2026-08-13T17:47:48Z",
+      "timestamp": "2026-08-13T17:47:48Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 4
+      },
+      "labels": [
+        "bug",
+        "ready",
+        "v1"
+      ],
+      "author": "sytianhe",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:vllm-project/vllm:pull_request:46595",
       "source": "github",
       "group": "ai-infrastructure",
@@ -6443,6 +6478,32 @@
       "change": "updated"
     },
     {
+      "id": "github:vllm-project/vllm:pull_request:50280",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "vllm-project/vllm",
+      "kind": "pull_request",
+      "title": "[Bugfix][Spec Decode] Make EAGLE weight sharing TP-consistent",
+      "text": "## Purpose Addresses the rank-divergent EAGLE weight-sharing decision described in #50158. The issue stays open: real-hardware runs (see discussion below) show the acceptance collapse reported there persists after this fix and has a separate root cause that is still under investigation. EAGLE currently decides whether to share the target model's `embed_tokens` and `lm_head` by comparing each tensor-parallel rank's local shards independently. If equality differs across ranks, some ranks replace the draft module with the target module while others keep the draft weights. The ranks then build different drafters, which can severely reduce speculative acceptance. This change requires unanimous TP-wide agreement before sharing either module. Each rank contributes its local decision to a CPU-group `MIN` reduction, so any mismatch keeps the draft weights on every rank. TP size 1 preserves the existing fast path without a collective. The regression test covers both unanimous agreement and one-rank mismatch for `embed_tokens` and `lm_head`. The change is limited to the existing EAGLE weight-sharing decisions. The collectives occur in the same fixed model-load order on every TP rank and do not affect inference-time execution. ## Test Plan ```bash pytest -q tests/v1/spec_decode/test_eagle.py::test_eagle_weight_sharing_requires_all_tp_shards_to_match pre-commit run --files vllm/v1/spec_decode/llm_base_proposer.py tests/v1/spec_decode/test_eagle.py ``` ## Test Result - Targeted regression test: `2 passed`. On macOS, the platform backend list was patched to a non-empty value before module collection; the test itself mocks the TP CPU-group reduction. - All applicable pre-commit hooks passed on both changed files, including Ruff, formatting, typos, mypy, SPDX, import checks, and forbidden-import checks. - Real-hardware validation (community, 2x RTX 3090, TP=2, see discussion): the consensus mechanism works as designed — both ranks now log the same verdict where stock vLLM disagreed on every boot; no measurable perf change. The acceptance collapse from #50158 is unaffected by this change (separate root cause, tracked in the open issue). AI assistance: OpenAI Codex was used for analysis, implementation, testing, and PR preparation. All changes were reviewed by the submitter.",
+      "url": "https://github.com/vllm-project/vllm/pull/50280",
+      "createdAt": "2026-07-29T14:27:13Z",
+      "updatedAt": "2026-08-13T17:59:54Z",
+      "timestamp": "2026-08-13T17:59:54Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 2
+      },
+      "labels": [
+        "bug",
+        "speculative-decoding",
+        "v1"
+      ],
+      "author": "sdflkjssl",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:vllm-project/vllm:pull_request:50288",
       "source": "github",
       "group": "ai-infrastructure",
@@ -8375,8 +8436,8 @@
       "text": "This PR removes speculative-method guessing and makes the method an explicit contract. ## Problem On current `main`, vLLM guesses the speculative method from model path/name substrings such as `eagle3`, `dflash`, and `dspark`. A DFlash or DSpark checkpoint at a neutral training path can therefore be treated as the generic autoregressive `draft_model`, while renaming or moving the same checkpoint changes serving behavior. For example: ```bash vllm serve Qwen/Qwen3-8B \\ --speculative-config '{\"model\": \"/path/to/checkpoints/6\", \"num_speculative_tokens\": 15}' ``` Previously, this could silently select `draft_model`. In the original end-to-end Qwen3-8B + DFlash reproduction, the misdetected path produced acceptance length 1.02; adding explicit `\"method\": \"dflash\"` produced 3.88. Serving a specialized checkpoint through the wrong proposer is worse than requiring one extra field, so this PR now fails closed. ## Design - A method is required for every explicit speculative configuration. It can be supplied as `\"method\"` in `--speculative-config` or with `--spec-method`. - The explicit method selects the proposer and any structural loader normalization. vLLM does not replace or second-guess it from the model path, checkpoint architecture, structural `model_type`, or other metadata. - Checkpoint metadata is used only after method selection for implementation details, such as choosing the embedded DeepSeek-V4 DSpark loader for `method=\"dspark\"` and defaulting its proposal depth from `dspark_block_size`. - Known checkpoint schemas that explicitly declare their algorithm may populate the method before `SpeculativeConfig` is constructed. The speculators format uses `speculators_model_type`; PEagle is normalized to `method=\"eagle3\"` with parallel drafting. - `num_speculative_tokens` remains optional when the selected checkpoint format declares a proposal depth, such as speculators `speculative_tokens`, `n_predict`, or DSpark `dspark_block_size`. Otherwise the existing clear error remains. - DFlash and DSpark parallel-drafting behavior is derived from the explicit method. - Explicit shorthand values are folded into the config before checkpoint-declared defaults, so `--spec-method`, `--spec-model`, and `--spec-tokens` follow the same precedence rule as JSON fields. For an embedded DeepSeek-V4 checkpoint, the same checkpoint metadata is therefore handled according to the requested method: `draft_model` keeps the ordinary model loader, `mtp` uses `DeepSeekV4MTPModel`, and `dspark` uses `DSparkDraftModel`. The metadata does not choose among them. ## Breaking change Configurations that relied on implicit selection must add a method. Before: ```bash vllm serve Qwen/Qwen3-8B \\ --speculative-config '{ \"model\": \"/path/to/checkpoints/6\", \"num_speculative_tokens\": 15 }' ``` After: ```bash vllm serve Qwen/Qwen3-8B \\ --speculative-config '{ \"method\": \"dflash\", \"model\": \"/path/to/checkpoints/6\", \"num_speculative_tokens\": 15 }' ``` For a generic autoregressive draft model, use `\"method\": \"draft_model\"`. Legacy EAGLE/EAGLE3, Medusa, MLP-speculator, n-gram, and custom-proposer configurations must likewise state their method. A speculators-format checkpoint used as the top-level model still works without an explicit `--speculative-config`, because its schema declares both the algorithm and proposal depth. ## Validation - End-to-end reproduction recorded before this design change: - misdetected `draft_model`: acceptance length 1.02 - explicit `dflash`: acceptance length 3.88 - This PR now rejects the missing-method configuration instead of silently serving it autoregressively. - Explicit method, schema default, loader selection, and callable override tests: 18 passed. - Full draft HF override module: 11 passed. - DeepSeek EAGLE loader compatibility regression: 1 passed. - Earlier focused config, DSpark, engine-argument, scheduler, and structured-output suites: 50 passed. - Full `tests/test_config.py` before the final refinement: 179 passed; 2 failed only because this environment cannot access gated `meta-llama/Meta-Llama-3-8B-Instruct` (HTTP 403). - All pre-commit hooks passed on every changed file, including Ruff, mypy, Markdown lint, SPDX, DCO sign-off, and configuration validation. - GPU model evaluation was not rerun for this follow-up; the serving change is fail-fast configuration and loader-selection behavior, and the earlier DFlash measurement above is retained as the motivating model result. <details> <summary>Commands run</summary> ```bash .venv/bin/python -m pytest -q \\ tests/config/test_speculative_draft_hf_overrides.py \\ tests/test_config.py \\ -k 'method_selects_draft_override or callable_overrides_reach_the_draft_config or arch_mapping_applies_before_callable_override or composed_override_is_picklable or explicit_method_selects_deepseek_v4_loader or speculative_config_requires_method or speculators_format' .venv/bin/python -m pytest -q \\ 'tests/config/test_model_arch_config.py::test_draft_model_arch_config[eagle618/deepseek-v3-random-eagle618/eagle-deepseek-v3-random-eagle-True]' .venv/bin/python -m pytest -q tests/config/test_speculative_draft_hf_overrides.py .venv/bin/pre-commit run --files <all changed files> ``` </details> ## Contribution notes - This is not a duplicate of #47490: that PR preserves auto-detection and validates explicit-method mismatches; this PR removes automatic method selection and fails when an explicit configuration omits the method. - This is not a duplicate of #44566: that PR only propagates token depth from a speculators-format draft; this PR changes method-selection semantics while preserving declared token defaults. - This is not a duplicate of #52165: that PR detects embedded DeepSeek-V4 DSpark metadata and uses it for automatic routing; this PR makes the explicit method authoritative and uses metadata only to configure the selected loader. - AI assistance was used. I reviewed every changed line and ran the validation listed above.",
       "url": "https://github.com/vllm-project/vllm/pull/51338",
       "createdAt": "2026-08-07T00:53:10Z",
-      "updatedAt": "2026-08-13T17:20:56Z",
-      "timestamp": "2026-08-13T17:20:56Z",
+      "updatedAt": "2026-08-13T17:47:21Z",
+      "timestamp": "2026-08-13T17:47:21Z",
       "metrics": {
         "reactions": 2,
         "comments": 6
@@ -8391,7 +8452,8 @@
       ],
       "author": "WindChimeRan",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51346",
@@ -8528,8 +8590,8 @@
       "text": "<!-- markdownlint-disable MD013 MD041 --> ## Purpose @elizabetht's RFC #34303 and #37921/#37925 split CUDA checkpoint work into in-process primitives and leave CRIU disk persistence for a later phase. #35934 proposes a CRIU-safe engine suspend and resume path, while PRs #42790 and #46089 propose provider-owned pod snapshot hooks. @fergusfinn's data in #34303 also showed that full initialized snapshots can work, with large images and stale external TCP connections as central costs. @simon-mo's closed, reference-only #40323 autoresearch showcase also included inert snapshot scaffolding for a pre-model image of Python imports and a CUDA context. It explicitly excluded model weights, model configuration, compile state, and CUDA graphs. This PR instead implements and measures a host-owned artifact captured after TP1 engine initialization and a deterministic generation canary, before HTTP bind. It is also the measured successor to my closed PR #48996. PR #48996 captured only the import stage. Its matched warm comparison was flat at about 29.08 seconds versus 29.09 seconds, n=3 per arm, because the expensive engine state still had to be constructed after restore. This PR moves the boundary after engine initialization and a deterministic generation canary, but before the HTTP listener binds. The user-facing workflow is: ```bash vllm snapshot create MODEL --snapshot-dir PATH --revision MODEL_SHA [serve args] vllm snapshot inspect PATH vllm snapshot restore PATH --host 127.0.0.1 --port 8000 ``` Creation captures the initialized TP1 process tree and CUDA state with CRIU and NVIDIA's CUDA plugin. Restore validates the saved host and software identity before CRIU runs, restores the tree, binds the requested HTTP address, and checks the saved token again before returning. It does not silently fall back to ordinary startup. The lightweight `vllm_bootstrap` wrapper is intentional. Importing the normal CLI loads the vLLM runtime and PyTorch before CRIU can restore the saved process, consuming much of the activation win. Only `vllm snapshot restore` takes the lightweight path. Every other `vllm` command delegates to the existing CLI entry point unchanged. This is adjacent to, but does not replace, the in-process suspend and resume work. The current product boundary stays TP1 so it can preserve the initialized process tree without claiming multi-GPU communicator restore. ## Product envelope and tradeoffs This feature is opt-in and intentionally exchanges local disk and host privilege for activation time. - Linux x86-64, one NVIDIA GPU, TP1, PP1, and DP1 only. - Same host, GPU, driver, kernel, Python, PyTorch, vLLM source and binary, model revision, engine arguments, selected environment, and plugin identity. - Root or passwordless `sudo`, CRIU, `cuda-checkpoint`, and NVIDIA's CRIU CUDA plugin. - `io_uring` disabled before vLLM starts. For an unprivileged process, `kernel.io_uring_disabled=1` is sufficient; mode `2` disables it host-wide. - One plaintext HTTP frontend without API authentication, TLS, custom middleware, or a Unix domain socket. - No external established TCP peer at capture. Tree-owned internal connections are recorded. - Private local artifact that may contain process memory, model state, and secrets. - No concurrent restore of one artifact and no automatic normal-start fallback. The documentation explains these constraints, the sensitive-artifact boundary, and the disk, preparation-time, privilege, compatibility, and portability costs. ## Update, August 8 After the original `16999dbe788f` head passed full CI, I added one opt-in artifact-size path to the same product. `vllm snapshot create --minimize-snapshot-state` uses the existing sleep level 2 lifecycle after the correctness canary and before capture. It releases the model-weight and KV-cache allocations, then reloads the weights and recreates the KV cache after restore and before binding HTTP. The default full-state path is unchanged. The dense A10 decision cell used experimental source `4154f9b61775048f7cb679c4581706fd620426ff`, Qwen3-8B FP16 TP1, warm model-weight pages, and a cold snapshot artifact: | Path | Allocated artifact | Activation to first correct token | | --- | ---: | ---: | | ordinary | 24,231,231,488 B | 23.7633 s median, n=3 | | minimized | 5,144,281,088 B | 21.2396 s median, n=3 | The minimized path removed 19,086,950,400 allocated bytes, or 78.8 percent, and reduced the activation clock by 2.5237 seconds, or 10.6 percent. Every accepted restore returned the exact oracle token, completed at least six post-restore requests, and left no GPU process behind. The public option was then tested on source `e790b9b2018a6727bea069fa11bf1d1e64626e2b` with Qwen3-0.6B FP16 TP1 on an RTX 4090 Laptop GPU. It reduced the allocated artifact from 11,623,870,464 to 3,698,221,056 bytes, or 68.2 percent. The ordinary artifact restored once and the minimized artifact restored twice. Each restore passed the exact-token oracle plus three additional requests and drained the GPU. Page residency was uncontrolled, so this is a mechanism smoke and not another performance claim. Feature production-code changes since that tested source are a reviewer-requested hardening of existing CRIU link-remap validation and the lightweight package rename from `vllm_cli` to `vllm_bootstrap` after a reviewer found a collision with the independent `vllm-cli` PyPI project. Neither changes the measured activation path. Deterministic regressions cover the prior remap check/read race and the console entry-point/package-discovery boundary. Current head `f86a1e269b` rebases the tested implementation plus those two review fixes onto vLLM main `8a9f9f762a`; the remaining feature changes since the tested source are documentation and tests. The five commits added since the previous reviewed base touched none of this PR's 16 files. The state-minimization measurements use a different model and starting state from the original 9.4234-second A10 restore result below. The savings are not additive. Warm model-file pages can make the smaller artifact faster, while cold or slow storage can make reloading weights slower than restoring the full process image. ## Test plan Focused CPU tests: ```bash PYTHONPATH=$PWD pytest -q \\ tests/snapshot \\ tests/entrypoints/unit_tests/test_launch_cli.py ``` Changed-file repository checks: ```bash pre-commit run \\ --from-ref 8a9f9f762a47e24ed8b48a8472f6757346cb30ae \\ --to-ref HEAD ``` The RTX 4090 Laptop GPU cell used: - source `6d4507450d6ad2b226b5883904e009b9d11617ec` - base `dd856e48bbf969e3f0e561e8c76f6e92c76e0795` - RTX 4090 Laptop GPU, 16,376 MiB, driver 595.71.05 - Ubuntu kernel 7.0.0-28, Python 3.12.3, torch 2.13.0+cu132, CRIU 4.2.1 - `Qwen/Qwen3-0.6B` at revision `c1899de289a04d12100db370d81485cdf75e47ca` - FP16, maximum model length 512, GPU memory utilization 0.50, TP1, PP1, and DP1 - warm Hugging Face, TorchInductor, Triton, and vLLM caches - `VLLM_NO_USAGE_STATS=1` The Python source was the exact clean feature commit. The precompiled native payload was reused from `adc3e03517d2e7333a3bb2083bb4d394a2986876` after a path-limited diff found no C++, CUDA, Rust, FlashAttention, or vendored native-source change. The only `setup.py` change was an optional dependency minimum. The final NVIDIA A10 acceptance cell used: - exact source `16999dbe788f2a1d7e6b0de243e874193388e352` - base `c810e5ee9976ad86b81d1277b53e76d0ee639414` - NVIDIA A10, 23,028 MiB, driver 570.148.08 - Ubuntu 22.04.5, kernel 6.8.0-60, Python 3.10.12, torch 2.13.0+cu129, CUDA 12.9, CRIU 4.2.1 - the same model revision and engine settings as the 4090 cell - warm Hugging Face, TorchInductor, Triton, and vLLM caches - documented unprivileged `kernel.io_uring_disabled=1` This exact head contains the two repairs selected by the first A10 run. It captures the caller's environment before vLLM injects internal defaults, and it rejects active `io_uring` descriptors with an actionable error before CRIU runs. ## Test result Focused tests: ```text 65 passed ``` All applicable changed-file pre-commit hooks passed, including Ruff, formatting, typos, markdownlint, Python 3.10 mypy, SPDX, lazy imports, forbidden imports, and configuration checks. Each hardware cell restored one artifact five times and ran five matched ordinary warm starts. Both arms used the same source, model revision, caches, engine settings, console entry point, clock boundary, and correctness request within that cell. ### RTX 4090 Laptop GPU | Path | Median to checked token | Samples | | ---------------------------- | ----------------------: | --------: | | ordinary warm start | 15.7790 s | 5 | | initialized snapshot restore | 5.5488 s | 5 | | reduction | 10.2302 s, 64.8% | 5 per arm | Snapshot creation took 37.50 seconds and recorded 11,595,128,620 artifact bytes, about 11.60 GB. The measured break-even was the fourth repeated activation. ### NVIDIA A10 | Path | Median to checked token | Samples | | ---------------------------- | ----------------------: | --------: | | ordinary warm start | 23.9121 s | 5 | | initialized snapshot restore | 9.4234 s | 5 | | reduction | 14.4888 s, 60.6% | 5 per arm | Snapshot creation took 42.3594 seconds and recorded 15,580,855,788 artifact bytes, about 15.58 GB. The measured break-even was the third repeated activation. Every restore and warm control in both cells returned token ID `12095` with text value \" Paris\" for the prompt `The capital of France is`. The final A10 cell exercised both product defects found by the first A10 run. With the host default `kernel.io_uring_disabled=0`, creation stopped before CRIU and named the owning PIDs. Mode `1` then completed creation and all five restores. The saved manifest omitted vLLM-injected internal defaults, while changing caller-provided `VLLM_USE_FLASHINFER_SAMPLER` still produced `snapshot mismatch: environment` before CRIU ran. The runner restored the host sysctl and left the GPU process list empty. These break-even points belong only to their measured machine, model, and cache state. Larger models, slower disks, or different GPU memory settings can change both artifact size and restore time. Both hardware cells disabled usage reporting. #51219 separately closes the default telemetry HTTP session, so this PR does not duplicate that fix or claim a default-telemetry hardware result. This PR does not claim a model-quality improvement. The generation canary checks that the restored engine reproduces the saved deterministic token before it is declared ready. AI assistance was used. I reviewed the changes and can defend the implementation, constraints, and measurements. ## Checklist - [x] The purpose names the RFC and adjacent open work. - [x] The test plan includes focused tests, repository checks, and hardware. - [x] The result includes matched before and after measurements with n labels. - [x] The documentation covers setup, security, compatibility, and tradeoffs.",
       "url": "https://github.com/vllm-project/vllm/pull/51360",
       "createdAt": "2026-08-07T05:06:49Z",
-      "updatedAt": "2026-08-13T09:13:26Z",
-      "timestamp": "2026-08-13T09:13:26Z",
+      "updatedAt": "2026-08-13T18:00:06Z",
+      "timestamp": "2026-08-13T18:00:06Z",
       "metrics": {
         "reactions": 2,
         "comments": 9
@@ -8541,7 +8603,8 @@
       ],
       "author": "matteso1",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51382",
@@ -9658,8 +9721,7 @@
       ],
       "author": "matteso1",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51757",
@@ -9816,8 +9878,8 @@
       "text": "## Purpose This is dead code following https://github.com/vllm-project/vllm/pull/37128. This was originally added in https://github.com/vllm-project/vllm/pull/29008 that supported padding for gpt-oss / certain MXFP4 backends, see: https://github.com/xuebwang-amd/vllm/blob/c62f664e97977ee54ab1d1c77604ebb45081bc06/vllm/model_executor/layers/fused_moe/layer.py#L259-L277 This is now handled in: https://github.com/vllm-project/vllm/blob/490259c1f63faf025b8050504db63d81c817d781/vllm/model_executor/layers/fused_moe/oracle/mxfp4.py#L640 ## Test Plan N/A ## Test Result N/A",
       "url": "https://github.com/vllm-project/vllm/pull/51793",
       "createdAt": "2026-08-11T09:46:17Z",
-      "updatedAt": "2026-08-13T15:02:07Z",
-      "timestamp": "2026-08-13T15:02:07Z",
+      "updatedAt": "2026-08-13T17:58:31Z",
+      "timestamp": "2026-08-13T17:58:31Z",
       "metrics": {
         "reactions": 2,
         "comments": 5
@@ -9827,8 +9889,9 @@
         "quantization"
       ],
       "author": "fxmarty-amd",
-      "state": "open",
-      "assignees": []
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51794",
@@ -10503,8 +10566,8 @@
       "text": "## Purpose Enables GLM-5.2 (`GlmMoeDsaForCausalLM`) end-to-end on `vllm/models/deepseek_v32/amd/` for gfx942/gfx950. Routing is opt-in via `--model-class-overrides`; the registry entry is unchanged, so the default path for GLM-5.2 and DeepSeek-V3.2 is untouched. The following issues were also fixed as a result of this overall enablement since it surfaced dormant bugs from a prior deepseek_v32 porting work: - **`launch_pdl` forwarded to a Triton runtime that doesn't accept it** — the shared `common/kernels.py` passed this CUDA-only kwarg unconditionally; ROCm's Triton rejects it by name even when `False`, so the engine died at startup with `KeyError`. Now passed only when the platform actually supports PDL. - **fp4 bmm invoked with mismatched positional args** — the output tensor landed in the kernel's `dtype` slot (`Expected 'Optional[int]' for 'dtype' but found Tensor`). Routed through the existing `rocm_aiter_ops.batched_gemm_a16wfp4` wrapper rather than calling aiter directly, so the argument contract lives in one place. - **fp4 MLA bmm silently wrong for non-power-of-two K** — `batched_gemm_a16wfp4` only supports power-of-two K, and returns wrong values without erroring otherwise. GLM-5.2's `qk_nope_head_dim=192` lands in the unsupported set; DeepSeek-V3.2's 128 does not. Guarded on both `qk_nope_head_dim` and `kv_lora_rank` to fall back to the fp8 bmm, with a warning. `W_K`/`W_K_scale` are also made contiguous after the transpose, which otherwise produced NaN. - **Indexer-K cache written in the plain layout while its reader expects the shuffled one** — affects DeepSeek-V3.2 identically, not just GLM-5.2. The AMD path writes this cache from the shared `fused_norm_rope`, which only implemented `[n_blocks, blk, head_dim]`, while the reader selects `SHUFFLE` above block size 1: the write kept storing row-major, but the reader expected shuffled, so the indexer scored garbage K and output degenerated once a sequence exceeded `index_topk=2048`, with no error raised. Refactored so the shared kernel stays platform-agnostic — it writes whichever layout the cache reports via a new `uses_shuffled_layout` property — and the AMD-specific shuffled write (`[n_blocks, blk/16, head_dim/16, 16, 16]`, used above block size 1) lives in the AMD backend. The base class returns `False`, so CUDA is unchanged. - **Sparse-MLA block sizes narrowed instead of extended** — the ported backends replaced the inherited `get_supported_kernel_block_sizes()` with `[16, 32]`, which made `select_common_block_size` silently downgrade a requested 64 to 32 via its largest-divisor fallback. Now concatenated with the base list. - **Kernel tests gated on `is_cuda()` and running against dims that matched neither model** — the tests were skipped entirely on CDNA. The gate is now `supports_fp8()`, so the suite runs on gfx950. The hardcoded attention dims were written as if one set served both GLM-5.2 and DeepSeek-V3.2, which it did not; they are now taken from each model's published config and parametrized over both. ## Test Plan Server: VLLM_ROCM_USE_AITER=1 \\ HF_HUB_OFFLINE=1 SAFETENSORS_FAST_GPU=1 \\ vllm serve /path-to-your/GLM-5.2-MXFP4 \\ --model-class-overrides '{\"GlmMoeDsaForCausalLM\": \"vllm.models.deepseek_v32:DeepseekV32ForCausalLM\"}' \\ --tensor-parallel-size 8 \\ --kv-cache-dtype auto \\ --max-model-len 65536 \\ --no-enable-prefix-caching \\ --trust-remote-code \\ --port 8000 Variants: --kv-cache-dtype fp8 for the fp8 KV row; --block-size {16,64} for the block-size matrix. Drop --model-class-overrides to run the legacy deepseek_v2 path for comparison. Accuracy: lm_eval --model local-completions \\ --model_args \"model=/models/GLM-5.2-MXFP4,base_url=http://localhost:8000/v1/completions,num_concurrent=32,tokenized_requests=False,max_retries=3,timeout=3600\" \\ --tasks gsm8k --num_fewshot 5 --gen_kwargs max_gen_toks=2048 --limit 200 Throughput: vllm bench serve --backend vllm --model /shareddata/models/GLM-5.2-MXFP4 \\ --dataset-name random --random-input-len 4096 --random-output-len 1024 \\ --num-prompts 200 --max-concurrency 32 --ignore-eos --port 8000 \\ --save-result --result-filename glm52_v32amd_bench.json Kernel unit tests: pytest tests/kernels/test_fused_deepseek_v32_norm_rope.py -v ## Test Result **gsm8k** — GLM-5.2 200 samples, 5-shot, `exact_match`, `deepseek_v32` AMD path | KV cache | Before (flexible / strict) | After (flexible / strict) | |-------------|----------------------------|------------------------------| | auto (bf16) | 0.0000 / 0.0000 | **0.9400 / 0.9400** ± 0.0168 | | fp8 | 0.0000 / 0.0000 \\* | **0.9350 / 0.9350** ± 0.0175 | \\* Not separately measured. fp8 KV goes through the same absorbed-weight bmm where the bug was, so it fails identically; only the bf16 run was evaluated pre-fix.",
       "url": "https://github.com/vllm-project/vllm/pull/51915",
       "createdAt": "2026-08-12T02:59:15Z",
-      "updatedAt": "2026-08-13T04:08:44Z",
-      "timestamp": "2026-08-13T04:08:44Z",
+      "updatedAt": "2026-08-13T17:59:08Z",
+      "timestamp": "2026-08-13T17:59:08Z",
       "metrics": {
         "reactions": 3,
         "comments": 1
@@ -10517,7 +10580,8 @@
       ],
       "author": "jhu960213",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51924",
@@ -13047,8 +13111,8 @@
       "text": "Fixes #52069. `create_draft_parallel_config` copies the target's `pipeline_parallel_size` into the draft's parallel config, so `_verify_args` demands `SupportsPP` from the draft model. No head in `MTPModelTypes` implements it, so every MTP speculative config dies in `create_engine_config` under PP > 1. A draft model always runs whole on a single PP rank (the V2 runner builds it on the last rank only), so this verifies it as single-stage, on a shallow copy of the config. **Test plan:** without the change, `--pipeline-parallel-size 4 --speculative-config '{\"method\":\"mtp\",...}'` fails at config time on GLM-4.5-Air; with it, the server loads and serves (8× RTX 3090, three machines, nightlies dev678–dev693). Complementary to #46994, which does not touch this file. --- Assisted-By: Claude",
       "url": "https://github.com/vllm-project/vllm/pull/52117",
       "createdAt": "2026-08-13T07:22:01Z",
-      "updatedAt": "2026-08-13T13:28:30Z",
-      "timestamp": "2026-08-13T13:28:30Z",
+      "updatedAt": "2026-08-13T18:01:09Z",
+      "timestamp": "2026-08-13T18:01:09Z",
       "metrics": {
         "reactions": 2,
         "comments": 2
@@ -13058,7 +13122,8 @@
       ],
       "author": "nickus",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52118",
@@ -14386,11 +14451,11 @@
       "text": "## Purpose Update the PyTorch ecosystem to the **2.14.0** release candidate, resolving wheels from the PyTorch **test channel** (`download.pytorch.org/whl/test/...`): - `torch`: → **2.14.0** - `torchvision`: → **0.29.0** - `triton`: → **3.8.0** 2.14.0 is published on `download.pytorch.org/whl/test/` but not yet on the release index / PyPI, so the index URLs point at the test channel. This mirrors the 2.13.0 test PR #45731. ### Verified availability (test channel) before pinning - `torch-2.14.0+cu130`: present - `torchvision-0.29.0`: present - `triton==3.8.0`: present, and is exactly what `pytorch` `release/2.14` pins in `.ci/docker/triton_version.txt` - `torchaudio`: newest published is still **2.11.0** on every channel, so that pin is unchanged ### ROCm `requirements/build/rocm.txt` moves from the `rocm7.1` index to `test/rocm7.2`. `rocm7.1` has no torch 2.14.0 wheels — 2.14 is built for `rocm7.2` and `rocm7.14` only. That file was also still on torch 2.11.0 / triton 3.6.0, so this brings it in line with `CMakeLists.txt`'s `TORCH_SUPPORTED_VERSION_ROCM`. ### Ray dependency-compatibility check `.buildkite/scripts/check-ray-compatibility.sh` now offers `uv` both the stable and test channels (it already runs with `--index-strategy unsafe-best-match`), so an RC `torch` pin coming from a transitive dep resolves during the RC window instead of failing against a stable-only index. Same fix as #45731. ### Deliberately *not* carried over from #45731 That PR also carried fixes reacting to breakages found during 2.12/2.13 CI. Those are not copied here, since 2.14 should get whatever it actually needs once CI reports: - xfails for pytorch#184431, pytorch#187735, pytorch#187727 - the ROCm source-build override + `install_flash_attn_rocm.sh` (needed because ROCm/pytorch had no `release/2.13` branch) - `verify_torch_wheel.py` / `UV_NO_VERIFY_HASHES` RC-respin handling `requirements/build/tpu.txt` is also left alone — TPU torch is bumped separately (#50412). ## Test Plan Full CI (apply the `ready` label to trigger the Buildkite run). ## BC-breaking? No — test-channel version bump only. *Authored with AI assistance; modeled on #45731.*",
       "url": "https://github.com/vllm-project/vllm/pull/52183",
       "createdAt": "2026-08-13T14:56:49Z",
-      "updatedAt": "2026-08-13T15:00:13Z",
-      "timestamp": "2026-08-13T15:00:13Z",
+      "updatedAt": "2026-08-13T17:57:44Z",
+      "timestamp": "2026-08-13T17:57:44Z",
       "metrics": {
         "reactions": 2,
-        "comments": 1
+        "comments": 2
       },
       "labels": [
         "ci/build",
@@ -14399,7 +14464,8 @@
       ],
       "author": "atalman",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52184",
@@ -14722,22 +14788,72 @@
       "project": "vllm-project/vllm",
       "kind": "pull_request",
       "title": "Support DSpark configs with `architectures=DSparkDraftModel` + `model_type=qwen3`",
-      "text": "## Purpose Generic Qwen `DSparkDraftModel` is now normalized to `Qwen3DSparkModel` so models like https://huggingface.co/RadixArk/Qwen3.8-2.4T-A95B-DSpark can now run on vLLM ## Test Plan ## Test Result Tested gsm8k with ``` vllm serve mgoin/Qwen3.8-2.4T-A95B-NVFP4-pruned75 -tp=4 --spec-model RadixArk/Qwen3.8-2.4T-A95B-DSpark --spec-method dspark --spec-tokens 7 ``` --- <details> <summary> Essential Elements of an Effective PR Description Checklist </summary> - [ ] The purpose of the PR, such as \"Fix some issue (link existing issues this PR will resolve)\". - [ ] The test plan, such as providing test command. - [ ] The test results, such as pasting the results comparison before and after, or e2e results - [ ] (Optional) The necessary documentation update, such as updating `supported_models.md` and `examples` for a new model. </details>",
+      "text": "## Purpose Generic Qwen `DSparkDraftModel` is now normalized to `Qwen3DSparkModel` so models like https://huggingface.co/RadixArk/Qwen3.8-2.4T-A95B-DSpark can now run on vLLM ## Test Plan ## Test Result Tested gsm8k with ``` vllm serve mgoin/Qwen3.8-2.4T-A95B-NVFP4-pruned75 -tp=4 --spec-model RadixArk/Qwen3.8-2.4T-A95B-DSpark --spec-method dspark --spec-tokens 7 ... (APIServer pid=2078258) INFO 08-13 17:48:18 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.90, Accepted throughput: 1537.03 tokens/s, Drafted throughput: 2757.00 tokens/s, Accepted: 15372 tokens, Drafted: 27573 tokens, Per-position acceptance rate: 0.901, 0.795, 0.667, 0.550, 0.436, 0.327, 0.225, Avg Draft acceptance rate: 55.8% ``` --- <details> <summary> Essential Elements of an Effective PR Description Checklist </summary> - [ ] The purpose of the PR, such as \"Fix some issue (link existing issues this PR will resolve)\". - [ ] The test plan, such as providing test command. - [ ] The test results, such as pasting the results comparison before and after, or e2e results - [ ] (Optional) The necessary documentation update, such as updating `supported_models.md` and `examples` for a new model. </details>",
       "url": "https://github.com/vllm-project/vllm/pull/52197",
       "createdAt": "2026-08-13T17:37:50Z",
-      "updatedAt": "2026-08-13T17:38:26Z",
-      "timestamp": "2026-08-13T17:38:26Z",
+      "updatedAt": "2026-08-13T17:53:53Z",
+      "timestamp": "2026-08-13T17:53:53Z",
       "metrics": {
         "reactions": 3,
-        "comments": 0
+        "comments": 2
       },
       "labels": [
+        "speculative-decoding",
+        "ready",
         "qwen"
       ],
       "author": "mgoin",
       "state": "open",
       "assignees": [],
       "change": "updated"
+    },
+    {
+      "id": "github:vllm-project/vllm:pull_request:52198",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "vllm-project/vllm",
+      "kind": "pull_request",
+      "title": "[Bugfix][LoRA] Fix PEFT 0.18+ target_parameters LoRA loading for 3D MoE experts",
+      "text": "# [Bugfix][LoRA] Fix PEFT 0.18+ target_parameters LoRA loading for 3D MoE experts ## Problem PEFT 0.18+ can train a LoRA against a fused 3D MoE expert parameter via `target_parameters` (e.g. `mlp.experts.gate_up_proj` / `down_proj`), reading it `[E, dim1, dim2]` as `[E, in, out]`. vLLM's `add_lora_w13` / `add_lora_w2` punica kernels use the opposite `nn.Linear` `[out, in]` convention, so per expert `ΔW_vllm = ΔW_peft^T`. On stock vLLM, `_stack_moe_lora_weights` reshapes with the wrong semantics and `set_lora` raises a shape mismatch that drops the adapter (e.g. Qwen3.5-35B-A3B `down_proj`: `512 vs 2048`). ## Fix - `peft_helper.py`: parse `target_parameters` from `adapter_config.json`. - `lora_model.py`: propagate it onto `LoRAModel` (ctor, `clone()`, `from_lora_tensors`). - `model_manager.py`: in `_stack_moe_lora_weights`, detect the PEFT 3D layout and swap `lora_A`/`lora_B` + transpose the trailing two dims **after** the EP-aware expert slicing. Detection is required, not assumed: `create_dummy_lora_weights` builds dummies in the native layout with the same flat shape, so an unconditional transpose would corrupt them. Primary signal is `target_parameters` naming a fused expert weight; fallback is `lora_a` trailing dim != `hidden_size`. ## Testing ``` python -m pytest -v \\ tests/lora/test_peft_helper.py::test_peft_helper_target_parameters_direct \\ tests/lora/test_lora_manager.py::test_target_parameters_indicates_3d_lora \\ tests/lora/test_lora_manager.py::test_from_lora_tensors_propagates_target_parameters \\ tests/lora/test_peft_helper.py::test_peft_helper_pass \\ tests/lora/test_lora_manager.py::test_from_lora_tensors ``` → **10 passed** (the discriminator test is parametrized over 6 cases). **End-to-end (Qwen3.5-35B-A3B expert LoRA).** The raw PEFT adapter crashes the unpatched loader with the `512 vs 2048` error. With the fix, the directly-loaded adapter is **bit-identical** (chosen-token logprobs, 32 tokens × 5 prompts) to an independent offline-converted oracle that self-checks `max|ΔW_vllm − ΔW_peft^T| = 0` over 320 experts, while both shift logits measurably vs base — so the adapter takes effect and the in-loader transpose matches the verified transform. Logprobs, not decoded text: for an experts-only (8-of-256, rank-32) adapter, greedy text is a false-negative trap since the adapter shifts logits without always flipping the argmax on short prompts. ## AI assistance disclosure AI assistance was used to author this change. A human submitter has reviewed every changed line and run the tests above.",
+      "url": "https://github.com/vllm-project/vllm/pull/52198",
+      "createdAt": "2026-08-13T17:48:23Z",
+      "updatedAt": "2026-08-13T17:55:50Z",
+      "timestamp": "2026-08-13T17:55:50Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 1
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "darrenpeng-amazon",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:vllm-project/vllm:pull_request:52199",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "vllm-project/vllm",
+      "kind": "pull_request",
+      "title": "[Feature] Add local/external prefix-cache hit breakdown to prompt_tokens_details (additive)",
+      "text": "## Summary A **strictly additive** change that exposes the **local vs external** prefix-cache hit breakdown per request in `prompt_tokens_details` (closes #52137). No existing field or behavior changes: `cached_tokens` keeps its exact meaning (total = `local + external`), and the two new fields are `None` by default / omitted from the response unless the flag is on. ## Background The scheduler already tracks `num_local_cached_tokens` / `num_external_cached_tokens` separately in `PrefillStats`, but `OutputProcessor` collapsed them to their sum (`num_cached_tokens`) before forwarding, so users of distributed prefix caching (Mooncake / lmcache / PD disaggregation) could not tell, per request, where cache hits came from (relevant for billing and diagnosing hit-rate changes). ## Changes (all additive) - **Data pipeline**: `RequestState` and `RequestOutput` gain `num_local_cached_tokens` / `num_external_cached_tokens`; `OutputProcessor` threads them from `PrefillStats` (same assignment site, so `cached_tokens == local + external` holds by construction). - **Protocol**: `PromptTokenUsageInfo` gains `local_cached_tokens` / `external_cached_tokens` (both default `None`). - **Endpoints**: chat and completion, streaming and non-streaming, all forward the breakdown. Other endpoints (responses / cohere / scale_out) are intentionally out of scope. - **Compatibility**: existing fields are untouched; new fields are `None` by default and omitted from the response when `--enable-prompt-tokens-details` is off — existing clients and dashboards keep working unchanged. ## Tests - `tests/entrypoints/openai/chat_completion/test_serving_chat.py`: `_make_prompt_tokens_details` with the new signature — defaults, gated-off behavior, multimodal coexistence, and the `cached_tokens == local + external` invariant. - `tests/v1/engine/test_output_processor.py`: `PrefillStats` → `RequestState` threading with non-zero local/external values.",
+      "url": "https://github.com/vllm-project/vllm/pull/52199",
+      "createdAt": "2026-08-13T17:48:30Z",
+      "updatedAt": "2026-08-13T17:49:11Z",
+      "timestamp": "2026-08-13T17:49:11Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 1
+      },
+      "labels": [
+        "frontend"
+      ],
+      "author": "SayHelloToWorld",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     }
   ],
   "events": [
@@ -37850,6 +37966,385 @@
           "qwen"
         ],
         "author": "mgoin",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:084f456ac0594ea1f844",
+      "signalId": "github:vllm-project/vllm:pull_request:52117",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:52117",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Bugfix] Do not require SupportsPP of draft models under pipeline parallelism",
+        "text": "Fixes #52069. `create_draft_parallel_config` copies the target's `pipeline_parallel_size` into the draft's parallel config, so `_verify_args` demands `SupportsPP` from the draft model. No head in `MTPModelTypes` implements it, so every MTP speculative config dies in `create_engine_config` under PP > 1. A draft model always runs whole on a single PP rank (the V2 runner builds it on the last rank only), so this verifies it as single-stage, on a shallow copy of the config. **Test plan:** without the change, `--pipeline-parallel-size 4 --speculative-config '{\"method\":\"mtp\",...}'` fails at config time on GLM-4.5-Air; with it, the server loads and serves (8× RTX 3090, three machines, nightlies dev678–dev693). Complementary to #46994, which does not touch this file. --- Assisted-By: Claude",
+        "url": "https://github.com/vllm-project/vllm/pull/52117",
+        "createdAt": "2026-08-13T07:22:01Z",
+        "updatedAt": "2026-08-13T18:01:09Z",
+        "timestamp": "2026-08-13T18:01:09Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 2
+        },
+        "labels": [
+          "bug"
+        ],
+        "author": "nickus",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e2538f01d7b29d3f5919",
+      "signalId": "github:vllm-project/vllm:pull_request:51360",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:51360",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Frontend] Add reusable TP1 initialized-engine snapshots",
+        "text": "<!-- markdownlint-disable MD013 MD041 --> ## Purpose @elizabetht's RFC #34303 and #37921/#37925 split CUDA checkpoint work into in-process primitives and leave CRIU disk persistence for a later phase. #35934 proposes a CRIU-safe engine suspend and resume path, while PRs #42790 and #46089 propose provider-owned pod snapshot hooks. @fergusfinn's data in #34303 also showed that full initialized snapshots can work, with large images and stale external TCP connections as central costs. @simon-mo's closed, reference-only #40323 autoresearch showcase also included inert snapshot scaffolding for a pre-model image of Python imports and a CUDA context. It explicitly excluded model weights, model configuration, compile state, and CUDA graphs. This PR instead implements and measures a host-owned artifact captured after TP1 engine initialization and a deterministic generation canary, before HTTP bind. It is also the measured successor to my closed PR #48996. PR #48996 captured only the import stage. Its matched warm comparison was flat at about 29.08 seconds versus 29.09 seconds, n=3 per arm, because the expensive engine state still had to be constructed after restore. This PR moves the boundary after engine initialization and a deterministic generation canary, but before the HTTP listener binds. The user-facing workflow is: ```bash vllm snapshot create MODEL --snapshot-dir PATH --revision MODEL_SHA [serve args] vllm snapshot inspect PATH vllm snapshot restore PATH --host 127.0.0.1 --port 8000 ``` Creation captures the initialized TP1 process tree and CUDA state with CRIU and NVIDIA's CUDA plugin. Restore validates the saved host and software identity before CRIU runs, restores the tree, binds the requested HTTP address, and checks the saved token again before returning. It does not silently fall back to ordinary startup. The lightweight `vllm_bootstrap` wrapper is intentional. Importing the normal CLI loads the vLLM runtime and PyTorch before CRIU can restore the saved process, consuming much of the activation win. Only `vllm snapshot restore` takes the lightweight path. Every other `vllm` command delegates to the existing CLI entry point unchanged. This is adjacent to, but does not replace, the in-process suspend and resume work. The current product boundary stays TP1 so it can preserve the initialized process tree without claiming multi-GPU communicator restore. ## Product envelope and tradeoffs This feature is opt-in and intentionally exchanges local disk and host privilege for activation time. - Linux x86-64, one NVIDIA GPU, TP1, PP1, and DP1 only. - Same host, GPU, driver, kernel, Python, PyTorch, vLLM source and binary, model revision, engine arguments, selected environment, and plugin identity. - Root or passwordless `sudo`, CRIU, `cuda-checkpoint`, and NVIDIA's CRIU CUDA plugin. - `io_uring` disabled before vLLM starts. For an unprivileged process, `kernel.io_uring_disabled=1` is sufficient; mode `2` disables it host-wide. - One plaintext HTTP frontend without API authentication, TLS, custom middleware, or a Unix domain socket. - No external established TCP peer at capture. Tree-owned internal connections are recorded. - Private local artifact that may contain process memory, model state, and secrets. - No concurrent restore of one artifact and no automatic normal-start fallback. The documentation explains these constraints, the sensitive-artifact boundary, and the disk, preparation-time, privilege, compatibility, and portability costs. ## Update, August 8 After the original `16999dbe788f` head passed full CI, I added one opt-in artifact-size path to the same product. `vllm snapshot create --minimize-snapshot-state` uses the existing sleep level 2 lifecycle after the correctness canary and before capture. It releases the model-weight and KV-cache allocations, then reloads the weights and recreates the KV cache after restore and before binding HTTP. The default full-state path is unchanged. The dense A10 decision cell used experimental source `4154f9b61775048f7cb679c4581706fd620426ff`, Qwen3-8B FP16 TP1, warm model-weight pages, and a cold snapshot artifact: | Path | Allocated artifact | Activation to first correct token | | --- | ---: | ---: | | ordinary | 24,231,231,488 B | 23.7633 s median, n=3 | | minimized | 5,144,281,088 B | 21.2396 s median, n=3 | The minimized path removed 19,086,950,400 allocated bytes, or 78.8 percent, and reduced the activation clock by 2.5237 seconds, or 10.6 percent. Every accepted restore returned the exact oracle token, completed at least six post-restore requests, and left no GPU process behind. The public option was then tested on source `e790b9b2018a6727bea069fa11bf1d1e64626e2b` with Qwen3-0.6B FP16 TP1 on an RTX 4090 Laptop GPU. It reduced the allocated artifact from 11,623,870,464 to 3,698,221,056 bytes, or 68.2 percent. The ordinary artifact restored once and the minimized artifact restored twice. Each restore passed the exact-token oracle plus three additional requests and drained the GPU. Page residency was uncontrolled, so this is a mechanism smoke and not another performance claim. Feature production-code changes since that tested source are a reviewer-requested hardening of existing CRIU link-remap validation and the lightweight package rename from `vllm_cli` to `vllm_bootstrap` after a reviewer found a collision with the independent `vllm-cli` PyPI project. Neither changes the measured activation path. Deterministic regressions cover the prior remap check/read race and the console entry-point/package-discovery boundary. Current head `f86a1e269b` rebases the tested implementation plus those two review fixes onto vLLM main `8a9f9f762a`; the remaining feature changes since the tested source are documentation and tests. The five commits added since the previous reviewed base touched none of this PR's 16 files. The state-minimization measurements use a different model and starting state from the original 9.4234-second A10 restore result below. The savings are not additive. Warm model-file pages can make the smaller artifact faster, while cold or slow storage can make reloading weights slower than restoring the full process image. ## Test plan Focused CPU tests: ```bash PYTHONPATH=$PWD pytest -q \\ tests/snapshot \\ tests/entrypoints/unit_tests/test_launch_cli.py ``` Changed-file repository checks: ```bash pre-commit run \\ --from-ref 8a9f9f762a47e24ed8b48a8472f6757346cb30ae \\ --to-ref HEAD ``` The RTX 4090 Laptop GPU cell used: - source `6d4507450d6ad2b226b5883904e009b9d11617ec` - base `dd856e48bbf969e3f0e561e8c76f6e92c76e0795` - RTX 4090 Laptop GPU, 16,376 MiB, driver 595.71.05 - Ubuntu kernel 7.0.0-28, Python 3.12.3, torch 2.13.0+cu132, CRIU 4.2.1 - `Qwen/Qwen3-0.6B` at revision `c1899de289a04d12100db370d81485cdf75e47ca` - FP16, maximum model length 512, GPU memory utilization 0.50, TP1, PP1, and DP1 - warm Hugging Face, TorchInductor, Triton, and vLLM caches - `VLLM_NO_USAGE_STATS=1` The Python source was the exact clean feature commit. The precompiled native payload was reused from `adc3e03517d2e7333a3bb2083bb4d394a2986876` after a path-limited diff found no C++, CUDA, Rust, FlashAttention, or vendored native-source change. The only `setup.py` change was an optional dependency minimum. The final NVIDIA A10 acceptance cell used: - exact source `16999dbe788f2a1d7e6b0de243e874193388e352` - base `c810e5ee9976ad86b81d1277b53e76d0ee639414` - NVIDIA A10, 23,028 MiB, driver 570.148.08 - Ubuntu 22.04.5, kernel 6.8.0-60, Python 3.10.12, torch 2.13.0+cu129, CUDA 12.9, CRIU 4.2.1 - the same model revision and engine settings as the 4090 cell - warm Hugging Face, TorchInductor, Triton, and vLLM caches - documented unprivileged `kernel.io_uring_disabled=1` This exact head contains the two repairs selected by the first A10 run. It captures the caller's environment before vLLM injects internal defaults, and it rejects active `io_uring` descriptors with an actionable error before CRIU runs. ## Test result Focused tests: ```text 65 passed ``` All applicable changed-file pre-commit hooks passed, including Ruff, formatting, typos, markdownlint, Python 3.10 mypy, SPDX, lazy imports, forbidden imports, and configuration checks. Each hardware cell restored one artifact five times and ran five matched ordinary warm starts. Both arms used the same source, model revision, caches, engine settings, console entry point, clock boundary, and correctness request within that cell. ### RTX 4090 Laptop GPU | Path | Median to checked token | Samples | | ---------------------------- | ----------------------: | --------: | | ordinary warm start | 15.7790 s | 5 | | initialized snapshot restore | 5.5488 s | 5 | | reduction | 10.2302 s, 64.8% | 5 per arm | Snapshot creation took 37.50 seconds and recorded 11,595,128,620 artifact bytes, about 11.60 GB. The measured break-even was the fourth repeated activation. ### NVIDIA A10 | Path | Median to checked token | Samples | | ---------------------------- | ----------------------: | --------: | | ordinary warm start | 23.9121 s | 5 | | initialized snapshot restore | 9.4234 s | 5 | | reduction | 14.4888 s, 60.6% | 5 per arm | Snapshot creation took 42.3594 seconds and recorded 15,580,855,788 artifact bytes, about 15.58 GB. The measured break-even was the third repeated activation. Every restore and warm control in both cells returned token ID `12095` with text value \" Paris\" for the prompt `The capital of France is`. The final A10 cell exercised both product defects found by the first A10 run. With the host default `kernel.io_uring_disabled=0`, creation stopped before CRIU and named the owning PIDs. Mode `1` then completed creation and all five restores. The saved manifest omitted vLLM-injected internal defaults, while changing caller-provided `VLLM_USE_FLASHINFER_SAMPLER` still produced `snapshot mismatch: environment` before CRIU ran. The runner restored the host sysctl and left the GPU process list empty. These break-even points belong only to their measured machine, model, and cache state. Larger models, slower disks, or different GPU memory settings can change both artifact size and restore time. Both hardware cells disabled usage reporting. #51219 separately closes the default telemetry HTTP session, so this PR does not duplicate that fix or claim a default-telemetry hardware result. This PR does not claim a model-quality improvement. The generation canary checks that the restored engine reproduces the saved deterministic token before it is declared ready. AI assistance was used. I reviewed the changes and can defend the implementation, constraints, and measurements. ## Checklist - [x] The purpose names the RFC and adjacent open work. - [x] The test plan includes focused tests, repository checks, and hardware. - [x] The result includes matched before and after measurements with n labels. - [x] The documentation covers setup, security, compatibility, and tradeoffs.",
+        "url": "https://github.com/vllm-project/vllm/pull/51360",
+        "createdAt": "2026-08-07T05:06:49Z",
+        "updatedAt": "2026-08-13T18:00:06Z",
+        "timestamp": "2026-08-13T18:00:06Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 9
+        },
+        "labels": [
+          "documentation",
+          "frontend",
+          "ready"
+        ],
+        "author": "matteso1",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1c6a752a5acf781257e9",
+      "signalId": "github:vllm-project/vllm:pull_request:50280",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:50280",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Bugfix][Spec Decode] Make EAGLE weight sharing TP-consistent",
+        "text": "## Purpose Addresses the rank-divergent EAGLE weight-sharing decision described in #50158. The issue stays open: real-hardware runs (see discussion below) show the acceptance collapse reported there persists after this fix and has a separate root cause that is still under investigation. EAGLE currently decides whether to share the target model's `embed_tokens` and `lm_head` by comparing each tensor-parallel rank's local shards independently. If equality differs across ranks, some ranks replace the draft module with the target module while others keep the draft weights. The ranks then build different drafters, which can severely reduce speculative acceptance. This change requires unanimous TP-wide agreement before sharing either module. Each rank contributes its local decision to a CPU-group `MIN` reduction, so any mismatch keeps the draft weights on every rank. TP size 1 preserves the existing fast path without a collective. The regression test covers both unanimous agreement and one-rank mismatch for `embed_tokens` and `lm_head`. The change is limited to the existing EAGLE weight-sharing decisions. The collectives occur in the same fixed model-load order on every TP rank and do not affect inference-time execution. ## Test Plan ```bash pytest -q tests/v1/spec_decode/test_eagle.py::test_eagle_weight_sharing_requires_all_tp_shards_to_match pre-commit run --files vllm/v1/spec_decode/llm_base_proposer.py tests/v1/spec_decode/test_eagle.py ``` ## Test Result - Targeted regression test: `2 passed`. On macOS, the platform backend list was patched to a non-empty value before module collection; the test itself mocks the TP CPU-group reduction. - All applicable pre-commit hooks passed on both changed files, including Ruff, formatting, typos, mypy, SPDX, import checks, and forbidden-import checks. - Real-hardware validation (community, 2x RTX 3090, TP=2, see discussion): the consensus mechanism works as designed — both ranks now log the same verdict where stock vLLM disagreed on every boot; no measurable perf change. The acceptance collapse from #50158 is unaffected by this change (separate root cause, tracked in the open issue). AI assistance: OpenAI Codex was used for analysis, implementation, testing, and PR preparation. All changes were reviewed by the submitter.",
+        "url": "https://github.com/vllm-project/vllm/pull/50280",
+        "createdAt": "2026-07-29T14:27:13Z",
+        "updatedAt": "2026-08-13T17:59:54Z",
+        "timestamp": "2026-08-13T17:59:54Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 2
+        },
+        "labels": [
+          "bug",
+          "speculative-decoding",
+          "v1"
+        ],
+        "author": "sdflkjssl",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:790af83f5dbec8eb434a",
+      "signalId": "github:vllm-project/vllm:pull_request:51915",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:51915",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[ROCm][Model][Bugfix] Enable GLM-5.2-MXFP4 on the deepseek_v32 path and fix sparse attention correctness",
+        "text": "## Purpose Enables GLM-5.2 (`GlmMoeDsaForCausalLM`) end-to-end on `vllm/models/deepseek_v32/amd/` for gfx942/gfx950. Routing is opt-in via `--model-class-overrides`; the registry entry is unchanged, so the default path for GLM-5.2 and DeepSeek-V3.2 is untouched. The following issues were also fixed as a result of this overall enablement since it surfaced dormant bugs from a prior deepseek_v32 porting work: - **`launch_pdl` forwarded to a Triton runtime that doesn't accept it** — the shared `common/kernels.py` passed this CUDA-only kwarg unconditionally; ROCm's Triton rejects it by name even when `False`, so the engine died at startup with `KeyError`. Now passed only when the platform actually supports PDL. - **fp4 bmm invoked with mismatched positional args** — the output tensor landed in the kernel's `dtype` slot (`Expected 'Optional[int]' for 'dtype' but found Tensor`). Routed through the existing `rocm_aiter_ops.batched_gemm_a16wfp4` wrapper rather than calling aiter directly, so the argument contract lives in one place. - **fp4 MLA bmm silently wrong for non-power-of-two K** — `batched_gemm_a16wfp4` only supports power-of-two K, and returns wrong values without erroring otherwise. GLM-5.2's `qk_nope_head_dim=192` lands in the unsupported set; DeepSeek-V3.2's 128 does not. Guarded on both `qk_nope_head_dim` and `kv_lora_rank` to fall back to the fp8 bmm, with a warning. `W_K`/`W_K_scale` are also made contiguous after the transpose, which otherwise produced NaN. - **Indexer-K cache written in the plain layout while its reader expects the shuffled one** — affects DeepSeek-V3.2 identically, not just GLM-5.2. The AMD path writes this cache from the shared `fused_norm_rope`, which only implemented `[n_blocks, blk, head_dim]`, while the reader selects `SHUFFLE` above block size 1: the write kept storing row-major, but the reader expected shuffled, so the indexer scored garbage K and output degenerated once a sequence exceeded `index_topk=2048`, with no error raised. Refactored so the shared kernel stays platform-agnostic — it writes whichever layout the cache reports via a new `uses_shuffled_layout` property — and the AMD-specific shuffled write (`[n_blocks, blk/16, head_dim/16, 16, 16]`, used above block size 1) lives in the AMD backend. The base class returns `False`, so CUDA is unchanged. - **Sparse-MLA block sizes narrowed instead of extended** — the ported backends replaced the inherited `get_supported_kernel_block_sizes()` with `[16, 32]`, which made `select_common_block_size` silently downgrade a requested 64 to 32 via its largest-divisor fallback. Now concatenated with the base list. - **Kernel tests gated on `is_cuda()` and running against dims that matched neither model** — the tests were skipped entirely on CDNA. The gate is now `supports_fp8()`, so the suite runs on gfx950. The hardcoded attention dims were written as if one set served both GLM-5.2 and DeepSeek-V3.2, which it did not; they are now taken from each model's published config and parametrized over both. ## Test Plan Server: VLLM_ROCM_USE_AITER=1 \\ HF_HUB_OFFLINE=1 SAFETENSORS_FAST_GPU=1 \\ vllm serve /path-to-your/GLM-5.2-MXFP4 \\ --model-class-overrides '{\"GlmMoeDsaForCausalLM\": \"vllm.models.deepseek_v32:DeepseekV32ForCausalLM\"}' \\ --tensor-parallel-size 8 \\ --kv-cache-dtype auto \\ --max-model-len 65536 \\ --no-enable-prefix-caching \\ --trust-remote-code \\ --port 8000 Variants: --kv-cache-dtype fp8 for the fp8 KV row; --block-size {16,64} for the block-size matrix. Drop --model-class-overrides to run the legacy deepseek_v2 path for comparison. Accuracy: lm_eval --model local-completions \\ --model_args \"model=/models/GLM-5.2-MXFP4,base_url=http://localhost:8000/v1/completions,num_concurrent=32,tokenized_requests=False,max_retries=3,timeout=3600\" \\ --tasks gsm8k --num_fewshot 5 --gen_kwargs max_gen_toks=2048 --limit 200 Throughput: vllm bench serve --backend vllm --model /shareddata/models/GLM-5.2-MXFP4 \\ --dataset-name random --random-input-len 4096 --random-output-len 1024 \\ --num-prompts 200 --max-concurrency 32 --ignore-eos --port 8000 \\ --save-result --result-filename glm52_v32amd_bench.json Kernel unit tests: pytest tests/kernels/test_fused_deepseek_v32_norm_rope.py -v ## Test Result **gsm8k** — GLM-5.2 200 samples, 5-shot, `exact_match`, `deepseek_v32` AMD path | KV cache | Before (flexible / strict) | After (flexible / strict) | |-------------|----------------------------|------------------------------| | auto (bf16) | 0.0000 / 0.0000 | **0.9400 / 0.9400** ± 0.0168 | | fp8 | 0.0000 / 0.0000 \\* | **0.9350 / 0.9350** ± 0.0175 | \\* Not separately measured. fp8 KV goes through the same absorbed-weight bmm where the bug was, so it fails identically; only the bf16 run was evaluated pre-fix.",
+        "url": "https://github.com/vllm-project/vllm/pull/51915",
+        "createdAt": "2026-08-12T02:59:15Z",
+        "updatedAt": "2026-08-13T17:59:08Z",
+        "timestamp": "2026-08-13T17:59:08Z",
+        "metrics": {
+          "reactions": 3,
+          "comments": 1
+        },
+        "labels": [
+          "bug",
+          "rocm",
+          "needs-rebase",
+          "deepseek"
+        ],
+        "author": "jhu960213",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:01f58712abae1393fddc",
+      "signalId": "github:vllm-project/vllm:pull_request:51793",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:51793",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Quantization] Remove dead `QuantizationConfig.is_mxfp4_quant`",
+        "text": "## Purpose This is dead code following https://github.com/vllm-project/vllm/pull/37128. This was originally added in https://github.com/vllm-project/vllm/pull/29008 that supported padding for gpt-oss / certain MXFP4 backends, see: https://github.com/xuebwang-amd/vllm/blob/c62f664e97977ee54ab1d1c77604ebb45081bc06/vllm/model_executor/layers/fused_moe/layer.py#L259-L277 This is now handled in: https://github.com/vllm-project/vllm/blob/490259c1f63faf025b8050504db63d81c817d781/vllm/model_executor/layers/fused_moe/oracle/mxfp4.py#L640 ## Test Plan N/A ## Test Result N/A",
+        "url": "https://github.com/vllm-project/vllm/pull/51793",
+        "createdAt": "2026-08-11T09:46:17Z",
+        "updatedAt": "2026-08-13T17:58:31Z",
+        "timestamp": "2026-08-13T17:58:31Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 5
+        },
+        "labels": [
+          "ready",
+          "quantization"
+        ],
+        "author": "fxmarty-amd",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:46b0c6e4778fc489233a",
+      "signalId": "github:vllm-project/vllm:pull_request:52183",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:52183",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Core] Update PyTorch to 2.14.0, torchvision to 0.29.0, triton to 3.8.0 (test channel)",
+        "text": "## Purpose Update the PyTorch ecosystem to the **2.14.0** release candidate, resolving wheels from the PyTorch **test channel** (`download.pytorch.org/whl/test/...`): - `torch`: → **2.14.0** - `torchvision`: → **0.29.0** - `triton`: → **3.8.0** 2.14.0 is published on `download.pytorch.org/whl/test/` but not yet on the release index / PyPI, so the index URLs point at the test channel. This mirrors the 2.13.0 test PR #45731. ### Verified availability (test channel) before pinning - `torch-2.14.0+cu130`: present - `torchvision-0.29.0`: present - `triton==3.8.0`: present, and is exactly what `pytorch` `release/2.14` pins in `.ci/docker/triton_version.txt` - `torchaudio`: newest published is still **2.11.0** on every channel, so that pin is unchanged ### ROCm `requirements/build/rocm.txt` moves from the `rocm7.1` index to `test/rocm7.2`. `rocm7.1` has no torch 2.14.0 wheels — 2.14 is built for `rocm7.2` and `rocm7.14` only. That file was also still on torch 2.11.0 / triton 3.6.0, so this brings it in line with `CMakeLists.txt`'s `TORCH_SUPPORTED_VERSION_ROCM`. ### Ray dependency-compatibility check `.buildkite/scripts/check-ray-compatibility.sh` now offers `uv` both the stable and test channels (it already runs with `--index-strategy unsafe-best-match`), so an RC `torch` pin coming from a transitive dep resolves during the RC window instead of failing against a stable-only index. Same fix as #45731. ### Deliberately *not* carried over from #45731 That PR also carried fixes reacting to breakages found during 2.12/2.13 CI. Those are not copied here, since 2.14 should get whatever it actually needs once CI reports: - xfails for pytorch#184431, pytorch#187735, pytorch#187727 - the ROCm source-build override + `install_flash_attn_rocm.sh` (needed because ROCm/pytorch had no `release/2.13` branch) - `verify_torch_wheel.py` / `UV_NO_VERIFY_HASHES` RC-respin handling `requirements/build/tpu.txt` is also left alone — TPU torch is bumped separately (#50412). ## Test Plan Full CI (apply the `ready` label to trigger the Buildkite run). ## BC-breaking? No — test-channel version bump only. *Authored with AI assistance; modeled on #45731.*",
+        "url": "https://github.com/vllm-project/vllm/pull/52183",
+        "createdAt": "2026-08-13T14:56:49Z",
+        "updatedAt": "2026-08-13T17:57:44Z",
+        "timestamp": "2026-08-13T17:57:44Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 2
+        },
+        "labels": [
+          "ci/build",
+          "cpu",
+          "nvidia"
+        ],
+        "author": "atalman",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4e5b0776be7d485c80a0",
+      "signalId": "github:vllm-project/vllm:pull_request:52198",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:52198",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Bugfix][LoRA] Fix PEFT 0.18+ target_parameters LoRA loading for 3D MoE experts",
+        "text": "# [Bugfix][LoRA] Fix PEFT 0.18+ target_parameters LoRA loading for 3D MoE experts ## Problem PEFT 0.18+ can train a LoRA against a fused 3D MoE expert parameter via `target_parameters` (e.g. `mlp.experts.gate_up_proj` / `down_proj`), reading it `[E, dim1, dim2]` as `[E, in, out]`. vLLM's `add_lora_w13` / `add_lora_w2` punica kernels use the opposite `nn.Linear` `[out, in]` convention, so per expert `ΔW_vllm = ΔW_peft^T`. On stock vLLM, `_stack_moe_lora_weights` reshapes with the wrong semantics and `set_lora` raises a shape mismatch that drops the adapter (e.g. Qwen3.5-35B-A3B `down_proj`: `512 vs 2048`). ## Fix - `peft_helper.py`: parse `target_parameters` from `adapter_config.json`. - `lora_model.py`: propagate it onto `LoRAModel` (ctor, `clone()`, `from_lora_tensors`). - `model_manager.py`: in `_stack_moe_lora_weights`, detect the PEFT 3D layout and swap `lora_A`/`lora_B` + transpose the trailing two dims **after** the EP-aware expert slicing. Detection is required, not assumed: `create_dummy_lora_weights` builds dummies in the native layout with the same flat shape, so an unconditional transpose would corrupt them. Primary signal is `target_parameters` naming a fused expert weight; fallback is `lora_a` trailing dim != `hidden_size`. ## Testing ``` python -m pytest -v \\ tests/lora/test_peft_helper.py::test_peft_helper_target_parameters_direct \\ tests/lora/test_lora_manager.py::test_target_parameters_indicates_3d_lora \\ tests/lora/test_lora_manager.py::test_from_lora_tensors_propagates_target_parameters \\ tests/lora/test_peft_helper.py::test_peft_helper_pass \\ tests/lora/test_lora_manager.py::test_from_lora_tensors ``` → **10 passed** (the discriminator test is parametrized over 6 cases). **End-to-end (Qwen3.5-35B-A3B expert LoRA).** The raw PEFT adapter crashes the unpatched loader with the `512 vs 2048` error. With the fix, the directly-loaded adapter is **bit-identical** (chosen-token logprobs, 32 tokens × 5 prompts) to an independent offline-converted oracle that self-checks `max|ΔW_vllm − ΔW_peft^T| = 0` over 320 experts, while both shift logits measurably vs base — so the adapter takes effect and the in-loader transpose matches the verified transform. Logprobs, not decoded text: for an experts-only (8-of-256, rank-32) adapter, greedy text is a false-negative trap since the adapter shifts logits without always flipping the argmax on short prompts. ## AI assistance disclosure AI assistance was used to author this change. A human submitter has reviewed every changed line and run the tests above.",
+        "url": "https://github.com/vllm-project/vllm/pull/52198",
+        "createdAt": "2026-08-13T17:48:23Z",
+        "updatedAt": "2026-08-13T17:55:50Z",
+        "timestamp": "2026-08-13T17:55:50Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 1
+        },
+        "labels": [
+          "bug"
+        ],
+        "author": "darrenpeng-amazon",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8f10133a5e6a894c7732",
+      "signalId": "github:vllm-project/vllm:pull_request:52197",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:52197",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "Support DSpark configs with `architectures=DSparkDraftModel` + `model_type=qwen3`",
+        "text": "## Purpose Generic Qwen `DSparkDraftModel` is now normalized to `Qwen3DSparkModel` so models like https://huggingface.co/RadixArk/Qwen3.8-2.4T-A95B-DSpark can now run on vLLM ## Test Plan ## Test Result Tested gsm8k with ``` vllm serve mgoin/Qwen3.8-2.4T-A95B-NVFP4-pruned75 -tp=4 --spec-model RadixArk/Qwen3.8-2.4T-A95B-DSpark --spec-method dspark --spec-tokens 7 ... (APIServer pid=2078258) INFO 08-13 17:48:18 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.90, Accepted throughput: 1537.03 tokens/s, Drafted throughput: 2757.00 tokens/s, Accepted: 15372 tokens, Drafted: 27573 tokens, Per-position acceptance rate: 0.901, 0.795, 0.667, 0.550, 0.436, 0.327, 0.225, Avg Draft acceptance rate: 55.8% ``` --- <details> <summary> Essential Elements of an Effective PR Description Checklist </summary> - [ ] The purpose of the PR, such as \"Fix some issue (link existing issues this PR will resolve)\". - [ ] The test plan, such as providing test command. - [ ] The test results, such as pasting the results comparison before and after, or e2e results - [ ] (Optional) The necessary documentation update, such as updating `supported_models.md` and `examples` for a new model. </details>",
+        "url": "https://github.com/vllm-project/vllm/pull/52197",
+        "createdAt": "2026-08-13T17:37:50Z",
+        "updatedAt": "2026-08-13T17:53:53Z",
+        "timestamp": "2026-08-13T17:53:53Z",
+        "metrics": {
+          "reactions": 3,
+          "comments": 2
+        },
+        "labels": [
+          "speculative-decoding",
+          "ready",
+          "qwen"
+        ],
+        "author": "mgoin",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:aad9c4995adccc9c7f1e",
+      "signalId": "github:vllm-project/vllm:pull_request:52199",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:52199",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Feature] Add local/external prefix-cache hit breakdown to prompt_tokens_details (additive)",
+        "text": "## Summary A **strictly additive** change that exposes the **local vs external** prefix-cache hit breakdown per request in `prompt_tokens_details` (closes #52137). No existing field or behavior changes: `cached_tokens` keeps its exact meaning (total = `local + external`), and the two new fields are `None` by default / omitted from the response unless the flag is on. ## Background The scheduler already tracks `num_local_cached_tokens` / `num_external_cached_tokens` separately in `PrefillStats`, but `OutputProcessor` collapsed them to their sum (`num_cached_tokens`) before forwarding, so users of distributed prefix caching (Mooncake / lmcache / PD disaggregation) could not tell, per request, where cache hits came from (relevant for billing and diagnosing hit-rate changes). ## Changes (all additive) - **Data pipeline**: `RequestState` and `RequestOutput` gain `num_local_cached_tokens` / `num_external_cached_tokens`; `OutputProcessor` threads them from `PrefillStats` (same assignment site, so `cached_tokens == local + external` holds by construction). - **Protocol**: `PromptTokenUsageInfo` gains `local_cached_tokens` / `external_cached_tokens` (both default `None`). - **Endpoints**: chat and completion, streaming and non-streaming, all forward the breakdown. Other endpoints (responses / cohere / scale_out) are intentionally out of scope. - **Compatibility**: existing fields are untouched; new fields are `None` by default and omitted from the response when `--enable-prompt-tokens-details` is off — existing clients and dashboards keep working unchanged. ## Tests - `tests/entrypoints/openai/chat_completion/test_serving_chat.py`: `_make_prompt_tokens_details` with the new signature — defaults, gated-off behavior, multimodal coexistence, and the `cached_tokens == local + external` invariant. - `tests/v1/engine/test_output_processor.py`: `PrefillStats` → `RequestState` threading with non-zero local/external values.",
+        "url": "https://github.com/vllm-project/vllm/pull/52199",
+        "createdAt": "2026-08-13T17:48:30Z",
+        "updatedAt": "2026-08-13T17:49:11Z",
+        "timestamp": "2026-08-13T17:49:11Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 1
+        },
+        "labels": [
+          "frontend"
+        ],
+        "author": "SayHelloToWorld",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:7ed414fea7a9bf53b28c",
+      "signalId": "github:vllm-project/vllm:pull_request:46424",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:46424",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Bugfix][Mamba2] Fix assert crash when prefill-reclassified-as-decode occurs with no concurrent spec tokens",
+        "text": "## Summary When a Mamba2-attention hybrid model (e.g. NemotronH) is served with both `--enable-prefix-caching` and `--speculative-config`, the server can crash with: ``` AssertionError File \"vllm/model_executor/layers/mamba/mamba_mixer2.py\", line 963, in conv_ssm_forward assert block_idx_last_scheduled_token_prev_step_d is not None ``` ### Trigger condition 1. `--enable-prefix-caching` auto-sets `mamba_cache_mode=all` for models implementing `SupportsMambaPrefixCaching` (`config.py:352`). This makes `is_mamba_cache_all=True` in the model. 2. A request arrives whose prompt is exactly `N × block_size + 1` tokens and the N-block prefix is already cached. Only 1 token remains to prefill. `mamba_attn.py` reclassifies any single-query-token prefill with prior state (`seq_len > 1`) as a decode step. 3. No other concurrent request has active speculative tokens that scheduler step, so `use_spec_decode = len(scheduled_spec_decode_tokens) > 0` is **False**. The current code gates `prev_last_scheduled_idx` inside this check, so it is never forwarded to `Mamba2AttentionMetadataBuilder`. 4. `mamba_mixer2.py:963` asserts this value is non-None whenever `has_decode=True`, `is_mamba_cache_all=True`, and `num_spec > 0`. The assert fires and kills all TP ranks. The crash is intermittent under heavy traffic: if any concurrent decode request happens to have active spec tokens in the same step, `use_spec_decode=True` and the bug is silently avoided. ### Root cause PR #41233 added `mamba_prev_last_scheduled_idx` and per-step preprocessing but left the per-step `use_spec_decode` gate in place. The fix is incomplete: `prev_last_scheduled_idx` must be forwarded whenever the buffer exists, not only on steps where spec tokens are scheduled. In v0.21.0 the crash was impossible because `config.py` forced `mamba_cache_mode=align` (not `all`) when spec decode was also active, so `is_mamba_cache_all` was always False. ### Fix Move the `prev_last_scheduled_idx` assignment outside the `use_spec_decode` gate. The guard `self.mamba_prev_last_scheduled_idx is not None` ensures this only runs for spec-decode deployments with `mamba_cache_mode=all`. `Mamba2AttentionMetadataBuilder` already handles `prev_last_scheduled_idx < 0` via the fallback `(num_computed - 1) // mamba_block_size`, so passing unconditionally is safe. ## Duplicate check Searched open PRs for `mamba_mixer2 assert`, `mamba prev_last_scheduled_idx`, `mamba cache mode spec decode` — no existing PR found. Related: #41233 (introduced the incomplete fix this PR completes). ## Test plan Requires a Mamba2-attention hybrid model implementing `SupportsMambaPrefixCaching` (NemotronH family) served with both `--enable-prefix-caching` and `--speculative-config '{\"method\":\"mtp\",\"num_speculative_tokens\":N}'`: 1. Start vLLM. Find the effective `BLOCK_SIZE` in the startup log: `\"Setting attention block size to N tokens\"`. 2. Send a prompt of exactly `BLOCK_SIZE + 1` tokens. The server caches one full block. 3. Send the same prompt again while the server is otherwise idle. Without this fix: the assert fires immediately and all TP ranks crash. With this fix: the request succeeds. Verified on `vllm/vllm-openai:v0.22.0`, 4-way tensor parallel, NemotronH-class model. ## AI assistance disclosure This fix was developed with AI assistance (Claude Sonnet 4.6). The crash sequence, root cause analysis, and fix were verified by the human submitter against the live codebase and against a running deployment. Every changed line has been reviewed.",
+        "url": "https://github.com/vllm-project/vllm/pull/46424",
+        "createdAt": "2026-06-22T23:20:12Z",
+        "updatedAt": "2026-08-13T17:47:48Z",
+        "timestamp": "2026-08-13T17:47:48Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 4
+        },
+        "labels": [
+          "bug",
+          "ready",
+          "v1"
+        ],
+        "author": "sytianhe",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f881f967df91e2b8dad9",
+      "signalId": "github:vllm-project/vllm:pull_request:51338",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:51338",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[RFC][Bug Fix][Spec Decode] Require explicit speculative methods",
+        "text": "This PR removes speculative-method guessing and makes the method an explicit contract. ## Problem On current `main`, vLLM guesses the speculative method from model path/name substrings such as `eagle3`, `dflash`, and `dspark`. A DFlash or DSpark checkpoint at a neutral training path can therefore be treated as the generic autoregressive `draft_model`, while renaming or moving the same checkpoint changes serving behavior. For example: ```bash vllm serve Qwen/Qwen3-8B \\ --speculative-config '{\"model\": \"/path/to/checkpoints/6\", \"num_speculative_tokens\": 15}' ``` Previously, this could silently select `draft_model`. In the original end-to-end Qwen3-8B + DFlash reproduction, the misdetected path produced acceptance length 1.02; adding explicit `\"method\": \"dflash\"` produced 3.88. Serving a specialized checkpoint through the wrong proposer is worse than requiring one extra field, so this PR now fails closed. ## Design - A method is required for every explicit speculative configuration. It can be supplied as `\"method\"` in `--speculative-config` or with `--spec-method`. - The explicit method selects the proposer and any structural loader normalization. vLLM does not replace or second-guess it from the model path, checkpoint architecture, structural `model_type`, or other metadata. - Checkpoint metadata is used only after method selection for implementation details, such as choosing the embedded DeepSeek-V4 DSpark loader for `method=\"dspark\"` and defaulting its proposal depth from `dspark_block_size`. - Known checkpoint schemas that explicitly declare their algorithm may populate the method before `SpeculativeConfig` is constructed. The speculators format uses `speculators_model_type`; PEagle is normalized to `method=\"eagle3\"` with parallel drafting. - `num_speculative_tokens` remains optional when the selected checkpoint format declares a proposal depth, such as speculators `speculative_tokens`, `n_predict`, or DSpark `dspark_block_size`. Otherwise the existing clear error remains. - DFlash and DSpark parallel-drafting behavior is derived from the explicit method. - Explicit shorthand values are folded into the config before checkpoint-declared defaults, so `--spec-method`, `--spec-model`, and `--spec-tokens` follow the same precedence rule as JSON fields. For an embedded DeepSeek-V4 checkpoint, the same checkpoint metadata is therefore handled according to the requested method: `draft_model` keeps the ordinary model loader, `mtp` uses `DeepSeekV4MTPModel`, and `dspark` uses `DSparkDraftModel`. The metadata does not choose among them. ## Breaking change Configurations that relied on implicit selection must add a method. Before: ```bash vllm serve Qwen/Qwen3-8B \\ --speculative-config '{ \"model\": \"/path/to/checkpoints/6\", \"num_speculative_tokens\": 15 }' ``` After: ```bash vllm serve Qwen/Qwen3-8B \\ --speculative-config '{ \"method\": \"dflash\", \"model\": \"/path/to/checkpoints/6\", \"num_speculative_tokens\": 15 }' ``` For a generic autoregressive draft model, use `\"method\": \"draft_model\"`. Legacy EAGLE/EAGLE3, Medusa, MLP-speculator, n-gram, and custom-proposer configurations must likewise state their method. A speculators-format checkpoint used as the top-level model still works without an explicit `--speculative-config`, because its schema declares both the algorithm and proposal depth. ## Validation - End-to-end reproduction recorded before this design change: - misdetected `draft_model`: acceptance length 1.02 - explicit `dflash`: acceptance length 3.88 - This PR now rejects the missing-method configuration instead of silently serving it autoregressively. - Explicit method, schema default, loader selection, and callable override tests: 18 passed. - Full draft HF override module: 11 passed. - DeepSeek EAGLE loader compatibility regression: 1 passed. - Earlier focused config, DSpark, engine-argument, scheduler, and structured-output suites: 50 passed. - Full `tests/test_config.py` before the final refinement: 179 passed; 2 failed only because this environment cannot access gated `meta-llama/Meta-Llama-3-8B-Instruct` (HTTP 403). - All pre-commit hooks passed on every changed file, including Ruff, mypy, Markdown lint, SPDX, DCO sign-off, and configuration validation. - GPU model evaluation was not rerun for this follow-up; the serving change is fail-fast configuration and loader-selection behavior, and the earlier DFlash measurement above is retained as the motivating model result. <details> <summary>Commands run</summary> ```bash .venv/bin/python -m pytest -q \\ tests/config/test_speculative_draft_hf_overrides.py \\ tests/test_config.py \\ -k 'method_selects_draft_override or callable_overrides_reach_the_draft_config or arch_mapping_applies_before_callable_override or composed_override_is_picklable or explicit_method_selects_deepseek_v4_loader or speculative_config_requires_method or speculators_format' .venv/bin/python -m pytest -q \\ 'tests/config/test_model_arch_config.py::test_draft_model_arch_config[eagle618/deepseek-v3-random-eagle618/eagle-deepseek-v3-random-eagle-True]' .venv/bin/python -m pytest -q tests/config/test_speculative_draft_hf_overrides.py .venv/bin/pre-commit run --files <all changed files> ``` </details> ## Contribution notes - This is not a duplicate of #47490: that PR preserves auto-detection and validates explicit-method mismatches; this PR removes automatic method selection and fails when an explicit configuration omits the method. - This is not a duplicate of #44566: that PR only propagates token depth from a speculators-format draft; this PR changes method-selection semantics while preserving declared token defaults. - This is not a duplicate of #52165: that PR detects embedded DeepSeek-V4 DSpark metadata and uses it for automatic routing; this PR makes the explicit method authoritative and uses metadata only to configure the selected loader. - AI assistance was used. I reviewed every changed line and ran the validation listed above.",
+        "url": "https://github.com/vllm-project/vllm/pull/51338",
+        "createdAt": "2026-08-07T00:53:10Z",
+        "updatedAt": "2026-08-13T17:47:21Z",
+        "timestamp": "2026-08-13T17:47:21Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 6
+        },
+        "labels": [
+          "bug",
+          "documentation",
+          "new-model",
+          "structured-output",
+          "speculative-decoding",
+          "rust"
+        ],
+        "author": "WindChimeRan",
         "state": "open",
         "assignees": [],
         "change": "updated"

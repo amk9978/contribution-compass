@@ -8,7 +8,10 @@
   "repository": {
     "id": "testcontainers-go",
     "repo": "testcontainers/testcontainers-go",
-    "name": "Testcontainers for Go"
+    "name": "Testcontainers for Go",
+    "keywords": [
+      "Testcontainers"
+    ]
   },
   "context": {
     "repository": "testcontainers/testcontainers-go",
@@ -32,11 +35,11 @@
     "forks": 628,
     "openIssues": 162,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:21.730636+00:00"
+    "collectedAt": "2026-08-13T18:02:09.926681+00:00"
   },
   "news": {
     "repository": "testcontainers/testcontainers-go",
-    "collectedAt": "2026-08-13T17:47:21.730636+00:00",
+    "collectedAt": "2026-08-13T18:02:09.926681+00:00",
     "latestRelease": {
       "repository": "testcontainers/testcontainers-go",
       "tag": "v0.44.0",
@@ -85,6 +88,12 @@
     {
       "collectedAt": "2026-08-13T17:47:07.884300Z",
       "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 2,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
       "observedCount": 2,
       "changedCount": 0
     }

@@ -8,7 +8,10 @@
   "repository": {
     "id": "dragonfly",
     "repo": "dragonflydb/dragonfly",
-    "name": "Dragonfly"
+    "name": "Dragonfly",
+    "keywords": [
+      "DragonflyDB"
+    ]
   },
   "context": {
     "repository": "dragonflydb/dragonfly",
@@ -39,11 +42,11 @@
     "forks": 1226,
     "openIssues": 300,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:16.165314+00:00"
+    "collectedAt": "2026-08-13T18:02:04.758446+00:00"
   },
   "news": {
     "repository": "dragonflydb/dragonfly",
-    "collectedAt": "2026-08-13T17:47:16.165314+00:00",
+    "collectedAt": "2026-08-13T18:02:04.758446+00:00",
     "latestRelease": {
       "repository": "dragonflydb/dragonfly",
       "tag": "v1.40.1",
@@ -115,6 +118,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 29,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 29,
+      "changedCount": 1
     }
   ],
   "signals": [
@@ -835,8 +844,8 @@
       "text": "The changes that I merged into 1.40 branch Only functional change: 1. Fixes small bins defrag by using bounded TraverseBySegmentOrder to avoid blowing up iteration costs when the table is largely empty Metrics & config: 1. Exports missing tiering fields from info to metrics 2. Adds new configurable values to allow limiting CPU limit consumption of offloading / background scanning",
       "url": "https://github.com/dragonflydb/dragonfly/pull/8077",
       "createdAt": "2026-08-13T11:05:19Z",
-      "updatedAt": "2026-08-13T11:12:19Z",
-      "timestamp": "2026-08-13T11:12:19Z",
+      "updatedAt": "2026-08-13T17:54:15Z",
+      "timestamp": "2026-08-13T17:54:15Z",
       "metrics": {
         "reactions": 0,
         "comments": 4
@@ -844,7 +853,8 @@
       "labels": [],
       "author": "dranikpg",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8078",
@@ -1983,6 +1993,37 @@
         "assignees": [
           "vyavdoshenko"
         ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ebe7ae1502bd820bff25",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8077",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8077",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(tiering): Use TraverseBySegmentOrder and export more metrics/configs",
+        "text": "The changes that I merged into 1.40 branch Only functional change: 1. Fixes small bins defrag by using bounded TraverseBySegmentOrder to avoid blowing up iteration costs when the table is largely empty Metrics & config: 1. Exports missing tiering fields from info to metrics 2. Adds new configurable values to allow limiting CPU limit consumption of offloading / background scanning",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8077",
+        "createdAt": "2026-08-13T11:05:19Z",
+        "updatedAt": "2026-08-13T17:54:15Z",
+        "timestamp": "2026-08-13T17:54:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
         "change": "updated"
       }
     }

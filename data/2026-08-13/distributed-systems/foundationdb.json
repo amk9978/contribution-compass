@@ -8,7 +8,10 @@
   "repository": {
     "id": "foundationdb",
     "repo": "apple/foundationdb",
-    "name": "FoundationDB"
+    "name": "FoundationDB",
+    "keywords": [
+      "FoundationDB"
+    ]
   },
   "context": {
     "repository": "apple/foundationdb",
@@ -29,11 +32,11 @@
     "forks": 1547,
     "openIssues": 768,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:10.444702+00:00"
+    "collectedAt": "2026-08-13T18:01:58.567200+00:00"
   },
   "news": {
     "repository": "apple/foundationdb",
-    "collectedAt": "2026-08-13T17:47:10.444702+00:00",
+    "collectedAt": "2026-08-13T18:01:58.567200+00:00",
     "latestRelease": {
       "repository": "apple/foundationdb",
       "tag": "7.3.77",
@@ -96,6 +99,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 14,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 14,
+      "changedCount": 2
     }
   ],
   "signals": [
@@ -447,8 +456,8 @@
       "text": "## Summary - Preserve the first observed maintenance-window start version when a transaction must be retried. - Adopt an already committed start after ambiguous commits, concurrent writers, or data-distributor recruitment. - Retry stale-start cleanup when maintenance ends while preserving the existing maintenance tracing and durable storage format. - Cover failed starts, ambiguous commits, competing writers, failed clears, changed maintenance zones, and recruitment with six focused regression tests. ## Testing - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test -f /DataDistribution/Maintenance/` - 6 passed, 0 failed. - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test` - 56 passed, 0 failed. - `clang-format` 19 and `git diff --check` passed.",
       "url": "https://github.com/apple/foundationdb/pull/13856",
       "createdAt": "2026-08-12T20:04:26Z",
-      "updatedAt": "2026-08-13T07:51:59Z",
-      "timestamp": "2026-08-13T07:51:59Z",
+      "updatedAt": "2026-08-13T17:57:20Z",
+      "timestamp": "2026-08-13T17:57:20Z",
       "metrics": {
         "reactions": 0,
         "comments": 49
@@ -456,7 +465,8 @@
       "labels": [],
       "author": "tclinkenbeard-oai",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13861",
@@ -468,16 +478,17 @@
       "text": "Append Major.Minor to titles of release-notes pages so they better distinguish themselves. URLs do not change, they are based on filename. Consolidate pre-1.0 alpha and beta release notes into the 1.0 page (subjective 🤷) Latest release-notes-740 keep version-less title because of links to \"latest Release Notes\" elsewhere in the docs site that would be affected by the title change. -------- The main place these updated titles can be appreciated is in the Previous Releases page (which might only be linked from the entire site index anyway): Before: <img width=\"1166\" height=\"826\" alt=\"Screenshot 2026-08-13 at 1 21 32 PM\" src=\"https://github.com/user-attachments/assets/9a247e5e-a1bf-45c7-8bbb-2c3692a98c26\" /> After: <img width=\"1187\" height=\"749\" alt=\"Screenshot 2026-08-13 at 1 20 47 PM\" src=\"https://github.com/user-attachments/assets/a5a6fb7d-8123-4334-9a16-c328a5701698\" />",
       "url": "https://github.com/apple/foundationdb/pull/13861",
       "createdAt": "2026-08-13T17:33:00Z",
-      "updatedAt": "2026-08-13T17:33:00Z",
-      "timestamp": "2026-08-13T17:33:00Z",
+      "updatedAt": "2026-08-13T17:56:49Z",
+      "timestamp": "2026-08-13T17:56:49Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [],
       "author": "ploxiln",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     }
   ],
   "events": [
@@ -1000,6 +1011,69 @@
         "state": "open",
         "assignees": [],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:44c02bc78d61540bd322",
+      "signalId": "github:apple/foundationdb:pull_request:13856",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13856",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Preserve DD maintenance start versions across transaction retries",
+        "text": "## Summary - Preserve the first observed maintenance-window start version when a transaction must be retried. - Adopt an already committed start after ambiguous commits, concurrent writers, or data-distributor recruitment. - Retry stale-start cleanup when maintenance ends while preserving the existing maintenance tracing and durable storage format. - Cover failed starts, ambiguous commits, competing writers, failed clears, changed maintenance zones, and recruitment with six focused regression tests. ## Testing - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test -f /DataDistribution/Maintenance/` - 6 passed, 0 failed. - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test` - 56 passed, 0 failed. - `clang-format` 19 and `git diff --check` passed.",
+        "url": "https://github.com/apple/foundationdb/pull/13856",
+        "createdAt": "2026-08-12T20:04:26Z",
+        "updatedAt": "2026-08-13T17:57:20Z",
+        "timestamp": "2026-08-13T17:57:20Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 49
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:7ea887199dde61286f48",
+      "signalId": "github:apple/foundationdb:pull_request:13861",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13861",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: release-notes titles, consolidate pre-1.0",
+        "text": "Append Major.Minor to titles of release-notes pages so they better distinguish themselves. URLs do not change, they are based on filename. Consolidate pre-1.0 alpha and beta release notes into the 1.0 page (subjective 🤷) Latest release-notes-740 keep version-less title because of links to \"latest Release Notes\" elsewhere in the docs site that would be affected by the title change. -------- The main place these updated titles can be appreciated is in the Previous Releases page (which might only be linked from the entire site index anyway): Before: <img width=\"1166\" height=\"826\" alt=\"Screenshot 2026-08-13 at 1 21 32 PM\" src=\"https://github.com/user-attachments/assets/9a247e5e-a1bf-45c7-8bbb-2c3692a98c26\" /> After: <img width=\"1187\" height=\"749\" alt=\"Screenshot 2026-08-13 at 1 20 47 PM\" src=\"https://github.com/user-attachments/assets/a5a6fb7d-8123-4334-9a16-c328a5701698\" />",
+        "url": "https://github.com/apple/foundationdb/pull/13861",
+        "createdAt": "2026-08-13T17:33:00Z",
+        "updatedAt": "2026-08-13T17:56:49Z",
+        "timestamp": "2026-08-13T17:56:49Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
       }
     }
   ]

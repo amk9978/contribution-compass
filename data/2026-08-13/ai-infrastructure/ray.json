@@ -8,7 +8,11 @@
   "repository": {
     "id": "ray",
     "repo": "ray-project/ray",
-    "name": "Ray"
+    "name": "Ray",
+    "keywords": [
+      "Ray distributed computing",
+      "Ray framework"
+    ]
   },
   "context": {
     "repository": "ray-project/ray",
@@ -44,11 +48,11 @@
     "forks": 7922,
     "openIssues": 3490,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:20.083836+00:00"
+    "collectedAt": "2026-08-13T18:02:08.020333+00:00"
   },
   "news": {
     "repository": "ray-project/ray",
-    "collectedAt": "2026-08-13T17:47:20.083836+00:00",
+    "collectedAt": "2026-08-13T18:02:08.020333+00:00",
     "latestRelease": {
       "repository": "ray-project/ray",
       "tag": "ray-2.57.0",
@@ -150,6 +154,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 96,
       "changedCount": 2
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 96,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -548,8 +558,7 @@
       ],
       "author": "OneSizeFitsQuorum",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:issue:65444",
@@ -1491,8 +1500,7 @@
       ],
       "author": "dstrodtman",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ray-project/ray:pull_request:65245",

@@ -17,7 +17,7 @@ Repository: [BerriAI/litellm](https://github.com/BerriAI/litellm)
 
 ## Publicly indicated upcoming work
 
-No public prerelease or open milestone was found.
+- **Prerelease** [v1.98.0-dev.2](https://github.com/BerriAI/litellm/releases/tag/v1.98.0-dev.2)
 
 ## Hacker News discussions
 

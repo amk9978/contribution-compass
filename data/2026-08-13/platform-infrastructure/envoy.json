@@ -8,7 +8,10 @@
   "repository": {
     "id": "envoy",
     "repo": "envoyproxy/envoy",
-    "name": "Envoy"
+    "name": "Envoy",
+    "keywords": [
+      "Envoy Proxy"
+    ]
   },
   "context": {
     "repository": "envoyproxy/envoy",
@@ -32,11 +35,11 @@
     "forks": 5553,
     "openIssues": 1836,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:11.125712+00:00"
+    "collectedAt": "2026-08-13T18:01:58.719902+00:00"
   },
   "news": {
     "repository": "envoyproxy/envoy",
-    "collectedAt": "2026-08-13T17:47:11.125712+00:00",
+    "collectedAt": "2026-08-13T18:01:58.719902+00:00",
     "latestRelease": {
       "repository": "envoyproxy/envoy",
       "tag": "v1.39.0",
@@ -118,6 +121,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 63,
       "changedCount": 1
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 63,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -1598,8 +1607,7 @@
       "labels": [],
       "author": "dangle1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46660",

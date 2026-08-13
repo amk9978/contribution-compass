@@ -8,7 +8,11 @@
   "repository": {
     "id": "uv",
     "repo": "astral-sh/uv",
-    "name": "uv"
+    "name": "uv",
+    "keywords": [
+      "Astral uv",
+      "uv Python"
+    ]
   },
   "context": {
     "repository": "astral-sh/uv",
@@ -24,15 +28,15 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 88718,
+    "stars": 88719,
     "forks": 3483,
-    "openIssues": 2819,
+    "openIssues": 2821,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:23.334804+00:00"
+    "collectedAt": "2026-08-13T18:02:14.474708+00:00"
   },
   "news": {
     "repository": "astral-sh/uv",
-    "collectedAt": "2026-08-13T17:47:23.334804+00:00",
+    "collectedAt": "2026-08-13T18:02:14.474708+00:00",
     "latestRelease": {
       "repository": "astral-sh/uv",
       "tag": "0.12.3",
@@ -94,6 +98,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 36,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 37,
+      "changedCount": 2
     }
   ],
   "signals": [
@@ -1550,6 +1560,55 @@
       "author": "charliermarsh",
       "state": "closed",
       "assignees": []
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21097",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Fix relative indexes in PEP 723 scripts",
+      "text": "## Summary Relative indexes in PEP 723 scripts were resolved against the current working directory instead of the script's directory, so a script could work when ran from its own directory but fail when ran from elsewhere. This change resolves inline indexes relative to the script and also makes `uv add --script` write index paths relative to the script. It also applies the same behavior to extra build dependencies Fixes #21096 ## Test Plan - Added an offline regression test that runs a script with a relative index from another directory - Ran the focused project and sync tests - Ran Clippy and rustfmt",
+      "url": "https://github.com/astral-sh/uv/pull/21097",
+      "createdAt": "2026-08-13T17:56:29Z",
+      "updatedAt": "2026-08-13T18:02:04Z",
+      "timestamp": "2026-08-13T18:02:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "kowanietz",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21098",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Add regression test for uv#21096",
+      "text": "Add a minimal integration test that reproduces astral-sh/uv#21096.",
+      "url": "https://github.com/astral-sh/uv/pull/21098",
+      "createdAt": "2026-08-13T17:58:34Z",
+      "updatedAt": "2026-08-13T17:58:36Z",
+      "timestamp": "2026-08-13T17:58:36Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "internal",
+        "testing"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "state": "open",
+      "assignees": [
+        "zanieb"
+      ],
+      "change": "new"
     }
   ],
   "events": [
@@ -3854,6 +3913,69 @@
         "author": "zaniebot",
         "state": "open",
         "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ef2ee82bab27b70b1e6a",
+      "signalId": "github:astral-sh/uv:pull_request:21097",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:astral-sh/uv:pull_request:21097",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "astral-sh/uv",
+        "kind": "pull_request",
+        "title": "Fix relative indexes in PEP 723 scripts",
+        "text": "## Summary Relative indexes in PEP 723 scripts were resolved against the current working directory instead of the script's directory, so a script could work when ran from its own directory but fail when ran from elsewhere. This change resolves inline indexes relative to the script and also makes `uv add --script` write index paths relative to the script. It also applies the same behavior to extra build dependencies Fixes #21096 ## Test Plan - Added an offline regression test that runs a script with a relative index from another directory - Ran the focused project and sync tests - Ran Clippy and rustfmt",
+        "url": "https://github.com/astral-sh/uv/pull/21097",
+        "createdAt": "2026-08-13T17:56:29Z",
+        "updatedAt": "2026-08-13T18:02:04Z",
+        "timestamp": "2026-08-13T18:02:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "kowanietz",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:706f1f53fd78ad2388b9",
+      "signalId": "github:astral-sh/uv:pull_request:21098",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:astral-sh/uv:pull_request:21098",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "astral-sh/uv",
+        "kind": "pull_request",
+        "title": "Add regression test for uv#21096",
+        "text": "Add a minimal integration test that reproduces astral-sh/uv#21096.",
+        "url": "https://github.com/astral-sh/uv/pull/21098",
+        "createdAt": "2026-08-13T17:58:34Z",
+        "updatedAt": "2026-08-13T17:58:36Z",
+        "timestamp": "2026-08-13T17:58:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "internal",
+          "testing"
+        ],
+        "author": "astral-automations-bot[bot]",
+        "state": "open",
+        "assignees": [
+          "zanieb"
+        ],
         "change": "new"
       }
     }

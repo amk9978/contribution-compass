@@ -8,7 +8,11 @@
   "repository": {
     "id": "buf",
     "repo": "bufbuild/buf",
-    "name": "Buf"
+    "name": "Buf",
+    "keywords": [
+      "Buf protobuf",
+      "Buf Schema Registry"
+    ]
   },
   "context": {
     "repository": "bufbuild/buf",
@@ -30,11 +34,11 @@
     "forks": 366,
     "openIssues": 58,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:23.045280+00:00"
+    "collectedAt": "2026-08-13T18:02:10.878057+00:00"
   },
   "news": {
     "repository": "bufbuild/buf",
-    "collectedAt": "2026-08-13T17:47:23.045280+00:00",
+    "collectedAt": "2026-08-13T18:02:10.878057+00:00",
     "latestRelease": {
       "repository": "bufbuild/buf",
       "tag": "v1.72.0",
@@ -80,6 +84,12 @@
     {
       "collectedAt": "2026-08-13T17:47:07.884300Z",
       "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
       "observedCount": 0,
       "changedCount": 0
     }

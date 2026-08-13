@@ -8,7 +8,10 @@
   "repository": {
     "id": "opencode",
     "repo": "anomalyco/opencode",
-    "name": "OpenCode"
+    "name": "OpenCode",
+    "keywords": [
+      "OpenCode"
+    ]
   },
   "context": {
     "repository": "anomalyco/opencode",
@@ -19,15 +22,15 @@
     "topics": [],
     "license": "MIT",
     "defaultBranch": "dev",
-    "stars": 197016,
-    "forks": 25337,
-    "openIssues": 5198,
+    "stars": 197020,
+    "forks": 25336,
+    "openIssues": 5203,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:28.935329+00:00"
+    "collectedAt": "2026-08-13T18:02:16.583088+00:00"
   },
   "news": {
     "repository": "anomalyco/opencode",
-    "collectedAt": "2026-08-13T17:47:28.935329+00:00",
+    "collectedAt": "2026-08-13T18:02:16.583088+00:00",
     "latestRelease": {
       "repository": "anomalyco/opencode",
       "tag": "v1.18.18",
@@ -76,6 +79,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 492,
       "changedCount": 2
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 497,
+      "changedCount": 14
     }
   ],
   "signals": [
@@ -1824,6 +1833,30 @@
       "labels": [],
       "author": "WuJunkai2004",
       "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:anomalyco/opencode:issue:33060",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "issue",
+      "title": "GitHub Integration with Opencode Zen",
+      "text": "### Description Im getting this error when my workflow file runs : ```bash Error: Unexpected error undefined is not an object (evaluating 'p.rest') ``` This is my current workflow file : ```yml name: opencode on: issue_comment: types: [created] pull_request_review_comment: types: [created] permissions: contents: write pull-requests: write issues: write id-token: write jobs: opencode: # Only triggers when someone comments '/oc' or '/opencode' if: | contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode') runs-on: ubuntu-latest steps: - name: Checkout repository uses: actions/checkout@v6 with: fetch-depth: 0 persist-credentials: false - name: Run OpenCode via Zen uses: anomalyco/opencode/github@latest env: # Your single OpenCode Zen gateway key OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }} with: # A Zen-supported model string model: opencode/kimi-k2.5 agent: build # Runs in write-enabled mode to apply code fixes ``` The problem I believe is the OPENCODE_API_KEY , Im not sure if its supported but there has to be a way to use different models than anthropic. Does anyone have docs on this becuase I cannot find it no matter how much I tried on the website. This template was generated via the kimi model on opencode so I trusted it would work but no luck so far. ### Plugins none ### OpenCode version version 1.17.8 ### Steps to reproduce 1. Create a workflow file in a repo for example \".github/workflows/main.yml\" or \".github/workflows/opencode.yml\" 2. Give the yml file this content: ```yml name: opencode on: issue_comment: types: [created] pull_request_review_comment: types: [created] permissions: contents: write pull-requests: write issues: write id-token: write jobs: opencode: # Only triggers when someone comments '/oc' or '/opencode' if: | contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode') runs-on: ubuntu-latest steps: - name: Checkout repository uses: actions/checkout@v6 with: fetch-depth: 0 persist-credentials: false - name: Run OpenCode via Zen uses: anomalyco/opencode/github@latest env: # Your single OpenCode Zen gateway key OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }} with: # A Zen-supported model string model: opencode/kimi-k2.5 agent: build # Runs in write-enabled mode to apply code fixes ``` 3. Register an environment variable in your repository settings with the name OPENCODE_API_KEY 4. Comment on a PR \"/oc\" or \"/opencode\" to trigger github actions and the process will fail ### Screenshot and/or share link <img width=\"2084\" height=\"956\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e4d46d7d-7c23-4310-94b7-bd52d1f6afc9\" /> ### Operating System This would run on Linux specifically the Ubuntu distro ### Terminal Bash shell",
+      "url": "https://github.com/anomalyco/opencode/issues/33060",
+      "createdAt": "2026-06-20T07:53:33Z",
+      "updatedAt": "2026-08-13T17:06:15Z",
+      "timestamp": "2026-08-13T17:06:15Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "FabrzyTech",
+      "state": "open",
+      "assignees": [
+        "fwang"
+      ],
       "change": "new"
     },
     {
@@ -4618,16 +4651,17 @@
       "title": "Why does Opencode require me to subscribe when your official website states it's 100% free?",
       "url": "https://github.com/anomalyco/opencode/issues/42143",
       "createdAt": "2026-08-12T20:34:29Z",
-      "updatedAt": "2026-08-13T11:39:46Z",
-      "timestamp": "2026-08-13T11:39:46Z",
+      "updatedAt": "2026-08-13T17:49:48Z",
+      "timestamp": "2026-08-13T17:49:48Z",
       "metrics": {
         "reactions": 26,
-        "comments": 9
+        "comments": 8
       },
       "labels": [],
       "author": "mahmoud-Web-Developer",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:anomalyco/opencode:issue:42145",
@@ -6263,18 +6297,19 @@
       "text": "### Description I was using opencode connected to DeepSeek V4 Flash Free on opencode zen, and most - *but not all*! - requests failed with an error, `Upstream request failed: [invalid_bearer_credential] Missing or invalid bearer credential` This happened with version 1.18.3. I upgraded to 1.18.18, and it kept happening. I then connected to DeepSeek V4 Flash on my opencode **go** subscription, and the request immediately succeeded, and kept working. ### Plugins None ### OpenCode version 1.18.18 ### Steps to reproduce 1. Connect to opencode zen 2. Choose DeepSeek V4 Flash (Free) as the model 3. Ask some number of requests, most of them seem to be failing at the time of reporting. ### Screenshot and/or share link With DeepSeek V4 Flash Free on OpenCode Zen: <img width=\"1896\" height=\"1642\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bb2b2c90-7204-4f3b-a905-34dd47dcddbc\" /> With DeepSeek V4 Flash on OpenCode Go: <img width=\"1896\" height=\"1642\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ee91724e-6030-4604-a3e7-c53bfc1f5d7c\" /> ### Operating System Ubuntu 26.04 ### Terminal Ubuntu terminal",
       "url": "https://github.com/anomalyco/opencode/issues/42293",
       "createdAt": "2026-08-13T09:21:50Z",
-      "updatedAt": "2026-08-13T17:21:26Z",
-      "timestamp": "2026-08-13T17:21:26Z",
+      "updatedAt": "2026-08-13T17:59:10Z",
+      "timestamp": "2026-08-13T17:59:10Z",
       "metrics": {
         "reactions": 0,
-        "comments": 10
+        "comments": 12
       },
       "labels": [],
       "author": "cbrunschen",
-      "state": "open",
+      "state": "closed",
       "assignees": [
         "MrMushrooooom"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:anomalyco/opencode:issue:42294",
@@ -7254,16 +7289,68 @@
       "text": "### Description The [tools docs](https://opencode.ai/docs/tools/) say `websearch` \"is only available when using the OpenCode provider or when the `OPENCODE_ENABLE_EXA` environment variable is set\". I'm using the official **OpenCode Go** subscription ([docs](https://opencode.ai/docs/go/), model IDs use the `opencode-go/` prefix, e.g. `opencode-go/deepseek-v4-flash`, API key added via `/connect`). However, `websearch` is filtered out of the tool list for the `opencode-go` provider. The gate is in `packages/opencode/src/tool/registry.ts`: ```ts // L58-60 export function webSearchEnabled(providerID: ProviderV2.ID, flags = { exa: false, parallel: false }) { return providerID === ProviderV2.ID.opencode || flags.exa || flags.parallel } // L286-290 if (tool.id === WebSearchTool.id) { return webSearchEnabled(input.providerID, { exa: flags.enableExa, parallel: flags.enableParallel }) } ``` `webSearchEnabled` only matches `ProviderV2.ID.opencode` exactly — the `opencode-go` provider ID never matches, so the tool is hidden unless `OPENCODE_ENABLE_EXA` / `OPENCODE_ENABLE_PARALLEL` is set. Same code on `dev` (https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/tool/registry.ts#L58-L60). Expected: `opencode-go` is an official OpenCode product (\"Go works like any other provider in OpenCode\" — https://opencode.ai/docs/go/), so it should be treated as the OpenCode provider and expose `websearch` (which needs no API key). At minimum, the docs should state that OpenCode Go does not include `websearch`. ### Plugins None ### OpenCode version 1.18.18 ### Steps to reproduce 1. Install opencode 1.18.18 2. Add OpenCode Go API key (`/connect` → OpenCode Go) 3. Start a session with `opencode-go/deepseek-v4-flash` 4. `websearch` does not appear in the available tools; setting `OPENCODE_ENABLE_EXA=1` restores it ### Screenshot and/or share link N/A ### Operating System macOS ### Terminal iTerm2",
       "url": "https://github.com/anomalyco/opencode/issues/42378",
       "createdAt": "2026-08-13T17:45:42Z",
-      "updatedAt": "2026-08-13T17:45:42Z",
-      "timestamp": "2026-08-13T17:45:42Z",
+      "updatedAt": "2026-08-13T17:48:32Z",
+      "timestamp": "2026-08-13T17:48:32Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [],
       "author": "xfqz86",
       "state": "open",
-      "assignees": [],
+      "assignees": [
+        "jlongster"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:anomalyco/opencode:issue:42380",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "issue",
+      "title": "File-mention resolver expands stray \"@\\\" in prompt content to a C:\\ drive-root attachment (Windows)",
+      "text": "### Description On Windows, OpenCode's server-side prompt file-mention resolver (`SessionPrompt.resolvePromptParts`) scans the **entire** prompt text for `@` mentions and can resolve a stray `@\\` byte sequence to the **drive root** `C:\\`, then attaches the whole drive-root directory listing to the model context. The mention extractor uses: ```js FILE_REGEX = /(?<![\\w`])@(\\.?[^\\s`,.]*(?:\\.[^\\s`,.]+)*)/g ``` The character class `[^\\s`,.]` **includes backslash**, so an `@\\` sequence anywhere in the prompt — including inside a binary blob or a diff that was embedded as text — is captured as mention `X = \"\\\"`. Then, in `resolvePromptParts`: ```js // X === \"\\\\\" j = X.startsWith(\"~/\") ? join(homedir(), X.slice(2)) : path.resolve(worktree, X); // path.resolve(worktree, \"\\\\\") === \"C:\\\\\" on Windows he = stat(j); // Directory parts.push({ type: \"file\", url: \"file:///C:/\", // Wy(j).href filename: \"\\\\\", // raw mention X mime: \"application/x-directory\", }); ``` OpenCode then injects a synthetic `Called the Read tool with the following input: {\"filePath\":\"C:\\\\\"}` plus the full `C:\\` directory listing into the message. This also fires for **subagents whose tools are disabled** (e.g. `\"*\": false`), which contradicts their tool policy — they never called a tool, yet a `Read` of `C:\\` appears in their transcript. Impact: not a data leak (only top-level directory *names* are listed), but it wastes context, pollutes prompts, and produces misleading synthetic tool calls. It reproduces deterministically whenever a prompt carries binary/diff payload containing `@\\`. ### Steps to reproduce 1. On Windows, send any prompt (or a `task`-tool subagent prompt) whose text contains the two bytes `` @\\ `` where `@` is not preceded by a word character. Minimal example: a prompt containing `` foo @\\` bar ``. Any embedded binary/diff payload naturally contains such bytes. 2. Inspect the resulting user message parts. It gains: - a `file` part `{\"type\":\"file\",\"url\":\"file:///C:/\",\"filename\":\"\\\\\",\"mime\":\"application/x-directory\"}`, - a synthetic text part `Called the Read tool with the following input: {\"filePath\":\"C:\\\\\"}`, - a text part with the full `C:\\` root directory listing. ### OpenCode version 1.18.18 ### Operating System Windows 11 ### Expected behavior The file-mention resolver should not treat a lone `\\` (or `/`) as an attachable mention. A capture whose `path.resolve(worktree, X)` lands on a filesystem/drive root, or that escapes the worktree (`path.relative(worktree, j)` starts with `..` or is empty), should be rejected. Mention scanning should also avoid matching inside binary payloads / fenced code blocks. ### Actual behavior A lone `\\` captured by `FILE_REGEX` resolves to `C:\\`, `stat`s as a directory, and is attached with a synthetic `Read` of the drive root, injecting the root listing into context. ### Evidence The regex and `resolvePromptParts` code above were extracted from the shipped 1.18.18 Windows binary. The behavior reproduced identically across 5 independent real sessions (each produced a byte-identical `{\"url\":\"file:///C:/\",\"filename\":\"\\\\\",\"mime\":\"application/x-directory\"}` attachment). Related but distinct code path (TUI autocomplete): #35330.",
+      "url": "https://github.com/anomalyco/opencode/issues/42380",
+      "createdAt": "2026-08-13T17:50:55Z",
+      "updatedAt": "2026-08-13T17:53:29Z",
+      "timestamp": "2026-08-13T17:53:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "Maicololiveras",
+      "state": "open",
+      "assignees": [
+        "rekram1-node"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:anomalyco/opencode:issue:42382",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "issue",
+      "title": "slowless",
+      "text": "mimo v2.5 free is so slow its making a readme on 10 hours.",
+      "url": "https://github.com/anomalyco/opencode/issues/42382",
+      "createdAt": "2026-08-13T17:53:50Z",
+      "updatedAt": "2026-08-13T17:56:09Z",
+      "timestamp": "2026-08-13T17:56:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "needs:compliance"
+      ],
+      "author": "tomar753ozi-sketch",
+      "state": "open",
+      "assignees": [
+        "fwang"
+      ],
       "change": "new"
     },
     {
@@ -7336,6 +7423,30 @@
       "assignees": [
         "rekram1-node"
       ]
+    },
+    {
+      "id": "github:anomalyco/opencode:issue:6719",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "issue",
+      "title": "[FEATURE]: slash command for reload",
+      "text": "### Feature hasn't been suggested before. - [x] I have verified this feature I'm about to request hasn't been suggested before. ### Describe the enhancement you want to request A `/reload` that reloads config files like `opencode.jsonc` of global and project level and also `.opencode/` this way without having to close and open the tui just able to reload easily could be even better done when a `/compact` is runnning",
+      "url": "https://github.com/anomalyco/opencode/issues/6719",
+      "createdAt": "2026-01-03T02:53:24Z",
+      "updatedAt": "2026-08-13T17:57:46Z",
+      "timestamp": "2026-08-13T17:57:46Z",
+      "metrics": {
+        "reactions": 80,
+        "comments": 16
+      },
+      "labels": [],
+      "author": "wojons",
+      "state": "open",
+      "assignees": [
+        "rekram1-node"
+      ],
+      "change": "new"
     },
     {
       "id": "github:anomalyco/opencode:issue:6815",
@@ -8886,6 +8997,28 @@
       "author": "ShinjukuZhu",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:anomalyco/opencode:pull_request:41818",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "pull_request",
+      "title": "fix: log plugin load failures to stderr",
+      "text": "### Issue for this PR Closes #41817 ### Type of change - [x] Bug fix - [ ] New feature - [ ] Refactor / code improvement - [ ] Documentation ### What does this PR do? Plugin load errors are only published as a `Session.Event.Error` in `publishPluginError` (`packages/opencode/src/plugin/index.ts`). The desktop renderer does not consume that event, so a plugin that fails to load in the desktop app is invisible: the entry appears in the plugin list, nothing is logged, and no tools register. Example: plugins importing `bun:sqlite` on the Node plugin host (see #41817). Change: `publishPluginError` also writes the message to stderr, which the desktop sidecar pipes into the server log, so failures are diagnosable. The `bun:sqlite` shim itself is tracked separately in #41817. ### How did you verify your code works? Could not run the desktop build locally (no Node/pnpm toolchain in the environment). The change is a one-line addition to the existing error path, using the Node `process.stderr` API; the existing event publish is untouched. ### Screenshots / recordings N/A (no UI change). ### Checklist - [ ] I have tested my changes locally - [x] I have not included unrelated changes in this PR",
+      "url": "https://github.com/anomalyco/opencode/pull/41818",
+      "createdAt": "2026-08-11T18:30:32Z",
+      "updatedAt": "2026-08-13T17:50:21Z",
+      "timestamp": "2026-08-13T17:50:21Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "YoannDev90",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:anomalyco/opencode:pull_request:41867",
@@ -12913,8 +13046,7 @@
       "state": "open",
       "assignees": [
         "jlongster"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:anomalyco/opencode:pull_request:42340",
@@ -13108,8 +13240,8 @@
       "text": "## What Add a persistent recovery surface when a session's location cannot initialize. The transcript remains readable, the durable model identity remains visible in existing message chrome, and the normal composer is replaced with a focused `Choose directory` action using the same question-panel pattern as permissions. ## Before / After **Before** 1. A session's directory is deleted. 2. Location-scoped reads fail. 3. The durable session and transcript still exist, but the TUI presents secondary symptoms such as an unavailable model. 4. The user has no clear recovery action in the composer. **After** 1. The session route retains the failed location synchronization state. 2. The transcript remains mounted. 3. The composer is replaced with `Session location unavailable`, the abbreviated path, and `Choose directory`. 4. The action opens the existing `Move session` dialog, scoped to cataloged directories for the same project. 5. An unavailable current directory is not synthesized into the picker. 6. A successful destination sync clears the recovery state and restores the composer. ## How - `packages/tui/src/context/location.tsx` retains the latest location synchronization error and clears it before each retry. - `packages/tui/src/routes/session/permission.tsx` exposes the existing question-panel shell as `SessionQuestion` without changing permission behavior. - `packages/tui/src/routes/session/location-missing.tsx` renders the recovery prompt through that shared shell. - `packages/tui/src/component/dialog-move-session.tsx` treats the project directory catalog as authoritative and flattens category headers while searching. - Storybook mounts the production recovery panel and move dialog with fixture directories. ## Scope - The client currently knows only that location initialization failed. It cannot prove the directory is missing rather than config, plugin, or catalog initialization failing. Typed server-side location status remains follow-up work. - This PR does not fix orphaned-session move semantics, absolute `/cd` handling, or CLI HTTP error exits. - The Storybook fixture handles the final selection locally; it does not call the server move endpoint. ## Testing - `bun typecheck` from `packages/tui` - `bun run test test/new-session-location.test.ts` from `packages/tui` (3 passing) - `bun run test test/cli/tui/data.test.tsx` was attempted twice; 22 event-stream tests timed out with the fixture stuck in `reconnecting` - Commit hook: `bun turbo typecheck --concurrency=3` (34 tasks passing) - OpenCode Drive walkthrough of the production recovery panel and project-scoped picker ## Demo https://github.com/user-attachments/assets/9ad51e2f-a2ec-4a5d-aff9-17b017d249c5 ![Project-scoped recovery directory picker](https://github.com/user-attachments/assets/7b552728-1c27-46bf-b837-797cc210e6cf) ## Flow ```mermaid flowchart TD A[Open durable session] --> B{Location sync succeeds?} B -- Yes --> C[Normal composer] B -- No --> D[Keep transcript visible] D --> E[Show recovery panel] E --> F[Open Move session] F --> G{Destination sync succeeds?} G -- Yes --> C G -- No --> E ```",
       "url": "https://github.com/anomalyco/opencode/pull/42353",
       "createdAt": "2026-08-13T16:18:08Z",
-      "updatedAt": "2026-08-13T17:35:21Z",
-      "timestamp": "2026-08-13T17:35:21Z",
+      "updatedAt": "2026-08-13T18:00:55Z",
+      "timestamp": "2026-08-13T18:00:55Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -13119,7 +13251,8 @@
       ],
       "author": "kitlangton",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:anomalyco/opencode:pull_request:42354",
@@ -13402,11 +13535,11 @@
       "project": "anomalyco/opencode",
       "kind": "pull_request",
       "title": "feat(tui): prototype tab scroll memory",
-      "text": "## What Add an opt-in V2 TUI experiment that remembers the reading position of each open session tab and provides a direct return to the latest transcript content. Enable **Remember tab scroll** from the DevTools **Experiments** dialog. ## Before / After **Before:** Switching away from a session tab unmounted its transcript. Returning always snapped to the bottom, even when reading earlier output. Scrolling upward also had no visible return action. **After:** A tab away from the bottom retains its in-memory scroll offset. Returning restores that position and shows `↓ Bottom` along the right edge above the composer with one column of spacing. Tabs at the bottom retain no offset. ## How - `packages/tui/src/component/dialog-experiments.tsx` registers **Remember tab scroll** in V2's config-native Experiments dialog and removes the redundant list category heading. - `packages/tui/src/context/session-tabs.tsx` owns transient positions for open tabs, clearing them when tabs close or the experiment is disabled. - `packages/tui/src/routes/session/index.tsx` captures positions on unmount, restores them after transcript layout, and renders the jump control only while away from the bottom. - Restoring a position mounts the full transcript first; first visits and bottom-position tabs retain the existing tail-first fast path. ## Scope - V2 only, based on `v2`. - Disabled by default. - Positions last only for the current TUI process. - Only open tabs retain positions. - No server-side or durable session state changes. ## Testing - `bun typecheck` in `packages/tui` - `bun run test` in `packages/tui`: 689 passed, 5 skipped - Push hook `bun turbo typecheck --concurrency=3`: 34 packages passed ## Demo OpenCode Drive capture showing the experiment enabled from the V2 TUI: ![Remember tab scroll enabled](https://github.com/user-attachments/assets/0d3b1f73-8e2f-4ed3-b3d6-a373cf0d9704) ## Flow ```mermaid flowchart TD A[Open session tab] --> B{At bottom?} B -->|Yes| C[Clear offset and hide control] B -->|No| D[Keep offset and show Bottom] D --> E[Switch tabs] E --> F[Restore offset after transcript layout] D -->|Click Bottom| C D -->|Close tab| C D -->|Disable experiment| C ```",
+      "text": "## What Add an opt-in V2 TUI experiment that remembers the reading position of each open session tab and provides a direct return to the latest transcript content. Enable **Remember tab scroll** from the DevTools **Experiments** dialog. ## Before / After **Before:** Switching away from a session tab unmounted its transcript. Returning always snapped to the bottom, even when reading earlier output. Scrolling upward also had no visible return action. **After:** A tab away from the bottom retains its in-memory scroll offset. Returning restores that position and shows `↓ Bottom` along the right edge above the composer with one column of spacing. Tabs at the bottom retain no offset. ## How - `packages/tui/src/component/dialog-experiments.tsx` registers **Remember tab scroll** in V2's config-native Experiments dialog and removes the redundant list category heading. - `packages/tui/src/context/session-tabs.tsx` owns transient positions for open tabs, clearing them when tabs close or the experiment is disabled. - `packages/tui/src/routes/session/index.tsx` captures positions on unmount, restores them after transcript layout, and renders the jump control only while away from the bottom. - Restoring a position mounts the full transcript first; first visits and bottom-position tabs retain the existing tail-first fast path. ## Scope - V2 only, based on `v2`. - Disabled by default. - Positions last only for the current TUI process. - Only open tabs retain positions. - No server-side or durable session state changes. ## Testing - `bun typecheck` in `packages/tui` - `bun run test` in `packages/tui`: 689 passed, 5 skipped - Push hook `bun turbo typecheck --concurrency=3`: 34 packages passed ## Demo OpenCode Drive capture showing the actual `↓ Latest` affordance while the transcript is scrolled away from the bottom: ![Latest transcript action](https://github.com/user-attachments/assets/0875aa48-605e-4649-8b35-d301eb690480) The experiment is enabled from the V2 TUI DevTools **Experiments** dialog. ## Flow ```mermaid flowchart TD A[Open session tab] --> B{At bottom?} B -->|Yes| C[Clear offset and hide control] B -->|No| D[Keep offset and show Bottom] D --> E[Switch tabs] E --> F[Restore offset after transcript layout] D -->|Click Bottom| C D -->|Close tab| C D -->|Disable experiment| C ```",
       "url": "https://github.com/anomalyco/opencode/pull/42375",
       "createdAt": "2026-08-13T17:28:58Z",
-      "updatedAt": "2026-08-13T17:29:06Z",
-      "timestamp": "2026-08-13T17:29:06Z",
+      "updatedAt": "2026-08-13T17:55:48Z",
+      "timestamp": "2026-08-13T17:55:48Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -13416,7 +13549,106 @@
       ],
       "author": "kitlangton",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:anomalyco/opencode:pull_request:42379",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "pull_request",
+      "title": "fix: log plugin load failures to stderr",
+      "text": "### Issue for this PR Closes #41817 ### Type of change - [x] Bug fix - [ ] New feature - [ ] Refactor / code improvement - [ ] Documentation ### What does this PR do? Plugin load errors are only published as a `Session.Event.Error` in `publishPluginError` (`packages/opencode/src/plugin/index.ts`). The desktop renderer does not consume that event, so a plugin that fails to load in the desktop app is invisible: the entry appears in the plugin list, nothing is logged, and no tools register. Example: plugins importing `bun:sqlite` on the Node plugin host (see #41817). Change: `publishPluginError` also writes the message to stderr, which the desktop sidecar pipes into the server log, so failures are diagnosable. The `bun:sqlite` shim itself is tracked separately in #41817. ### How did you verify your code works? Could not run the desktop build locally (no Node/pnpm toolchain in the environment). The change is a one-line addition to the existing error path, using the Node `process.stderr` API; the existing event publish is untouched. ### Screenshots / recordings N/A (no UI change). ### Checklist - [ ] I have tested my changes locally - [x] I have not included unrelated changes in this PR",
+      "url": "https://github.com/anomalyco/opencode/pull/42379",
+      "createdAt": "2026-08-13T17:50:31Z",
+      "updatedAt": "2026-08-13T17:50:41Z",
+      "timestamp": "2026-08-13T17:50:41Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "needs:compliance"
+      ],
+      "author": "YoannDev90",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:anomalyco/opencode:pull_request:42381",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "pull_request",
+      "title": "feat(tui): show failed shell exit code",
+      "text": "## Summary - detect non-zero shell exit metadata - show a pinned red `× exited with code N` row - keep the failure visible outside collapsed command output, including output previews longer than ten lines ## Checks - `bun typecheck` (`packages/tui`) - `bun test test/mini/entry.body.test.ts test/mini/scrollback.surface.test.ts` (`packages/tui`) - real V2 session fixture with 11 lines of output and exit code 1 Requested by: @kitlangton (Kit via Slack)",
+      "url": "https://github.com/anomalyco/opencode/pull/42381",
+      "createdAt": "2026-08-13T17:51:45Z",
+      "updatedAt": "2026-08-13T17:51:53Z",
+      "timestamp": "2026-08-13T17:51:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "contributor"
+      ],
+      "author": "opencode-agent[bot]",
+      "state": "open",
+      "assignees": [
+        "kitlangton"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:anomalyco/opencode:pull_request:42383",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "pull_request",
+      "title": "fix(core): render granular instruction updates",
+      "text": "## What Instruction changes now append only the affected file deltas instead of repeating every loaded `AGENTS.md` file in full. Modified files render as three-context unified patches. Added and removed files use explicit messages. ## Before / After **Before:** Editing one line in one instruction file appended a complete replacement containing every global and project instruction file. The session learned the correct new state, but paid the token cost of unrelated unchanged files. **After:** The same edit appends a small patch for that file. Unchanged files are omitted while additions and removals remain explicit. ## How - `packages/core/src/instruction-discovery.ts` compares the previous and current file arrays by path. - Modified files use the existing `diff` dependency to produce unified patches with three lines of context. - Added files include their complete contents; removed files name the source that no longer applies. - `packages/core/test/instruction-discovery.test.ts` covers granular rendering and the real watcher-driven update/delete flow. ## Scope This does not attempt to attribute file changes to the session that made them or suppress self-authored updates. Durable instruction state, chronological updates, and compaction behavior are unchanged. ## Testing - `bun run test` in `packages/core`: 1,709 passed, 16 skipped - `bun run test test/instruction-discovery.test.ts` in `packages/core`: 10 passed - `bun typecheck` in `packages/core` - Repository pre-push typecheck: 34 tasks passed - `bunx prettier --check packages/core/src/instruction-discovery.ts packages/core/test/instruction-discovery.test.ts` - `git diff --check` ## Flow ```mermaid flowchart LR A[Read instruction files] --> B[Compare with admitted values] B --> C{Change type} C -->|Modified| D[Append unified patch] C -->|Added| E[Append new instructions] C -->|Removed| F[Append removal notice] D --> G[Durable chronological update] E --> G F --> G ```",
+      "url": "https://github.com/anomalyco/opencode/pull/42383",
+      "createdAt": "2026-08-13T17:57:34Z",
+      "updatedAt": "2026-08-13T18:01:09Z",
+      "timestamp": "2026-08-13T18:01:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "contributor"
+      ],
+      "author": "kitlangton",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:anomalyco/opencode:pull_request:42384",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anomalyco/opencode",
+      "kind": "pull_request",
+      "title": "fix(tui): prioritize composer keybinds",
+      "text": "## What Replace the Shell tab's hard-coded `Ctrl+D` interceptor with OpenTUI keymap layer priority for the full composer. Closes #42377. ## Before / After **Before:** #42366 restored the default Shell kill shortcut with a raw event interceptor that recognized only literal `Ctrl+D`. Custom bindings and the adjacent composer navigation/Subagents layers still depended on equal-priority registration order against focused-editor bindings. **After:** Composer navigation and active tab actions use contextual priority. Their configured bindings win while the composer is active, including custom bindings, without matching physical keys manually. ## How - Give the composer navigation layer contextual `priority: 1`. - Give Shell and Subagents action layers the same priority. - Remove the Shell-specific raw event interceptor. - Extend the composer keymap test to exercise tab navigation and a custom Shell kill binding while a textarea remains focused. ## Investigation Focused rendered-component tests showed permission rejection, textual forms, autocomplete destructive actions, and ordinary non-default editor collisions already behave correctly. Lowering `app.exit` priority did not fix the real TUI. Applying priority to the active composer layers did. ## Testing - `bun run test test/cli/tui/composer-keymap.test.tsx` from `packages/tui`: 3 passed - `bun typecheck` from `packages/tui`: passed - Push hook repository typecheck: 34 packages passed - Live PTY with `termctrl` against the elected service: opened composer, switched Subagents → Shell, pressed `Ctrl+D`, observed the shell disappear, and confirmed its ID was absent from `/api/shell` ## Flow ```mermaid flowchart LR Key[Configured keypress] --> Mode{Composer active?} Mode -- no --> Editor[Normal global/editor binding] Mode -- yes --> Priority[Priority 1 composer layer] Priority --> Action[Navigation or active-tab action] ```",
+      "url": "https://github.com/anomalyco/opencode/pull/42384",
+      "createdAt": "2026-08-13T17:59:49Z",
+      "updatedAt": "2026-08-13T17:59:57Z",
+      "timestamp": "2026-08-13T17:59:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "contributor"
+      ],
+      "author": "kitlangton",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:anomalyco/opencode:pull_request:952",
@@ -32439,6 +32671,455 @@
         "author": "xfqz86",
         "state": "open",
         "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d6985287e89ce422010f",
+      "signalId": "github:anomalyco/opencode:pull_request:42383",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:pull_request:42383",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "pull_request",
+        "title": "fix(core): render granular instruction updates",
+        "text": "## What Instruction changes now append only the affected file deltas instead of repeating every loaded `AGENTS.md` file in full. Modified files render as three-context unified patches. Added and removed files use explicit messages. ## Before / After **Before:** Editing one line in one instruction file appended a complete replacement containing every global and project instruction file. The session learned the correct new state, but paid the token cost of unrelated unchanged files. **After:** The same edit appends a small patch for that file. Unchanged files are omitted while additions and removals remain explicit. ## How - `packages/core/src/instruction-discovery.ts` compares the previous and current file arrays by path. - Modified files use the existing `diff` dependency to produce unified patches with three lines of context. - Added files include their complete contents; removed files name the source that no longer applies. - `packages/core/test/instruction-discovery.test.ts` covers granular rendering and the real watcher-driven update/delete flow. ## Scope This does not attempt to attribute file changes to the session that made them or suppress self-authored updates. Durable instruction state, chronological updates, and compaction behavior are unchanged. ## Testing - `bun run test` in `packages/core`: 1,709 passed, 16 skipped - `bun run test test/instruction-discovery.test.ts` in `packages/core`: 10 passed - `bun typecheck` in `packages/core` - Repository pre-push typecheck: 34 tasks passed - `bunx prettier --check packages/core/src/instruction-discovery.ts packages/core/test/instruction-discovery.test.ts` - `git diff --check` ## Flow ```mermaid flowchart LR A[Read instruction files] --> B[Compare with admitted values] B --> C{Change type} C -->|Modified| D[Append unified patch] C -->|Added| E[Append new instructions] C -->|Removed| F[Append removal notice] D --> G[Durable chronological update] E --> G F --> G ```",
+        "url": "https://github.com/anomalyco/opencode/pull/42383",
+        "createdAt": "2026-08-13T17:57:34Z",
+        "updatedAt": "2026-08-13T18:01:09Z",
+        "timestamp": "2026-08-13T18:01:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "contributor"
+        ],
+        "author": "kitlangton",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:57248a168c4a52b6683a",
+      "signalId": "github:anomalyco/opencode:pull_request:42353",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:anomalyco/opencode:pull_request:42353",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "pull_request",
+        "title": "feat(tui): prototype missing location recovery",
+        "text": "## What Add a persistent recovery surface when a session's location cannot initialize. The transcript remains readable, the durable model identity remains visible in existing message chrome, and the normal composer is replaced with a focused `Choose directory` action using the same question-panel pattern as permissions. ## Before / After **Before** 1. A session's directory is deleted. 2. Location-scoped reads fail. 3. The durable session and transcript still exist, but the TUI presents secondary symptoms such as an unavailable model. 4. The user has no clear recovery action in the composer. **After** 1. The session route retains the failed location synchronization state. 2. The transcript remains mounted. 3. The composer is replaced with `Session location unavailable`, the abbreviated path, and `Choose directory`. 4. The action opens the existing `Move session` dialog, scoped to cataloged directories for the same project. 5. An unavailable current directory is not synthesized into the picker. 6. A successful destination sync clears the recovery state and restores the composer. ## How - `packages/tui/src/context/location.tsx` retains the latest location synchronization error and clears it before each retry. - `packages/tui/src/routes/session/permission.tsx` exposes the existing question-panel shell as `SessionQuestion` without changing permission behavior. - `packages/tui/src/routes/session/location-missing.tsx` renders the recovery prompt through that shared shell. - `packages/tui/src/component/dialog-move-session.tsx` treats the project directory catalog as authoritative and flattens category headers while searching. - Storybook mounts the production recovery panel and move dialog with fixture directories. ## Scope - The client currently knows only that location initialization failed. It cannot prove the directory is missing rather than config, plugin, or catalog initialization failing. Typed server-side location status remains follow-up work. - This PR does not fix orphaned-session move semantics, absolute `/cd` handling, or CLI HTTP error exits. - The Storybook fixture handles the final selection locally; it does not call the server move endpoint. ## Testing - `bun typecheck` from `packages/tui` - `bun run test test/new-session-location.test.ts` from `packages/tui` (3 passing) - `bun run test test/cli/tui/data.test.tsx` was attempted twice; 22 event-stream tests timed out with the fixture stuck in `reconnecting` - Commit hook: `bun turbo typecheck --concurrency=3` (34 tasks passing) - OpenCode Drive walkthrough of the production recovery panel and project-scoped picker ## Demo https://github.com/user-attachments/assets/9ad51e2f-a2ec-4a5d-aff9-17b017d249c5 ![Project-scoped recovery directory picker](https://github.com/user-attachments/assets/7b552728-1c27-46bf-b837-797cc210e6cf) ## Flow ```mermaid flowchart TD A[Open durable session] --> B{Location sync succeeds?} B -- Yes --> C[Normal composer] B -- No --> D[Keep transcript visible] D --> E[Show recovery panel] E --> F[Open Move session] F --> G{Destination sync succeeds?} G -- Yes --> C G -- No --> E ```",
+        "url": "https://github.com/anomalyco/opencode/pull/42353",
+        "createdAt": "2026-08-13T16:18:08Z",
+        "updatedAt": "2026-08-13T18:00:55Z",
+        "timestamp": "2026-08-13T18:00:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "contributor"
+        ],
+        "author": "kitlangton",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:77b8c16ea3c335ad190f",
+      "signalId": "github:anomalyco/opencode:pull_request:42384",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:pull_request:42384",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "pull_request",
+        "title": "fix(tui): prioritize composer keybinds",
+        "text": "## What Replace the Shell tab's hard-coded `Ctrl+D` interceptor with OpenTUI keymap layer priority for the full composer. Closes #42377. ## Before / After **Before:** #42366 restored the default Shell kill shortcut with a raw event interceptor that recognized only literal `Ctrl+D`. Custom bindings and the adjacent composer navigation/Subagents layers still depended on equal-priority registration order against focused-editor bindings. **After:** Composer navigation and active tab actions use contextual priority. Their configured bindings win while the composer is active, including custom bindings, without matching physical keys manually. ## How - Give the composer navigation layer contextual `priority: 1`. - Give Shell and Subagents action layers the same priority. - Remove the Shell-specific raw event interceptor. - Extend the composer keymap test to exercise tab navigation and a custom Shell kill binding while a textarea remains focused. ## Investigation Focused rendered-component tests showed permission rejection, textual forms, autocomplete destructive actions, and ordinary non-default editor collisions already behave correctly. Lowering `app.exit` priority did not fix the real TUI. Applying priority to the active composer layers did. ## Testing - `bun run test test/cli/tui/composer-keymap.test.tsx` from `packages/tui`: 3 passed - `bun typecheck` from `packages/tui`: passed - Push hook repository typecheck: 34 packages passed - Live PTY with `termctrl` against the elected service: opened composer, switched Subagents → Shell, pressed `Ctrl+D`, observed the shell disappear, and confirmed its ID was absent from `/api/shell` ## Flow ```mermaid flowchart LR Key[Configured keypress] --> Mode{Composer active?} Mode -- no --> Editor[Normal global/editor binding] Mode -- yes --> Priority[Priority 1 composer layer] Priority --> Action[Navigation or active-tab action] ```",
+        "url": "https://github.com/anomalyco/opencode/pull/42384",
+        "createdAt": "2026-08-13T17:59:49Z",
+        "updatedAt": "2026-08-13T17:59:57Z",
+        "timestamp": "2026-08-13T17:59:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "contributor"
+        ],
+        "author": "kitlangton",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b330fe83bb068104cadf",
+      "signalId": "github:anomalyco/opencode:issue:42293",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:anomalyco/opencode:issue:42293",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "issue",
+        "title": "opencode zen DeepSeek V4 Flash Free requests fail with [invalid_bearer_credential]",
+        "text": "### Description I was using opencode connected to DeepSeek V4 Flash Free on opencode zen, and most - *but not all*! - requests failed with an error, `Upstream request failed: [invalid_bearer_credential] Missing or invalid bearer credential` This happened with version 1.18.3. I upgraded to 1.18.18, and it kept happening. I then connected to DeepSeek V4 Flash on my opencode **go** subscription, and the request immediately succeeded, and kept working. ### Plugins None ### OpenCode version 1.18.18 ### Steps to reproduce 1. Connect to opencode zen 2. Choose DeepSeek V4 Flash (Free) as the model 3. Ask some number of requests, most of them seem to be failing at the time of reporting. ### Screenshot and/or share link With DeepSeek V4 Flash Free on OpenCode Zen: <img width=\"1896\" height=\"1642\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bb2b2c90-7204-4f3b-a905-34dd47dcddbc\" /> With DeepSeek V4 Flash on OpenCode Go: <img width=\"1896\" height=\"1642\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ee91724e-6030-4604-a3e7-c53bfc1f5d7c\" /> ### Operating System Ubuntu 26.04 ### Terminal Ubuntu terminal",
+        "url": "https://github.com/anomalyco/opencode/issues/42293",
+        "createdAt": "2026-08-13T09:21:50Z",
+        "updatedAt": "2026-08-13T17:59:10Z",
+        "timestamp": "2026-08-13T17:59:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 12
+        },
+        "labels": [],
+        "author": "cbrunschen",
+        "state": "closed",
+        "assignees": [
+          "MrMushrooooom"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:cf07df9f731d1c50445b",
+      "signalId": "github:anomalyco/opencode:issue:6719",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:issue:6719",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "issue",
+        "title": "[FEATURE]: slash command for reload",
+        "text": "### Feature hasn't been suggested before. - [x] I have verified this feature I'm about to request hasn't been suggested before. ### Describe the enhancement you want to request A `/reload` that reloads config files like `opencode.jsonc` of global and project level and also `.opencode/` this way without having to close and open the tui just able to reload easily could be even better done when a `/compact` is runnning",
+        "url": "https://github.com/anomalyco/opencode/issues/6719",
+        "createdAt": "2026-01-03T02:53:24Z",
+        "updatedAt": "2026-08-13T17:57:46Z",
+        "timestamp": "2026-08-13T17:57:46Z",
+        "metrics": {
+          "reactions": 80,
+          "comments": 16
+        },
+        "labels": [],
+        "author": "wojons",
+        "state": "open",
+        "assignees": [
+          "rekram1-node"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b778573269302188e9a4",
+      "signalId": "github:anomalyco/opencode:issue:42382",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:issue:42382",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "issue",
+        "title": "slowless",
+        "text": "mimo v2.5 free is so slow its making a readme on 10 hours.",
+        "url": "https://github.com/anomalyco/opencode/issues/42382",
+        "createdAt": "2026-08-13T17:53:50Z",
+        "updatedAt": "2026-08-13T17:56:09Z",
+        "timestamp": "2026-08-13T17:56:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "needs:compliance"
+        ],
+        "author": "tomar753ozi-sketch",
+        "state": "open",
+        "assignees": [
+          "fwang"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a6b14bb6573d9f559ad7",
+      "signalId": "github:anomalyco/opencode:pull_request:42375",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:anomalyco/opencode:pull_request:42375",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "pull_request",
+        "title": "feat(tui): prototype tab scroll memory",
+        "text": "## What Add an opt-in V2 TUI experiment that remembers the reading position of each open session tab and provides a direct return to the latest transcript content. Enable **Remember tab scroll** from the DevTools **Experiments** dialog. ## Before / After **Before:** Switching away from a session tab unmounted its transcript. Returning always snapped to the bottom, even when reading earlier output. Scrolling upward also had no visible return action. **After:** A tab away from the bottom retains its in-memory scroll offset. Returning restores that position and shows `↓ Bottom` along the right edge above the composer with one column of spacing. Tabs at the bottom retain no offset. ## How - `packages/tui/src/component/dialog-experiments.tsx` registers **Remember tab scroll** in V2's config-native Experiments dialog and removes the redundant list category heading. - `packages/tui/src/context/session-tabs.tsx` owns transient positions for open tabs, clearing them when tabs close or the experiment is disabled. - `packages/tui/src/routes/session/index.tsx` captures positions on unmount, restores them after transcript layout, and renders the jump control only while away from the bottom. - Restoring a position mounts the full transcript first; first visits and bottom-position tabs retain the existing tail-first fast path. ## Scope - V2 only, based on `v2`. - Disabled by default. - Positions last only for the current TUI process. - Only open tabs retain positions. - No server-side or durable session state changes. ## Testing - `bun typecheck` in `packages/tui` - `bun run test` in `packages/tui`: 689 passed, 5 skipped - Push hook `bun turbo typecheck --concurrency=3`: 34 packages passed ## Demo OpenCode Drive capture showing the actual `↓ Latest` affordance while the transcript is scrolled away from the bottom: ![Latest transcript action](https://github.com/user-attachments/assets/0875aa48-605e-4649-8b35-d301eb690480) The experiment is enabled from the V2 TUI DevTools **Experiments** dialog. ## Flow ```mermaid flowchart TD A[Open session tab] --> B{At bottom?} B -->|Yes| C[Clear offset and hide control] B -->|No| D[Keep offset and show Bottom] D --> E[Switch tabs] E --> F[Restore offset after transcript layout] D -->|Click Bottom| C D -->|Close tab| C D -->|Disable experiment| C ```",
+        "url": "https://github.com/anomalyco/opencode/pull/42375",
+        "createdAt": "2026-08-13T17:28:58Z",
+        "updatedAt": "2026-08-13T17:55:48Z",
+        "timestamp": "2026-08-13T17:55:48Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "contributor"
+        ],
+        "author": "kitlangton",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:bc77706c7b89260131f7",
+      "signalId": "github:anomalyco/opencode:issue:42380",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:issue:42380",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "issue",
+        "title": "File-mention resolver expands stray \"@\\\" in prompt content to a C:\\ drive-root attachment (Windows)",
+        "text": "### Description On Windows, OpenCode's server-side prompt file-mention resolver (`SessionPrompt.resolvePromptParts`) scans the **entire** prompt text for `@` mentions and can resolve a stray `@\\` byte sequence to the **drive root** `C:\\`, then attaches the whole drive-root directory listing to the model context. The mention extractor uses: ```js FILE_REGEX = /(?<![\\w`])@(\\.?[^\\s`,.]*(?:\\.[^\\s`,.]+)*)/g ``` The character class `[^\\s`,.]` **includes backslash**, so an `@\\` sequence anywhere in the prompt — including inside a binary blob or a diff that was embedded as text — is captured as mention `X = \"\\\"`. Then, in `resolvePromptParts`: ```js // X === \"\\\\\" j = X.startsWith(\"~/\") ? join(homedir(), X.slice(2)) : path.resolve(worktree, X); // path.resolve(worktree, \"\\\\\") === \"C:\\\\\" on Windows he = stat(j); // Directory parts.push({ type: \"file\", url: \"file:///C:/\", // Wy(j).href filename: \"\\\\\", // raw mention X mime: \"application/x-directory\", }); ``` OpenCode then injects a synthetic `Called the Read tool with the following input: {\"filePath\":\"C:\\\\\"}` plus the full `C:\\` directory listing into the message. This also fires for **subagents whose tools are disabled** (e.g. `\"*\": false`), which contradicts their tool policy — they never called a tool, yet a `Read` of `C:\\` appears in their transcript. Impact: not a data leak (only top-level directory *names* are listed), but it wastes context, pollutes prompts, and produces misleading synthetic tool calls. It reproduces deterministically whenever a prompt carries binary/diff payload containing `@\\`. ### Steps to reproduce 1. On Windows, send any prompt (or a `task`-tool subagent prompt) whose text contains the two bytes `` @\\ `` where `@` is not preceded by a word character. Minimal example: a prompt containing `` foo @\\` bar ``. Any embedded binary/diff payload naturally contains such bytes. 2. Inspect the resulting user message parts. It gains: - a `file` part `{\"type\":\"file\",\"url\":\"file:///C:/\",\"filename\":\"\\\\\",\"mime\":\"application/x-directory\"}`, - a synthetic text part `Called the Read tool with the following input: {\"filePath\":\"C:\\\\\"}`, - a text part with the full `C:\\` root directory listing. ### OpenCode version 1.18.18 ### Operating System Windows 11 ### Expected behavior The file-mention resolver should not treat a lone `\\` (or `/`) as an attachable mention. A capture whose `path.resolve(worktree, X)` lands on a filesystem/drive root, or that escapes the worktree (`path.relative(worktree, j)` starts with `..` or is empty), should be rejected. Mention scanning should also avoid matching inside binary payloads / fenced code blocks. ### Actual behavior A lone `\\` captured by `FILE_REGEX` resolves to `C:\\`, `stat`s as a directory, and is attached with a synthetic `Read` of the drive root, injecting the root listing into context. ### Evidence The regex and `resolvePromptParts` code above were extracted from the shipped 1.18.18 Windows binary. The behavior reproduced identically across 5 independent real sessions (each produced a byte-identical `{\"url\":\"file:///C:/\",\"filename\":\"\\\\\",\"mime\":\"application/x-directory\"}` attachment). Related but distinct code path (TUI autocomplete): #35330.",
+        "url": "https://github.com/anomalyco/opencode/issues/42380",
+        "createdAt": "2026-08-13T17:50:55Z",
+        "updatedAt": "2026-08-13T17:53:29Z",
+        "timestamp": "2026-08-13T17:53:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "Maicololiveras",
+        "state": "open",
+        "assignees": [
+          "rekram1-node"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:05237c8cfb15ef787477",
+      "signalId": "github:anomalyco/opencode:pull_request:42381",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:pull_request:42381",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "pull_request",
+        "title": "feat(tui): show failed shell exit code",
+        "text": "## Summary - detect non-zero shell exit metadata - show a pinned red `× exited with code N` row - keep the failure visible outside collapsed command output, including output previews longer than ten lines ## Checks - `bun typecheck` (`packages/tui`) - `bun test test/mini/entry.body.test.ts test/mini/scrollback.surface.test.ts` (`packages/tui`) - real V2 session fixture with 11 lines of output and exit code 1 Requested by: @kitlangton (Kit via Slack)",
+        "url": "https://github.com/anomalyco/opencode/pull/42381",
+        "createdAt": "2026-08-13T17:51:45Z",
+        "updatedAt": "2026-08-13T17:51:53Z",
+        "timestamp": "2026-08-13T17:51:53Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "contributor"
+        ],
+        "author": "opencode-agent[bot]",
+        "state": "open",
+        "assignees": [
+          "kitlangton"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b18552a96ade58dc9a88",
+      "signalId": "github:anomalyco/opencode:pull_request:42379",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:pull_request:42379",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "pull_request",
+        "title": "fix: log plugin load failures to stderr",
+        "text": "### Issue for this PR Closes #41817 ### Type of change - [x] Bug fix - [ ] New feature - [ ] Refactor / code improvement - [ ] Documentation ### What does this PR do? Plugin load errors are only published as a `Session.Event.Error` in `publishPluginError` (`packages/opencode/src/plugin/index.ts`). The desktop renderer does not consume that event, so a plugin that fails to load in the desktop app is invisible: the entry appears in the plugin list, nothing is logged, and no tools register. Example: plugins importing `bun:sqlite` on the Node plugin host (see #41817). Change: `publishPluginError` also writes the message to stderr, which the desktop sidecar pipes into the server log, so failures are diagnosable. The `bun:sqlite` shim itself is tracked separately in #41817. ### How did you verify your code works? Could not run the desktop build locally (no Node/pnpm toolchain in the environment). The change is a one-line addition to the existing error path, using the Node `process.stderr` API; the existing event publish is untouched. ### Screenshots / recordings N/A (no UI change). ### Checklist - [ ] I have tested my changes locally - [x] I have not included unrelated changes in this PR",
+        "url": "https://github.com/anomalyco/opencode/pull/42379",
+        "createdAt": "2026-08-13T17:50:31Z",
+        "updatedAt": "2026-08-13T17:50:41Z",
+        "timestamp": "2026-08-13T17:50:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "needs:compliance"
+        ],
+        "author": "YoannDev90",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:e67a78e3e65ccfed0000",
+      "signalId": "github:anomalyco/opencode:pull_request:41818",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:pull_request:41818",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "pull_request",
+        "title": "fix: log plugin load failures to stderr",
+        "text": "### Issue for this PR Closes #41817 ### Type of change - [x] Bug fix - [ ] New feature - [ ] Refactor / code improvement - [ ] Documentation ### What does this PR do? Plugin load errors are only published as a `Session.Event.Error` in `publishPluginError` (`packages/opencode/src/plugin/index.ts`). The desktop renderer does not consume that event, so a plugin that fails to load in the desktop app is invisible: the entry appears in the plugin list, nothing is logged, and no tools register. Example: plugins importing `bun:sqlite` on the Node plugin host (see #41817). Change: `publishPluginError` also writes the message to stderr, which the desktop sidecar pipes into the server log, so failures are diagnosable. The `bun:sqlite` shim itself is tracked separately in #41817. ### How did you verify your code works? Could not run the desktop build locally (no Node/pnpm toolchain in the environment). The change is a one-line addition to the existing error path, using the Node `process.stderr` API; the existing event publish is untouched. ### Screenshots / recordings N/A (no UI change). ### Checklist - [ ] I have tested my changes locally - [x] I have not included unrelated changes in this PR",
+        "url": "https://github.com/anomalyco/opencode/pull/41818",
+        "createdAt": "2026-08-11T18:30:32Z",
+        "updatedAt": "2026-08-13T17:50:21Z",
+        "timestamp": "2026-08-13T17:50:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "YoannDev90",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:26b7d4a4cf983f12400c",
+      "signalId": "github:anomalyco/opencode:issue:42143",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:anomalyco/opencode:issue:42143",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "issue",
+        "title": "Why does Opencode require me to subscribe when your official website states it's 100% free?",
+        "url": "https://github.com/anomalyco/opencode/issues/42143",
+        "createdAt": "2026-08-12T20:34:29Z",
+        "updatedAt": "2026-08-13T17:49:48Z",
+        "timestamp": "2026-08-13T17:49:48Z",
+        "metrics": {
+          "reactions": 26,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "mahmoud-Web-Developer",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3d5ae3202ba8ae8afcd3",
+      "signalId": "github:anomalyco/opencode:issue:42378",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "assignees"
+      ],
+      "signal": {
+        "id": "github:anomalyco/opencode:issue:42378",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "issue",
+        "title": "websearch tool hidden when using the official OpenCode Go (opencode-go) provider",
+        "text": "### Description The [tools docs](https://opencode.ai/docs/tools/) say `websearch` \"is only available when using the OpenCode provider or when the `OPENCODE_ENABLE_EXA` environment variable is set\". I'm using the official **OpenCode Go** subscription ([docs](https://opencode.ai/docs/go/), model IDs use the `opencode-go/` prefix, e.g. `opencode-go/deepseek-v4-flash`, API key added via `/connect`). However, `websearch` is filtered out of the tool list for the `opencode-go` provider. The gate is in `packages/opencode/src/tool/registry.ts`: ```ts // L58-60 export function webSearchEnabled(providerID: ProviderV2.ID, flags = { exa: false, parallel: false }) { return providerID === ProviderV2.ID.opencode || flags.exa || flags.parallel } // L286-290 if (tool.id === WebSearchTool.id) { return webSearchEnabled(input.providerID, { exa: flags.enableExa, parallel: flags.enableParallel }) } ``` `webSearchEnabled` only matches `ProviderV2.ID.opencode` exactly — the `opencode-go` provider ID never matches, so the tool is hidden unless `OPENCODE_ENABLE_EXA` / `OPENCODE_ENABLE_PARALLEL` is set. Same code on `dev` (https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/tool/registry.ts#L58-L60). Expected: `opencode-go` is an official OpenCode product (\"Go works like any other provider in OpenCode\" — https://opencode.ai/docs/go/), so it should be treated as the OpenCode provider and expose `websearch` (which needs no API key). At minimum, the docs should state that OpenCode Go does not include `websearch`. ### Plugins None ### OpenCode version 1.18.18 ### Steps to reproduce 1. Install opencode 1.18.18 2. Add OpenCode Go API key (`/connect` → OpenCode Go) 3. Start a session with `opencode-go/deepseek-v4-flash` 4. `websearch` does not appear in the available tools; setting `OPENCODE_ENABLE_EXA=1` restores it ### Screenshot and/or share link N/A ### Operating System macOS ### Terminal iTerm2",
+        "url": "https://github.com/anomalyco/opencode/issues/42378",
+        "createdAt": "2026-08-13T17:45:42Z",
+        "updatedAt": "2026-08-13T17:48:32Z",
+        "timestamp": "2026-08-13T17:48:32Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "xfqz86",
+        "state": "open",
+        "assignees": [
+          "jlongster"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3fff78df34017320303d",
+      "signalId": "github:anomalyco/opencode:issue:33060",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anomalyco/opencode:issue:33060",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anomalyco/opencode",
+        "kind": "issue",
+        "title": "GitHub Integration with Opencode Zen",
+        "text": "### Description Im getting this error when my workflow file runs : ```bash Error: Unexpected error undefined is not an object (evaluating 'p.rest') ``` This is my current workflow file : ```yml name: opencode on: issue_comment: types: [created] pull_request_review_comment: types: [created] permissions: contents: write pull-requests: write issues: write id-token: write jobs: opencode: # Only triggers when someone comments '/oc' or '/opencode' if: | contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode') runs-on: ubuntu-latest steps: - name: Checkout repository uses: actions/checkout@v6 with: fetch-depth: 0 persist-credentials: false - name: Run OpenCode via Zen uses: anomalyco/opencode/github@latest env: # Your single OpenCode Zen gateway key OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }} with: # A Zen-supported model string model: opencode/kimi-k2.5 agent: build # Runs in write-enabled mode to apply code fixes ``` The problem I believe is the OPENCODE_API_KEY , Im not sure if its supported but there has to be a way to use different models than anthropic. Does anyone have docs on this becuase I cannot find it no matter how much I tried on the website. This template was generated via the kimi model on opencode so I trusted it would work but no luck so far. ### Plugins none ### OpenCode version version 1.17.8 ### Steps to reproduce 1. Create a workflow file in a repo for example \".github/workflows/main.yml\" or \".github/workflows/opencode.yml\" 2. Give the yml file this content: ```yml name: opencode on: issue_comment: types: [created] pull_request_review_comment: types: [created] permissions: contents: write pull-requests: write issues: write id-token: write jobs: opencode: # Only triggers when someone comments '/oc' or '/opencode' if: | contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode') runs-on: ubuntu-latest steps: - name: Checkout repository uses: actions/checkout@v6 with: fetch-depth: 0 persist-credentials: false - name: Run OpenCode via Zen uses: anomalyco/opencode/github@latest env: # Your single OpenCode Zen gateway key OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }} with: # A Zen-supported model string model: opencode/kimi-k2.5 agent: build # Runs in write-enabled mode to apply code fixes ``` 3. Register an environment variable in your repository settings with the name OPENCODE_API_KEY 4. Comment on a PR \"/oc\" or \"/opencode\" to trigger github actions and the process will fail ### Screenshot and/or share link <img width=\"2084\" height=\"956\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e4d46d7d-7c23-4310-94b7-bd52d1f6afc9\" /> ### Operating System This would run on Linux specifically the Ubuntu distro ### Terminal Bash shell",
+        "url": "https://github.com/anomalyco/opencode/issues/33060",
+        "createdAt": "2026-06-20T07:53:33Z",
+        "updatedAt": "2026-08-13T17:06:15Z",
+        "timestamp": "2026-08-13T17:06:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "FabrzyTech",
+        "state": "open",
+        "assignees": [
+          "fwang"
+        ],
         "change": "new"
       }
     }

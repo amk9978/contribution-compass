@@ -8,7 +8,10 @@
   "repository": {
     "id": "jepsen",
     "repo": "jepsen-io/jepsen",
-    "name": "Jepsen"
+    "name": "Jepsen",
+    "keywords": [
+      "Jepsen"
+    ]
   },
   "context": {
     "repository": "jepsen-io/jepsen",
@@ -21,11 +24,11 @@
     "forks": 754,
     "openIssues": 66,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:09.654625+00:00"
+    "collectedAt": "2026-08-13T18:01:57.391912+00:00"
   },
   "news": {
     "repository": "jepsen-io/jepsen",
-    "collectedAt": "2026-08-13T17:47:09.654625+00:00",
+    "collectedAt": "2026-08-13T18:01:57.391912+00:00",
     "latestRelease": {
       "repository": "jepsen-io/jepsen",
       "tag": "v0.3.13",
@@ -74,6 +77,12 @@
     {
       "collectedAt": "2026-08-13T17:47:07.884300Z",
       "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
       "observedCount": 0,
       "changedCount": 0
     }

@@ -8,7 +8,11 @@
   "repository": {
     "id": "temporal",
     "repo": "temporalio/temporal",
-    "name": "Temporal"
+    "name": "Temporal",
+    "keywords": [
+      "Temporal.io",
+      "Temporal workflow"
+    ]
   },
   "context": {
     "repository": "temporalio/temporal",
@@ -38,13 +42,13 @@
     "defaultBranch": "main",
     "stars": 22285,
     "forks": 1808,
-    "openIssues": 889,
+    "openIssues": 890,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:11.519788+00:00"
+    "collectedAt": "2026-08-13T18:01:58.960116+00:00"
   },
   "news": {
     "repository": "temporalio/temporal",
-    "collectedAt": "2026-08-13T17:47:11.519788+00:00",
+    "collectedAt": "2026-08-13T18:01:58.960116+00:00",
     "latestRelease": {
       "repository": "temporalio/temporal",
       "tag": "v1.31.2",
@@ -95,6 +99,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 87,
       "changedCount": 7
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 89,
+      "changedCount": 8
     }
   ],
   "signals": [
@@ -540,8 +550,8 @@
       "text": "Makes test execution return an exit code and error instead of terminating inside the orchestration loop. Final artifact failures, retry-validation failures, execution errors, timeouts, and normal pass/fail outcomes are tested directly while Main remains the process-exit seam. Stack: depends on #11518 and completes the canonical Go test JSON reporting pipeline.",
       "url": "https://github.com/temporalio/temporal/pull/11033",
       "createdAt": "2026-07-13T19:38:51Z",
-      "updatedAt": "2026-08-13T17:32:26Z",
-      "timestamp": "2026-08-13T17:32:26Z",
+      "updatedAt": "2026-08-13T17:47:26Z",
+      "timestamp": "2026-08-13T17:47:26Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -552,7 +562,8 @@
       ],
       "author": "stephanos",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11169",
@@ -564,18 +575,21 @@
       "text": "## What changed? - `WithRequestID` now applies to `UpdateComponent`, enabling execution-level idempotency guarding via request ID. - When a request ID is passed as part of an `UpdateComponent` call (via API handler), it is persisted upon successful updateFn call. If it is already present, instead, `UpdateComponent` fails with a `FailedPrecondition`. - When a request ID is not passed in, a generated ID is still created for error tracing purposes, but it is not written to mutable state. - On transaction close, mutable state will sweep the oldest RequestIDs (with an `attach_time`) upon hitting the configured limit. - This will sweep both entries below a configurable max age, as well as past a certain hard length limit. ## Why? - Scheduler's `UpdateSchedule` and `PatchSchedule` are implemented as handlers that persist a signal in V1. V1 signals provide idempotency via their request IDs. Scheduler V2 doesn't make use of signals, so instead, it must record request IDs explicitly. - We reuse the existing map within mutable state. - We *must* fail with an explicit error (`FailedPrecondition`) instead of simply returning a zero value (as Signals would on repeated successful requests). This is because `UpdateComponent` can apply to API models that include response values (which we don't record, therefore, we can't return on subsequent calls). ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
       "url": "https://github.com/temporalio/temporal/pull/11169",
       "createdAt": "2026-07-21T00:51:10Z",
-      "updatedAt": "2026-08-13T15:23:52Z",
-      "timestamp": "2026-08-13T15:23:52Z",
+      "updatedAt": "2026-08-13T17:51:12Z",
+      "timestamp": "2026-08-13T17:51:12Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
-      "labels": [],
+      "labels": [
+        "reliability-2026"
+      ],
       "author": "lina-temporal",
       "state": "open",
       "assignees": [
         "fretz12"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11204",
@@ -618,6 +632,28 @@
       "author": "awln-temporal",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11232",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "VLN-1574: remediate checkout-below-v7",
+      "text": "> 🏕️ This pull request was created by [camper](https://github.com/temporalio/camper), an automated security campaign tool. ## Finding <table> <tr><td><strong>Rule</strong></td><td><code>checkout-below-v7</code></td></tr> <tr><td><strong>Severity</strong></td><td>HIGH</td></tr> <tr><td><strong>Repository</strong></td><td><code>temporalio/temporal</code></td></tr> <tr><td><strong>Ticket</strong></td><td><a href=\"https://temporalio.atlassian.net/browse/VLN-1574\">VLN-1574</a></td></tr> </table> ## Summary - `.github/workflows/build-and-publish.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/check-release-dependencies.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/ci-success-report.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/docker-build-manual.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/features-integration.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/flaky-tests-report.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/govulncheck.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/linters.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/optimize-test-sharding.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/release.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/run-single-test.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/run-tests.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. ## Instructions - **Approve** to merge this fix - **Request changes** to trigger a new remediation attempt - `/camper rebase` — rebase onto the base branch - `/camper close` — close this PR without merging - `/camper retry` — regenerate the fix from scratch against the current base",
+      "url": "https://github.com/temporalio/temporal/pull/11232",
+      "createdAt": "2026-07-23T15:57:20Z",
+      "updatedAt": "2026-08-13T17:58:35Z",
+      "timestamp": "2026-08-13T17:58:35Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "picatz",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11302",
@@ -1340,8 +1376,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11488",
@@ -1362,8 +1397,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11492",
@@ -1659,8 +1693,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11513",
@@ -1681,8 +1714,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11514",
@@ -1703,8 +1735,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11515",
@@ -1725,8 +1756,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11516",
@@ -1738,8 +1768,8 @@
       "text": "Moves retry selection, argument rewriting, and missing-rerun validation into a focused policy over canonical attempt results. The current runner still owns orchestration, so this PR changes the decision module without switching the reporting pipeline. Stack: depends on #11515. Canonical JUnit rendering follows in #11517.",
       "url": "https://github.com/temporalio/temporal/pull/11516",
       "createdAt": "2026-08-12T22:14:53Z",
-      "updatedAt": "2026-08-13T17:47:09Z",
-      "timestamp": "2026-08-13T17:47:09Z",
+      "updatedAt": "2026-08-13T17:47:12Z",
+      "timestamp": "2026-08-13T17:47:12Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1760,8 +1790,8 @@
       "text": "Adds the pure canonical attempt-history renderer, including parent-failure suppression, diagnostics, timeouts, aborts, build errors, retry suffixes, crash reports, exact counters, and numeric durations. Integration coverage verifies the persisted JUnit shape and the downstream sharding consumer. Stack: depends on #11516. The production cutover follows in #11518.",
       "url": "https://github.com/temporalio/temporal/pull/11517",
       "createdAt": "2026-08-12T22:18:31Z",
-      "updatedAt": "2026-08-13T17:32:21Z",
-      "timestamp": "2026-08-13T17:32:21Z",
+      "updatedAt": "2026-08-13T17:47:17Z",
+      "timestamp": "2026-08-13T17:47:17Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1769,7 +1799,8 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11518",
@@ -1781,8 +1812,8 @@
       "text": "Switches orchestration to canonical attempt results and JUnit rendering, then removes the legacy JUnit merger and temporary diagnostic adapter in the same PR. Intermediate and final artifacts come from one attempt history, and report writes reject inconsistent counters. Stack: depends on #11517. Explicit orchestration outcomes follow in #11033.",
       "url": "https://github.com/temporalio/temporal/pull/11518",
       "createdAt": "2026-08-12T22:21:21Z",
-      "updatedAt": "2026-08-13T17:32:23Z",
-      "timestamp": "2026-08-13T17:32:23Z",
+      "updatedAt": "2026-08-13T17:47:21Z",
+      "timestamp": "2026-08-13T17:47:21Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1790,7 +1821,8 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11520",
@@ -2177,20 +2209,23 @@
       "group": "platform-infrastructure",
       "project": "temporalio/temporal",
       "kind": "pull_request",
-      "title": "Release process-global lifecycle registrations",
-      "text": "## What changed? Tie gRPC resolver registrations and OTEL logger registrations to their owners. Test resolver callers now receive and register cleanup directly, and matching test clients close their RPC factories during cluster shutdown. The leak test drops the corresponding logger, host, and final testBase expectations, so it no longer allows expected object leaks. ## Why? The process-global resolver map and OTEL error handler retained cluster-owned state after shutdown. Explicit cleanup releases those references while preserving resolver availability during Fx graph construction. ## Testing - go test -race -tags disable_grpc_modules,test_dep ./common/membership ./common/rpc/test ./temporal ./tests/testcore -count=1 - make LEAK_ITERS=5 LEAK_ITERS_WARMUP=2 LEAK_GC_SETTLE_TIMEOUT=30s LEAK_TIMEOUT=4m leak-test The package tests pass. The zero-expected-leak gate depends on the persistence ownership fixes in #11506 and #11507; without them, the leak test reports the remaining testBase persistence graph. Stacked on #11542.",
+      "title": "Release gRPC resolver registrations on shutdown",
+      "text": "## What changed? Tie process-global gRPC resolver registrations to their Fx and test owners. Resolver URLs use monotonic opaque registration IDs, test callers register cleanup directly, and matching test clients close their RPC factories during cluster shutdown. The leak test drops the corresponding host expectation. ## Why? The process-global resolver map retained cluster-owned state after shutdown. Explicit cleanup releases those references while preserving resolver availability during Fx graph construction. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./common/membership ./common/rpc/test ./tests/testcore -count=1` - `LEAK_ITERS=5 LEAK_ITERS_WARMUP=1 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 6m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Stacked on #11542.",
       "url": "https://github.com/temporalio/temporal/pull/11543",
       "createdAt": "2026-08-13T15:50:19Z",
-      "updatedAt": "2026-08-13T17:42:59Z",
-      "timestamp": "2026-08-13T17:42:59Z",
+      "updatedAt": "2026-08-13T18:01:05Z",
+      "timestamp": "2026-08-13T18:01:05Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
-      "labels": [],
+      "labels": [
+        "request-claude-review"
+      ],
       "author": "stephanos",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:temporalio/temporal:pull_request:11544",
@@ -2256,6 +2291,28 @@
       "author": "feiyang3cat",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11551",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Release OTEL logger registrations on shutdown",
+      "text": "## What changed? Route process-global OTEL errors through lifecycle-owned logger registrations. The handler selects the newest ready registration and drops each logger reference when its Fx owner stops. The leak test drops the corresponding logger expectation. ## Why? The process-global OTEL error handler retained the server logger after shutdown. Lifecycle ownership releases that reference while supporting multiple in-process servers. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./temporal -count=1` - `LEAK_ITERS=5 LEAK_ITERS_WARMUP=1 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 6m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Based on #11542.",
+      "url": "https://github.com/temporalio/temporal/pull/11551",
+      "createdAt": "2026-08-13T17:59:38Z",
+      "updatedAt": "2026-08-13T17:59:38Z",
+      "timestamp": "2026-08-13T17:59:38Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     }
   ],
   "events": [
@@ -6651,6 +6708,263 @@
         "createdAt": "2026-08-12T22:12:35Z",
         "updatedAt": "2026-08-13T17:47:08Z",
         "timestamp": "2026-08-13T17:47:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fe438a468257ac5aae04",
+      "signalId": "github:temporalio/temporal:pull_request:11543",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11543",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Release gRPC resolver registrations on shutdown",
+        "text": "## What changed? Tie process-global gRPC resolver registrations to their Fx and test owners. Resolver URLs use monotonic opaque registration IDs, test callers register cleanup directly, and matching test clients close their RPC factories during cluster shutdown. The leak test drops the corresponding host expectation. ## Why? The process-global resolver map retained cluster-owned state after shutdown. Explicit cleanup releases those references while preserving resolver availability during Fx graph construction. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./common/membership ./common/rpc/test ./tests/testcore -count=1` - `LEAK_ITERS=5 LEAK_ITERS_WARMUP=1 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 6m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Stacked on #11542.",
+        "url": "https://github.com/temporalio/temporal/pull/11543",
+        "createdAt": "2026-08-13T15:50:19Z",
+        "updatedAt": "2026-08-13T18:01:05Z",
+        "timestamp": "2026-08-13T18:01:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "request-claude-review"
+        ],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f9f0c3e5d916de2dedc3",
+      "signalId": "github:temporalio/temporal:pull_request:11551",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11551",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Release OTEL logger registrations on shutdown",
+        "text": "## What changed? Route process-global OTEL errors through lifecycle-owned logger registrations. The handler selects the newest ready registration and drops each logger reference when its Fx owner stops. The leak test drops the corresponding logger expectation. ## Why? The process-global OTEL error handler retained the server logger after shutdown. Lifecycle ownership releases that reference while supporting multiple in-process servers. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./temporal -count=1` - `LEAK_ITERS=5 LEAK_ITERS_WARMUP=1 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 6m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Based on #11542.",
+        "url": "https://github.com/temporalio/temporal/pull/11551",
+        "createdAt": "2026-08-13T17:59:38Z",
+        "updatedAt": "2026-08-13T17:59:38Z",
+        "timestamp": "2026-08-13T17:59:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0f6094ed336526c9c603",
+      "signalId": "github:temporalio/temporal:pull_request:11232",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11232",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "VLN-1574: remediate checkout-below-v7",
+        "text": "> 🏕️ This pull request was created by [camper](https://github.com/temporalio/camper), an automated security campaign tool. ## Finding <table> <tr><td><strong>Rule</strong></td><td><code>checkout-below-v7</code></td></tr> <tr><td><strong>Severity</strong></td><td>HIGH</td></tr> <tr><td><strong>Repository</strong></td><td><code>temporalio/temporal</code></td></tr> <tr><td><strong>Ticket</strong></td><td><a href=\"https://temporalio.atlassian.net/browse/VLN-1574\">VLN-1574</a></td></tr> </table> ## Summary - `.github/workflows/build-and-publish.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/check-release-dependencies.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/ci-success-report.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/docker-build-manual.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/features-integration.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/flaky-tests-report.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/govulncheck.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/linters.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/optimize-test-sharding.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/release.yml`: Updated `actions/checkout` to the required v7.0.0 commit pin. - `.github/workflows/run-single-test.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. - `.github/workflows/run-tests.yml`: Updated all `actions/checkout` uses to the required v7.0.0 commit pin. ## Instructions - **Approve** to merge this fix - **Request changes** to trigger a new remediation attempt - `/camper rebase` — rebase onto the base branch - `/camper close` — close this PR without merging - `/camper retry` — regenerate the fix from scratch against the current base",
+        "url": "https://github.com/temporalio/temporal/pull/11232",
+        "createdAt": "2026-07-23T15:57:20Z",
+        "updatedAt": "2026-08-13T17:58:35Z",
+        "timestamp": "2026-08-13T17:58:35Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "picatz",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b3cdf7392a917b864821",
+      "signalId": "github:temporalio/temporal:pull_request:11169",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11169",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "[CHASM] Support WithRequestID on UpdateComponent",
+        "text": "## What changed? - `WithRequestID` now applies to `UpdateComponent`, enabling execution-level idempotency guarding via request ID. - When a request ID is passed as part of an `UpdateComponent` call (via API handler), it is persisted upon successful updateFn call. If it is already present, instead, `UpdateComponent` fails with a `FailedPrecondition`. - When a request ID is not passed in, a generated ID is still created for error tracing purposes, but it is not written to mutable state. - On transaction close, mutable state will sweep the oldest RequestIDs (with an `attach_time`) upon hitting the configured limit. - This will sweep both entries below a configurable max age, as well as past a certain hard length limit. ## Why? - Scheduler's `UpdateSchedule` and `PatchSchedule` are implemented as handlers that persist a signal in V1. V1 signals provide idempotency via their request IDs. Scheduler V2 doesn't make use of signals, so instead, it must record request IDs explicitly. - We reuse the existing map within mutable state. - We *must* fail with an explicit error (`FailedPrecondition`) instead of simply returning a zero value (as Signals would on repeated successful requests). This is because `UpdateComponent` can apply to API models that include response values (which we don't record, therefore, we can't return on subsequent calls). ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+        "url": "https://github.com/temporalio/temporal/pull/11169",
+        "createdAt": "2026-07-21T00:51:10Z",
+        "updatedAt": "2026-08-13T17:51:12Z",
+        "timestamp": "2026-08-13T17:51:12Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "reliability-2026"
+        ],
+        "author": "lina-temporal",
+        "state": "open",
+        "assignees": [
+          "fretz12"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:134bc54802bca5caff9a",
+      "signalId": "github:temporalio/temporal:pull_request:11033",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11033",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Return test runner orchestration outcomes",
+        "text": "Makes test execution return an exit code and error instead of terminating inside the orchestration loop. Final artifact failures, retry-validation failures, execution errors, timeouts, and normal pass/fail outcomes are tested directly while Main remains the process-exit seam. Stack: depends on #11518 and completes the canonical Go test JSON reporting pipeline.",
+        "url": "https://github.com/temporalio/temporal/pull/11033",
+        "createdAt": "2026-07-13T19:38:51Z",
+        "updatedAt": "2026-08-13T17:47:26Z",
+        "timestamp": "2026-08-13T17:47:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "test-all-dbs",
+          "request-claude-review"
+        ],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:47fd968d119bc7a0f57d",
+      "signalId": "github:temporalio/temporal:pull_request:11518",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11518",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Adopt canonical test reporting pipeline",
+        "text": "Switches orchestration to canonical attempt results and JUnit rendering, then removes the legacy JUnit merger and temporary diagnostic adapter in the same PR. Intermediate and final artifacts come from one attempt history, and report writes reject inconsistent counters. Stack: depends on #11517. Explicit orchestration outcomes follow in #11033.",
+        "url": "https://github.com/temporalio/temporal/pull/11518",
+        "createdAt": "2026-08-12T22:21:21Z",
+        "updatedAt": "2026-08-13T17:47:21Z",
+        "timestamp": "2026-08-13T17:47:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:64c415b049b2e8c2d778",
+      "signalId": "github:temporalio/temporal:pull_request:11517",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11517",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Render JUnit from canonical attempt results",
+        "text": "Adds the pure canonical attempt-history renderer, including parent-failure suppression, diagnostics, timeouts, aborts, build errors, retry suffixes, crash reports, exact counters, and numeric durations. Integration coverage verifies the persisted JUnit shape and the downstream sharding consumer. Stack: depends on #11516. The production cutover follows in #11518.",
+        "url": "https://github.com/temporalio/temporal/pull/11517",
+        "createdAt": "2026-08-12T22:18:31Z",
+        "updatedAt": "2026-08-13T17:47:17Z",
+        "timestamp": "2026-08-13T17:47:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b9d9c3294558f9f8f431",
+      "signalId": "github:temporalio/temporal:pull_request:11516",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11516",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Plan test retries from canonical results",
+        "text": "Moves retry selection, argument rewriting, and missing-rerun validation into a focused policy over canonical attempt results. The current runner still owns orchestration, so this PR changes the decision module without switching the reporting pipeline. Stack: depends on #11515. Canonical JUnit rendering follows in #11517.",
+        "url": "https://github.com/temporalio/temporal/pull/11516",
+        "createdAt": "2026-08-12T22:14:53Z",
+        "updatedAt": "2026-08-13T17:47:12Z",
+        "timestamp": "2026-08-13T17:47:12Z",
         "metrics": {
           "reactions": 0,
           "comments": 0

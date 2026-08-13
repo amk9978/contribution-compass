@@ -8,7 +8,10 @@
   "repository": {
     "id": "redpanda",
     "repo": "redpanda-data/redpanda",
-    "name": "Redpanda"
+    "name": "Redpanda",
+    "keywords": [
+      "Redpanda"
+    ]
   },
   "context": {
     "repository": "redpanda-data/redpanda",
@@ -34,13 +37,13 @@
     "defaultBranch": "dev",
     "stars": 12438,
     "forks": 784,
-    "openIssues": 612,
+    "openIssues": 611,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:14.590496+00:00"
+    "collectedAt": "2026-08-13T18:02:02.916137+00:00"
   },
   "news": {
     "repository": "redpanda-data/redpanda",
-    "collectedAt": "2026-08-13T17:47:14.590496+00:00",
+    "collectedAt": "2026-08-13T18:02:02.916137+00:00",
     "latestRelease": {
       "repository": "redpanda-data/redpanda",
       "tag": "v26.1.15",
@@ -66,7 +69,7 @@
         "url": "https://github.com/redpanda-data/redpanda/milestone/329",
         "progress": 88,
         "openIssues": 8,
-        "closedIssues": 57
+        "closedIssues": 58
       },
       {
         "repository": "redpanda-data/redpanda",
@@ -110,6 +113,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 42,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 41,
+      "changedCount": 3
     }
   ],
   "signals": [
@@ -1515,11 +1524,11 @@
       "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
       "url": "https://github.com/redpanda-data/redpanda/pull/31570",
       "createdAt": "2026-08-13T15:17:15Z",
-      "updatedAt": "2026-08-13T15:18:45Z",
-      "timestamp": "2026-08-13T15:18:45Z",
+      "updatedAt": "2026-08-13T17:53:51Z",
+      "timestamp": "2026-08-13T17:53:51Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "area/build",
@@ -1528,7 +1537,8 @@
       ],
       "author": "vbotbuildovich",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31571",
@@ -1565,19 +1575,20 @@
       "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31567",
       "url": "https://github.com/redpanda-data/redpanda/pull/31572",
       "createdAt": "2026-08-13T16:10:51Z",
-      "updatedAt": "2026-08-13T16:14:06Z",
-      "timestamp": "2026-08-13T16:14:06Z",
+      "updatedAt": "2026-08-13T17:52:18Z",
+      "timestamp": "2026-08-13T17:52:18Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "area/redpanda",
         "kind/backport"
       ],
       "author": "vbotbuildovich",
-      "state": "open",
-      "assignees": []
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31573",
@@ -1586,11 +1597,11 @@
       "project": "redpanda-data/redpanda",
       "kind": "pull_request",
       "title": "rpk: add stretch cluster grafana dashboard behind --cluster-type flag",
-      "text": "Adds a `--cluster-type` flag to `rpk generate grafana-dashboard`. The default value (`default`) leaves the existing `--dashboard` flow untouched; `stretch` prints a new embedded dashboard focused on stretch cluster observability: cross-cluster raft health, StretchCluster member status, and operator reconcile health. ``` rpk generate grafana-dashboard --cluster-type stretch ``` The dashboard is converted from the Redpanda operator repository's [`docs/operator-grafana-dashboard.json`](https://github.com/redpanda-data/redpanda-operator/blob/main/docs/operator-grafana-dashboard.json), with the Prometheus datasource parameterized as a `${DS_PROMETHEUS}` dashboard variable so it imports cleanly into any Grafana instance (matching the convention of the other embedded dashboards, e.g. serverless). It is embedded-only — not downloaded from the [observability](https://github.com/redpanda-data/observability) GitHub repository — so combining `--dashboard` with `--cluster-type stretch` is rejected with a clear error, as is any unrecognized `--cluster-type` value. Unit tests cover flag parsing/routing (`TestClusterTypeStretch`) and the embedded gzip's integrity via sha256 (extended `Test_embeddedDecompressAndPrint`). ## Backports Required - [x] none - not a bug fix ## Release Notes ### Features * `rpk generate grafana-dashboard` accepts a new `--cluster-type` flag. Passing `--cluster-type stretch` generates a Grafana dashboard for stretch clusters managed by the Redpanda Operator, covering cross-cluster raft health, StretchCluster member status, and operator reconcile health. 🤖 Generated with [Claude Code](https://claude.com/claude-code) [K8S-855](https://redpandadata.atlassian.net/browse/K8S-855) [K8S-855]: https://redpandadata.atlassian.net/browse/K8S-855?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+      "text": "Adds a `--cluster-type` flag to `rpk generate grafana-dashboard` (K8S-855, https://redpandadata.atlassian.net/browse/K8S-855). The default value (`default`) leaves the existing `--dashboard` flow untouched; `stretch` swaps in dashboard variants for stretch clusters. The stretch variant of the `operations` dashboard is a new dashboard focused on stretch cluster observability: cross-cluster raft health, StretchCluster member status, and operator reconcile health. ``` rpk generate grafana-dashboard --cluster-type stretch ``` The cluster type composes with `--dashboard` by overlaying the default dashboard set: any dashboard without a stretch-specific variant (e.g. `consumer-offsets`) is generated exactly as before. Stretch variants follow the same flow as the other dashboards — downloaded from the [observability](https://github.com/redpanda-data/observability) GitHub repository, with an embedded gzipped fallback pinned by sha256. Until the companion observability-repo change merges, the download 404s and rpk serves the byte-identical embedded copy. The dashboard is converted from the Redpanda operator repository's [`docs/operator-grafana-dashboard.json`](https://github.com/redpanda-data/redpanda-operator/blob/main/docs/operator-grafana-dashboard.json), with the Prometheus datasource parameterized as a `${DS_PROMETHEUS}` dashboard variable so it imports cleanly into any Grafana instance (matching the convention of the other embedded dashboards, e.g. serverless). Unit tests cover flag parsing, the GitHub download path (stubbed host), the embedded fallback, the overlay fallback to the default set, and the embedded gzip's integrity via sha256. ## Backports Required - [x] none - not a bug fix ## Release Notes ### Features * `rpk generate grafana-dashboard` accepts a new `--cluster-type` flag. Passing `--cluster-type stretch` generates a Grafana dashboard for stretch clusters managed by the Redpanda Operator, covering cross-cluster raft health, StretchCluster member status, and operator reconcile health. It composes with `--dashboard`: dashboards without a stretch-specific variant are generated as usual. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
       "url": "https://github.com/redpanda-data/redpanda/pull/31573",
       "createdAt": "2026-08-13T17:02:20Z",
-      "updatedAt": "2026-08-13T17:10:58Z",
-      "timestamp": "2026-08-13T17:10:58Z",
+      "updatedAt": "2026-08-13T17:51:51Z",
+      "timestamp": "2026-08-13T17:51:51Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1601,7 +1612,8 @@
       ],
       "author": "RafalKorepta",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     }
   ],
   "events": [
@@ -4174,6 +4186,113 @@
         ],
         "author": "JakeSCahill",
         "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0a49e9005ab8703359a4",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31570",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31570",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.2.x] storage: bump segment_concatenation_test timeout",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31568",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31570",
+        "createdAt": "2026-08-13T15:17:15Z",
+        "updatedAt": "2026-08-13T17:53:51Z",
+        "timestamp": "2026-08-13T17:53:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8c6f972773c0817f0479",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31572",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31572",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[v26.2.x] kafka/client/test: deflake data_queue blocking push test",
+        "text": "Backport of PR https://github.com/redpanda-data/redpanda/pull/31567",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31572",
+        "createdAt": "2026-08-13T16:10:51Z",
+        "updatedAt": "2026-08-13T17:52:18Z",
+        "timestamp": "2026-08-13T17:52:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "area/redpanda",
+          "kind/backport"
+        ],
+        "author": "vbotbuildovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8a854d322ff0dcd679c7",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31573",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31573",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "rpk: add stretch cluster grafana dashboard behind --cluster-type flag",
+        "text": "Adds a `--cluster-type` flag to `rpk generate grafana-dashboard` (K8S-855, https://redpandadata.atlassian.net/browse/K8S-855). The default value (`default`) leaves the existing `--dashboard` flow untouched; `stretch` swaps in dashboard variants for stretch clusters. The stretch variant of the `operations` dashboard is a new dashboard focused on stretch cluster observability: cross-cluster raft health, StretchCluster member status, and operator reconcile health. ``` rpk generate grafana-dashboard --cluster-type stretch ``` The cluster type composes with `--dashboard` by overlaying the default dashboard set: any dashboard without a stretch-specific variant (e.g. `consumer-offsets`) is generated exactly as before. Stretch variants follow the same flow as the other dashboards — downloaded from the [observability](https://github.com/redpanda-data/observability) GitHub repository, with an embedded gzipped fallback pinned by sha256. Until the companion observability-repo change merges, the download 404s and rpk serves the byte-identical embedded copy. The dashboard is converted from the Redpanda operator repository's [`docs/operator-grafana-dashboard.json`](https://github.com/redpanda-data/redpanda-operator/blob/main/docs/operator-grafana-dashboard.json), with the Prometheus datasource parameterized as a `${DS_PROMETHEUS}` dashboard variable so it imports cleanly into any Grafana instance (matching the convention of the other embedded dashboards, e.g. serverless). Unit tests cover flag parsing, the GitHub download path (stubbed host), the embedded fallback, the overlay fallback to the default set, and the embedded gzip's integrity via sha256. ## Backports Required - [x] none - not a bug fix ## Release Notes ### Features * `rpk generate grafana-dashboard` accepts a new `--cluster-type` flag. Passing `--cluster-type stretch` generates a Grafana dashboard for stretch clusters managed by the Redpanda Operator, covering cross-cluster raft health, StretchCluster member status, and operator reconcile health. It composes with `--dashboard`: dashboards without a stretch-specific variant are generated as usual. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31573",
+        "createdAt": "2026-08-13T17:02:20Z",
+        "updatedAt": "2026-08-13T17:51:51Z",
+        "timestamp": "2026-08-13T17:51:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "area/rpk",
+          "area/build"
+        ],
+        "author": "RafalKorepta",
+        "state": "open",
         "assignees": [],
         "change": "updated"
       }

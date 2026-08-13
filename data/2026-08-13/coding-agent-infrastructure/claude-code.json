@@ -8,7 +8,10 @@
   "repository": {
     "id": "claude-code",
     "repo": "anthropics/claude-code",
-    "name": "Claude Code"
+    "name": "Claude Code",
+    "keywords": [
+      "Claude Code"
+    ]
   },
   "context": {
     "repository": "anthropics/claude-code",
@@ -18,15 +21,15 @@
     "language": "Python",
     "topics": [],
     "defaultBranch": "main",
-    "stars": 141340,
+    "stars": 141341,
     "forks": 22697,
-    "openIssues": 16022,
+    "openIssues": 16027,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:25.266458+00:00"
+    "collectedAt": "2026-08-13T18:02:14.001087+00:00"
   },
   "news": {
     "repository": "anthropics/claude-code",
-    "collectedAt": "2026-08-13T17:47:25.266458+00:00",
+    "collectedAt": "2026-08-13T18:02:14.001087+00:00",
     "latestRelease": {
       "repository": "anthropics/claude-code",
       "tag": "v2.1.231",
@@ -104,6 +107,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 502,
       "changedCount": 7
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 502,
+      "changedCount": 11
     }
   ],
   "signals": [
@@ -1709,6 +1718,34 @@
       "author": "cminn10",
       "state": "closed",
       "assignees": []
+    },
+    {
+      "id": "github:anthropics/claude-code:issue:49655",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anthropics/claude-code",
+      "kind": "issue",
+      "title": "[BUG] Claude Desktop update fails with 0x80073CF6 when CoworkVMService is running (Windows)",
+      "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? **Claude Desktop fails to update/reinstall on Windows with HRESULT 0x80073CF6 (ERROR_PACKAGES_IN_USE) when CoworkVMService is running, even after Claude Desktop is fully closed. The AppX installer cannot delete the Helium virtual registry hive files because CoworkVMService holds kernel-level locks on them: - C:\\Users\\<user>\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\SystemAppData\\Helium\\User.dat - C:\\Users\\<user>\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\SystemAppData\\Helium\\UserClasses.dat These locks cannot be released without a full system reboot, making it impossible to update Claude while any server/service is running.** ### What Should Happen? The Claude installer should automatically stop CoworkVMService and related processes (cowork-svc, parsecd, chrome-native-host) before attempting the MSIX package update, then restart them after installation completes. ### Error Messages/Logs ```shell MSIX installation failed: AddPackage failed: AddPackage failed with HRESULT 0x80073CF6 AppX deployment log: - Error deleting Helium\\User.dat: 0x20 (ERROR_SHARING_VIOLATION) - Error deleting Helium\\UserClasses.dat: 0x20 (ERROR_SHARING_VIOLATION) - Error 0xD0074005: Cannot notify BrokerInfrastructure service about package state change ``` ### Steps to Reproduce 1. Install Claude Desktop (MSIX) with Cowork feature enabled 2. Launch Claude Desktop — CoworkVMService starts automatically 3. Close Claude Desktop completely 4. Download and run the new Claude Setup.exe installer 5. Installation fails with: AddPackage failed with HRESULT 0x80073CF6 Workaround (requires manual step before every update): Stop-Service CoworkVMService -Force Stop-Process -Name cowork-svc, parsecd, chrome-native-host -Force -ErrorAction SilentlyContinue Claude Code Version Claude Desktop 1.3036.0.0 Operating System Windows 11 Pro 10.0.26100 Terminal/Shell PowerShell (Administrator) ### Claude Model Other ### Is this a regression? Yes, this worked in a previous version ### Last Working Version _No response_ ### Claude Code Version Claude Desktop 1.3036.0.0 ### Platform Anthropic API ### Operating System Windows ### Terminal/Shell Terminal.app (macOS) ### Additional Information - This is a recurring issue: every Claude Desktop update requires a full system reboot if CoworkVMService has been running - The Helium hive files are locked at kernel level — handle64.exe (Sysinternals) cannot detect the lock - reg unload fails with \"Access is denied\" even from Administrator - Only a full system restart releases the kernel-level hive locks - Users running servers or long-running processes cannot reboot just to update Claude",
+      "url": "https://github.com/anthropics/claude-code/issues/49655",
+      "createdAt": "2026-04-17T02:13:04Z",
+      "updatedAt": "2026-08-13T17:51:46Z",
+      "timestamp": "2026-08-13T17:51:46Z",
+      "metrics": {
+        "reactions": 10,
+        "comments": 20
+      },
+      "labels": [
+        "bug",
+        "platform:windows",
+        "area:cowork",
+        "area:installation",
+        "area:desktop"
+      ],
+      "author": "jun-ho-hong",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:anthropics/claude-code:issue:49806",
@@ -6688,7 +6725,7 @@
       "updatedAt": "2026-08-13T13:10:03Z",
       "timestamp": "2026-08-13T13:10:03Z",
       "metrics": {
-        "reactions": 107,
+        "reactions": 108,
         "comments": 10
       },
       "labels": [
@@ -6698,7 +6735,8 @@
       ],
       "author": "bhuvarloka",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:anthropics/claude-code:issue:66002",
@@ -15515,6 +15553,33 @@
       "assignees": []
     },
     {
+      "id": "github:anthropics/claude-code:issue:77752",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anthropics/claude-code",
+      "kind": "issue",
+      "title": "[BUG] Mouse tracking not disabled when Claude Code is suspended with Ctrl-Z",
+      "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? When Claude Code is suspended using Ctrl-Z, it leaves mouse tracking enabled in the terminal. This causes other terminal programs to receive unwanted mouse enter/exit events. In my case, when i wanted to use the terminal scrollback, bash responds to scroll-events by cycling through the command history instead. ### What Should Happen? When Claude Code is suspended, it should disable mouse tracking so other terminal programs aren't affected. ### Error Messages/Logs ```shell ``` ### Steps to Reproduce 1. Open a fresh terminal (using xfce4-terminal) 2. ls -R | head -1000 3. Start Claude Code 4. Suspend Claude Code with Ctrl-Z 5. Scroll up (attempt to skim through old terminal output) ### Claude Model None ### Is this a regression? I don't know ### Last Working Version _No response_ ### Claude Code Version 2.1.210 (Claude Code) ### Platform Anthropic API ### Operating System Other Linux ### Terminal/Shell Other ### Additional Information I've confirmed this only for xfce4-terminal, not others. I doubt it's specific to xfce4-terminal. This exact issue has been [reported](https://github.com/anthropics/claude-code/issues/7807) but then closed automatically. I have ```json { \"env\": { \"CLAUDE_CODE_DISABLE_MOUSE_CLICKS\": \"1\" }, \"tui\": \"fullscreen\", \"editorMode\": \"normal\", /* ... */ } ```",
+      "url": "https://github.com/anthropics/claude-code/issues/77752",
+      "createdAt": "2026-07-15T10:13:23Z",
+      "updatedAt": "2026-08-13T17:51:29Z",
+      "timestamp": "2026-08-13T17:51:29Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 2
+      },
+      "labels": [
+        "bug",
+        "has repro",
+        "platform:linux",
+        "area:tui"
+      ],
+      "author": "arinar",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:anthropics/claude-code:issue:77819",
       "source": "github",
       "group": "coding-agent-infrastructure",
@@ -17845,8 +17910,8 @@
       "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? On Windows (MSIX/Store install), send_message between Claude Code sessions reports success and the message visibly appears in the target session's input composer — but it is never submitted. The target never produces a turn. Observed sitting unprocessed for 39+ minutes. Typing the identical text into that same session by hand works instantly, so the target session is healthy. Only the delivered message fails to execute. Two additional findings: 1. Queued messages OVERWRITE each other. Sending a second message to a session with one still unprocessed replaces it — the first is lost silently with no notice. Messages can disappear entirely. 2. In the target's transcript JSONL the message is written as a `last-prompt` record, never as a `type: \"user\"` turn. It is stored as a pending prompt rather than enqueued. This worked reliably until 2026-08-11 ~18:48 ET and has failed 100% since. ### What Should Happen? The target session should process the delivered message as a conversation turn and respond, as it did prior to 2026-08-11. ### Error Messages/Logs ```shell No error is produced anywhere. The tool returns: Message sent to session local_<id> (\"Flow HQ\"). The message renders correctly in the target session UI. Nothing fails loudly — it simply never executes. Delivery counts across six long-running sessions, cross-session messages processed as real turns vs parked: Session A: 45 processed, 0 parked Session B: 30 processed, 0 parked Session C: 23 processed, 0 parked Session D: 21 processed, 0 parked Session E: 6 processed, 0 parked Session F: 3 processed, 0 parked 128 successful deliveries, zero failures, through 2026-08-11 18:48 ET. Since 2026-08-12 07:54 ET: 17 sends, 0 processed. Every one returned success. ``` ### Steps to Reproduce 1. Open two Claude Code sessions, A and B, on Windows (MSIX/Store install). 2. From session A, call send_message targeting session B. 3. Tool returns: Message sent to session <id> (\"B\"). 4. Open session B — the message is visibly present as a \"Message from A\" block. 5. Session B never processes it. No assistant turn is ever generated. 6. Type any text into B by hand — it responds immediately. Ruled out during diagnosis: - Privacy/telemetry env vars (CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC, DISABLE_TELEMETRY, DO_NOT_TRACK, DISABLE_GROWTHBOOK) — all unset at process, user and machine scope - Windows Firewall — all Claude inbound/outbound rules present, enabled, action Allow - Stale process state — reproduces after a full quit (all processes killed and verified) and relaunch - Orphaned pre-existing sessions — reproduces in a session created minutes ago, after the failure began Change window: four changes landed between the last success (8/11 18:48) and the first failure (8/12 07:54): - Claude 1.28929.0.0 installed 8/11 21:10 — its release notes mention fixing MSIX installs \"failing to save chat history, settings, and scheduled tasks,\" so this build touched MSIX persistence - KB5123304 (8/11), KB5121003 and KB5120708 (8/12) I cannot isolate which. Flagging the MSIX persistence change as most suspicious given the install type and the symptom: a prompt that is stored but never enqueued. Possibly related: the 2026-08-08 fix for \"cross-session messages staying parked without a notice or expiry\" — same class of parking, reappearing after 8/11. ### Claude Model Opus ### Is this a regression? Yes, this worked in a previous version ### Last Working Version unknown — the build immediately prior to 1.28929.0.0 (MSIX update removed the old package folder). Last confirmed working 2026-08-11 18:48 ET. ### Claude Code Version 1.28929.0.0 ### Platform Anthropic API ### Operating System Windows ### Terminal/Shell PowerShell ### Additional Information _No response_",
       "url": "https://github.com/anthropics/claude-code/issues/86069",
       "createdAt": "2026-08-12T10:07:03Z",
-      "updatedAt": "2026-08-13T17:32:03Z",
-      "timestamp": "2026-08-13T17:32:03Z",
+      "updatedAt": "2026-08-13T17:49:50Z",
+      "timestamp": "2026-08-13T17:49:50Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -17860,7 +17925,8 @@
       ],
       "author": "lschlegel9826",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:anthropics/claude-code:issue:86082",
@@ -24250,8 +24316,7 @@
       ],
       "author": "andreapeterfly-prog",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:anthropics/claude-code:issue:86458",
@@ -24277,8 +24342,7 @@
       ],
       "author": "mistywidow",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:anthropics/claude-code:issue:86459",
@@ -24303,8 +24367,7 @@
       ],
       "author": "andsoforth-tech",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:anthropics/claude-code:issue:86460",
@@ -24329,8 +24392,7 @@
       ],
       "author": "namiranianp",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:anthropics/claude-code:issue:86461",
@@ -24342,19 +24404,21 @@
       "text": "### Preflight Checklist - [x] I have searched [existing requests](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20label%3Aenhancement) and this feature hasn't been requested yet - [x] This is a single feature request (not multiple features) ### Problem Statement I run a hierarchy of persistent threads: several Home/chat threads act as \"tech leads\" (strategy, methodology, research direction). Each tech lead delegates execution work to its own dedicated Code session, and separately collaborates with other persistent Home/chat threads that act as helpers with specialized skills — not formally launched or owned by the lead, but working alongside it on an ongoing basis. For example, one tech-lead thread might rely on a separate persistent thread specialized in finding patterns or anomalies in unstructured data streams to continuously review output on its behalf. This is a two-way, ongoing collaboration: the helper reports findings back, and the lead can respond by asking the helper to look deeper into something specific, or redirect its attention toward what currently matters most — not a one-off task or a successor handoff. Normal day-to-day operation of this structure requires frequent thread-to-thread communication in several directions: a lead delegating a task to its Code session, a Code session or helper thread reporting findings back to the lead it's supporting, the lead refining or focusing the helper's attention in response, one lead requesting input from another, or one lead proactively informing another lead of important new information it has discovered. All of this currently happens through the same manual mechanism: copy content out of the source thread, switch to the target thread, paste it in. This works, but it's pure mechanical overhead on every single exchange — the user acts as a message router for routine, ongoing collaboration between threads, not just for occasional one-off handoffs. As the number of active threads grows, this manual relay becomes the dominant cost of running a multi-thread workflow. This is distinct from existing requests like #27441, #37213, #35072, #36181, and #24798, which describe Claude Code session-to-session coordination for multi-agent coding workflows, several explicitly requesting autonomous, human-out-of-the-loop messaging between peer Code sessions. This request covers Home-to-Home (including between independent collaborating threads), Home-to-Code, and Code-to-Home communication for normal operation, and explicitly keeps a human review step by design. ### Proposed Solution 1. Any thread — Home or Code — can draft a message addressed to another named thread (by title or ID). 2. The drafted message is staged for user review before being sent, not delivered automatically. 3. The user has three options on a staged message: - Approve as-is → delivered directly into the target thread - Edit before sending - Reject/discard 4. An optional trust setting (per thread-pair, or global) allows auto-approval for specific relationships the user has come to trust — e.g., a lead and its long-standing helper thread — so review can be skipped once confidence is established, without requiring it to be all-or-nothing across every thread pair. 5. This explicitly does not propose autonomous agent-to-agent messaging without a human in the loop by default. That is the key difference from the Code-session peer-messaging requests referenced above, several of which raise real coordination and safety complexity that this simpler, human-gated version avoids. The goal is to eliminate the mechanical copy/switch/paste relay step — not to remove the user from the loop. 6. This should work across all thread types described above: Home-to-Home, Home-to-Code, and Code-to-Home, since all three currently rely on the identical manual-relay workaround. ### Alternative Solutions Currently the only alternative is fully manual relay: copying content out of the source thread, switching to the target thread, and pasting it in. This works but does not scale — as the number of active threads grows, the user spends an increasing share of their time acting as a message router rather than doing the actual work each thread exists to support. I'm not aware of any existing setting, workaround, or third-party tool that solves this for Home/chat threads specifically. The closest adjacent tooling I've found (tmux-based orchestration, git-backed inbox files, custom message-broker scripts) all target Claude Code CLI sessions coordinating as peers, and require the user to build and maintain custom infrastructure outside the product — they don't address Home-tab threads at all, and they don't preserve a built-in human review step. ### Priority High - Significant impact on productivity ### Feature Category Other ### Use Case Example A tech-lead thread (\"RTS\") is delegating a coding task to its dedicated Code session, and separately relies on a helper thread (\"Evidence\") that continuously analyzes log output from a long-running process for anomalies. Right now: 1. When Evidence finds something worth flagging, I copy its finding out of the Evidence thread and paste it into RTS. 2. When RTS wants Evidence to look more closely at a specific time window or pattern, I copy that request out of RTS and paste it into Evidence. 3. When RTS's Code session finishes a task and reports results, I copy that output from the Code session back into RTS. With this feature: RTS could draft \"ask Evidence to check for X in the last hour of logs\" and send it directly to Evidence, pending my one-click approval. Evidence's findings could be drafted as a message back to RTS the same way. Over a single day running 5-6 active threads like this, this would eliminate dozens of manual copy/switch/paste cycles, while I still see and approve every message before it's delivered. ### Additional Context This request is specifically about the Claude Desktop app for macOS (distributed from the Claude Code product page, containing both a Home tab and a Code tab). The lack of thread-to-thread messaging compounds with two other gaps in the same app: there is no reliable way to tell, at a glance, when a given thread has produced new output ready to review (the previous sidebar unread-indicator was removed and closed as not planned in #32628), and Home/chat threads have no compaction mechanism (/compact, /clear, /context are Code-session-only). Together, these make managing several persistent, ongoing threads harder than it needs to be: no passive signal for new output, no way to compact a long-running thread proactively, and no way to relay information between threads without manual copy/paste.",
       "url": "https://github.com/anthropics/claude-code/issues/86461",
       "createdAt": "2026-08-13T17:45:49Z",
-      "updatedAt": "2026-08-13T17:45:49Z",
-      "timestamp": "2026-08-13T17:45:49Z",
+      "updatedAt": "2026-08-13T17:47:37Z",
+      "timestamp": "2026-08-13T17:47:37Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
       "labels": [
-        "enhancement"
+        "enhancement",
+        "platform:macos",
+        "area:desktop"
       ],
       "author": "lennig",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:anthropics/claude-code:issue:86462",
@@ -24380,8 +24444,7 @@
       ],
       "author": "offby1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:anthropics/claude-code:issue:86463",
@@ -24393,14 +24456,145 @@
       "text": "**Bug Description** keeps going in cycle. Nothing fixes. only tokens get wasted here **Environment Info** - Platform: darwin - Terminal: Apple_Terminal - Version: 2.1.226 - Feedback ID: 46d4c388-241f-4f98-bed9-c4ccffb63058 **Errors** ```json [] ```",
       "url": "https://github.com/anthropics/claude-code/issues/86463",
       "createdAt": "2026-08-13T17:46:56Z",
-      "updatedAt": "2026-08-13T17:46:56Z",
-      "timestamp": "2026-08-13T17:46:56Z",
+      "updatedAt": "2026-08-13T17:47:59Z",
+      "timestamp": "2026-08-13T17:47:59Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "bug",
+        "platform:macos",
+        "area:core",
+        "needs-repro"
+      ],
+      "author": "evanpaul90",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:anthropics/claude-code:issue:86464",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anthropics/claude-code",
+      "kind": "issue",
+      "title": "[BUG] MCP progress notifications are received but discarded once a call is auto-backgrounded at 120s",
+      "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? When an MCP tool call exceeds the 120s foreground limit, Claude Code moves it to the background — and from that moment the progress the server is streaming becomes unobservable. Opening the background task manager (`↓` to manage) gives one static row per task: ``` Background MCP tasks (1) ❯ ⏳ slowstream/slow_stream · klxdvixp · working ↑/↓ to select · x to stop · Esc to close ``` A tool name, an opaque task ID, and the frozen word `working`. The server is emitting a `notifications/progress` every two seconds with a human-readable `message` — 600 of them over a twenty-minute call — and none of it appears here. **The notifications are received; they are then deliberately discarded.** The `onprogress` callback on the call stays live for the whole call and is actively used — it disarms the transport watchdog and refreshes the idle-timeout timestamp on every notification. It then forwards the message to a sink that backgrounding switches off: `onBackgrounded` sets the exact latch that makes the forwarder a no-op, and nothing is wired up in its place. So the text arrives, is acted on for timeout purposes, and is dropped. Meanwhile the task row's renderer already knows how to display a status string, and the formatter that renders exactly the desired output already exists on the foreground path. Details and excerpts in **Additional Information**. There is also nowhere further to drill in. Every other backgrounded task type offers `enter to view` a detail pane; MCP tasks are excluded by an explicit type check, so the affordances really are select, stop, and close. That one row is the whole surface a backgrounded MCP call gets. **Why this matters.** Backgrounding is triggered *by* duration, so the behavior is inverted relative to need: short calls, where progress is least interesting, stream their progress; long calls, where it is essential, go dark after the first two minutes. The practical outcome is that the only way to react to a slow MCP call is to kill it with `x` and lose the work. Distinguishing \"still working, on the fourth of seven targets\" from \"wedged on fixture setup for eighteen minutes\" is impossible. With several calls backgrounded at once, every row reads `working` and they are indistinguishable from each other. ### What Should Happen? Each row should carry the latest `message` from the server instead of a fixed `working`: ``` MCP tasks (2) › slowstream/slow_stream · kslinnvg · run: step 412 - 824s elapsed, still working slowstream/slow_stream · kuw8p5hj · batch-2: compiling fixtures (3 of 7 targets) ``` One constraint on any fix: `progress`/`total` are optional in MCP and real servers frequently omit `total`, so `message` has to be the primary content — show the counter when the server provides one. A fix that renders only numeric progress would leave those servers exactly as opaque as they are now. Conveniently, that exact ladder is already implemented for the foreground path, so this is closer to re-pointing an existing formatter than writing a new one. See item 6 below. ### Error Messages/Logs ```shell # 1. What the user actually sees when the call is backgrounded. Note the TUI does # not render the tool result verbatim -- the model paraphrases it, so the exact # wording varies per run. Observed: Fourth run started - backgrounded as task klxdvixpt. I'll report the result when it completes. # The underlying tool result, from the 2.1.231 binary, is a fixed template: MCP tool \"${serverName}/${toolName}\" is still running after ${N}s. It was moved to the background as task ${id} and keeps running; you'll receive a notification with the result when it completes. You can keep working in the meantime. To stop it, use TaskStop with task_id \"${id}\". Note: it does not survive exiting this session. # 2. smoke_test.py drives the same server directly over stdio with no MCP client # involved. The notifications are on the wire, on schedule, with `message` # populated — nothing is missing server-side; the gap is client-side: [ 0.0s] {\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"protocolVersion\": \"2025-06-18\", \"capabilities\": {\"tools\": {}, \"logging\": {}}, \"serverInfo\": {\"name\": \"slow-stream\", \"ver [ 0.0s] {\"jsonrpc\": \"2.0\", \"id\": 2, \"result\": {\"tools\": [{\"name\": \"slow_stream\", \"description\": \"Runs for a long time (default 20 minutes) and streams a progress notifi [ 1.0s] progress 1/8 smoke: step 1/8 - 1s elapsed, still working [ 2.0s] progress 2/8 smoke: step 2/8 - 2s elapsed, still working [ 3.0s] progress 3/8 smoke: step 3/8 - 3s elapsed, still working [ 4.0s] progress 4/8 smoke: step 4/8 - 4s elapsed, still working [ 5.0s] progress 5/8 smoke: step 5/8 - 5s elapsed, still working [ 6.0s] progress 6/8 smoke: step 6/8 - 6s elapsed, still working [ 7.0s] progress 7/8 smoke: step 7/8 - 7s elapsed, still working [ 8.1s] progress 8/8 smoke: step 8/8 - 8s elapsed, still working [ 8.1s] RESULT: smoke: finished after 8.0s and 8 progress notifications. ``` ### Steps to Reproduce A dependency-free reproduction is attached as `mcp-progress-repro.zip`, and every file is also inlined below so nothing needs downloading. The server is plain line-delimited JSON-RPC 2.0 over stdin/stdout — no SDK, no `npm install`, no venv. `.mcp.json` uses a relative path that Claude Code resolves against the project directory, so the files work wherever you put them with nothing to edit. The tool is `slow_stream(duration_seconds=1200, interval_seconds=2, label=\"run\", include_total=True)`. It sleeps for `duration_seconds`, and every `interval_seconds` it emits a `notifications/progress` echoing the call's `_meta.progressToken`, with an incrementing `progress`, a human-readable `message`, and — unless `include_total` is false — a `total`. It also emits a `notifications/message` info log carrying the same text, so both notification channels are exercised. **The 90-second version.** From the directory holding the files: ``` CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=10000 claude ``` 1. Prompt: **`Call the slowstream slow_stream tool with duration_seconds 60.`** Approve the tool and the server when prompted. 2. The call starts in the foreground and progress is visible, rendered by the formatter in item 6 below: ``` ● Calling slowstream · 6s… └ run: step 3/30 - 6s elapsed, still working (10%) ``` 3. At 10s the call is backgrounded and the model says so (message #1 above; with default settings this happens at 120s instead). The footer changes to `1 MCP task`. 4. Press `↓` to open the background task manager. (`Esc` interrupts instead.) 5. Select the running `slowstream/slow_stream` entry and try to see its progress. **Observed:** `slowstream/slow_stream · <id> · working`, unchanged for the remaining 50 seconds. Enter does nothing. **Expected:** the latest streamed `message`. Plain `claude` with default arguments is the real-world shape — a 1200s call backgrounded at 120s, then eighteen more minutes of progress notifications arriving and none of them shown. Behavior is identical from step 3 onward. **Variants.** Two calls with different `label` values reproduce the multi-task case; the server threads each `tools/call`, so they stream independently and both rows read `working`. Adding `include_total false` drops the optional `total`, leaving `message` as the only renderable content — this is the shape a fix has to handle. **Conditions that suppress auto-backgrounding**, worth checking if this doesn't reproduce: it is off for `sse-ide`/`ws-ide` transports; off in non-interactive sessions unless `CLAUDE_AUTO_BACKGROUND_TASKS` is set; off when `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` is set; and off for MCP calls made by subagents. Setting `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` explicitly also forces the feature on regardless of its gate, which is why the recipe above uses it. <details> <summary><code>slow_stream_mcp.py</code> (click to expand)</summary> ```python #!/usr/bin/env python3 \"\"\" Minimal MCP server (stdio, zero dependencies) that reproduces: \"A long-running MCP tool call gets auto-backgrounded, and once backgrounded its streamed progress is no longer visible anywhere in the UI.\" The single tool `slow_stream` runs for `duration_seconds` (default 1200, i.e. 20 minutes) and emits a `notifications/progress` every `interval_seconds` (default 2), each with an incrementing progress value and a human-readable `message`. It also emits a `notifications/message` (logging) at every tick, so the repro covers both notification channels. The 20-minute default matches the real-world calls this was filed against; the bug itself is observable from the 120s mark onward, so pass a smaller `duration_seconds` for a faster confirmation. Nothing here is Python-specific -- it is plain line-delimited JSON-RPC 2.0 over stdin/stdout, per the MCP stdio transport. \"\"\" import json import sys import threading import time PROTOCOL_VERSION = \"2025-11-25\" # First spec revision with `message` on progress notifications. Version strings # are dates, so they compare lexically. MIN_PROTOCOL_VERSION = \"2025-03-26\" SERVER_INFO = {\"name\": \"slow-stream\", \"version\": \"1.0.0\"} def negotiate(requested): \"\"\"Echo the client's protocol version when this server can speak it. Only tools, progress notifications and logging are used here, all stable since 2025-03-26, so echoing avoids a needless downgrade. \"\"\" if isinstance(requested, str) and requested >= MIN_PROTOCOL_VERSION: return requested return PROTOCOL_VERSION _stdout_lock = threading.Lock() def send(payload): \"\"\"Write one JSON-RPC message to stdout. Thread-safe.\"\"\" with _stdout_lock: sys.stdout.write(json.dumps(payload) + \"\\n\") sys.stdout.flush() def log(msg): \"\"\"Server-side diagnostics go to stderr; stdout is the protocol channel.\"\"\" print(f\"[slow-stream] {msg}\", file=sys.stderr, flush=True) TOOLS = [ { \"name\": \"slow_stream\", \"description\": ( \"Runs for a long time (default 20 minutes) and streams a progress \" \"notification every couple of seconds. Used to reproduce a UI bug \" \"with backgrounded MCP calls.\" ), \"inputSchema\": { \"type\": \"object\", \"properties\": { \"duration_seconds\": { \"type\": \"number\", \"description\": \"How long the tool should run. Default 1200 (20 minutes).\", \"default\": 1200, }, \"interval_seconds\": { \"type\": \"number\", \"description\": \"Seconds between progress notifications. Default 2.\", \"default\": 2, }, \"label\": { \"type\": \"string\", \"description\": \"Free-form label echoed into every progress message, so concurrent calls are distinguishable.\", \"default\": \"run\", }, \"include_total\": { \"type\": \"boolean\", \"description\": ( \"Whether to send the optional `total` field. Set false to match \" \"servers that stream free-form status with no known end point, \" \"leaving `message` as the only renderable content.\" ), \"default\": True, }, }, }, } ] def run_slow_stream(request_id, arguments, progress_token): \"\"\"Executed on its own thread so the server keeps serving during the call.\"\"\" duration = float(arguments.get(\"duration_seconds\", 1200)) interval = float(arguments.get(\"interval_seconds\", 2)) label = str(arguments.get(\"label\", \"run\")) include_total = bool(arguments.get(\"include_total\", True)) total_ticks = max(1, int(duration / interval)) started = time.monotonic() log(f\"{label}: starting, {duration}s in {total_ticks} ticks, progressToken={progress_token!r}\") for tick in range(1, total_ticks + 1): time.sleep(interval) elapsed = time.monotonic() - started if include_total: message = f\"{label}: step {tick}/{total_ticks} - {elapsed:.0f}s elapsed, still working\" else: # No denominator anywhere: `message` is the only thing a client can show. message = f\"{label}: step {tick} - {elapsed:.0f}s elapsed, still working\" if progress_token is not None: # `progress` is required by the spec; `total` and `message` are optional. params = {\"progressToken\": progress_token, \"progress\": tick, \"message\": message} if include_total: params[\"total\"] = total_ticks send({\"jsonrpc\": \"2.0\", \"method\": \"notifications/progress\", \"params\": params}) # Second channel: MCP logging notification. send( { \"jsonrpc\": \"2.0\", \"method\": \"notifications/message\", \"params\": { \"level\": \"info\", \"logger\": \"slow_stream\", \"data\": message, }, } ) log(message) elapsed = time.monotonic() - started send( { \"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": { \"content\": [ { \"type\": \"text\", \"text\": ( f\"{label}: finished after {elapsed:.1f}s and \" f\"{total_ticks} progress notifications.\" ), } ] }, } ) log(f\"{label}: done after {elapsed:.1f}s\") def handle(message): method = message.get(\"method\") request_id = message.get(\"id\") params = message.get(\"params\") or {} # Notifications from the client carry no id and expect no response. if request_id is None: log(f\"notification: {method}\") return if method == \"initialize\": # Claude Code surfaces server stderr in its MCP log, so this records the # client's requested protocol version for the bug report. log( f\"initialize from {params.get('clientInfo')} \" f\"requesting protocolVersion={params.get('protocolVersion')!r}\" ) send( { \"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": { \"protocolVersion\": negotiate(params.get(\"protocolVersion\")), \"capabilities\": {\"tools\": {}, \"logging\": {}}, \"serverInfo\": SERVER_INFO, }, } ) elif method == \"tools/list\": send({\"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": {\"tools\": TOOLS}}) elif method == \"tools/call\": progress_token = (params.get(\"_meta\") or {}).get(\"progressToken\") arguments = params.get(\"arguments\") or {} threading.Thread( target=run_slow_stream, args=(request_id, arguments, progress_token), daemon=True, ).start() elif method in (\"ping\", \"logging/setLevel\"): # `logging/setLevel` is answered because the server declares the logging # capability; an error here would be the server's bug, not the client's. send({\"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": {}}) else: send( { \"jsonrpc\": \"2.0\", \"id\": request_id, \"error\": {\"code\": -32601, \"message\": f\"Method not found: {method}\"}, } ) def main(): log(\"ready on stdio\") for line in sys.stdin: line = line.strip() if not line: continue try: message = json.loads(line) except json.JSONDecodeError: log(f\"skipping non-JSON line: {line[:120]!r}\") continue handle(message) if __name__ == \"__main__\": main() ``` </details> <details> <summary><code>.mcp.json</code></summary> ```json { \"mcpServers\": { \"slowstream\": { \"command\": \"python3\", \"args\": [\"slow_stream_mcp.py\"] } } } ``` </details> <details> <summary><code>smoke_test.py</code> — confirms the server is not at fault</summary> ```python #!/usr/bin/env python3 \"\"\" Smoke test: drives slow_stream_mcp.py over stdio without any MCP client and prints every notification it emits. Confirms the server really is streaming progress, so any missing progress in the Claude Code UI is a client-side issue. python3 smoke_test.py # 10s run, ticks every 1s python3 smoke_test.py 1200 2 # full repro timing (20 minutes) \"\"\" import json import subprocess import sys import threading import time DURATION = float(sys.argv[1]) if len(sys.argv) > 1 else 10 INTERVAL = float(sys.argv[2]) if len(sys.argv) > 2 else 1 proc = subprocess.Popen( [sys.executable, \"-u\", \"slow_stream_mcp.py\"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, bufsize=1, ) def send(msg): proc.stdin.write(json.dumps(msg) + \"\\n\") proc.stdin.flush() def reader(): started = time.monotonic() for line in proc.stdout: msg = json.loads(line) stamp = f\"{time.monotonic() - started:6.1f}s\" if msg.get(\"method\") == \"notifications/progress\": p = msg[\"params\"] print(f\"[{stamp}] progress {p['progress']}/{p['total']} {p.get('message', '')}\") elif msg.get(\"method\") == \"notifications/message\": pass # duplicate of the progress text; skip for readability elif msg.get(\"id\") == 3: print(f\"[{stamp}] RESULT: {msg['result']['content'][0]['text']}\") else: print(f\"[{stamp}] {json.dumps(msg)[:160]}\") threading.Thread(target=reader, daemon=True).start() send({\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"initialize\", \"params\": {\"protocolVersion\": \"2025-06-18\", \"capabilities\": {}, \"clientInfo\": {\"name\": \"smoke\", \"version\": \"0\"}}}) send({\"jsonrpc\": \"2.0\", \"method\": \"notifications/initialized\"}) send({\"jsonrpc\": \"2.0\", \"id\": 2, \"method\": \"tools/list\"}) send({\"jsonrpc\": \"2.0\", \"id\": 3, \"method\": \"tools/call\", \"params\": {\"name\": \"slow_stream\", \"arguments\": {\"duration_seconds\": DURATION, \"interval_seconds\": INTERVAL, \"label\": \"smoke\"}, \"_meta\": {\"progressToken\": \"tok-1\"}}}) time.sleep(DURATION + 3) proc.terminate() ``` </details> ### Claude Model Opus ### Is this a regression? Yes, this worked in a previous version ### Last Working Version _No response_ ### Claude Code Version 2.1.231 ### Platform Anthropic API ### Operating System macOS ### Terminal/Shell Terminal.app (macOS) ### Additional Information <img width=\"617\" height=\"180\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/97ed0319-8141-4d80-998c-9f435b917c90\" /> <img width=\"629\" height=\"215\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/93b3cdeb-e900-4c2d-81ad-c93c69405023\" /> [mcp-progress-repro.zip](https://github.com/user-attachments/files/31039803/mcp-progress-repro.zip)",
+      "url": "https://github.com/anthropics/claude-code/issues/86464",
+      "createdAt": "2026-08-13T17:52:25Z",
+      "updatedAt": "2026-08-13T17:57:53Z",
+      "timestamp": "2026-08-13T17:57:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "bug",
+        "has repro",
+        "platform:macos",
+        "area:tui",
+        "area:mcp"
+      ],
+      "author": "EDmitry",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:anthropics/claude-code:issue:86465",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anthropics/claude-code",
+      "kind": "issue",
+      "title": "[sonnet and opus] Inability to use web search in dependency research",
+      "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Amodel) for similar behavior reports - [x] This report does NOT contain sensitive information (API keys, passwords, etc.) ### Type of Behavior Issue Claude accessed files outside the working directory ### What You Asked Claude to Do Without context the prompt I used is useless I think anthropic should realize this. I cannot provide it anyway publicly. In the current case I wanted a .env file which is backed by PydanticSettings. I am using the secret_dir in prod but locally wanted an override. ### What Claude Actually Did Step by step of what a model did is a big ask. The general strokes though I do not use CLAUDE.md and there is no other system prompt modification. Memories are minimal and actually explicitly state the desired behavior in this case. 1. Checked the config file for what existed in the current package. 2. Read another package for existing patterns. 3. Checked a couple README.md and found nothing 4. tried a handful of python temp/test files to \"understand the limitation\" 5. tried copying dependency code to read. This is where I stopped it. ### Expected Behavior Used the documentation on the internet. It is just annoying how much these models try to \"fix\" code they have no business touching. ### Files Affected ```shell Just tmp files. I stopped it before modification occurred. ``` ### Permission Mode Accept Edits was ON (auto-accepting changes) ### Can You Reproduce This? Sometimes (intermittent) ### Steps to Reproduce It is more of you have to pay attention to what the harness is doing. Very rarely do I see docs accessed and more often it is the direct code reads which sometime spirals to the harness modifying things it should not in undocumented ways. ### Claude Model Opus ### Relevant Conversation ```markdown ``` ### Impact High - Significant unwanted changes ### Claude Code Version 2.1.210 ### Platform Anthropic API ### Additional Context _No response_",
+      "url": "https://github.com/anthropics/claude-code/issues/86465",
+      "createdAt": "2026-08-13T17:52:27Z",
+      "updatedAt": "2026-08-13T17:54:02Z",
+      "timestamp": "2026-08-13T17:54:02Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "bug",
+        "area:model",
+        "model",
+        "api:anthropic"
+      ],
+      "author": "couryrr",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:anthropics/claude-code:issue:86466",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anthropics/claude-code",
+      "kind": "issue",
+      "title": "[BUG] Can not bypass GIT on Windows Desktop",
+      "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? The windows desktop requires git to function. I am an IT professional using Claude to setup IIS. There is absolutely no reason git should be involved and my MSP flat out blocks it on non development boxes. THIS MAKES YOUR TOOL USELESS FOR IT WORK ### What Should Happen? It should allow me to bypass git because I AM NOT WORKING WITH FILES OR CODE ### Error Messages/Logs ```shell ``` ### Steps to Reproduce Login Windows no git ### Claude Model None ### Is this a regression? Yes, this worked in a previous version ### Last Working Version _No response_ ### Claude Code Version Claude Desktop ### Platform Anthropic API ### Operating System Windows ### Terminal/Shell WSL (Windows Subsystem for Linux) ### Additional Information _No response_",
+      "url": "https://github.com/anthropics/claude-code/issues/86466",
+      "createdAt": "2026-08-13T17:59:59Z",
+      "updatedAt": "2026-08-13T18:01:22Z",
+      "timestamp": "2026-08-13T18:01:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "invalid"
+      ],
+      "author": "comps-usa",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:anthropics/claude-code:issue:86467",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anthropics/claude-code",
+      "kind": "issue",
+      "title": "Plan mode needs a discuss/debate state that doesn't wipe the plan view",
+      "text": "**Summary** While in plan mode (after `EnterPlanMode`, with a plan file already drafted), I tried to just discuss the plan in plain text with the user — no tool calls, no edits — before deciding whether to proceed. Two problems: 1. Sending a plain conversational turn while still flagged as \"in plan mode\" caused the harness to re-trigger a \"returning to plan mode\" event on the next turn, which appears to clear/wipe the user's view of the plan content from their screen. 2. The only sanctioned ways to end a turn while in plan mode are `AskUserQuestion` (structured clarification) or `ExitPlanMode` (request approval to execute). There's no third option for \"let's just talk about this plan in freeform prose for a while before deciding anything\" — every path back to normal conversation is framed as either a structured question or an approval request, and `ExitPlanMode` itself carries the connotation of \"approve and go\" even when the user's intent is just to keep debating. **Impact** The user explicitly asked to discuss/debate a plan conversationally multiple times. Each attempt either wiped their view of the plan or funneled back toward an approval prompt they hadn't asked for, causing visible frustration. **Requested improvement** Plan mode's turn-ending options should include an explicit \"just discussing, not deciding yet\" state — freeform back-and-forth about the plan's content, without wiping the plan display and without implying an approval decision is imminent. Something like a lightweight \"stay in plan mode, keep talking\" affordance distinct from both `AskUserQuestion` and `ExitPlanMode`. **Workaround used** Pasted the plan content as plain chat text (outside the plan-file UI) so it wouldn't disappear, and avoided further `EnterPlanMode`/`ExitPlanMode` calls for the rest of the session per the user's request.",
+      "url": "https://github.com/anthropics/claude-code/issues/86467",
+      "createdAt": "2026-08-13T18:00:06Z",
+      "updatedAt": "2026-08-13T18:01:15Z",
+      "timestamp": "2026-08-13T18:01:15Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "enhancement",
+        "area:core"
+      ],
+      "author": "tilusnet",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:anthropics/claude-code:issue:86468",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "anthropics/claude-code",
+      "kind": "issue",
+      "title": "[BUG] ECONNRESET on streaming connections behind multi-layer NAT (macOS 26.6.1, v2.1.231)",
+      "text": "Reopening this as a new issue per the stale-bot instruction on #67091. The same failure is described in #67091 (closed NOT_PLANNED, titled for Windows), #48008 (closed as duplicate, macOS), and #51164 (closed NOT_PLANNED). It still reproduces on current versions, and I have a controlled set of scenarios that isolates it to NAT depth in the path. ### Environment - Claude Code 2.1.231 - Node v20.17.0 - macOS 26.6.1, arm64, MacBook Air M4 (Mac16,12) ### Three scenarios 1. Without the UniFi Travel Router - network setup works, but traffic goes over Tailscale. 2. With the UniFi Travel Router over Wi-Fi. 3. With the UniFi Travel Router, where we connect an Ethernet cable and change routing priorities. ### Setup Working from a hotel network. Tailscale is running in all three scenarios with accept-routes on and no exit node selected, so it carries tailnet traffic only and Anthropic traffic never rides it. The variable is a UniFi Travel Router, which when present full-tunnels everything back to a UCG-Fiber at my house over Teleport (WireGuard). ### Scenario 1 - no travel router The laptop associates directly with the hotel SSID. One NAT layer. Tailscale gives me my home resources and everything else egresses the hotel directly. This is stable. I get normal sessions and don't see the reset. ### Scenario 2 - travel router over Wi-Fi The laptop is on the travel router's SSID with Teleport up. Three NAT/conntrack tables now sit in the path of a single streaming socket: hotel gateway, travel router, home gateway. I confirmed the tunnel is actually carrying the traffic, since my egress IP resolves to my home ISP rather than the hotel's. This is where I get \"Connection dropped (ECONNRESET) · Retrying in 23s · attempt 7/10\" repeatedly, and it lands during pauses while the model is thinking or writing a long file. I ruled out MTU and general path health first. DF-set pings pass at a full 1500 bytes to api.anthropic.com, four consecutive 10 MB TLS downloads over the same path completed clean at 2.6-3.3 MB/s, and eight consecutive TLS handshakes to api.anthropic.com all completed in roughly 100 ms. The path is healthy. It is specifically long-lived idle sockets that die. ### Scenario 3 - travel router with Ethernet and changed routing priority Same travel router, but with an Ethernet cable to the laptop and Ethernet moved above Wi-Fi in the macOS network service order. This is not intermittent. Claude Code stops working outright. The recovery is specific and worth recording. Unplugging the cable and associating directly with the hotel SSID, which is scenario 1, restores connectivity. Falling back to the travel router's Wi-Fi, which is scenario 2, does not. So recovering means leaving the travel router path entirely, not merely changing which interface ranks first. Whatever state this puts the connection into is not cleared by demoting the wired interface on its own. On my machine Wi-Fi sits at position 14 of 16 in the default service order, below a long list of dock and bridge services, so it is easy to end up with a wired interface ranked first without realizing the ranking changed. ### macOS keepalive defaults The macOS defaults make this worse than the ~346 s figure in #67091 suggests. macOS ships net.inet.tcp.always_keepalive=0 with net.inet.tcp.keepidle=7200000 and net.inet.tcp.keepintvl=75000. A socket that doesn't explicitly request SO_KEEPALIVE gets nothing, and even one that does would wait two hours before its first probe. There is no OS-level safety net, so whichever NAT in the chain has the shortest idle timeout wins by default. ### Expected The streaming socket sets SO_KEEPALIVE with an interval comfortably below the shortest common NAT idle timeout, so idle periods during model inference don't get the flow evicted from an intermediate conntrack table.",
+      "url": "https://github.com/anthropics/claude-code/issues/86468",
+      "createdAt": "2026-08-13T18:00:58Z",
+      "updatedAt": "2026-08-13T18:00:58Z",
+      "timestamp": "2026-08-13T18:00:58Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
       "labels": [],
-      "author": "evanpaul90",
+      "author": "Technophobe01",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -56248,6 +56442,381 @@
           "needs-repro"
         ],
         "author": "andreapeterfly-prog",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:53efdf1c222de2d77489",
+      "signalId": "github:anthropics/claude-code:issue:86466",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86466",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[BUG] Can not bypass GIT on Windows Desktop",
+        "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? The windows desktop requires git to function. I am an IT professional using Claude to setup IIS. There is absolutely no reason git should be involved and my MSP flat out blocks it on non development boxes. THIS MAKES YOUR TOOL USELESS FOR IT WORK ### What Should Happen? It should allow me to bypass git because I AM NOT WORKING WITH FILES OR CODE ### Error Messages/Logs ```shell ``` ### Steps to Reproduce Login Windows no git ### Claude Model None ### Is this a regression? Yes, this worked in a previous version ### Last Working Version _No response_ ### Claude Code Version Claude Desktop ### Platform Anthropic API ### Operating System Windows ### Terminal/Shell WSL (Windows Subsystem for Linux) ### Additional Information _No response_",
+        "url": "https://github.com/anthropics/claude-code/issues/86466",
+        "createdAt": "2026-08-13T17:59:59Z",
+        "updatedAt": "2026-08-13T18:01:22Z",
+        "timestamp": "2026-08-13T18:01:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "invalid"
+        ],
+        "author": "comps-usa",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2d1d2f95bcf4763dbbe8",
+      "signalId": "github:anthropics/claude-code:issue:86467",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86467",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "Plan mode needs a discuss/debate state that doesn't wipe the plan view",
+        "text": "**Summary** While in plan mode (after `EnterPlanMode`, with a plan file already drafted), I tried to just discuss the plan in plain text with the user — no tool calls, no edits — before deciding whether to proceed. Two problems: 1. Sending a plain conversational turn while still flagged as \"in plan mode\" caused the harness to re-trigger a \"returning to plan mode\" event on the next turn, which appears to clear/wipe the user's view of the plan content from their screen. 2. The only sanctioned ways to end a turn while in plan mode are `AskUserQuestion` (structured clarification) or `ExitPlanMode` (request approval to execute). There's no third option for \"let's just talk about this plan in freeform prose for a while before deciding anything\" — every path back to normal conversation is framed as either a structured question or an approval request, and `ExitPlanMode` itself carries the connotation of \"approve and go\" even when the user's intent is just to keep debating. **Impact** The user explicitly asked to discuss/debate a plan conversationally multiple times. Each attempt either wiped their view of the plan or funneled back toward an approval prompt they hadn't asked for, causing visible frustration. **Requested improvement** Plan mode's turn-ending options should include an explicit \"just discussing, not deciding yet\" state — freeform back-and-forth about the plan's content, without wiping the plan display and without implying an approval decision is imminent. Something like a lightweight \"stay in plan mode, keep talking\" affordance distinct from both `AskUserQuestion` and `ExitPlanMode`. **Workaround used** Pasted the plan content as plain chat text (outside the plan-file UI) so it wouldn't disappear, and avoided further `EnterPlanMode`/`ExitPlanMode` calls for the rest of the session per the user's request.",
+        "url": "https://github.com/anthropics/claude-code/issues/86467",
+        "createdAt": "2026-08-13T18:00:06Z",
+        "updatedAt": "2026-08-13T18:01:15Z",
+        "timestamp": "2026-08-13T18:01:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "enhancement",
+          "area:core"
+        ],
+        "author": "tilusnet",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0c45b42e4d7af13a10e4",
+      "signalId": "github:anthropics/claude-code:issue:86468",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86468",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[BUG] ECONNRESET on streaming connections behind multi-layer NAT (macOS 26.6.1, v2.1.231)",
+        "text": "Reopening this as a new issue per the stale-bot instruction on #67091. The same failure is described in #67091 (closed NOT_PLANNED, titled for Windows), #48008 (closed as duplicate, macOS), and #51164 (closed NOT_PLANNED). It still reproduces on current versions, and I have a controlled set of scenarios that isolates it to NAT depth in the path. ### Environment - Claude Code 2.1.231 - Node v20.17.0 - macOS 26.6.1, arm64, MacBook Air M4 (Mac16,12) ### Three scenarios 1. Without the UniFi Travel Router - network setup works, but traffic goes over Tailscale. 2. With the UniFi Travel Router over Wi-Fi. 3. With the UniFi Travel Router, where we connect an Ethernet cable and change routing priorities. ### Setup Working from a hotel network. Tailscale is running in all three scenarios with accept-routes on and no exit node selected, so it carries tailnet traffic only and Anthropic traffic never rides it. The variable is a UniFi Travel Router, which when present full-tunnels everything back to a UCG-Fiber at my house over Teleport (WireGuard). ### Scenario 1 - no travel router The laptop associates directly with the hotel SSID. One NAT layer. Tailscale gives me my home resources and everything else egresses the hotel directly. This is stable. I get normal sessions and don't see the reset. ### Scenario 2 - travel router over Wi-Fi The laptop is on the travel router's SSID with Teleport up. Three NAT/conntrack tables now sit in the path of a single streaming socket: hotel gateway, travel router, home gateway. I confirmed the tunnel is actually carrying the traffic, since my egress IP resolves to my home ISP rather than the hotel's. This is where I get \"Connection dropped (ECONNRESET) · Retrying in 23s · attempt 7/10\" repeatedly, and it lands during pauses while the model is thinking or writing a long file. I ruled out MTU and general path health first. DF-set pings pass at a full 1500 bytes to api.anthropic.com, four consecutive 10 MB TLS downloads over the same path completed clean at 2.6-3.3 MB/s, and eight consecutive TLS handshakes to api.anthropic.com all completed in roughly 100 ms. The path is healthy. It is specifically long-lived idle sockets that die. ### Scenario 3 - travel router with Ethernet and changed routing priority Same travel router, but with an Ethernet cable to the laptop and Ethernet moved above Wi-Fi in the macOS network service order. This is not intermittent. Claude Code stops working outright. The recovery is specific and worth recording. Unplugging the cable and associating directly with the hotel SSID, which is scenario 1, restores connectivity. Falling back to the travel router's Wi-Fi, which is scenario 2, does not. So recovering means leaving the travel router path entirely, not merely changing which interface ranks first. Whatever state this puts the connection into is not cleared by demoting the wired interface on its own. On my machine Wi-Fi sits at position 14 of 16 in the default service order, below a long list of dock and bridge services, so it is easy to end up with a wired interface ranked first without realizing the ranking changed. ### macOS keepalive defaults The macOS defaults make this worse than the ~346 s figure in #67091 suggests. macOS ships net.inet.tcp.always_keepalive=0 with net.inet.tcp.keepidle=7200000 and net.inet.tcp.keepintvl=75000. A socket that doesn't explicitly request SO_KEEPALIVE gets nothing, and even one that does would wait two hours before its first probe. There is no OS-level safety net, so whichever NAT in the chain has the shortest idle timeout wins by default. ### Expected The streaming socket sets SO_KEEPALIVE with an interval comfortably below the shortest common NAT idle timeout, so idle periods during model inference don't get the flow evicted from an intermediate conntrack table.",
+        "url": "https://github.com/anthropics/claude-code/issues/86468",
+        "createdAt": "2026-08-13T18:00:58Z",
+        "updatedAt": "2026-08-13T18:00:58Z",
+        "timestamp": "2026-08-13T18:00:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "Technophobe01",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:361842fc0f5b97fbd91c",
+      "signalId": "github:anthropics/claude-code:issue:86464",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86464",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[BUG] MCP progress notifications are received but discarded once a call is auto-backgrounded at 120s",
+        "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? When an MCP tool call exceeds the 120s foreground limit, Claude Code moves it to the background — and from that moment the progress the server is streaming becomes unobservable. Opening the background task manager (`↓` to manage) gives one static row per task: ``` Background MCP tasks (1) ❯ ⏳ slowstream/slow_stream · klxdvixp · working ↑/↓ to select · x to stop · Esc to close ``` A tool name, an opaque task ID, and the frozen word `working`. The server is emitting a `notifications/progress` every two seconds with a human-readable `message` — 600 of them over a twenty-minute call — and none of it appears here. **The notifications are received; they are then deliberately discarded.** The `onprogress` callback on the call stays live for the whole call and is actively used — it disarms the transport watchdog and refreshes the idle-timeout timestamp on every notification. It then forwards the message to a sink that backgrounding switches off: `onBackgrounded` sets the exact latch that makes the forwarder a no-op, and nothing is wired up in its place. So the text arrives, is acted on for timeout purposes, and is dropped. Meanwhile the task row's renderer already knows how to display a status string, and the formatter that renders exactly the desired output already exists on the foreground path. Details and excerpts in **Additional Information**. There is also nowhere further to drill in. Every other backgrounded task type offers `enter to view` a detail pane; MCP tasks are excluded by an explicit type check, so the affordances really are select, stop, and close. That one row is the whole surface a backgrounded MCP call gets. **Why this matters.** Backgrounding is triggered *by* duration, so the behavior is inverted relative to need: short calls, where progress is least interesting, stream their progress; long calls, where it is essential, go dark after the first two minutes. The practical outcome is that the only way to react to a slow MCP call is to kill it with `x` and lose the work. Distinguishing \"still working, on the fourth of seven targets\" from \"wedged on fixture setup for eighteen minutes\" is impossible. With several calls backgrounded at once, every row reads `working` and they are indistinguishable from each other. ### What Should Happen? Each row should carry the latest `message` from the server instead of a fixed `working`: ``` MCP tasks (2) › slowstream/slow_stream · kslinnvg · run: step 412 - 824s elapsed, still working slowstream/slow_stream · kuw8p5hj · batch-2: compiling fixtures (3 of 7 targets) ``` One constraint on any fix: `progress`/`total` are optional in MCP and real servers frequently omit `total`, so `message` has to be the primary content — show the counter when the server provides one. A fix that renders only numeric progress would leave those servers exactly as opaque as they are now. Conveniently, that exact ladder is already implemented for the foreground path, so this is closer to re-pointing an existing formatter than writing a new one. See item 6 below. ### Error Messages/Logs ```shell # 1. What the user actually sees when the call is backgrounded. Note the TUI does # not render the tool result verbatim -- the model paraphrases it, so the exact # wording varies per run. Observed: Fourth run started - backgrounded as task klxdvixpt. I'll report the result when it completes. # The underlying tool result, from the 2.1.231 binary, is a fixed template: MCP tool \"${serverName}/${toolName}\" is still running after ${N}s. It was moved to the background as task ${id} and keeps running; you'll receive a notification with the result when it completes. You can keep working in the meantime. To stop it, use TaskStop with task_id \"${id}\". Note: it does not survive exiting this session. # 2. smoke_test.py drives the same server directly over stdio with no MCP client # involved. The notifications are on the wire, on schedule, with `message` # populated — nothing is missing server-side; the gap is client-side: [ 0.0s] {\"jsonrpc\": \"2.0\", \"id\": 1, \"result\": {\"protocolVersion\": \"2025-06-18\", \"capabilities\": {\"tools\": {}, \"logging\": {}}, \"serverInfo\": {\"name\": \"slow-stream\", \"ver [ 0.0s] {\"jsonrpc\": \"2.0\", \"id\": 2, \"result\": {\"tools\": [{\"name\": \"slow_stream\", \"description\": \"Runs for a long time (default 20 minutes) and streams a progress notifi [ 1.0s] progress 1/8 smoke: step 1/8 - 1s elapsed, still working [ 2.0s] progress 2/8 smoke: step 2/8 - 2s elapsed, still working [ 3.0s] progress 3/8 smoke: step 3/8 - 3s elapsed, still working [ 4.0s] progress 4/8 smoke: step 4/8 - 4s elapsed, still working [ 5.0s] progress 5/8 smoke: step 5/8 - 5s elapsed, still working [ 6.0s] progress 6/8 smoke: step 6/8 - 6s elapsed, still working [ 7.0s] progress 7/8 smoke: step 7/8 - 7s elapsed, still working [ 8.1s] progress 8/8 smoke: step 8/8 - 8s elapsed, still working [ 8.1s] RESULT: smoke: finished after 8.0s and 8 progress notifications. ``` ### Steps to Reproduce A dependency-free reproduction is attached as `mcp-progress-repro.zip`, and every file is also inlined below so nothing needs downloading. The server is plain line-delimited JSON-RPC 2.0 over stdin/stdout — no SDK, no `npm install`, no venv. `.mcp.json` uses a relative path that Claude Code resolves against the project directory, so the files work wherever you put them with nothing to edit. The tool is `slow_stream(duration_seconds=1200, interval_seconds=2, label=\"run\", include_total=True)`. It sleeps for `duration_seconds`, and every `interval_seconds` it emits a `notifications/progress` echoing the call's `_meta.progressToken`, with an incrementing `progress`, a human-readable `message`, and — unless `include_total` is false — a `total`. It also emits a `notifications/message` info log carrying the same text, so both notification channels are exercised. **The 90-second version.** From the directory holding the files: ``` CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=10000 claude ``` 1. Prompt: **`Call the slowstream slow_stream tool with duration_seconds 60.`** Approve the tool and the server when prompted. 2. The call starts in the foreground and progress is visible, rendered by the formatter in item 6 below: ``` ● Calling slowstream · 6s… └ run: step 3/30 - 6s elapsed, still working (10%) ``` 3. At 10s the call is backgrounded and the model says so (message #1 above; with default settings this happens at 120s instead). The footer changes to `1 MCP task`. 4. Press `↓` to open the background task manager. (`Esc` interrupts instead.) 5. Select the running `slowstream/slow_stream` entry and try to see its progress. **Observed:** `slowstream/slow_stream · <id> · working`, unchanged for the remaining 50 seconds. Enter does nothing. **Expected:** the latest streamed `message`. Plain `claude` with default arguments is the real-world shape — a 1200s call backgrounded at 120s, then eighteen more minutes of progress notifications arriving and none of them shown. Behavior is identical from step 3 onward. **Variants.** Two calls with different `label` values reproduce the multi-task case; the server threads each `tools/call`, so they stream independently and both rows read `working`. Adding `include_total false` drops the optional `total`, leaving `message` as the only renderable content — this is the shape a fix has to handle. **Conditions that suppress auto-backgrounding**, worth checking if this doesn't reproduce: it is off for `sse-ide`/`ws-ide` transports; off in non-interactive sessions unless `CLAUDE_AUTO_BACKGROUND_TASKS` is set; off when `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` is set; and off for MCP calls made by subagents. Setting `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS` explicitly also forces the feature on regardless of its gate, which is why the recipe above uses it. <details> <summary><code>slow_stream_mcp.py</code> (click to expand)</summary> ```python #!/usr/bin/env python3 \"\"\" Minimal MCP server (stdio, zero dependencies) that reproduces: \"A long-running MCP tool call gets auto-backgrounded, and once backgrounded its streamed progress is no longer visible anywhere in the UI.\" The single tool `slow_stream` runs for `duration_seconds` (default 1200, i.e. 20 minutes) and emits a `notifications/progress` every `interval_seconds` (default 2), each with an incrementing progress value and a human-readable `message`. It also emits a `notifications/message` (logging) at every tick, so the repro covers both notification channels. The 20-minute default matches the real-world calls this was filed against; the bug itself is observable from the 120s mark onward, so pass a smaller `duration_seconds` for a faster confirmation. Nothing here is Python-specific -- it is plain line-delimited JSON-RPC 2.0 over stdin/stdout, per the MCP stdio transport. \"\"\" import json import sys import threading import time PROTOCOL_VERSION = \"2025-11-25\" # First spec revision with `message` on progress notifications. Version strings # are dates, so they compare lexically. MIN_PROTOCOL_VERSION = \"2025-03-26\" SERVER_INFO = {\"name\": \"slow-stream\", \"version\": \"1.0.0\"} def negotiate(requested): \"\"\"Echo the client's protocol version when this server can speak it. Only tools, progress notifications and logging are used here, all stable since 2025-03-26, so echoing avoids a needless downgrade. \"\"\" if isinstance(requested, str) and requested >= MIN_PROTOCOL_VERSION: return requested return PROTOCOL_VERSION _stdout_lock = threading.Lock() def send(payload): \"\"\"Write one JSON-RPC message to stdout. Thread-safe.\"\"\" with _stdout_lock: sys.stdout.write(json.dumps(payload) + \"\\n\") sys.stdout.flush() def log(msg): \"\"\"Server-side diagnostics go to stderr; stdout is the protocol channel.\"\"\" print(f\"[slow-stream] {msg}\", file=sys.stderr, flush=True) TOOLS = [ { \"name\": \"slow_stream\", \"description\": ( \"Runs for a long time (default 20 minutes) and streams a progress \" \"notification every couple of seconds. Used to reproduce a UI bug \" \"with backgrounded MCP calls.\" ), \"inputSchema\": { \"type\": \"object\", \"properties\": { \"duration_seconds\": { \"type\": \"number\", \"description\": \"How long the tool should run. Default 1200 (20 minutes).\", \"default\": 1200, }, \"interval_seconds\": { \"type\": \"number\", \"description\": \"Seconds between progress notifications. Default 2.\", \"default\": 2, }, \"label\": { \"type\": \"string\", \"description\": \"Free-form label echoed into every progress message, so concurrent calls are distinguishable.\", \"default\": \"run\", }, \"include_total\": { \"type\": \"boolean\", \"description\": ( \"Whether to send the optional `total` field. Set false to match \" \"servers that stream free-form status with no known end point, \" \"leaving `message` as the only renderable content.\" ), \"default\": True, }, }, }, } ] def run_slow_stream(request_id, arguments, progress_token): \"\"\"Executed on its own thread so the server keeps serving during the call.\"\"\" duration = float(arguments.get(\"duration_seconds\", 1200)) interval = float(arguments.get(\"interval_seconds\", 2)) label = str(arguments.get(\"label\", \"run\")) include_total = bool(arguments.get(\"include_total\", True)) total_ticks = max(1, int(duration / interval)) started = time.monotonic() log(f\"{label}: starting, {duration}s in {total_ticks} ticks, progressToken={progress_token!r}\") for tick in range(1, total_ticks + 1): time.sleep(interval) elapsed = time.monotonic() - started if include_total: message = f\"{label}: step {tick}/{total_ticks} - {elapsed:.0f}s elapsed, still working\" else: # No denominator anywhere: `message` is the only thing a client can show. message = f\"{label}: step {tick} - {elapsed:.0f}s elapsed, still working\" if progress_token is not None: # `progress` is required by the spec; `total` and `message` are optional. params = {\"progressToken\": progress_token, \"progress\": tick, \"message\": message} if include_total: params[\"total\"] = total_ticks send({\"jsonrpc\": \"2.0\", \"method\": \"notifications/progress\", \"params\": params}) # Second channel: MCP logging notification. send( { \"jsonrpc\": \"2.0\", \"method\": \"notifications/message\", \"params\": { \"level\": \"info\", \"logger\": \"slow_stream\", \"data\": message, }, } ) log(message) elapsed = time.monotonic() - started send( { \"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": { \"content\": [ { \"type\": \"text\", \"text\": ( f\"{label}: finished after {elapsed:.1f}s and \" f\"{total_ticks} progress notifications.\" ), } ] }, } ) log(f\"{label}: done after {elapsed:.1f}s\") def handle(message): method = message.get(\"method\") request_id = message.get(\"id\") params = message.get(\"params\") or {} # Notifications from the client carry no id and expect no response. if request_id is None: log(f\"notification: {method}\") return if method == \"initialize\": # Claude Code surfaces server stderr in its MCP log, so this records the # client's requested protocol version for the bug report. log( f\"initialize from {params.get('clientInfo')} \" f\"requesting protocolVersion={params.get('protocolVersion')!r}\" ) send( { \"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": { \"protocolVersion\": negotiate(params.get(\"protocolVersion\")), \"capabilities\": {\"tools\": {}, \"logging\": {}}, \"serverInfo\": SERVER_INFO, }, } ) elif method == \"tools/list\": send({\"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": {\"tools\": TOOLS}}) elif method == \"tools/call\": progress_token = (params.get(\"_meta\") or {}).get(\"progressToken\") arguments = params.get(\"arguments\") or {} threading.Thread( target=run_slow_stream, args=(request_id, arguments, progress_token), daemon=True, ).start() elif method in (\"ping\", \"logging/setLevel\"): # `logging/setLevel` is answered because the server declares the logging # capability; an error here would be the server's bug, not the client's. send({\"jsonrpc\": \"2.0\", \"id\": request_id, \"result\": {}}) else: send( { \"jsonrpc\": \"2.0\", \"id\": request_id, \"error\": {\"code\": -32601, \"message\": f\"Method not found: {method}\"}, } ) def main(): log(\"ready on stdio\") for line in sys.stdin: line = line.strip() if not line: continue try: message = json.loads(line) except json.JSONDecodeError: log(f\"skipping non-JSON line: {line[:120]!r}\") continue handle(message) if __name__ == \"__main__\": main() ``` </details> <details> <summary><code>.mcp.json</code></summary> ```json { \"mcpServers\": { \"slowstream\": { \"command\": \"python3\", \"args\": [\"slow_stream_mcp.py\"] } } } ``` </details> <details> <summary><code>smoke_test.py</code> — confirms the server is not at fault</summary> ```python #!/usr/bin/env python3 \"\"\" Smoke test: drives slow_stream_mcp.py over stdio without any MCP client and prints every notification it emits. Confirms the server really is streaming progress, so any missing progress in the Claude Code UI is a client-side issue. python3 smoke_test.py # 10s run, ticks every 1s python3 smoke_test.py 1200 2 # full repro timing (20 minutes) \"\"\" import json import subprocess import sys import threading import time DURATION = float(sys.argv[1]) if len(sys.argv) > 1 else 10 INTERVAL = float(sys.argv[2]) if len(sys.argv) > 2 else 1 proc = subprocess.Popen( [sys.executable, \"-u\", \"slow_stream_mcp.py\"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, bufsize=1, ) def send(msg): proc.stdin.write(json.dumps(msg) + \"\\n\") proc.stdin.flush() def reader(): started = time.monotonic() for line in proc.stdout: msg = json.loads(line) stamp = f\"{time.monotonic() - started:6.1f}s\" if msg.get(\"method\") == \"notifications/progress\": p = msg[\"params\"] print(f\"[{stamp}] progress {p['progress']}/{p['total']} {p.get('message', '')}\") elif msg.get(\"method\") == \"notifications/message\": pass # duplicate of the progress text; skip for readability elif msg.get(\"id\") == 3: print(f\"[{stamp}] RESULT: {msg['result']['content'][0]['text']}\") else: print(f\"[{stamp}] {json.dumps(msg)[:160]}\") threading.Thread(target=reader, daemon=True).start() send({\"jsonrpc\": \"2.0\", \"id\": 1, \"method\": \"initialize\", \"params\": {\"protocolVersion\": \"2025-06-18\", \"capabilities\": {}, \"clientInfo\": {\"name\": \"smoke\", \"version\": \"0\"}}}) send({\"jsonrpc\": \"2.0\", \"method\": \"notifications/initialized\"}) send({\"jsonrpc\": \"2.0\", \"id\": 2, \"method\": \"tools/list\"}) send({\"jsonrpc\": \"2.0\", \"id\": 3, \"method\": \"tools/call\", \"params\": {\"name\": \"slow_stream\", \"arguments\": {\"duration_seconds\": DURATION, \"interval_seconds\": INTERVAL, \"label\": \"smoke\"}, \"_meta\": {\"progressToken\": \"tok-1\"}}}) time.sleep(DURATION + 3) proc.terminate() ``` </details> ### Claude Model Opus ### Is this a regression? Yes, this worked in a previous version ### Last Working Version _No response_ ### Claude Code Version 2.1.231 ### Platform Anthropic API ### Operating System macOS ### Terminal/Shell Terminal.app (macOS) ### Additional Information <img width=\"617\" height=\"180\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/97ed0319-8141-4d80-998c-9f435b917c90\" /> <img width=\"629\" height=\"215\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/93b3cdeb-e900-4c2d-81ad-c93c69405023\" /> [mcp-progress-repro.zip](https://github.com/user-attachments/files/31039803/mcp-progress-repro.zip)",
+        "url": "https://github.com/anthropics/claude-code/issues/86464",
+        "createdAt": "2026-08-13T17:52:25Z",
+        "updatedAt": "2026-08-13T17:57:53Z",
+        "timestamp": "2026-08-13T17:57:53Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "bug",
+          "has repro",
+          "platform:macos",
+          "area:tui",
+          "area:mcp"
+        ],
+        "author": "EDmitry",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:96531302cd1ff8ed9ab1",
+      "signalId": "github:anthropics/claude-code:issue:86465",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86465",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[sonnet and opus] Inability to use web search in dependency research",
+        "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Amodel) for similar behavior reports - [x] This report does NOT contain sensitive information (API keys, passwords, etc.) ### Type of Behavior Issue Claude accessed files outside the working directory ### What You Asked Claude to Do Without context the prompt I used is useless I think anthropic should realize this. I cannot provide it anyway publicly. In the current case I wanted a .env file which is backed by PydanticSettings. I am using the secret_dir in prod but locally wanted an override. ### What Claude Actually Did Step by step of what a model did is a big ask. The general strokes though I do not use CLAUDE.md and there is no other system prompt modification. Memories are minimal and actually explicitly state the desired behavior in this case. 1. Checked the config file for what existed in the current package. 2. Read another package for existing patterns. 3. Checked a couple README.md and found nothing 4. tried a handful of python temp/test files to \"understand the limitation\" 5. tried copying dependency code to read. This is where I stopped it. ### Expected Behavior Used the documentation on the internet. It is just annoying how much these models try to \"fix\" code they have no business touching. ### Files Affected ```shell Just tmp files. I stopped it before modification occurred. ``` ### Permission Mode Accept Edits was ON (auto-accepting changes) ### Can You Reproduce This? Sometimes (intermittent) ### Steps to Reproduce It is more of you have to pay attention to what the harness is doing. Very rarely do I see docs accessed and more often it is the direct code reads which sometime spirals to the harness modifying things it should not in undocumented ways. ### Claude Model Opus ### Relevant Conversation ```markdown ``` ### Impact High - Significant unwanted changes ### Claude Code Version 2.1.210 ### Platform Anthropic API ### Additional Context _No response_",
+        "url": "https://github.com/anthropics/claude-code/issues/86465",
+        "createdAt": "2026-08-13T17:52:27Z",
+        "updatedAt": "2026-08-13T17:54:02Z",
+        "timestamp": "2026-08-13T17:54:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "bug",
+          "area:model",
+          "model",
+          "api:anthropic"
+        ],
+        "author": "couryrr",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:12908b92eccaa0f6b14f",
+      "signalId": "github:anthropics/claude-code:issue:49655",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:49655",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[BUG] Claude Desktop update fails with 0x80073CF6 when CoworkVMService is running (Windows)",
+        "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? **Claude Desktop fails to update/reinstall on Windows with HRESULT 0x80073CF6 (ERROR_PACKAGES_IN_USE) when CoworkVMService is running, even after Claude Desktop is fully closed. The AppX installer cannot delete the Helium virtual registry hive files because CoworkVMService holds kernel-level locks on them: - C:\\Users\\<user>\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\SystemAppData\\Helium\\User.dat - C:\\Users\\<user>\\AppData\\Local\\Packages\\Claude_pzs8sxrjxfjjc\\SystemAppData\\Helium\\UserClasses.dat These locks cannot be released without a full system reboot, making it impossible to update Claude while any server/service is running.** ### What Should Happen? The Claude installer should automatically stop CoworkVMService and related processes (cowork-svc, parsecd, chrome-native-host) before attempting the MSIX package update, then restart them after installation completes. ### Error Messages/Logs ```shell MSIX installation failed: AddPackage failed: AddPackage failed with HRESULT 0x80073CF6 AppX deployment log: - Error deleting Helium\\User.dat: 0x20 (ERROR_SHARING_VIOLATION) - Error deleting Helium\\UserClasses.dat: 0x20 (ERROR_SHARING_VIOLATION) - Error 0xD0074005: Cannot notify BrokerInfrastructure service about package state change ``` ### Steps to Reproduce 1. Install Claude Desktop (MSIX) with Cowork feature enabled 2. Launch Claude Desktop — CoworkVMService starts automatically 3. Close Claude Desktop completely 4. Download and run the new Claude Setup.exe installer 5. Installation fails with: AddPackage failed with HRESULT 0x80073CF6 Workaround (requires manual step before every update): Stop-Service CoworkVMService -Force Stop-Process -Name cowork-svc, parsecd, chrome-native-host -Force -ErrorAction SilentlyContinue Claude Code Version Claude Desktop 1.3036.0.0 Operating System Windows 11 Pro 10.0.26100 Terminal/Shell PowerShell (Administrator) ### Claude Model Other ### Is this a regression? Yes, this worked in a previous version ### Last Working Version _No response_ ### Claude Code Version Claude Desktop 1.3036.0.0 ### Platform Anthropic API ### Operating System Windows ### Terminal/Shell Terminal.app (macOS) ### Additional Information - This is a recurring issue: every Claude Desktop update requires a full system reboot if CoworkVMService has been running - The Helium hive files are locked at kernel level — handle64.exe (Sysinternals) cannot detect the lock - reg unload fails with \"Access is denied\" even from Administrator - Only a full system restart releases the kernel-level hive locks - Users running servers or long-running processes cannot reboot just to update Claude",
+        "url": "https://github.com/anthropics/claude-code/issues/49655",
+        "createdAt": "2026-04-17T02:13:04Z",
+        "updatedAt": "2026-08-13T17:51:46Z",
+        "timestamp": "2026-08-13T17:51:46Z",
+        "metrics": {
+          "reactions": 10,
+          "comments": 20
+        },
+        "labels": [
+          "bug",
+          "platform:windows",
+          "area:cowork",
+          "area:installation",
+          "area:desktop"
+        ],
+        "author": "jun-ho-hong",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d18018178dba260d437c",
+      "signalId": "github:anthropics/claude-code:issue:77752",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:77752",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[BUG] Mouse tracking not disabled when Claude Code is suspended with Ctrl-Z",
+        "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? When Claude Code is suspended using Ctrl-Z, it leaves mouse tracking enabled in the terminal. This causes other terminal programs to receive unwanted mouse enter/exit events. In my case, when i wanted to use the terminal scrollback, bash responds to scroll-events by cycling through the command history instead. ### What Should Happen? When Claude Code is suspended, it should disable mouse tracking so other terminal programs aren't affected. ### Error Messages/Logs ```shell ``` ### Steps to Reproduce 1. Open a fresh terminal (using xfce4-terminal) 2. ls -R | head -1000 3. Start Claude Code 4. Suspend Claude Code with Ctrl-Z 5. Scroll up (attempt to skim through old terminal output) ### Claude Model None ### Is this a regression? I don't know ### Last Working Version _No response_ ### Claude Code Version 2.1.210 (Claude Code) ### Platform Anthropic API ### Operating System Other Linux ### Terminal/Shell Other ### Additional Information I've confirmed this only for xfce4-terminal, not others. I doubt it's specific to xfce4-terminal. This exact issue has been [reported](https://github.com/anthropics/claude-code/issues/7807) but then closed automatically. I have ```json { \"env\": { \"CLAUDE_CODE_DISABLE_MOUSE_CLICKS\": \"1\" }, \"tui\": \"fullscreen\", \"editorMode\": \"normal\", /* ... */ } ```",
+        "url": "https://github.com/anthropics/claude-code/issues/77752",
+        "createdAt": "2026-07-15T10:13:23Z",
+        "updatedAt": "2026-08-13T17:51:29Z",
+        "timestamp": "2026-08-13T17:51:29Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 2
+        },
+        "labels": [
+          "bug",
+          "has repro",
+          "platform:linux",
+          "area:tui"
+        ],
+        "author": "arinar",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:72c6fa7e4f12a7b5340e",
+      "signalId": "github:anthropics/claude-code:issue:86069",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86069",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[BUG] Windows/MSIX 1.28929.0: cross-session messages land in the target's composer but are never submitted — session never responds",
+        "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet - [x] This is a single bug report (please file separate reports for different bugs) - [x] I am using the latest version of Claude Code ### What's Wrong? On Windows (MSIX/Store install), send_message between Claude Code sessions reports success and the message visibly appears in the target session's input composer — but it is never submitted. The target never produces a turn. Observed sitting unprocessed for 39+ minutes. Typing the identical text into that same session by hand works instantly, so the target session is healthy. Only the delivered message fails to execute. Two additional findings: 1. Queued messages OVERWRITE each other. Sending a second message to a session with one still unprocessed replaces it — the first is lost silently with no notice. Messages can disappear entirely. 2. In the target's transcript JSONL the message is written as a `last-prompt` record, never as a `type: \"user\"` turn. It is stored as a pending prompt rather than enqueued. This worked reliably until 2026-08-11 ~18:48 ET and has failed 100% since. ### What Should Happen? The target session should process the delivered message as a conversation turn and respond, as it did prior to 2026-08-11. ### Error Messages/Logs ```shell No error is produced anywhere. The tool returns: Message sent to session local_<id> (\"Flow HQ\"). The message renders correctly in the target session UI. Nothing fails loudly — it simply never executes. Delivery counts across six long-running sessions, cross-session messages processed as real turns vs parked: Session A: 45 processed, 0 parked Session B: 30 processed, 0 parked Session C: 23 processed, 0 parked Session D: 21 processed, 0 parked Session E: 6 processed, 0 parked Session F: 3 processed, 0 parked 128 successful deliveries, zero failures, through 2026-08-11 18:48 ET. Since 2026-08-12 07:54 ET: 17 sends, 0 processed. Every one returned success. ``` ### Steps to Reproduce 1. Open two Claude Code sessions, A and B, on Windows (MSIX/Store install). 2. From session A, call send_message targeting session B. 3. Tool returns: Message sent to session <id> (\"B\"). 4. Open session B — the message is visibly present as a \"Message from A\" block. 5. Session B never processes it. No assistant turn is ever generated. 6. Type any text into B by hand — it responds immediately. Ruled out during diagnosis: - Privacy/telemetry env vars (CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC, DISABLE_TELEMETRY, DO_NOT_TRACK, DISABLE_GROWTHBOOK) — all unset at process, user and machine scope - Windows Firewall — all Claude inbound/outbound rules present, enabled, action Allow - Stale process state — reproduces after a full quit (all processes killed and verified) and relaunch - Orphaned pre-existing sessions — reproduces in a session created minutes ago, after the failure began Change window: four changes landed between the last success (8/11 18:48) and the first failure (8/12 07:54): - Claude 1.28929.0.0 installed 8/11 21:10 — its release notes mention fixing MSIX installs \"failing to save chat history, settings, and scheduled tasks,\" so this build touched MSIX persistence - KB5123304 (8/11), KB5121003 and KB5120708 (8/12) I cannot isolate which. Flagging the MSIX persistence change as most suspicious given the install type and the symptom: a prompt that is stored but never enqueued. Possibly related: the 2026-08-08 fix for \"cross-session messages staying parked without a notice or expiry\" — same class of parking, reappearing after 8/11. ### Claude Model Opus ### Is this a regression? Yes, this worked in a previous version ### Last Working Version unknown — the build immediately prior to 1.28929.0.0 (MSIX update removed the old package folder). Last confirmed working 2026-08-11 18:48 ET. ### Claude Code Version 1.28929.0.0 ### Platform Anthropic API ### Operating System Windows ### Terminal/Shell PowerShell ### Additional Information _No response_",
+        "url": "https://github.com/anthropics/claude-code/issues/86069",
+        "createdAt": "2026-08-12T10:07:03Z",
+        "updatedAt": "2026-08-13T17:49:50Z",
+        "timestamp": "2026-08-13T17:49:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "bug",
+          "has repro",
+          "platform:windows",
+          "area:agents",
+          "regression"
+        ],
+        "author": "lschlegel9826",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3d8c468b9c0425c30a41",
+      "signalId": "github:anthropics/claude-code:issue:86463",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86463",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[Bug] Infinite loop in agentic cycle causing token waste",
+        "text": "**Bug Description** keeps going in cycle. Nothing fixes. only tokens get wasted here **Environment Info** - Platform: darwin - Terminal: Apple_Terminal - Version: 2.1.226 - Feedback ID: 46d4c388-241f-4f98-bed9-c4ccffb63058 **Errors** ```json [] ```",
+        "url": "https://github.com/anthropics/claude-code/issues/86463",
+        "createdAt": "2026-08-13T17:46:56Z",
+        "updatedAt": "2026-08-13T17:47:59Z",
+        "timestamp": "2026-08-13T17:47:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "bug",
+          "platform:macos",
+          "area:core",
+          "needs-repro"
+        ],
+        "author": "evanpaul90",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b4f237772702e3d39af1",
+      "signalId": "github:anthropics/claude-code:issue:86461",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:86461",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[FEATURE] Reviewable draft-message relay between Home/chat threads (not Code sessions)",
+        "text": "### Preflight Checklist - [x] I have searched [existing requests](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20label%3Aenhancement) and this feature hasn't been requested yet - [x] This is a single feature request (not multiple features) ### Problem Statement I run a hierarchy of persistent threads: several Home/chat threads act as \"tech leads\" (strategy, methodology, research direction). Each tech lead delegates execution work to its own dedicated Code session, and separately collaborates with other persistent Home/chat threads that act as helpers with specialized skills — not formally launched or owned by the lead, but working alongside it on an ongoing basis. For example, one tech-lead thread might rely on a separate persistent thread specialized in finding patterns or anomalies in unstructured data streams to continuously review output on its behalf. This is a two-way, ongoing collaboration: the helper reports findings back, and the lead can respond by asking the helper to look deeper into something specific, or redirect its attention toward what currently matters most — not a one-off task or a successor handoff. Normal day-to-day operation of this structure requires frequent thread-to-thread communication in several directions: a lead delegating a task to its Code session, a Code session or helper thread reporting findings back to the lead it's supporting, the lead refining or focusing the helper's attention in response, one lead requesting input from another, or one lead proactively informing another lead of important new information it has discovered. All of this currently happens through the same manual mechanism: copy content out of the source thread, switch to the target thread, paste it in. This works, but it's pure mechanical overhead on every single exchange — the user acts as a message router for routine, ongoing collaboration between threads, not just for occasional one-off handoffs. As the number of active threads grows, this manual relay becomes the dominant cost of running a multi-thread workflow. This is distinct from existing requests like #27441, #37213, #35072, #36181, and #24798, which describe Claude Code session-to-session coordination for multi-agent coding workflows, several explicitly requesting autonomous, human-out-of-the-loop messaging between peer Code sessions. This request covers Home-to-Home (including between independent collaborating threads), Home-to-Code, and Code-to-Home communication for normal operation, and explicitly keeps a human review step by design. ### Proposed Solution 1. Any thread — Home or Code — can draft a message addressed to another named thread (by title or ID). 2. The drafted message is staged for user review before being sent, not delivered automatically. 3. The user has three options on a staged message: - Approve as-is → delivered directly into the target thread - Edit before sending - Reject/discard 4. An optional trust setting (per thread-pair, or global) allows auto-approval for specific relationships the user has come to trust — e.g., a lead and its long-standing helper thread — so review can be skipped once confidence is established, without requiring it to be all-or-nothing across every thread pair. 5. This explicitly does not propose autonomous agent-to-agent messaging without a human in the loop by default. That is the key difference from the Code-session peer-messaging requests referenced above, several of which raise real coordination and safety complexity that this simpler, human-gated version avoids. The goal is to eliminate the mechanical copy/switch/paste relay step — not to remove the user from the loop. 6. This should work across all thread types described above: Home-to-Home, Home-to-Code, and Code-to-Home, since all three currently rely on the identical manual-relay workaround. ### Alternative Solutions Currently the only alternative is fully manual relay: copying content out of the source thread, switching to the target thread, and pasting it in. This works but does not scale — as the number of active threads grows, the user spends an increasing share of their time acting as a message router rather than doing the actual work each thread exists to support. I'm not aware of any existing setting, workaround, or third-party tool that solves this for Home/chat threads specifically. The closest adjacent tooling I've found (tmux-based orchestration, git-backed inbox files, custom message-broker scripts) all target Claude Code CLI sessions coordinating as peers, and require the user to build and maintain custom infrastructure outside the product — they don't address Home-tab threads at all, and they don't preserve a built-in human review step. ### Priority High - Significant impact on productivity ### Feature Category Other ### Use Case Example A tech-lead thread (\"RTS\") is delegating a coding task to its dedicated Code session, and separately relies on a helper thread (\"Evidence\") that continuously analyzes log output from a long-running process for anomalies. Right now: 1. When Evidence finds something worth flagging, I copy its finding out of the Evidence thread and paste it into RTS. 2. When RTS wants Evidence to look more closely at a specific time window or pattern, I copy that request out of RTS and paste it into Evidence. 3. When RTS's Code session finishes a task and reports results, I copy that output from the Code session back into RTS. With this feature: RTS could draft \"ask Evidence to check for X in the last hour of logs\" and send it directly to Evidence, pending my one-click approval. Evidence's findings could be drafted as a message back to RTS the same way. Over a single day running 5-6 active threads like this, this would eliminate dozens of manual copy/switch/paste cycles, while I still see and approve every message before it's delivered. ### Additional Context This request is specifically about the Claude Desktop app for macOS (distributed from the Claude Code product page, containing both a Home tab and a Code tab). The lack of thread-to-thread messaging compounds with two other gaps in the same app: there is no reliable way to tell, at a glance, when a given thread has produced new output ready to review (the previous sidebar unread-indicator was removed and closed as not planned in #32628), and Home/chat threads have no compaction mechanism (/compact, /clear, /context are Code-session-only). Together, these make managing several persistent, ongoing threads harder than it needs to be: no passive signal for new output, no way to compact a long-running thread proactively, and no way to relay information between threads without manual copy/paste.",
+        "url": "https://github.com/anthropics/claude-code/issues/86461",
+        "createdAt": "2026-08-13T17:45:49Z",
+        "updatedAt": "2026-08-13T17:47:37Z",
+        "timestamp": "2026-08-13T17:47:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "enhancement",
+          "platform:macos",
+          "area:desktop"
+        ],
+        "author": "lennig",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d1e5a4a01598e5c0be1f",
+      "signalId": "github:anthropics/claude-code:issue:65961",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:anthropics/claude-code:issue:65961",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "anthropics/claude-code",
+        "kind": "issue",
+        "title": "[MODEL] Claude verbose code comments by default — ignores instructions to stop.",
+        "text": "### Preflight Checklist - [x] I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Amodel) for similar behavior reports - [x] This report does NOT contain sensitive information (API keys, passwords, etc.) ### Type of Behavior Issue Persistent bad behavior. Claude ignores my instructions or configuration. ### What You Asked Claude to Do ### Description Claude Code adds far too many code comments by default. The comments are mostly redundant, restating what the adjacent code already makes obvious or simply making references to the chat with Claude itself, leaking its chain of thoughts. It happens on every language, every model. Crucially, this default persists even when explicitly told to stop: - A clear, mandatory rule in `CLAUDE.md` does not reliably suppress it. - Reinforcing the rule via the memory system does not stop it either. I suppose the core problem is that verbose commenting is the **out-of-the-box default**, and that default is strong enough to override explicit user instructions. Users shouldn't have to stack a CLAUDE.md rule + memory entries + enforcement hooks just to get clean code, and that still working partially. ### Environment - Claude Code - Model: claude-opus-4-8, also verified on Opus 5 and Sonnet 5. ### What Claude Actually Did Contant verbose code commenting. ### Expected Behavior Restrained commenting as the **default** — comment only genuinely non-obvious constraints or \"why\" decisions, not self-evident \"what.\" And when a project instruction says to minimize comments, that instruction should be reliably respected. ### Actual behavior Reflexive explanatory comments on most code output, even when instructed otherwise. Requires constant manual cleanup or cleanup sessions with other models. ### Files Affected ```shell all ``` ### Permission Mode Accept Edits was ON (auto-accepting changes) ### Can You Reproduce This? Yes, every time. Happens pretty much on every session. ### Steps to Reproduce Just ask it to write code ### Claude Model Opus, Sonnet, Fable ### Relevant Conversation ```markdown Some comment examples: // A contribution ID collided with one owned by someone else, or a channel kind that doesn't match it. // Must stay below CHUNK_WORDS — the loop steps by the difference. // Ollama answers empty text with 200 and no vector, which would read as a model fault. // Unwrapped this is a bare \"fetch failed\" — no URL, no reason. The usual cause is a container pointing at 127.0.0.1 instead of host.docker.internal. // Another service on that port answers 200 with HTML, and a raw parse error names neither it nor the URL. // Asked, never assumed — no path may fall back to the column default. ``` ### Impact High - Significant unwanted changes. ### Claude Code Version 2.1.228 ### Platform Anthropic API ### Additional Context _No response_",
+        "url": "https://github.com/anthropics/claude-code/issues/65961",
+        "createdAt": "2026-06-07T00:38:42Z",
+        "updatedAt": "2026-08-13T13:10:03Z",
+        "timestamp": "2026-08-13T13:10:03Z",
+        "metrics": {
+          "reactions": 108,
+          "comments": 10
+        },
+        "labels": [
+          "bug",
+          "area:model",
+          "model"
+        ],
+        "author": "bhuvarloka",
         "state": "open",
         "assignees": [],
         "change": "updated"

@@ -8,7 +8,10 @@
   "repository": {
     "id": "sglang",
     "repo": "sgl-project/sglang",
-    "name": "SGLang"
+    "name": "SGLang",
+    "keywords": [
+      "SGLang"
+    ]
   },
   "context": {
     "repository": "sgl-project/sglang",
@@ -42,11 +45,11 @@
     "forks": 7862,
     "openIssues": 4908,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:20.269851+00:00"
+    "collectedAt": "2026-08-13T18:02:08.970665+00:00"
   },
   "news": {
     "repository": "sgl-project/sglang",
-    "collectedAt": "2026-08-13T17:47:20.269851+00:00",
+    "collectedAt": "2026-08-13T18:02:08.970665+00:00",
     "latestRelease": {
       "repository": "sgl-project/sglang",
       "tag": "v0.5.17",
@@ -107,6 +110,12 @@
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 500,
       "changedCount": 4
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 500,
+      "changedCount": 10
     }
   ],
   "signals": [
@@ -2066,8 +2075,7 @@
       "assignees": [
         "hzh0425",
         "ShangmingCai"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:28251",
@@ -2454,11 +2462,11 @@
       "project": "sgl-project/sglang",
       "kind": "pull_request",
       "title": "[AMD][Quantization] Online MXFP4 quantization 4/N - NVFP4 to MXFP4 Online Requantization on AMD GPUs",
-      "text": "## Summary Adds support in SGLang for loading and inference for ModelOpt (and Quark) NVFP4 checkpoints by dequantizing the supplied NVFP4 weights and requantizing them to MXFP4 at load time to allow efficient inference using supported AMD hardware (e.g. AMD MI355x). Enabled via `--quantization quark_mxfp4`. Weights dequantized then requantized to MXFP4 during loading, so the resulting model occupies MXFP4 memory without ever holding a full-precision copy. Also includes the config-routing and shared-expert-fusion fixes needed to load ModelOpt exports across various architectures using the existing SGLang AMD Quark integration. ## Modifications ### Online Requantization Path - **`layers/quantization/quark/quark.py`**: `_detect_nvfp4_source` detects ModelOpt and AMD Quark NVFP4 layouts; `_parse_nvfp4_excludes` extracts producer exclude lists; `from_config` routing gated on `requantization_method`. `_maybe_disable_shared_experts_fusion` delegates to the existing `can_fuse_shared_expert()` to correctly handle `shared_expert_gate` and `mtp.` exclusions. - **`layers/quantization/quark/schemes/quark_w4a4_mxfp4.py`**: NVFP4 linear scheme: `_create_weights_from_nvfp4` allocates NVFP4 staging buffers directly on device, loads all source shards, then dequant-requant to MXFP4 once all bytes are present. Registers (and discards) the NVFP4 per-tensor `input_scale` slot since MXFP4 uses dynamic activation quantization. - **`layers/quantization/quark/schemes/quark_w4a4_mxfp4_moe.py`**: NVFP4 fused-MoE scheme: per-expert weight/scale registration, online expert-wise dequant-requant, no-op `input_scale` slots for w13/w2. - **`layers/quantization/dequantization.py`**, **`layers/quantization/online_quantization.py`**, **`layers/quantization/quark/utils.py`**: `Nvfp4SourceConfig` + dequant helpers and `CopyNumelCounter` to track progressive shard loading ### Fixes required to load ModelOpt exports - **Config-loading** (`model_loader/weight_utils.py`): Some ModelOpt NVFP4 checkpoints store quant metadata only in `hf_quant_config.json`; others duplicate it in `config.json`. `get_quant_config` now reads `hf_quant_config.json` preferentially when present and FP4-typed, routing through `from_config`. - **Shared-expert-fusion** (`layers/quantization/quark/quark.py`): Some NVFP4 checkpoints keep shared experts in BF16 while routed experts are FP4. Shared-expert fusion remaps `mlp.shared_experts` into the quantized `FusedMoE`, causing a shape mismatch. `QuarkConfig.__init__` now calls `_maybe_disable_shared_experts_fusion` which delegates to `can_fuse_shared_expert()` (which is the same detection path introduced in #22948 and scoped to Quark in #27057) and sets `disable_shared_experts_fusion` globally before model construction. ### Tests - **`test/registered/quant/test_quark_mxfp4.py`**: Added `TestNVFP4ToMXFP4MOETP1` testing NVFP4→MXFP4 MoE requantization accuracy on `nvidia/Qwen3-30B-A3B-NVFP4`. ### Docs - **`docs_new/docs/advanced_features/quantization.mdx`**: documents the NVFP4-MXFP4 requant path (supported checkpoint layouts, and example command. ## Accuracy Tests All numbers below are obtained using lm_eval using SGLang backend with `--quantization quark_mxfp4` on AMD MI355X GPUs. (`max_gen_toks`=32768) ### GSM8k (lm_eval, flexible-extract) | Model | Original Release (bf16/fp8) | NVFP4-to-MXFP4 | % Recovery | |---|---|---|---| | MiniMax-M2.7-NVFP4 | 0.918 | 0.920 | 100.2% | | GLM-5.1-NVFP4 | 0.952 | 0.928 | 97.5% | | Kimi-K2.6-NVFP4 | 0.939 | 0.930 | 99.0% | | Qwen3.5-397B-A17B-NVFP4 | 0.954 | 0.945 | 99.1% | | Qwen3.5-397B-A17B-NVFP4-V2 | 0.954 | 0.941 | 98.7% | | DeepSeek-R1-NVFP4 | 0.958 | 0.950 | 99.2% | <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31619623512](https://github.com/sgl-project/sglang/actions/runs/31619623512)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31619623176](https://github.com/sgl-project/sglang/actions/runs/31619623176)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "text": "## Summary Adds support in SGLang for loading and inference for ModelOpt (and Quark) NVFP4 checkpoints by dequantizing the supplied NVFP4 weights and requantizing them to MXFP4 at load time to allow efficient inference using supported AMD hardware (e.g. AMD MI355x). Enabled via `--quantization quark_mxfp4`. Weights dequantized then requantized to MXFP4 during loading, so the resulting model occupies MXFP4 memory without ever holding a full-precision copy. Also includes the config-routing and shared-expert-fusion fixes needed to load ModelOpt exports across various architectures using the existing SGLang AMD Quark integration. ## Modifications ### Online Requantization Path - **`layers/quantization/quark/quark.py`**: `_detect_nvfp4_source` detects ModelOpt and AMD Quark NVFP4 layouts; `_parse_nvfp4_excludes` extracts producer exclude lists; `from_config` routing gated on `requantization_method`. `_maybe_disable_shared_experts_fusion` delegates to the existing `can_fuse_shared_expert()` to correctly handle `shared_expert_gate` and `mtp.` exclusions. - **`layers/quantization/quark/schemes/quark_w4a4_mxfp4.py`**: NVFP4 linear scheme: `_create_weights_from_nvfp4` allocates NVFP4 staging buffers directly on device, loads all source shards, then dequant-requant to MXFP4 once all bytes are present. Registers (and discards) the NVFP4 per-tensor `input_scale` slot since MXFP4 uses dynamic activation quantization. - **`layers/quantization/quark/schemes/quark_w4a4_mxfp4_moe.py`**: NVFP4 fused-MoE scheme: per-expert weight/scale registration, online expert-wise dequant-requant, no-op `input_scale` slots for w13/w2. - **`layers/quantization/dequantization.py`**, **`layers/quantization/online_quantization.py`**, **`layers/quantization/quark/utils.py`**: `Nvfp4SourceConfig` + dequant helpers and `CopyNumelCounter` to track progressive shard loading ### Fixes required to load ModelOpt exports - **Config-loading** (`model_loader/weight_utils.py`): Some ModelOpt NVFP4 checkpoints store quant metadata only in `hf_quant_config.json`; others duplicate it in `config.json`. `get_quant_config` now reads `hf_quant_config.json` preferentially when present and FP4-typed, routing through `from_config`. - **Shared-expert-fusion** (`layers/quantization/quark/quark.py`): Some NVFP4 checkpoints keep shared experts in BF16 while routed experts are FP4. Shared-expert fusion remaps `mlp.shared_experts` into the quantized `FusedMoE`, causing a shape mismatch. `QuarkConfig.__init__` now calls `_maybe_disable_shared_experts_fusion` which delegates to `can_fuse_shared_expert()` (which is the same detection path introduced in #22948 and scoped to Quark in #27057) and sets `disable_shared_experts_fusion` globally before model construction. ### Tests - **`test/registered/quant/test_quark_mxfp4.py`**: Added `TestNVFP4ToMXFP4MOETP1` testing NVFP4→MXFP4 MoE requantization accuracy on `nvidia/Qwen3-30B-A3B-NVFP4`. ### Docs - **`docs_new/docs/advanced_features/quantization.mdx`**: documents the NVFP4-MXFP4 requant path (supported checkpoint layouts, and example command. ## Accuracy Tests All numbers below are obtained using lm_eval using SGLang backend with `--quantization quark_mxfp4` on AMD MI355X GPUs. (`max_gen_toks`=32768) ### GSM8k (lm_eval, flexible-extract) | Model | Original Release (bf16/fp8) | NVFP4-to-MXFP4 | % Recovery | |---|---|---|---| | MiniMax-M2.7-NVFP4 | 0.918 | 0.920 | 100.2% | | GLM-5.1-NVFP4 | 0.952 | 0.928 | 97.5% | | Kimi-K2.6-NVFP4 | 0.939 | 0.930 | 99.0% | | Qwen3.5-397B-A17B-NVFP4 | 0.954 | 0.945 | 99.1% | | Qwen3.5-397B-A17B-NVFP4-V2 | 0.954 | 0.941 | 98.7% | | DeepSeek-R1-NVFP4 | 0.958 | 0.950 | 99.2% | <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31619623512](https://github.com/sgl-project/sglang/actions/runs/31619623512)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31619623176](https://github.com/sgl-project/sglang/actions/runs/31619623176)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/29328",
       "createdAt": "2026-06-25T20:10:55Z",
-      "updatedAt": "2026-08-13T17:41:35Z",
-      "timestamp": "2026-08-13T17:41:35Z",
+      "updatedAt": "2026-08-13T17:57:19Z",
+      "timestamp": "2026-08-13T17:57:19Z",
       "metrics": {
         "reactions": 1,
         "comments": 22
@@ -2484,7 +2492,8 @@
       ],
       "author": "ColinZ22",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:29593",
@@ -4259,8 +4268,8 @@
       "text": "## The bug An abort or timeout _during a prefill→decode transfer_ frees the request's KV pages back to the allocator, but it **_does not cancel the transfer_**. The next request can then be allocated those same pages and have them overwritten by the earlier, still-in-flight write, causing the next request to hold the first request's KV, with no error raised anywhere. @ShangmingCai already anticipated this in #27372, which prevents the prefill *starting* new work after an abort and this PR implements [what he mentioned as a TODO](https://github.com/sgl-project/sglang/blob/7cae831e41c942f4514c2458c5840c6b5ac0dd81/python/sglang/srt/disaggregation/mooncake/conn.py#L1726-L1728), which is handling transfers that are already in flight. The bug's window is narrow: the transfer has to still be in flight *and* the pages have to be reallocated before it lands. But in our setup, we often abort requests that are too slow, so I believe we are hitting this scenario. The only symptom is a slightly wrong answer to our users. **No cost on the happy-path:** no extra collective and no wait unless a request has failed. Only ~995 lines of implementation code, the rest is tests and doc strings. ## Reproduction script [This script](https://gist.github.com/KastanDay/a78f9ba98b3a255c2a0f94768a2522c2) reproduces the bug on current `main` (CPU only, no GPU): ``` [T1] transfer worker is inside a write to decode page 0xdead0000 [T2] request aborted while that write is still in flight [T3] scheduler was told: Failed RESULT: REPRODUCED ``` Reporting a terminal state is what lets the allocator hand those pages out, so `Failed` at [T3] is the bug. Asserting the *ordering* makes it deterministic. With this PR, [T3] reports `Transferring` and terminal arrives only after the write returns. ## The core change No new states and no new message types. `KVPoll` keeps its five states (`Failed`, `Bootstrapping`, `WaitingForInput`, `Transferring`, `Success`); what changes is **which one the scheduler is told, and when**: - **Before:** the first failure reported `Failed` immediately. A terminal state is what authorizes the allocator to hand the request's pages out — so pages could be reused while a transfer was still writing to them. - **After:** until every rank proves the pages are idle, the poll path reports `Transferring` — a state the scheduler already knows to wait on. `Failed` arrives only with proof. (Skipped entirely when nothing failed, so the happy path is unchanged.) Correspondingly, **`ABORT_ACK` changes meaning: from \"I heard your abort\" to \"your pages are safe to reuse.\"** Prefill now sends it only after that room's transfer work has drained, and it must echo a per-request nonce. Each bootstrap room gets a lease-counted lifetime. Transfer work holds a lease; a failed request closes the room; pages are released once it is closed with zero leases and, on decode, once every peer has acknowledged. ## Required for the barrier to hold Fixed these three paths from bypassing the abort: * The lease would drop early. `send_kvcache` returns on the first failing future, but `Future.cancel()` is a no-op once a future is running — so siblings keep writing while the worker reports the chunk done. * HiCache bypassed the gate. A failed restore releases pages regardless of poll state, including while the barrier is holding. * Room identity is ambiguous. `bootstrap_room` is recycled, so a queued chunk can lease the wrong request's lifetime. ## Tests - **Integrated 3-node H200 validation passed.** With two TP8 prefill and one TP8 decode (24 H200s, `STRICT` policy), 192/192 immediate victim reuse probes succeeded after 192 in-flight donor aborts. There were zero transport, semantic, hard, or critical failures; zero foreign canaries; a decode transfer-queue peak of 20; and zero model restarts. [Raw summary, matrix, telemetry, and the admission-control disclosure](https://gist.github.com/KastanDay/a2346f10d3a3e67a7f5870a5d8eb8b21). ```bash python -m pytest -q test/registered/unit/disaggregation/test_transfer_ownership_barrier.py ``` 71 tests named by property. Every fix has a regression test verified to fail with that fix reverted. `unit/disaggregation` 72 → 143 passed; `unit/managers` + `unit/mem_cache` unchanged apart from additions. ## Related PRs - **PP is unvalidated.** The added collectives cover TP and CP. #31869 looks complementary. - Overlaps #29984 (socket serialization) and #31144 (non-blocking sends). I deliberately used the same function names and placements so the PR diffs collapse and merge cleanly. Glad for this to land as a completion of #27372. @AsterWang identified this race first in #24580 but I think my solution is a bit safer. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31566610945](https://github.com/sgl-project/sglang/actions/runs/31566610945)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:white_check_mark: [Run #31620191653](https://github.com/sgl-project/sglang/actions/runs/31620191653)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/32564",
       "createdAt": "2026-07-27T18:59:18Z",
-      "updatedAt": "2026-08-12T16:57:40Z",
-      "timestamp": "2026-08-12T16:57:40Z",
+      "updatedAt": "2026-08-13T17:55:42Z",
+      "timestamp": "2026-08-13T17:55:42Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -4271,7 +4280,9 @@
       ],
       "author": "KastanDay",
       "state": "open",
-      "assignees": [],
+      "assignees": [
+        "ShangmingCai"
+      ],
       "change": "updated"
     },
     {
@@ -5529,8 +5540,8 @@
       "text": "## Motivation Add support for Nemotron 3.5 including DFlash and DSpark spec-dec ## Modifications <!-- Detail the changes made in this pull request. --> ## Accuracy Tests <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: **Missing `run-ci` label** -- add it to run CI tests.<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: **Blocked** -- `run-ci` is required first.<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/33554",
       "createdAt": "2026-08-04T13:09:55Z",
-      "updatedAt": "2026-08-13T17:42:45Z",
-      "timestamp": "2026-08-13T17:42:45Z",
+      "updatedAt": "2026-08-13T17:58:06Z",
+      "timestamp": "2026-08-13T17:58:06Z",
       "metrics": {
         "reactions": 0,
         "comments": 3
@@ -5544,7 +5555,8 @@
       "state": "open",
       "assignees": [
         "b8zhong"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33559",
@@ -5633,6 +5645,30 @@
       ]
     },
     {
+      "id": "github:sgl-project/sglang:pull_request:33572",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "sgl-project/sglang",
+      "kind": "pull_request",
+      "title": "[Cosmos3] Add cosmos3 Reasoner to llm only inference",
+      "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation Cosmos3 Omni model has 2 transformer towers stacked on top of each other for video generation. First tower is understanding tower that is also trained for text/visual reasoning. Metrics are included in model card under Reasoning Benchmarks: https://huggingface.co/nvidia/Cosmos3-Nano#reasoning-benchmarks . This PR adds support for Reasoner only inference. ## Modifications Should be merged after: https://github.com/sgl-project/sglang/pull/31590 * Added new model type cosmos3_omni * Modified DefaultModelLoader with allow_patterns_overrides argument to allow reading Diffusers format checkpoints * Added Cosmos3 specific checkpoint key mappings * Extended Qwen3VL execution path checks with new model type (Cosmos3 Reason follows Qwen3VL architecture) <!-- Detail the changes made in this pull request. --> ## Accuracy Tests Simple request to make sure model generates reasonable output, since rest of the implementation relies on Qwen3VL integration. ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31727450906](https://github.com/sgl-project/sglang/actions/runs/31727450906)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727450532](https://github.com/sgl-project/sglang/actions/runs/31727450532)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "url": "https://github.com/sgl-project/sglang/pull/33572",
+      "createdAt": "2026-08-04T15:58:33Z",
+      "updatedAt": "2026-08-13T17:48:06Z",
+      "timestamp": "2026-08-13T17:48:06Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "diffusion"
+      ],
+      "author": "Zhylkaaa",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:sgl-project/sglang:pull_request:33602",
       "source": "github",
       "group": "ai-infrastructure",
@@ -5664,11 +5700,11 @@
       "project": "sgl-project/sglang",
       "kind": "pull_request",
       "title": "Fix Whisper transcription for audio over 30 seconds",
-      "text": "## Summary Whisper's feature extractor pads or truncates input to its fixed 3000-mel-frame (30-second) encoder window, so `/v1/audio/transcriptions` silently drops everything after 30 seconds when the serving layer sends a long file as one generation. This change: - splits long Whisper audio into contiguous chunks of at most 30 seconds; - places each seam at the quietest 100 ms RMS window within the final second of the chunk, matching the former vLLM speech-to-text behavior; - runs non-streaming chunks concurrently and stitches results in audio order; - streams chunks sequentially with one final finish frame; - offsets `verbose_json` segment timestamps by each chunk's start time; - preserves fused language auto-detection and reports the first chunk's detected language; - gates chunking through the transcription adapter, so Qwen3-ASR and other adapters remain unchanged. Each chunk receives an independent sampling-parameter dictionary because the multimodal processor consumes transcription-only keys while preparing decoder prompts. ## Validation - Added CPU unit coverage for energy-aware split points, contiguity, maximum duration, waveform preservation, short-audio behavior, ordered stitching, chunk failures and aborts, streaming, fused auto-detection, spaceless scripts, and verbose timestamp offsets. - Added GPU endpoint coverage using a 40-second clip whose speech begins after Whisper's 30-second encoder window: JSON transcription, `verbose_json` timestamps past 30 seconds, and streaming. - The audio splitter tests pass locally (5 tests). - Changed Python files pass AST, isort, Ruff, Black, codespell, CI registry, merge-conflict, and private-key checks; `compileall` and `git diff --check` pass. - Live validation with `openai/whisper-large-v3` on a 57.06-second file produced the complete transcript, including segments after 30 seconds, with one streaming stop frame. Split points and explicit-language output matched vLLM 0.11.0. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727027933](https://github.com/sgl-project/sglang/actions/runs/31727027933)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:hourglass_flowing_sand: [Run #31727027759](https://github.com/sgl-project/sglang/actions/runs/31727027759)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "text": "## Summary Whisper's feature extractor pads or truncates input to its fixed 3000-mel-frame (30-second) encoder window, so `/v1/audio/transcriptions` silently drops everything after 30 seconds when the serving layer sends a long file as one generation. This change: - splits long Whisper audio into contiguous chunks of at most 30 seconds; - places each seam at the quietest 100 ms RMS window within the final second of the chunk, matching the former vLLM speech-to-text behavior; - runs non-streaming chunks concurrently and stitches results in audio order; - streams chunks sequentially with one final finish frame; - offsets `verbose_json` segment timestamps by each chunk's start time; - preserves fused language auto-detection and reports the first chunk's detected language; - gates chunking through the transcription adapter, so Qwen3-ASR and other adapters remain unchanged. Each chunk receives an independent sampling-parameter dictionary because the multimodal processor consumes transcription-only keys while preparing decoder prompts. ## Validation - Added CPU unit coverage for energy-aware split points, contiguity, maximum duration, waveform preservation, short-audio behavior, ordered stitching, chunk failures and aborts, streaming, fused auto-detection, spaceless scripts, and verbose timestamp offsets. - Added GPU endpoint coverage using a 40-second clip whose speech begins after Whisper's 30-second encoder window: JSON transcription, `verbose_json` timestamps past 30 seconds, and streaming. - The audio splitter tests pass locally (5 tests). - Changed Python files pass AST, isort, Ruff, Black, codespell, CI registry, merge-conflict, and private-key checks; `compileall` and `git diff --check` pass. - Live validation with `openai/whisper-large-v3` on a 57.06-second file produced the complete transcript, including segments after 30 seconds, with one streaming stop frame. Split points and explicit-language output matched vLLM 0.11.0. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31727027933](https://github.com/sgl-project/sglang/actions/runs/31727027933)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:hourglass_flowing_sand: [Run #31727027759](https://github.com/sgl-project/sglang/actions/runs/31727027759)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/33604",
       "createdAt": "2026-08-04T21:15:55Z",
-      "updatedAt": "2026-08-13T17:42:26Z",
-      "timestamp": "2026-08-13T17:42:26Z",
+      "updatedAt": "2026-08-13T17:54:10Z",
+      "timestamp": "2026-08-13T17:54:10Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -5681,7 +5717,8 @@
       "state": "open",
       "assignees": [
         "JustinTong0323"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33614",
@@ -6564,8 +6601,8 @@
       "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation Improve M3 performance on MI350. <!-- Describe the purpose and goals of this pull request. --> ## Modifications - Adds AITER FlyDSL MXFP8 MoE support, including pre-shuffled gate/up weights and E8M0 scales, OAI-SwiGLU activation handling, and fused shared-expert execution. - Adds selectable dense MXFP8 linear backends through `SGLANG_MXFP8_LINEAR_BACKEND`: - `auto`/`aiter`: native blockwise MXFP8 via `torch._scaled_mm` - `triton`: existing `dot_scaled` implementation - `bf16`: cached BF16 weight dequantization with hipBLASLt - Reduces decode overhead by: - Skipping redundant sparse KV-cache writes when fusion already populated the cache. - Avoiding unnecessary top-k ID sanitization when expert parallelism is disabled. - Fixes AITER top-k handling for fused shared experts and respects the configured gate/up layout. - Enables MiniMax-M3 shared-expert fusion on supported ROCm devices (gfx942 or newer), while preserving existing EP and DeepEP compatibility guards. - Allows the AITER MoE runner for MXFP8 on gfx950 and validates that `SGLANG_USE_AITER=1` is enabled when explicitly selected. - Applies the same ROCm shared-expert support to the MiniMax-M3-VL model. ``` SGLANG_USE_AITER=1 \\ sglang serve \\ --trust-remote-code \\ --model-path /persistent/models/MiniMax-M3-MXFP8 \\ --reasoning-parser auto \\ --tool-call-parser auto \\ --tp 8 \\ --quantization mxfp8 \\ --moe-runner-backend aiter \\ --fp8-gemm-backend bf16 \\ --enable-aiter-allreduce-fusion \\ --dtype bfloat16 \\ --chunked-prefill-size 8192 \\ --mem-fraction-static 0.80 \\ --host 0.0.0.0 \\ --port 30000 ``` <!-- Detail the changes made in this pull request. --> ## Accuracy Tests baseline ``` == gsm8k == 1319 examples (single-shot) | 227.1s | 1485 tok/s | 337K tokens * score = 88.55% stop_rate = 89.61% truncated_rate = 10.39% [warn: hitting max_tokens] error_rate = 0.00% ``` this pr ``` == gsm8k == 1319 examples (single-shot) | 151.2s | 2231 tok/s | 337K tokens * score = 88.63% stop_rate = 89.99% truncated_rate = 10.01% [warn: hitting max_tokens] error_rate = 0.00% ``` <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <img width=\"654\" height=\"323\" alt=\"Screenshot 2026-08-07 at 11 23 22 AM\" src=\"https://github.com/user-attachments/assets/513b39bc-72e1-4510-a3cd-9b09b4c4b32c\" /> <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: **Missing `run-ci` label** -- add it to run CI tests.<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: **Blocked** -- `run-ci` is required first.<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/34014",
       "createdAt": "2026-08-07T18:43:58Z",
-      "updatedAt": "2026-08-13T17:07:50Z",
-      "timestamp": "2026-08-13T17:07:50Z",
+      "updatedAt": "2026-08-13T17:49:34Z",
+      "timestamp": "2026-08-13T17:49:34Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -6577,7 +6614,8 @@
       ],
       "author": "zcnrex",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34018",
@@ -7207,8 +7245,7 @@
       "state": "open",
       "assignees": [
         "b8zhong"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34284",
@@ -8284,8 +8321,8 @@
       "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation <!-- Describe the purpose and goals of this pull request. --> ## Modifications <!-- Detail the changes made in this pull request. --> ## Accuracy Tests <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:white_check_mark: [Run #31632222955](https://github.com/sgl-project/sglang/actions/runs/31632222955)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31632222552](https://github.com/sgl-project/sglang/actions/runs/31632222552)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/34471",
       "createdAt": "2026-08-11T23:21:25Z",
-      "updatedAt": "2026-08-13T06:35:45Z",
-      "timestamp": "2026-08-13T06:35:45Z",
+      "updatedAt": "2026-08-13T17:53:56Z",
+      "timestamp": "2026-08-13T17:53:56Z",
       "metrics": {
         "reactions": 1,
         "comments": 1
@@ -8297,7 +8334,8 @@
       ],
       "author": "AgainstEntropy",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34474",
@@ -9453,11 +9491,11 @@
       "project": "sgl-project/sglang",
       "kind": "pull_request",
       "title": "Publish per-scheduler load on a dedicated socket for load-aware routers",
-      "text": "## Motivation The cache-aware-zmq router infers a worker's load from a router-side in-flight counter. That counter measures what *this router* dispatched — it misses traffic from other routers and direct clients, and for streaming responses it stays held for the whole response rather than the time the request occupies the scheduler. The engine already builds the right number: `SchedulerLoadInquirer.get_loads()` produces a `LoadSnapshot` every publish cycle (feeding `/v1/loads` and DP-attention dispatch). This exposes that snapshot to out-of-process consumers so a router can price workers on real queue depth / KV occupancy. Ported to `main` from a production branch; the router-side consumer lands separately. ## Modifications **A dedicated per-scheduler load PUB socket.** `SchedulerLoadPublisher` publishes a compact `LoadStat` gauge (`num_running_reqs`, `num_waiting_reqs`, `num_tokens`, `max_total_num_tokens`) on its own ZMQ PUB socket, independent of KV-cache events. The payload is a tagged subset of `LoadSnapshot` so the router-facing wire contract stays fixed as the internal snapshot grows. Framing matches the KV-event socket (`[b\"load\", big-endian i64 seq, msgpack LoadStat]`) so one subscriber loop handles both. Transport is a plain synchronous PUB socket — a send just enqueues to ZMQ's IO thread — so there is no background thread or replay buffer, which a gauge does not need. **One resolver for the port, shared by the bind and the advertisement.** `resolve_load_pub_range` decides where the load range lives and returns `((host, base), reason)`. Both `SchedulerLoadPublisher` (which binds `base + rank`) and `/server_info`'s `describe_kv_events_publisher` (which advertises `base` under the `kv_events` block, plus `load_topic`) route through it, so the engine cannot advertise a range it will not bind. By default the range packs immediately after the KV-event range, bumping past the replay ROUTER range when the two overlap (with the conventional `replay = kv + 1`, always). **New `--load-publish-endpoint` (observability namespace).** Sets the load range outright to move it off a port conflict, or the literal `off` to disable load publishing while keeping KV events. Must be a wildcard-host TCP address (a concrete host would be *connected to*, not bound). **Gating and cadence.** Enabled on the same condition as KV-event publishing (shared `is_kv_publisher_rank`), so the feature is **off by default** — it requires `--kv-events-config`. Publishing is throttled by call count, and an unchanged gauge is deduped to a ~1s heartbeat while a changed one goes out immediately (transitions are never delayed). When the DP-balancing sink also published this cycle, the scheduler hands its already-computed snapshot to the load publisher rather than walking the queues again. The disabled path is a bound-method call and a `None` check — no socket and no thread. **Load also publishes on stalled no-batch iterations.** `on_idle` now publishes before its fully-idle gate — a stall (queues parked under KV pressure / disagg transfer) has no `process_batch_result` to publish the growing gauge. That path spins without sleeping, so a ~50ms wall-clock floor bounds the `get_loads()` refresh for both the DP-balancing writer and the load socket; the fully-idle publish stays at its original post-flush position so the idle gauge reflects compacted KV. **Failure handling is best-effort.** A publish failure never crashes the loop (routers fall back to their own counter) and is logged once per failure episode (the publish path runs every scheduler loop, so it must not flood). **Startup validation.** `--load-publish-endpoint` set without a `--kv-events-config` publisher, not bindable, or overlapping the KV range fails at the entrypoint (`check_load_publish_args`) rather than only warning from a scheduler subprocess. ## Notes for reviewers - **Breaking change to an override point** (per `large-class-init-style` rule 28): `Scheduler.publish_load_snapshot` now returns the `LoadSnapshot` it published (previously nothing); both call sites feed it to the router-facing publisher to avoid a second queue walk. A downstream override returning `None` stays functionally correct — the publisher falls back to `load_inquirer.get_loads` at its own throttled cadence — but silently loses the shared-snapshot optimization. Return the snapshot you wrote to keep it. - **Intentional user-visible change:** endpoint parsing is now strict (`NetworkAddress.parse`), so a bare unbracketed IPv6 kv endpoint (`tcp://::1:5557`) drops the whole `kv_events` block from `/server_info`, where the old `rfind(\":\")` split advertised it unusably. - **Port footprint:** a bindable `--kv-events-config` TCP endpoint now reserves `2 * dp_size` ports from its base (`2 * dp_size + 1` with the conventional adjacent replay). Co-hosted workers must space their KV bases at least that far apart, or use `--load-publish-endpoint`. Documented in the server-arguments table. ## Accuracy Tests Not applicable — no change to model execution or output. ## Speed Tests and Profiling No benchmark run. The disabled path (default) is a bound-method call plus a `None` check per batch — no socket, no thread. When enabled, the load socket reuses the DP-balancing snapshot whenever that sink also published this cycle (otherwise it collects its own on the same call throttle), and a stalled no-batch loop is bounded to one `get_loads()` per ~50ms for both sinks. ## Checklist - [ ] Format your code according to the [Format Code](https://docs.sglang.ai/references/contribution_guide.html) guide. - [ ] Add unit tests as outlined in the [Test Guide](https://docs.sglang.ai/references/contribution_guide.html). - [ ] Update documentation as needed. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727235459](https://github.com/sgl-project/sglang/actions/runs/31727235459)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727235133](https://github.com/sgl-project/sglang/actions/runs/31727235133)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "text": "## Motivation The cache-aware-zmq router infers a worker's load from a router-side in-flight counter. That counter measures what *this router* dispatched — it misses traffic from other routers and direct clients, and for streaming responses it stays held for the whole response rather than the time the request occupies the scheduler. The engine already builds the right number: `SchedulerLoadInquirer.get_loads()` produces a `LoadSnapshot` every publish cycle (feeding `/v1/loads` and DP-attention dispatch). This exposes that snapshot to out-of-process consumers so a router can price workers on real queue depth / KV occupancy. Ported to `main` from a production branch; the router-side consumer lands separately. ## Modifications **A dedicated per-scheduler load PUB socket.** `SchedulerLoadPublisher` publishes a compact `LoadStat` gauge (`num_running_reqs`, `num_waiting_reqs`, `num_tokens`, `max_total_num_tokens`) on its own ZMQ PUB socket, independent of KV-cache events. The payload is a tagged subset of `LoadSnapshot` so the router-facing wire contract stays fixed as the internal snapshot grows. Framing matches the KV-event socket (`[b\"load\", big-endian i64 seq, msgpack LoadStat]`) so one subscriber loop handles both. Transport is a plain synchronous PUB socket — a send just enqueues to ZMQ's IO thread — so there is no background thread or replay buffer, which a gauge does not need. **One resolver for the port, shared by the bind and the advertisement.** `resolve_load_pub_range` decides where the load range lives and returns `((host, base), reason)`. Both `SchedulerLoadPublisher` (which binds `base + rank`) and `/server_info`'s `describe_kv_events_publisher` (which advertises `base` under the `kv_events` block, plus `load_topic`) route through it, so the engine cannot advertise a range it will not bind. By default the range packs immediately after the KV-event range, bumping past the replay ROUTER range when the two overlap (with the conventional `replay = kv + 1`, always). **Opt-in via `--load-publish-endpoint` (observability namespace).** **Off by default** — unset (or `off`) reserves no port, so an upgrade of an existing `--kv-events-config` deployment can't collide with a co-hosted neighbor's KV bind. `auto` packs the range after the KV-event range; an explicit wildcard-host `tcp://` address places it outright (a concrete host would be *connected to*, not bound). Also requires `--kv-events-config`, since routers discover the base through `/server_info`. **Cadence.** When enabled, publishing is throttled by call count, and an unchanged gauge is deduped to a ~1s heartbeat while a changed one goes out immediately (transitions are never delayed). When the DP-balancing sink also published this cycle, the scheduler hands its already-computed snapshot to the load publisher rather than walking the queues again. When disabled (the default), the publisher holds no socket or thread and each call is a bound method plus a `None` check. **Load also publishes on stalled no-batch iterations.** `on_idle` now publishes before its fully-idle gate — a stall (queues parked under KV pressure / disagg transfer) has no `process_batch_result` to publish the growing gauge. That path spins without sleeping, so a ~50ms wall-clock floor bounds the `get_loads()` refresh for both the DP-balancing writer and the load socket; the fully-idle publish stays at its original post-flush position so the idle gauge reflects compacted KV. **Failure handling is best-effort.** A publish failure never crashes the loop (routers fall back to their own counter) and is logged once per failure episode (the publish path runs every scheduler loop, so it must not flood). **Startup validation.** `--load-publish-endpoint` set without a `--kv-events-config` publisher, not bindable, or overlapping the KV range fails at the entrypoint (`check_load_publish_args`) rather than only warning from a scheduler subprocess. ## Notes for reviewers - **Breaking change to an override point** (per `large-class-init-style` rule 28): `Scheduler.publish_load_snapshot` now returns the `LoadSnapshot` it published (previously nothing); both call sites feed it to the router-facing publisher to avoid a second queue walk. A downstream override returning `None` stays functionally correct — the publisher falls back to `load_inquirer.get_loads` at its own throttled cadence — but silently loses the shared-snapshot optimization. Return the snapshot you wrote to keep it. - **Intentional user-visible change:** endpoint parsing is now strict (`NetworkAddress.parse`), so a bare unbracketed IPv6 kv endpoint (`tcp://::1:5557`) drops the whole `kv_events` block from `/server_info`, where the old `rfind(\":\")` split advertised it unusably. - **Port footprint (opt-in only):** with `--load-publish-endpoint auto`, a worker reserves `2 * dp_size` ports from its KV base (`2 * dp_size + 1` with the conventional adjacent replay). Co-hosted workers must space their KV bases at least that far apart, or place the range with an explicit address. This is why it's opt-in rather than default-on — see the server-arguments table. - **Inherited limit:** with DP-attention across `nnodes > 1`, the single advertised base is paired with one worker-URL host, so ranks on other nodes aren't reachable at that host — same constraint as the existing KV-event discovery, noted in the resolver docstring. ## Accuracy Tests Not applicable — no change to model execution or output. ## Speed Tests and Profiling No benchmark run. The disabled path (default) is a bound-method call plus a `None` check per batch — no socket, no thread. When enabled, the load socket reuses the DP-balancing snapshot whenever that sink also published this cycle (otherwise it collects its own on the same call throttle), and a stalled no-batch loop is bounded to one `get_loads()` per ~50ms for both sinks. ## Checklist - [ ] Format your code according to the [Format Code](https://docs.sglang.ai/references/contribution_guide.html) guide. - [ ] Add unit tests as outlined in the [Test Guide](https://docs.sglang.ai/references/contribution_guide.html). - [ ] Update documentation as needed. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727235459](https://github.com/sgl-project/sglang/actions/runs/31727235459)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727235133](https://github.com/sgl-project/sglang/actions/runs/31727235133)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/34608",
       "createdAt": "2026-08-12T17:43:45Z",
-      "updatedAt": "2026-08-13T17:45:43Z",
-      "timestamp": "2026-08-13T17:45:43Z",
+      "updatedAt": "2026-08-13T17:58:19Z",
+      "timestamp": "2026-08-13T17:58:19Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -12281,11 +12319,11 @@
       "project": "sgl-project/sglang",
       "kind": "pull_request",
       "title": "[Cosmos3] Add cosmos3 transfer capability",
-      "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation This PR adds Transfer capability to allow additional control inputs into the pipeline. PR implements CFG, CFG-free and CFG-parallel options. <!-- Describe the purpose and goals of this pull request. --> ## Modifications * Extends API requests with additional options required for transfer * Adds CFG implementation. <!-- Detail the changes made in this pull request. --> ## Accuracy Tests <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: **Missing `run-ci` label** -- add it to run CI tests.<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: **Blocked** -- `run-ci` is required first.<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation This PR adds Transfer capability to allow additional control inputs into the pipeline. PR implements CFG, CFG-free and CFG-parallel options. <!-- Describe the purpose and goals of this pull request. --> ## Modifications * Extends API requests with additional options required for transfer * Adds CFG implementation. <!-- Detail the changes made in this pull request. --> ## Accuracy Tests <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31727890679](https://github.com/sgl-project/sglang/actions/runs/31727890679)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727890404](https://github.com/sgl-project/sglang/actions/runs/31727890404)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/34747",
       "createdAt": "2026-08-13T14:30:29Z",
-      "updatedAt": "2026-08-13T14:30:42Z",
-      "timestamp": "2026-08-13T14:30:42Z",
+      "updatedAt": "2026-08-13T17:53:11Z",
+      "timestamp": "2026-08-13T17:53:11Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -12295,7 +12333,8 @@
       ],
       "author": "Zhylkaaa",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34748",
@@ -12370,11 +12409,11 @@
       "project": "sgl-project/sglang",
       "kind": "pull_request",
       "title": "feat(cli): add extensible serve backend plugins",
-      "text": "## Motivation SGLang now uses `sglang serve` as the common entry point for both autoregressive and diffusion runtimes. Ecosystem projects also build on SGLang, but publishing a second console script named `sglang` would make installation and uninstallation order decide which executable survives. This PR makes `sglang serve` an extensible frontend while keeping one clear owner for the executable: the SGLang distribution. Out-of-tree projects register serving backends through Python package metadata instead of replacing the command. The immediate downstream use case is SGLang-Omni: ```bash sglang serve MiniMaxAI/MiniMax-Music3 --model-type omni ``` The core API is intentionally generic and does not contain an Omni-specific import or backend name. ## Design and plan ### Phase 1: land the generic core contract (this PR) - Add the `sglang.serve_backends` entry point group ### Phase 2: integrate SGLang-Omni in its repository (follow-up PR) - Register `omni = \"sglang_omni.cli.sglang_backend:create_backend\"` under `sglang.serve_backends`. - Add a thin adapter that forwards `ServeRequest.argv` to the existing Omni Typer parser and launcher. ### Phase 3: enable safe auto detection per ecosystem backend - Start Omni with explicit `--model-type omni` so the CLI unification does not depend on detector quality. - Add a lightweight Omni detector after model metadata coverage is validated. ### Routing rules The `auto` path has no install-order priority: 1. Backends without a detector remain explicit-only. 2. One `MATCH` selects that backend. 3. Multiple matches fail and ask the user for `--model-type BACKEND`. 4. `UNKNOWN`, detector errors, and no matches preserve the historical LLM fallback. 5. Explicit selection is strict: a missing, duplicate, broken, or API-incompatible provider is an error. Explicit selection imports only the selected extension. Listing available names uses entry point metadata and does not import out-of-tree packages. Automatic detection necessarily loads participating factories, so the API documentation requires those paths to stay lightweight. ## Modifications ## Compatibility - Existing `sglang serve MODEL`, `--model-path`, `--model-type llm`, and `--model-type diffusion` commands retain their routes. - When no detector matches, `auto` still falls back to LLM. - Diffusion still uses its existing registry/Hugging Face detection and positional-model bookkeeping. - No new package dependency or second executable is introduced. - Backend-specific arguments remain owned and parsed by the selected runtime. ## Accuracy Tests ## Speed Tests and Profiling Not applicable to the inference path. Backend discovery occurs once during CLI startup. Explicit selection loads only the requested provider; metadata listing does not import provider modules. ## Validation - `PYTHONPATH=python python -m pytest test/registered/unit/cli/test_serve_backends.py -q` — 12 passed - `pre-commit run --files docs/docs/hardware-platforms/plugin.mdx python/sglang/cli/serve.py python/sglang/cli/serve_backends.py python/sglang/cli/utils.py test/registered/unit/cli/test_serve_backends.py` — passed - `mint validate` with Node v24.12.0 — passed ## Checklist - [x] Format code with pre-commit. - [x] Add CPU-only unit tests. - [x] Update plugin documentation. - [x] Document the out-of-tree rollout and executable ownership plan. - [x] No accuracy or speed benchmark is required for this CLI-only change. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31721168554](https://github.com/sgl-project/sglang/actions/runs/31721168554)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31721168198](https://github.com/sgl-project/sglang/actions/runs/31721168198)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "text": "## Motivation SGLang now uses `sglang serve` as the common entry point for both autoregressive and diffusion runtimes. Ecosystem projects also build on SGLang, but publishing a second console script named `sglang` would make installation and uninstallation order decide which executable survives. This PR makes `sglang serve` an extensible frontend while keeping one clear owner for the executable: the SGLang distribution. Out-of-tree projects register serving backends through Python package metadata instead of replacing the command. The immediate downstream use case is SGLang-Omni: ```bash sglang serve MiniMaxAI/MiniMax-Music3 --model-type omni ``` The core API is intentionally generic and does not contain an Omni-specific import or backend name. ## Design and plan ### Phase 1: land the generic core contract (this PR) - Add the `sglang.serve_backends` entry point group ### Phase 2: integrate SGLang-Omni in its repository (follow-up PR) - Register `omni = \"sglang_omni.cli.sglang_backend:create_backend\"` under `sglang.serve_backends`. - Add a thin adapter that forwards `ServeRequest.argv` to the existing Omni Typer parser and launcher. ### Phase 3: enable safe auto detection per ecosystem backend - Start Omni with explicit `--model-type omni` so the CLI unification does not depend on detector quality. - Add a lightweight Omni detector after model metadata coverage is validated. ### Routing rules The `auto` path has no install-order priority: 1. Backends without a detector remain explicit-only. 2. One `MATCH` selects that backend. 3. Multiple matches fail and ask the user for `--model-type BACKEND`. 4. `UNKNOWN`, detector errors, and no matches preserve the historical LLM fallback. 5. Explicit selection is strict: a missing, duplicate, broken, or API-incompatible provider is an error. Explicit selection imports only the selected extension. Listing available names uses entry point metadata and does not import out-of-tree packages. Automatic detection necessarily loads participating factories, so the API documentation requires those paths to stay lightweight. ## Modifications ## Compatibility - Existing `sglang serve MODEL`, `--model-path`, `--model-type llm`, and `--model-type diffusion` commands retain their routes. - When no detector matches, `auto` still falls back to LLM. - Diffusion still uses its existing registry/Hugging Face detection and positional-model bookkeeping. - No new package dependency or second executable is introduced. - Backend-specific arguments remain owned and parsed by the selected runtime. ## Accuracy Tests ## Speed Tests and Profiling Not applicable to the inference path. Backend discovery occurs once during CLI startup. Explicit selection loads only the requested provider; metadata listing does not import provider modules. ## Validation - `PYTHONPATH=python python -m pytest test/registered/unit/cli/test_serve_backends.py -q` — 12 passed - `pre-commit run --files docs/docs/hardware-platforms/plugin.mdx python/sglang/cli/serve.py python/sglang/cli/serve_backends.py python/sglang/cli/utils.py test/registered/unit/cli/test_serve_backends.py` — passed - `mint validate` with Node v24.12.0 — passed ## Checklist - [x] Format code with pre-commit. - [x] Add CPU-only unit tests. - [x] Update plugin documentation. - [x] Document the out-of-tree rollout and executable ownership plan. - [x] No accuracy or speed benchmark is required for this CLI-only change. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31721168554](https://github.com/sgl-project/sglang/actions/runs/31721168554)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31721168198](https://github.com/sgl-project/sglang/actions/runs/31721168198)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/34753",
       "createdAt": "2026-08-13T16:32:07Z",
-      "updatedAt": "2026-08-13T16:49:15Z",
-      "timestamp": "2026-08-13T16:49:15Z",
+      "updatedAt": "2026-08-13T17:56:15Z",
+      "timestamp": "2026-08-13T17:56:15Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -12385,7 +12424,8 @@
       ],
       "author": "mickqian",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34754",
@@ -12427,8 +12467,7 @@
       "labels": [],
       "author": "ShangmingCai",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34756",
@@ -33382,6 +33421,375 @@
         "labels": [],
         "author": "ShangmingCai",
         "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:17af97a8073321c65610",
+      "signalId": "github:sgl-project/sglang:pull_request:34608",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34608",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "Publish per-scheduler load on a dedicated socket for load-aware routers",
+        "text": "## Motivation The cache-aware-zmq router infers a worker's load from a router-side in-flight counter. That counter measures what *this router* dispatched — it misses traffic from other routers and direct clients, and for streaming responses it stays held for the whole response rather than the time the request occupies the scheduler. The engine already builds the right number: `SchedulerLoadInquirer.get_loads()` produces a `LoadSnapshot` every publish cycle (feeding `/v1/loads` and DP-attention dispatch). This exposes that snapshot to out-of-process consumers so a router can price workers on real queue depth / KV occupancy. Ported to `main` from a production branch; the router-side consumer lands separately. ## Modifications **A dedicated per-scheduler load PUB socket.** `SchedulerLoadPublisher` publishes a compact `LoadStat` gauge (`num_running_reqs`, `num_waiting_reqs`, `num_tokens`, `max_total_num_tokens`) on its own ZMQ PUB socket, independent of KV-cache events. The payload is a tagged subset of `LoadSnapshot` so the router-facing wire contract stays fixed as the internal snapshot grows. Framing matches the KV-event socket (`[b\"load\", big-endian i64 seq, msgpack LoadStat]`) so one subscriber loop handles both. Transport is a plain synchronous PUB socket — a send just enqueues to ZMQ's IO thread — so there is no background thread or replay buffer, which a gauge does not need. **One resolver for the port, shared by the bind and the advertisement.** `resolve_load_pub_range` decides where the load range lives and returns `((host, base), reason)`. Both `SchedulerLoadPublisher` (which binds `base + rank`) and `/server_info`'s `describe_kv_events_publisher` (which advertises `base` under the `kv_events` block, plus `load_topic`) route through it, so the engine cannot advertise a range it will not bind. By default the range packs immediately after the KV-event range, bumping past the replay ROUTER range when the two overlap (with the conventional `replay = kv + 1`, always). **Opt-in via `--load-publish-endpoint` (observability namespace).** **Off by default** — unset (or `off`) reserves no port, so an upgrade of an existing `--kv-events-config` deployment can't collide with a co-hosted neighbor's KV bind. `auto` packs the range after the KV-event range; an explicit wildcard-host `tcp://` address places it outright (a concrete host would be *connected to*, not bound). Also requires `--kv-events-config`, since routers discover the base through `/server_info`. **Cadence.** When enabled, publishing is throttled by call count, and an unchanged gauge is deduped to a ~1s heartbeat while a changed one goes out immediately (transitions are never delayed). When the DP-balancing sink also published this cycle, the scheduler hands its already-computed snapshot to the load publisher rather than walking the queues again. When disabled (the default), the publisher holds no socket or thread and each call is a bound method plus a `None` check. **Load also publishes on stalled no-batch iterations.** `on_idle` now publishes before its fully-idle gate — a stall (queues parked under KV pressure / disagg transfer) has no `process_batch_result` to publish the growing gauge. That path spins without sleeping, so a ~50ms wall-clock floor bounds the `get_loads()` refresh for both the DP-balancing writer and the load socket; the fully-idle publish stays at its original post-flush position so the idle gauge reflects compacted KV. **Failure handling is best-effort.** A publish failure never crashes the loop (routers fall back to their own counter) and is logged once per failure episode (the publish path runs every scheduler loop, so it must not flood). **Startup validation.** `--load-publish-endpoint` set without a `--kv-events-config` publisher, not bindable, or overlapping the KV range fails at the entrypoint (`check_load_publish_args`) rather than only warning from a scheduler subprocess. ## Notes for reviewers - **Breaking change to an override point** (per `large-class-init-style` rule 28): `Scheduler.publish_load_snapshot` now returns the `LoadSnapshot` it published (previously nothing); both call sites feed it to the router-facing publisher to avoid a second queue walk. A downstream override returning `None` stays functionally correct — the publisher falls back to `load_inquirer.get_loads` at its own throttled cadence — but silently loses the shared-snapshot optimization. Return the snapshot you wrote to keep it. - **Intentional user-visible change:** endpoint parsing is now strict (`NetworkAddress.parse`), so a bare unbracketed IPv6 kv endpoint (`tcp://::1:5557`) drops the whole `kv_events` block from `/server_info`, where the old `rfind(\":\")` split advertised it unusably. - **Port footprint (opt-in only):** with `--load-publish-endpoint auto`, a worker reserves `2 * dp_size` ports from its KV base (`2 * dp_size + 1` with the conventional adjacent replay). Co-hosted workers must space their KV bases at least that far apart, or place the range with an explicit address. This is why it's opt-in rather than default-on — see the server-arguments table. - **Inherited limit:** with DP-attention across `nnodes > 1`, the single advertised base is paired with one worker-URL host, so ranks on other nodes aren't reachable at that host — same constraint as the existing KV-event discovery, noted in the resolver docstring. ## Accuracy Tests Not applicable — no change to model execution or output. ## Speed Tests and Profiling No benchmark run. The disabled path (default) is a bound-method call plus a `None` check per batch — no socket, no thread. When enabled, the load socket reuses the DP-balancing snapshot whenever that sink also published this cycle (otherwise it collects its own on the same call throttle), and a stalled no-batch loop is bounded to one `get_loads()` per ~50ms for both sinks. ## Checklist - [ ] Format your code according to the [Format Code](https://docs.sglang.ai/references/contribution_guide.html) guide. - [ ] Add unit tests as outlined in the [Test Guide](https://docs.sglang.ai/references/contribution_guide.html). - [ ] Update documentation as needed. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727235459](https://github.com/sgl-project/sglang/actions/runs/31727235459)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727235133](https://github.com/sgl-project/sglang/actions/runs/31727235133)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34608",
+        "createdAt": "2026-08-12T17:43:45Z",
+        "updatedAt": "2026-08-13T17:58:19Z",
+        "timestamp": "2026-08-13T17:58:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "documentation",
+          "run-ci"
+        ],
+        "author": "ShangmingCai",
+        "state": "open",
+        "assignees": [
+          "Kangyan-Zhou",
+          "alexnails"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:bc5f1f591322b8e2b0a2",
+      "signalId": "github:sgl-project/sglang:pull_request:33554",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:33554",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "Add new spec-dec support and quant recipe for Nano v3",
+        "text": "## Motivation Add support for Nemotron 3.5 including DFlash and DSpark spec-dec ## Modifications <!-- Detail the changes made in this pull request. --> ## Accuracy Tests <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: **Missing `run-ci` label** -- add it to run CI tests.<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: **Blocked** -- `run-ci` is required first.<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/33554",
+        "createdAt": "2026-08-04T13:09:55Z",
+        "updatedAt": "2026-08-13T17:58:06Z",
+        "timestamp": "2026-08-13T17:58:06Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "quant",
+          "speculative-decoding",
+          "new-model"
+        ],
+        "author": "rystewart-nvidia",
+        "state": "open",
+        "assignees": [
+          "b8zhong"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:5f309bbdbe73580b0bde",
+      "signalId": "github:sgl-project/sglang:pull_request:32564",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt",
+        "assignees"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:32564",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[PD] Don't release KV pages while Mooncake transfers are in flight",
+        "text": "## The bug An abort or timeout _during a prefill→decode transfer_ frees the request's KV pages back to the allocator, but it **_does not cancel the transfer_**. The next request can then be allocated those same pages and have them overwritten by the earlier, still-in-flight write, causing the next request to hold the first request's KV, with no error raised anywhere. @ShangmingCai already anticipated this in #27372, which prevents the prefill *starting* new work after an abort and this PR implements [what he mentioned as a TODO](https://github.com/sgl-project/sglang/blob/7cae831e41c942f4514c2458c5840c6b5ac0dd81/python/sglang/srt/disaggregation/mooncake/conn.py#L1726-L1728), which is handling transfers that are already in flight. The bug's window is narrow: the transfer has to still be in flight *and* the pages have to be reallocated before it lands. But in our setup, we often abort requests that are too slow, so I believe we are hitting this scenario. The only symptom is a slightly wrong answer to our users. **No cost on the happy-path:** no extra collective and no wait unless a request has failed. Only ~995 lines of implementation code, the rest is tests and doc strings. ## Reproduction script [This script](https://gist.github.com/KastanDay/a78f9ba98b3a255c2a0f94768a2522c2) reproduces the bug on current `main` (CPU only, no GPU): ``` [T1] transfer worker is inside a write to decode page 0xdead0000 [T2] request aborted while that write is still in flight [T3] scheduler was told: Failed RESULT: REPRODUCED ``` Reporting a terminal state is what lets the allocator hand those pages out, so `Failed` at [T3] is the bug. Asserting the *ordering* makes it deterministic. With this PR, [T3] reports `Transferring` and terminal arrives only after the write returns. ## The core change No new states and no new message types. `KVPoll` keeps its five states (`Failed`, `Bootstrapping`, `WaitingForInput`, `Transferring`, `Success`); what changes is **which one the scheduler is told, and when**: - **Before:** the first failure reported `Failed` immediately. A terminal state is what authorizes the allocator to hand the request's pages out — so pages could be reused while a transfer was still writing to them. - **After:** until every rank proves the pages are idle, the poll path reports `Transferring` — a state the scheduler already knows to wait on. `Failed` arrives only with proof. (Skipped entirely when nothing failed, so the happy path is unchanged.) Correspondingly, **`ABORT_ACK` changes meaning: from \"I heard your abort\" to \"your pages are safe to reuse.\"** Prefill now sends it only after that room's transfer work has drained, and it must echo a per-request nonce. Each bootstrap room gets a lease-counted lifetime. Transfer work holds a lease; a failed request closes the room; pages are released once it is closed with zero leases and, on decode, once every peer has acknowledged. ## Required for the barrier to hold Fixed these three paths from bypassing the abort: * The lease would drop early. `send_kvcache` returns on the first failing future, but `Future.cancel()` is a no-op once a future is running — so siblings keep writing while the worker reports the chunk done. * HiCache bypassed the gate. A failed restore releases pages regardless of poll state, including while the barrier is holding. * Room identity is ambiguous. `bootstrap_room` is recycled, so a queued chunk can lease the wrong request's lifetime. ## Tests - **Integrated 3-node H200 validation passed.** With two TP8 prefill and one TP8 decode (24 H200s, `STRICT` policy), 192/192 immediate victim reuse probes succeeded after 192 in-flight donor aborts. There were zero transport, semantic, hard, or critical failures; zero foreign canaries; a decode transfer-queue peak of 20; and zero model restarts. [Raw summary, matrix, telemetry, and the admission-control disclosure](https://gist.github.com/KastanDay/a2346f10d3a3e67a7f5870a5d8eb8b21). ```bash python -m pytest -q test/registered/unit/disaggregation/test_transfer_ownership_barrier.py ``` 71 tests named by property. Every fix has a regression test verified to fail with that fix reverted. `unit/disaggregation` 72 → 143 passed; `unit/managers` + `unit/mem_cache` unchanged apart from additions. ## Related PRs - **PP is unvalidated.** The added collectives cover TP and CP. #31869 looks complementary. - Overlaps #29984 (socket serialization) and #31144 (non-blocking sends). I deliberately used the same function names and placements so the PR diffs collapse and merge cleanly. Glad for this to land as a completion of #27372. @AsterWang identified this race first in #24580 but I think my solution is a bit safer. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31566610945](https://github.com/sgl-project/sglang/actions/runs/31566610945)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:white_check_mark: [Run #31620191653](https://github.com/sgl-project/sglang/actions/runs/31620191653)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/32564",
+        "createdAt": "2026-07-27T18:59:18Z",
+        "updatedAt": "2026-08-13T17:55:42Z",
+        "timestamp": "2026-08-13T17:55:42Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "high priority",
+          "hicache"
+        ],
+        "author": "KastanDay",
+        "state": "open",
+        "assignees": [
+          "ShangmingCai"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8c682676d651664f8420",
+      "signalId": "github:sgl-project/sglang:pull_request:33604",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:33604",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "Fix Whisper transcription for audio over 30 seconds",
+        "text": "## Summary Whisper's feature extractor pads or truncates input to its fixed 3000-mel-frame (30-second) encoder window, so `/v1/audio/transcriptions` silently drops everything after 30 seconds when the serving layer sends a long file as one generation. This change: - splits long Whisper audio into contiguous chunks of at most 30 seconds; - places each seam at the quietest 100 ms RMS window within the final second of the chunk, matching the former vLLM speech-to-text behavior; - runs non-streaming chunks concurrently and stitches results in audio order; - streams chunks sequentially with one final finish frame; - offsets `verbose_json` segment timestamps by each chunk's start time; - preserves fused language auto-detection and reports the first chunk's detected language; - gates chunking through the transcription adapter, so Qwen3-ASR and other adapters remain unchanged. Each chunk receives an independent sampling-parameter dictionary because the multimodal processor consumes transcription-only keys while preparing decoder prompts. ## Validation - Added CPU unit coverage for energy-aware split points, contiguity, maximum duration, waveform preservation, short-audio behavior, ordered stitching, chunk failures and aborts, streaming, fused auto-detection, spaceless scripts, and verbose timestamp offsets. - Added GPU endpoint coverage using a 40-second clip whose speech begins after Whisper's 30-second encoder window: JSON transcription, `verbose_json` timestamps past 30 seconds, and streaming. - The audio splitter tests pass locally (5 tests). - Changed Python files pass AST, isort, Ruff, Black, codespell, CI registry, merge-conflict, and private-key checks; `compileall` and `git diff --check` pass. - Live validation with `openai/whisper-large-v3` on a 57.06-second file produced the complete transcript, including segments after 30 seconds, with one streaming stop frame. Split points and explicit-language output matched vLLM 0.11.0. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31727027933](https://github.com/sgl-project/sglang/actions/runs/31727027933)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:hourglass_flowing_sand: [Run #31727027759](https://github.com/sgl-project/sglang/actions/runs/31727027759)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/33604",
+        "createdAt": "2026-08-04T21:15:55Z",
+        "updatedAt": "2026-08-13T17:54:10Z",
+        "timestamp": "2026-08-13T17:54:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "run-ci",
+          "run-ci-extra"
+        ],
+        "author": "shenxiul",
+        "state": "open",
+        "assignees": [
+          "JustinTong0323"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8359acf93c5d25093263",
+      "signalId": "github:sgl-project/sglang:pull_request:34471",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34471",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[diffusion] Support LTX-2.5",
+        "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation <!-- Describe the purpose and goals of this pull request. --> ## Modifications <!-- Detail the changes made in this pull request. --> ## Accuracy Tests <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:white_check_mark: [Run #31632222955](https://github.com/sgl-project/sglang/actions/runs/31632222955)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31632222552](https://github.com/sgl-project/sglang/actions/runs/31632222552)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34471",
+        "createdAt": "2026-08-11T23:21:25Z",
+        "updatedAt": "2026-08-13T17:53:56Z",
+        "timestamp": "2026-08-13T17:53:56Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "documentation",
+          "run-ci",
+          "diffusion"
+        ],
+        "author": "AgainstEntropy",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e362967a05d5f16ee77b",
+      "signalId": "github:sgl-project/sglang:pull_request:34747",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34747",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[Cosmos3] Add cosmos3 transfer capability",
+        "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation This PR adds Transfer capability to allow additional control inputs into the pipeline. PR implements CFG, CFG-free and CFG-parallel options. <!-- Describe the purpose and goals of this pull request. --> ## Modifications * Extends API requests with additional options required for transfer * Adds CFG implementation. <!-- Detail the changes made in this pull request. --> ## Accuracy Tests <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31727890679](https://github.com/sgl-project/sglang/actions/runs/31727890679)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727890404](https://github.com/sgl-project/sglang/actions/runs/31727890404)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34747",
+        "createdAt": "2026-08-13T14:30:29Z",
+        "updatedAt": "2026-08-13T17:53:11Z",
+        "timestamp": "2026-08-13T17:53:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "diffusion"
+        ],
+        "author": "Zhylkaaa",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:887189bb3663ccc2eb30",
+      "signalId": "github:sgl-project/sglang:pull_request:34014",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34014",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "Improve M3 performance on MI350",
+        "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation Improve M3 performance on MI350. <!-- Describe the purpose and goals of this pull request. --> ## Modifications - Adds AITER FlyDSL MXFP8 MoE support, including pre-shuffled gate/up weights and E8M0 scales, OAI-SwiGLU activation handling, and fused shared-expert execution. - Adds selectable dense MXFP8 linear backends through `SGLANG_MXFP8_LINEAR_BACKEND`: - `auto`/`aiter`: native blockwise MXFP8 via `torch._scaled_mm` - `triton`: existing `dot_scaled` implementation - `bf16`: cached BF16 weight dequantization with hipBLASLt - Reduces decode overhead by: - Skipping redundant sparse KV-cache writes when fusion already populated the cache. - Avoiding unnecessary top-k ID sanitization when expert parallelism is disabled. - Fixes AITER top-k handling for fused shared experts and respects the configured gate/up layout. - Enables MiniMax-M3 shared-expert fusion on supported ROCm devices (gfx942 or newer), while preserving existing EP and DeepEP compatibility guards. - Allows the AITER MoE runner for MXFP8 on gfx950 and validates that `SGLANG_USE_AITER=1` is enabled when explicitly selected. - Applies the same ROCm shared-expert support to the MiniMax-M3-VL model. ``` SGLANG_USE_AITER=1 \\ sglang serve \\ --trust-remote-code \\ --model-path /persistent/models/MiniMax-M3-MXFP8 \\ --reasoning-parser auto \\ --tool-call-parser auto \\ --tp 8 \\ --quantization mxfp8 \\ --moe-runner-backend aiter \\ --fp8-gemm-backend bf16 \\ --enable-aiter-allreduce-fusion \\ --dtype bfloat16 \\ --chunked-prefill-size 8192 \\ --mem-fraction-static 0.80 \\ --host 0.0.0.0 \\ --port 30000 ``` <!-- Detail the changes made in this pull request. --> ## Accuracy Tests baseline ``` == gsm8k == 1319 examples (single-shot) | 227.1s | 1485 tok/s | 337K tokens * score = 88.55% stop_rate = 89.61% truncated_rate = 10.39% [warn: hitting max_tokens] error_rate = 0.00% ``` this pr ``` == gsm8k == 1319 examples (single-shot) | 151.2s | 2231 tok/s | 337K tokens * score = 88.63% stop_rate = 89.99% truncated_rate = 10.01% [warn: hitting max_tokens] error_rate = 0.00% ``` <!-- If this pull request affects model outputs (e.g., changes to the kernel or model forward code), provide accuracy test results. --> ## Speed Tests and Profiling <img width=\"654\" height=\"323\" alt=\"Screenshot 2026-08-07 at 11 23 22 AM\" src=\"https://github.com/user-attachments/assets/513b39bc-72e1-4510-a3cd-9b09b4c4b32c\" /> <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: **Missing `run-ci` label** -- add it to run CI tests.<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: **Blocked** -- `run-ci` is required first.<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34014",
+        "createdAt": "2026-08-07T18:43:58Z",
+        "updatedAt": "2026-08-13T17:49:34Z",
+        "timestamp": "2026-08-13T17:49:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "quant",
+          "amd",
+          "jit-kernel"
+        ],
+        "author": "zcnrex",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6833c2afcb3a94c349ab",
+      "signalId": "github:sgl-project/sglang:pull_request:33572",
+      "event": "discovered",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:33572",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[Cosmos3] Add cosmos3 Reasoner to llm only inference",
+        "text": "<!-- Thank you for your contribution! Please follow these guidelines to enhance your pull request. If anything is unclear, submit your PR and reach out to maintainers for assistance. Join our Slack community at https://slack.sglang.io to discuss further. --> ## Motivation Cosmos3 Omni model has 2 transformer towers stacked on top of each other for video generation. First tower is understanding tower that is also trained for text/visual reasoning. Metrics are included in model card under Reasoning Benchmarks: https://huggingface.co/nvidia/Cosmos3-Nano#reasoning-benchmarks . This PR adds support for Reasoner only inference. ## Modifications Should be merged after: https://github.com/sgl-project/sglang/pull/31590 * Added new model type cosmos3_omni * Modified DefaultModelLoader with allow_patterns_overrides argument to allow reading Diffusers format checkpoints * Added Cosmos3 specific checkpoint key mappings * Extended Qwen3VL execution path checks with new model type (Cosmos3 Reason follows Qwen3VL architecture) <!-- Detail the changes made in this pull request. --> ## Accuracy Tests Simple request to make sure model generates reasonable output, since rest of the implementation relies on Qwen3VL integration. ## Speed Tests and Profiling <!-- If this pull request impacts inference speed, provide benchmarking and profiling results. --> ## Checklist - [ ] Format your code according to the [Format code with pre-commit](https://docs.sglang.io/developer_guide/contribution_guide.html#format-code-with-pre-commit). - [ ] Add unit tests according to the [Run and add unit tests](https://docs.sglang.io/developer_guide/contribution_guide.html#run-and-add-unit-tests). - [ ] Update documentation according to [Write documentations](https://docs.sglang.io/developer_guide/contribution_guide.html#write-documentations). - [ ] Provide accuracy and speed benchmark results according to [Test the accuracy](https://docs.sglang.io/developer_guide/contribution_guide.html#test-the-accuracy) and [Benchmark the speed](https://docs.sglang.io/developer_guide/contribution_guide.html#benchmark-the-speed). - [ ] Follow the SGLang code style [guidance](https://docs.sglang.io/developer_guide/contribution_guide.html#code-style-guidance). ## Review and Merge Process 1. Ping Merge Oncalls to start the process. See the [PR Merge Process](https://github.com/sgl-project/sglang/blob/main/.github/MAINTAINER.md#pull-request-merge-process). 2. Get approvals from [CODEOWNERS](https://github.com/sgl-project/sglang/blob/main/.github/CODEOWNERS) and other reviewers. 3. Trigger CI tests with [comments](https://docs.sglang.io/developer_guide/contribution_guide.html#how-to-trigger-ci-tests) or contact authorized users to do so. - Common commands include `/tag-and-rerun-ci`, `/tag-run-ci-label`, `/rerun-failed-ci` 4. After green CI and required approvals, ask Merge Oncalls or people with Write permission to merge the PR. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31727450906](https://github.com/sgl-project/sglang/actions/runs/31727450906)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727450532](https://github.com/sgl-project/sglang/actions/runs/31727450532)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/33572",
+        "createdAt": "2026-08-04T15:58:33Z",
+        "updatedAt": "2026-08-13T17:48:06Z",
+        "timestamp": "2026-08-13T17:48:06Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "diffusion"
+        ],
+        "author": "Zhylkaaa",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:089b2e004fc465bb8b01",
+      "signalId": "github:sgl-project/sglang:pull_request:29328",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:29328",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[AMD][Quantization] Online MXFP4 quantization 4/N - NVFP4 to MXFP4 Online Requantization on AMD GPUs",
+        "text": "## Summary Adds support in SGLang for loading and inference for ModelOpt (and Quark) NVFP4 checkpoints by dequantizing the supplied NVFP4 weights and requantizing them to MXFP4 at load time to allow efficient inference using supported AMD hardware (e.g. AMD MI355x). Enabled via `--quantization quark_mxfp4`. Weights dequantized then requantized to MXFP4 during loading, so the resulting model occupies MXFP4 memory without ever holding a full-precision copy. Also includes the config-routing and shared-expert-fusion fixes needed to load ModelOpt exports across various architectures using the existing SGLang AMD Quark integration. ## Modifications ### Online Requantization Path - **`layers/quantization/quark/quark.py`**: `_detect_nvfp4_source` detects ModelOpt and AMD Quark NVFP4 layouts; `_parse_nvfp4_excludes` extracts producer exclude lists; `from_config` routing gated on `requantization_method`. `_maybe_disable_shared_experts_fusion` delegates to the existing `can_fuse_shared_expert()` to correctly handle `shared_expert_gate` and `mtp.` exclusions. - **`layers/quantization/quark/schemes/quark_w4a4_mxfp4.py`**: NVFP4 linear scheme: `_create_weights_from_nvfp4` allocates NVFP4 staging buffers directly on device, loads all source shards, then dequant-requant to MXFP4 once all bytes are present. Registers (and discards) the NVFP4 per-tensor `input_scale` slot since MXFP4 uses dynamic activation quantization. - **`layers/quantization/quark/schemes/quark_w4a4_mxfp4_moe.py`**: NVFP4 fused-MoE scheme: per-expert weight/scale registration, online expert-wise dequant-requant, no-op `input_scale` slots for w13/w2. - **`layers/quantization/dequantization.py`**, **`layers/quantization/online_quantization.py`**, **`layers/quantization/quark/utils.py`**: `Nvfp4SourceConfig` + dequant helpers and `CopyNumelCounter` to track progressive shard loading ### Fixes required to load ModelOpt exports - **Config-loading** (`model_loader/weight_utils.py`): Some ModelOpt NVFP4 checkpoints store quant metadata only in `hf_quant_config.json`; others duplicate it in `config.json`. `get_quant_config` now reads `hf_quant_config.json` preferentially when present and FP4-typed, routing through `from_config`. - **Shared-expert-fusion** (`layers/quantization/quark/quark.py`): Some NVFP4 checkpoints keep shared experts in BF16 while routed experts are FP4. Shared-expert fusion remaps `mlp.shared_experts` into the quantized `FusedMoE`, causing a shape mismatch. `QuarkConfig.__init__` now calls `_maybe_disable_shared_experts_fusion` which delegates to `can_fuse_shared_expert()` (which is the same detection path introduced in #22948 and scoped to Quark in #27057) and sets `disable_shared_experts_fusion` globally before model construction. ### Tests - **`test/registered/quant/test_quark_mxfp4.py`**: Added `TestNVFP4ToMXFP4MOETP1` testing NVFP4→MXFP4 MoE requantization accuracy on `nvidia/Qwen3-30B-A3B-NVFP4`. ### Docs - **`docs_new/docs/advanced_features/quantization.mdx`**: documents the NVFP4-MXFP4 requant path (supported checkpoint layouts, and example command. ## Accuracy Tests All numbers below are obtained using lm_eval using SGLang backend with `--quantization quark_mxfp4` on AMD MI355X GPUs. (`max_gen_toks`=32768) ### GSM8k (lm_eval, flexible-extract) | Model | Original Release (bf16/fp8) | NVFP4-to-MXFP4 | % Recovery | |---|---|---|---| | MiniMax-M2.7-NVFP4 | 0.918 | 0.920 | 100.2% | | GLM-5.1-NVFP4 | 0.952 | 0.928 | 97.5% | | Kimi-K2.6-NVFP4 | 0.939 | 0.930 | 99.0% | | Qwen3.5-397B-A17B-NVFP4 | 0.954 | 0.945 | 99.1% | | Qwen3.5-397B-A17B-NVFP4-V2 | 0.954 | 0.941 | 98.7% | | DeepSeek-R1-NVFP4 | 0.958 | 0.950 | 99.2% | <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31619623512](https://github.com/sgl-project/sglang/actions/runs/31619623512)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31619623176](https://github.com/sgl-project/sglang/actions/runs/31619623176)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/29328",
+        "createdAt": "2026-06-25T20:10:55Z",
+        "updatedAt": "2026-08-13T17:57:19Z",
+        "timestamp": "2026-08-13T17:57:19Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 22
+        },
+        "labels": [
+          "documentation",
+          "quant",
+          "amd",
+          "dependencies",
+          "lora",
+          "Multi-modal",
+          "deepseek",
+          "speculative-decoding",
+          "hicache",
+          "blackwell",
+          "npu",
+          "run-ci",
+          "diffusion",
+          "mthreads",
+          "apple-silicon",
+          "jit-kernel",
+          "bypass-fastfail"
+        ],
+        "author": "ColinZ22",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8fdef04c1124d648a91d",
+      "signalId": "github:sgl-project/sglang:pull_request:34753",
+      "event": "changed",
+      "observedAt": "2026-08-13T18:01:55.420671Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34753",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "feat(cli): add extensible serve backend plugins",
+        "text": "## Motivation SGLang now uses `sglang serve` as the common entry point for both autoregressive and diffusion runtimes. Ecosystem projects also build on SGLang, but publishing a second console script named `sglang` would make installation and uninstallation order decide which executable survives. This PR makes `sglang serve` an extensible frontend while keeping one clear owner for the executable: the SGLang distribution. Out-of-tree projects register serving backends through Python package metadata instead of replacing the command. The immediate downstream use case is SGLang-Omni: ```bash sglang serve MiniMaxAI/MiniMax-Music3 --model-type omni ``` The core API is intentionally generic and does not contain an Omni-specific import or backend name. ## Design and plan ### Phase 1: land the generic core contract (this PR) - Add the `sglang.serve_backends` entry point group ### Phase 2: integrate SGLang-Omni in its repository (follow-up PR) - Register `omni = \"sglang_omni.cli.sglang_backend:create_backend\"` under `sglang.serve_backends`. - Add a thin adapter that forwards `ServeRequest.argv` to the existing Omni Typer parser and launcher. ### Phase 3: enable safe auto detection per ecosystem backend - Start Omni with explicit `--model-type omni` so the CLI unification does not depend on detector quality. - Add a lightweight Omni detector after model metadata coverage is validated. ### Routing rules The `auto` path has no install-order priority: 1. Backends without a detector remain explicit-only. 2. One `MATCH` selects that backend. 3. Multiple matches fail and ask the user for `--model-type BACKEND`. 4. `UNKNOWN`, detector errors, and no matches preserve the historical LLM fallback. 5. Explicit selection is strict: a missing, duplicate, broken, or API-incompatible provider is an error. Explicit selection imports only the selected extension. Listing available names uses entry point metadata and does not import out-of-tree packages. Automatic detection necessarily loads participating factories, so the API documentation requires those paths to stay lightweight. ## Modifications ## Compatibility - Existing `sglang serve MODEL`, `--model-path`, `--model-type llm`, and `--model-type diffusion` commands retain their routes. - When no detector matches, `auto` still falls back to LLM. - Diffusion still uses its existing registry/Hugging Face detection and positional-model bookkeeping. - No new package dependency or second executable is introduced. - Backend-specific arguments remain owned and parsed by the selected runtime. ## Accuracy Tests ## Speed Tests and Profiling Not applicable to the inference path. Backend discovery occurs once during CLI startup. Explicit selection loads only the requested provider; metadata listing does not import provider modules. ## Validation - `PYTHONPATH=python python -m pytest test/registered/unit/cli/test_serve_backends.py -q` — 12 passed - `pre-commit run --files docs/docs/hardware-platforms/plugin.mdx python/sglang/cli/serve.py python/sglang/cli/serve_backends.py python/sglang/cli/utils.py test/registered/unit/cli/test_serve_backends.py` — passed - `mint validate` with Node v24.12.0 — passed ## Checklist - [x] Format code with pre-commit. - [x] Add CPU-only unit tests. - [x] Update plugin documentation. - [x] Document the out-of-tree rollout and executable ownership plan. - [x] No accuracy or speed benchmark is required for this CLI-only change. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31721168554](https://github.com/sgl-project/sglang/actions/runs/31721168554)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31721168198](https://github.com/sgl-project/sglang/actions/runs/31721168198)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34753",
+        "createdAt": "2026-08-13T16:32:07Z",
+        "updatedAt": "2026-08-13T17:56:15Z",
+        "timestamp": "2026-08-13T17:56:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "documentation",
+          "run-ci"
+        ],
+        "author": "mickqian",
+        "state": "open",
         "assignees": [],
         "change": "updated"
       }

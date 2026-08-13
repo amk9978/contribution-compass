@@ -8,7 +8,10 @@
   "repository": {
     "id": "containerd",
     "repo": "containerd/containerd",
-    "name": "containerd"
+    "name": "containerd",
+    "keywords": [
+      "containerd"
+    ]
   },
   "context": {
     "repository": "containerd/containerd",
@@ -32,11 +35,11 @@
     "forks": 4059,
     "openIssues": 488,
     "archived": false,
-    "collectedAt": "2026-08-13T17:47:12.811344+00:00"
+    "collectedAt": "2026-08-13T18:02:01.459351+00:00"
   },
   "news": {
     "repository": "containerd/containerd",
-    "collectedAt": "2026-08-13T17:47:12.811344+00:00",
+    "collectedAt": "2026-08-13T18:02:01.459351+00:00",
     "latestRelease": {
       "repository": "containerd/containerd",
       "tag": "v2.3.4",
@@ -107,6 +110,12 @@
       "collectedAt": "2026-08-13T17:47:07.884300Z",
       "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 38,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T18:01:55.420671Z",
+      "since": "2026-08-12T18:01:55.420671Z",
+      "observedCount": 35,
       "changedCount": 0
     }
   ],
