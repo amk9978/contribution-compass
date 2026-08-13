@@ -60,7 +60,7 @@ def test_hackernews_collects_current_configured_project_discussions_only() -> No
                                 "foundationdb",
                                 "apple/foundationdb",
                                 "FoundationDB",
-                                hackernews_keywords=("FoundationDB",),
+                                keywords=("FoundationDB",),
                             ),
                         ),
                     ),
@@ -109,7 +109,7 @@ def test_hackernews_skips_old_dead_and_unmatched_stories() -> None:
                                 "fdb",
                                 "apple/foundationdb",
                                 "FoundationDB",
-                                hackernews_keywords=("FoundationDB",),
+                                keywords=("FoundationDB",),
                             ),
                         ),
                     ),
@@ -134,6 +134,6 @@ def test_hackernews_keyword_mentions_inside_story_body_do_not_create_news_matche
         "claude-code",
         "anthropics/claude-code",
         "Claude Code",
-        hackernews_keywords=("Claude Code",),
+        keywords=("Claude Code",),
     )
     assert HackerNewsCollector._matches(item, repo) == ()

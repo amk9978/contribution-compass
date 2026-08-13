@@ -55,7 +55,7 @@ class HackerNewsCollector:
             reasons.append(f"repository:{repo.repo}")
         reasons.extend(
             f"keyword:{keyword}"
-            for keyword in repo.hackernews_keywords
+            for keyword in repo.keywords
             if _contains_phrase(title_haystack, keyword)
         )
         return tuple(dict.fromkeys(reasons))

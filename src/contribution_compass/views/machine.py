@@ -116,7 +116,15 @@ class MachineView:
                         "properties": {
                             "date": {"type": "string", "format": "date"},
                             "group": {"type": "object"},
-                            "repository": {"type": "object"},
+                            "repository": {
+                                "type": "object",
+                                "properties": {
+                                    "keywords": {
+                                        "type": "array",
+                                        "items": {"type": "string"},
+                                    }
+                                },
+                            },
                             "context": {"type": ["object", "null"]},
                             "news": {"type": ["object", "null"]},
                             "signals": {"type": "array", "items": {"type": "object"}},
@@ -176,6 +184,7 @@ class MachineView:
                         "id": dataset.repository_id,
                         "repository": dataset.repository,
                         "name": dataset.repository_name,
+                        "keywords": list(dataset.keywords),
                         "signalCount": len(dataset.signals),
                         "eventCount": len(dataset.events),
                         "apiUrl": (

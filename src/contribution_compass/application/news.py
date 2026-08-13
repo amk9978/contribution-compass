@@ -15,6 +15,7 @@ class ProjectNewsEntry:
     group_id: str
     group_name: str
     news: ProjectNewsSnapshot
+    keywords: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -23,6 +24,7 @@ class ProjectNewsEntry:
                 "id": self.project_id,
                 "repository": self.repository,
                 "name": self.project_name,
+                "keywords": list(self.keywords),
             },
             "group": {"id": self.group_id, "name": self.group_name},
             "news": self.news.to_dict(),
@@ -54,6 +56,7 @@ class NewsQueries:
                 group_id=dataset.group_id,
                 group_name=dataset.group_name,
                 news=dataset.news,
+                keywords=dataset.keywords,
             )
             for dataset in self._catalog.repositories(date)
             if dataset.news is not None
@@ -76,7 +79,7 @@ class NewsQueries:
     @staticmethod
     def _search_text(entry: ProjectNewsEntry) -> str:
         release = entry.news.latest_release
-        parts = [entry.repository, entry.project_name, entry.group_name]
+        parts = [entry.repository, entry.project_name, entry.group_name, *entry.keywords]
         if release:
             parts.extend((release.title, release.tag, *release.highlights))
         for item in entry.news.upcoming:

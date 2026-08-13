@@ -33,10 +33,19 @@ def write_catalog(root: Path) -> LocalJsonCatalog:
 def test_catalog_queries_preserve_context_evidence_and_timeline(tmp_path: Path) -> None:
     queries = CatalogQueries(write_catalog(tmp_path / "data"))
     assert queries.list_projects()[0].context["language"] == "Python"  # type: ignore[index]
+    assert queries.list_projects()[0].keywords == ("resource lifecycle", "async runtime")
+    assert queries.search_updates(query="resource lifecycle")[0].project == "acme/widget"
+    assert queries.contribution_leads(query="async runtime")[0].signal.url.endswith("/issues/42")
     assert queries.contribution_leads()[0].signal.url.endswith("/issues/42")
     assert queries.signal_timeline("github:acme/widget:issue:42")[0].event == "discovered"
     assert NewsQueries(write_catalog(tmp_path / "news-data")).list()[0].news.latest_release.tag == (
         "v2.0.0"
+    )
+    assert (
+        NewsQueries(write_catalog(tmp_path / "keyword-news"))
+        .list(query="resource lifecycle")[0]
+        .repository
+        == "acme/widget"
     )
 
 
@@ -70,10 +79,22 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
     assert "Hacker News discussions" in news_page
     assert "https://news.ycombinator.com/item?id=123" in news_page
     assert "Observation trail" in repository
+    assert "keyword: resource lifecycle" in repository
     assert "https://github.com/acme/widget/issues/42" in repository
     assert api["schemaVersion"] == 3
     assert opportunities["leads"][0]["evidenceUrl"].endswith("/issues/42")
     assert repository_api["dataset"]["events"][0]["event"] == "discovered"
+    assert repository_api["dataset"]["repository"]["keywords"] == [
+        "resource lifecycle",
+        "async runtime",
+    ]
+    group_api = json.loads(
+        (output / "api/v1/dates/2026-08-13/groups/runtime-tools/index.json").read_text()
+    )
+    assert group_api["repositories"][0]["keywords"] == [
+        "resource lifecycle",
+        "async runtime",
+    ]
     assert repository_api["dataset"]["news"]["latestRelease"]["tag"] == "v2.0.0"
     assert (
         json.loads((output / "api/v1/news.json").read_text())["projects"][0]["news"]["upcoming"][0][

@@ -17,6 +17,9 @@ official Python MCP SDK. The MCP adapter performs no inference and never writes 
 Resources provide the catalog, latest contribution leads, latest project news, Hacker News
 discussion links, and per-project context under `compass://...` URIs.
 
+Configured project `keywords` are persisted as project metadata, returned by project-list/context
+tools, and included when searching updates, contribution leads, or project news.
+
 ## Choose a data adapter
 
 By default, the server reads the clone's local `data/` directory. To use the continuously updated

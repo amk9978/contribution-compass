@@ -42,12 +42,21 @@ def test_mcp_exposes_typed_tools_and_resources_in_memory() -> None:
             )
             assert result.structured_content is not None
             assert result.structured_content["result"][0]["evidenceUrl"].endswith("/issues/42")
+            keyword_result = await client.call_tool(
+                "search_project_updates", {"query": "resource lifecycle"}
+            )
+            assert keyword_result.structured_content is not None
+            assert keyword_result.structured_content["result"][0]["project"] == "acme/widget"
             context = await client.call_tool(
                 "get_project_context", {"repository": "acme/widget", "signal_limit": 1}
             )
             assert context.structured_content is not None
             assert len(context.structured_content["importantSignals"]) == 1
             assert context.structured_content["signalCount"] == 1
+            assert context.structured_content["project"]["keywords"] == [
+                "resource lifecycle",
+                "async runtime",
+            ]
             news = await client.call_tool("get_project_news", {"project": "acme/widget"})
             assert news.structured_content is not None
             assert news.structured_content["result"][0]["news"]["latestRelease"]["tag"] == (

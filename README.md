@@ -132,13 +132,14 @@ repo_groups:
         repo: llvm/llvm-project
         name: LLVM
         paginated: true
-        hackernews_keywords: [LLVM]
+        keywords: [LLVM, compiler infrastructure]
 ```
 
-Each repository ID must be globally unique. `repos: []` and `hackernews_keywords: []` mean empty.
-HN keywords are matched against story titles and should be specific enough to avoid ambiguity;
-exact references to the configured GitHub repository are matched independently. Set
-`hackernews.enabled: false` to disable the source.
+Each repository ID must be globally unique. `repos: []` and `keywords: []` mean empty. Keywords are
+persisted with repository data and participate in update, opportunity, and news searches. They are
+also matched against Hacker News story titles, so choose specific phrases to avoid ambiguity. Exact
+references to the configured GitHub repository are matched independently. Set
+`hackernews.enabled: false` to disable that source while retaining keyword search metadata.
 
 Human pages use static pagination: 20 contribution leads, 10 project-news cards, or 50 project
 Signals per page. JSON, RSS, MCP, and direct GitHub/HN links remain available for deeper reading.

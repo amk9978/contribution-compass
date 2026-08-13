@@ -38,6 +38,13 @@ def _string_array(record: dict[str, Any], key: str, path: str) -> tuple[str, ...
     return tuple(dict.fromkeys(item.strip() for item in value))
 
 
+def _project_keywords(record: dict[str, Any], path: str) -> tuple[str, ...]:
+    if "keywords" in record and "hackernews_keywords" in record:
+        _fail(path, 'use "keywords" only; do not specify both keyword fields')
+    key = "keywords" if "keywords" in record else "hackernews_keywords"
+    return _string_array(record, key, path)
+
+
 def parse_config(value: Any) -> CompassConfig:
     root = _record(value, "root")
     raw_groups = _record(root.get("repo_groups"), "repo_groups")
@@ -74,7 +81,7 @@ def parse_config(value: Any) -> CompassConfig:
                     repo=slug,
                     name=_text(repo, "name", repo_path),
                     paginated=paginated,
-                    hackernews_keywords=_string_array(repo, "hackernews_keywords", repo_path),
+                    keywords=_project_keywords(repo, repo_path),
                 )
             )
         description = group.get("description")
