@@ -39,11 +39,11 @@
     "forks": 1904,
     "openIssues": 541,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:29.653990+00:00"
+    "collectedAt": "2026-08-13T17:47:16.063063+00:00"
   },
   "news": {
     "repository": "nats-io/nats-server",
-    "collectedAt": "2026-08-13T17:43:29.653990+00:00",
+    "collectedAt": "2026-08-13T17:47:16.063063+00:00",
     "latestRelease": {
       "repository": "nats-io/nats-server",
       "tag": "v2.14.5",
@@ -88,6 +88,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 13,
       "changedCount": 3
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 13,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -288,8 +294,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8452",
@@ -310,8 +315,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8453",
@@ -450,8 +454,7 @@
       "labels": [],
       "author": "MauriceVanVeen",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8461",

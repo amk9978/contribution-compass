@@ -32,11 +32,11 @@
     "forks": 5553,
     "openIssues": 1836,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:24.295884+00:00"
+    "collectedAt": "2026-08-13T17:47:11.125712+00:00"
   },
   "news": {
     "repository": "envoyproxy/envoy",
-    "collectedAt": "2026-08-13T17:43:24.295884+00:00",
+    "collectedAt": "2026-08-13T17:47:11.125712+00:00",
     "latestRelease": {
       "repository": "envoyproxy/envoy",
       "tag": "v1.39.0",
@@ -112,6 +112,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 62,
       "changedCount": 7
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 63,
+      "changedCount": 1
     }
   ],
   "signals": [
@@ -942,8 +948,7 @@
         "yanavlasov",
         "rshriram",
         "tyxia"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46358",
@@ -1087,8 +1092,7 @@
       "assignees": [
         "nezdolik",
         "markdroth"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46526",
@@ -1113,8 +1117,7 @@
         "adisuissa",
         "markdroth",
         "botengyao"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46543",
@@ -1137,8 +1140,7 @@
       "state": "open",
       "assignees": [
         "tyxia"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46545",
@@ -1578,6 +1580,28 @@
       "change": "new"
     },
     {
+      "id": "github:envoyproxy/envoy:pull_request:46658",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "tls_inspector: fix GREASE filtering in JA4_c signature algorithms",
+      "text": "## Summary The JA4 fingerprint's third component hashes the ClientHello's extension list joined to its `signature_algorithms` list. Per the [JA4 spec](https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/JA4.md), GREASE codepoints must be excluded everywhere they appear — including in `signature_algorithms`. `getJA4ExtensionHash` already applies `isNotGrease` to extension type IDs, and `getJA4CipherHash`, `countCiphers`, and `countExtensions` apply it to their respective inputs. The `signature_algorithms` collection loop was the sole exception, pushing every 16-bit codepoint from the extension body unconditionally. Clients that inject a GREASE value into `signature_algorithms` (e.g. Chrome's per-handshake random GREASE selection, drawn from the 16 reserved code points `0x0a0a`, `0x1a1a`, …, `0xfafa`) therefore produce a **different** JA4_c hash per connection while all other parts of the fingerprint are identical — resulting in many-to-one hash collapse when compared against spec-compliant implementations. ## Fix Guard the `sig_algs.push_back(sig_alg)` call in `getJA4ExtensionHash` with `isNotGrease(sig_alg)`, matching the treatment already applied everywhere else in the file. ## Test plan - [x] Added `TEST(JA4Fingerprinter, GreaseValueFilteredFromSignatureAlgorithms)` in `ja4_fingerprint_test.cc` that constructs two \\`SSL_CLIENT_HELLO\\`s identical except for a GREASE codepoint (\\`0x0a0a\\`) in \\`signature_algorithms\\` and asserts \\`JA4Fingerprinter::create\\` produces the same fingerprint for both. - [x] \\`bazel test //test/extensions/filters/listener/tls_inspector:ja4_fingerprint_test\\` passes locally. ## Notes - No existing entry in the \\`JA4_TEST_VECTORS\\` table in \\`tls_inspector_ja4_test.cc\\` contains a GREASE codepoint inside its \\`signature_algorithms\\` extension body — all GREASE bytes in those captures live in extensions/versions/keyshare slots, which are already filtered correctly — so its pinned expected hashes remain valid. - This change was drafted with AI assistance and reviewed by the author.",
+      "url": "https://github.com/envoyproxy/envoy/pull/46658",
+      "createdAt": "2026-08-11T22:04:01Z",
+      "updatedAt": "2026-08-13T17:45:55Z",
+      "timestamp": "2026-08-13T17:45:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "dangle1",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:envoyproxy/envoy:pull_request:46660",
       "source": "github",
       "group": "platform-infrastructure",
@@ -1800,8 +1824,7 @@
       "assignees": [
         "adisuissa",
         "antoniovleonti"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46674",
@@ -1889,8 +1912,7 @@
       "state": "open",
       "assignees": [
         "mattklein123"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:envoyproxy/envoy:pull_request:46682",
@@ -1995,8 +2017,7 @@
       "labels": [],
       "author": "MichaelHDing",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [
@@ -4938,6 +4959,35 @@
           "mattklein123"
         ],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:a64eabd562f0cfd51eb3",
+      "signalId": "github:envoyproxy/envoy:pull_request:46658",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:envoyproxy/envoy:pull_request:46658",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "envoyproxy/envoy",
+        "kind": "pull_request",
+        "title": "tls_inspector: fix GREASE filtering in JA4_c signature algorithms",
+        "text": "## Summary The JA4 fingerprint's third component hashes the ClientHello's extension list joined to its `signature_algorithms` list. Per the [JA4 spec](https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/JA4.md), GREASE codepoints must be excluded everywhere they appear — including in `signature_algorithms`. `getJA4ExtensionHash` already applies `isNotGrease` to extension type IDs, and `getJA4CipherHash`, `countCiphers`, and `countExtensions` apply it to their respective inputs. The `signature_algorithms` collection loop was the sole exception, pushing every 16-bit codepoint from the extension body unconditionally. Clients that inject a GREASE value into `signature_algorithms` (e.g. Chrome's per-handshake random GREASE selection, drawn from the 16 reserved code points `0x0a0a`, `0x1a1a`, …, `0xfafa`) therefore produce a **different** JA4_c hash per connection while all other parts of the fingerprint are identical — resulting in many-to-one hash collapse when compared against spec-compliant implementations. ## Fix Guard the `sig_algs.push_back(sig_alg)` call in `getJA4ExtensionHash` with `isNotGrease(sig_alg)`, matching the treatment already applied everywhere else in the file. ## Test plan - [x] Added `TEST(JA4Fingerprinter, GreaseValueFilteredFromSignatureAlgorithms)` in `ja4_fingerprint_test.cc` that constructs two \\`SSL_CLIENT_HELLO\\`s identical except for a GREASE codepoint (\\`0x0a0a\\`) in \\`signature_algorithms\\` and asserts \\`JA4Fingerprinter::create\\` produces the same fingerprint for both. - [x] \\`bazel test //test/extensions/filters/listener/tls_inspector:ja4_fingerprint_test\\` passes locally. ## Notes - No existing entry in the \\`JA4_TEST_VECTORS\\` table in \\`tls_inspector_ja4_test.cc\\` contains a GREASE codepoint inside its \\`signature_algorithms\\` extension body — all GREASE bytes in those captures live in extensions/versions/keyshare slots, which are already filtered correctly — so its pinned expected hashes remain valid. - This change was drafted with AI assistance and reviewed by the author.",
+        "url": "https://github.com/envoyproxy/envoy/pull/46658",
+        "createdAt": "2026-08-11T22:04:01Z",
+        "updatedAt": "2026-08-13T17:45:55Z",
+        "timestamp": "2026-08-13T17:45:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "dangle1",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
       }
     }
   ]

@@ -33,15 +33,15 @@
     ],
     "license": "MIT",
     "defaultBranch": "main",
-    "stars": 230017,
-    "forks": 45480,
-    "openIssues": 31797,
+    "stars": 230018,
+    "forks": 45481,
+    "openIssues": 31790,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:37.884778+00:00"
+    "collectedAt": "2026-08-13T17:47:24.757134+00:00"
   },
   "news": {
     "repository": "NousResearch/hermes-agent",
-    "collectedAt": "2026-08-13T17:43:37.884778+00:00",
+    "collectedAt": "2026-08-13T17:47:24.757134+00:00",
     "latestRelease": {
       "repository": "NousResearch/hermes-agent",
       "tag": "v2026.8.3",
@@ -86,9 +86,42 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 100,
       "changedCount": 100
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 100,
+      "changedCount": 20
     }
   ],
   "signals": [
+    {
+      "id": "github:NousResearch/hermes-agent:issue:2513",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "issue",
+      "title": "[Bug]: Custom providers lack context length auto-detection when saved via /model command",
+      "text": "### Bug Description **Summary:** When users save a custom provider using the `/model` command without specifying a context length, the system doesn't automatically detect and display what context length was actually used. This leaves users uncertain about whether their custom provider has a short or long context window, which is critical for prompt caching behavior. **Impact:** - Users cannot easily verify if their custom provider has adequate context window - Prompt caching may be less effective than expected - No visual feedback distinguishes between auto-detected and default context lengths ### Steps to Reproduce run hermes model select a custom provider do not enter a context length ### Expected Behavior After saving a custom provider without a context length, the system should: 1. Attempt to auto-detect the context length based on the model name 2. Display the detected context length to the user 3. Fall back to a sensible default (128K tokens) if detection fails 4. Indicate visually when the default was used vs. when auto-detection succeeded ### Actual Behavior Users who save a custom provider without specifying context length have no feedback on what context length is being used. This can lead to unexpected prompt caching behavior and higher token costs. ### Affected Component CLI (interactive chat) ### Messaging Platform (if gateway-related) _No response_ ### Operating System Debian 13.4 ### Python Version 3.13.3 ### Hermes Version 0.4 ### Relevant Logs / Traceback ```shell ``` ### Root Cause Analysis (optional) _No response_ ### Proposed Fix (optional) _No response_ ### Are you willing to submit a PR for this? - [x] I'd like to fix this myself and submit a PR",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/2513",
+      "createdAt": "2026-03-22T16:00:19Z",
+      "updatedAt": "2026-08-13T17:46:25Z",
+      "timestamp": "2026-08-13T17:46:25Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 5
+      },
+      "labels": [
+        "type/bug",
+        "comp/cli",
+        "area/config",
+        "P3"
+      ],
+      "author": "InB4DevOps",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
     {
       "id": "github:NousResearch/hermes-agent:issue:29482",
       "source": "github",
@@ -112,8 +145,7 @@
       ],
       "author": "swanhtet1992",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:43121",
@@ -278,6 +310,62 @@
       ],
       "author": "colorcn",
       "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:issue:5820",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "issue",
+      "title": "feat(memory): Allow synchronous recall for current turn as option for honcho and hindsight",
+      "text": "IIUC hermes currently queues a background recall for next turn instead of synchronously recalling based on the current user query (for honcho and hindsight at least). `prefetch` right now totally ignores the given query. This means that the recalled information may be completely irrelevant when it is actually injected. If one query is `fix linting`, and the next is `fix tests`, or even if the topic changes slightly, the recalled information may be irrelevant or even cause worse results. Hindsight recall is already supposed to be fast, so the cost of this for a slight latency improvement does not seem worth it to me. I want memory results relevant to the current message.",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/5820",
+      "createdAt": "2026-04-07T11:14:21Z",
+      "updatedAt": "2026-08-13T17:45:28Z",
+      "timestamp": "2026-08-13T17:45:28Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [
+        "type/feature",
+        "comp/plugins",
+        "tool/memory",
+        "P3",
+        "sweeper:risk-session-state",
+        "area/memory"
+      ],
+      "author": "noctuid",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:issue:58596",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "issue",
+      "title": "DaemonThreadPoolExecutor crashes on Python 3.14: `_initializer` attribute removed",
+      "text": "## Bug Description `DaemonThreadPoolExecutor._adjust_thread_count()` references `self._initializer` and `self._initargs`, which no longer exist in Python 3.14. This breaks **all** concurrent features: `delegate_task`, async delegation, skills hub fan-out, and memory sync. ``` Error during OpenAI-compatible API call: 'DaemonThreadPoolExecutor' object has no attribute '_initializer' ``` ## Root Cause Python 3.14 changed `ThreadPoolExecutor` internals: | | Python ≤ 3.13 | Python ≥ 3.14 | |---|---|---| | Initializer storage | `self._initializer`, `self._initargs` (instance attrs) | `self._create_worker_context()` returns a `WorkerContext` | | `_worker()` signature | `_worker(executor_ref, work_queue, initializer, initargs)` (4 params) | `_worker(executor_ref, ctx, work_queue)` (3 params) | | Context management | None | `WorkerContext.initialize()` / `ctx.finalize()` lifecycle | The code at `tools/daemon_pool.py:58-59` directly accesses the removed attributes. ## Affected Code File: `tools/daemon_pool.py`, method `_adjust_thread_count`, lines 55-60: ```python args=( weakref.ref(self, weakref_cb), self._work_queue, self._initializer, # AttributeError in 3.14 self._initargs, # AttributeError in 3.14 ), ``` ## Reproduction ``` Python 3.14.6 from tools.daemon_pool import DaemonThreadPoolExecutor e = DaemonThreadPoolExecutor(max_workers=1) e.submit(lambda: 42) # -> AttributeError: 'DaemonThreadPoolExecutor' object has no attribute '_initializer' ``` ## Proposed Fix Detect `_worker` signature at import time and branch accordingly: ```python import inspect from concurrent.futures.thread import _worker _worker_uses_ctx = len(inspect.signature(_worker).parameters) == 3 # In _adjust_thread_count: if _worker_uses_ctx: # Python >= 3.14: _worker(executor_ref, ctx, work_queue) args = ( weakref.ref(self, weakref_cb), self._create_worker_context(), self._work_queue, ) else: # Python <= 3.13: _worker(executor_ref, work_queue, initializer, initargs) args = ( weakref.ref(self, weakref_cb), self._work_queue, self._initializer, self._initargs, ) ``` This fix: - Uses `inspect.signature(_worker)` at import time (zero overhead per call) - Passes `self._create_worker_context()` for 3.14 (returns a `WorkerContext` with `initialize()`/`finalize()` lifecycle) - Falls back to old `_initializer`/`_initargs` for <= 3.13 - Preserves the original semantics (daemon=True, no `_threads_queues` registration) ## Environment - Hermes Agent: v0.18.0 (2026.7.1) - Python: 3.14.6 - Platform: aarch64-linux-android (Termux) - Verified: patch applied locally, `DaemonThreadPoolExecutor` creates, submits tasks, and shuts down correctly ## Impact **Critical** — on Python 3.14, every feature using `DaemonThreadPoolExecutor` crashes: `delegate_task`, `async_delegation`, `skills_hub`, `memory_manager`, `tool_executor`.",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/58596",
+      "createdAt": "2026-07-05T01:29:33Z",
+      "updatedAt": "2026-08-13T17:43:57Z",
+      "timestamp": "2026-08-13T17:43:57Z",
+      "metrics": {
+        "reactions": 3,
+        "comments": 7
+      },
+      "labels": [
+        "type/bug",
+        "comp/tools",
+        "tool/delegate",
+        "P2",
+        "sweeper:risk-compatibility"
+      ],
+      "author": "iamzulx",
+      "state": "open",
       "assignees": [],
       "change": "new"
     },
@@ -419,8 +507,7 @@
       ],
       "author": "daragao3",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:69778",
@@ -471,8 +558,7 @@
       ],
       "author": "optionshift",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:72662",
@@ -526,8 +612,7 @@
       ],
       "author": "kaitwalla",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:73082",
@@ -859,8 +944,7 @@
       ],
       "author": "linfeng961",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:84741",
@@ -2281,8 +2365,7 @@
       ],
       "author": "xiaoyaner0201",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:85491",
@@ -2294,11 +2377,11 @@
       "text": "## Summary `terminal_tool` crashes with `ValueError: embedded null byte` before running the command, when the command string leads the guard to derive a script path containing a NUL byte. The failure happens in the cron lifecycle guard's pre-flight scan, so the command never executes and the tool call returns an error instead of output. ## Impact Hit repeatedly during an ordinary coding session on `main` (`470aa20d22`). Two commands that failed: ```bash cd /path/to/repo && git merge --ff-only origin/master && echo \"...\" && .venv/bin/python -m pytest -q cd /path/to/repo && .venv/bin/python -m pytest -q | tail -2 ``` Running a virtualenv interpreter by relative path is extremely common, so this is likely to affect many sessions. It fails loudly rather than silently, which limits the damage — but the error surfaces as a tool traceback with no indication that the *command* was fine and the *guard* was at fault, so it reads like a repo or environment problem. **Workaround:** assign the path to a shell variable first, which changes the token the guard inspects. ```bash PY=.venv/bin/python; \"$PY\" -m pytest -q # works ``` ## Root cause `cron/lifecycle_guard.py::_read_referenced_script` (line ~260): ```python flags = os.O_RDONLY | getattr(os, \"O_NONBLOCK\", 0) try: descriptor = os.open(path, flags) except OSError: return None, False ``` `os.open()` raises **`ValueError`** — not `OSError` — when the path contains an embedded NUL byte. The `except OSError` clause does not catch it, so it propagates up through `_contains_unsafe_gateway_action` → `contains_gateway_lifecycle_command_or_referenced_script` → `terminal_tool` and aborts the tool call. Verified in isolation: ```python >>> import os >>> os.open(\"/tmp/x\\x00y\", os.O_RDONLY) ValueError: embedded null byte ``` The surrounding code already treats unreadable and non-regular paths as \"nothing to scan\" and returns cleanly, so an unopenable path is an expected condition here rather than an exceptional one — this looks like a missed exception type rather than a design question. ## Full traceback ``` File \"tools/terminal_tool.py\", line 2560, in terminal_tool if contains_gateway_lifecycle_command_or_referenced_script( File \"cron/lifecycle_guard.py\", line 353, in contains_gateway_lifecycle_command_or_referenced_script return _contains_unsafe_gateway_action( File \"cron/lifecycle_guard.py\", line 335, in _contains_unsafe_gateway_action if script_text and _contains_unsafe_gateway_action( File \"cron/lifecycle_guard.py\", line 324, in _contains_unsafe_gateway_action script_text, unsafe = _read_referenced_script(script_path) File \"cron/lifecycle_guard.py\", line 260, in _read_referenced_script descriptor = os.open(path, flags) ValueError: embedded null byte ``` ## Suggested fix Catch `ValueError` alongside `OSError`: ```python try: descriptor = os.open(path, flags) except (OSError, ValueError): return None, False ``` A path that cannot be opened is already handled as \"nothing to scan, not unsafe\", and a NUL-containing path can never name a real script, so the same return is correct. Worth checking whether the path *derivation* upstream should also reject NUL-containing candidates before they reach the open — the guard scans several tokens per command, and this one produced a candidate that could not name any file on disk. ## Notes I have not opened a PR — the one-line change is easy, but the guard is security-adjacent code and I would rather the maintainers decide whether the fix belongs at the `open()` call, at the path derivation, or both. Happy to submit one if that is useful.",
       "url": "https://github.com/NousResearch/hermes-agent/issues/85491",
       "createdAt": "2026-08-13T17:32:33Z",
-      "updatedAt": "2026-08-13T17:42:54Z",
-      "timestamp": "2026-08-13T17:42:54Z",
+      "updatedAt": "2026-08-13T17:45:57Z",
+      "timestamp": "2026-08-13T17:45:57Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [
         "type/bug",
@@ -2310,7 +2393,7 @@
       "author": "PolyphonyRequiem",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:85492",
@@ -2339,8 +2422,7 @@
       ],
       "author": "DavidMetcalfe",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:85495",
@@ -2367,8 +2449,7 @@
       ],
       "author": "EirikWolf",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:issue:85496",
@@ -2389,6 +2470,58 @@
       "labels": [],
       "author": "strohjarvis",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:issue:85497",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "issue",
+      "title": "[Feature]: kanban HERMES_TENANT has no memory-isolation effect — worker memory pollutes across tenants",
+      "text": "### Problem or Use Case Kanban workers receive a `HERMES_TENANT` env var from the dispatcher (`kanban_db.py:_default_spawn`, ~line 9018) when a task is created with `--tenant <slug>`, but that variable has **no memory-isolation effect**. All workers — regardless of board, tenant, or assignee profile — write to the same flat global memory store (`~/.hermes/memories/MEMORY.md`), so concurrent tasks across tenants pollute each other's persistent memory. The kanban docs describe `--tenant` as providing \"data isolation by workspace path and memory key prefix\" ([docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/kanban)). The workspace-path half works; the **memory key prefix half is not implemented**. In a multi-project setup where one role profile (e.g. `implementer`) serves several tenant boards concurrently, the same profile's worker processes write unrelated project context into the same global memory — the next task on any tenant reads the previous tenant's memories. ### Proposed Solution When a kanban worker is spawned with `HERMES_TENANT=<slug>`, scope its memory reads/writes to a per-tenant namespace, mirroring the `context_id` scoping proposed in #47552 and #34352: 1. In `_default_spawn`, map `task.tenant` → the same `context_id` mechanism from #47552 (`MemoryStore` context scoping — writes into `memories/contexts/{context_id}/`, reads merge global + scoped), or 2. Set a dedicated env (e.g. `HERMES_MEMORY_CONTEXT_ID=tenant`) consumed by the memory tool, keeping kanban independent of gateway message-source derivation. Either way, the existing `HERMES_TENANT` plumbing in `_default_spawn` is the natural hook point — the isolation is already half-wired. ### Alternatives Considered - **Manual review of MEMORY.md** — current workaround; fragile at scale with 10+ tenant boards. - **Per-profile memory dirs** (`memories` under each profile) — doesn't help when one role profile serves multiple tenants concurrently, which is the exact kanban pattern. - **Separate boards as hard isolation** — boards already isolate task queues and workspaces, but worker *memory* still lands in one global store regardless of board; board isolation alone doesn't solve this. ### Feature Type - Configuration option / Performance & reliability (memory isolation for multi-tenant kanban workers) ### Scope - Small to Medium (hook `HERMES_TENANT` into the existing `context_id` plumbing in `_default_spawn` + memory tool; tests for scoped reads/writes) ### Contribution - [ ] I'd like to implement this myself and submit a PR --- ### Evidence (source inspection + runtime test) - `HERMES_TENANT` is set at `kanban_db.py:9017-9018` in `_default_spawn`. - The only reader is `tools/kanban_tools.py:1217` (default tenant for `kanban_create`) — no memory path consults it. - Runtime test 2026-08-14: two tasks on two different boards (`cognitive-tree-csharp`, `envoy-task`), both assigned to `decomposer`, each created with `--tenant <board>`. Both workers' memory writes landed in the single global `~/.hermes/memories/MEMORY.md` (mtime during the run window); the profile's own `memories/` dir stayed empty. ### Related - #34352 (Solving the Multi-Tenant Hermes Problem) - #47552 (feat(memory): opt-in context_id scoping — open PR, not merged) ### Environment - Hermes agent, commit aec331899 (recent main) - macOS 26.5, kanban dispatcher in gateway (dispatch_in_gateway: true)",
+      "url": "https://github.com/NousResearch/hermes-agent/issues/85497",
+      "createdAt": "2026-08-13T17:43:33Z",
+      "updatedAt": "2026-08-13T17:46:00Z",
+      "timestamp": "2026-08-13T17:46:00Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "hua-hua3321",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:pull_request:13101",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "fix(memory): auto-install hindsight-all for local_embedded mode",
+      "text": "## What does this PR do? Fixes a crash when users select `local_embedded` mode via `hermes memory setup`. The setup wizard tries to install `hindsight-all` but the install can silently fail because `capture_output=True` swallows errors. Since `plugin.yaml` only declares `hindsight-client>=0.4.22` as a dependency, hermes startup validation passes even when `hindsight-all` is missing. At runtime, `from hindsight import HindsightEmbedded` crashes with `ModuleNotFoundError: No module named 'hindsight'`. This patch adds a guard in `HindsightMemoryProvider.initialize()` that: 1. Detects when mode is `local_embedded` 2. Attempts to `import hindsight` — if it fails, auto-installs `hindsight-all` via `uv pip install` 3. Raises a clear `RuntimeError` with manual install instructions if installation fails 4. Does **not** surface errors as swallowed silent failures — errors are logged and propagated This mirrors the existing auto-upgrade logic for `hindsight-client` already present in `initialize()` for cloud mode. ## Related Issue Fixes crash described in hindsight local_embedded setup flow. ## Type of Change - [x] Bug fix (non-breaking change that fixes an issue) ## Changes Made - `plugins/memory/hindsight/__init__.py`: Added auto-install guard for `hindsight-all` in `initialize()` when mode is `local_embedded` - `plugins/memory/hindsight/plugin.yaml`: Added comment documenting the `hindsight-all` dependency for local_embedded mode ## How to Test 1. Configure hindsight with `local_embedded` mode but ensure `hindsight-all` is NOT installed 2. Start a new hermes session with hindsight memory enabled 3. Verify that the plugin auto-installs `hindsight-all` and logs the installation 4. Verify that if installation fails, a clear `RuntimeError` is raised with manual instructions 5. Test cloud mode still works without `hindsight-all` installed (no regression) ## Checklist - [x] My commit messages follow Conventional Commits - [x] My PR contains only changes related to this fix - [x] I have considered cross-platform impact (uses shutil.which(\"uv\") which works on all platforms) - [x] Updated relevant docstrings/comments — plugin.yaml comment added",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/13101",
+      "createdAt": "2026-04-20T16:06:45Z",
+      "updatedAt": "2026-08-13T17:46:21Z",
+      "timestamp": "2026-08-13T17:46:21Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "type/bug",
+        "comp/plugins",
+        "tool/memory",
+        "P2",
+        "sweeper:risk-compatibility",
+        "sweeper:blast-moderate",
+        "area/memory",
+        "area/install-update"
+      ],
+      "author": "LehaoLin",
+      "state": "closed",
       "assignees": [],
       "change": "new"
     },
@@ -2530,8 +2663,7 @@
       ],
       "author": "yimi128",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:30232",
@@ -2560,8 +2692,7 @@
       ],
       "author": "terlanks",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:31623",
@@ -2617,8 +2748,7 @@
       ],
       "author": "db-aeon",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:37684",
@@ -2674,8 +2804,7 @@
       ],
       "author": "rodboev",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:41351",
@@ -2702,8 +2831,7 @@
       ],
       "author": "Vesna-9",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:41440",
@@ -2758,8 +2886,7 @@
       ],
       "author": "nftpoetrist",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:43130",
@@ -2788,8 +2915,7 @@
       ],
       "author": "liuhao1024",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:44878",
@@ -2845,6 +2971,35 @@
         "sweeper:blast-moderate"
       ],
       "author": "egilewski",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:pull_request:46504",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "fix(hindsight): surface missing hindsight-all in local_embedded (#7718)",
+      "text": "## Summary `local_embedded` imports the top-level `hindsight` module (from the `hindsight-all` package), but `plugin.yaml` only declares `hindsight-client`. Users who configure `local_embedded` by hand — or upgrade from the legacy `\"mode\": \"local\"` — never run the setup wizard that installs `hindsight-all`, so long-term memory is **silently disabled** behind a non-actionable `No module named 'hindsight'` warning. The agent-startup path (`agent/agent_init.py`) gates the provider on `is_available()` and drops it with a silent `logger.debug` **before** `initialize()` runs — so the actionable message has to live where the provider is actually dropped. ## Changes - **`is_available()`** — emits a one-time actionable warning naming `hindsight-all` + the install command when `local_embedded` is configured but the runtime package is missing. Stays silent for intentional graceful-degradation failures (e.g. NumPy CPU-baseline errors). - **`_get_client()`** — the `RuntimeError` raised when the runtime probe fails now carries the same actionable hint (the real raise point), with an `ImportError` backstop around the embedded import. - **`initialize()`** — actionable disable warning + a migration warning when the legacy `\"mode\": \"local\"` is remapped to `local_embedded`. - Shared `_embedded_runtime_hint()` / `_warn_missing_embedded_runtime_once()` helpers keep the messaging DRY and reason-gated. - **Docs** — README troubleshooting note + `plugin.yaml` comment explaining why `hindsight-all` is intentionally not a static dependency (avoids pulling the heavy embedded runtime for cloud-only users). ## Testing ``` scripts/run_tests.sh tests/plugins/memory/test_hindsight_provider.py # 109 passed, 0 failed ``` 7 new regression tests cover: `is_available()` warning + silence + once-per-process; `_get_client()` real-path `RuntimeError` and import backstop; `initialize()` disable + legacy-migration warnings. Fixes #7718",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/46504",
+      "createdAt": "2026-06-15T06:15:14Z",
+      "updatedAt": "2026-08-13T17:46:14Z",
+      "timestamp": "2026-08-13T17:46:14Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "type/bug",
+        "comp/plugins",
+        "tool/memory",
+        "P3",
+        "sweeper:blast-contained",
+        "area/memory"
+      ],
+      "author": "bionicbutterfly13",
+      "state": "closed",
       "assignees": [],
       "change": "new"
     },
@@ -2908,8 +3063,7 @@
       ],
       "author": "VHSgunzo",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:51466",
@@ -3224,6 +3378,38 @@
       "change": "new"
     },
     {
+      "id": "github:NousResearch/hermes-agent:pull_request:5838",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "feat(memory): add sync_recall option for current-turn relevance",
+      "text": "## Summary Closes #5820. Adds a `memory.sync_recall: true` config option that switches memory providers from background prefetch to synchronous recall at turn start. ## Problem The current model queues a background recall at turn end using that turn's query. The next turn consumes this result — which is based on the *previous* message. When topics change between turns the injected context is irrelevant or misleading. ## Solution When `sync_recall: true`, each turn performs a live recall with the actual current message before the first LLM call. Background prefetch is skipped entirely at turn end. Default is `false` — no behavior change for existing users. ## Implementation `MemoryProvider.recall_sync()` default: fires `queue_prefetch()` then immediately calls `prefetch()`, which joins the background thread. This works for all providers that join inside `prefetch()` (honcho, hindsight, mem0, openviking). RetainDB overrides `recall_sync()` directly because its `prefetch()` reads shared state without joining threads. 4 files changed, 54 lines added. ## Config ```yaml memory: provider: hindsight # or honcho, mem0, etc. sync_recall: true",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/5838",
+      "createdAt": "2026-04-07T12:42:20Z",
+      "updatedAt": "2026-08-13T17:46:18Z",
+      "timestamp": "2026-08-13T17:46:18Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "type/feature",
+        "comp/agent",
+        "comp/plugins",
+        "tool/memory",
+        "P3",
+        "sweeper:risk-session-state",
+        "sweeper:risk-compatibility",
+        "sweeper:blast-moderate",
+        "area/memory"
+      ],
+      "author": "heathley",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:NousResearch/hermes-agent:pull_request:58687",
       "source": "github",
       "group": "coding-agent-infrastructure",
@@ -3336,8 +3522,7 @@
       ],
       "author": "Per0-1",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:61882",
@@ -3543,8 +3728,7 @@
       ],
       "author": "FnExpress",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:64345",
@@ -3602,8 +3786,7 @@
       ],
       "author": "NaMinhyeok",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:64891",
@@ -3632,8 +3815,7 @@
       ],
       "author": "AlexanderPrendota",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:65102",
@@ -3660,6 +3842,34 @@
         "area/sessions"
       ],
       "author": "rungmc357",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:pull_request:65515",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "fix(agent): default context lookup for empty model IDs",
+      "text": "## Summary This is the focused current-main replacement for the unique safety fix in #26873. `get_model_context_length()` can be called while a runtime/model selection is still empty. Before this guard, an empty or `None` model flowed into provider-prefix normalization and then into cache/probe logic. Return the documented 256K fallback immediately instead. The replacement intentionally excludes the unrelated runtime-switch, Feishu, cron, auxiliary-client, metadata, and compressor changes from #26873. Those concerns overlap with later upstream work and should not be resurrected as one conflicted patch. ## Verification - `scripts/run_tests.sh tests/agent/test_model_metadata.py -q` — 122 passed - `ruff check agent/model_metadata.py tests/agent/test_model_metadata.py` - `python -m py_compile agent/model_metadata.py tests/agent/test_model_metadata.py` - `git diff --check` Closes the unique empty-model failure mode extracted from #26873; the historical PR remains separate until maintainers decide how to handle its now-overlapping runtime-switch changes.",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/65515",
+      "createdAt": "2026-07-16T08:47:19Z",
+      "updatedAt": "2026-08-13T17:44:20Z",
+      "timestamp": "2026-08-13T17:44:20Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "type/bug",
+        "comp/agent",
+        "P2",
+        "sweeper:risk-compatibility",
+        "sweeper:blast-contained"
+      ],
+      "author": "whirmill",
+      "state": "open",
       "assignees": [],
       "change": "new"
     },
@@ -3749,8 +3959,7 @@
       ],
       "author": "adybag14-cyber",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:67336",
@@ -3898,8 +4107,7 @@
       ],
       "author": "vidarak",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:67934",
@@ -4214,8 +4422,7 @@
       ],
       "author": "Diaspar4u",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:72671",
@@ -4242,8 +4449,7 @@
       ],
       "author": "vadelma-agent",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:72756",
@@ -4308,6 +4514,38 @@
       "change": "new"
     },
     {
+      "id": "github:NousResearch/hermes-agent:pull_request:74379",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "feat(hindsight): memory provider improvements — recall_sync, retain_source, setup templates, memory indicators, error hints",
+      "text": "Bundles previously-separate Hindsight/memory PRs into a single review surface. Each was independently mergeable; combining them avoids parallel reviews of the same file (`plugins/memory/hindsight/__init__.py`, which most of them touch). ## What's included | Supersedes | Change | Fixes | |---|---|---| | #70278 | **Opt-in synchronous recall** for the current turn (`recall_sync`) — recall the injected memory in-turn instead of next-turn prefetch | #5820 | | #70295 | **Actionable error when the `local_embedded` runtime is missing** — tells the user exactly which package to install instead of a bare import failure | #7718 | | #72926 | **Default `retain_source` to `\"hermes\"`** so every stored memory self-identifies its provenance (`metadata.source: \"hermes\"`) | — | | #73415 | **Offer a starter memory template during `hermes memory setup`**, plus **warn before overwriting** an already-configured bank | — | | #70257 | **Warn when a configured memory provider reports unavailable** (provider-agnostic) | #2765 | | _new_ | **Deterministic \"recalled N memories\" recall indicator** — Hermes itself emits `👁️ Hindsight — recalled N memories` via the status channel when auto-recall injects memory, so the user SEES memory working regardless of whether the model mentions it (`recall_indicator`, on by default) | — | | _new_ | **\"saving to memory\" retain indicator** — `👁️ Hindsight — saving to memory…` emitted the moment a turn is dispatched to the writer, only on real writes (`retain_indicator`, on by default) | — | ## Why the indicators Auto-recall injects memory into the prompt, but whether the user can *see* that Hindsight contributed was previously left to the model — and models routinely decline to mention it, so memory looks like it isn't working even when it is. These indicators are rendered by Hermes itself (`_emit_status`, the same model-independent channel as compression/idle notices), so they always show and can't be silently dropped. Both have off switches for customer-facing agents. ## Scope - Most changes are confined to `plugins/memory/hindsight/**` (+ their tests). - **#70257 and the indicators** are (partly) provider-agnostic and also touch `agent/agent_init.py`, `agent/memory_manager.py`, `agent/memory_provider.py`, `agent/turn_context.py`, and `hermes_cli/memory_setup.py` — the recall indicator adds an opt-in `recall_status()` hook to the base `MemoryProvider` and a `describe_recall()` aggregator on `MemoryManager`; the status channel is wired to the provider via `initialize(status_callback=…)`. ## Tests New/updated deterministic tests across all changes (provider behaviour incl. the recall_sync × indicator interaction, retain-indicator dispatch/off/buffered paths, template setup, local-runtime hint, provider-unavailable warning, env-hint, manager formatting, turn-loop emit wiring). Full affected suite green; `ruff` clean.",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/74379",
+      "createdAt": "2026-07-29T20:32:53Z",
+      "updatedAt": "2026-08-13T17:46:09Z",
+      "timestamp": "2026-08-13T17:46:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [
+        "type/feature",
+        "comp/agent",
+        "comp/cli",
+        "comp/plugins",
+        "tool/memory",
+        "P3",
+        "sweeper:risk-session-state",
+        "sweeper:blast-moderate",
+        "area/memory"
+      ],
+      "author": "benfrank241",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:NousResearch/hermes-agent:pull_request:74658",
       "source": "github",
       "group": "coding-agent-infrastructure",
@@ -4333,8 +4571,7 @@
       ],
       "author": "nikitaBarkov",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:74743",
@@ -4368,8 +4605,7 @@
       ],
       "author": "AlexanderPrendota",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:74823",
@@ -4397,8 +4633,7 @@
       ],
       "author": "cmyk",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:74983",
@@ -4427,8 +4662,7 @@
       ],
       "author": "0xr00tf3rr3t",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:75312",
@@ -4628,8 +4862,7 @@
       ],
       "author": "PRATHAMESH75",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:79839",
@@ -4866,8 +5099,7 @@
       ],
       "author": "bgodlin",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:81088",
@@ -5051,8 +5283,7 @@
       ],
       "author": "aldoeliacim",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:82520",
@@ -5292,8 +5523,7 @@
       ],
       "author": "erosika",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:83661",
@@ -5994,8 +6224,7 @@
       ],
       "author": "Diaspar4u",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:84926",
@@ -6025,8 +6254,7 @@
       ],
       "author": "Diaspar4u",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:84954",
@@ -6077,6 +6305,35 @@
       ],
       "author": "Nicolas-Formenton",
       "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:pull_request:85009",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "feat(relay): session-span segmentation for continuous sessions",
+      "text": "## Problem Continuous gateway sessions (the normal state for a Telegram/Slack agent) keep the Relay session scope open for days or weeks. Relay export is close-driven, so: - the session root span and its attributes stay unexported until `/new` or idle-end, - any marks attached to the session scope are held with it, - a crash or redeploy loses the entire open segment — nothing exports. In-turn marks already export per-turn since the turn-parenting fix (#83517); this addresses the session-scope remainder. ## Design Opt-in segmentation, config in `config.yaml` (no new env vars): ```yaml gateway: telemetry: session_segments: on_compaction: false # rotate the session scope when the session compacts max_turns: 0 # 0 = unlimited; N = rotate after N turns per segment ``` **Both defaults OFF → scope lifecycle byte-identical to today.** Nothing changes for any existing deployment. Rotation closes the current session scope and pushes the next segment with the same `session_id` attribute plus `hermes.session.segment=N` and `hermes.session.segment_reason=compaction|max_turns` — dashboards keep grouping on `session_id`; per-session queries are unchanged. Key invariants: - **Turn-boundary only.** The scope stack is LIFO; rotation happens exclusively in `begin_turn` before the turn scope pushes. Compaction never rotates directly — it flags `rotate_pending`, consumed at the next turn. A compaction completing mid-turn cannot violate stack order. - **Nothing on the compaction critical path.** The hook in `_notify_context_engine_compression_complete` is observer-semantics: flag set under the session lock, every failure swallowed at DEBUG. - **Legacy rotating compaction handled.** When compaction rotates to a child session id, the old session's scope would orphan unexported forever; the notification closes it (bounded) so the pre-compaction segment exports. - **Bounded like every native scope op.** Rotation rides the shared scope-op executor with `_SCOPE_OP_TIMEOUT` (#83514): a wedged rotation costs one segment span, never the agent. Bookkeeping advances before the native calls so a degraded rotation cannot retry on every turn. - **Subagents:** post-rotation children parent to the new segment handle; live children under the old handle remain valid (parent-ends-before-child is legal tracing). ## Rejected scope (deliberate) - Byte-size segment accounting — span size is not observable pre-close in the SDK - Wall-clock / age-based rotation — parked; turn count and compaction are the meaningful boundaries - OTel span links between segments — shared `session_id` attribute suffices for v1 - Rotation outside turn boundaries; retroactive stitching of pre-crash segments ## Verification - 11 new tests (`tests/agent/test_relay_session_segments.py`): defaults-never-rotate contract, rotation at next begin_turn (not immediately, never mid-turn), segment metadata, max_turns cap arithmetic, zero-cap unlimited, unknown-session/disabled no-ops, rotating-compaction close, wedged-rotation bounded (<5s return), subagent handle continuity. Wedge tests unwedge + drain at teardown (per the #83514 CI lesson). - Mutation check: disabling rotation consumption → exactly the 4 rotation tests fail (4 failed, 7 passed); restore → 11/11. - Gates over `tests/agent/ tests/gateway/relay/ tests/plugins/`: all green except `tests/plugins/memory/test_hindsight_provider.py` (6 failures) — **pre-existing on unmodified origin/main** (`fe8b44dac`), reproduced identically in a clean control worktree; unrelated to this change.",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/85009",
+      "createdAt": "2026-08-13T03:22:35Z",
+      "updatedAt": "2026-08-13T17:45:39Z",
+      "timestamp": "2026-08-13T17:45:39Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "type/feature",
+        "comp/agent",
+        "P3",
+        "telemetry",
+        "sweeper:risk-session-state",
+        "area/compression"
+      ],
+      "author": "victor-kyriazakos",
+      "state": "closed",
       "assignees": [],
       "change": "new"
     },
@@ -6132,8 +6389,7 @@
       ],
       "author": "pom11",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85082",
@@ -6184,8 +6440,7 @@
       ],
       "author": "hustwkr",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85212",
@@ -7019,11 +7274,11 @@
       "project": "NousResearch/hermes-agent",
       "kind": "pull_request",
       "title": "fix(desktop): bound large composer image previews",
-      "text": "## What does this PR do? Fixes #41169. Supersedes #68744 while preserving David Metcalfe's original authorship on its two commits, replayed onto current `main`. Follow-up commits harden the fix for the reproduced 72-image failure and the async races exposed during independent review. The Desktop composer previously retained full-resolution image data URLs and rendered them as attachment thumbnails. Large images forced Chromium to decode and rasterize full-size sources on renderer display surfaces. With 72 images, the renderer emitted: ```text Failed to serialize op in 16777152 bytes webContents became unresponsive render-process-gone reason=crashed exitCode=133 ``` The `Failed to serialize op` message comes from Chromium's raster/PaintOp path, not Electron IPC. The parent Electron process, backend, and gateway remained alive; Electron replaced the failed renderer. The original PR's 2048×2048 thumbnail ceiling can itself decode to 16,777,216 RGBA bytes — 64 bytes above the logged 16,777,152-byte PaintOp serialization failure — so the hardened ceiling is intentionally 512px rather than 2048px. This PR bounds the complete composer-preview pipeline rather than only the final `<img>` dimensions: - serializes local/gateway reads and thumbnail creation so only one full image is read/decoded at a time; - creates display thumbnails with `createImageBitmap` + `OffscreenCanvas`, with a 512px longest edge; - closes decoded `ImageBitmap` resources and fails closed to a 1×1 placeholder instead of rendering the original when conversion is unavailable or fails; - retains only the bounded `thumbnailUrl` in new composer attachment state, rather than dozens of multi-megabyte full-resolution data URLs; - reads the original path only when the lightbox is opened, then releases that data URL when the lightbox closes; - keeps model input full resolution: submit/upload reads the authoritative on-disk original independently of the display thumbnail; - binds async preview completion to a renderer-lifetime per-occurrence UUID that survives session-draft cloning, so both A → B → A switching and remove + same-path reattach remain race-safe; - retains local-first reads with gateway fallback for local and remote project paths; - after cross-filesystem staging rewrites `path`, falls back to the preserved original host path in `detail` for lightbox/download; - uses the bounded thumbnail for the optimistic in-flight message bubble too, and never falls back to rendering `@image:<path>` while a queued thumbnail is still pending. No new custom protocol, URL allowlist, or navigation permission is introduced. The existing `MEDIA:` / transcript image path tracked by #42109 remains out of scope. ## Related Issue Fixes #41169 Supersedes #68744. A maintainer can close the conflicted original after accepting this attributed replacement. ## Type of Change - [x] 🐛 Bug fix (non-breaking change that fixes an issue) - [ ] ✨ New feature (non-breaking change that adds functionality) - [ ] 🔒 Security fix - [ ] 📝 Documentation update - [x] ✅ Tests (adding or improving test coverage) - [x] ♻️ Refactor (no intended external behavior change beyond fixing the failure) - [ ] 🎯 New skill (bundled or hub) ## Changes Made - `apps/desktop/src/lib/image-resize.ts` - serial one-at-a-time resize queue; - 512px default longest edge; - explicit bitmap cleanup and fail-closed fallback. - `apps/desktop/src/app/chat/hooks/use-composer-actions.ts` - serializes the full read + resize pipeline; - stores only the bounded thumbnail for new image chips; - updates only the exact optimistic attachment occurrence captured before async preview work, preserving identity across draft clones while preventing same-path replacement races. - `apps/desktop/src/lib/desktop-fs.ts` - centralizes local-first image reads with active-gateway fallback. - `apps/desktop/src/app/chat/composer/attachments.tsx` - renders bounded thumbnails; - keys each pill by occurrence identity so a removed occurrence's deferred lightbox read cannot populate a same-path replacement; - loads the full image on demand for lightbox/download, falls back from a staged backend path to the preserved host path, and releases it on close. - `apps/desktop/src/lib/chat-runtime.ts` - uses the bounded thumbnail in the optimistic in-flight bubble. - `apps/desktop/src/store/composer.ts` - documents thumbnail versus legacy/on-demand full-source semantics; - provides UUID-backed occurrence-identity conditional patching shared by main and tile composers; - patches the main live atom and inactive per-session draft stashes while merging into the latest occurrence state, so thumbnail and staging completions cannot overwrite each other; - removes only the attachment occurrences captured by a successful submit: UUID-backed chips match by occurrence token, while legacy occurrence-less chips match by exact object identity; this preserves newer same-ID file/URL replacements while still clearing successfully staged submitted files. - `apps/desktop/src/app/chat/session-tile-actions.ts` - applies the same occurrence-aware staging merge in independently mounted session-tile composers, rejecting stale upload completion after remove + same-path reattach. - `apps/desktop/src/app/session/hooks/use-prompt-actions/index.ts` - merges cross-filesystem staging metadata into the current occurrence instead of replacing concurrent preview state. Regression coverage verifies: - 72 image reads run one at a time; - 72 bitmap decodes run one at a time and every generated canvas is 512×512 or smaller; - composer state contains 72 bounded thumbnails and no full-resolution preview data; - removing an attachment during queued resize does not resurrect it; - removing and reattaching the same path cannot receive the removed occurrence's late thumbnail; - a delayed thumbnail resolving while another session is active updates only the original session's stashed draft and appears after returning; - thumbnail generation and submit-time staging may finish in either order in both the main and session-tile composers without dropping thumbnail, staged path, session ownership, or upload state; - remove + same-path reattach rejects stale staging completion in both composer scopes; - successful main and tile submits remove only their captured occurrences, preserve newer same-ID image and occurrence-less URL replacements added while submission is in flight, still clear successfully staged legacy files, and emit cleanup state exactly once; - an old occurrence's deferred full-image read cannot open or populate a same-path replacement lightbox; - lightbox full-source data is read only on open and released on close; - a split-filesystem image remains previewable after its `path` is rewritten to a gateway-staged path; - local-first and gateway-fallback paths remain supported; - optimistic messages prefer the bounded thumbnail and render no path-backed image while resize is pending; - resize failures and unsupported APIs fail closed. ## How to Test 1. Attach or paste one large screenshot and verify the composer remains responsive. 2. Attach many large images (the reproduced report used 72) and verify the renderer remains responsive. 3. Verify attachment pills and the optimistic user bubble render bounded thumbnails. 4. Open/download an attachment and verify the original full-resolution image is used. 5. Send the prompt and verify the model receives the original image, not the thumbnail. 6. Remove a chip while thumbnails are still being created and verify it does not reappear. Automated verification on CachyOS Linux with Node 22.23.2: ```bash LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=UTC NODE_ENV=test \\ NODE_OPTIONS='--max-old-space-size=8192 --localstorage-file=/tmp/hermes-pr68744-full-ui-en-localstorage.json' \\ npm --workspace apps/desktop run test:ui # 423 files passed; 3,819 tests passed NODE_ENV=test NODE_OPTIONS='--max-old-space-size=8192 --localstorage-file=/tmp/hermes-pr68744-exact-localstorage.json' \\ npm --workspace apps/desktop exec -- vitest run --project ui \\ src/lib/image-resize.test.ts \\ src/app/chat/hooks/use-composer-actions.test.ts \\ src/lib/chat-runtime.test.ts \\ src/app/chat/composer/attachments.test.tsx \\ src/lib/desktop-fs.test.ts \\ src/store/composer.test.ts \\ src/app/chat/composer/hooks/use-composer-draft.test.tsx \\ src/app/session/hooks/use-prompt-actions/index.test.tsx \\ src/app/chat/session-tile-attachments.test.tsx # 9 files passed; 216 tests passed NODE_ENV=test npm --workspace apps/desktop run typecheck # passed NODE_ENV=test npm --workspace apps/desktop run lint # 0 errors; repository baseline warnings only, none in changed files NODE_ENV=production npm --workspace apps/desktop run build # production renderer and Electron bundles built; assert-dist-built passed git diff --check # passed ``` Running the full UI suite without forcing an English locale initially produced four locale-sensitive assertion failures (`1 234 567`/`25 USD` formatting versus en-US expectations). Re-running under the CI locale passed all 3,813 tests. Mutation proof: in an isolated worktree of the exact candidate, bypassing the end-to-end preview queue made the 72-image regression fail with `maxActiveReads = 72` versus the required `1`. Restoring the candidate returned the focused suite to 74/74. ## Checklist ### Code - [x] I've read the [Contributing Guide](https://github.com/NousResearch/hermes-agent/blob/main/CONTRIBUTING.md) - [x] My commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) - [x] I searched for existing PRs; this is an attributed current-main replacement for conflicted #68744 - [x] My PR contains only changes related to this fix - [x] I've run the relevant Desktop automated tests - [x] I've added regression tests for the reported 72-image case - [x] I've tested on CachyOS Linux with Node 22.23.2 and a production Electron build ### Documentation & Housekeeping - [x] User documentation — N/A; no user-facing command or configuration changed - [x] `cli-config.yaml.example` — N/A; no config keys changed - [x] `CONTRIBUTING.md` / `AGENTS.md` — N/A; no workflow contract changed - [x] Cross-platform impact considered — uses Chromium/Electron-standard APIs with a safe fallback - [x] Tool descriptions/schemas — N/A; no agent tool changed ## For New Skills N/A — this PR does not add a skill.",
+      "text": "## What does this PR do? Fixes #41169. Supersedes #68744 while preserving David Metcalfe's original authorship on its two commits, replayed onto current `main`. Follow-up commits harden the fix for the reproduced 72-image failure and the async races exposed during independent review. The Desktop composer previously retained full-resolution image data URLs and rendered them as attachment thumbnails. Large images forced Chromium to decode and rasterize full-size sources on renderer display surfaces. With 72 images, the renderer emitted: ```text Failed to serialize op in 16777152 bytes webContents became unresponsive render-process-gone reason=crashed exitCode=133 ``` The `Failed to serialize op` message comes from Chromium's raster/PaintOp path, not Electron IPC. The parent Electron process, backend, and gateway remained alive; Electron replaced the failed renderer. The original PR's 2048×2048 thumbnail ceiling can itself decode to 16,777,216 RGBA bytes — 64 bytes above the logged 16,777,152-byte PaintOp serialization failure — so the hardened ceiling is intentionally 512px rather than 2048px. This PR bounds the complete composer-preview pipeline rather than only the final `<img>` dimensions: - serializes local/gateway reads and thumbnail creation so only one full image is read/decoded at a time; - creates display thumbnails with `createImageBitmap` + `OffscreenCanvas`, with a 512px longest edge; - closes decoded `ImageBitmap` resources and fails closed to a 1×1 placeholder instead of rendering the original when conversion is unavailable or fails; - retains only the bounded `thumbnailUrl` in new composer attachment state, rather than dozens of multi-megabyte full-resolution data URLs; - reads the original path only when the lightbox is opened, then releases that data URL when the lightbox closes; - keeps model input full resolution: submit/upload reads the authoritative on-disk original independently of the display thumbnail; - binds async preview completion to a renderer-lifetime per-occurrence UUID that survives session-draft cloning, so both A → B → A switching and remove + same-path reattach remain race-safe; - retains local-first reads with gateway fallback for local and remote project paths; - after cross-filesystem staging rewrites `path`, falls back to the preserved original host path in `detail` for lightbox/download; - uses the bounded thumbnail for the optimistic in-flight message bubble too, and never falls back to rendering `@image:<path>` while a queued thumbnail is still pending. No new custom protocol, URL allowlist, or navigation permission is introduced. The existing `MEDIA:` / transcript image path tracked by #42109 remains out of scope. ## Related Issue Fixes #41169 Supersedes #68744. A maintainer can close the conflicted original after accepting this attributed replacement. ## Type of Change - [x] 🐛 Bug fix (non-breaking change that fixes an issue) - [ ] ✨ New feature (non-breaking change that adds functionality) - [ ] 🔒 Security fix - [ ] 📝 Documentation update - [x] ✅ Tests (adding or improving test coverage) - [x] ♻️ Refactor (no intended external behavior change beyond fixing the failure) - [ ] 🎯 New skill (bundled or hub) ## Changes Made - `apps/desktop/src/lib/image-resize.ts` - serial one-at-a-time resize queue; - 512px default longest edge; - explicit bitmap cleanup and fail-closed fallback. - `apps/desktop/src/app/chat/hooks/use-composer-actions.ts` - serializes the full read + resize pipeline; - stores only the bounded thumbnail for new image chips; - updates only the exact optimistic attachment occurrence captured before async preview work, preserving identity across draft clones while preventing same-path replacement races. - `apps/desktop/src/lib/desktop-fs.ts` - centralizes local-first image reads with active-gateway fallback. - `apps/desktop/src/app/chat/composer/attachments.tsx` - renders bounded thumbnails; - keys each pill by occurrence identity so a removed occurrence's deferred lightbox read cannot populate a same-path replacement; - loads the full image on demand for lightbox/download, falls back from a staged backend path to the preserved host path, and releases it on close. - `apps/desktop/src/lib/chat-runtime.ts` - uses the bounded thumbnail in the optimistic in-flight bubble. - `apps/desktop/src/store/composer.ts` - documents thumbnail versus legacy/on-demand full-source semantics; - provides UUID-backed occurrence-identity conditional patching shared by main and tile composers; - patches the main live atom and inactive per-session draft stashes while merging into the latest occurrence state, so thumbnail and staging completions cannot overwrite each other; - removes only the attachment occurrences captured by a successful submit: UUID-backed chips match by occurrence token, while legacy occurrence-less chips match by exact object identity; this preserves newer same-ID file/URL replacements while still clearing successfully staged submitted files. - `apps/desktop/src/app/chat/session-tile-actions.ts` - applies the same occurrence-aware staging merge in independently mounted session-tile composers, rejecting stale upload completion after remove + same-path reattach. - `apps/desktop/src/app/session/hooks/use-prompt-actions/index.ts` - merges cross-filesystem staging metadata into the current occurrence instead of replacing concurrent preview state. Regression coverage verifies: - 72 image reads run one at a time; - 72 bitmap decodes run one at a time and every generated canvas is 512×512 or smaller; - composer state contains 72 bounded thumbnails and no full-resolution preview data; - removing an attachment during queued resize does not resurrect it; - removing and reattaching the same path cannot receive the removed occurrence's late thumbnail; - a delayed thumbnail resolving while another session is active updates only the original session's stashed draft and appears after returning; - thumbnail generation and submit-time staging may finish in either order in both the main and session-tile composers without dropping thumbnail, staged path, session ownership, or upload state; - remove + same-path reattach rejects stale staging completion in both composer scopes; - successful main and tile submits remove only their captured occurrences, preserve newer same-ID image and occurrence-less URL replacements added while submission is in flight, still clear successfully staged legacy files, and emit cleanup state exactly once; - an old occurrence's deferred full-image read cannot open or populate a same-path replacement lightbox; - lightbox full-source data is read only on open and released on close; - a split-filesystem image remains previewable after its `path` is rewritten to a gateway-staged path; - local-first and gateway-fallback paths remain supported; - optimistic messages prefer the bounded thumbnail and render no path-backed image while resize is pending; - resize failures and unsupported APIs fail closed. ## How to Test 1. Attach or paste one large screenshot and verify the composer remains responsive. 2. Attach many large images (the reproduced report used 72) and verify the renderer remains responsive. 3. Verify attachment pills and the optimistic user bubble render bounded thumbnails. 4. Open/download an attachment and verify the original full-resolution image is used. 5. Send the prompt and verify the model receives the original image, not the thumbnail. 6. Remove a chip while thumbnails are still being created and verify it does not reappear. Automated verification on CachyOS Linux with Node 22.23.2: ```bash LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=UTC NODE_ENV=test \\ NODE_OPTIONS='--max-old-space-size=8192 --localstorage-file=/tmp/hermes-pr68744-full-ui-en-localstorage.json' \\ npm --workspace apps/desktop run test:ui # 423 files passed; 3,819 tests passed NODE_ENV=test NODE_OPTIONS='--max-old-space-size=8192 --localstorage-file=/tmp/hermes-pr68744-exact-localstorage.json' \\ npm --workspace apps/desktop exec -- vitest run --project ui \\ src/lib/image-resize.test.ts \\ src/app/chat/hooks/use-composer-actions.test.ts \\ src/lib/chat-runtime.test.ts \\ src/app/chat/composer/attachments.test.tsx \\ src/lib/desktop-fs.test.ts \\ src/store/composer.test.ts \\ src/app/chat/composer/hooks/use-composer-draft.test.tsx \\ src/app/session/hooks/use-prompt-actions/index.test.tsx \\ src/app/chat/session-tile-attachments.test.tsx # 9 files passed; 216 tests passed NODE_ENV=test npm --workspace apps/desktop run typecheck # passed NODE_ENV=test npm --workspace apps/desktop run lint # 0 errors; repository baseline warnings only, none in changed files NODE_ENV=production npm --workspace apps/desktop run build # production renderer and Electron bundles built; assert-dist-built passed git diff --check # passed ``` Running the full UI suite without forcing an English locale initially produced four locale-sensitive assertion failures (`1 234 567`/`25 USD` formatting versus en-US expectations). Re-running under the CI locale passed all 3,813 tests. Mutation proof: in an isolated worktree of the exact candidate, bypassing the end-to-end preview queue made the 72-image regression fail with `maxActiveReads = 72` versus the required `1`. Restoring the candidate returned the focused suite to 74/74. ## Live CI Exact head `cd265e005e6a49319d97ca2fcf1b1d59edf4bf76`: [CI run 31726943548](https://github.com/NousResearch/hermes-agent/actions/runs/31726943548) completed successfully. `All required checks pass` is green, including Desktop UI, Desktop platform tests, lint, OSV, and both amd64/arm64 Docker builds. Final failed/pending counts: **0 / 0**. ## Checklist ### Code - [x] I've read the [Contributing Guide](https://github.com/NousResearch/hermes-agent/blob/main/CONTRIBUTING.md) - [x] My commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) - [x] I searched for existing PRs; this is an attributed current-main replacement for conflicted #68744 - [x] My PR contains only changes related to this fix - [x] I've run the relevant Desktop automated tests - [x] I've added regression tests for the reported 72-image case - [x] I've tested on CachyOS Linux with Node 22.23.2 and a production Electron build ### Documentation & Housekeeping - [x] User documentation — N/A; no user-facing command or configuration changed - [x] `cli-config.yaml.example` — N/A; no config keys changed - [x] `CONTRIBUTING.md` / `AGENTS.md` — N/A; no workflow contract changed - [x] Cross-platform impact considered — uses Chromium/Electron-standard APIs with a safe fallback - [x] Tool descriptions/schemas — N/A; no agent tool changed ## For New Skills N/A — this PR does not add a skill.",
       "url": "https://github.com/NousResearch/hermes-agent/pull/85274",
       "createdAt": "2026-08-13T12:11:02Z",
-      "updatedAt": "2026-08-13T17:41:44Z",
-      "timestamp": "2026-08-13T17:41:44Z",
+      "updatedAt": "2026-08-13T17:47:18Z",
+      "timestamp": "2026-08-13T17:47:18Z",
       "metrics": {
         "reactions": 0,
         "comments": 3
@@ -7633,8 +7888,7 @@
       ],
       "author": "Wahrheitssuchender",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85318",
@@ -7895,8 +8149,8 @@
       "text": "## Summary Two interlocking cron-delivery bugs on relay-fronted Slack deployments (the gateway runs only the relay platform; a connector owns the Slack app). Reported from a live deployment: `/sethome` was set correctly, yet cron jobs created from Slack delivered into the ephemeral thread that Slack spawns around the creation message — and the explicit-target escape hatch `deliver: \"slack:<chat_id>\"` was rejected at preflight with \"delivery platform 'slack' has no gateway credentials configured (not connected)\". ### Bug 1 — synthetic session-keying thread persisted as durable routing Relay-fronted Slack in thread-per-message mode stamps each top-level message's own id as `source.thread_id` (`gateway/relay/adapter.py::_stamp_slack_session_thread`, mirroring native `thread_ts = event.thread_ts or ts`). Its docstring is explicit that the stamp exists for **session keying** — but three consumers persisted it as a delivery address: 1. **Cron origin capture** (`tools/cronjob_tools.py::_origin_from_env`) stored it as `origin.thread_id`, and fire-time resolution replayed it unconditionally (`cron/scheduler.py::_resolve_single_delivery_target`), with a Slack origin-affinity block re-attaching it even onto explicit `slack:<chat_id>` targets. 2. **`/sethome` itself** (`gateway/slash_commands.py`) captured it into the persisted `HomeChannel.thread_id` and its legacy env mirror — pinning the *home target* to the thread around the `/sethome` message, so bare `deliver: \"slack\"` also routed into a stale thread. Found during live validation of fix 1; same root cause, third consumer. **Fix — recognize the stamp at every capture boundary, plus a fire-time repair for jobs persisted before the fix:** - Capture (cron): `_origin_from_env` drops a Slack thread id equal to the creation message's own id (`HERMES_SESSION_MESSAGE_ID`). A genuine in-thread creation (thread id = parent's id, not this message's own) keeps its thread. - Capture (`/sethome`): new `_home_thread_from_source` applies the same recognition before persisting the home target. Running `/sethome` inside a real thread still pins that thread deliberately. Users repair an already-poisoned home target by rerunning `/sethome`. - Fire time: `_origin_thread_is_stale` treats a Slack origin thread as stale when the origin chat is the configured Slack home chat — delivery goes top-level (or to the home target's own configured thread). Non-home chats keep their threads; the explicit-target re-attach is gated on the same predicate. - Slack-scoped throughout: Telegram forum topics legitimately reuse ids and are untouched (covered by negative-control tests). ### Bug 2 — preflight blind to relay-fronted platforms `_preflight_check_delivery` and `cron_delivery_targets` validated deliver prefixes against `get_connected_platforms()`, which only sees **natively configured** platforms — `{relay}` on a relay-only deployment, so `slack:<chat>` was refused before any spend. Fire-time routing already handles this topology correctly (`gateway/delivery.py::resolve_delivery_transport` → `RelayAdapter.fronts_platform`; the delivery loop even bypasses the native enabled-gate for relay transports). Validation and routing were asymmetric; the asymmetry is the bug. **Fix:** new `gateway.relay.relay_fronted_platforms()` — a thin wrapper over the existing `relay_platform_identities()` (env-derived from `GATEWAY_RELAY_PLATFORMS`, the same source that seeds the live adapter's identity set, so the two paths cannot disagree; usable from a standalone scheduler process with no live adapter handle). Unioned into the connected set at both validation sites, only when the relay itself is connected. Native topologies keep the strict credential check unchanged. ## Live validation (relay-fronted staging fleet, 2026-08-13) | Lane | Pre-fix behavior | Post-fix result | |---|---|---| | `deliver: \"origin\"` (job created from Slack DM) | delivered into creation-message thread | **verified: top-level delivery** | | `deliver: \"slack:<chat_id>\"` | killed at preflight (\"no gateway credentials\") | **verified: schedules and delivers top-level** | | `deliver: \"slack\"` (bare → home) | delivered into the old `/sethome` message's thread | **verified: top-level after rerunning `/sethome`** | ## Test evidence RED before fix (6 failed = the new contracts; 8 passed = negative controls): ``` FAILED tests/cron/test_cron_origin_synthetic_thread.py::TestSlackSyntheticThreadCapture::test_synthetic_slack_thread_not_captured FAILED tests/cron/test_cron_relay_delivery_guards.py::TestOriginThreadStaleGuard::test_origin_thread_dropped_when_chat_is_home FAILED tests/cron/test_cron_relay_delivery_guards.py::TestOriginThreadStaleGuard::test_home_thread_config_still_wins FAILED tests/cron/test_cron_relay_delivery_guards.py::TestOriginThreadStaleGuard::test_explicit_target_no_reattach_when_chat_is_home FAILED tests/cron/test_cron_relay_delivery_guards.py::TestPreflightRelayFronted::test_relay_fronted_slack_accepted FAILED tests/cron/test_cron_relay_delivery_guards.py::TestPreflightRelayFronted::test_delivery_targets_include_relay_fronted 6 failed, 8 passed ``` Mutation checks (fix committed first, one guard stubbed at a time, tests must go red, tree restored): - cron capture guard stubbed → `test_synthetic_slack_thread_not_captured` FAILED (1 failed, 3 passed) - `_origin_thread_is_stale` stubbed to `return False` → 3 staleness-guard tests FAILED (3 failed, 7 passed) - fronted-union stubbed to `return set()` → 2 preflight tests FAILED (2 failed, 2 passed) - `/sethome` guard stubbed → `test_synthetic_slack_thread_dropped` FAILED (1 failed, 4 passed) Canonical runner on the final tree: ``` === Summary: 74 files, 715 tests passed, 0 failed, 1 skipped (100% complete) in 13.9s (8 workers) === (scripts/run_tests.sh tests/cron tests/gateway/relay) ``` Full cron + gateway sweep after the `/sethome` commit: 543 passed, 1 skipped. ## Surfaces - No new config keys, no new model-tool surface, no wire/frame changes (`relay_fronted_platforms()` reads the existing `GATEWAY_RELAY_PLATFORMS` deploy stamp). - No connector-side changes required: both bugs are gateway-local (capture/validation); the connector's delivery path was already correct. - Behavior change scope: Slack origins/home targets only for bug 1; relay-connected deployments only for bug 2. ## What this does NOT do - No change to the per-message-session UX — the adapter's session-keying stamp is untouched; only its capture as delivery routing changes. - No `gateway/delivery.py` changes — fire-time routing was already correct. - No standalone-scheduler fire-path hardening (in-gateway fire works via the existing relay transport bypass). - Thread-continuation UX for cron deliveries in thread-per-message mode (a reply under a delivered brief opens an unseeded session) is a separate concern with a fix in progress on `fix-slack-delivery-root-seed`; it will arrive as its own PR once live-validated.",
       "url": "https://github.com/NousResearch/hermes-agent/pull/85340",
       "createdAt": "2026-08-13T14:02:55Z",
-      "updatedAt": "2026-08-13T17:38:19Z",
-      "timestamp": "2026-08-13T17:38:19Z",
+      "updatedAt": "2026-08-13T17:46:14Z",
+      "timestamp": "2026-08-13T17:46:14Z",
       "metrics": {
         "reactions": 0,
         "comments": 4
@@ -7910,7 +8164,7 @@
         "sweeper:risk-message-delivery"
       ],
       "author": "victor-kyriazakos",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -7924,8 +8178,8 @@
       "text": "## What does this PR do? Micro-compaction spliced the rolling summary into the in-memory transcript, then called `_sync_micro_compact_to_db` and swallowed any exception. Resume then loaded the still-active originals on top of the already-compacted list. Rehydrated marker text and generated micro summaries also skipped the batch path's strict redaction, so a legacy secret in an old marker could re-enter the aux prompt and the session DB. `_sync_micro_compact_to_db` now returns success/failure. A failed persist restores the previous cursor and summary and returns the pre-splice messages. Rehydrated marker text and generated micro summaries go through `_redact_compaction_text` before they are stored or sent. ## Related Issue Fixes #84723 ## Type of Change - [x] 🐛 Bug fix (non-breaking change that fixes an issue) ## Changes Made - `_sync_micro_compact_to_db` returns `True` on success / no DB, `False` on write exception. - Absorb path rolls back cursor/summary and keeps the original list when persist fails. - Rehydrate and generated micro summaries are redacted before prompt/DB. - Tests: persist-fail keeps the pre-splice transcript; leaked summarizer output and a legacy marker secret do not survive publish or the aux prompt. ## How to Test 1. On `origin/main`, `test_failed_db_sync_keeps_pre_splice_transcript`, `test_generated_micro_summary_is_redacted_before_publish`, and `test_rehydrated_secret_is_redacted_before_summarizer_prompt` fail. 2. `scripts/run_tests.sh tests/agent/test_micro_compaction.py tests/agent/test_compaction_redaction_boundaries.py` ## Checklist ### Code - [x] I've read the [Contributing Guide](https://github.com/NousResearch/hermes-agent/blob/main/CONTRIBUTING.md) - [x] My commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) - [x] I searched for [existing PRs](https://github.com/NousResearch/hermes-agent/pulls) to make sure this isn't a duplicate - [x] My PR contains **only** changes related to this fix/feature - [x] I've run `pytest tests/ -q` and all tests pass - [x] I've added tests for my changes - [x] I've tested on my platform: macOS 15 (Darwin arm64) ### Documentation & Housekeeping - [x] I've updated relevant documentation — or N/A - [x] I've updated `cli-config.yaml.example` — or N/A - [x] I've updated `CONTRIBUTING.md` or `AGENTS.md` — or N/A - [x] I've considered cross-platform impact — or N/A - [x] I've updated tool descriptions/schemas — or N/A",
       "url": "https://github.com/NousResearch/hermes-agent/pull/85349",
       "createdAt": "2026-08-13T14:20:09Z",
-      "updatedAt": "2026-08-13T15:40:12Z",
-      "timestamp": "2026-08-13T15:40:12Z",
+      "updatedAt": "2026-08-13T17:45:24Z",
+      "timestamp": "2026-08-13T17:45:24Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -7941,7 +8195,7 @@
       "author": "Christopher-Schulze",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85351",
@@ -8054,8 +8308,7 @@
       ],
       "author": "x7peeps",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85372",
@@ -8080,8 +8333,7 @@
       ],
       "author": "patrykkopycinski",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85373",
@@ -8316,11 +8568,11 @@
       "text": "## Summary Implements #72662: DeepSeek's official rate card switches to peak/off-peak billing at **2026-08-16T16:00 UTC** (announced on https://api-docs.deepseek.com/quick_start/pricing): - Peak hours: **01:00–04:00 and 06:00–10:00 UTC** (all other hours off-peak) - Peak = 2× off-peak on every billing item (cache-hit input, cache-miss input, output) ## Changes ### `agent/usage_pricing.py` - **Snapshot updated to the 2026-08-16 OFF-PEAK rates**: deepseek-v4-flash $0.007 / $0.22 / $0.66 per 1M (cache-hit / cache-miss / output), deepseek-v4-pro $0.022 / $0.66 / $1.98. `pricing_version` bumped to `deepseek-pricing-2026-08-16`. The deepseek-chat / deepseek-reasoner aliases keep sharing flash's rates. - **`estimate_usage_cost` peak/off-peak selection**: before the switchover instant the legacy flat card (`deepseek-pricing-2026-07`) applies; after it, calls during peak hours bill at 2× the off-peak rates and the `CostResult` carries a \"peak-hour rate applied\" note. Peak windows are read as half-open intervals → hours 1, 2, 3 and 6, 7, 8, 9. - The legacy flat card lives in a small temporary module dict (`_DEEPSEEK_LEGACY_FLAT_RATES`) so estimates stay accurate during the transition window; it is marked for removal after the switchover. ### `tests/agent/test_usage_pricing.py` 7 new tests: - peak-hour boundary matrix (hours 0–11, 23) incl. exact window edges (00:59:59 → 01:00:00, 03:59:59 → 04:00:00, 09:59:59 → 10:00:00) - official-table amounts for both models (1M in + 1M out: flash $0.88 off-peak / $1.76 peak; pro $2.64 / $5.28) - cache-read tokens scale at peak ($0.007 → $0.014 flash) - pre-switchover legacy flat rates (incl. a would-be peak hour) - switchover instant boundary (15:59:59Z legacy, 16:00:00Z new card) - non-DeepSeek providers unaffected during peak hours - updated `test_deepseek_v4_pro_pricing_entry_exists` to the new card ## Testing - `tests/agent/test_usage_pricing.py`: 20 passed - All usage_pricing consumers (insights, model cost guard, usage command, MoA loop, context engine): 100 passed total - A large combined batch run shows ~120 failures in unrelated suites (title generator, secret-scope migration, codex transport, etc.) that pass in isolation on both main and this branch — known order-dependent batch interference in this repo, unrelated to this change. ## Notes - **Boundary semantics**: peak windows are treated as half-open [01:00, 04:00) and [06:00, 10:00) UTC, matching the 09:00–12:00 / 14:00–18:00 Beijing framing (clean 12:00–14:00 lunch gap). Hour 4 (04:00–05:00) is off-peak. - **Transition window**: rates are selected at call time (post-request), matching DeepSeek's per-request timestamp billing. Before 2026-08-16T16:00Z the legacy flat card is used, so estimates don't overstate during the transition. - Supersedes the earlier attempt #72756, whose 2×-on-current-rates approach no longer matches DeepSeek's published pricing (the official off-peak rates themselves differ from the current flat card). - **Credit**: feature request and the peak-window UTC mapping are from @dominicelayda's issue #72662; @webtecnica's earlier attempt (#72756) established the multiplier approach and surfaced the need for the official rate card. This PR is a fresh implementation against the official card. Closes #72662",
       "url": "https://github.com/NousResearch/hermes-agent/pull/85388",
       "createdAt": "2026-08-13T15:24:17Z",
-      "updatedAt": "2026-08-13T17:31:10Z",
-      "timestamp": "2026-08-13T17:31:10Z",
+      "updatedAt": "2026-08-13T17:47:04Z",
+      "timestamp": "2026-08-13T17:47:04Z",
       "metrics": {
         "reactions": 0,
-        "comments": 2
+        "comments": 4
       },
       "labels": [
         "type/feature",
@@ -8578,8 +8830,7 @@
       ],
       "author": "lightcloud00",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85402",
@@ -8630,8 +8881,7 @@
       ],
       "author": "PRATHAMESH75",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85404",
@@ -8679,8 +8929,7 @@
       ],
       "author": "33hodl",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85407",
@@ -8750,8 +8999,7 @@
       ],
       "author": "neilinger",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85410",
@@ -8866,8 +9114,7 @@
       ],
       "author": "webtecnica",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85416",
@@ -8937,8 +9184,7 @@
       ],
       "author": "lesyuk",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85428",
@@ -8965,8 +9211,7 @@
       ],
       "author": "rkfshakti",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85429",
@@ -9048,8 +9293,7 @@
       ],
       "author": "kshitijk4poor",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85449",
@@ -9104,8 +9348,7 @@
       ],
       "author": "Luna161",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85452",
@@ -9219,8 +9462,7 @@
       ],
       "author": "psc239",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85459",
@@ -9249,8 +9491,7 @@
       ],
       "author": "rudrakshchahal",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85460",
@@ -9276,8 +9517,7 @@
       ],
       "author": "ajoslin",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85461",
@@ -9303,8 +9543,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85462",
@@ -9356,8 +9595,7 @@
       ],
       "author": "teknium1",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85465",
@@ -9382,8 +9620,7 @@
       ],
       "author": "jerryhjones",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85466",
@@ -9411,8 +9648,7 @@
       ],
       "author": "teknium1",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85467",
@@ -9424,8 +9660,8 @@
       "text": "## Summary Salvage of #85009 by @victor-kyriazakos: opt-in Relay session-scope segmentation so continuous gateway sessions export session-level telemetry at turn boundaries instead of holding one unexported span open for weeks — plus a LIFO-safety fix and docs on top. Relay export is close-driven; a Telegram/Slack session that never ends means the session root span (and its marks) never exports, and a crash loses the whole open segment. Turn spans already export per-turn (#83517); this handles the session-scope remainder. ## Changes - `agent/relay_runtime.py`: `gateway.telemetry.session_segments.{on_compaction,max_turns}` (both default OFF → byte-identical lifecycle); rotation consumed only in `begin_turn`, rides the bounded scope-op executor (#83514); segments share `session_id` + `hermes.session.segment` / `segment_reason` metadata (contributor's work, authorship preserved) - `agent/conversation_compression.py`: observer-only compaction notification (contributor's work) - **Fix on top:** the legacy rotating-compaction path closed the old session scope immediately — a compaction completing while a turn was still live on the old session would pop the session scope under the live turn scope (LIFO violation). Now defers via `close_pending`, consumed by that turn's `end_turn` after its own scope pops. Sabotage-verified: the new regression test fails without the fix. - **Docs on top:** `observability/nemo_relay` section on the built-in plugins page (the plugin had no section) with the `session_segments` config table; summary mirrored in the plugin README. ## Validation | | Result | |---|---| | PR test suite | 12/12 (contributor's 11 + 1 new mid-turn deferred-close regression test) | | All relay tests | 50/50 | | Sabotage run | new test fails at the exact assertion with the fix reverted | | Defaults-off contract | pinned by `TestDefaultsNeverRotate` | | Attribution audit | clean | ## Infographic ![Relay session-span segmentation](https://files.catbox.moe/mpxfpr.png) Closes #85009.",
       "url": "https://github.com/NousResearch/hermes-agent/pull/85467",
       "createdAt": "2026-08-13T17:24:11Z",
-      "updatedAt": "2026-08-13T17:36:54Z",
-      "timestamp": "2026-08-13T17:36:54Z",
+      "updatedAt": "2026-08-13T17:45:19Z",
+      "timestamp": "2026-08-13T17:45:19Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -9439,9 +9675,9 @@
         "area/compression"
       ],
       "author": "teknium1",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85468",
@@ -9467,8 +9703,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85469",
@@ -9496,8 +9731,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85470",
@@ -9523,8 +9757,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85471",
@@ -9550,8 +9783,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85472",
@@ -9578,8 +9810,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85473",
@@ -9607,8 +9838,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85474",
@@ -9635,8 +9865,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85475",
@@ -9662,8 +9891,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85476",
@@ -9694,8 +9922,7 @@
       ],
       "author": "teknium1",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85477",
@@ -9722,8 +9949,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85478",
@@ -9749,8 +9975,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85479",
@@ -9779,8 +10004,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85480",
@@ -9808,8 +10032,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85481",
@@ -9837,8 +10060,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85482",
@@ -9865,8 +10087,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85483",
@@ -9892,8 +10113,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85484",
@@ -9919,8 +10139,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85485",
@@ -9947,8 +10166,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85486",
@@ -9975,8 +10193,7 @@
       ],
       "author": "pablo-afterlife",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85487",
@@ -9988,8 +10205,8 @@
       "text": "## Summary Kanban notify subscriptions gain explicit delivery modes — `notify`, `notify+wake`, `wake` — and woken turns now land in the creator's REAL session instead of a context-less parallel one. Salvage of #37865 by @verybigdog onto current main (authorship preserved; original commits carried a local placeholder identity, re-attributed to the contributor's public email), plus one follow-up fix of ours. ## Changes - `hermes_cli/kanban_db.py`: `delivery_mode` + `chat_type` + `user_id_alt` columns with idempotent migration; child tasks inherit the parent's notify return path (ACK-edge inheritance) - `gateway/kanban_watchers.py`: wake gated on `delivery_mode` instead of unconditional; passive send suppressed in pure-`wake` mode - `gateway/session_context.py` / `tools/kanban_tools.py`: persist `chat_type` and alt user id so the wake replay reconstructs the same `build_session_key`; gateway autosubscribes as `notify+wake`, TUI as `notify` - `hermes_cli/kanban.py`: `--delivery-mode` CLI flag; `gateway/slash_commands.py` autosubscribe; docs updated - **Follow-up (ours):** migration backfills pre-existing gateway subscriptions to `notify+wake` on first-add of the column — before this column existed, wake was unconditional, so defaulting legacy rows to `notify` would have silently disabled active wake on upgrade. Backfill runs only on first-add; explicit downgrades survive re-migration. Sabotage-verified regression tests. ## Validation | | Before | After | |---|---|---| | wake session key | could land context-less (user_id vs alt id divergence) | reconstructs creator's session | | legacy gateway subs after upgrade | silently lose wake | backfilled to notify+wake | | targeted tests | — | 60/60 pass (kanban_notify + kanban_tools + kanban_notifier) | Supersedes #37865; closes it with credit. Triage previously anointed #37865 canonical over dupes #49593/#49749/#49751. ## Infographic ![Kanban delivery modes](https://files.catbox.moe/se1zot.png)",
       "url": "https://github.com/NousResearch/hermes-agent/pull/85487",
       "createdAt": "2026-08-13T17:31:01Z",
-      "updatedAt": "2026-08-13T17:43:26Z",
-      "timestamp": "2026-08-13T17:43:26Z",
+      "updatedAt": "2026-08-13T17:46:50Z",
+      "timestamp": "2026-08-13T17:46:50Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -10007,7 +10224,7 @@
       "author": "teknium1",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85488",
@@ -10033,8 +10250,7 @@
       ],
       "author": "webtecnica",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85489",
@@ -10061,8 +10277,7 @@
       ],
       "author": "webtecnica",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85490",
@@ -10091,8 +10306,7 @@
       ],
       "author": "NehoraiHadad",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85493",
@@ -10120,8 +10334,7 @@
       ],
       "author": "DavidMetcalfe",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:NousResearch/hermes-agent:pull_request:85494",
@@ -10133,8 +10346,8 @@
       "text": "## Summary Salvages PR #74379 (@benfrank241) with security and efficiency fixes applied on top. Hindsight memory provider improvements: opt-in synchronous recall (recall_sync), actionable error hints for missing local runtime, opt-in retain_source attribution, starter memory templates during setup, provider-unavailable warning, and deterministic \"recalled N memories\" / \"saving to memory\" status indicators. Fixes #5820, #7718, #2765. Supersedes #70278, #70295, #72926, #73415, #70257, #46504, #5838, #13101. ## Changes - `plugins/memory/hindsight/__init__.py`: recall_sync, retain_source default, indicators, local runtime hint, unavailable_reason(), recall_status() - `plugins/memory/hindsight/templates.py` (new): starter bank template catalog fetch + apply + overwrite warning - `agent/memory_provider.py`: RecallStatus dataclass, unavailable_reason() and recall_status() ABC hooks, generic INDICATOR_GLYPH - `agent/memory_manager.py`: describe_recall() aggregator - `agent/turn_context.py`: recall indicator emit after prefetch - `agent/agent_init.py`: provider-unavailable warning with dedup guard - `hermes_cli/memory_setup.py`: systemd/.env inheritance hint ## Fixes applied on top of @benfrank241's work 1. **Security:** `templates.py` apply_template() and probe_existing_customization() now use `open_credentialed_url()` instead of bare `urlopen()` — prevents credential leak via cross-origin redirect. 2. **Efficiency:** `agent_init.py` guards `unavailable_reason()` with the dedup set check before calling it — was running disk I/O + importlib probes on every gateway turn despite the warning being deduped. 3. **Abstraction:** `INDICATOR_GLYPH` in core is now a generic brain (🧠) instead of Hindsight's brand mark. Hindsight overrides with its own `_HINDSIGHT_GLYPH` (👁️). ## Validation - 129/129 targeted tests pass (7 test files) - Ruff clean - E2E smoke tests pass with real imports Contributor: @benfrank241 (ben.bartholomew@vectorize.io) — authorship preserved via commit 1.",
       "url": "https://github.com/NousResearch/hermes-agent/pull/85494",
       "createdAt": "2026-08-13T17:34:49Z",
-      "updatedAt": "2026-08-13T17:43:02Z",
-      "timestamp": "2026-08-13T17:43:02Z",
+      "updatedAt": "2026-08-13T17:45:27Z",
+      "timestamp": "2026-08-13T17:45:27Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -10148,6 +10361,50 @@
         "P3"
       ],
       "author": "kshitijk4poor",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:pull_request:85498",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "fix(agent): default context lookup for empty model IDs (salvage #65515) — un-reds main CI",
+      "text": "## Summary Every open PR's CI is currently red on one shard with: ``` FAILED tests/run_agent/test_primary_runtime_restore.py::TestTryRecoverPrimaryTransport::test_allowed_for_nous_anthropic_messages ValueError: Model has a context window of 32,000 tokens, which is below the minimum 64,000 required by Hermes Agent. ``` (Seen on #85444 slice 7/12, #85452 slice 2/12; reproduces locally on plain `upstream/main` files.) Root cause: the test constructs an agent with `model=\"\"` against the live Nous portal URL. `get_model_context_length(\"\")` reaches `_resolve_endpoint_context_length`, whose fuzzy matcher ```python if model in key or key in model: ``` is **vacuously true for an empty model** — `\"\" in key` matches every entry — so it picks an arbitrary model from the live `/v1/models` response and returns that entry's context length. The portal catalog changed recently; the arbitrary match now lands on a 32K entry, `init_agent` raises the 64K-floor `ValueError`, and the junk value is persisted under a `@https://inference-api.nousresearch.com/v1` cache key (visible in the failing log: `Cached context length @https://... -> 32,000 tokens`). This is a salvage of #65515 by @whirmill (open since July 16), rebased onto current main — the same guard, now positioned after the malformed-base_url normalization that landed since, plus an explanatory comment documenting the fuzzy-match footgun. Contributor authorship preserved on the commit. ## Changes - `agent/model_metadata.py`: a blank/empty model id falls back to `DEFAULT_FALLBACK_CONTEXT` immediately — before any cache write or network probe. - `tests/agent/test_model_metadata.py`: `test_empty_model_uses_fallback_context` (covers `\"\"` and `None`). ## Validation - The two previously failing/new tests pass: `test_allowed_for_nous_anthropic_messages` + `test_empty_model_uses_fallback_context`. - Full `tests/agent/test_model_metadata.py` + `tests/run_agent/test_primary_runtime_restore.py`: 92 passed. - Mutation check: removing the guard makes `test_empty_model_uses_fallback_context` fail (arbitrary live-catalog match returns non-default), restoring goes green. - `ruff check` clean. Closes #65515.",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/85498",
+      "createdAt": "2026-08-13T17:43:57Z",
+      "updatedAt": "2026-08-13T17:43:57Z",
+      "timestamp": "2026-08-13T17:43:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "kshitijk4poor",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:NousResearch/hermes-agent:pull_request:85499",
+      "source": "github",
+      "group": "coding-agent-infrastructure",
+      "project": "NousResearch/hermes-agent",
+      "kind": "pull_request",
+      "title": "fix(cli): show context-length detection result when saving custom provider",
+      "text": "Fixes #2513. When a custom provider is saved via `hermes model` / `hermes setup` with the context-length prompt left blank, the value stays `None` and the runtime resolution chain (`agent/model_metadata.get_model_context_length`) runs silently later. Users got no feedback about which context window was actually in effect — or whether it was a real detection vs. the hard fallback. This implements the approach the closed reference PR #2522 was verified for, adapted to current main (the flow moved from `hermes_cli/main.py::_model_flow_custom` to `hermes_cli/model_setup_flows.py`): - After parsing the blank input, call `get_model_context_length(model_name, base_url=effective_url, api_key=effective_key)` — the full 9-step resolution chain (endpoint probe, local server, registries, family defaults). - Distinguish a genuinely detected value from `DEFAULT_FALLBACK_CONTEXT` so the fallback is never mislabeled as \"auto-detected\". - Persist only real detections into the `custom_providers` entry; the bare fallback stays unset (so the runtime re-resolves each startup and logs its own fallback warning). - Print one clear line either way, using `_format_context_length` (`256K`-style). - Wrap the whole probe in try/except — a failing probe must never block saving the provider. Regression tests (`tests/hermes_cli/test_custom_provider_context_feedback.py`) cover: - known model resolves to a non-fallback value - unknown model falls through to `DEFAULT_FALLBACK_CONTEXT` - the fallback sentinel is distinguishable from a real detection - blank model name never triggers a probe Note: the fallback constant on current main is 256K (`CONTEXT_PROBE_TIERS[0]`), not the 128K mentioned in the issue — the messages reference `DEFAULT_FALLBACK_CONTEXT` directly so they stay correct if the tier list changes.",
+      "url": "https://github.com/NousResearch/hermes-agent/pull/85499",
+      "createdAt": "2026-08-13T17:46:24Z",
+      "updatedAt": "2026-08-13T17:46:35Z",
+      "timestamp": "2026-08-13T17:46:35Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "Luna161",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -20612,6 +20869,728 @@
         "state": "open",
         "assignees": [],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:81a36f55f0907841186a",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85487",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85487",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "feat(kanban): explicit notify/wake delivery modes with faithful wake session routing (salvage #37865)",
+        "text": "## Summary Kanban notify subscriptions gain explicit delivery modes — `notify`, `notify+wake`, `wake` — and woken turns now land in the creator's REAL session instead of a context-less parallel one. Salvage of #37865 by @verybigdog onto current main (authorship preserved; original commits carried a local placeholder identity, re-attributed to the contributor's public email), plus one follow-up fix of ours. ## Changes - `hermes_cli/kanban_db.py`: `delivery_mode` + `chat_type` + `user_id_alt` columns with idempotent migration; child tasks inherit the parent's notify return path (ACK-edge inheritance) - `gateway/kanban_watchers.py`: wake gated on `delivery_mode` instead of unconditional; passive send suppressed in pure-`wake` mode - `gateway/session_context.py` / `tools/kanban_tools.py`: persist `chat_type` and alt user id so the wake replay reconstructs the same `build_session_key`; gateway autosubscribes as `notify+wake`, TUI as `notify` - `hermes_cli/kanban.py`: `--delivery-mode` CLI flag; `gateway/slash_commands.py` autosubscribe; docs updated - **Follow-up (ours):** migration backfills pre-existing gateway subscriptions to `notify+wake` on first-add of the column — before this column existed, wake was unconditional, so defaulting legacy rows to `notify` would have silently disabled active wake on upgrade. Backfill runs only on first-add; explicit downgrades survive re-migration. Sabotage-verified regression tests. ## Validation | | Before | After | |---|---|---| | wake session key | could land context-less (user_id vs alt id divergence) | reconstructs creator's session | | legacy gateway subs after upgrade | silently lose wake | backfilled to notify+wake | | targeted tests | — | 60/60 pass (kanban_notify + kanban_tools + kanban_notifier) | Supersedes #37865; closes it with credit. Triage previously anointed #37865 canonical over dupes #49593/#49749/#49751. ## Infographic ![Kanban delivery modes](https://files.catbox.moe/se1zot.png)",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85487",
+        "createdAt": "2026-08-13T17:31:01Z",
+        "updatedAt": "2026-08-13T17:46:50Z",
+        "timestamp": "2026-08-13T17:46:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "type/feature",
+          "comp/cli",
+          "comp/gateway",
+          "comp/cron",
+          "P3",
+          "sweeper:risk-session-state",
+          "sweeper:risk-message-delivery",
+          "sweeper:risk-compatibility"
+        ],
+        "author": "teknium1",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:05c59a300249f0f4f190",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85499",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85499",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(cli): show context-length detection result when saving custom provider",
+        "text": "Fixes #2513. When a custom provider is saved via `hermes model` / `hermes setup` with the context-length prompt left blank, the value stays `None` and the runtime resolution chain (`agent/model_metadata.get_model_context_length`) runs silently later. Users got no feedback about which context window was actually in effect — or whether it was a real detection vs. the hard fallback. This implements the approach the closed reference PR #2522 was verified for, adapted to current main (the flow moved from `hermes_cli/main.py::_model_flow_custom` to `hermes_cli/model_setup_flows.py`): - After parsing the blank input, call `get_model_context_length(model_name, base_url=effective_url, api_key=effective_key)` — the full 9-step resolution chain (endpoint probe, local server, registries, family defaults). - Distinguish a genuinely detected value from `DEFAULT_FALLBACK_CONTEXT` so the fallback is never mislabeled as \"auto-detected\". - Persist only real detections into the `custom_providers` entry; the bare fallback stays unset (so the runtime re-resolves each startup and logs its own fallback warning). - Print one clear line either way, using `_format_context_length` (`256K`-style). - Wrap the whole probe in try/except — a failing probe must never block saving the provider. Regression tests (`tests/hermes_cli/test_custom_provider_context_feedback.py`) cover: - known model resolves to a non-fallback value - unknown model falls through to `DEFAULT_FALLBACK_CONTEXT` - the fallback sentinel is distinguishable from a real detection - blank model name never triggers a probe Note: the fallback constant on current main is 256K (`CONTEXT_PROBE_TIERS[0]`), not the 128K mentioned in the issue — the messages reference `DEFAULT_FALLBACK_CONTEXT` directly so they stay correct if the tier list changes.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85499",
+        "createdAt": "2026-08-13T17:46:24Z",
+        "updatedAt": "2026-08-13T17:46:35Z",
+        "timestamp": "2026-08-13T17:46:35Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "Luna161",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:6949451c1b3964debf79",
+      "signalId": "github:NousResearch/hermes-agent:issue:2513",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:issue:2513",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "issue",
+        "title": "[Bug]: Custom providers lack context length auto-detection when saved via /model command",
+        "text": "### Bug Description **Summary:** When users save a custom provider using the `/model` command without specifying a context length, the system doesn't automatically detect and display what context length was actually used. This leaves users uncertain about whether their custom provider has a short or long context window, which is critical for prompt caching behavior. **Impact:** - Users cannot easily verify if their custom provider has adequate context window - Prompt caching may be less effective than expected - No visual feedback distinguishes between auto-detected and default context lengths ### Steps to Reproduce run hermes model select a custom provider do not enter a context length ### Expected Behavior After saving a custom provider without a context length, the system should: 1. Attempt to auto-detect the context length based on the model name 2. Display the detected context length to the user 3. Fall back to a sensible default (128K tokens) if detection fails 4. Indicate visually when the default was used vs. when auto-detection succeeded ### Actual Behavior Users who save a custom provider without specifying context length have no feedback on what context length is being used. This can lead to unexpected prompt caching behavior and higher token costs. ### Affected Component CLI (interactive chat) ### Messaging Platform (if gateway-related) _No response_ ### Operating System Debian 13.4 ### Python Version 3.13.3 ### Hermes Version 0.4 ### Relevant Logs / Traceback ```shell ``` ### Root Cause Analysis (optional) _No response_ ### Proposed Fix (optional) _No response_ ### Are you willing to submit a PR for this? - [x] I'd like to fix this myself and submit a PR",
+        "url": "https://github.com/NousResearch/hermes-agent/issues/2513",
+        "createdAt": "2026-03-22T16:00:19Z",
+        "updatedAt": "2026-08-13T17:46:25Z",
+        "timestamp": "2026-08-13T17:46:25Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [
+          "type/bug",
+          "comp/cli",
+          "area/config",
+          "P3"
+        ],
+        "author": "InB4DevOps",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a82c4aeb315fb12a18e7",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:13101",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:13101",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(memory): auto-install hindsight-all for local_embedded mode",
+        "text": "## What does this PR do? Fixes a crash when users select `local_embedded` mode via `hermes memory setup`. The setup wizard tries to install `hindsight-all` but the install can silently fail because `capture_output=True` swallows errors. Since `plugin.yaml` only declares `hindsight-client>=0.4.22` as a dependency, hermes startup validation passes even when `hindsight-all` is missing. At runtime, `from hindsight import HindsightEmbedded` crashes with `ModuleNotFoundError: No module named 'hindsight'`. This patch adds a guard in `HindsightMemoryProvider.initialize()` that: 1. Detects when mode is `local_embedded` 2. Attempts to `import hindsight` — if it fails, auto-installs `hindsight-all` via `uv pip install` 3. Raises a clear `RuntimeError` with manual install instructions if installation fails 4. Does **not** surface errors as swallowed silent failures — errors are logged and propagated This mirrors the existing auto-upgrade logic for `hindsight-client` already present in `initialize()` for cloud mode. ## Related Issue Fixes crash described in hindsight local_embedded setup flow. ## Type of Change - [x] Bug fix (non-breaking change that fixes an issue) ## Changes Made - `plugins/memory/hindsight/__init__.py`: Added auto-install guard for `hindsight-all` in `initialize()` when mode is `local_embedded` - `plugins/memory/hindsight/plugin.yaml`: Added comment documenting the `hindsight-all` dependency for local_embedded mode ## How to Test 1. Configure hindsight with `local_embedded` mode but ensure `hindsight-all` is NOT installed 2. Start a new hermes session with hindsight memory enabled 3. Verify that the plugin auto-installs `hindsight-all` and logs the installation 4. Verify that if installation fails, a clear `RuntimeError` is raised with manual instructions 5. Test cloud mode still works without `hindsight-all` installed (no regression) ## Checklist - [x] My commit messages follow Conventional Commits - [x] My PR contains only changes related to this fix - [x] I have considered cross-platform impact (uses shutil.which(\"uv\") which works on all platforms) - [x] Updated relevant docstrings/comments — plugin.yaml comment added",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/13101",
+        "createdAt": "2026-04-20T16:06:45Z",
+        "updatedAt": "2026-08-13T17:46:21Z",
+        "timestamp": "2026-08-13T17:46:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "type/bug",
+          "comp/plugins",
+          "tool/memory",
+          "P2",
+          "sweeper:risk-compatibility",
+          "sweeper:blast-moderate",
+          "area/memory",
+          "area/install-update"
+        ],
+        "author": "LehaoLin",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:1f6ffbc690a8f263aa3e",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:5838",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:5838",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "feat(memory): add sync_recall option for current-turn relevance",
+        "text": "## Summary Closes #5820. Adds a `memory.sync_recall: true` config option that switches memory providers from background prefetch to synchronous recall at turn start. ## Problem The current model queues a background recall at turn end using that turn's query. The next turn consumes this result — which is based on the *previous* message. When topics change between turns the injected context is irrelevant or misleading. ## Solution When `sync_recall: true`, each turn performs a live recall with the actual current message before the first LLM call. Background prefetch is skipped entirely at turn end. Default is `false` — no behavior change for existing users. ## Implementation `MemoryProvider.recall_sync()` default: fires `queue_prefetch()` then immediately calls `prefetch()`, which joins the background thread. This works for all providers that join inside `prefetch()` (honcho, hindsight, mem0, openviking). RetainDB overrides `recall_sync()` directly because its `prefetch()` reads shared state without joining threads. 4 files changed, 54 lines added. ## Config ```yaml memory: provider: hindsight # or honcho, mem0, etc. sync_recall: true",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/5838",
+        "createdAt": "2026-04-07T12:42:20Z",
+        "updatedAt": "2026-08-13T17:46:18Z",
+        "timestamp": "2026-08-13T17:46:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "type/feature",
+          "comp/agent",
+          "comp/plugins",
+          "tool/memory",
+          "P3",
+          "sweeper:risk-session-state",
+          "sweeper:risk-compatibility",
+          "sweeper:blast-moderate",
+          "area/memory"
+        ],
+        "author": "heathley",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:08148b7f382a103acf34",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85340",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85340",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(cron): relay-fronted Slack delivery — synthetic creation-thread capture + preflight fronted-platform blindness",
+        "text": "## Summary Two interlocking cron-delivery bugs on relay-fronted Slack deployments (the gateway runs only the relay platform; a connector owns the Slack app). Reported from a live deployment: `/sethome` was set correctly, yet cron jobs created from Slack delivered into the ephemeral thread that Slack spawns around the creation message — and the explicit-target escape hatch `deliver: \"slack:<chat_id>\"` was rejected at preflight with \"delivery platform 'slack' has no gateway credentials configured (not connected)\". ### Bug 1 — synthetic session-keying thread persisted as durable routing Relay-fronted Slack in thread-per-message mode stamps each top-level message's own id as `source.thread_id` (`gateway/relay/adapter.py::_stamp_slack_session_thread`, mirroring native `thread_ts = event.thread_ts or ts`). Its docstring is explicit that the stamp exists for **session keying** — but three consumers persisted it as a delivery address: 1. **Cron origin capture** (`tools/cronjob_tools.py::_origin_from_env`) stored it as `origin.thread_id`, and fire-time resolution replayed it unconditionally (`cron/scheduler.py::_resolve_single_delivery_target`), with a Slack origin-affinity block re-attaching it even onto explicit `slack:<chat_id>` targets. 2. **`/sethome` itself** (`gateway/slash_commands.py`) captured it into the persisted `HomeChannel.thread_id` and its legacy env mirror — pinning the *home target* to the thread around the `/sethome` message, so bare `deliver: \"slack\"` also routed into a stale thread. Found during live validation of fix 1; same root cause, third consumer. **Fix — recognize the stamp at every capture boundary, plus a fire-time repair for jobs persisted before the fix:** - Capture (cron): `_origin_from_env` drops a Slack thread id equal to the creation message's own id (`HERMES_SESSION_MESSAGE_ID`). A genuine in-thread creation (thread id = parent's id, not this message's own) keeps its thread. - Capture (`/sethome`): new `_home_thread_from_source` applies the same recognition before persisting the home target. Running `/sethome` inside a real thread still pins that thread deliberately. Users repair an already-poisoned home target by rerunning `/sethome`. - Fire time: `_origin_thread_is_stale` treats a Slack origin thread as stale when the origin chat is the configured Slack home chat — delivery goes top-level (or to the home target's own configured thread). Non-home chats keep their threads; the explicit-target re-attach is gated on the same predicate. - Slack-scoped throughout: Telegram forum topics legitimately reuse ids and are untouched (covered by negative-control tests). ### Bug 2 — preflight blind to relay-fronted platforms `_preflight_check_delivery` and `cron_delivery_targets` validated deliver prefixes against `get_connected_platforms()`, which only sees **natively configured** platforms — `{relay}` on a relay-only deployment, so `slack:<chat>` was refused before any spend. Fire-time routing already handles this topology correctly (`gateway/delivery.py::resolve_delivery_transport` → `RelayAdapter.fronts_platform`; the delivery loop even bypasses the native enabled-gate for relay transports). Validation and routing were asymmetric; the asymmetry is the bug. **Fix:** new `gateway.relay.relay_fronted_platforms()` — a thin wrapper over the existing `relay_platform_identities()` (env-derived from `GATEWAY_RELAY_PLATFORMS`, the same source that seeds the live adapter's identity set, so the two paths cannot disagree; usable from a standalone scheduler process with no live adapter handle). Unioned into the connected set at both validation sites, only when the relay itself is connected. Native topologies keep the strict credential check unchanged. ## Live validation (relay-fronted staging fleet, 2026-08-13) | Lane | Pre-fix behavior | Post-fix result | |---|---|---| | `deliver: \"origin\"` (job created from Slack DM) | delivered into creation-message thread | **verified: top-level delivery** | | `deliver: \"slack:<chat_id>\"` | killed at preflight (\"no gateway credentials\") | **verified: schedules and delivers top-level** | | `deliver: \"slack\"` (bare → home) | delivered into the old `/sethome` message's thread | **verified: top-level after rerunning `/sethome`** | ## Test evidence RED before fix (6 failed = the new contracts; 8 passed = negative controls): ``` FAILED tests/cron/test_cron_origin_synthetic_thread.py::TestSlackSyntheticThreadCapture::test_synthetic_slack_thread_not_captured FAILED tests/cron/test_cron_relay_delivery_guards.py::TestOriginThreadStaleGuard::test_origin_thread_dropped_when_chat_is_home FAILED tests/cron/test_cron_relay_delivery_guards.py::TestOriginThreadStaleGuard::test_home_thread_config_still_wins FAILED tests/cron/test_cron_relay_delivery_guards.py::TestOriginThreadStaleGuard::test_explicit_target_no_reattach_when_chat_is_home FAILED tests/cron/test_cron_relay_delivery_guards.py::TestPreflightRelayFronted::test_relay_fronted_slack_accepted FAILED tests/cron/test_cron_relay_delivery_guards.py::TestPreflightRelayFronted::test_delivery_targets_include_relay_fronted 6 failed, 8 passed ``` Mutation checks (fix committed first, one guard stubbed at a time, tests must go red, tree restored): - cron capture guard stubbed → `test_synthetic_slack_thread_not_captured` FAILED (1 failed, 3 passed) - `_origin_thread_is_stale` stubbed to `return False` → 3 staleness-guard tests FAILED (3 failed, 7 passed) - fronted-union stubbed to `return set()` → 2 preflight tests FAILED (2 failed, 2 passed) - `/sethome` guard stubbed → `test_synthetic_slack_thread_dropped` FAILED (1 failed, 4 passed) Canonical runner on the final tree: ``` === Summary: 74 files, 715 tests passed, 0 failed, 1 skipped (100% complete) in 13.9s (8 workers) === (scripts/run_tests.sh tests/cron tests/gateway/relay) ``` Full cron + gateway sweep after the `/sethome` commit: 543 passed, 1 skipped. ## Surfaces - No new config keys, no new model-tool surface, no wire/frame changes (`relay_fronted_platforms()` reads the existing `GATEWAY_RELAY_PLATFORMS` deploy stamp). - No connector-side changes required: both bugs are gateway-local (capture/validation); the connector's delivery path was already correct. - Behavior change scope: Slack origins/home targets only for bug 1; relay-connected deployments only for bug 2. ## What this does NOT do - No change to the per-message-session UX — the adapter's session-keying stamp is untouched; only its capture as delivery routing changes. - No `gateway/delivery.py` changes — fire-time routing was already correct. - No standalone-scheduler fire-path hardening (in-gateway fire works via the existing relay transport bypass). - Thread-continuation UX for cron deliveries in thread-per-message mode (a reply under a delivered brief opens an unseeded session) is a separate concern with a fix in progress on `fix-slack-delivery-root-seed`; it will arrive as its own PR once live-validated.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85340",
+        "createdAt": "2026-08-13T14:02:55Z",
+        "updatedAt": "2026-08-13T17:46:14Z",
+        "timestamp": "2026-08-13T17:46:14Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "type/bug",
+          "comp/gateway",
+          "comp/cron",
+          "platform/slack",
+          "P2",
+          "sweeper:risk-message-delivery"
+        ],
+        "author": "victor-kyriazakos",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0919c12052b7c9be86f9",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:46504",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:46504",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(hindsight): surface missing hindsight-all in local_embedded (#7718)",
+        "text": "## Summary `local_embedded` imports the top-level `hindsight` module (from the `hindsight-all` package), but `plugin.yaml` only declares `hindsight-client`. Users who configure `local_embedded` by hand — or upgrade from the legacy `\"mode\": \"local\"` — never run the setup wizard that installs `hindsight-all`, so long-term memory is **silently disabled** behind a non-actionable `No module named 'hindsight'` warning. The agent-startup path (`agent/agent_init.py`) gates the provider on `is_available()` and drops it with a silent `logger.debug` **before** `initialize()` runs — so the actionable message has to live where the provider is actually dropped. ## Changes - **`is_available()`** — emits a one-time actionable warning naming `hindsight-all` + the install command when `local_embedded` is configured but the runtime package is missing. Stays silent for intentional graceful-degradation failures (e.g. NumPy CPU-baseline errors). - **`_get_client()`** — the `RuntimeError` raised when the runtime probe fails now carries the same actionable hint (the real raise point), with an `ImportError` backstop around the embedded import. - **`initialize()`** — actionable disable warning + a migration warning when the legacy `\"mode\": \"local\"` is remapped to `local_embedded`. - Shared `_embedded_runtime_hint()` / `_warn_missing_embedded_runtime_once()` helpers keep the messaging DRY and reason-gated. - **Docs** — README troubleshooting note + `plugin.yaml` comment explaining why `hindsight-all` is intentionally not a static dependency (avoids pulling the heavy embedded runtime for cloud-only users). ## Testing ``` scripts/run_tests.sh tests/plugins/memory/test_hindsight_provider.py # 109 passed, 0 failed ``` 7 new regression tests cover: `is_available()` warning + silence + once-per-process; `_get_client()` real-path `RuntimeError` and import backstop; `initialize()` disable + legacy-migration warnings. Fixes #7718",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/46504",
+        "createdAt": "2026-06-15T06:15:14Z",
+        "updatedAt": "2026-08-13T17:46:14Z",
+        "timestamp": "2026-08-13T17:46:14Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "type/bug",
+          "comp/plugins",
+          "tool/memory",
+          "P3",
+          "sweeper:blast-contained",
+          "area/memory"
+        ],
+        "author": "bionicbutterfly13",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2fe5afdf7a50e2e40558",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:74379",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:74379",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "feat(hindsight): memory provider improvements — recall_sync, retain_source, setup templates, memory indicators, error hints",
+        "text": "Bundles previously-separate Hindsight/memory PRs into a single review surface. Each was independently mergeable; combining them avoids parallel reviews of the same file (`plugins/memory/hindsight/__init__.py`, which most of them touch). ## What's included | Supersedes | Change | Fixes | |---|---|---| | #70278 | **Opt-in synchronous recall** for the current turn (`recall_sync`) — recall the injected memory in-turn instead of next-turn prefetch | #5820 | | #70295 | **Actionable error when the `local_embedded` runtime is missing** — tells the user exactly which package to install instead of a bare import failure | #7718 | | #72926 | **Default `retain_source` to `\"hermes\"`** so every stored memory self-identifies its provenance (`metadata.source: \"hermes\"`) | — | | #73415 | **Offer a starter memory template during `hermes memory setup`**, plus **warn before overwriting** an already-configured bank | — | | #70257 | **Warn when a configured memory provider reports unavailable** (provider-agnostic) | #2765 | | _new_ | **Deterministic \"recalled N memories\" recall indicator** — Hermes itself emits `👁️ Hindsight — recalled N memories` via the status channel when auto-recall injects memory, so the user SEES memory working regardless of whether the model mentions it (`recall_indicator`, on by default) | — | | _new_ | **\"saving to memory\" retain indicator** — `👁️ Hindsight — saving to memory…` emitted the moment a turn is dispatched to the writer, only on real writes (`retain_indicator`, on by default) | — | ## Why the indicators Auto-recall injects memory into the prompt, but whether the user can *see* that Hindsight contributed was previously left to the model — and models routinely decline to mention it, so memory looks like it isn't working even when it is. These indicators are rendered by Hermes itself (`_emit_status`, the same model-independent channel as compression/idle notices), so they always show and can't be silently dropped. Both have off switches for customer-facing agents. ## Scope - Most changes are confined to `plugins/memory/hindsight/**` (+ their tests). - **#70257 and the indicators** are (partly) provider-agnostic and also touch `agent/agent_init.py`, `agent/memory_manager.py`, `agent/memory_provider.py`, `agent/turn_context.py`, and `hermes_cli/memory_setup.py` — the recall indicator adds an opt-in `recall_status()` hook to the base `MemoryProvider` and a `describe_recall()` aggregator on `MemoryManager`; the status channel is wired to the provider via `initialize(status_callback=…)`. ## Tests New/updated deterministic tests across all changes (provider behaviour incl. the recall_sync × indicator interaction, retain-indicator dispatch/off/buffered paths, template setup, local-runtime hint, provider-unavailable warning, env-hint, manager formatting, turn-loop emit wiring). Full affected suite green; `ruff` clean.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/74379",
+        "createdAt": "2026-07-29T20:32:53Z",
+        "updatedAt": "2026-08-13T17:46:09Z",
+        "timestamp": "2026-08-13T17:46:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "type/feature",
+          "comp/agent",
+          "comp/cli",
+          "comp/plugins",
+          "tool/memory",
+          "P3",
+          "sweeper:risk-session-state",
+          "sweeper:blast-moderate",
+          "area/memory"
+        ],
+        "author": "benfrank241",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:1d9dd4bbb16a87613572",
+      "signalId": "github:NousResearch/hermes-agent:issue:85497",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:issue:85497",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "issue",
+        "title": "[Feature]: kanban HERMES_TENANT has no memory-isolation effect — worker memory pollutes across tenants",
+        "text": "### Problem or Use Case Kanban workers receive a `HERMES_TENANT` env var from the dispatcher (`kanban_db.py:_default_spawn`, ~line 9018) when a task is created with `--tenant <slug>`, but that variable has **no memory-isolation effect**. All workers — regardless of board, tenant, or assignee profile — write to the same flat global memory store (`~/.hermes/memories/MEMORY.md`), so concurrent tasks across tenants pollute each other's persistent memory. The kanban docs describe `--tenant` as providing \"data isolation by workspace path and memory key prefix\" ([docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/kanban)). The workspace-path half works; the **memory key prefix half is not implemented**. In a multi-project setup where one role profile (e.g. `implementer`) serves several tenant boards concurrently, the same profile's worker processes write unrelated project context into the same global memory — the next task on any tenant reads the previous tenant's memories. ### Proposed Solution When a kanban worker is spawned with `HERMES_TENANT=<slug>`, scope its memory reads/writes to a per-tenant namespace, mirroring the `context_id` scoping proposed in #47552 and #34352: 1. In `_default_spawn`, map `task.tenant` → the same `context_id` mechanism from #47552 (`MemoryStore` context scoping — writes into `memories/contexts/{context_id}/`, reads merge global + scoped), or 2. Set a dedicated env (e.g. `HERMES_MEMORY_CONTEXT_ID=tenant`) consumed by the memory tool, keeping kanban independent of gateway message-source derivation. Either way, the existing `HERMES_TENANT` plumbing in `_default_spawn` is the natural hook point — the isolation is already half-wired. ### Alternatives Considered - **Manual review of MEMORY.md** — current workaround; fragile at scale with 10+ tenant boards. - **Per-profile memory dirs** (`memories` under each profile) — doesn't help when one role profile serves multiple tenants concurrently, which is the exact kanban pattern. - **Separate boards as hard isolation** — boards already isolate task queues and workspaces, but worker *memory* still lands in one global store regardless of board; board isolation alone doesn't solve this. ### Feature Type - Configuration option / Performance & reliability (memory isolation for multi-tenant kanban workers) ### Scope - Small to Medium (hook `HERMES_TENANT` into the existing `context_id` plumbing in `_default_spawn` + memory tool; tests for scoped reads/writes) ### Contribution - [ ] I'd like to implement this myself and submit a PR --- ### Evidence (source inspection + runtime test) - `HERMES_TENANT` is set at `kanban_db.py:9017-9018` in `_default_spawn`. - The only reader is `tools/kanban_tools.py:1217` (default tenant for `kanban_create`) — no memory path consults it. - Runtime test 2026-08-14: two tasks on two different boards (`cognitive-tree-csharp`, `envoy-task`), both assigned to `decomposer`, each created with `--tenant <board>`. Both workers' memory writes landed in the single global `~/.hermes/memories/MEMORY.md` (mtime during the run window); the profile's own `memories/` dir stayed empty. ### Related - #34352 (Solving the Multi-Tenant Hermes Problem) - #47552 (feat(memory): opt-in context_id scoping — open PR, not merged) ### Environment - Hermes agent, commit aec331899 (recent main) - macOS 26.5, kanban dispatcher in gateway (dispatch_in_gateway: true)",
+        "url": "https://github.com/NousResearch/hermes-agent/issues/85497",
+        "createdAt": "2026-08-13T17:43:33Z",
+        "updatedAt": "2026-08-13T17:46:00Z",
+        "timestamp": "2026-08-13T17:46:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "hua-hua3321",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a3f3e3b6bea2899e7f9a",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85388",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85388",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "feat(pricing): apply DeepSeek peak/off-peak rate card (#72662)",
+        "text": "## Summary Implements #72662: DeepSeek's official rate card switches to peak/off-peak billing at **2026-08-16T16:00 UTC** (announced on https://api-docs.deepseek.com/quick_start/pricing): - Peak hours: **01:00–04:00 and 06:00–10:00 UTC** (all other hours off-peak) - Peak = 2× off-peak on every billing item (cache-hit input, cache-miss input, output) ## Changes ### `agent/usage_pricing.py` - **Snapshot updated to the 2026-08-16 OFF-PEAK rates**: deepseek-v4-flash $0.007 / $0.22 / $0.66 per 1M (cache-hit / cache-miss / output), deepseek-v4-pro $0.022 / $0.66 / $1.98. `pricing_version` bumped to `deepseek-pricing-2026-08-16`. The deepseek-chat / deepseek-reasoner aliases keep sharing flash's rates. - **`estimate_usage_cost` peak/off-peak selection**: before the switchover instant the legacy flat card (`deepseek-pricing-2026-07`) applies; after it, calls during peak hours bill at 2× the off-peak rates and the `CostResult` carries a \"peak-hour rate applied\" note. Peak windows are read as half-open intervals → hours 1, 2, 3 and 6, 7, 8, 9. - The legacy flat card lives in a small temporary module dict (`_DEEPSEEK_LEGACY_FLAT_RATES`) so estimates stay accurate during the transition window; it is marked for removal after the switchover. ### `tests/agent/test_usage_pricing.py` 7 new tests: - peak-hour boundary matrix (hours 0–11, 23) incl. exact window edges (00:59:59 → 01:00:00, 03:59:59 → 04:00:00, 09:59:59 → 10:00:00) - official-table amounts for both models (1M in + 1M out: flash $0.88 off-peak / $1.76 peak; pro $2.64 / $5.28) - cache-read tokens scale at peak ($0.007 → $0.014 flash) - pre-switchover legacy flat rates (incl. a would-be peak hour) - switchover instant boundary (15:59:59Z legacy, 16:00:00Z new card) - non-DeepSeek providers unaffected during peak hours - updated `test_deepseek_v4_pro_pricing_entry_exists` to the new card ## Testing - `tests/agent/test_usage_pricing.py`: 20 passed - All usage_pricing consumers (insights, model cost guard, usage command, MoA loop, context engine): 100 passed total - A large combined batch run shows ~120 failures in unrelated suites (title generator, secret-scope migration, codex transport, etc.) that pass in isolation on both main and this branch — known order-dependent batch interference in this repo, unrelated to this change. ## Notes - **Boundary semantics**: peak windows are treated as half-open [01:00, 04:00) and [06:00, 10:00) UTC, matching the 09:00–12:00 / 14:00–18:00 Beijing framing (clean 12:00–14:00 lunch gap). Hour 4 (04:00–05:00) is off-peak. - **Transition window**: rates are selected at call time (post-request), matching DeepSeek's per-request timestamp billing. Before 2026-08-16T16:00Z the legacy flat card is used, so estimates don't overstate during the transition. - Supersedes the earlier attempt #72756, whose 2×-on-current-rates approach no longer matches DeepSeek's published pricing (the official off-peak rates themselves differ from the current flat card). - **Credit**: feature request and the peak-window UTC mapping are from @dominicelayda's issue #72662; @webtecnica's earlier attempt (#72756) established the multiplier approach and surfaced the need for the official rate card. This PR is a fresh implementation against the official card. Closes #72662",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85388",
+        "createdAt": "2026-08-13T15:24:17Z",
+        "updatedAt": "2026-08-13T17:47:04Z",
+        "timestamp": "2026-08-13T17:47:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "type/feature",
+          "comp/agent",
+          "provider/deepseek",
+          "P3",
+          "area/usage-cost"
+        ],
+        "author": "DavidMetcalfe",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b5832fc1ee1975a6c948",
+      "signalId": "github:NousResearch/hermes-agent:issue:85491",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:issue:85491",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "issue",
+        "title": "terminal_tool: cron lifecycle guard crashes with ValueError on venv binary paths (os.open raises ValueError, not OSError)",
+        "text": "## Summary `terminal_tool` crashes with `ValueError: embedded null byte` before running the command, when the command string leads the guard to derive a script path containing a NUL byte. The failure happens in the cron lifecycle guard's pre-flight scan, so the command never executes and the tool call returns an error instead of output. ## Impact Hit repeatedly during an ordinary coding session on `main` (`470aa20d22`). Two commands that failed: ```bash cd /path/to/repo && git merge --ff-only origin/master && echo \"...\" && .venv/bin/python -m pytest -q cd /path/to/repo && .venv/bin/python -m pytest -q | tail -2 ``` Running a virtualenv interpreter by relative path is extremely common, so this is likely to affect many sessions. It fails loudly rather than silently, which limits the damage — but the error surfaces as a tool traceback with no indication that the *command* was fine and the *guard* was at fault, so it reads like a repo or environment problem. **Workaround:** assign the path to a shell variable first, which changes the token the guard inspects. ```bash PY=.venv/bin/python; \"$PY\" -m pytest -q # works ``` ## Root cause `cron/lifecycle_guard.py::_read_referenced_script` (line ~260): ```python flags = os.O_RDONLY | getattr(os, \"O_NONBLOCK\", 0) try: descriptor = os.open(path, flags) except OSError: return None, False ``` `os.open()` raises **`ValueError`** — not `OSError` — when the path contains an embedded NUL byte. The `except OSError` clause does not catch it, so it propagates up through `_contains_unsafe_gateway_action` → `contains_gateway_lifecycle_command_or_referenced_script` → `terminal_tool` and aborts the tool call. Verified in isolation: ```python >>> import os >>> os.open(\"/tmp/x\\x00y\", os.O_RDONLY) ValueError: embedded null byte ``` The surrounding code already treats unreadable and non-regular paths as \"nothing to scan\" and returns cleanly, so an unopenable path is an expected condition here rather than an exceptional one — this looks like a missed exception type rather than a design question. ## Full traceback ``` File \"tools/terminal_tool.py\", line 2560, in terminal_tool if contains_gateway_lifecycle_command_or_referenced_script( File \"cron/lifecycle_guard.py\", line 353, in contains_gateway_lifecycle_command_or_referenced_script return _contains_unsafe_gateway_action( File \"cron/lifecycle_guard.py\", line 335, in _contains_unsafe_gateway_action if script_text and _contains_unsafe_gateway_action( File \"cron/lifecycle_guard.py\", line 324, in _contains_unsafe_gateway_action script_text, unsafe = _read_referenced_script(script_path) File \"cron/lifecycle_guard.py\", line 260, in _read_referenced_script descriptor = os.open(path, flags) ValueError: embedded null byte ``` ## Suggested fix Catch `ValueError` alongside `OSError`: ```python try: descriptor = os.open(path, flags) except (OSError, ValueError): return None, False ``` A path that cannot be opened is already handled as \"nothing to scan, not unsafe\", and a NUL-containing path can never name a real script, so the same return is correct. Worth checking whether the path *derivation* upstream should also reject NUL-containing candidates before they reach the open — the guard scans several tokens per command, and this one produced a candidate that could not name any file on disk. ## Notes I have not opened a PR — the one-line change is easy, but the guard is security-adjacent code and I would rather the maintainers decide whether the fix belongs at the `open()` call, at the path derivation, or both. Happy to submit one if that is useful.",
+        "url": "https://github.com/NousResearch/hermes-agent/issues/85491",
+        "createdAt": "2026-08-13T17:32:33Z",
+        "updatedAt": "2026-08-13T17:45:57Z",
+        "timestamp": "2026-08-13T17:45:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "type/bug",
+          "comp/tools",
+          "comp/cron",
+          "tool/terminal",
+          "P2"
+        ],
+        "author": "PolyphonyRequiem",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e541c8ee976652709977",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85009",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85009",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "feat(relay): session-span segmentation for continuous sessions",
+        "text": "## Problem Continuous gateway sessions (the normal state for a Telegram/Slack agent) keep the Relay session scope open for days or weeks. Relay export is close-driven, so: - the session root span and its attributes stay unexported until `/new` or idle-end, - any marks attached to the session scope are held with it, - a crash or redeploy loses the entire open segment — nothing exports. In-turn marks already export per-turn since the turn-parenting fix (#83517); this addresses the session-scope remainder. ## Design Opt-in segmentation, config in `config.yaml` (no new env vars): ```yaml gateway: telemetry: session_segments: on_compaction: false # rotate the session scope when the session compacts max_turns: 0 # 0 = unlimited; N = rotate after N turns per segment ``` **Both defaults OFF → scope lifecycle byte-identical to today.** Nothing changes for any existing deployment. Rotation closes the current session scope and pushes the next segment with the same `session_id` attribute plus `hermes.session.segment=N` and `hermes.session.segment_reason=compaction|max_turns` — dashboards keep grouping on `session_id`; per-session queries are unchanged. Key invariants: - **Turn-boundary only.** The scope stack is LIFO; rotation happens exclusively in `begin_turn` before the turn scope pushes. Compaction never rotates directly — it flags `rotate_pending`, consumed at the next turn. A compaction completing mid-turn cannot violate stack order. - **Nothing on the compaction critical path.** The hook in `_notify_context_engine_compression_complete` is observer-semantics: flag set under the session lock, every failure swallowed at DEBUG. - **Legacy rotating compaction handled.** When compaction rotates to a child session id, the old session's scope would orphan unexported forever; the notification closes it (bounded) so the pre-compaction segment exports. - **Bounded like every native scope op.** Rotation rides the shared scope-op executor with `_SCOPE_OP_TIMEOUT` (#83514): a wedged rotation costs one segment span, never the agent. Bookkeeping advances before the native calls so a degraded rotation cannot retry on every turn. - **Subagents:** post-rotation children parent to the new segment handle; live children under the old handle remain valid (parent-ends-before-child is legal tracing). ## Rejected scope (deliberate) - Byte-size segment accounting — span size is not observable pre-close in the SDK - Wall-clock / age-based rotation — parked; turn count and compaction are the meaningful boundaries - OTel span links between segments — shared `session_id` attribute suffices for v1 - Rotation outside turn boundaries; retroactive stitching of pre-crash segments ## Verification - 11 new tests (`tests/agent/test_relay_session_segments.py`): defaults-never-rotate contract, rotation at next begin_turn (not immediately, never mid-turn), segment metadata, max_turns cap arithmetic, zero-cap unlimited, unknown-session/disabled no-ops, rotating-compaction close, wedged-rotation bounded (<5s return), subagent handle continuity. Wedge tests unwedge + drain at teardown (per the #83514 CI lesson). - Mutation check: disabling rotation consumption → exactly the 4 rotation tests fail (4 failed, 7 passed); restore → 11/11. - Gates over `tests/agent/ tests/gateway/relay/ tests/plugins/`: all green except `tests/plugins/memory/test_hindsight_provider.py` (6 failures) — **pre-existing on unmodified origin/main** (`fe8b44dac`), reproduced identically in a clean control worktree; unrelated to this change.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85009",
+        "createdAt": "2026-08-13T03:22:35Z",
+        "updatedAt": "2026-08-13T17:45:39Z",
+        "timestamp": "2026-08-13T17:45:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "type/feature",
+          "comp/agent",
+          "P3",
+          "telemetry",
+          "sweeper:risk-session-state",
+          "area/compression"
+        ],
+        "author": "victor-kyriazakos",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:15f6268769e6ddab4e3c",
+      "signalId": "github:NousResearch/hermes-agent:issue:5820",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:issue:5820",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "issue",
+        "title": "feat(memory): Allow synchronous recall for current turn as option for honcho and hindsight",
+        "text": "IIUC hermes currently queues a background recall for next turn instead of synchronously recalling based on the current user query (for honcho and hindsight at least). `prefetch` right now totally ignores the given query. This means that the recalled information may be completely irrelevant when it is actually injected. If one query is `fix linting`, and the next is `fix tests`, or even if the topic changes slightly, the recalled information may be irrelevant or even cause worse results. Hindsight recall is already supposed to be fast, so the cost of this for a slight latency improvement does not seem worth it to me. I want memory results relevant to the current message.",
+        "url": "https://github.com/NousResearch/hermes-agent/issues/5820",
+        "createdAt": "2026-04-07T11:14:21Z",
+        "updatedAt": "2026-08-13T17:45:28Z",
+        "timestamp": "2026-08-13T17:45:28Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [
+          "type/feature",
+          "comp/plugins",
+          "tool/memory",
+          "P3",
+          "sweeper:risk-session-state",
+          "area/memory"
+        ],
+        "author": "noctuid",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:e9268d1c7eff378f4cd8",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85494",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85494",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "feat(hindsight): memory provider improvements — recall_sync, retain_source, setup templates, memory indicators, error hints",
+        "text": "## Summary Salvages PR #74379 (@benfrank241) with security and efficiency fixes applied on top. Hindsight memory provider improvements: opt-in synchronous recall (recall_sync), actionable error hints for missing local runtime, opt-in retain_source attribution, starter memory templates during setup, provider-unavailable warning, and deterministic \"recalled N memories\" / \"saving to memory\" status indicators. Fixes #5820, #7718, #2765. Supersedes #70278, #70295, #72926, #73415, #70257, #46504, #5838, #13101. ## Changes - `plugins/memory/hindsight/__init__.py`: recall_sync, retain_source default, indicators, local runtime hint, unavailable_reason(), recall_status() - `plugins/memory/hindsight/templates.py` (new): starter bank template catalog fetch + apply + overwrite warning - `agent/memory_provider.py`: RecallStatus dataclass, unavailable_reason() and recall_status() ABC hooks, generic INDICATOR_GLYPH - `agent/memory_manager.py`: describe_recall() aggregator - `agent/turn_context.py`: recall indicator emit after prefetch - `agent/agent_init.py`: provider-unavailable warning with dedup guard - `hermes_cli/memory_setup.py`: systemd/.env inheritance hint ## Fixes applied on top of @benfrank241's work 1. **Security:** `templates.py` apply_template() and probe_existing_customization() now use `open_credentialed_url()` instead of bare `urlopen()` — prevents credential leak via cross-origin redirect. 2. **Efficiency:** `agent_init.py` guards `unavailable_reason()` with the dedup set check before calling it — was running disk I/O + importlib probes on every gateway turn despite the warning being deduped. 3. **Abstraction:** `INDICATOR_GLYPH` in core is now a generic brain (🧠) instead of Hindsight's brand mark. Hindsight overrides with its own `_HINDSIGHT_GLYPH` (👁️). ## Validation - 129/129 targeted tests pass (7 test files) - Ruff clean - E2E smoke tests pass with real imports Contributor: @benfrank241 (ben.bartholomew@vectorize.io) — authorship preserved via commit 1.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85494",
+        "createdAt": "2026-08-13T17:34:49Z",
+        "updatedAt": "2026-08-13T17:45:27Z",
+        "timestamp": "2026-08-13T17:45:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "type/feature",
+          "comp/agent",
+          "comp/cli",
+          "comp/plugins",
+          "tool/memory",
+          "P3"
+        ],
+        "author": "kshitijk4poor",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:66b2b787a300bd163136",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85349",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85349",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(compress): do not publish micro-compaction when DB sync fails",
+        "text": "## What does this PR do? Micro-compaction spliced the rolling summary into the in-memory transcript, then called `_sync_micro_compact_to_db` and swallowed any exception. Resume then loaded the still-active originals on top of the already-compacted list. Rehydrated marker text and generated micro summaries also skipped the batch path's strict redaction, so a legacy secret in an old marker could re-enter the aux prompt and the session DB. `_sync_micro_compact_to_db` now returns success/failure. A failed persist restores the previous cursor and summary and returns the pre-splice messages. Rehydrated marker text and generated micro summaries go through `_redact_compaction_text` before they are stored or sent. ## Related Issue Fixes #84723 ## Type of Change - [x] 🐛 Bug fix (non-breaking change that fixes an issue) ## Changes Made - `_sync_micro_compact_to_db` returns `True` on success / no DB, `False` on write exception. - Absorb path rolls back cursor/summary and keeps the original list when persist fails. - Rehydrate and generated micro summaries are redacted before prompt/DB. - Tests: persist-fail keeps the pre-splice transcript; leaked summarizer output and a legacy marker secret do not survive publish or the aux prompt. ## How to Test 1. On `origin/main`, `test_failed_db_sync_keeps_pre_splice_transcript`, `test_generated_micro_summary_is_redacted_before_publish`, and `test_rehydrated_secret_is_redacted_before_summarizer_prompt` fail. 2. `scripts/run_tests.sh tests/agent/test_micro_compaction.py tests/agent/test_compaction_redaction_boundaries.py` ## Checklist ### Code - [x] I've read the [Contributing Guide](https://github.com/NousResearch/hermes-agent/blob/main/CONTRIBUTING.md) - [x] My commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) - [x] I searched for [existing PRs](https://github.com/NousResearch/hermes-agent/pulls) to make sure this isn't a duplicate - [x] My PR contains **only** changes related to this fix/feature - [x] I've run `pytest tests/ -q` and all tests pass - [x] I've added tests for my changes - [x] I've tested on my platform: macOS 15 (Darwin arm64) ### Documentation & Housekeeping - [x] I've updated relevant documentation — or N/A - [x] I've updated `cli-config.yaml.example` — or N/A - [x] I've updated `CONTRIBUTING.md` or `AGENTS.md` — or N/A - [x] I've considered cross-platform impact — or N/A - [x] I've updated tool descriptions/schemas — or N/A",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85349",
+        "createdAt": "2026-08-13T14:20:09Z",
+        "updatedAt": "2026-08-13T17:45:24Z",
+        "timestamp": "2026-08-13T17:45:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "type/bug",
+          "comp/agent",
+          "P2",
+          "sweeper:risk-session-state",
+          "area/sessions",
+          "area/compression"
+        ],
+        "author": "Christopher-Schulze",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d04a0984b6744ed74c01",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85467",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85467",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "feat(relay): session-span segmentation for continuous sessions (salvage #85009)",
+        "text": "## Summary Salvage of #85009 by @victor-kyriazakos: opt-in Relay session-scope segmentation so continuous gateway sessions export session-level telemetry at turn boundaries instead of holding one unexported span open for weeks — plus a LIFO-safety fix and docs on top. Relay export is close-driven; a Telegram/Slack session that never ends means the session root span (and its marks) never exports, and a crash loses the whole open segment. Turn spans already export per-turn (#83517); this handles the session-scope remainder. ## Changes - `agent/relay_runtime.py`: `gateway.telemetry.session_segments.{on_compaction,max_turns}` (both default OFF → byte-identical lifecycle); rotation consumed only in `begin_turn`, rides the bounded scope-op executor (#83514); segments share `session_id` + `hermes.session.segment` / `segment_reason` metadata (contributor's work, authorship preserved) - `agent/conversation_compression.py`: observer-only compaction notification (contributor's work) - **Fix on top:** the legacy rotating-compaction path closed the old session scope immediately — a compaction completing while a turn was still live on the old session would pop the session scope under the live turn scope (LIFO violation). Now defers via `close_pending`, consumed by that turn's `end_turn` after its own scope pops. Sabotage-verified: the new regression test fails without the fix. - **Docs on top:** `observability/nemo_relay` section on the built-in plugins page (the plugin had no section) with the `session_segments` config table; summary mirrored in the plugin README. ## Validation | | Result | |---|---| | PR test suite | 12/12 (contributor's 11 + 1 new mid-turn deferred-close regression test) | | All relay tests | 50/50 | | Sabotage run | new test fails at the exact assertion with the fix reverted | | Defaults-off contract | pinned by `TestDefaultsNeverRotate` | | Attribution audit | clean | ## Infographic ![Relay session-span segmentation](https://files.catbox.moe/mpxfpr.png) Closes #85009.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85467",
+        "createdAt": "2026-08-13T17:24:11Z",
+        "updatedAt": "2026-08-13T17:45:19Z",
+        "timestamp": "2026-08-13T17:45:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "type/feature",
+          "comp/agent",
+          "P3",
+          "telemetry",
+          "sweeper:risk-session-state",
+          "area/compression"
+        ],
+        "author": "teknium1",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fd670112c33b6e9b9d69",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:65515",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:65515",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(agent): default context lookup for empty model IDs",
+        "text": "## Summary This is the focused current-main replacement for the unique safety fix in #26873. `get_model_context_length()` can be called while a runtime/model selection is still empty. Before this guard, an empty or `None` model flowed into provider-prefix normalization and then into cache/probe logic. Return the documented 256K fallback immediately instead. The replacement intentionally excludes the unrelated runtime-switch, Feishu, cron, auxiliary-client, metadata, and compressor changes from #26873. Those concerns overlap with later upstream work and should not be resurrected as one conflicted patch. ## Verification - `scripts/run_tests.sh tests/agent/test_model_metadata.py -q` — 122 passed - `ruff check agent/model_metadata.py tests/agent/test_model_metadata.py` - `python -m py_compile agent/model_metadata.py tests/agent/test_model_metadata.py` - `git diff --check` Closes the unique empty-model failure mode extracted from #26873; the historical PR remains separate until maintainers decide how to handle its now-overlapping runtime-switch changes.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/65515",
+        "createdAt": "2026-07-16T08:47:19Z",
+        "updatedAt": "2026-08-13T17:44:20Z",
+        "timestamp": "2026-08-13T17:44:20Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "type/bug",
+          "comp/agent",
+          "P2",
+          "sweeper:risk-compatibility",
+          "sweeper:blast-contained"
+        ],
+        "author": "whirmill",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:3b41637e45d50aeefc14",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85498",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85498",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(agent): default context lookup for empty model IDs (salvage #65515) — un-reds main CI",
+        "text": "## Summary Every open PR's CI is currently red on one shard with: ``` FAILED tests/run_agent/test_primary_runtime_restore.py::TestTryRecoverPrimaryTransport::test_allowed_for_nous_anthropic_messages ValueError: Model has a context window of 32,000 tokens, which is below the minimum 64,000 required by Hermes Agent. ``` (Seen on #85444 slice 7/12, #85452 slice 2/12; reproduces locally on plain `upstream/main` files.) Root cause: the test constructs an agent with `model=\"\"` against the live Nous portal URL. `get_model_context_length(\"\")` reaches `_resolve_endpoint_context_length`, whose fuzzy matcher ```python if model in key or key in model: ``` is **vacuously true for an empty model** — `\"\" in key` matches every entry — so it picks an arbitrary model from the live `/v1/models` response and returns that entry's context length. The portal catalog changed recently; the arbitrary match now lands on a 32K entry, `init_agent` raises the 64K-floor `ValueError`, and the junk value is persisted under a `@https://inference-api.nousresearch.com/v1` cache key (visible in the failing log: `Cached context length @https://... -> 32,000 tokens`). This is a salvage of #65515 by @whirmill (open since July 16), rebased onto current main — the same guard, now positioned after the malformed-base_url normalization that landed since, plus an explanatory comment documenting the fuzzy-match footgun. Contributor authorship preserved on the commit. ## Changes - `agent/model_metadata.py`: a blank/empty model id falls back to `DEFAULT_FALLBACK_CONTEXT` immediately — before any cache write or network probe. - `tests/agent/test_model_metadata.py`: `test_empty_model_uses_fallback_context` (covers `\"\"` and `None`). ## Validation - The two previously failing/new tests pass: `test_allowed_for_nous_anthropic_messages` + `test_empty_model_uses_fallback_context`. - Full `tests/agent/test_model_metadata.py` + `tests/run_agent/test_primary_runtime_restore.py`: 92 passed. - Mutation check: removing the guard makes `test_empty_model_uses_fallback_context` fail (arbitrary live-catalog match returns non-default), restoring goes green. - `ruff check` clean. Closes #65515.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85498",
+        "createdAt": "2026-08-13T17:43:57Z",
+        "updatedAt": "2026-08-13T17:43:57Z",
+        "timestamp": "2026-08-13T17:43:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "kshitijk4poor",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:cacd826a53d39bee31ff",
+      "signalId": "github:NousResearch/hermes-agent:issue:58596",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:issue:58596",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "issue",
+        "title": "DaemonThreadPoolExecutor crashes on Python 3.14: `_initializer` attribute removed",
+        "text": "## Bug Description `DaemonThreadPoolExecutor._adjust_thread_count()` references `self._initializer` and `self._initargs`, which no longer exist in Python 3.14. This breaks **all** concurrent features: `delegate_task`, async delegation, skills hub fan-out, and memory sync. ``` Error during OpenAI-compatible API call: 'DaemonThreadPoolExecutor' object has no attribute '_initializer' ``` ## Root Cause Python 3.14 changed `ThreadPoolExecutor` internals: | | Python ≤ 3.13 | Python ≥ 3.14 | |---|---|---| | Initializer storage | `self._initializer`, `self._initargs` (instance attrs) | `self._create_worker_context()` returns a `WorkerContext` | | `_worker()` signature | `_worker(executor_ref, work_queue, initializer, initargs)` (4 params) | `_worker(executor_ref, ctx, work_queue)` (3 params) | | Context management | None | `WorkerContext.initialize()` / `ctx.finalize()` lifecycle | The code at `tools/daemon_pool.py:58-59` directly accesses the removed attributes. ## Affected Code File: `tools/daemon_pool.py`, method `_adjust_thread_count`, lines 55-60: ```python args=( weakref.ref(self, weakref_cb), self._work_queue, self._initializer, # AttributeError in 3.14 self._initargs, # AttributeError in 3.14 ), ``` ## Reproduction ``` Python 3.14.6 from tools.daemon_pool import DaemonThreadPoolExecutor e = DaemonThreadPoolExecutor(max_workers=1) e.submit(lambda: 42) # -> AttributeError: 'DaemonThreadPoolExecutor' object has no attribute '_initializer' ``` ## Proposed Fix Detect `_worker` signature at import time and branch accordingly: ```python import inspect from concurrent.futures.thread import _worker _worker_uses_ctx = len(inspect.signature(_worker).parameters) == 3 # In _adjust_thread_count: if _worker_uses_ctx: # Python >= 3.14: _worker(executor_ref, ctx, work_queue) args = ( weakref.ref(self, weakref_cb), self._create_worker_context(), self._work_queue, ) else: # Python <= 3.13: _worker(executor_ref, work_queue, initializer, initargs) args = ( weakref.ref(self, weakref_cb), self._work_queue, self._initializer, self._initargs, ) ``` This fix: - Uses `inspect.signature(_worker)` at import time (zero overhead per call) - Passes `self._create_worker_context()` for 3.14 (returns a `WorkerContext` with `initialize()`/`finalize()` lifecycle) - Falls back to old `_initializer`/`_initargs` for <= 3.13 - Preserves the original semantics (daemon=True, no `_threads_queues` registration) ## Environment - Hermes Agent: v0.18.0 (2026.7.1) - Python: 3.14.6 - Platform: aarch64-linux-android (Termux) - Verified: patch applied locally, `DaemonThreadPoolExecutor` creates, submits tasks, and shuts down correctly ## Impact **Critical** — on Python 3.14, every feature using `DaemonThreadPoolExecutor` crashes: `delegate_task`, `async_delegation`, `skills_hub`, `memory_manager`, `tool_executor`.",
+        "url": "https://github.com/NousResearch/hermes-agent/issues/58596",
+        "createdAt": "2026-07-05T01:29:33Z",
+        "updatedAt": "2026-08-13T17:43:57Z",
+        "timestamp": "2026-08-13T17:43:57Z",
+        "metrics": {
+          "reactions": 3,
+          "comments": 7
+        },
+        "labels": [
+          "type/bug",
+          "comp/tools",
+          "tool/delegate",
+          "P2",
+          "sweeper:risk-compatibility"
+        ],
+        "author": "iamzulx",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:e1a0737cd50e89eec4d5",
+      "signalId": "github:NousResearch/hermes-agent:pull_request:85274",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:NousResearch/hermes-agent:pull_request:85274",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "NousResearch/hermes-agent",
+        "kind": "pull_request",
+        "title": "fix(desktop): bound large composer image previews",
+        "text": "## What does this PR do? Fixes #41169. Supersedes #68744 while preserving David Metcalfe's original authorship on its two commits, replayed onto current `main`. Follow-up commits harden the fix for the reproduced 72-image failure and the async races exposed during independent review. The Desktop composer previously retained full-resolution image data URLs and rendered them as attachment thumbnails. Large images forced Chromium to decode and rasterize full-size sources on renderer display surfaces. With 72 images, the renderer emitted: ```text Failed to serialize op in 16777152 bytes webContents became unresponsive render-process-gone reason=crashed exitCode=133 ``` The `Failed to serialize op` message comes from Chromium's raster/PaintOp path, not Electron IPC. The parent Electron process, backend, and gateway remained alive; Electron replaced the failed renderer. The original PR's 2048×2048 thumbnail ceiling can itself decode to 16,777,216 RGBA bytes — 64 bytes above the logged 16,777,152-byte PaintOp serialization failure — so the hardened ceiling is intentionally 512px rather than 2048px. This PR bounds the complete composer-preview pipeline rather than only the final `<img>` dimensions: - serializes local/gateway reads and thumbnail creation so only one full image is read/decoded at a time; - creates display thumbnails with `createImageBitmap` + `OffscreenCanvas`, with a 512px longest edge; - closes decoded `ImageBitmap` resources and fails closed to a 1×1 placeholder instead of rendering the original when conversion is unavailable or fails; - retains only the bounded `thumbnailUrl` in new composer attachment state, rather than dozens of multi-megabyte full-resolution data URLs; - reads the original path only when the lightbox is opened, then releases that data URL when the lightbox closes; - keeps model input full resolution: submit/upload reads the authoritative on-disk original independently of the display thumbnail; - binds async preview completion to a renderer-lifetime per-occurrence UUID that survives session-draft cloning, so both A → B → A switching and remove + same-path reattach remain race-safe; - retains local-first reads with gateway fallback for local and remote project paths; - after cross-filesystem staging rewrites `path`, falls back to the preserved original host path in `detail` for lightbox/download; - uses the bounded thumbnail for the optimistic in-flight message bubble too, and never falls back to rendering `@image:<path>` while a queued thumbnail is still pending. No new custom protocol, URL allowlist, or navigation permission is introduced. The existing `MEDIA:` / transcript image path tracked by #42109 remains out of scope. ## Related Issue Fixes #41169 Supersedes #68744. A maintainer can close the conflicted original after accepting this attributed replacement. ## Type of Change - [x] 🐛 Bug fix (non-breaking change that fixes an issue) - [ ] ✨ New feature (non-breaking change that adds functionality) - [ ] 🔒 Security fix - [ ] 📝 Documentation update - [x] ✅ Tests (adding or improving test coverage) - [x] ♻️ Refactor (no intended external behavior change beyond fixing the failure) - [ ] 🎯 New skill (bundled or hub) ## Changes Made - `apps/desktop/src/lib/image-resize.ts` - serial one-at-a-time resize queue; - 512px default longest edge; - explicit bitmap cleanup and fail-closed fallback. - `apps/desktop/src/app/chat/hooks/use-composer-actions.ts` - serializes the full read + resize pipeline; - stores only the bounded thumbnail for new image chips; - updates only the exact optimistic attachment occurrence captured before async preview work, preserving identity across draft clones while preventing same-path replacement races. - `apps/desktop/src/lib/desktop-fs.ts` - centralizes local-first image reads with active-gateway fallback. - `apps/desktop/src/app/chat/composer/attachments.tsx` - renders bounded thumbnails; - keys each pill by occurrence identity so a removed occurrence's deferred lightbox read cannot populate a same-path replacement; - loads the full image on demand for lightbox/download, falls back from a staged backend path to the preserved host path, and releases it on close. - `apps/desktop/src/lib/chat-runtime.ts` - uses the bounded thumbnail in the optimistic in-flight bubble. - `apps/desktop/src/store/composer.ts` - documents thumbnail versus legacy/on-demand full-source semantics; - provides UUID-backed occurrence-identity conditional patching shared by main and tile composers; - patches the main live atom and inactive per-session draft stashes while merging into the latest occurrence state, so thumbnail and staging completions cannot overwrite each other; - removes only the attachment occurrences captured by a successful submit: UUID-backed chips match by occurrence token, while legacy occurrence-less chips match by exact object identity; this preserves newer same-ID file/URL replacements while still clearing successfully staged submitted files. - `apps/desktop/src/app/chat/session-tile-actions.ts` - applies the same occurrence-aware staging merge in independently mounted session-tile composers, rejecting stale upload completion after remove + same-path reattach. - `apps/desktop/src/app/session/hooks/use-prompt-actions/index.ts` - merges cross-filesystem staging metadata into the current occurrence instead of replacing concurrent preview state. Regression coverage verifies: - 72 image reads run one at a time; - 72 bitmap decodes run one at a time and every generated canvas is 512×512 or smaller; - composer state contains 72 bounded thumbnails and no full-resolution preview data; - removing an attachment during queued resize does not resurrect it; - removing and reattaching the same path cannot receive the removed occurrence's late thumbnail; - a delayed thumbnail resolving while another session is active updates only the original session's stashed draft and appears after returning; - thumbnail generation and submit-time staging may finish in either order in both the main and session-tile composers without dropping thumbnail, staged path, session ownership, or upload state; - remove + same-path reattach rejects stale staging completion in both composer scopes; - successful main and tile submits remove only their captured occurrences, preserve newer same-ID image and occurrence-less URL replacements added while submission is in flight, still clear successfully staged legacy files, and emit cleanup state exactly once; - an old occurrence's deferred full-image read cannot open or populate a same-path replacement lightbox; - lightbox full-source data is read only on open and released on close; - a split-filesystem image remains previewable after its `path` is rewritten to a gateway-staged path; - local-first and gateway-fallback paths remain supported; - optimistic messages prefer the bounded thumbnail and render no path-backed image while resize is pending; - resize failures and unsupported APIs fail closed. ## How to Test 1. Attach or paste one large screenshot and verify the composer remains responsive. 2. Attach many large images (the reproduced report used 72) and verify the renderer remains responsive. 3. Verify attachment pills and the optimistic user bubble render bounded thumbnails. 4. Open/download an attachment and verify the original full-resolution image is used. 5. Send the prompt and verify the model receives the original image, not the thumbnail. 6. Remove a chip while thumbnails are still being created and verify it does not reappear. Automated verification on CachyOS Linux with Node 22.23.2: ```bash LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 TZ=UTC NODE_ENV=test \\ NODE_OPTIONS='--max-old-space-size=8192 --localstorage-file=/tmp/hermes-pr68744-full-ui-en-localstorage.json' \\ npm --workspace apps/desktop run test:ui # 423 files passed; 3,819 tests passed NODE_ENV=test NODE_OPTIONS='--max-old-space-size=8192 --localstorage-file=/tmp/hermes-pr68744-exact-localstorage.json' \\ npm --workspace apps/desktop exec -- vitest run --project ui \\ src/lib/image-resize.test.ts \\ src/app/chat/hooks/use-composer-actions.test.ts \\ src/lib/chat-runtime.test.ts \\ src/app/chat/composer/attachments.test.tsx \\ src/lib/desktop-fs.test.ts \\ src/store/composer.test.ts \\ src/app/chat/composer/hooks/use-composer-draft.test.tsx \\ src/app/session/hooks/use-prompt-actions/index.test.tsx \\ src/app/chat/session-tile-attachments.test.tsx # 9 files passed; 216 tests passed NODE_ENV=test npm --workspace apps/desktop run typecheck # passed NODE_ENV=test npm --workspace apps/desktop run lint # 0 errors; repository baseline warnings only, none in changed files NODE_ENV=production npm --workspace apps/desktop run build # production renderer and Electron bundles built; assert-dist-built passed git diff --check # passed ``` Running the full UI suite without forcing an English locale initially produced four locale-sensitive assertion failures (`1 234 567`/`25 USD` formatting versus en-US expectations). Re-running under the CI locale passed all 3,813 tests. Mutation proof: in an isolated worktree of the exact candidate, bypassing the end-to-end preview queue made the 72-image regression fail with `maxActiveReads = 72` versus the required `1`. Restoring the candidate returned the focused suite to 74/74. ## Live CI Exact head `cd265e005e6a49319d97ca2fcf1b1d59edf4bf76`: [CI run 31726943548](https://github.com/NousResearch/hermes-agent/actions/runs/31726943548) completed successfully. `All required checks pass` is green, including Desktop UI, Desktop platform tests, lint, OSV, and both amd64/arm64 Docker builds. Final failed/pending counts: **0 / 0**. ## Checklist ### Code - [x] I've read the [Contributing Guide](https://github.com/NousResearch/hermes-agent/blob/main/CONTRIBUTING.md) - [x] My commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) - [x] I searched for existing PRs; this is an attributed current-main replacement for conflicted #68744 - [x] My PR contains only changes related to this fix - [x] I've run the relevant Desktop automated tests - [x] I've added regression tests for the reported 72-image case - [x] I've tested on CachyOS Linux with Node 22.23.2 and a production Electron build ### Documentation & Housekeeping - [x] User documentation — N/A; no user-facing command or configuration changed - [x] `cli-config.yaml.example` — N/A; no config keys changed - [x] `CONTRIBUTING.md` / `AGENTS.md` — N/A; no workflow contract changed - [x] Cross-platform impact considered — uses Chromium/Electron-standard APIs with a safe fallback - [x] Tool descriptions/schemas — N/A; no agent tool changed ## For New Skills N/A — this PR does not add a skill.",
+        "url": "https://github.com/NousResearch/hermes-agent/pull/85274",
+        "createdAt": "2026-08-13T12:11:02Z",
+        "updatedAt": "2026-08-13T17:47:18Z",
+        "timestamp": "2026-08-13T17:47:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "type/bug",
+          "P3",
+          "comp/desktop"
+        ],
+        "author": "frizikk",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
       }
     }
   ]

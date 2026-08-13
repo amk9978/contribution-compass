@@ -39,13 +39,13 @@
     "defaultBranch": "master",
     "stars": 49229,
     "forks": 8784,
-    "openIssues": 6899,
+    "openIssues": 6898,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:32.025310+00:00"
+    "collectedAt": "2026-08-13T17:47:19.483748+00:00"
   },
   "news": {
     "repository": "ClickHouse/ClickHouse",
-    "collectedAt": "2026-08-13T17:43:32.025310+00:00",
+    "collectedAt": "2026-08-13T17:47:19.483748+00:00",
     "latestRelease": {
       "repository": "ClickHouse/ClickHouse",
       "tag": "v26.7.3.19-stable",
@@ -82,6 +82,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 500,
       "changedCount": 136
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 500,
+      "changedCount": 13
     }
   ],
   "signals": [
@@ -1119,8 +1125,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:issue:113763",
@@ -1554,8 +1559,7 @@
       "labels": [],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:issue:114581",
@@ -1851,8 +1855,7 @@
       ],
       "author": "PedroTadim",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:issue:114616",
@@ -1970,8 +1973,7 @@
       "state": "open",
       "assignees": [
         "shankar-iyer"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:issue:114640",
@@ -2379,8 +2381,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:100374",
@@ -2493,8 +2494,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:101273",
@@ -2617,8 +2617,7 @@
       ],
       "author": "simonmichal",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:101841",
@@ -2801,8 +2800,7 @@
       "state": "open",
       "assignees": [
         "alesapin"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:103483",
@@ -2848,8 +2846,7 @@
       "state": "open",
       "assignees": [
         "kssenii"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:104217",
@@ -2978,8 +2975,7 @@
       "state": "open",
       "assignees": [
         "nihalzp"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:104489",
@@ -3153,8 +3149,7 @@
       "state": "closed",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:105045",
@@ -3279,8 +3274,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:105714",
@@ -3723,8 +3717,8 @@
       "text": "`ALTER TABLE ... MODIFY COLUMN <col> Tuple(...)` on a named `Tuple` that only adds new subfields is now metadata-only (no mutation). Gated behind `SET allow_experimental_metadata_only_named_tuple_alter = 1` (default `false`). Subfield additions through `Array`/`Map`/nested `Tuple` wrappers are also handled. `Nullable(Tuple(...))` is blocked (null map incompatibility). Removing/renaming subfields or changing types still triggers a mutation. Key/index/projection guards reject the metadata-only path when `primary.idx` or skip-index bytes would become invalid (whole tuple in key, or subcolumn whose type changes). Subcolumn references with unchanged types (e.g. `ORDER BY t.a` when only `t.c` is added) are allowed. ### Changelog category (leave one): - Improvement ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): `ALTER TABLE ... MODIFY COLUMN <col> Tuple(...)` on a named `Tuple` is now metadata-only when only adding subfields, matching the speed of top-level `ADD COLUMN`. Gated behind `SET allow_experimental_metadata_only_named_tuple_alter = 1`. ### Documentation entry for user-facing changes - [x] Documentation is not required (behavioral improvement; semantics unchanged)",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/107305",
       "createdAt": "2026-06-12T07:42:58Z",
-      "updatedAt": "2026-08-13T17:22:17Z",
-      "timestamp": "2026-08-13T17:22:17Z",
+      "updatedAt": "2026-08-13T17:45:47Z",
+      "timestamp": "2026-08-13T17:45:47Z",
       "metrics": {
         "reactions": 1,
         "comments": 8
@@ -3807,8 +3801,7 @@
       ],
       "author": "vdimir",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:107865",
@@ -3834,8 +3827,7 @@
       "state": "open",
       "assignees": [
         "kssenii"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:107943",
@@ -3957,8 +3949,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:108329",
@@ -4120,8 +4111,8 @@
       "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Closes: https://github.com/ClickHouse/ClickHouse/issues/NNNNN (auto-closes the issue when this PR is merged into the default branch) Related: https://github.com/ClickHouse/ClickHouse/pull/NNNNN --> The query below applies the same `1 PRECEDING AND 1 FOLLOWING` bounds as a `ROWS`, a `RANGE`, and a `GROUPS` (this PR) frame. The `order` column contains duplicate and non-consecutive values, so the three modes cover different rows: ```sql CREATE TABLE wf_frame_groups (`order` UInt64, value UInt64) ENGINE = Memory; INSERT INTO wf_frame_groups FORMAT Values (10, 1), (10, 2), (20, 3), (30, 4), (30, 5); SELECT order, value, groupArray(value) OVER (ORDER BY order ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS rows_frame, groupArray(value) OVER (ORDER BY order RANGE BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS range_frame, groupArray(value) OVER (ORDER BY order GROUPS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS groups_frame FROM wf_frame_groups ORDER BY order, value; ``` ```response ┌─order─┬─value─┬─rows_frame─┬─range_frame─┬─groups_frame─┐ │ 10 │ 1 │ [1,2] │ [1,2] │ [1,2,3] │ │ 10 │ 2 │ [1,2,3] │ [1,2] │ [1,2,3] │ │ 20 │ 3 │ [2,3,4] │ [3] │ [1,2,3,4,5] │ │ 30 │ 4 │ [3,4,5] │ [4,5] │ [3,4,5] │ │ 30 │ 5 │ [4,5] │ [4,5] │ [3,4,5] │ └───────┴───────┴────────────┴─────────────┴──────────────┘ ``` Each mode interprets the bounds differently: - `ROWS` counts physical rows, so the frame is at most three adjacent rows: the current row plus one on each side. - `RANGE` counts `order` values, so `1 PRECEDING` and `1 FOLLOWING` cover rows whose `order` is within 1 of the current row's. With gaps of 10, no neighbouring row qualifies, so the frame holds only the rows that share the current `order`. - `GROUPS` (added by this PR) counts peer groups, so `1 PRECEDING` and `1 FOLLOWING` always include the adjacent groups in full, whatever the gaps between `order` values. cc: @cwurm ### Changelog category (leave one): - New Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Support the `GROUPS` frame mode for window functions (SQL:2011), e.g. `any(price) OVER (PARTITION BY symbol ORDER BY ts GROUPS BETWEEN CURRENT ROW AND 1 FOLLOWING)`. In a `GROUPS` frame the boundaries count whole peer groups — sets of rows that are equal on the `ORDER BY` key — so `N PRECEDING`/`N FOLLOWING` mean `N` peer groups before/after the current row's peer group, rather than physical rows (`ROWS`) or `ORDER BY` value distances (`RANGE`).",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/108653",
       "createdAt": "2026-06-26T20:45:31Z",
-      "updatedAt": "2026-08-13T15:56:02Z",
-      "timestamp": "2026-08-13T15:56:02Z",
+      "updatedAt": "2026-08-13T17:43:57Z",
+      "timestamp": "2026-08-13T17:43:57Z",
       "metrics": {
         "reactions": 2,
         "comments": 3
@@ -4130,10 +4121,11 @@
         "pr-feature"
       ],
       "author": "nihalzp",
-      "state": "open",
+      "state": "closed",
       "assignees": [
         "antaljanosbenjamin"
-      ]
+      ],
+      "change": "updated"
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:108721",
@@ -4157,8 +4149,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:108786",
@@ -4207,8 +4198,7 @@
       ],
       "author": "UberDever",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:108862",
@@ -4334,8 +4324,7 @@
       "state": "open",
       "assignees": [
         "george-larionov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:109299",
@@ -4371,11 +4360,11 @@
       "text": "<!-- Related: https://github.com/ClickHouse/ClickHouse/issues/109064 --> Scheduler-side support for reclaimable memory tracking and dynamic spilling, built on top of the memory reservations subsystem. The design is described in #109064. Queries can report the portion of an allocation that can be spilled or discarded on request (`IAllocationQueue::setReclaimable`), which is aggregated bottom-up as a new `reclaimable` field on every scheduler node. Each `AllocationLimit` gains a soft limit: when a workload's allocated memory exceeds it and the subtree has reclaimable memory, the scheduler asks a victim to reclaim memory (`ResourceAllocation::spillAllocation`, mirroring `killAllocation`) instead of waiting for the hard `max_memory` limit to force a kill. The request is replied: the query finishes it with `IAllocationQueue::finishSpill` after issuing the decreases for the freed memory (zero reclaimable doubling as a decline), the reply travels to the root as `Update::spilled` on the same propagation path as the state it describes, and at most one spill request is outstanding per subtree until it arrives; a victim that leaves the queue counts as having replied. Victim selection is deterministic and matches the kill order (largest usage, least precedence, largest allocation), descends a single root-to-leaf path via reclaimable-filtered ordered sets, and is fail-close: with nothing reclaimable, or with no soft limit configured, behavior is exactly as before. The soft limit is configured per workload via two new settings: `max_memory_before_spill` (absolute) and `max_memory_to_spill_ratio` (a fraction of the workload's own `max_memory`), smaller wins. The new state is observable in `system.scheduler`: `reclaimable`, `spills`, and the effective `soft_limit`. This is the scheduler side only. `MemoryReservation::spillAllocation` is currently a no-op; the query side that reports reclaimable memory and reacts to spill signals is a separate change. Documentation for the scheduler-side workload settings (`max_memory_before_spill`, `max_memory_to_spill_ratio`) and a `Spilling reclaimable memory` section are included here; the set of operators that can spill will be documented together with the query-side reaction. Invariants for the new machinery are documented on `ISpaceSharedNode` (I1-I8). Added unit tests cover fail-close, largest-first selection, fair descent skipping unreclaimable subtrees, the gate held until the victim's reply, the reply deferred to a pending decrease, re-signalling until under the soft limit, clamping reclaimable on a shrink, a declining victim, a victim removed mid-spill, the soft-limit enable transition via `CREATE OR REPLACE WORKLOAD`, the settings (absolute, ratio, and smaller-wins combination), a concurrency stress, and a parametrized throughput test. Verified under ThreadSanitizer (145 scheduler/workload gtests, 0 data races). ### Changelog category (leave one): - Experimental Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added workload settings `max_memory_before_spill` and `max_memory_to_spill_ratio` for the experimental memory reservation scheduling. They configure a soft memory limit above which a workload's queries are asked to spill reclaimable memory, before the hard `max_memory` limit forces an eviction. This is the scheduler-side foundation: queries do not yet report reclaimable memory or react to spill requests, so the settings have no effect until the query-side change lands. ### Documentation entry for user-facing changes - [x] Documentation is written (mandatory for new features)",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/109367",
       "createdAt": "2026-07-03T21:49:24Z",
-      "updatedAt": "2026-08-13T16:29:58Z",
-      "timestamp": "2026-08-13T16:29:58Z",
+      "updatedAt": "2026-08-13T17:44:40Z",
+      "timestamp": "2026-08-13T17:44:40Z",
       "metrics": {
         "reactions": 1,
-        "comments": 9
+        "comments": 10
       },
       "labels": [
         "pr-experimental"
@@ -4411,8 +4400,7 @@
       "assignees": [
         "novikd",
         "m-selmi"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:109369",
@@ -4739,8 +4727,7 @@
       "state": "open",
       "assignees": [
         "kssenii"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:109891",
@@ -4846,8 +4833,7 @@
       "state": "open",
       "assignees": [
         "kssenii"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110072",
@@ -4970,8 +4956,32 @@
       "state": "closed",
       "assignees": [
         "yakov-olkhovskiy"
+      ]
+    },
+    {
+      "id": "github:ClickHouse/ClickHouse:pull_request:110105",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "ClickHouse/ClickHouse",
+      "kind": "pull_request",
+      "title": "Add clickhouse-proxy application mode",
+      "text": "Implements a new application mode in the `clickhouse` binary, named `proxy`. The proxy accepts connections over end-user ClickHouse protocols, finds the upstream backend based on configurable rules (hostname from TLS SNI or HTTP header, user name, database name, and — for HTTP — query type), and forwards the traffic to it. It is built on the `silk` fiber framework so that many concurrent connections are handled with low RAM usage. Start it with `clickhouse proxy --config-file proxy_config.xml`; a fully commented example config is in `programs/proxy/proxy_config.xml`, and the feature is documented at `docs/en/operations/clickhouse-proxy.md`. **What it does** - Protocol frontends for HTTP(S), native TCP, MySQL, PostgreSQL, transparent TLS-by-SNI, and opaque TCP streams. It handles only end-user protocols (not Keeper or inter-server replication). The user name and database are parsed from the first packets where the protocol allows it (HTTP headers/params/Basic auth, native `Hello`, PostgreSQL `StartupMessage`, HTTP query type). MySQL is server-speaks-first with in-band TLS, so it is forwarded transparently and routed by peer address or the default pool. - TLS routing options: terminate and re-encrypt (the proxy and each backend hold their own certificates), terminate only (unwrap: TLS to clients, plaintext to backends), and transparent (route by SNI without decrypting). Optional ACME certificate provisioning, as in `clickhouse-server`. - Multi-criteria routing rules matching host / user / database / query type / protocol, by exact value or regular expression; regexp captures can be substituted into a backend address template (e.g. route users `ch-<tenant>` to per-tenant backends). - Pools with pluggable load balancing (`random`, `round_robin`, `least_connections`, `lowest_latency`, `least_resources`) behind a common interface; a pool may list several backends for load balancing. - Session stickiness by `session_id` (from the HTTP URL) or by peer address, using a consistent (rendezvous) hash of the backends. - Backend health monitoring (connect latency, consecutive failures) and optional CPU/memory polling with per-backend credentials, feeding the `least_resources` strategy; a JSON status endpoint, `/ping`, and static pages are served by the proxy itself. - An abstract routing table exposing hooks (unknown route, no backends available, first time a user or database is seen) that run a shell command — for example to provision a backend on demand and wait for it to become available. Validated end to end against a live server: HTTP `/ping`, static pages, the status endpoint, GET/POST forwarding, the no-backend error paths, native protocol round-trips, and clean shutdown. ### Changelog category (leave one): - New Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added a new `proxy` mode to the `clickhouse` binary: a lightweight, protocol-aware proxy that routes end-user connections (HTTP, native, MySQL, PostgreSQL, TLS-by-SNI, and raw TCP) to backend servers based on a configurable routing table, with TLS termination/passthrough, load balancing, health checks, and session stickiness. ### Documentation entry for user-facing changes - [x] Documentation is written (mandatory for new features) 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "url": "https://github.com/ClickHouse/ClickHouse/pull/110105",
+      "createdAt": "2026-07-11T17:34:42Z",
+      "updatedAt": "2026-08-13T17:46:26Z",
+      "timestamp": "2026-08-13T17:46:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [
+        "pr-feature",
+        "submodule changed"
       ],
-      "change": "updated"
+      "author": "alexey-milovidov",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110127",
@@ -5118,8 +5128,7 @@
       "state": "open",
       "assignees": [
         "yariks5s"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110199",
@@ -5266,8 +5275,7 @@
       "state": "open",
       "assignees": [
         "yariks5s"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110391",
@@ -5339,8 +5347,7 @@
       "state": "open",
       "assignees": [
         "george-larionov"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110477",
@@ -5363,8 +5370,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110479",
@@ -5700,8 +5706,7 @@
       "assignees": [
         "alexey-milovidov",
         "evillique"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110883",
@@ -5778,8 +5783,7 @@
       "state": "open",
       "assignees": [
         "vdimir"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110943",
@@ -5834,8 +5838,7 @@
       "assignees": [
         "alexey-milovidov",
         "yariks5s"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:110968",
@@ -5991,8 +5994,7 @@
       "state": "open",
       "assignees": [
         "nihalzp"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111332",
@@ -6046,8 +6048,7 @@
       "state": "open",
       "assignees": [
         "jkartseva"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111427",
@@ -6118,8 +6119,7 @@
       ],
       "author": "vdimir",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111459",
@@ -6195,8 +6195,7 @@
         "Ergus",
         "CurtizJ",
         "rschu1ze"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111597",
@@ -6295,8 +6294,7 @@
       "state": "closed",
       "assignees": [
         "Michicosun"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111830",
@@ -6321,8 +6319,7 @@
       "state": "open",
       "assignees": [
         "rschu1ze"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111852",
@@ -6347,8 +6344,7 @@
       "state": "open",
       "assignees": [
         "mstetsyuk"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111867",
@@ -6375,8 +6371,7 @@
       "state": "open",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111895",
@@ -6501,8 +6496,7 @@
       "state": "open",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:111985",
@@ -6701,8 +6695,7 @@
       "state": "open",
       "assignees": [
         "alexbakharew"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112358",
@@ -6858,8 +6851,7 @@
       "state": "closed",
       "assignees": [
         "Algunenano"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112573",
@@ -6940,8 +6932,7 @@
       ],
       "author": "yakov-olkhovskiy",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112648",
@@ -6968,8 +6959,7 @@
       "state": "closed",
       "assignees": [
         "PedroTadim"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112650",
@@ -7019,8 +7009,7 @@
       "state": "open",
       "assignees": [
         "CheSema"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112679",
@@ -7117,8 +7106,7 @@
       ],
       "author": "Avogar",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112758",
@@ -7143,8 +7131,7 @@
       "state": "open",
       "assignees": [
         "alesapin"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112788",
@@ -7215,8 +7202,7 @@
       ],
       "author": "mstetsyuk",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112824",
@@ -7268,8 +7254,7 @@
       "assignees": [
         "antaljanosbenjamin",
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112847",
@@ -7568,8 +7553,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:112950",
@@ -7690,8 +7674,7 @@
       ],
       "author": "rorylshanks",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113023",
@@ -7789,8 +7772,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113076",
@@ -7961,8 +7943,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113244",
@@ -8282,8 +8263,7 @@
       "state": "open",
       "assignees": [
         "hanfei1991"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113443",
@@ -8362,8 +8342,7 @@
       "state": "closed",
       "assignees": [
         "JiaQiTang98"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113482",
@@ -8413,8 +8392,7 @@
       ],
       "author": "scanhex12",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113512",
@@ -8426,8 +8404,8 @@
       "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Closes: https://github.com/ClickHouse/ClickHouse/issues/NNNNN (auto-closes the issue when this PR is merged into the default branch) Related: https://github.com/ClickHouse/ClickHouse/pull/NNNNN --> <details> <summary>Claude</summary> ## Motivation JOIN runtime filters (`enable_join_runtime_filters`) filter probe-side rows only after they were read: the row-level `__applyFilter` conjunct discards non-matching rows, and the read-time index analysis from #109085 (`enable_join_runtime_filters_index_analysis`) skips granules inside already-created read tasks. In both cases the probe side starts reading concurrently with the build side, before the filter exists, so the early tasks are read unpruned. This PR adds a stronger, structural variant for the case when the probe-side join key is a prefix of the table's primary key: the probe side does not read anything until the build side completes, and the completed filter then prunes whole mark ranges by the primary key *before* read tasks are created. ## Approach The gating is expressed as an edge of the query pipeline, not as a waiting state: - `FillingRightJoinSideTransform` gets an optional \"seal\" output port. Exactly one of the concurrent filling transforms — the one that completes the build — emits a single seal chunk carrying the completed runtime filter in its chunk info; the rest just finish. - On the probe side, the sources of a gated `ReadFromMergeTree` are replaced by `SealGatedReadTransform`s: source-like processors whose only input is the seal. Until the seal arrives, the executor has nothing to schedule below them, so the read pools never cut a task. On the seal, the filter is handed to a `RuntimeFilterReadRangesRefiner` (installed on the read pool), which turns it into a primary key `KeyCondition` — an exact `IN`-set, or the `[min, max]` envelope when the exact set overflowed into a bloom filter — and drops non-matching mark ranges at task-cut time, reusing the refiner contract of the MergeTree read pools. - The plan-level pass `markSealGatedReading` finds hash joins whose pushed-down `__applyFilter` conjunct references a probe-side primary key column, and marks the join step and the reading step. `JoinStep::updatePipeline` then wires the seal to the pending seal inputs collected by the `Pipe`. - Everything fails open: a gated read whose seal cannot be wired (the build side of a join, `YShaped`/by-shards pipelines, cancellation) is fed from a `NullSource` and reads ungated with row-level filtering only. FINAL, parallel replicas, and joins sharded by primary key ranges are not gated. Both the default multi-threaded pool and the in-order reading paths are gated (including `max_threads = 1` and reads in primary key order). On a gated read, the read-time index analysis by the same runtime filter is skipped as redundant — the refiner is already granule-exact through the primary key; filters of other joins are kept. Enabled by the experimental setting `enable_join_seal_gated_reading` (default off) on top of `enable_join_runtime_filters`. This is also groundwork for epoch-based (punctuated) collocated joins, where the same reader will consume a stream of per-epoch seals. ## Results On a 90M-row probe table (`ORDER BY k`, warm cache; `tests/performance/join_seal_gated_reading.xml`, CI perf host numbers): - 100 sparse build keys (exact `IN`-set path): 172 ms → 12 ms - 1M build keys in a narrow band (bloom overflow, `[min, max]` envelope path): 645 ms → 54 ms Compared with the read-time granule pruning by the same runtime filter (`enable_join_runtime_filters_index_analysis` + `use_skip_indexes_on_data_read`), the single-query latency on local storage is on par (the probe side cannot run far ahead of the build even ungated: the join does not consume it until the hash table is ready, so port backpressure stalls it after about a chunk per stream). The structural difference of gating is that no read or prefetch is issued for pruned ranges at all, and that it is the seam for the per-epoch seals of collocated joins. The stateless test `04653_join_seal_gated_reading` asserts result equality with ungated execution, the pipeline structure, `ReadPoolRangeRefinerDroppedMarks`/`read_rows` contrast, the fail-open shapes, and the suppression of the redundant read-time analysis. </details> ### Changelog category (leave one): - Improvement ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added an experimental setting `enable_join_seal_gated_reading` (default off). When enabled together with `enable_join_runtime_filters` and the probe-side join key is a prefix of the table's primary key, the probe side of a hash JOIN starts reading only after the build side completes, and the completed runtime filter prunes whole mark ranges by the primary key before read tasks are created, instead of only filtering rows after they were read.",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/113512",
       "createdAt": "2026-08-05T15:13:35Z",
-      "updatedAt": "2026-08-13T17:15:02Z",
-      "timestamp": "2026-08-13T17:15:02Z",
+      "updatedAt": "2026-08-13T17:43:34Z",
+      "timestamp": "2026-08-13T17:43:34Z",
       "metrics": {
         "reactions": 1,
         "comments": 3
@@ -8439,7 +8417,7 @@
       "author": "KochetovNicolai",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113534",
@@ -8574,8 +8552,7 @@
       ],
       "author": "dhtclk",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113609",
@@ -8700,8 +8677,7 @@
       "state": "open",
       "assignees": [
         "nihalzp"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113707",
@@ -8755,8 +8731,7 @@
       "state": "closed",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113754",
@@ -8832,8 +8807,7 @@
       "state": "open",
       "assignees": [
         "Fgrtue"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113868",
@@ -8961,8 +8935,7 @@
       "state": "closed",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113902",
@@ -9038,8 +9011,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113912",
@@ -9166,8 +9138,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113984",
@@ -9219,8 +9190,7 @@
       "state": "closed",
       "assignees": [
         "PedroTadim"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:113998",
@@ -9571,8 +9541,7 @@
       "state": "closed",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114070",
@@ -9952,6 +9921,30 @@
       ]
     },
     {
+      "id": "github:ClickHouse/ClickHouse:pull_request:114150",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "ClickHouse/ClickHouse",
+      "kind": "pull_request",
+      "title": "Disable the map element to subcolumn rewrite by default and revert the PREWHERE grouping change",
+      "text": "Closes: https://github.com/ClickHouse/ClickHouse/issues/111879 Related: https://github.com/ClickHouse/ClickHouse/pull/99200 Related: https://github.com/ClickHouse/ClickHouse/pull/107988 Related: https://github.com/ClickHouse/ClickHouse/pull/111954 Related: https://github.com/ClickHouse/ClickHouse/issues/107912 ### Description In 26.3 we added bucketed serialization for the `Map` data type together with an analyzer rewrite of `m['key']` (internally `arrayElement(m, 'key')`) into the Map key subcolumn `m.key_<key>`, so that only the relevant bucket is read from disk. The bucketed serialization turned out to be imperfect and is planned to be reimplemented as a separate type. For regular (non-bucketed) `Map` serialization this rewrite can be harmful (for example, it complicates subcolumn size estimation) and gives no benefit for single-key lookups. **1. New setting.** `optimize_map_element_to_subcolumn` (default `false`) gates only the `{Map, arrayElement}` transformer in `FunctionToSubcolumnsPass`. All other `Map` subcolumn optimizations (`mapKeys`, `mapValues`, `length`, `empty`) keep following `optimize_functions_to_subcolumns`. The new setting takes effect only when `optimize_functions_to_subcolumns` is also enabled. This only disables the automatic rewrite; reading the `m.key_<key>` subcolumn explicitly still works, and query results are unchanged either way. **2. Revert of the PREWHERE grouping from #107988.** That change made `MergeTreeWhereOptimizer` and `tryBuildPrewhereSteps` group conditions by physical storage column instead of by the exact column set, so that several `m['kN']` subcolumn reads share one read step. Its only purpose was to compensate for the rewrite: with the rewrite disabled, all `m['kN']` conditions reference the same column `m` and the original exact-column-set grouping already places them into one step. The grouping also introduced a correctness regression, #111879: a guard condition and a throwing expression over subcolumns of the same column (for example `payload.longitude IS NOT NULL` and a `CAST(tuple(...), 'Point')` over `payload.latitude`) became adjacent and were merged into one read step. All conditions of a step are evaluated on the same unfiltered block, so the throwing expression ran on rows the guard had rejected. Measured with the repro from #111879 on pre-built binaries: | binary | result | |---|---| | master before #107988 (`cd3c529cd3a`) | `66666` | | master with #107988 | `CANNOT_INSERT_NULL_IN_ORDINARY_COLUMN` | | this branch | `66666` | Reverting instead of adding a new heuristic keeps this change small enough to backport. Improving subcolumn read sharing in PREWHERE will be done separately on `master` and does not need backporting; #111954 is superseded by this change. The serialization part of #107988 (`ISerialization` cache keys, whole-map caching in `SerializationMapKeyValue`, the `SerializationSparse` refactor) is kept — it is unrelated to #111879 and still shares reads between subcolumns of the same column inside one read step. **Expected performance comparison results.** By default `m['key']` again reads the whole `Map` column, as before 26.3, so query shapes that read map elements are slower than on `master`, where the rewrite is enabled: `get_map_value` and the shapes in `tests/performance/map_subcolumns_prewhere.xml` (the setting opt-in was removed from that test so it measures the default path). This is the intended consequence of disabling the rewrite; enabling `optimize_map_element_to_subcolumn` restores the previous behavior. **Out of scope.** With `enable_multiple_prewhere_read_steps = 0` the whole PREWHERE is a single step, so no guard can protect a throwing expression and the repro still throws. This is pre-existing and unrelated to the rewrite: master before #107988 (`cd3c529cd3a`) already throws in that configuration, and it involves `JSON` subcolumns, not `Map`. The new test pins the setting to `1` because it is randomized in CI. **Tests.** `04815_prewhere_guard_throwing_expression_subcolumns` is a regression test for #111879. `04814_optimize_map_element_to_subcolumn_setting` covers the new setting and pins its value, because `clickhouse-test` randomizes it. The tests that assert the rewrite (`04000`, `04513`, `03989`, `04040`, `04207`) enable the setting explicitly. All 177 `prewhere`-named stateless tests were compared against a pre-revert binary and none changes behavior. ### Changelog category (leave one): - Bug Fix (user-visible misbehavior in an official stable release) ### Changelog entry (a user-readable short description of the changes that goes into CHANGELOG.md): Added a new setting `optimize_map_element_to_subcolumn` (disabled by default) that controls rewriting `m['key']` into the `Map` key subcolumn `m.key_<key>`. It is disabled by default because the bucketed `Map` serialization it relies on is being reworked. Also reverted the PREWHERE condition grouping that was introduced for that rewrite, which caused `CANNOT_INSERT_NULL_IN_ORDINARY_COLUMN` when a guard condition and a potentially throwing expression, such as a `CAST`, read subcolumns of the same column, for example a `JSON` or `Map` column.",
+      "url": "https://github.com/ClickHouse/ClickHouse/pull/114150",
+      "createdAt": "2026-08-10T12:25:51Z",
+      "updatedAt": "2026-08-13T17:45:22Z",
+      "timestamp": "2026-08-13T17:45:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "pr-improvement"
+      ],
+      "author": "Avogar",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:ClickHouse/ClickHouse:pull_request:114152",
       "source": "github",
       "group": "data-infrastructure",
@@ -10117,8 +10110,7 @@
       ],
       "author": "vdimir",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114187",
@@ -10242,8 +10234,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114216",
@@ -10270,8 +10261,7 @@
       "state": "closed",
       "assignees": [
         "PedroTadim"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114219",
@@ -10298,8 +10288,7 @@
       "assignees": [
         "vdimir",
         "Avogar"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114220",
@@ -10326,8 +10315,7 @@
       "assignees": [
         "vdimir",
         "Avogar"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114226",
@@ -10365,8 +10353,8 @@
       "text": "Follow-up to https://github.com/ClickHouse/ClickHouse/pull/113759: the last AI review finding on that PR landed after the PR had been added to the merge queue, so the branch could no longer be updated. This addresses it. `StorageWindowView::getSourceTableSelectQuery` builds the raw-source backfill query for `CREATE WINDOW VIEW ... POPULATE`. The rows it produces are inserted into the window view, where `writeIntoWindowView` executes the mergeable view query over them, so the backfill query must deliver the raw source rows and leave all row transformations of the original query to the view query — otherwise the initialized state diverges from live behavior. The PR originally made the helper clear the leftovers of the original `SELECT` that violated this invariant one by one — `LIMIT`/`OFFSET` (and `WITH TIES`), plain `DISTINCT`, `ARRAY JOIN`, `WHERE`/`PREWHERE`, table-expression `SAMPLE`/`FINAL` — on top of the `JOIN`/`GROUP BY`/`ORDER BY`/`LIMIT BY`/`WINDOW`/`QUALIFY`/`INTERPOLATE` handling it already had. Review then found that this strip-the-leftovers approach misses wrapped sources: the same constructs inside a `FROM (SELECT ...)` subquery or a CTE definition survived the rewrite, and covering them would have required recursing the rewrite into every nested select. So the helper now builds the backfill query from scratch instead of stripping a clone of the view query. The contract makes this valid: `writeIntoWindowView` always receives raw source-table blocks (`getInputHeader` is the source table header no matter how the view query wraps or transforms the table — `PushingToWindowViewSink` is created with exactly that header), so the correct backfill query is exactly `SELECT <source columns> FROM <source table>`, plus `ORDER BY` on the timestamp column so the watermark is initialized from the earliest record. Wrapped sources, joins, and every row-shaping clause are covered by construction because the user query is no longer cloned at all. The helper shrinks by ~100 lines. Note: the divergence is currently unobservable because `CREATE WINDOW VIEW ... POPULATE` fails before writing any rows (https://github.com/ClickHouse/ClickHouse/issues/113493), so no regression test is possible yet; this keeps the rewrite invariant consistent for when `POPULATE` is fixed. Verified with `clickhouse-local` probes that `POPULATE` over wrapped-subquery/CTE/`JOIN`/`WHERE`/`FINAL` sources now analyzes the backfill query cleanly and proceeds to the pre-existing #113493 sink error. Related: https://github.com/ClickHouse/ClickHouse/pull/113759 Related: https://github.com/ClickHouse/ClickHouse/issues/113493 ### Changelog category (leave one): - Not for changelog (changelog entry is not required)",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/114247",
       "createdAt": "2026-08-10T23:40:02Z",
-      "updatedAt": "2026-08-13T17:30:18Z",
-      "timestamp": "2026-08-13T17:30:18Z",
+      "updatedAt": "2026-08-13T17:46:37Z",
+      "timestamp": "2026-08-13T17:46:37Z",
       "metrics": {
         "reactions": 0,
         "comments": 5
@@ -10426,8 +10414,7 @@
       "state": "open",
       "assignees": [
         "PedroTadim"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114274",
@@ -10530,8 +10517,7 @@
       ],
       "author": "maxknv",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114285",
@@ -10556,8 +10542,7 @@
       "state": "open",
       "assignees": [
         "alesapin"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114298",
@@ -10609,8 +10594,7 @@
       "state": "closed",
       "assignees": [
         "nikitamikhaylov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114305",
@@ -10711,8 +10695,7 @@
       "state": "open",
       "assignees": [
         "rschu1ze"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114320",
@@ -10760,8 +10743,7 @@
       ],
       "author": "Blargian",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114328",
@@ -10773,8 +10755,8 @@
       "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Closes: https://github.com/ClickHouse/ClickHouse/issues/NNNNN (auto-closes the issue when this PR is merged into the default branch) Related: https://github.com/ClickHouse/ClickHouse/pull/NNNNN --> ### Changelog category (leave one): - Not for changelog (changelog entry is not required) ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Pure refactoring change, doesn't affect any working part of code.",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/114328",
       "createdAt": "2026-08-11T13:44:39Z",
-      "updatedAt": "2026-08-13T17:21:58Z",
-      "timestamp": "2026-08-13T17:21:58Z",
+      "updatedAt": "2026-08-13T17:44:07Z",
+      "timestamp": "2026-08-13T17:44:07Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -10998,8 +10980,8 @@
       "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Related: https://github.com/ClickHouse/ClickHouse/issues/78474 --> ### Changelog category (leave one): - Bug Fix (user-visible misbehavior in an official stable release) ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Fixes a bug where a client connecting to ClickHouse Keeper during a Raft leader change could be held for the whole `session_timeout_ms` (30 seconds by default) before its connection was rejected, instead of being rejected as soon as the in-flight request was dropped. The connecting client can now reconnect to another replica sooner. ### Description A client's `Connect` makes Keeper submit an internal `SessionID` request. If the Raft append stream breaks while it is in flight, during a leader election say, that request is lost silently. **Root cause.** Such a request carries `session_id = -1` and no xid; its identity lives in `(server_id, internal_id)`. Two places used the wrong key: * `KeeperRequestDispatcher::onCommit` correlated a commit with its in-flight head by `(session_id, xid)`. Every `SessionID` request shares `(-1, 0)`, and `onCommit` runs on every node for every commit, so a `SessionID` committed for another server retired a still-uncommitted local request. * The error path queued the response for lookup by `session_id`, which `-1` has no callback for, so it was discarded and `getSessionID` timed out. The real waiter is a promise keyed by `internal_id`. **The change.** `onCommit` additionally requires `(server_id, internal_id)` to match for `OpNum::SessionID`. Error responses go through one `SessionID`-aware routing helper on `KeeperDispatcher`, wired into **both** dispatchers: `use_new_dispatcher` is a setting and the old one shares the defect. The request now fails at the in-flight drain bound rather than at `session_timeout_ms`. `KeeperTCPHandler` does not branch on the error code, so that earlier rejection is the whole user-visible gain; the accurate `ZCONNECTIONLOSS` only improves the server log. `test_keeper_force_recovery` also gets a retry around the connect after the election, since dropping in-flight appends is deliberate. The correlation fix is scoped to `OpNum::SessionID`. The garbage collectors also use negative session ids, but their `TryRemove` is idempotent and unwaited, so they are unaffected. **Validation.** New gtests cover both the routing decision and the production wiring behind it, each verified to go red under a mutation of the change it covers; the old dispatcher was exercised with `use_new_dispatcher = false`. An injected fault at the connect under test reddens the integration test without the retry and passes with it.",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/114401",
       "createdAt": "2026-08-12T00:10:11Z",
-      "updatedAt": "2026-08-13T17:29:07Z",
-      "timestamp": "2026-08-13T17:29:07Z",
+      "updatedAt": "2026-08-13T17:47:09Z",
+      "timestamp": "2026-08-13T17:47:09Z",
       "metrics": {
         "reactions": 0,
         "comments": 7
@@ -11060,8 +11042,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114410",
@@ -11135,8 +11116,7 @@
       "state": "open",
       "assignees": [
         "Avogar"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114417",
@@ -11502,8 +11482,8 @@
       "text": "### Changelog category (leave one): - Documentation (changelog entry is not required)",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/114466",
       "createdAt": "2026-08-12T10:49:59Z",
-      "updatedAt": "2026-08-13T17:41:19Z",
-      "timestamp": "2026-08-13T17:41:19Z",
+      "updatedAt": "2026-08-13T17:44:49Z",
+      "timestamp": "2026-08-13T17:44:49Z",
       "metrics": {
         "reactions": 0,
         "comments": 47
@@ -11589,8 +11569,7 @@
       ],
       "author": "leshikus",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114473",
@@ -11727,8 +11706,7 @@
       ],
       "author": "scanhex12",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114478",
@@ -11806,8 +11784,7 @@
       "state": "closed",
       "assignees": [
         "PedroTadim"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114490",
@@ -12160,8 +12137,7 @@
       "state": "open",
       "assignees": [
         "azat"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114523",
@@ -12209,8 +12185,7 @@
       ],
       "author": "CurtizJ",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114527",
@@ -12336,8 +12311,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114533",
@@ -12360,8 +12334,7 @@
       ],
       "author": "vdimir",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114534",
@@ -12604,8 +12577,7 @@
       "state": "closed",
       "assignees": [
         "tiandiwonder"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114544",
@@ -12683,8 +12655,7 @@
       "state": "closed",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114547",
@@ -13414,8 +13385,7 @@
       "assignees": [
         "Algunenano",
         "tiandiwonder"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114576",
@@ -13517,8 +13487,7 @@
       "state": "open",
       "assignees": [
         "PedroTadim"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114583",
@@ -13848,8 +13817,7 @@
       "state": "closed",
       "assignees": [
         "Blargian"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114604",
@@ -14064,8 +14032,7 @@
       ],
       "author": "vdimir",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114617",
@@ -14172,8 +14139,7 @@
       "state": "open",
       "assignees": [
         "pufit"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114621",
@@ -14224,8 +14190,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114623",
@@ -14250,8 +14215,7 @@
       "state": "open",
       "assignees": [
         "leshikus"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114624",
@@ -14275,8 +14239,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114625",
@@ -14299,8 +14262,7 @@
       ],
       "author": "yakov-olkhovskiy",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114626",
@@ -14326,8 +14288,7 @@
       "state": "open",
       "assignees": [
         "davenger"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114627",
@@ -14374,8 +14335,7 @@
       "state": "open",
       "assignees": [
         "PedroTadim"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114629",
@@ -14398,8 +14358,7 @@
       ],
       "author": "fkastrati",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114631",
@@ -14506,8 +14465,7 @@
       "state": "open",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114635",
@@ -14533,8 +14491,7 @@
       "state": "closed",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114636",
@@ -14581,8 +14538,7 @@
       ],
       "author": "Blargian",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114643",
@@ -14608,8 +14564,7 @@
       "state": "open",
       "assignees": [
         "Manerone"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114644",
@@ -14632,8 +14587,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114645",
@@ -14658,8 +14612,7 @@
       "state": "open",
       "assignees": [
         "yariks5s"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114646",
@@ -14684,8 +14637,7 @@
       "state": "open",
       "assignees": [
         "nihalzp"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114647",
@@ -14752,8 +14704,7 @@
       ],
       "author": "yakov-olkhovskiy",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114651",
@@ -14913,8 +14864,7 @@
       "state": "closed",
       "assignees": [
         "Blargian"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114658",
@@ -14938,8 +14888,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114659",
@@ -14962,8 +14911,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114660",
@@ -14986,8 +14934,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114661",
@@ -15010,8 +14957,7 @@
       ],
       "author": "rschu1ze",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114662",
@@ -15067,8 +15013,7 @@
         "alexey-milovidov",
         "JiaQiTang98",
         "groeneai"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114664",
@@ -15117,8 +15062,7 @@
       "labels": [],
       "author": "valerypetrov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114666",
@@ -15141,8 +15085,7 @@
       ],
       "author": "yakov-olkhovskiy",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114667",
@@ -15163,8 +15106,7 @@
       "labels": [],
       "author": "Ria-K912",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114668",
@@ -15188,8 +15130,7 @@
       ],
       "author": "groeneai",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114669",
@@ -15212,8 +15153,7 @@
       ],
       "author": "dhtclk",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114670",
@@ -15225,8 +15165,8 @@
       "text": "### Changelog category (leave one): - Documentation (changelog entry is not required) ## Summary - Expand the one-line Autoscaling section in the Managed Postgres scaling docs with the behavior sourced from the Ubicloud codebase: the 85% storage notification, the 90% automatic scale-up, and the 95% maintenance-window bypass - Document what autoscaling means for the cutover and client connections: same process as a manual instance change, connections dropped and in-flight transactions rolled back, DNS repointed to the new primary under the same hostname - Document read-only mode: free-space trigger and recovery thresholds per disk size, the error writes receive, and automatic recovery after the scale-up - Add a worked example scenario for a 1024 GB instance scaling to 2048 GB",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/114670",
       "createdAt": "2026-08-13T16:59:03Z",
-      "updatedAt": "2026-08-13T17:41:05Z",
-      "timestamp": "2026-08-13T17:41:05Z",
+      "updatedAt": "2026-08-13T17:45:05Z",
+      "timestamp": "2026-08-13T17:45:05Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -15238,7 +15178,7 @@
       "author": "amogiska",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:114671",
@@ -15262,8 +15202,7 @@
       ],
       "author": "leshikus",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:42701",
@@ -15314,8 +15253,7 @@
       "state": "open",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:64184",
@@ -15392,8 +15330,7 @@
       ],
       "author": "devcrafter",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:73776",
@@ -15595,8 +15532,7 @@
       ],
       "author": "m4ttheux",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:81944",
@@ -15656,11 +15592,11 @@
       "project": "ClickHouse/ClickHouse",
       "kind": "pull_request",
       "title": "Cascades cost-based optimizer for distributed query plans",
-      "text": "A Cascades-style cost-based optimizer that chooses distribution strategies for the multi-stage distributed query plans of #106020. It explores alternatives in a memo (a shared store of equivalent plan fragments) with top-down, goal-directed search and picks the cheapest plan satisfying the required distribution and sorting properties, inserting exchange operators (plan steps that move rows between nodes) as needed. Implemented: - **Join strategies**: shuffle hash join, broadcast hash join (with `ReplicatedRead` — every worker repeats the same read of a small table instead of a network broadcast, assuming shared storage where all workers see the same data), replicated join (a small deterministic join is recomputed identically on every node over such reads, so its result never crosses the network; nested joins compose; `ANY` joins are excluded because the kept row depends on the build order), local join. - **Aggregation strategies**: two-phase (partial + merge), shuffle by group keys, local; `distributed_aggregation_memory_efficient` and `distributed_plan_force_shuffle_aggregation` are honored. - **Top-N**: two-stage distributed top-N (per-node bounded sort, sorted-merge gather, coordinator limit); disabled under `exact_rows_before_limit`, which needs the full row count. - **Read strategies**: parallel N-way read, replicated read, local read. For `FINAL`, #108148 (already in master) taught the rule-based distributed plan to split a `FINAL` read into disjoint primary-key-range buckets where that is safe; Cascades now reuses that machinery, so `FINAL` no longer forces a serial read here either. The coordinator ships each bucket's marks in the `read_bucket` task parameters. - **`IN (subquery)`**: follows the `rewrite_in_to_join` setting like the rest of the planner (the forced join form is removed). In the default set form the set-building subqueries are planned separately and distributed like any other query. - **Properties and enforcers**: distribution (node count, replication, partitioning columns with equivalence classes and the types the keys are cast to before hashing) and sorting; when a plan alternative lacks a required property, an enforcer inserts the step that provides it (`Gather`/`Shuffle`/`Broadcast`/`ScatterExchange`, `Sort`). - **Transformations**: join commutativity (only for semantics-preserving joins: `INNER ALL`, `CROSS`, `SEMI`/`ANY`/`ANTI`; never `ASOF`, and never `ANY` under `join_any_take_last_row`), two-phase aggregation split, two-stage top-N split. - **Cost model**: `work`, `network`, and `sequential` components, each priced as wall-clock per node: a shuffle moves 1/N of the data per node, a broadcast payload is ingested once by every receiver in parallel, and a gather funnels every row through one endpoint, so its transfer stays undivided and pays a per-row cost. A hash-table build counts as parallel work (`parallel_hash` shards it across threads); a fixed per-exchange overhead keeps small inputs local. A table read is priced on its scan volume - the rows the primary key keeps - not on its output estimate, so a filter off the sorting key cannot make a replicated re-read look free. Standalone filters (e.g. `HAVING`) are estimated from column NDVs with join-key equivalence classes; join estimates are clamped to join kind and strictness semantics; exchange costs use per-row byte widths measured from the parts' column sizes (followed through renames, not derived from types). All weights and calibration constants are overridable at query time. What this improves over the rule-based distributed planner, on TPC-H plans. The rule-based planner broadcasts a small table when its read is below `distributed_plan_max_rows_to_broadcast`, but it often cannot size the result of a join, so a small join result (`nation x region`, 5 rows after the region filter) is scattered across nodes, joined there, and shuffled again (repartitioned across nodes) by the next join key. It also often inserts a shuffle at join and aggregation boundaries even when the rows are already divided by the right key. Cascades estimates sizes through joins, knows which partitioning already holds, compares broadcast against shuffle by cost for each join, and recomputes a small deterministic join on every node when that is cheaper than moving its result. On TPC-H SF100 over 8 nodes (same binary, same run window; times are server-side means of the hot runs) the join-heavy queries improve: | Query | Rule-based -> Cascades | What changed in the plan | |---|---|---| | Q21 | 7.66 s -> 5.34 s | The four `supplier x nation` joins compute their small results once and broadcast them, so `lineitem` is not shuffled to meet them. | | Q09 | 4.07 s -> 2.47 s | `part` and `nation` are read in full by every node, so `lineitem` and `supplier` are not shuffled to meet them. | | Q08 | 2.39 s -> 0.99 s | `nation x region` (5 rows) is recomputed by every node; `part` is read in full per node, so `lineitem` is not shuffled to join it. | | Q02 | 2.14 s -> 0.84 s | The `supplier x nation x region` chain is recomputed by every node, so only `partsupp` and `supplier` are shuffled. The top-100 sort becomes two-stage, sending at most 100 rows per node. | | Q05 | 2.05 s -> 1.12 s | The whole dimension side (`orders x customer x nation x region`) is recomputed by every node over full local reads; `lineitem` joins it in place with no shuffle at all. | | Q17 | 2.72 s -> 1.78 s | The small per-part average is broadcast to every node, so the outer 600M-row `lineitem` read is not shuffled. | | Q11 | 0.49 s -> 0.26 s | `supplier x nation` is computed once and broadcast; `partsupp` joins it in place. | | Q12 | 0.76 s -> 0.59 s | The filtered `lineitem` rows (~30K of 600M) are gathered once and broadcast; nothing is shuffled. | The remaining queries change less. Summed over all 22 queries, hot server time drops from 36.8 s to 28.8 s (about 22% lower). The remaining regressions are the `IN (subquery)` queries Q18 (2.43 s -> 2.85 s) and Q20 (2.24 s -> 2.99 s): with the forced join rewrite removed, both run their `IN`s as sets, and the set-form plan Cascades picks is slower than the rule-based one; a cost-informed choice of the `IN` form is a follow-up. `EXPLAIN pretty = 1, estimates = 1` shows the chosen plan with a row estimate and the accumulated cost for each step. Also in this PR, two improvements to the shared bucketed-read machinery (they benefit the rule-based path too): the `FINAL` layer split no longer depends on the coordinator's core count, and a many-partition `FINAL` split groups its layers into the target task count instead of falling back to a serial read. Design, a worked example on TPC-H data (a simplified 3-table query traced through the memo), and current limitations are documented in `src/Processors/QueryPlan/Optimizations/Cascades/ARCHITECTURE.md`. Plan-shape tests cover the actual TPC-H queries (`03836_tpch_join_order_plans`), and focused tests pin the cost-model contracts (e.g. `04869_cascades_read_cost_granule_volume`, `04838_cascades_filter_selectivity`). Disabled by default. Requires the analyzer; remote execution requires the stateless-worker configuration, while `distributed_plan_execute_locally = 1` runs the stages in-process without it: ```sql SET enable_cascades_optimizer = 1, make_distributed_plan = 1; ``` For tests, `param__internal_cascades_cluster_node_count` overrides the cluster size, `param__internal_cascades_cost_config` overrides the cost model configuration, `param__internal_join_table_stat_hints` injects table statistics, `param__internal_cascades_task_limit` lowers the task budget (it can never raise it). Related: https://github.com/ClickHouse/ClickHouse/pull/106020 ### Changelog category (leave one): - Experimental Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added an experimental Cascades cost-based optimizer for distributed query plans, enabled by `enable_cascades_optimizer = 1` together with `make_distributed_plan = 1`. It chooses between shuffle, broadcast, replicated, and local join strategies, two-phase, shuffle, and local aggregation, two-stage distributed top-N, and parallel and replicated reads by estimated cost, inserting exchange operators as needed. ### Documentation entry for user-facing changes - [ ] Documentation written in [/docs](https://github.com/ClickHouse/ClickHouse/tree/master/docs)",
+      "text": "A Cascades-style cost-based optimizer that chooses distribution strategies for the multi-stage distributed query plans of #106020. It explores alternatives in a memo (a shared store of equivalent plan fragments) with top-down, goal-directed search and picks the cheapest plan satisfying the required distribution and sorting properties, inserting exchange operators (plan steps that move rows between nodes) as needed. Implemented: - **Join strategies**: shuffle hash join, broadcast hash join (with `ReplicatedRead` — every worker repeats the same read of a small table instead of a network broadcast, assuming shared storage where all workers see the same data), replicated join (a small deterministic join is recomputed identically on every node over such reads, so its result never crosses the network; nested joins compose; `ANY` joins are excluded because the kept row depends on the build order), local join. - **Aggregation strategies**: two-phase (partial + merge), shuffle by group keys, local; `distributed_aggregation_memory_efficient` and `distributed_plan_force_shuffle_aggregation` are honored. - **Top-N**: two-stage distributed top-N (per-node bounded sort, sorted-merge gather, coordinator limit); disabled under `exact_rows_before_limit`, which needs the full row count. - **Read strategies**: parallel N-way read, replicated read, local read. For `FINAL`, #108148 (already in master) taught the rule-based distributed plan to split a `FINAL` read into disjoint primary-key-range buckets where that is safe; Cascades now reuses that machinery, so `FINAL` no longer forces a serial read here either. The coordinator ships each bucket's marks in the `read_bucket` task parameters. - **`IN (subquery)`**: follows the `rewrite_in_to_join` setting like the rest of the planner (the forced join form is removed). In the default set form the set-building subqueries are planned separately and distributed like any other query. - **Properties and enforcers**: distribution (node count, replication, partitioning columns with equivalence classes and the types the keys are cast to before hashing) and sorting; when a plan alternative lacks a required property, an enforcer inserts the step that provides it (`Gather`/`Shuffle`/`Broadcast`/`ScatterExchange`, `Sort`). - **Transformations**: join commutativity (only for semantics-preserving joins: `INNER ALL`, `CROSS`, `SEMI`/`ANY`/`ANTI`; never `ASOF`, and never `ANY` under `join_any_take_last_row`), two-phase aggregation split, two-stage top-N split. - **Cost model**: `work`, `network`, and `sequential` components, each priced as wall-clock per node: a shuffle moves 1/N of the data per node, a broadcast payload is ingested once by every receiver in parallel, and a gather funnels every row through one endpoint, so its transfer stays undivided and pays a per-row cost. A hash-table build counts as parallel work (`parallel_hash` shards it across threads); a fixed per-exchange overhead keeps small inputs local. A table read is priced on its scan volume - the rows the primary key keeps - not on its output estimate, so a filter off the sorting key cannot make a replicated re-read look free. Standalone filters (e.g. `HAVING`) are estimated from column NDVs with join-key equivalence classes; join estimates are clamped to join kind and strictness semantics; exchange costs use per-row byte widths measured from the parts' column sizes (followed through renames, not derived from types). All weights and calibration constants are overridable at query time. What this improves over the rule-based distributed planner, on TPC-H plans. The rule-based planner broadcasts a small table when its read is below `distributed_plan_max_rows_to_broadcast`, but it often cannot size the result of a join, so a small join result (`nation x region`, 5 rows after the region filter) is scattered across nodes, joined there, and shuffled again (repartitioned across nodes) by the next join key. It also often inserts a shuffle at join and aggregation boundaries even when the rows are already divided by the right key. Cascades estimates sizes through joins, knows which partitioning already holds, compares broadcast against shuffle by cost for each join, and recomputes a small deterministic join on every node when that is cheaper than moving its result. On TPC-H SF100 over 8 nodes (same binary, same run window; times are server-side means of the hot runs) the join-heavy queries improve: | Query | Rule-based -> Cascades | What changed in the plan | |---|---|---| | Q21 | 7.66 s -> 5.34 s | The four `supplier x nation` joins compute their small results once and broadcast them, so `lineitem` is not shuffled to meet them. | | Q09 | 4.07 s -> 2.47 s | `part` and `nation` are read in full by every node, so `lineitem` and `supplier` are not shuffled to meet them. | | Q08 | 2.39 s -> 0.99 s | `nation x region` (5 rows) is recomputed by every node; `part` is read in full per node, so `lineitem` is not shuffled to join it. | | Q02 | 2.14 s -> 0.84 s | The `supplier x nation x region` chain is recomputed by every node, so only `partsupp` and `supplier` are shuffled. The top-100 sort becomes two-stage, sending at most 100 rows per node. | | Q05 | 2.05 s -> 1.12 s | The whole dimension side (`orders x customer x nation x region`) is recomputed by every node over full local reads; `lineitem` joins it in place with no shuffle at all. | | Q17 | 2.72 s -> 1.78 s | The small per-part average is broadcast to every node, so the outer 600M-row `lineitem` read is not shuffled. | | Q11 | 0.49 s -> 0.26 s | `supplier x nation` is computed once and broadcast; `partsupp` joins it in place. | | Q12 | 0.76 s -> 0.59 s | The filtered `lineitem` rows (~30K of 600M) are gathered once and broadcast; nothing is shuffled. | The remaining queries change less. Summed over all 22 queries, hot server time drops from 36.8 s to 28.8 s (about 22% lower). The remaining regressions are the `IN (subquery)` queries Q18 (2.43 s -> 2.85 s) and Q20 (2.24 s -> 2.99 s). With the forced join rewrite removed, both run their `IN`s as sets in both modes, and the sets built are identical; the difference is in the plans around them. Cascades picks replicated-read shapes that rescan moderate tables on every node, which loses here for a structural reason: the main reads are filtered by `x IN <set>`, and the set contents do not exist at costing time, so the model cannot credit a shuffle-based plan for how few rows survive the set filter, while the replicated read's full scan is paid regardless. Two follow-ups: a cost-informed choice of the `IN` form, and set-filter selectivity from the subquery's output estimate. `EXPLAIN pretty = 1, estimates = 1` shows the chosen plan with a row estimate and the accumulated cost for each step. Also in this PR, two improvements to the shared bucketed-read machinery (they benefit the rule-based path too): the `FINAL` layer split no longer depends on the coordinator's core count, and a many-partition `FINAL` split groups its layers into the target task count instead of falling back to a serial read. Design, a worked example on TPC-H data (a simplified 3-table query traced through the memo), and current limitations are documented in `src/Processors/QueryPlan/Optimizations/Cascades/ARCHITECTURE.md`. Plan-shape tests cover the actual TPC-H queries (`03836_tpch_join_order_plans`), and focused tests pin the cost-model contracts (e.g. `04869_cascades_read_cost_granule_volume`, `04838_cascades_filter_selectivity`). Disabled by default. Requires the analyzer; remote execution requires the stateless-worker configuration, while `distributed_plan_execute_locally = 1` runs the stages in-process without it: ```sql SET enable_cascades_optimizer = 1, make_distributed_plan = 1; ``` For tests, `param__internal_cascades_cluster_node_count` overrides the cluster size, `param__internal_cascades_cost_config` overrides the cost model configuration, `param__internal_join_table_stat_hints` injects table statistics, `param__internal_cascades_task_limit` lowers the task budget (it can never raise it). Related: https://github.com/ClickHouse/ClickHouse/pull/106020 ### Changelog category (leave one): - Experimental Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added an experimental Cascades cost-based optimizer for distributed query plans, enabled by `enable_cascades_optimizer = 1` together with `make_distributed_plan = 1`. It chooses between shuffle, broadcast, replicated, and local join strategies, two-phase, shuffle, and local aggregation, two-stage distributed top-N, and parallel and replicated reads by estimated cost, inserting exchange operators as needed. ### Documentation entry for user-facing changes - [ ] Documentation written in [/docs](https://github.com/ClickHouse/ClickHouse/tree/master/docs)",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/86353",
       "createdAt": "2025-08-28T11:27:09Z",
-      "updatedAt": "2026-08-13T17:35:58Z",
-      "timestamp": "2026-08-13T17:35:58Z",
+      "updatedAt": "2026-08-13T17:45:48Z",
+      "timestamp": "2026-08-13T17:45:48Z",
       "metrics": {
         "reactions": 21,
         "comments": 7
@@ -15701,8 +15637,7 @@
       "state": "open",
       "assignees": [
         "alexey-milovidov"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:88234",
@@ -15780,8 +15715,7 @@
       "state": "open",
       "assignees": [
         "Ergus"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:91062",
@@ -15852,8 +15786,7 @@
       ],
       "author": "amosbird",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:93833",
@@ -15903,8 +15836,7 @@
       ],
       "author": "maxknv",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:94748",
@@ -15956,8 +15888,7 @@
       ],
       "author": "alexey-milovidov",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:96487",
@@ -15969,8 +15900,8 @@
       "text": "### Changelog category (leave one): - Bug Fix (user-visible misbehavior in an official stable release) ### Changelog entry: Fix missing lazy read and top-K read optimizations (skip-index top-K and dynamic top-K filtering) when selecting `ALIAS` columns with `WHERE ... ORDER BY ... LIMIT` on MergeTree tables. Closes: https://github.com/ClickHouse/ClickHouse/issues/96452 ### Documentation entry for user-facing changes N/A",
       "url": "https://github.com/ClickHouse/ClickHouse/pull/96487",
       "createdAt": "2026-02-09T21:21:08Z",
-      "updatedAt": "2026-08-13T17:13:17Z",
-      "timestamp": "2026-08-13T17:13:17Z",
+      "updatedAt": "2026-08-13T17:45:34Z",
+      "timestamp": "2026-08-13T17:45:34Z",
       "metrics": {
         "reactions": 1,
         "comments": 31
@@ -16200,8 +16131,7 @@
       "state": "open",
       "assignees": [
         "nihalzp"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:ClickHouse/ClickHouse:pull_request:99981",
@@ -44936,6 +44866,453 @@
         "state": "open",
         "assignees": [
           "alexbakharew"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fa1c0174affbd72fcea5",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:114247",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:114247",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Clear plain LIMIT/OFFSET in the window-view backfill source query",
+        "text": "Follow-up to https://github.com/ClickHouse/ClickHouse/pull/113759: the last AI review finding on that PR landed after the PR had been added to the merge queue, so the branch could no longer be updated. This addresses it. `StorageWindowView::getSourceTableSelectQuery` builds the raw-source backfill query for `CREATE WINDOW VIEW ... POPULATE`. The rows it produces are inserted into the window view, where `writeIntoWindowView` executes the mergeable view query over them, so the backfill query must deliver the raw source rows and leave all row transformations of the original query to the view query — otherwise the initialized state diverges from live behavior. The PR originally made the helper clear the leftovers of the original `SELECT` that violated this invariant one by one — `LIMIT`/`OFFSET` (and `WITH TIES`), plain `DISTINCT`, `ARRAY JOIN`, `WHERE`/`PREWHERE`, table-expression `SAMPLE`/`FINAL` — on top of the `JOIN`/`GROUP BY`/`ORDER BY`/`LIMIT BY`/`WINDOW`/`QUALIFY`/`INTERPOLATE` handling it already had. Review then found that this strip-the-leftovers approach misses wrapped sources: the same constructs inside a `FROM (SELECT ...)` subquery or a CTE definition survived the rewrite, and covering them would have required recursing the rewrite into every nested select. So the helper now builds the backfill query from scratch instead of stripping a clone of the view query. The contract makes this valid: `writeIntoWindowView` always receives raw source-table blocks (`getInputHeader` is the source table header no matter how the view query wraps or transforms the table — `PushingToWindowViewSink` is created with exactly that header), so the correct backfill query is exactly `SELECT <source columns> FROM <source table>`, plus `ORDER BY` on the timestamp column so the watermark is initialized from the earliest record. Wrapped sources, joins, and every row-shaping clause are covered by construction because the user query is no longer cloned at all. The helper shrinks by ~100 lines. Note: the divergence is currently unobservable because `CREATE WINDOW VIEW ... POPULATE` fails before writing any rows (https://github.com/ClickHouse/ClickHouse/issues/113493), so no regression test is possible yet; this keeps the rewrite invariant consistent for when `POPULATE` is fixed. Verified with `clickhouse-local` probes that `POPULATE` over wrapped-subquery/CTE/`JOIN`/`WHERE`/`FINAL` sources now analyzes the backfill query cleanly and proceeds to the pre-existing #113493 sink error. Related: https://github.com/ClickHouse/ClickHouse/pull/113759 Related: https://github.com/ClickHouse/ClickHouse/issues/113493 ### Changelog category (leave one): - Not for changelog (changelog entry is not required)",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/114247",
+        "createdAt": "2026-08-10T23:40:02Z",
+        "updatedAt": "2026-08-13T17:46:37Z",
+        "timestamp": "2026-08-13T17:46:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [
+          "pr-not-for-changelog"
+        ],
+        "author": "alexey-milovidov",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:75bef5a15d565f91fbae",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:110105",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:110105",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Add clickhouse-proxy application mode",
+        "text": "Implements a new application mode in the `clickhouse` binary, named `proxy`. The proxy accepts connections over end-user ClickHouse protocols, finds the upstream backend based on configurable rules (hostname from TLS SNI or HTTP header, user name, database name, and — for HTTP — query type), and forwards the traffic to it. It is built on the `silk` fiber framework so that many concurrent connections are handled with low RAM usage. Start it with `clickhouse proxy --config-file proxy_config.xml`; a fully commented example config is in `programs/proxy/proxy_config.xml`, and the feature is documented at `docs/en/operations/clickhouse-proxy.md`. **What it does** - Protocol frontends for HTTP(S), native TCP, MySQL, PostgreSQL, transparent TLS-by-SNI, and opaque TCP streams. It handles only end-user protocols (not Keeper or inter-server replication). The user name and database are parsed from the first packets where the protocol allows it (HTTP headers/params/Basic auth, native `Hello`, PostgreSQL `StartupMessage`, HTTP query type). MySQL is server-speaks-first with in-band TLS, so it is forwarded transparently and routed by peer address or the default pool. - TLS routing options: terminate and re-encrypt (the proxy and each backend hold their own certificates), terminate only (unwrap: TLS to clients, plaintext to backends), and transparent (route by SNI without decrypting). Optional ACME certificate provisioning, as in `clickhouse-server`. - Multi-criteria routing rules matching host / user / database / query type / protocol, by exact value or regular expression; regexp captures can be substituted into a backend address template (e.g. route users `ch-<tenant>` to per-tenant backends). - Pools with pluggable load balancing (`random`, `round_robin`, `least_connections`, `lowest_latency`, `least_resources`) behind a common interface; a pool may list several backends for load balancing. - Session stickiness by `session_id` (from the HTTP URL) or by peer address, using a consistent (rendezvous) hash of the backends. - Backend health monitoring (connect latency, consecutive failures) and optional CPU/memory polling with per-backend credentials, feeding the `least_resources` strategy; a JSON status endpoint, `/ping`, and static pages are served by the proxy itself. - An abstract routing table exposing hooks (unknown route, no backends available, first time a user or database is seen) that run a shell command — for example to provision a backend on demand and wait for it to become available. Validated end to end against a live server: HTTP `/ping`, static pages, the status endpoint, GET/POST forwarding, the no-backend error paths, native protocol round-trips, and clean shutdown. ### Changelog category (leave one): - New Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added a new `proxy` mode to the `clickhouse` binary: a lightweight, protocol-aware proxy that routes end-user connections (HTTP, native, MySQL, PostgreSQL, TLS-by-SNI, and raw TCP) to backend servers based on a configurable routing table, with TLS termination/passthrough, load balancing, health checks, and session stickiness. ### Documentation entry for user-facing changes - [x] Documentation is written (mandatory for new features) 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/110105",
+        "createdAt": "2026-07-11T17:34:42Z",
+        "updatedAt": "2026-08-13T17:46:26Z",
+        "timestamp": "2026-08-13T17:46:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [
+          "pr-feature",
+          "submodule changed"
+        ],
+        "author": "alexey-milovidov",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:e6521752a509c1fae00a",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:86353",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:86353",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Cascades cost-based optimizer for distributed query plans",
+        "text": "A Cascades-style cost-based optimizer that chooses distribution strategies for the multi-stage distributed query plans of #106020. It explores alternatives in a memo (a shared store of equivalent plan fragments) with top-down, goal-directed search and picks the cheapest plan satisfying the required distribution and sorting properties, inserting exchange operators (plan steps that move rows between nodes) as needed. Implemented: - **Join strategies**: shuffle hash join, broadcast hash join (with `ReplicatedRead` — every worker repeats the same read of a small table instead of a network broadcast, assuming shared storage where all workers see the same data), replicated join (a small deterministic join is recomputed identically on every node over such reads, so its result never crosses the network; nested joins compose; `ANY` joins are excluded because the kept row depends on the build order), local join. - **Aggregation strategies**: two-phase (partial + merge), shuffle by group keys, local; `distributed_aggregation_memory_efficient` and `distributed_plan_force_shuffle_aggregation` are honored. - **Top-N**: two-stage distributed top-N (per-node bounded sort, sorted-merge gather, coordinator limit); disabled under `exact_rows_before_limit`, which needs the full row count. - **Read strategies**: parallel N-way read, replicated read, local read. For `FINAL`, #108148 (already in master) taught the rule-based distributed plan to split a `FINAL` read into disjoint primary-key-range buckets where that is safe; Cascades now reuses that machinery, so `FINAL` no longer forces a serial read here either. The coordinator ships each bucket's marks in the `read_bucket` task parameters. - **`IN (subquery)`**: follows the `rewrite_in_to_join` setting like the rest of the planner (the forced join form is removed). In the default set form the set-building subqueries are planned separately and distributed like any other query. - **Properties and enforcers**: distribution (node count, replication, partitioning columns with equivalence classes and the types the keys are cast to before hashing) and sorting; when a plan alternative lacks a required property, an enforcer inserts the step that provides it (`Gather`/`Shuffle`/`Broadcast`/`ScatterExchange`, `Sort`). - **Transformations**: join commutativity (only for semantics-preserving joins: `INNER ALL`, `CROSS`, `SEMI`/`ANY`/`ANTI`; never `ASOF`, and never `ANY` under `join_any_take_last_row`), two-phase aggregation split, two-stage top-N split. - **Cost model**: `work`, `network`, and `sequential` components, each priced as wall-clock per node: a shuffle moves 1/N of the data per node, a broadcast payload is ingested once by every receiver in parallel, and a gather funnels every row through one endpoint, so its transfer stays undivided and pays a per-row cost. A hash-table build counts as parallel work (`parallel_hash` shards it across threads); a fixed per-exchange overhead keeps small inputs local. A table read is priced on its scan volume - the rows the primary key keeps - not on its output estimate, so a filter off the sorting key cannot make a replicated re-read look free. Standalone filters (e.g. `HAVING`) are estimated from column NDVs with join-key equivalence classes; join estimates are clamped to join kind and strictness semantics; exchange costs use per-row byte widths measured from the parts' column sizes (followed through renames, not derived from types). All weights and calibration constants are overridable at query time. What this improves over the rule-based distributed planner, on TPC-H plans. The rule-based planner broadcasts a small table when its read is below `distributed_plan_max_rows_to_broadcast`, but it often cannot size the result of a join, so a small join result (`nation x region`, 5 rows after the region filter) is scattered across nodes, joined there, and shuffled again (repartitioned across nodes) by the next join key. It also often inserts a shuffle at join and aggregation boundaries even when the rows are already divided by the right key. Cascades estimates sizes through joins, knows which partitioning already holds, compares broadcast against shuffle by cost for each join, and recomputes a small deterministic join on every node when that is cheaper than moving its result. On TPC-H SF100 over 8 nodes (same binary, same run window; times are server-side means of the hot runs) the join-heavy queries improve: | Query | Rule-based -> Cascades | What changed in the plan | |---|---|---| | Q21 | 7.66 s -> 5.34 s | The four `supplier x nation` joins compute their small results once and broadcast them, so `lineitem` is not shuffled to meet them. | | Q09 | 4.07 s -> 2.47 s | `part` and `nation` are read in full by every node, so `lineitem` and `supplier` are not shuffled to meet them. | | Q08 | 2.39 s -> 0.99 s | `nation x region` (5 rows) is recomputed by every node; `part` is read in full per node, so `lineitem` is not shuffled to join it. | | Q02 | 2.14 s -> 0.84 s | The `supplier x nation x region` chain is recomputed by every node, so only `partsupp` and `supplier` are shuffled. The top-100 sort becomes two-stage, sending at most 100 rows per node. | | Q05 | 2.05 s -> 1.12 s | The whole dimension side (`orders x customer x nation x region`) is recomputed by every node over full local reads; `lineitem` joins it in place with no shuffle at all. | | Q17 | 2.72 s -> 1.78 s | The small per-part average is broadcast to every node, so the outer 600M-row `lineitem` read is not shuffled. | | Q11 | 0.49 s -> 0.26 s | `supplier x nation` is computed once and broadcast; `partsupp` joins it in place. | | Q12 | 0.76 s -> 0.59 s | The filtered `lineitem` rows (~30K of 600M) are gathered once and broadcast; nothing is shuffled. | The remaining queries change less. Summed over all 22 queries, hot server time drops from 36.8 s to 28.8 s (about 22% lower). The remaining regressions are the `IN (subquery)` queries Q18 (2.43 s -> 2.85 s) and Q20 (2.24 s -> 2.99 s). With the forced join rewrite removed, both run their `IN`s as sets in both modes, and the sets built are identical; the difference is in the plans around them. Cascades picks replicated-read shapes that rescan moderate tables on every node, which loses here for a structural reason: the main reads are filtered by `x IN <set>`, and the set contents do not exist at costing time, so the model cannot credit a shuffle-based plan for how few rows survive the set filter, while the replicated read's full scan is paid regardless. Two follow-ups: a cost-informed choice of the `IN` form, and set-filter selectivity from the subquery's output estimate. `EXPLAIN pretty = 1, estimates = 1` shows the chosen plan with a row estimate and the accumulated cost for each step. Also in this PR, two improvements to the shared bucketed-read machinery (they benefit the rule-based path too): the `FINAL` layer split no longer depends on the coordinator's core count, and a many-partition `FINAL` split groups its layers into the target task count instead of falling back to a serial read. Design, a worked example on TPC-H data (a simplified 3-table query traced through the memo), and current limitations are documented in `src/Processors/QueryPlan/Optimizations/Cascades/ARCHITECTURE.md`. Plan-shape tests cover the actual TPC-H queries (`03836_tpch_join_order_plans`), and focused tests pin the cost-model contracts (e.g. `04869_cascades_read_cost_granule_volume`, `04838_cascades_filter_selectivity`). Disabled by default. Requires the analyzer; remote execution requires the stateless-worker configuration, while `distributed_plan_execute_locally = 1` runs the stages in-process without it: ```sql SET enable_cascades_optimizer = 1, make_distributed_plan = 1; ``` For tests, `param__internal_cascades_cluster_node_count` overrides the cluster size, `param__internal_cascades_cost_config` overrides the cost model configuration, `param__internal_join_table_stat_hints` injects table statistics, `param__internal_cascades_task_limit` lowers the task budget (it can never raise it). Related: https://github.com/ClickHouse/ClickHouse/pull/106020 ### Changelog category (leave one): - Experimental Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added an experimental Cascades cost-based optimizer for distributed query plans, enabled by `enable_cascades_optimizer = 1` together with `make_distributed_plan = 1`. It chooses between shuffle, broadcast, replicated, and local join strategies, two-phase, shuffle, and local aggregation, two-stage distributed top-N, and parallel and replicated reads by estimated cost, inserting exchange operators as needed. ### Documentation entry for user-facing changes - [ ] Documentation written in [/docs](https://github.com/ClickHouse/ClickHouse/tree/master/docs)",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/86353",
+        "createdAt": "2025-08-28T11:27:09Z",
+        "updatedAt": "2026-08-13T17:45:48Z",
+        "timestamp": "2026-08-13T17:45:48Z",
+        "metrics": {
+          "reactions": 21,
+          "comments": 7
+        },
+        "labels": [
+          "pr-experimental"
+        ],
+        "author": "davenger",
+        "state": "open",
+        "assignees": [
+          "novikd"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9b13e7bc31e631920ca8",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:107305",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:107305",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Make ALTER MODIFY COLUMN on named Tuple metadata-only when adding subfields",
+        "text": "`ALTER TABLE ... MODIFY COLUMN <col> Tuple(...)` on a named `Tuple` that only adds new subfields is now metadata-only (no mutation). Gated behind `SET allow_experimental_metadata_only_named_tuple_alter = 1` (default `false`). Subfield additions through `Array`/`Map`/nested `Tuple` wrappers are also handled. `Nullable(Tuple(...))` is blocked (null map incompatibility). Removing/renaming subfields or changing types still triggers a mutation. Key/index/projection guards reject the metadata-only path when `primary.idx` or skip-index bytes would become invalid (whole tuple in key, or subcolumn whose type changes). Subcolumn references with unchanged types (e.g. `ORDER BY t.a` when only `t.c` is added) are allowed. ### Changelog category (leave one): - Improvement ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): `ALTER TABLE ... MODIFY COLUMN <col> Tuple(...)` on a named `Tuple` is now metadata-only when only adding subfields, matching the speed of top-level `ADD COLUMN`. Gated behind `SET allow_experimental_metadata_only_named_tuple_alter = 1`. ### Documentation entry for user-facing changes - [x] Documentation is not required (behavioral improvement; semantics unchanged)",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/107305",
+        "createdAt": "2026-06-12T07:42:58Z",
+        "updatedAt": "2026-08-13T17:45:47Z",
+        "timestamp": "2026-08-13T17:45:47Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 8
+        },
+        "labels": [
+          "pr-improvement",
+          "can be tested"
+        ],
+        "author": "amosbird",
+        "state": "open",
+        "assignees": [
+          "Avogar"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:40b854b7c12c8d932c1e",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:96487",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:96487",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Fix LazilyReadFromMergeTree optimization with ALIAS columns (#96452)",
+        "text": "### Changelog category (leave one): - Bug Fix (user-visible misbehavior in an official stable release) ### Changelog entry: Fix missing lazy read and top-K read optimizations (skip-index top-K and dynamic top-K filtering) when selecting `ALIAS` columns with `WHERE ... ORDER BY ... LIMIT` on MergeTree tables. Closes: https://github.com/ClickHouse/ClickHouse/issues/96452 ### Documentation entry for user-facing changes N/A",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/96487",
+        "createdAt": "2026-02-09T21:21:08Z",
+        "updatedAt": "2026-08-13T17:45:34Z",
+        "timestamp": "2026-08-13T17:45:34Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 31
+        },
+        "labels": [
+          "pr-bugfix",
+          "can be tested"
+        ],
+        "author": "jayvenn21",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:58e9689b35778ee9d490",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:114150",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:114150",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Disable the map element to subcolumn rewrite by default and revert the PREWHERE grouping change",
+        "text": "Closes: https://github.com/ClickHouse/ClickHouse/issues/111879 Related: https://github.com/ClickHouse/ClickHouse/pull/99200 Related: https://github.com/ClickHouse/ClickHouse/pull/107988 Related: https://github.com/ClickHouse/ClickHouse/pull/111954 Related: https://github.com/ClickHouse/ClickHouse/issues/107912 ### Description In 26.3 we added bucketed serialization for the `Map` data type together with an analyzer rewrite of `m['key']` (internally `arrayElement(m, 'key')`) into the Map key subcolumn `m.key_<key>`, so that only the relevant bucket is read from disk. The bucketed serialization turned out to be imperfect and is planned to be reimplemented as a separate type. For regular (non-bucketed) `Map` serialization this rewrite can be harmful (for example, it complicates subcolumn size estimation) and gives no benefit for single-key lookups. **1. New setting.** `optimize_map_element_to_subcolumn` (default `false`) gates only the `{Map, arrayElement}` transformer in `FunctionToSubcolumnsPass`. All other `Map` subcolumn optimizations (`mapKeys`, `mapValues`, `length`, `empty`) keep following `optimize_functions_to_subcolumns`. The new setting takes effect only when `optimize_functions_to_subcolumns` is also enabled. This only disables the automatic rewrite; reading the `m.key_<key>` subcolumn explicitly still works, and query results are unchanged either way. **2. Revert of the PREWHERE grouping from #107988.** That change made `MergeTreeWhereOptimizer` and `tryBuildPrewhereSteps` group conditions by physical storage column instead of by the exact column set, so that several `m['kN']` subcolumn reads share one read step. Its only purpose was to compensate for the rewrite: with the rewrite disabled, all `m['kN']` conditions reference the same column `m` and the original exact-column-set grouping already places them into one step. The grouping also introduced a correctness regression, #111879: a guard condition and a throwing expression over subcolumns of the same column (for example `payload.longitude IS NOT NULL` and a `CAST(tuple(...), 'Point')` over `payload.latitude`) became adjacent and were merged into one read step. All conditions of a step are evaluated on the same unfiltered block, so the throwing expression ran on rows the guard had rejected. Measured with the repro from #111879 on pre-built binaries: | binary | result | |---|---| | master before #107988 (`cd3c529cd3a`) | `66666` | | master with #107988 | `CANNOT_INSERT_NULL_IN_ORDINARY_COLUMN` | | this branch | `66666` | Reverting instead of adding a new heuristic keeps this change small enough to backport. Improving subcolumn read sharing in PREWHERE will be done separately on `master` and does not need backporting; #111954 is superseded by this change. The serialization part of #107988 (`ISerialization` cache keys, whole-map caching in `SerializationMapKeyValue`, the `SerializationSparse` refactor) is kept — it is unrelated to #111879 and still shares reads between subcolumns of the same column inside one read step. **Expected performance comparison results.** By default `m['key']` again reads the whole `Map` column, as before 26.3, so query shapes that read map elements are slower than on `master`, where the rewrite is enabled: `get_map_value` and the shapes in `tests/performance/map_subcolumns_prewhere.xml` (the setting opt-in was removed from that test so it measures the default path). This is the intended consequence of disabling the rewrite; enabling `optimize_map_element_to_subcolumn` restores the previous behavior. **Out of scope.** With `enable_multiple_prewhere_read_steps = 0` the whole PREWHERE is a single step, so no guard can protect a throwing expression and the repro still throws. This is pre-existing and unrelated to the rewrite: master before #107988 (`cd3c529cd3a`) already throws in that configuration, and it involves `JSON` subcolumns, not `Map`. The new test pins the setting to `1` because it is randomized in CI. **Tests.** `04815_prewhere_guard_throwing_expression_subcolumns` is a regression test for #111879. `04814_optimize_map_element_to_subcolumn_setting` covers the new setting and pins its value, because `clickhouse-test` randomizes it. The tests that assert the rewrite (`04000`, `04513`, `03989`, `04040`, `04207`) enable the setting explicitly. All 177 `prewhere`-named stateless tests were compared against a pre-revert binary and none changes behavior. ### Changelog category (leave one): - Bug Fix (user-visible misbehavior in an official stable release) ### Changelog entry (a user-readable short description of the changes that goes into CHANGELOG.md): Added a new setting `optimize_map_element_to_subcolumn` (disabled by default) that controls rewriting `m['key']` into the `Map` key subcolumn `m.key_<key>`. It is disabled by default because the bucketed `Map` serialization it relies on is being reworked. Also reverted the PREWHERE condition grouping that was introduced for that rewrite, which caused `CANNOT_INSERT_NULL_IN_ORDINARY_COLUMN` when a guard condition and a potentially throwing expression, such as a `CAST`, read subcolumns of the same column, for example a `JSON` or `Map` column.",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/114150",
+        "createdAt": "2026-08-10T12:25:51Z",
+        "updatedAt": "2026-08-13T17:45:22Z",
+        "timestamp": "2026-08-13T17:45:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "pr-improvement"
+        ],
+        "author": "Avogar",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c69d773c99d7c0678028",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:114670",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:114670",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Docs: expand the Managed Postgres autoscaling documentation",
+        "text": "### Changelog category (leave one): - Documentation (changelog entry is not required) ## Summary - Expand the one-line Autoscaling section in the Managed Postgres scaling docs with the behavior sourced from the Ubicloud codebase: the 85% storage notification, the 90% automatic scale-up, and the 95% maintenance-window bypass - Document what autoscaling means for the cutover and client connections: same process as a manual instance change, connections dropped and in-flight transactions rolled back, DNS repointed to the new primary under the same hostname - Document read-only mode: free-space trigger and recovery thresholds per disk size, the error writes receive, and automatic recovery after the scale-up - Add a worked example scenario for a 1024 GB instance scaling to 2048 GB",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/114670",
+        "createdAt": "2026-08-13T16:59:03Z",
+        "updatedAt": "2026-08-13T17:45:05Z",
+        "timestamp": "2026-08-13T17:45:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "pr-documentation",
+          "can be tested"
+        ],
+        "author": "amogiska",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4d6e36e7c2b4510fba98",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:114466",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:114466",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Docs: internationalize master",
+        "text": "### Changelog category (leave one): - Documentation (changelog entry is not required)",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/114466",
+        "createdAt": "2026-08-12T10:49:59Z",
+        "updatedAt": "2026-08-13T17:44:49Z",
+        "timestamp": "2026-08-13T17:44:49Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 47
+        },
+        "labels": [
+          "pr-documentation"
+        ],
+        "author": "locadex-agent[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c92b03a5efbe3f5c5df3",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:109367",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:109367",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Scheduler: reclaimable memory tracking and dynamic spilling",
+        "text": "<!-- Related: https://github.com/ClickHouse/ClickHouse/issues/109064 --> Scheduler-side support for reclaimable memory tracking and dynamic spilling, built on top of the memory reservations subsystem. The design is described in #109064. Queries can report the portion of an allocation that can be spilled or discarded on request (`IAllocationQueue::setReclaimable`), which is aggregated bottom-up as a new `reclaimable` field on every scheduler node. Each `AllocationLimit` gains a soft limit: when a workload's allocated memory exceeds it and the subtree has reclaimable memory, the scheduler asks a victim to reclaim memory (`ResourceAllocation::spillAllocation`, mirroring `killAllocation`) instead of waiting for the hard `max_memory` limit to force a kill. The request is replied: the query finishes it with `IAllocationQueue::finishSpill` after issuing the decreases for the freed memory (zero reclaimable doubling as a decline), the reply travels to the root as `Update::spilled` on the same propagation path as the state it describes, and at most one spill request is outstanding per subtree until it arrives; a victim that leaves the queue counts as having replied. Victim selection is deterministic and matches the kill order (largest usage, least precedence, largest allocation), descends a single root-to-leaf path via reclaimable-filtered ordered sets, and is fail-close: with nothing reclaimable, or with no soft limit configured, behavior is exactly as before. The soft limit is configured per workload via two new settings: `max_memory_before_spill` (absolute) and `max_memory_to_spill_ratio` (a fraction of the workload's own `max_memory`), smaller wins. The new state is observable in `system.scheduler`: `reclaimable`, `spills`, and the effective `soft_limit`. This is the scheduler side only. `MemoryReservation::spillAllocation` is currently a no-op; the query side that reports reclaimable memory and reacts to spill signals is a separate change. Documentation for the scheduler-side workload settings (`max_memory_before_spill`, `max_memory_to_spill_ratio`) and a `Spilling reclaimable memory` section are included here; the set of operators that can spill will be documented together with the query-side reaction. Invariants for the new machinery are documented on `ISpaceSharedNode` (I1-I8). Added unit tests cover fail-close, largest-first selection, fair descent skipping unreclaimable subtrees, the gate held until the victim's reply, the reply deferred to a pending decrease, re-signalling until under the soft limit, clamping reclaimable on a shrink, a declining victim, a victim removed mid-spill, the soft-limit enable transition via `CREATE OR REPLACE WORKLOAD`, the settings (absolute, ratio, and smaller-wins combination), a concurrency stress, and a parametrized throughput test. Verified under ThreadSanitizer (145 scheduler/workload gtests, 0 data races). ### Changelog category (leave one): - Experimental Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added workload settings `max_memory_before_spill` and `max_memory_to_spill_ratio` for the experimental memory reservation scheduling. They configure a soft memory limit above which a workload's queries are asked to spill reclaimable memory, before the hard `max_memory` limit forces an eviction. This is the scheduler-side foundation: queries do not yet report reclaimable memory or react to spill requests, so the settings have no effect until the query-side change lands. ### Documentation entry for user-facing changes - [x] Documentation is written (mandatory for new features)",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/109367",
+        "createdAt": "2026-07-03T21:49:24Z",
+        "updatedAt": "2026-08-13T17:44:40Z",
+        "timestamp": "2026-08-13T17:44:40Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 10
+        },
+        "labels": [
+          "pr-experimental"
+        ],
+        "author": "serxa",
+        "state": "open",
+        "assignees": [
+          "azat"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:de8e1cd2ced30592bc38",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:114328",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:114328",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Enhance MetadataStorageFromMemory",
+        "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Closes: https://github.com/ClickHouse/ClickHouse/issues/NNNNN (auto-closes the issue when this PR is merged into the default branch) Related: https://github.com/ClickHouse/ClickHouse/pull/NNNNN --> ### Changelog category (leave one): - Not for changelog (changelog entry is not required) ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Pure refactoring change, doesn't affect any working part of code.",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/114328",
+        "createdAt": "2026-08-11T13:44:39Z",
+        "updatedAt": "2026-08-13T17:44:07Z",
+        "timestamp": "2026-08-13T17:44:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "pr-not-for-changelog",
+          "comp-object-storage-disks"
+        ],
+        "author": "alesapin",
+        "state": "open",
+        "assignees": [
+          "Michicosun"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c2950226042c25f0e2cf",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:108653",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:108653",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Support `GROUPS` frame mode for window functions",
+        "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Closes: https://github.com/ClickHouse/ClickHouse/issues/NNNNN (auto-closes the issue when this PR is merged into the default branch) Related: https://github.com/ClickHouse/ClickHouse/pull/NNNNN --> The query below applies the same `1 PRECEDING AND 1 FOLLOWING` bounds as a `ROWS`, a `RANGE`, and a `GROUPS` (this PR) frame. The `order` column contains duplicate and non-consecutive values, so the three modes cover different rows: ```sql CREATE TABLE wf_frame_groups (`order` UInt64, value UInt64) ENGINE = Memory; INSERT INTO wf_frame_groups FORMAT Values (10, 1), (10, 2), (20, 3), (30, 4), (30, 5); SELECT order, value, groupArray(value) OVER (ORDER BY order ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS rows_frame, groupArray(value) OVER (ORDER BY order RANGE BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS range_frame, groupArray(value) OVER (ORDER BY order GROUPS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS groups_frame FROM wf_frame_groups ORDER BY order, value; ``` ```response ┌─order─┬─value─┬─rows_frame─┬─range_frame─┬─groups_frame─┐ │ 10 │ 1 │ [1,2] │ [1,2] │ [1,2,3] │ │ 10 │ 2 │ [1,2,3] │ [1,2] │ [1,2,3] │ │ 20 │ 3 │ [2,3,4] │ [3] │ [1,2,3,4,5] │ │ 30 │ 4 │ [3,4,5] │ [4,5] │ [3,4,5] │ │ 30 │ 5 │ [4,5] │ [4,5] │ [3,4,5] │ └───────┴───────┴────────────┴─────────────┴──────────────┘ ``` Each mode interprets the bounds differently: - `ROWS` counts physical rows, so the frame is at most three adjacent rows: the current row plus one on each side. - `RANGE` counts `order` values, so `1 PRECEDING` and `1 FOLLOWING` cover rows whose `order` is within 1 of the current row's. With gaps of 10, no neighbouring row qualifies, so the frame holds only the rows that share the current `order`. - `GROUPS` (added by this PR) counts peer groups, so `1 PRECEDING` and `1 FOLLOWING` always include the adjacent groups in full, whatever the gaps between `order` values. cc: @cwurm ### Changelog category (leave one): - New Feature ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Support the `GROUPS` frame mode for window functions (SQL:2011), e.g. `any(price) OVER (PARTITION BY symbol ORDER BY ts GROUPS BETWEEN CURRENT ROW AND 1 FOLLOWING)`. In a `GROUPS` frame the boundaries count whole peer groups — sets of rows that are equal on the `ORDER BY` key — so `N PRECEDING`/`N FOLLOWING` mean `N` peer groups before/after the current row's peer group, rather than physical rows (`ROWS`) or `ORDER BY` value distances (`RANGE`).",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/108653",
+        "createdAt": "2026-06-26T20:45:31Z",
+        "updatedAt": "2026-08-13T17:43:57Z",
+        "timestamp": "2026-08-13T17:43:57Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 3
+        },
+        "labels": [
+          "pr-feature"
+        ],
+        "author": "nihalzp",
+        "state": "closed",
+        "assignees": [
+          "antaljanosbenjamin"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a0b0d90d4a4cb13aaa02",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:113512",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:113512",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "[WIP] Seal-gated reading: gate the probe side of a hash JOIN on the runtime filter and prune read ranges by it",
+        "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Closes: https://github.com/ClickHouse/ClickHouse/issues/NNNNN (auto-closes the issue when this PR is merged into the default branch) Related: https://github.com/ClickHouse/ClickHouse/pull/NNNNN --> <details> <summary>Claude</summary> ## Motivation JOIN runtime filters (`enable_join_runtime_filters`) filter probe-side rows only after they were read: the row-level `__applyFilter` conjunct discards non-matching rows, and the read-time index analysis from #109085 (`enable_join_runtime_filters_index_analysis`) skips granules inside already-created read tasks. In both cases the probe side starts reading concurrently with the build side, before the filter exists, so the early tasks are read unpruned. This PR adds a stronger, structural variant for the case when the probe-side join key is a prefix of the table's primary key: the probe side does not read anything until the build side completes, and the completed filter then prunes whole mark ranges by the primary key *before* read tasks are created. ## Approach The gating is expressed as an edge of the query pipeline, not as a waiting state: - `FillingRightJoinSideTransform` gets an optional \"seal\" output port. Exactly one of the concurrent filling transforms — the one that completes the build — emits a single seal chunk carrying the completed runtime filter in its chunk info; the rest just finish. - On the probe side, the sources of a gated `ReadFromMergeTree` are replaced by `SealGatedReadTransform`s: source-like processors whose only input is the seal. Until the seal arrives, the executor has nothing to schedule below them, so the read pools never cut a task. On the seal, the filter is handed to a `RuntimeFilterReadRangesRefiner` (installed on the read pool), which turns it into a primary key `KeyCondition` — an exact `IN`-set, or the `[min, max]` envelope when the exact set overflowed into a bloom filter — and drops non-matching mark ranges at task-cut time, reusing the refiner contract of the MergeTree read pools. - The plan-level pass `markSealGatedReading` finds hash joins whose pushed-down `__applyFilter` conjunct references a probe-side primary key column, and marks the join step and the reading step. `JoinStep::updatePipeline` then wires the seal to the pending seal inputs collected by the `Pipe`. - Everything fails open: a gated read whose seal cannot be wired (the build side of a join, `YShaped`/by-shards pipelines, cancellation) is fed from a `NullSource` and reads ungated with row-level filtering only. FINAL, parallel replicas, and joins sharded by primary key ranges are not gated. Both the default multi-threaded pool and the in-order reading paths are gated (including `max_threads = 1` and reads in primary key order). On a gated read, the read-time index analysis by the same runtime filter is skipped as redundant — the refiner is already granule-exact through the primary key; filters of other joins are kept. Enabled by the experimental setting `enable_join_seal_gated_reading` (default off) on top of `enable_join_runtime_filters`. This is also groundwork for epoch-based (punctuated) collocated joins, where the same reader will consume a stream of per-epoch seals. ## Results On a 90M-row probe table (`ORDER BY k`, warm cache; `tests/performance/join_seal_gated_reading.xml`, CI perf host numbers): - 100 sparse build keys (exact `IN`-set path): 172 ms → 12 ms - 1M build keys in a narrow band (bloom overflow, `[min, max]` envelope path): 645 ms → 54 ms Compared with the read-time granule pruning by the same runtime filter (`enable_join_runtime_filters_index_analysis` + `use_skip_indexes_on_data_read`), the single-query latency on local storage is on par (the probe side cannot run far ahead of the build even ungated: the join does not consume it until the hash table is ready, so port backpressure stalls it after about a chunk per stream). The structural difference of gating is that no read or prefetch is issued for pruned ranges at all, and that it is the seam for the per-epoch seals of collocated joins. The stateless test `04653_join_seal_gated_reading` asserts result equality with ungated execution, the pipeline structure, `ReadPoolRangeRefinerDroppedMarks`/`read_rows` contrast, the fail-open shapes, and the suppression of the redundant read-time analysis. </details> ### Changelog category (leave one): - Improvement ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Added an experimental setting `enable_join_seal_gated_reading` (default off). When enabled together with `enable_join_runtime_filters` and the probe-side join key is a prefix of the table's primary key, the probe side of a hash JOIN starts reading only after the build side completes, and the completed runtime filter prunes whole mark ranges by the primary key before read tasks are created, instead of only filtering rows after they were read.",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/113512",
+        "createdAt": "2026-08-05T15:13:35Z",
+        "updatedAt": "2026-08-13T17:43:34Z",
+        "timestamp": "2026-08-13T17:43:34Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [
+          "pr-improvement",
+          "pr-performance"
+        ],
+        "author": "KochetovNicolai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:cddf71ea526da628e781",
+      "signalId": "github:ClickHouse/ClickHouse:pull_request:114401",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:ClickHouse/ClickHouse:pull_request:114401",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "ClickHouse/ClickHouse",
+        "kind": "pull_request",
+        "title": "Keeper: do not lose a session request when the Raft leader changes",
+        "text": "<!-- Linked issues and pull requests. Use full GitHub URLs, one relationship per line; delete the lines you don't need. Related: https://github.com/ClickHouse/ClickHouse/issues/78474 --> ### Changelog category (leave one): - Bug Fix (user-visible misbehavior in an official stable release) ### Changelog entry (a [user-readable short description](https://github.com/ClickHouse/ClickHouse/blob/master/docs/changelog_entry_guidelines.md) of the changes that goes into CHANGELOG.md): Fixes a bug where a client connecting to ClickHouse Keeper during a Raft leader change could be held for the whole `session_timeout_ms` (30 seconds by default) before its connection was rejected, instead of being rejected as soon as the in-flight request was dropped. The connecting client can now reconnect to another replica sooner. ### Description A client's `Connect` makes Keeper submit an internal `SessionID` request. If the Raft append stream breaks while it is in flight, during a leader election say, that request is lost silently. **Root cause.** Such a request carries `session_id = -1` and no xid; its identity lives in `(server_id, internal_id)`. Two places used the wrong key: * `KeeperRequestDispatcher::onCommit` correlated a commit with its in-flight head by `(session_id, xid)`. Every `SessionID` request shares `(-1, 0)`, and `onCommit` runs on every node for every commit, so a `SessionID` committed for another server retired a still-uncommitted local request. * The error path queued the response for lookup by `session_id`, which `-1` has no callback for, so it was discarded and `getSessionID` timed out. The real waiter is a promise keyed by `internal_id`. **The change.** `onCommit` additionally requires `(server_id, internal_id)` to match for `OpNum::SessionID`. Error responses go through one `SessionID`-aware routing helper on `KeeperDispatcher`, wired into **both** dispatchers: `use_new_dispatcher` is a setting and the old one shares the defect. The request now fails at the in-flight drain bound rather than at `session_timeout_ms`. `KeeperTCPHandler` does not branch on the error code, so that earlier rejection is the whole user-visible gain; the accurate `ZCONNECTIONLOSS` only improves the server log. `test_keeper_force_recovery` also gets a retry around the connect after the election, since dropping in-flight appends is deliberate. The correlation fix is scoped to `OpNum::SessionID`. The garbage collectors also use negative session ids, but their `TryRemove` is idempotent and unwaited, so they are unaffected. **Validation.** New gtests cover both the routing decision and the production wiring behind it, each verified to go red under a mutation of the change it covers; the old dispatcher was exercised with `use_new_dispatcher = false`. An injected fault at the connect under test reddens the integration test without the retry and passes with it.",
+        "url": "https://github.com/ClickHouse/ClickHouse/pull/114401",
+        "createdAt": "2026-08-12T00:10:11Z",
+        "updatedAt": "2026-08-13T17:47:09Z",
+        "timestamp": "2026-08-13T17:47:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "pr-bugfix",
+          "can be tested"
+        ],
+        "author": "groeneai",
+        "state": "open",
+        "assignees": [
+          "antonio2368"
         ],
         "change": "updated"
       }

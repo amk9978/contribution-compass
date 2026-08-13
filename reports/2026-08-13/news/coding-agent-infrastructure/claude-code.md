@@ -19,6 +19,4 @@ Repository: [anthropics/claude-code](https://github.com/anthropics/claude-code)
 
 ## Hacker News discussions
 
-- [Launch HN: Bullet (YC S26) – A Faster Coding Agent](https://www.codewithbullet.com) — [16 points · 17 comments](https://news.ycombinator.com/item?id=49283063)
-
-Community discussion; not maintainer evidence.
+No matching current Hacker News discussion was found.

@@ -40,11 +40,11 @@
     "forks": 3962,
     "openIssues": 1083,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:24.124861+00:00"
+    "collectedAt": "2026-08-13T17:47:11.024415+00:00"
   },
   "news": {
     "repository": "cilium/cilium",
-    "collectedAt": "2026-08-13T17:43:24.124861+00:00",
+    "collectedAt": "2026-08-13T17:47:11.024415+00:00",
     "latestRelease": {
       "repository": "cilium/cilium",
       "tag": "v1.20.0",
@@ -149,6 +149,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 141,
       "changedCount": 14
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 142,
+      "changedCount": 4
     }
   ],
   "signals": [
@@ -176,8 +182,7 @@
       ],
       "author": "brb",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:issue:33550",
@@ -203,8 +208,7 @@
       ],
       "author": "cilium-renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:issue:43519",
@@ -695,8 +699,7 @@
       ],
       "author": "joe-sm",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:issue:47940",
@@ -732,7 +735,7 @@
       "updatedAt": "2026-08-13T15:37:23Z",
       "timestamp": "2026-08-13T15:37:23Z",
       "metrics": {
-        "reactions": 0,
+        "reactions": 1,
         "comments": 0
       },
       "labels": [
@@ -742,7 +745,8 @@
       ],
       "author": "xandau",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:cilium/cilium:pull_request:44913",
@@ -892,8 +896,7 @@
       ],
       "author": "gentoo-root",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:45670",
@@ -1950,8 +1953,7 @@
       ],
       "author": "amchelapurath2023",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:47208",
@@ -3238,8 +3240,7 @@
       ],
       "author": "mehrdadbn9",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:47838",
@@ -3410,11 +3411,11 @@
       "text": "Migrate the functions exposed from the k8s package to use the ClusterInfo struct to depends less on the legacy config. Sorry for the many codeowners involved, those k8s functions are called in a bunch of places unfortunately :sweat_smile:. I prepared this commit using AIL-2",
       "url": "https://github.com/cilium/cilium/pull/47854",
       "createdAt": "2026-08-08T16:54:06Z",
-      "updatedAt": "2026-08-12T16:30:47Z",
-      "timestamp": "2026-08-12T16:30:47Z",
+      "updatedAt": "2026-08-13T17:46:44Z",
+      "timestamp": "2026-08-13T17:46:44Z",
       "metrics": {
         "reactions": 2,
-        "comments": 9
+        "comments": 10
       },
       "labels": [
         "area/k8s",
@@ -3423,7 +3424,8 @@
       ],
       "author": "MrFreezeex",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:cilium/cilium:pull_request:47858",
@@ -3749,8 +3751,8 @@
       "text": "The Go stdlib `net.Interface*` family talks to the kernel over a netlink socket with no timeout, so it can block forever. This PR converts the two remaining offenders to `netlink/safenetlink` and add a forbidigo rule so new ones don't creep back in. Fixes: #15051",
       "url": "https://github.com/cilium/cilium/pull/47902",
       "createdAt": "2026-08-11T20:27:45Z",
-      "updatedAt": "2026-08-13T17:43:13Z",
-      "timestamp": "2026-08-13T17:43:13Z",
+      "updatedAt": "2026-08-13T17:47:04Z",
+      "timestamp": "2026-08-13T17:47:04Z",
       "metrics": {
         "reactions": 4,
         "comments": 1
@@ -3838,8 +3840,7 @@
       ],
       "author": "bimmlerd",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:47914",
@@ -4205,8 +4206,8 @@
       "text": "Explicitly configure a limit for the zstd decoder used to decode the ClusterEndpointSlice entries received over Cluster Mesh, to prevent the risk of unbounded memory usage in case of crafted payloads. I've marked the PR as `release-note/misc` because the logic ingesting ClusterEndpointSlices is incomplete and disabled behind a feature flag in v1.20. Reported-by: Secstant - Sigma Prime \\<secstant@sigmaprime.io>",
       "url": "https://github.com/cilium/cilium/pull/47932",
       "createdAt": "2026-08-13T08:30:58Z",
-      "updatedAt": "2026-08-13T17:38:58Z",
-      "timestamp": "2026-08-13T17:38:58Z",
+      "updatedAt": "2026-08-13T17:46:22Z",
+      "timestamp": "2026-08-13T17:46:22Z",
       "metrics": {
         "reactions": 2,
         "comments": 2
@@ -4243,8 +4244,7 @@
       ],
       "author": "Artyop",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:47934",
@@ -4366,8 +4366,7 @@
       ],
       "author": "pippolo84",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:47939",
@@ -4390,8 +4389,7 @@
       ],
       "author": "HadrienPatte",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:47942",
@@ -4472,8 +4470,7 @@
       ],
       "author": "stias",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:cilium/cilium:pull_request:47945",
@@ -4497,8 +4494,7 @@
       ],
       "author": "dlanov",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [
@@ -11192,6 +11188,147 @@
           "kind/community-contribution"
         ],
         "author": "amchelapurath2023",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fcc7677d9313182f2639",
+      "signalId": "github:cilium/cilium:pull_request:47902",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:pull_request:47902",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "pull_request",
+        "title": "golangci-lint: Forbid stdlib `net.Interface*` functions",
+        "text": "The Go stdlib `net.Interface*` family talks to the kernel over a netlink socket with no timeout, so it can block forever. This PR converts the two remaining offenders to `netlink/safenetlink` and add a forbidigo rule so new ones don't creep back in. Fixes: #15051",
+        "url": "https://github.com/cilium/cilium/pull/47902",
+        "createdAt": "2026-08-11T20:27:45Z",
+        "updatedAt": "2026-08-13T17:47:04Z",
+        "timestamp": "2026-08-13T17:47:04Z",
+        "metrics": {
+          "reactions": 4,
+          "comments": 1
+        },
+        "labels": [
+          "ready-to-merge",
+          "release-note/misc"
+        ],
+        "author": "HadrienPatte",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3532f4be32456c86aefd",
+      "signalId": "github:cilium/cilium:pull_request:47854",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:pull_request:47854",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "pull_request",
+        "title": "k8s: migrate from legacy config to ClusterInfo",
+        "text": "Migrate the functions exposed from the k8s package to use the ClusterInfo struct to depends less on the legacy config. Sorry for the many codeowners involved, those k8s functions are called in a bunch of places unfortunately :sweat_smile:. I prepared this commit using AIL-2",
+        "url": "https://github.com/cilium/cilium/pull/47854",
+        "createdAt": "2026-08-08T16:54:06Z",
+        "updatedAt": "2026-08-13T17:46:44Z",
+        "timestamp": "2026-08-13T17:46:44Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 10
+        },
+        "labels": [
+          "area/k8s",
+          "area/clustermesh",
+          "release-note/misc"
+        ],
+        "author": "MrFreezeex",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:7da098e9ebd192b853bd",
+      "signalId": "github:cilium/cilium:pull_request:47932",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:pull_request:47932",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "pull_request",
+        "title": "clustermesh/endpointslices: explicitly limit maximum decoder memory",
+        "text": "Explicitly configure a limit for the zstd decoder used to decode the ClusterEndpointSlice entries received over Cluster Mesh, to prevent the risk of unbounded memory usage in case of crafted payloads. I've marked the PR as `release-note/misc` because the logic ingesting ClusterEndpointSlices is incomplete and disabled behind a feature flag in v1.20. Reported-by: Secstant - Sigma Prime \\<secstant@sigmaprime.io>",
+        "url": "https://github.com/cilium/cilium/pull/47932",
+        "createdAt": "2026-08-13T08:30:58Z",
+        "updatedAt": "2026-08-13T17:46:22Z",
+        "timestamp": "2026-08-13T17:46:22Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 2
+        },
+        "labels": [
+          "ready-to-merge",
+          "area/clustermesh",
+          "release-note/misc",
+          "needs-backport/1.20"
+        ],
+        "author": "giorio94",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ed55f9a4f046da491c84",
+      "signalId": "github:cilium/cilium:issue:47941",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:cilium/cilium:issue:47941",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "cilium/cilium",
+        "kind": "issue",
+        "title": "Hubble Relay does not terminate, gRPC health server remains running",
+        "text": "### Is there an existing issue for this? - [x] I have searched the existing issues ### Version equal or higher than v1.20.0 and lower than v1.21.0 ### What happened? Hubble Relay does not fully terminate after receiving SIGTERM. The Relay server shuts down and the log reports Server stopped, but the Relay process remains running until the Kubernetes termination grace period expires and the pod is killed with SIGTERM. The dedicated gRPC health server on port 4222 remains listening after the main Relay server has already stopped. ## Expected behavior Hubble Relay should fully terminate after SIGTERM once the server is stopped. The Kubernetes termination grace period should be a maximum shutdown deadline and should not expire before the Relay process exits. ## Cause `Server.Serve()` starts both the gRPC and the separate gRPC health Server and waits for all of them to return. The current Server.Stop() stops the main server with: `s.server.Stop()` but does not stop: `s.grpcHealthServer` This appears to leave the health server listening on port 4222, preventing `errgroup.Wait()` in `Server.Serve()` from returning. The health server appears to have been introduced in: [b1f246567b72 (\"hubble/relay: Update health server to check connectivity\")](https://github.com/cilium/cilium/commit/b1f246567b7233fdd9a3edcbbe102415d3911fe4) ### How can we reproduce the issue? Run Hubble Relay in Kubernetes. Start termination of the Relay pod, for example as part of a node drain. Observe the Relay logs: ``` Stopping server... Server stopped ``` The pod remains in Terminating and the container remains in a running state. Inspect the Relay process network namespace after Server stopped: `sudo nsenter -t \"$PID\" -n ss -ltnp` Port 4222 is still in LISTEN state while the main Relay listener is gone. A SIGQUIT stack dump taken showed Server.Serve() waiting in: ``` sync.(*WaitGroup).Wait golang.org/x/sync/errgroup.(*Group).Wait github.com/cilium/cilium/pkg/hubble/relay/server.(*Server).Serve ``` ### Cilium Version 1.20.0 ### Kernel Version 5.14.0 ### Kubernetes Version 1.36.3 ### Regression _No response_ ### Sysdump _No response_ ### Relevant log output ```shell sync.(*WaitGroup).Wait golang.org/x/sync/errgroup.(*Group).Wait github.com/cilium/cilium/pkg/hubble/relay/server.(*Server).Serve ``` ### Anything else? _No response_ ### Cilium Users Document - [ ] Are you a user of Cilium? Please add yourself to the [Users doc](https://github.com/cilium/cilium/blob/main/USERS.md) ### Code of Conduct - [x] I agree to follow this project's Code of Conduct",
+        "url": "https://github.com/cilium/cilium/issues/47941",
+        "createdAt": "2026-08-13T15:11:30Z",
+        "updatedAt": "2026-08-13T15:37:23Z",
+        "timestamp": "2026-08-13T15:37:23Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [
+          "kind/bug",
+          "needs/triage",
+          "kind/community-report"
+        ],
+        "author": "xandau",
         "state": "open",
         "assignees": [],
         "change": "updated"

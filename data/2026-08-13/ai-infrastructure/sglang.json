@@ -40,13 +40,13 @@
     "defaultBranch": "main",
     "stars": 31754,
     "forks": 7862,
-    "openIssues": 4909,
+    "openIssues": 4908,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:33.746427+00:00"
+    "collectedAt": "2026-08-13T17:47:20.269851+00:00"
   },
   "news": {
     "repository": "sgl-project/sglang",
-    "collectedAt": "2026-08-13T17:43:33.746427+00:00",
+    "collectedAt": "2026-08-13T17:47:20.269851+00:00",
     "latestRelease": {
       "repository": "sgl-project/sglang",
       "tag": "v0.5.17",
@@ -101,6 +101,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 500,
       "changedCount": 49
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 500,
+      "changedCount": 4
     }
   ],
   "signals": [
@@ -146,8 +152,7 @@
       "labels": [],
       "author": "alisonshao",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:issue:19137",
@@ -373,8 +378,7 @@
         "xiezhq-hermann",
         "hzh0425",
         "ishandhanani"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:issue:27937",
@@ -814,8 +818,7 @@
       "labels": [],
       "author": "jambow0320",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:issue:34513",
@@ -1239,8 +1242,7 @@
       "labels": [],
       "author": "b8zhong",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:issue:5979",
@@ -1901,8 +1903,7 @@
       ],
       "author": "sushildubey171",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:26510",
@@ -2036,8 +2037,7 @@
       ],
       "author": "xyuzh",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:27770",
@@ -2046,16 +2046,17 @@
       "project": "sgl-project/sglang",
       "kind": "pull_request",
       "title": "[P/D disagg] Decode-side radix cache for SWA hybrid models (unified radix tree)",
-      "text": "<!-- codex-pr-description:start --> This PR enables device-resident decode-side radix reuse for hybrid SWA models on the experimental unified radix tree. It keeps full-attention KV reusable while transferring a fresh SWA window, reducing repeated P/D KV transfer without introducing HiCache or Mamba support. ### How This Was Implemented - Caps the reused full-attention prefix at the SWA window boundary and allocates only the fresh SWA tail. - Caches an unfinished request's computed prefix, deduplicates overlapping full-attention KV, then repoints the live request to the cache-owned slots. - Carries SWA lock boundaries through rejection paths, including when the cap reduces a matched prefix to zero. - Requires the unified radix tree and rejects hierarchical cache, Mamba/SSM, DSA, and SWA-compress variants. - Adds registered device-only gpt-oss-20b P/D coverage. ### Before and After | Unfinished-request state | Before | After | |---|---|---| | Full-attention KV is device-resident but the old SWA window is tombstoned | The normal full+SWA match can return zero indices after insertion has deduplicated the request's full KV. Repointing then fails `new_prefix_len <= len(new_indices)`; continuing would leave the request referencing freed duplicate slots. | This one lifecycle path requests the full device-resident match, rewrites the request table to the cache-owned full-KV slots, and transfers its lock to the deepest full-resident node. Normal scheduler matching remains SWA-window-safe. | <details> <summary>Walkthrough</summary> #### Mental model Full-attention KV remains reusable across turns, while SWA KV is valid only for the current live window. ```mermaid flowchart LR P[\"Prefill delta\"] --> D[\"Decode admission\"] M[\"Unified-tree prefix match\"] --> D D --> F[\"Reuse full-attention KV\"] D --> W[\"Allocate fresh SWA tail\"] F --> C[\"Cache unfinished request\"] W --> C ``` #### Why a full-device match is required `cache_unfinished_req` is named for the request lifecycle, not for a single pointer operation: it commits the current prefix of a request that will continue running. It inserts the prefix into the shared radix tree, deduplicates request-owned full-KV slots that the tree already owns, resolves the canonical cached slots, rewrites the live request's token table, and moves the request's tree lock. For a four-token reused prefix: ```text request-owned full KV before insert: R0 R1 R2 R3 cache-owned full KV: C0 C1 C2 C3 cache-owned SWA KV: tombstoned insert result: prefix_len = 4; duplicate R0-R3 are released normal match: [] because SWA is tombstoned full-device match: [C0 C1 C2 C3] canonical slots for repointing ``` The normal match would make the safety check `4 <= 0` fail. The full-device match makes it `4 <= 4`, so the request is repointed to `C0-C3` before it continues; `return_full_match` defaults to false and is enabled only at this repoint call, so admission and reuse decisions still require an SWA-valid match. #### Request lifecycle Decode matches and locks the device prefix, caps reuse at the SWA window boundary, checks both full and SWA pool budgets, and allocates the remaining full pages plus the live SWA tail. Admission rejection releases the original matched-node lock even when capping reduces the usable prefix to zero; unfinished caching then commits the live prefix, tombstones out-of-window SWA positions, repoints full-attention slots, and transfers the request lock. #### Boundaries and limitations This change is device-only. SWA decode radix combined with hierarchical cache is rejected, and Mamba/SSM, DSA, and SWA-compress models remain unsupported. </details> ### Validation - `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test/registered/unit/mem_cache/test_decode_radix_lock_ref.py -v` — 6 passed. - `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test/registered/unit/mem_cache/test_unified_radix_cache_unittest.py` — 1,818 ran; 758 skipped; OK. - Mocked `build_kv_cache` smoke — device-only path succeeds; SWA + hierarchical cache raises. - `.venv/bin/pre-commit run --files ...` — passed. - Targeted `/rerun-group disaggregation` — SWA decode-radix passed on 8×H20; hybrid-attention passed on 8×H200. <!-- codex-pr-description:end --> ## Motivation Extend the decode-side radix cache (P/D disaggregation, #19746) to **sliding-window-attention (SWA) hybrid models** such as gpt-oss, which are currently rejected at startup. With this, a decode worker can **reuse a cached prefix's full-attention KV across requests/turns** and request only the delta from the prefill worker, instead of receiving the entire prefix KV every time. The feature is gated to the **experimental unified radix tree** (`SGLANG_ENABLE_UNIFIED_RADIX_TREE`). The default `SWARadixCache` and the Mamba/SSM pools remain unsupported on this path, as do DSA (DeepSeek-V4) and SWA-compress (Gemma/MiMo) variants. > Supersedes #26218, which took the same feature through the default `SWARadixCache`. We're standardizing on the unified tree for SWA decode-radix, so that path is dropped here. ## Background: why SWA needs special handling A hybrid SWA model keeps **two** KV caches with different lifetimes: - **Full-attention layers** — keep KV for every token, as long as it's cached. Large, sticky. - **Sliding-window layers** — keep KV for only the last *W* tokens; older slots recycle as the window advances. Bounded. So on the decode worker the prefix's **full-attention** KV can be reused directly, but its **sliding-window** KV cannot — by reuse time the original writer's window has slid past it. Such a node is a **tombstone** (full KV present, SWA recycled). This is normal and harmless for correctness: a reuser only needs the window for its *own* current position, which it gets fresh. ## What this PR does - **`kv_cache_builder.py`** — allow SWA + `--disaggregation-decode-enable-radix-cache` **only when the unified tree is active**; otherwise raise (DSA / SWA-compress still blocked even under unified). - **`decode.py`** — decode-side SWA mechanics: cap full-attention prefix reuse at the sliding-window start so the window lands in the fresh delta; `alloc_extend_swa_tail` on radix hits; mark the non-window prefix `swa_evicted_seqlen` (SWA tombstone); SWA-aware budget/eviction accessors; thread the SWA lock uuid through prefix lock/release. - **`unified_radix_cache.py` + `swa_component.py` + `base_prefix_cache.py`** — two `UnifiedRadixCache` fixes this path needs: 1. **SWA pool leak.** `SWAComponent.prepare_for_caching_req` only forwarded `swa_evicted_seqlen` when `is_finished=True`; on the unfinished path the out-of-window prefix tokens were inserted as *live* SWA and counted as `swa_evictable`, so at idle `available + evictable` exceeds the pool. Forward it on both paths so they become tombstones (`0` on the aggregated path → unchanged there). 2. **`cache_unfinished_req` repoint.** The dedup/repoint operates on full-attention cards but was sized by the SWA-window-safe match. On a reused, tombstoned prefix the window-safe match collapses to `0` while the cards number in the hundreds, tripping `assert new_prefix_len <= len(new_indices)`. Add `MatchPrefixParams.return_full_match`: `_match_prefix_helper` returns the deepest device-resident node, `_match_post_processor` returns the full cards + that node. The unified `inc_lock_ref` already skips tombstones, so no lock change is needed. No `swa_radix_cache.py` changes — the old path is intentionally not supported. ## Usage ``` --disaggregation-mode decode \\ --disaggregation-transfer-backend {nixl|mooncake} \\ --disaggregation-decode-enable-radix-cache \\ --page-size 64 # with SGLANG_ENABLE_UNIFIED_RADIX_TREE=1 in the env ``` ## Test `test/manual/disaggregation/test_disaggregation_decode_radix_cache_swa.py` (gpt-oss-20b; manual because the model isn't in the CI pool) launches with the unified tree via `extra_*_env` and runs the shared decode-radix mixin (multi-turn cache-hit + 2-pass gsm8k). Validated on `openai/gpt-oss-20b`, 1P1D on 2×L40S, `--page-size 64 --attention-backend triton`, strict idle + per-iteration memory checks: | Check | Result | |---|---| | Multi-turn prefix reuse (decode cache hit) | cached tokens grow across rounds (0 → 1792 → 3584) | | gsm8k, 500 ex, 2 passes (2nd hits the cache) | 0.532 / 0.572 | | SWA-pool leak / `cache_unfinished_req` assert | **0 / 0** | ## Deep dive Writeup of the two `UnifiedRadixCache` bugs hit while enabling this path — exact errors, root causes, fix walkthrough, before/after validation: https://gist.github.com/ishandhanani/ed3cd2082381f31d848a7f6fcac977c6 <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31726053680](https://github.com/sgl-project/sglang/actions/runs/31726053680)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:hourglass_flowing_sand: [Run #31726053067](https://github.com/sgl-project/sglang/actions/runs/31726053067)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "text": "<!-- codex-pr-description:start --> This PR enables device-resident decode-side radix reuse for hybrid SWA models on the experimental unified radix tree. It keeps full-attention KV reusable while transferring a fresh SWA window, reducing repeated P/D KV transfer without introducing HiCache or Mamba support. ### How This Was Implemented - Caps the reused full-attention prefix at the SWA window boundary and allocates only the fresh SWA tail. - Caches an unfinished request's computed prefix, deduplicates overlapping full-attention KV, then repoints the live request to the cache-owned slots. - Carries SWA lock boundaries through rejection paths, including when the cap reduces a matched prefix to zero. - Requires the unified radix tree and rejects hierarchical cache, Mamba/SSM, DSA, and SWA-compress variants. - Adds registered device-only gpt-oss-20b P/D coverage. ### Before and After | Unfinished-request state | Before | After | |---|---|---| | Full-attention KV is device-resident but the old SWA window is tombstoned | The normal full+SWA match can return zero indices after insertion has deduplicated the request's full KV. Repointing then fails `new_prefix_len <= len(new_indices)`; continuing would leave the request referencing freed duplicate slots. | This one lifecycle path requests the full device-resident match, rewrites the request table to the cache-owned full-KV slots, and transfers its lock to the deepest full-resident node. Normal scheduler matching remains SWA-window-safe. | <details> <summary>Walkthrough</summary> #### Mental model Full-attention KV remains reusable across turns, while SWA KV is valid only for the current live window. ```mermaid flowchart LR P[\"Prefill delta\"] --> D[\"Decode admission\"] M[\"Unified-tree prefix match\"] --> D D --> F[\"Reuse full-attention KV\"] D --> W[\"Allocate fresh SWA tail\"] F --> C[\"Cache unfinished request\"] W --> C ``` #### Why a full-device match is required `cache_unfinished_req` is named for the request lifecycle, not for a single pointer operation: it commits the current prefix of a request that will continue running. It inserts the prefix into the shared radix tree, deduplicates request-owned full-KV slots that the tree already owns, resolves the canonical cached slots, rewrites the live request's token table, and moves the request's tree lock. For a four-token reused prefix: ```text request-owned full KV before insert: R0 R1 R2 R3 cache-owned full KV: C0 C1 C2 C3 cache-owned SWA KV: tombstoned insert result: prefix_len = 4; duplicate R0-R3 are released normal match: [] because SWA is tombstoned full-device match: [C0 C1 C2 C3] canonical slots for repointing ``` The normal match would make the safety check `4 <= 0` fail. The full-device match makes it `4 <= 4`, so the request is repointed to `C0-C3` before it continues; `return_full_match` defaults to false and is enabled only at this repoint call, so admission and reuse decisions still require an SWA-valid match. #### Request lifecycle Decode matches and locks the device prefix, caps reuse at the SWA window boundary, checks both full and SWA pool budgets, and allocates the remaining full pages plus the live SWA tail. Admission rejection releases the original matched-node lock even when capping reduces the usable prefix to zero; unfinished caching then commits the live prefix, tombstones out-of-window SWA positions, repoints full-attention slots, and transfers the request lock. #### Boundaries and limitations This change is device-only. SWA decode radix combined with hierarchical cache is rejected, and Mamba/SSM, DSA, and SWA-compress models remain unsupported. </details> ### Validation - `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test/registered/unit/mem_cache/test_decode_radix_lock_ref.py -v` — 6 passed. - `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test/registered/unit/mem_cache/test_unified_radix_cache_unittest.py` — 1,818 ran; 758 skipped; OK. - Mocked `build_kv_cache` smoke — device-only path succeeds; SWA + hierarchical cache raises. - `.venv/bin/pre-commit run --files ...` — passed. - Targeted `/rerun-group disaggregation` — SWA decode-radix passed on 8×H20; hybrid-attention passed on 8×H200. <!-- codex-pr-description:end --> ## Motivation Extend the decode-side radix cache (P/D disaggregation, #19746) to **sliding-window-attention (SWA) hybrid models** such as gpt-oss, which are currently rejected at startup. With this, a decode worker can **reuse a cached prefix's full-attention KV across requests/turns** and request only the delta from the prefill worker, instead of receiving the entire prefix KV every time. The feature is gated to the **experimental unified radix tree** (`SGLANG_ENABLE_UNIFIED_RADIX_TREE`). The default `SWARadixCache` and the Mamba/SSM pools remain unsupported on this path, as do DSA (DeepSeek-V4) and SWA-compress (Gemma/MiMo) variants. > Supersedes #26218, which took the same feature through the default `SWARadixCache`. We're standardizing on the unified tree for SWA decode-radix, so that path is dropped here. ## Background: why SWA needs special handling A hybrid SWA model keeps **two** KV caches with different lifetimes: - **Full-attention layers** — keep KV for every token, as long as it's cached. Large, sticky. - **Sliding-window layers** — keep KV for only the last *W* tokens; older slots recycle as the window advances. Bounded. So on the decode worker the prefix's **full-attention** KV can be reused directly, but its **sliding-window** KV cannot — by reuse time the original writer's window has slid past it. Such a node is a **tombstone** (full KV present, SWA recycled). This is normal and harmless for correctness: a reuser only needs the window for its *own* current position, which it gets fresh. ## What this PR does - **`kv_cache_builder.py`** — allow SWA + `--disaggregation-decode-enable-radix-cache` **only when the unified tree is active**; otherwise raise (DSA / SWA-compress still blocked even under unified). - **`decode.py`** — decode-side SWA mechanics: cap full-attention prefix reuse at the sliding-window start so the window lands in the fresh delta; `alloc_extend_swa_tail` on radix hits; mark the non-window prefix `swa_evicted_seqlen` (SWA tombstone); SWA-aware budget/eviction accessors; thread the SWA lock uuid through prefix lock/release. - **`unified_radix_cache.py` + `swa_component.py` + `base_prefix_cache.py`** — two `UnifiedRadixCache` fixes this path needs: 1. **SWA pool leak.** `SWAComponent.prepare_for_caching_req` only forwarded `swa_evicted_seqlen` when `is_finished=True`; on the unfinished path the out-of-window prefix tokens were inserted as *live* SWA and counted as `swa_evictable`, so at idle `available + evictable` exceeds the pool. Forward it on both paths so they become tombstones (`0` on the aggregated path → unchanged there). 2. **`cache_unfinished_req` repoint.** The dedup/repoint operates on full-attention cards but was sized by the SWA-window-safe match. On a reused, tombstoned prefix the window-safe match collapses to `0` while the cards number in the hundreds, tripping `assert new_prefix_len <= len(new_indices)`. Add `MatchPrefixParams.return_full_match`: `_match_prefix_helper` returns the deepest device-resident node, `_match_post_processor` returns the full cards + that node. The unified `inc_lock_ref` already skips tombstones, so no lock change is needed. No `swa_radix_cache.py` changes — the old path is intentionally not supported. ## Usage ``` --disaggregation-mode decode \\ --disaggregation-transfer-backend {nixl|mooncake} \\ --disaggregation-decode-enable-radix-cache \\ --page-size 64 # with SGLANG_ENABLE_UNIFIED_RADIX_TREE=1 in the env ``` ## Test `test/manual/disaggregation/test_disaggregation_decode_radix_cache_swa.py` (gpt-oss-20b; manual because the model isn't in the CI pool) launches with the unified tree via `extra_*_env` and runs the shared decode-radix mixin (multi-turn cache-hit + 2-pass gsm8k). Validated on `openai/gpt-oss-20b`, 1P1D on 2×L40S, `--page-size 64 --attention-backend triton`, strict idle + per-iteration memory checks: | Check | Result | |---|---| | Multi-turn prefix reuse (decode cache hit) | cached tokens grow across rounds (0 → 1792 → 3584) | | gsm8k, 500 ex, 2 passes (2nd hits the cache) | 0.532 / 0.572 | | SWA-pool leak / `cache_unfinished_req` assert | **0 / 0** | ## Deep dive Writeup of the two `UnifiedRadixCache` bugs hit while enabling this path — exact errors, root causes, fix walkthrough, before/after validation: https://gist.github.com/ishandhanani/ed3cd2082381f31d848a7f6fcac977c6 <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727270612](https://github.com/sgl-project/sglang/actions/runs/31727270612)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:hourglass_flowing_sand: [Run #31727270469](https://github.com/sgl-project/sglang/actions/runs/31727270469)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/27770",
       "createdAt": "2026-06-10T07:28:25Z",
-      "updatedAt": "2026-08-13T17:30:44Z",
-      "timestamp": "2026-08-13T17:30:44Z",
+      "updatedAt": "2026-08-13T17:45:19Z",
+      "timestamp": "2026-08-13T17:45:19Z",
       "metrics": {
         "reactions": 3,
         "comments": 38
       },
       "labels": [
+        "amd",
         "hicache",
         "run-ci",
         "run-ci-extra"
@@ -2101,8 +2102,7 @@
       ],
       "author": "elvischenv",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:28354",
@@ -2295,8 +2295,7 @@
       "labels": [],
       "author": "ruokee",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:28932",
@@ -2323,8 +2322,7 @@
       "state": "open",
       "assignees": [
         "yctseng0211"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:28993",
@@ -2486,8 +2484,7 @@
       ],
       "author": "ColinZ22",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:29593",
@@ -2539,8 +2536,7 @@
       ],
       "author": "stmatengss",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:29723",
@@ -2663,8 +2659,7 @@
       "state": "open",
       "assignees": [
         "ping1jing2"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:30319",
@@ -2719,8 +2714,7 @@
       ],
       "author": "AnuSajikumar6264",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:30371",
@@ -2823,8 +2817,7 @@
       "state": "open",
       "assignees": [
         "hnyls2002"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:30575",
@@ -3079,8 +3072,7 @@
         "sogalin",
         "bingxche",
         "yctseng0211"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:31031",
@@ -3544,8 +3536,7 @@
       ],
       "author": "yuchengliu1",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:31785",
@@ -4084,8 +4075,7 @@
       "state": "open",
       "assignees": [
         "ch-wan"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:32414",
@@ -4230,8 +4220,7 @@
       "state": "open",
       "assignees": [
         "hzh0425"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:32523",
@@ -4512,8 +4501,7 @@
       ],
       "author": "TobyMint",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:32746",
@@ -4687,8 +4675,7 @@
       ],
       "author": "sushildubey171",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:32941",
@@ -5557,8 +5544,7 @@
       "state": "open",
       "assignees": [
         "b8zhong"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33559",
@@ -5695,8 +5681,7 @@
       "state": "open",
       "assignees": [
         "JustinTong0323"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33614",
@@ -5795,8 +5780,7 @@
       ],
       "author": "yyihuang",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33672",
@@ -5890,8 +5874,7 @@
       ],
       "author": "pllimax",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33726",
@@ -5964,8 +5947,7 @@
       ],
       "author": "vedantjh2",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33793",
@@ -6092,8 +6074,7 @@
       ],
       "author": "Elaine4CY",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33829",
@@ -6199,8 +6180,7 @@
       ],
       "author": "weireweire",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33863",
@@ -6289,8 +6269,7 @@
       ],
       "author": "reger-men",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:33891",
@@ -6598,8 +6577,7 @@
       ],
       "author": "zcnrex",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34018",
@@ -7206,6 +7184,33 @@
       "assignees": []
     },
     {
+      "id": "github:sgl-project/sglang:pull_request:34277",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "sgl-project/sglang",
+      "kind": "pull_request",
+      "title": "[DSV4] Emit TMA-aligned UE8M0 scales for FP8 einsum",
+      "text": "## Motivation Follow-up to #27926: DSV4 still emits FP32 activation scales, so DeepGEMM runs `transpose_and_pack_fp32_into_ue8m0` before every `fp8_einsum` (61 launches, ~114 µs per BS1 decode step). ## Modification Emit DeepGEMM's TMA-aligned packed UE8M0 `int32` scale layout directly from the DSV4 quant kernel. Quantized outputs and einsum numerics are unchanged. ## Speedup DeepSeek-V4-Pro, TP8 on 8×B200, ISL 16 / OSL 1024. Values are medians over 1,023 decode steps. | BS | Main latency (ms) | This PR (ms) | Saved (µs) | Throughput gain | |---:|---:|---:|---:|---:| | 1 | 10.5033 | 10.3778 | 125.5 | 1.21% | | 2 | 10.7202 | 10.6135 | 106.7 | 1.01% | | 4 | 10.8403 | 10.7365 | 103.8 | 0.97% | | 8 | 11.5747 | 11.5213 | 53.4 | 0.46% | | 16 | 13.3792 | 13.0686 | 310.6 | 2.38% | | 32 | 16.0405 | 15.4845 | 556.0 | 3.59% | | 64 | 19.6261 | 19.5289 | 97.2 | 0.50% | Geometric mean: **1.42% lower decode latency / 1.44% higher throughput**. ## Accuracy `sgl-eval run gsm8k --base-url http://localhost:30000/v1 --num-threads 32` - **GSM8K: 96.74%** (1,319 examples, single-shot) - Stop / truncated / error rates: 100.00% / 0.00% / 0.00% <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31379860367](https://github.com/sgl-project/sglang/actions/runs/31379860367)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31379860167](https://github.com/sgl-project/sglang/actions/runs/31379860167)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "url": "https://github.com/sgl-project/sglang/pull/34277",
+      "createdAt": "2026-08-10T10:36:16Z",
+      "updatedAt": "2026-08-13T17:46:27Z",
+      "timestamp": "2026-08-13T17:46:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "quant",
+        "jit-kernel"
+      ],
+      "author": "mattteochen",
+      "state": "open",
+      "assignees": [
+        "b8zhong"
+      ],
+      "change": "new"
+    },
+    {
       "id": "github:sgl-project/sglang:pull_request:34284",
       "source": "github",
       "group": "ai-infrastructure",
@@ -7372,8 +7377,7 @@
       "labels": [],
       "author": "liangjuf",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34327",
@@ -7565,8 +7569,7 @@
       ],
       "author": "AnuSajikumar6264",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34368",
@@ -7775,8 +7778,7 @@
       ],
       "author": "foraxe",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34403",
@@ -8820,8 +8822,7 @@
       ],
       "author": "rogeryoungh",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34543",
@@ -9452,11 +9453,11 @@
       "project": "sgl-project/sglang",
       "kind": "pull_request",
       "title": "Publish per-scheduler load on a dedicated socket for load-aware routers",
-      "text": "## Motivation The cache-aware-zmq router infers a worker's load from a router-side in-flight counter. That counter measures what *this router* dispatched — it misses traffic from other routers and direct clients, and for streaming responses it stays held for the whole response rather than the time the request occupies the scheduler. The engine already builds the right number: `SchedulerLoadInquirer.get_loads()` produces a `LoadSnapshot` every publish cycle (feeding `/v1/loads` and DP-attention dispatch). This exposes that snapshot to out-of-process consumers so a router can price workers on real queue depth / KV occupancy. Ported to `main` from a production branch; the router-side consumer lands separately. ## Modifications **A dedicated per-scheduler load PUB socket.** `SchedulerLoadPublisher` publishes a compact `LoadStat` gauge (`num_running_reqs`, `num_waiting_reqs`, `num_tokens`, `max_total_num_tokens`) on its own ZMQ PUB socket, independent of KV-cache events. The payload is a tagged subset of `LoadSnapshot` so the router-facing wire contract stays fixed as the internal snapshot grows. Framing matches the KV-event socket (`[b\"load\", big-endian i64 seq, msgpack LoadStat]`) so one subscriber loop handles both. Transport is a plain synchronous PUB socket — a send just enqueues to ZMQ's IO thread — so there is no background thread or replay buffer, which a gauge does not need. **One resolver for the port, shared by the bind and the advertisement.** `resolve_load_pub_range` decides where the load range lives and returns `((host, base), reason)`. Both `SchedulerLoadPublisher` (which binds `base + rank`) and `/server_info`'s `describe_kv_events_publisher` (which advertises `base` under the `kv_events` block, plus `load_topic`) route through it, so the engine cannot advertise a range it will not bind. By default the range packs immediately after the KV-event range, bumping past the replay ROUTER range when the two overlap (with the conventional `replay = kv + 1`, always). **New `--load-publish-endpoint` (observability namespace).** Sets the load range outright to move it off a port conflict, or the literal `off` to disable load publishing while keeping KV events. Must be a wildcard-host TCP address (a concrete host would be *connected to*, not bound). **Gating and cadence.** Enabled on the same condition as KV-event publishing (shared `is_kv_publisher_rank`), so the feature is **off by default** — it requires `--kv-events-config`. Publishing is throttled by call count, and an unchanged gauge is deduped to a ~1s heartbeat while a changed one goes out immediately (transitions are never delayed). When the DP-balancing sink also published this cycle, the scheduler hands its already-computed snapshot to the load publisher rather than walking the queues again. The disabled path is a bound-method call and a `None` check — no socket and no thread. **Load also publishes on stalled no-batch iterations.** `on_idle` now publishes before its fully-idle gate — a stall (queues parked under KV pressure / disagg transfer) has no `process_batch_result` to publish the growing gauge. That path spins without sleeping, so a ~50ms wall-clock floor bounds the `get_loads()` refresh for both the DP-balancing writer and the load socket; the fully-idle publish stays at its original post-flush position so the idle gauge reflects compacted KV. **Failure handling is best-effort.** A publish failure never crashes the loop (routers fall back to their own counter) and is logged once per failure episode (the publish path runs every scheduler loop, so it must not flood). **Startup validation.** `--load-publish-endpoint` set without a `--kv-events-config` publisher, not bindable, or overlapping the KV range fails at the entrypoint (`check_load_publish_args`) rather than only warning from a scheduler subprocess. ## Notes for reviewers - **Breaking change to an override point** (per `large-class-init-style` rule 28): `Scheduler.publish_load_snapshot` now returns the `LoadSnapshot` it published (previously nothing); both call sites feed it to the router-facing publisher to avoid a second queue walk. A downstream override returning `None` stays functionally correct — the publisher falls back to `load_inquirer.get_loads` at its own throttled cadence — but silently loses the shared-snapshot optimization. Return the snapshot you wrote to keep it. - **Intentional user-visible change:** endpoint parsing is now strict (`NetworkAddress.parse`), so a bare unbracketed IPv6 kv endpoint (`tcp://::1:5557`) drops the whole `kv_events` block from `/server_info`, where the old `rfind(\":\")` split advertised it unusably. - **Port footprint:** a bindable `--kv-events-config` TCP endpoint now reserves `2 * dp_size` ports from its base (`2 * dp_size + 1` with the conventional adjacent replay). Co-hosted workers must space their KV bases at least that far apart, or use `--load-publish-endpoint`. Documented in the server-arguments table. ## Accuracy Tests Not applicable — no change to model execution or output. ## Speed Tests and Profiling No benchmark run. The disabled path (default) is a bound-method call plus a `None` check per batch — no socket, no thread. When enabled, the load socket reuses the DP-balancing snapshot whenever that sink also published this cycle (otherwise it collects its own on the same call throttle), and a stalled no-batch loop is bounded to one `get_loads()` per ~50ms for both sinks. ## Checklist - [ ] Format your code according to the [Format Code](https://docs.sglang.ai/references/contribution_guide.html) guide. - [ ] Add unit tests as outlined in the [Test Guide](https://docs.sglang.ai/references/contribution_guide.html). - [ ] Update documentation as needed. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31724231227](https://github.com/sgl-project/sglang/actions/runs/31724231227)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31724230956](https://github.com/sgl-project/sglang/actions/runs/31724230956)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+      "text": "## Motivation The cache-aware-zmq router infers a worker's load from a router-side in-flight counter. That counter measures what *this router* dispatched — it misses traffic from other routers and direct clients, and for streaming responses it stays held for the whole response rather than the time the request occupies the scheduler. The engine already builds the right number: `SchedulerLoadInquirer.get_loads()` produces a `LoadSnapshot` every publish cycle (feeding `/v1/loads` and DP-attention dispatch). This exposes that snapshot to out-of-process consumers so a router can price workers on real queue depth / KV occupancy. Ported to `main` from a production branch; the router-side consumer lands separately. ## Modifications **A dedicated per-scheduler load PUB socket.** `SchedulerLoadPublisher` publishes a compact `LoadStat` gauge (`num_running_reqs`, `num_waiting_reqs`, `num_tokens`, `max_total_num_tokens`) on its own ZMQ PUB socket, independent of KV-cache events. The payload is a tagged subset of `LoadSnapshot` so the router-facing wire contract stays fixed as the internal snapshot grows. Framing matches the KV-event socket (`[b\"load\", big-endian i64 seq, msgpack LoadStat]`) so one subscriber loop handles both. Transport is a plain synchronous PUB socket — a send just enqueues to ZMQ's IO thread — so there is no background thread or replay buffer, which a gauge does not need. **One resolver for the port, shared by the bind and the advertisement.** `resolve_load_pub_range` decides where the load range lives and returns `((host, base), reason)`. Both `SchedulerLoadPublisher` (which binds `base + rank`) and `/server_info`'s `describe_kv_events_publisher` (which advertises `base` under the `kv_events` block, plus `load_topic`) route through it, so the engine cannot advertise a range it will not bind. By default the range packs immediately after the KV-event range, bumping past the replay ROUTER range when the two overlap (with the conventional `replay = kv + 1`, always). **New `--load-publish-endpoint` (observability namespace).** Sets the load range outright to move it off a port conflict, or the literal `off` to disable load publishing while keeping KV events. Must be a wildcard-host TCP address (a concrete host would be *connected to*, not bound). **Gating and cadence.** Enabled on the same condition as KV-event publishing (shared `is_kv_publisher_rank`), so the feature is **off by default** — it requires `--kv-events-config`. Publishing is throttled by call count, and an unchanged gauge is deduped to a ~1s heartbeat while a changed one goes out immediately (transitions are never delayed). When the DP-balancing sink also published this cycle, the scheduler hands its already-computed snapshot to the load publisher rather than walking the queues again. The disabled path is a bound-method call and a `None` check — no socket and no thread. **Load also publishes on stalled no-batch iterations.** `on_idle` now publishes before its fully-idle gate — a stall (queues parked under KV pressure / disagg transfer) has no `process_batch_result` to publish the growing gauge. That path spins without sleeping, so a ~50ms wall-clock floor bounds the `get_loads()` refresh for both the DP-balancing writer and the load socket; the fully-idle publish stays at its original post-flush position so the idle gauge reflects compacted KV. **Failure handling is best-effort.** A publish failure never crashes the loop (routers fall back to their own counter) and is logged once per failure episode (the publish path runs every scheduler loop, so it must not flood). **Startup validation.** `--load-publish-endpoint` set without a `--kv-events-config` publisher, not bindable, or overlapping the KV range fails at the entrypoint (`check_load_publish_args`) rather than only warning from a scheduler subprocess. ## Notes for reviewers - **Breaking change to an override point** (per `large-class-init-style` rule 28): `Scheduler.publish_load_snapshot` now returns the `LoadSnapshot` it published (previously nothing); both call sites feed it to the router-facing publisher to avoid a second queue walk. A downstream override returning `None` stays functionally correct — the publisher falls back to `load_inquirer.get_loads` at its own throttled cadence — but silently loses the shared-snapshot optimization. Return the snapshot you wrote to keep it. - **Intentional user-visible change:** endpoint parsing is now strict (`NetworkAddress.parse`), so a bare unbracketed IPv6 kv endpoint (`tcp://::1:5557`) drops the whole `kv_events` block from `/server_info`, where the old `rfind(\":\")` split advertised it unusably. - **Port footprint:** a bindable `--kv-events-config` TCP endpoint now reserves `2 * dp_size` ports from its base (`2 * dp_size + 1` with the conventional adjacent replay). Co-hosted workers must space their KV bases at least that far apart, or use `--load-publish-endpoint`. Documented in the server-arguments table. ## Accuracy Tests Not applicable — no change to model execution or output. ## Speed Tests and Profiling No benchmark run. The disabled path (default) is a bound-method call plus a `None` check per batch — no socket, no thread. When enabled, the load socket reuses the DP-balancing snapshot whenever that sink also published this cycle (otherwise it collects its own on the same call throttle), and a stalled no-batch loop is bounded to one `get_loads()` per ~50ms for both sinks. ## Checklist - [ ] Format your code according to the [Format Code](https://docs.sglang.ai/references/contribution_guide.html) guide. - [ ] Add unit tests as outlined in the [Test Guide](https://docs.sglang.ai/references/contribution_guide.html). - [ ] Update documentation as needed. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727235459](https://github.com/sgl-project/sglang/actions/runs/31727235459)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727235133](https://github.com/sgl-project/sglang/actions/runs/31727235133)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/34608",
       "createdAt": "2026-08-12T17:43:45Z",
-      "updatedAt": "2026-08-13T17:13:41Z",
-      "timestamp": "2026-08-13T17:13:41Z",
+      "updatedAt": "2026-08-13T17:45:43Z",
+      "timestamp": "2026-08-13T17:45:43Z",
       "metrics": {
         "reactions": 0,
         "comments": 2
@@ -11227,8 +11228,7 @@
       "labels": [],
       "author": "jambow0320",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34693",
@@ -11383,8 +11383,7 @@
       ],
       "author": "sherlockwu",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34701",
@@ -11405,8 +11404,7 @@
       "labels": [],
       "author": "Arist12",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34702",
@@ -11429,8 +11427,7 @@
       ],
       "author": "Arist12",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34703",
@@ -11474,8 +11471,7 @@
       ],
       "author": "foraxe",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34705",
@@ -11930,8 +11926,7 @@
       ],
       "author": "ispobock",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34730",
@@ -11977,8 +11972,7 @@
       ],
       "author": "b8zhong",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34732",
@@ -12100,8 +12094,7 @@
       ],
       "author": "mickqian",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34738",
@@ -12323,8 +12316,7 @@
       "labels": [],
       "author": "BBuf",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34749",
@@ -12393,8 +12385,7 @@
       ],
       "author": "mickqian",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34754",
@@ -12415,8 +12406,7 @@
       "labels": [],
       "author": "arathi-hlab",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34755",
@@ -12428,17 +12418,17 @@
       "text": "## Motivation The `test_disaggregation_dsv4` PD test (and other PD tests sharing the disaggregation fixture) intermittently fail at server startup with: ``` torch.distributed.DistNetworkError: The server socket has failed to listen on any local network address. port: 35061, useIpv6: false, code: -98, name: EADDRINUSE, message: address already in use ... File \".../srt/distributed/parallel_state.py\", line 2242, in init_distributed_environment torch.distributed.init_process_group(...) ``` ### Root cause Port `35061` is the `torch.distributed` `TCPStore` **rendezvous port** (`nccl_port`; `model_runner` sets `self.dist_port = nccl_port`, and `bootstrap._resolve_dist_init_method` builds `tcp://<host>:<nccl_port>`). The test passes no `--nccl-port`, so each server resolves it via `get_free_port()`, which is a classic TOCTOU: bind port `0`, read the assigned **ephemeral-range** port, then **close the socket** — nothing holds the port afterward. For dp-attention, `launch_dp_attention_schedulers` reserves the port with `bind_port` and then **closes the reservation socket before the worker's `TCPStore` actually binds it**, reopening the window. Because: - prefill and decode are launched **back-to-back on the same node**, and - `nccl_port` comes from the ephemeral range (32768–60999) shared with every ZMQ / mooncake / deepep socket, on a contended CI runner the two servers can land on the **same** port, and whichever binds its `TCPStore` second dies with `EADDRINUSE`. This is an intermittent race under runner contention, not a hard regression. ## Fix Pin a **distinct, deterministic** `nccl_port` per side, **below** the ephemeral range, in the shared PD fixture (`prefill_nccl_port = base+300`, `decode_nccl_port = base+400`) and wire it into the DSV4 test's own `start_prefill` / `start_decode` overrides. Why one fixed port per side is correct here: - dp-attention routes through `launch_dp_attention_schedulers`, which launches `launch_tensor_parallel_group(..., dp_rank=None)` **once** with a single shared `port_args` — i.e. **one shared nccl port for the whole server**, and only rank 0 binds it. So a single fixed port per side cannot collide across the 4 dp ranks. - The chosen ports sit in the **gaps** of the existing derived-port plan and below `32768`, so the OS never hands them out as ephemeral ports → the race is structurally removed, not merely narrowed. This mirrors the existing `--nccl-port` pinning already used in `test_disaggregation_aarch64.py` for the same reason. Applying it at the **fixture** level also hardens the other PD tests that use the default `start_prefill`/`start_decode` (all tp-only / pp — single nccl world — verified none use classic DP that would need per-rank ports). ## Test plan - Existing PD disaggregation CI (`test_disaggregation_dsv4` on the 8-gpu-h200 runner) should no longer flake on `EADDRINUSE` at `init_process_group`. - Port plan verified collision-free with all derived PD ports, and both pinned ports are below the ephemeral floor. 🤖 Generated with [Claude Code](https://claude.com/claude-code) <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31723990579](https://github.com/sgl-project/sglang/actions/runs/31723990579)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31723990442](https://github.com/sgl-project/sglang/actions/runs/31723990442)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
       "url": "https://github.com/sgl-project/sglang/pull/34755",
       "createdAt": "2026-08-13T17:03:10Z",
-      "updatedAt": "2026-08-13T17:33:12Z",
-      "timestamp": "2026-08-13T17:33:12Z",
+      "updatedAt": "2026-08-13T17:44:21Z",
+      "timestamp": "2026-08-13T17:44:21Z",
       "metrics": {
         "reactions": 0,
         "comments": 3
       },
       "labels": [],
       "author": "ShangmingCai",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34756",
@@ -12461,8 +12451,7 @@
       ],
       "author": "JiaxinD",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:34757",
@@ -12486,8 +12475,7 @@
       ],
       "author": "mattteochen",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:sgl-project/sglang:pull_request:6616",
@@ -33249,6 +33237,151 @@
         ],
         "author": "foraxe",
         "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fee9cbaf5fec78212469",
+      "signalId": "github:sgl-project/sglang:pull_request:34277",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34277",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[DSV4] Emit TMA-aligned UE8M0 scales for FP8 einsum",
+        "text": "## Motivation Follow-up to #27926: DSV4 still emits FP32 activation scales, so DeepGEMM runs `transpose_and_pack_fp32_into_ue8m0` before every `fp8_einsum` (61 launches, ~114 µs per BS1 decode step). ## Modification Emit DeepGEMM's TMA-aligned packed UE8M0 `int32` scale layout directly from the DSV4 quant kernel. Quantized outputs and einsum numerics are unchanged. ## Speedup DeepSeek-V4-Pro, TP8 on 8×B200, ISL 16 / OSL 1024. Values are medians over 1,023 decode steps. | BS | Main latency (ms) | This PR (ms) | Saved (µs) | Throughput gain | |---:|---:|---:|---:|---:| | 1 | 10.5033 | 10.3778 | 125.5 | 1.21% | | 2 | 10.7202 | 10.6135 | 106.7 | 1.01% | | 4 | 10.8403 | 10.7365 | 103.8 | 0.97% | | 8 | 11.5747 | 11.5213 | 53.4 | 0.46% | | 16 | 13.3792 | 13.0686 | 310.6 | 2.38% | | 32 | 16.0405 | 15.4845 | 556.0 | 3.59% | | 64 | 19.6261 | 19.5289 | 97.2 | 0.50% | Geometric mean: **1.42% lower decode latency / 1.44% higher throughput**. ## Accuracy `sgl-eval run gsm8k --base-url http://localhost:30000/v1 --num-threads 32` - **GSM8K: 96.74%** (1,319 examples, single-shot) - Stop / truncated / error rates: 100.00% / 0.00% / 0.00% <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31379860367](https://github.com/sgl-project/sglang/actions/runs/31379860367)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31379860167](https://github.com/sgl-project/sglang/actions/runs/31379860167)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34277",
+        "createdAt": "2026-08-10T10:36:16Z",
+        "updatedAt": "2026-08-13T17:46:27Z",
+        "timestamp": "2026-08-13T17:46:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "quant",
+          "jit-kernel"
+        ],
+        "author": "mattteochen",
+        "state": "open",
+        "assignees": [
+          "b8zhong"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c7928a7d99b6af6e11dd",
+      "signalId": "github:sgl-project/sglang:pull_request:34608",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34608",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "Publish per-scheduler load on a dedicated socket for load-aware routers",
+        "text": "## Motivation The cache-aware-zmq router infers a worker's load from a router-side in-flight counter. That counter measures what *this router* dispatched — it misses traffic from other routers and direct clients, and for streaming responses it stays held for the whole response rather than the time the request occupies the scheduler. The engine already builds the right number: `SchedulerLoadInquirer.get_loads()` produces a `LoadSnapshot` every publish cycle (feeding `/v1/loads` and DP-attention dispatch). This exposes that snapshot to out-of-process consumers so a router can price workers on real queue depth / KV occupancy. Ported to `main` from a production branch; the router-side consumer lands separately. ## Modifications **A dedicated per-scheduler load PUB socket.** `SchedulerLoadPublisher` publishes a compact `LoadStat` gauge (`num_running_reqs`, `num_waiting_reqs`, `num_tokens`, `max_total_num_tokens`) on its own ZMQ PUB socket, independent of KV-cache events. The payload is a tagged subset of `LoadSnapshot` so the router-facing wire contract stays fixed as the internal snapshot grows. Framing matches the KV-event socket (`[b\"load\", big-endian i64 seq, msgpack LoadStat]`) so one subscriber loop handles both. Transport is a plain synchronous PUB socket — a send just enqueues to ZMQ's IO thread — so there is no background thread or replay buffer, which a gauge does not need. **One resolver for the port, shared by the bind and the advertisement.** `resolve_load_pub_range` decides where the load range lives and returns `((host, base), reason)`. Both `SchedulerLoadPublisher` (which binds `base + rank`) and `/server_info`'s `describe_kv_events_publisher` (which advertises `base` under the `kv_events` block, plus `load_topic`) route through it, so the engine cannot advertise a range it will not bind. By default the range packs immediately after the KV-event range, bumping past the replay ROUTER range when the two overlap (with the conventional `replay = kv + 1`, always). **New `--load-publish-endpoint` (observability namespace).** Sets the load range outright to move it off a port conflict, or the literal `off` to disable load publishing while keeping KV events. Must be a wildcard-host TCP address (a concrete host would be *connected to*, not bound). **Gating and cadence.** Enabled on the same condition as KV-event publishing (shared `is_kv_publisher_rank`), so the feature is **off by default** — it requires `--kv-events-config`. Publishing is throttled by call count, and an unchanged gauge is deduped to a ~1s heartbeat while a changed one goes out immediately (transitions are never delayed). When the DP-balancing sink also published this cycle, the scheduler hands its already-computed snapshot to the load publisher rather than walking the queues again. The disabled path is a bound-method call and a `None` check — no socket and no thread. **Load also publishes on stalled no-batch iterations.** `on_idle` now publishes before its fully-idle gate — a stall (queues parked under KV pressure / disagg transfer) has no `process_batch_result` to publish the growing gauge. That path spins without sleeping, so a ~50ms wall-clock floor bounds the `get_loads()` refresh for both the DP-balancing writer and the load socket; the fully-idle publish stays at its original post-flush position so the idle gauge reflects compacted KV. **Failure handling is best-effort.** A publish failure never crashes the loop (routers fall back to their own counter) and is logged once per failure episode (the publish path runs every scheduler loop, so it must not flood). **Startup validation.** `--load-publish-endpoint` set without a `--kv-events-config` publisher, not bindable, or overlapping the KV range fails at the entrypoint (`check_load_publish_args`) rather than only warning from a scheduler subprocess. ## Notes for reviewers - **Breaking change to an override point** (per `large-class-init-style` rule 28): `Scheduler.publish_load_snapshot` now returns the `LoadSnapshot` it published (previously nothing); both call sites feed it to the router-facing publisher to avoid a second queue walk. A downstream override returning `None` stays functionally correct — the publisher falls back to `load_inquirer.get_loads` at its own throttled cadence — but silently loses the shared-snapshot optimization. Return the snapshot you wrote to keep it. - **Intentional user-visible change:** endpoint parsing is now strict (`NetworkAddress.parse`), so a bare unbracketed IPv6 kv endpoint (`tcp://::1:5557`) drops the whole `kv_events` block from `/server_info`, where the old `rfind(\":\")` split advertised it unusably. - **Port footprint:** a bindable `--kv-events-config` TCP endpoint now reserves `2 * dp_size` ports from its base (`2 * dp_size + 1` with the conventional adjacent replay). Co-hosted workers must space their KV bases at least that far apart, or use `--load-publish-endpoint`. Documented in the server-arguments table. ## Accuracy Tests Not applicable — no change to model execution or output. ## Speed Tests and Profiling No benchmark run. The disabled path (default) is a bound-method call plus a `None` check per batch — no socket, no thread. When enabled, the load socket reuses the DP-balancing snapshot whenever that sink also published this cycle (otherwise it collects its own on the same call throttle), and a stalled no-batch loop is bounded to one `get_loads()` per ~50ms for both sinks. ## Checklist - [ ] Format your code according to the [Format Code](https://docs.sglang.ai/references/contribution_guide.html) guide. - [ ] Add unit tests as outlined in the [Test Guide](https://docs.sglang.ai/references/contribution_guide.html). - [ ] Update documentation as needed. <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727235459](https://github.com/sgl-project/sglang/actions/runs/31727235459)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31727235133](https://github.com/sgl-project/sglang/actions/runs/31727235133)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34608",
+        "createdAt": "2026-08-12T17:43:45Z",
+        "updatedAt": "2026-08-13T17:45:43Z",
+        "timestamp": "2026-08-13T17:45:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "documentation",
+          "run-ci"
+        ],
+        "author": "ShangmingCai",
+        "state": "open",
+        "assignees": [
+          "Kangyan-Zhou",
+          "alexnails"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:83a0c5aabcdf688d8d3e",
+      "signalId": "github:sgl-project/sglang:pull_request:27770",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:27770",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[P/D disagg] Decode-side radix cache for SWA hybrid models (unified radix tree)",
+        "text": "<!-- codex-pr-description:start --> This PR enables device-resident decode-side radix reuse for hybrid SWA models on the experimental unified radix tree. It keeps full-attention KV reusable while transferring a fresh SWA window, reducing repeated P/D KV transfer without introducing HiCache or Mamba support. ### How This Was Implemented - Caps the reused full-attention prefix at the SWA window boundary and allocates only the fresh SWA tail. - Caches an unfinished request's computed prefix, deduplicates overlapping full-attention KV, then repoints the live request to the cache-owned slots. - Carries SWA lock boundaries through rejection paths, including when the cap reduces a matched prefix to zero. - Requires the unified radix tree and rejects hierarchical cache, Mamba/SSM, DSA, and SWA-compress variants. - Adds registered device-only gpt-oss-20b P/D coverage. ### Before and After | Unfinished-request state | Before | After | |---|---|---| | Full-attention KV is device-resident but the old SWA window is tombstoned | The normal full+SWA match can return zero indices after insertion has deduplicated the request's full KV. Repointing then fails `new_prefix_len <= len(new_indices)`; continuing would leave the request referencing freed duplicate slots. | This one lifecycle path requests the full device-resident match, rewrites the request table to the cache-owned full-KV slots, and transfers its lock to the deepest full-resident node. Normal scheduler matching remains SWA-window-safe. | <details> <summary>Walkthrough</summary> #### Mental model Full-attention KV remains reusable across turns, while SWA KV is valid only for the current live window. ```mermaid flowchart LR P[\"Prefill delta\"] --> D[\"Decode admission\"] M[\"Unified-tree prefix match\"] --> D D --> F[\"Reuse full-attention KV\"] D --> W[\"Allocate fresh SWA tail\"] F --> C[\"Cache unfinished request\"] W --> C ``` #### Why a full-device match is required `cache_unfinished_req` is named for the request lifecycle, not for a single pointer operation: it commits the current prefix of a request that will continue running. It inserts the prefix into the shared radix tree, deduplicates request-owned full-KV slots that the tree already owns, resolves the canonical cached slots, rewrites the live request's token table, and moves the request's tree lock. For a four-token reused prefix: ```text request-owned full KV before insert: R0 R1 R2 R3 cache-owned full KV: C0 C1 C2 C3 cache-owned SWA KV: tombstoned insert result: prefix_len = 4; duplicate R0-R3 are released normal match: [] because SWA is tombstoned full-device match: [C0 C1 C2 C3] canonical slots for repointing ``` The normal match would make the safety check `4 <= 0` fail. The full-device match makes it `4 <= 4`, so the request is repointed to `C0-C3` before it continues; `return_full_match` defaults to false and is enabled only at this repoint call, so admission and reuse decisions still require an SWA-valid match. #### Request lifecycle Decode matches and locks the device prefix, caps reuse at the SWA window boundary, checks both full and SWA pool budgets, and allocates the remaining full pages plus the live SWA tail. Admission rejection releases the original matched-node lock even when capping reduces the usable prefix to zero; unfinished caching then commits the live prefix, tombstones out-of-window SWA positions, repoints full-attention slots, and transfers the request lock. #### Boundaries and limitations This change is device-only. SWA decode radix combined with hierarchical cache is rejected, and Mamba/SSM, DSA, and SWA-compress models remain unsupported. </details> ### Validation - `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test/registered/unit/mem_cache/test_decode_radix_lock_ref.py -v` — 6 passed. - `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test/registered/unit/mem_cache/test_unified_radix_cache_unittest.py` — 1,818 ran; 758 skipped; OK. - Mocked `build_kv_cache` smoke — device-only path succeeds; SWA + hierarchical cache raises. - `.venv/bin/pre-commit run --files ...` — passed. - Targeted `/rerun-group disaggregation` — SWA decode-radix passed on 8×H20; hybrid-attention passed on 8×H200. <!-- codex-pr-description:end --> ## Motivation Extend the decode-side radix cache (P/D disaggregation, #19746) to **sliding-window-attention (SWA) hybrid models** such as gpt-oss, which are currently rejected at startup. With this, a decode worker can **reuse a cached prefix's full-attention KV across requests/turns** and request only the delta from the prefill worker, instead of receiving the entire prefix KV every time. The feature is gated to the **experimental unified radix tree** (`SGLANG_ENABLE_UNIFIED_RADIX_TREE`). The default `SWARadixCache` and the Mamba/SSM pools remain unsupported on this path, as do DSA (DeepSeek-V4) and SWA-compress (Gemma/MiMo) variants. > Supersedes #26218, which took the same feature through the default `SWARadixCache`. We're standardizing on the unified tree for SWA decode-radix, so that path is dropped here. ## Background: why SWA needs special handling A hybrid SWA model keeps **two** KV caches with different lifetimes: - **Full-attention layers** — keep KV for every token, as long as it's cached. Large, sticky. - **Sliding-window layers** — keep KV for only the last *W* tokens; older slots recycle as the window advances. Bounded. So on the decode worker the prefix's **full-attention** KV can be reused directly, but its **sliding-window** KV cannot — by reuse time the original writer's window has slid past it. Such a node is a **tombstone** (full KV present, SWA recycled). This is normal and harmless for correctness: a reuser only needs the window for its *own* current position, which it gets fresh. ## What this PR does - **`kv_cache_builder.py`** — allow SWA + `--disaggregation-decode-enable-radix-cache` **only when the unified tree is active**; otherwise raise (DSA / SWA-compress still blocked even under unified). - **`decode.py`** — decode-side SWA mechanics: cap full-attention prefix reuse at the sliding-window start so the window lands in the fresh delta; `alloc_extend_swa_tail` on radix hits; mark the non-window prefix `swa_evicted_seqlen` (SWA tombstone); SWA-aware budget/eviction accessors; thread the SWA lock uuid through prefix lock/release. - **`unified_radix_cache.py` + `swa_component.py` + `base_prefix_cache.py`** — two `UnifiedRadixCache` fixes this path needs: 1. **SWA pool leak.** `SWAComponent.prepare_for_caching_req` only forwarded `swa_evicted_seqlen` when `is_finished=True`; on the unfinished path the out-of-window prefix tokens were inserted as *live* SWA and counted as `swa_evictable`, so at idle `available + evictable` exceeds the pool. Forward it on both paths so they become tombstones (`0` on the aggregated path → unchanged there). 2. **`cache_unfinished_req` repoint.** The dedup/repoint operates on full-attention cards but was sized by the SWA-window-safe match. On a reused, tombstoned prefix the window-safe match collapses to `0` while the cards number in the hundreds, tripping `assert new_prefix_len <= len(new_indices)`. Add `MatchPrefixParams.return_full_match`: `_match_prefix_helper` returns the deepest device-resident node, `_match_post_processor` returns the full cards + that node. The unified `inc_lock_ref` already skips tombstones, so no lock change is needed. No `swa_radix_cache.py` changes — the old path is intentionally not supported. ## Usage ``` --disaggregation-mode decode \\ --disaggregation-transfer-backend {nixl|mooncake} \\ --disaggregation-decode-enable-radix-cache \\ --page-size 64 # with SGLANG_ENABLE_UNIFIED_RADIX_TREE=1 in the env ``` ## Test `test/manual/disaggregation/test_disaggregation_decode_radix_cache_swa.py` (gpt-oss-20b; manual because the model isn't in the CI pool) launches with the unified tree via `extra_*_env` and runs the shared decode-radix mixin (multi-turn cache-hit + 2-pass gsm8k). Validated on `openai/gpt-oss-20b`, 1P1D on 2×L40S, `--page-size 64 --attention-backend triton`, strict idle + per-iteration memory checks: | Check | Result | |---|---| | Multi-turn prefix reuse (decode cache hit) | cached tokens grow across rounds (0 → 1792 → 3584) | | gsm8k, 500 ex, 2 passes (2nd hits the cache) | 0.532 / 0.572 | | SWA-pool leak / `cache_unfinished_req` assert | **0 / 0** | ## Deep dive Writeup of the two `UnifiedRadixCache` bugs hit while enabling this path — exact errors, root causes, fix walkthrough, before/after validation: https://gist.github.com/ishandhanani/ed3cd2082381f31d848a7f6fcac977c6 <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:hourglass_flowing_sand: [Run #31727270612](https://github.com/sgl-project/sglang/actions/runs/31727270612)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:hourglass_flowing_sand: [Run #31727270469](https://github.com/sgl-project/sglang/actions/runs/31727270469)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/27770",
+        "createdAt": "2026-06-10T07:28:25Z",
+        "updatedAt": "2026-08-13T17:45:19Z",
+        "timestamp": "2026-08-13T17:45:19Z",
+        "metrics": {
+          "reactions": 3,
+          "comments": 38
+        },
+        "labels": [
+          "amd",
+          "hicache",
+          "run-ci",
+          "run-ci-extra"
+        ],
+        "author": "ishandhanani",
+        "state": "open",
+        "assignees": [
+          "hzh0425",
+          "ShangmingCai"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:eebd986a6e8ed5ae5470",
+      "signalId": "github:sgl-project/sglang:pull_request:34755",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:sgl-project/sglang:pull_request:34755",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "sgl-project/sglang",
+        "kind": "pull_request",
+        "title": "[CI][PD] Pin nccl rendezvous port per side to fix flaky disaggregation tests",
+        "text": "## Motivation The `test_disaggregation_dsv4` PD test (and other PD tests sharing the disaggregation fixture) intermittently fail at server startup with: ``` torch.distributed.DistNetworkError: The server socket has failed to listen on any local network address. port: 35061, useIpv6: false, code: -98, name: EADDRINUSE, message: address already in use ... File \".../srt/distributed/parallel_state.py\", line 2242, in init_distributed_environment torch.distributed.init_process_group(...) ``` ### Root cause Port `35061` is the `torch.distributed` `TCPStore` **rendezvous port** (`nccl_port`; `model_runner` sets `self.dist_port = nccl_port`, and `bootstrap._resolve_dist_init_method` builds `tcp://<host>:<nccl_port>`). The test passes no `--nccl-port`, so each server resolves it via `get_free_port()`, which is a classic TOCTOU: bind port `0`, read the assigned **ephemeral-range** port, then **close the socket** — nothing holds the port afterward. For dp-attention, `launch_dp_attention_schedulers` reserves the port with `bind_port` and then **closes the reservation socket before the worker's `TCPStore` actually binds it**, reopening the window. Because: - prefill and decode are launched **back-to-back on the same node**, and - `nccl_port` comes from the ephemeral range (32768–60999) shared with every ZMQ / mooncake / deepep socket, on a contended CI runner the two servers can land on the **same** port, and whichever binds its `TCPStore` second dies with `EADDRINUSE`. This is an intermittent race under runner contention, not a hard regression. ## Fix Pin a **distinct, deterministic** `nccl_port` per side, **below** the ephemeral range, in the shared PD fixture (`prefill_nccl_port = base+300`, `decode_nccl_port = base+400`) and wire it into the DSV4 test's own `start_prefill` / `start_decode` overrides. Why one fixed port per side is correct here: - dp-attention routes through `launch_dp_attention_schedulers`, which launches `launch_tensor_parallel_group(..., dp_rank=None)` **once** with a single shared `port_args` — i.e. **one shared nccl port for the whole server**, and only rank 0 binds it. So a single fixed port per side cannot collide across the 4 dp ranks. - The chosen ports sit in the **gaps** of the existing derived-port plan and below `32768`, so the OS never hands them out as ephemeral ports → the race is structurally removed, not merely narrowed. This mirrors the existing `--nccl-port` pinning already used in `test_disaggregation_aarch64.py` for the same reason. Applying it at the **fixture** level also hardens the other PD tests that use the default `start_prefill`/`start_decode` (all tp-only / pp — single nccl world — verified none use classic DP that would need per-rank ports). ## Test plan - Existing PD disaggregation CI (`test_disaggregation_dsv4` on the 8-gpu-h200 runner) should no longer flake on `EADDRINUSE` at `init_process_group`. - Port plan verified collision-free with all derived PD ports, and both pinned ports are below the ephemeral floor. 🤖 Generated with [Claude Code](https://claude.com/claude-code) <!-- pr-states:start --> --- ### CI States Latest PR Test (Base): <!-- slot:pr-test:start -->:x: [Run #31723990579](https://github.com/sgl-project/sglang/actions/runs/31723990579)<!-- slot:pr-test:end --> Latest PR Test (Extra): <!-- slot:pr-test-extra:start -->:x: [Run #31723990442](https://github.com/sgl-project/sglang/actions/runs/31723990442)<!-- slot:pr-test-extra:end --> <!-- pr-states:end -->",
+        "url": "https://github.com/sgl-project/sglang/pull/34755",
+        "createdAt": "2026-08-13T17:03:10Z",
+        "updatedAt": "2026-08-13T17:44:21Z",
+        "timestamp": "2026-08-13T17:44:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "ShangmingCai",
+        "state": "closed",
         "assignees": [],
         "change": "updated"
       }

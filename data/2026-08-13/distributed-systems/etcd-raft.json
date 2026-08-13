@@ -26,11 +26,11 @@
     "forks": 269,
     "openIssues": 85,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:21.858869+00:00"
+    "collectedAt": "2026-08-13T17:47:08.832458+00:00"
   },
   "news": {
     "repository": "etcd-io/raft",
-    "collectedAt": "2026-08-13T17:43:21.858869+00:00",
+    "collectedAt": "2026-08-13T17:47:08.832458+00:00",
     "latestRelease": {
       "repository": "etcd-io/raft",
       "tag": "v3.7.0",
@@ -77,6 +77,12 @@
     {
       "collectedAt": "2026-08-13T17:43:20.785491Z",
       "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 0,
       "changedCount": 0
     }

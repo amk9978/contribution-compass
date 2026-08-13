@@ -585,6 +585,13 @@
 - Evidence: Unassigned bug with visible community engagement
 - Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
 
+### [DaemonThreadPoolExecutor crashes on Python 3.14: `_initializer` attribute removed](https://github.com/NousResearch/hermes-agent/issues/58596)
+
+- Project: `NousResearch/hermes-agent`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
 ### ["Always allow" for Claude-in-Chrome site permissions is always persisted as duration:"once" — approved sites list stays empty, prompt repeats for every browser action](https://github.com/anthropics/claude-code/issues/74715)
 
 - Project: `anthropics/claude-code`
@@ -613,137 +620,46 @@
 - Evidence: Unassigned bug with visible community engagement
 - Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
 
-### [Codex Desktop on Windows flashes visible PowerShell/console windows during background process polling](https://github.com/openai/codex/issues/26613)
-
-- Project: `openai/codex`
-- Tier: `triage-lead`
-- Evidence: Unassigned bug with visible community engagement
-- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
-
 ## Important Updates
 
 ### [Claude Code](https://github.com/anthropics/claude-code)
 
-- **Issue** [v2.1.150: scroll wheel no longer scrolls conversation — sends arrow keys instead](https://github.com/anthropics/claude-code/issues/65833) — 37 comments · 90 reactions · open
-- **Issue** [Feature Request: Message queue mode — queue messages instead of interrupting active tasks](https://github.com/anthropics/claude-code/issues/50246) — 55 comments · 224 reactions · open
-- **Issue** [Inter-session communication for multi-Claude workflows](https://github.com/anthropics/claude-code/issues/24798) — 65 comments · 21 reactions · open
-- **Issue** [\[BUG\] Cowork sessions ignore user hooks and managed settings — sandbox platform mismatch breaks all settings resolution](https://github.com/anthropics/claude-code/issues/40495) — 21 comments · 19 reactions · open
-- **Issue** [\[MODEL\] Claude verbose code comments by default — ignores instructions to stop.](https://github.com/anthropics/claude-code/issues/65961) — 10 comments · 107 reactions · open
-- **Issue** [\[BUG\] CVP-approved Claude.ai organization still receives cyber safeguard blocks in Claude Code](https://github.com/anthropics/claude-code/issues/84352) — 92 comments · 12 reactions · open
-- **Issue** [\[Bug\] Timezone displayed as "Europe/Kiev" instead of "Europe/Kyiv"](https://github.com/anthropics/claude-code/issues/67435) — 9 comments · 56 reactions · open
-- **Issue** [\[BUG\] .devcontainer/init-firewall.sh: statsig.anthropic.com fails DNS resolution, aborts container startup](https://github.com/anthropics/claude-code/issues/55623) — 5 comments · 17 reactions · open
-- **Issue** [CVP approved user being blocked on completely benign, non-security queries in fresh sessions on claude.ai (not Claude Code).](https://github.com/anthropics/claude-code/issues/61889) — 43 comments · 4 reactions · open
-- **Issue** [\[BUG\] macOS 26.5.1 kernel zone leak (data.kalloc.1024) from Claude Code CLI — claude.exe panics at ~20GB, leak rate scales 21→1027/sec with agent load](https://github.com/anthropics/claude-code/issues/66020) — 23 comments · 4 reactions · open
-- **Issue** [\[BUG\]  Apps gateway serves Claude Desktop an `otlpEndpoint` pointing at its own bearer-gated OTLP ingest but no `otlpHeaders`, so every Desktop telemetry flush is rejected with `missing_token`](https://github.com/anthropics/claude-code/issues/82092) — 9 comments · 5 reactions · open
-- **Issue** [\[BUG\] Desktop app: turns triggered by cross-session messages hang at 0 tokens (manual prompts work)](https://github.com/anthropics/claude-code/issues/86386) — 0 comments · 1 reactions · open
-- **Issue** [\[BUG\] Plan-mode webview "Select text to add comments" — comments never reach the model](https://github.com/anthropics/claude-code/issues/55813) — 3 comments · 7 reactions · closed
-- **Issue** [\[Windows\] Desktop app: GPU process crash (exit code 101457950) kills entire app and all running sessions](https://github.com/anthropics/claude-code/issues/81698) — 27 comments · 0 reactions · open
-- **Issue** [\[BUG\] Cursor flashes on every screen update (even while typing) in tmux](https://github.com/anthropics/claude-code/issues/73944) — 4 comments · 0 reactions · open
-- **Issue** [\[Bug\] Security vulnerability: Private repository data exposed to production without filtering](https://github.com/anthropics/claude-code/issues/86445) — 3 comments · 0 reactions · open
-- **Issue** [\[BUG\] Windows/MSIX 1.28929.0: cross-session messages land in the target's composer but are never submitted — session never responds](https://github.com/anthropics/claude-code/issues/86069) — 1 comments · 0 reactions · open
-- **Issue** [\[Bug\] Jailbreak attempt with multi-language prompt injection](https://github.com/anthropics/claude-code/issues/86429) — 0 comments · 0 reactions · open
-- **Issue** [\[Bug\] Context leakage between unrelated projects across sessions](https://github.com/anthropics/claude-code/issues/86452) — 0 comments · 0 reactions · open
-- **Issue** [\[Bug\] Claude Code uses vague, made-up, or fancy wording instead of plainly describing the code](https://github.com/anthropics/claude-code/issues/86205) — 4 comments · 2 reactions · open
-- **Issue** [Cross-session coordination for independently-launched Claude Code sessions](https://github.com/anthropics/claude-code/issues/76727) — 15 comments · 0 reactions · open
-- **Issue** [Cowork: remote-devices file bridge disconnects repeatedly, including mid-operation](https://github.com/anthropics/claude-code/issues/77385) — 7 comments · 1 reactions · open
-- **Issue** [MCP servers declaring draft-07 outputSchema are entirely unusable: "unsupported dialect" rejected client-side before dispatch](https://github.com/anthropics/claude-code/issues/86142) — 4 comments · 1 reactions · open
-- **Issue** [Show live session/weekly usage % and reset countdown in CLI (e.g. /usage)](https://github.com/anthropics/claude-code/issues/78385) — 2 comments · 1 reactions · open
-- **Issue** [Queued composer text is silently discarded on mobile](https://github.com/anthropics/claude-code/issues/85924) — 3 comments · 0 reactions · open
-- **Issue** [Argument substitution corrupts literal $N text (prices, awk fields) in command/skill file content — including fenced code blocks; no opt-out](https://github.com/anthropics/claude-code/issues/78759) — 5 comments · 0 reactions · open
-- **Issue** [\[BUG\] ​/goal​ reports "No goal set" while the goal is still set after a mid-session CLI auto-update](https://github.com/anthropics/claude-code/issues/86361) — 0 comments · 0 reactions · closed
-- **Issue** [\[BUG\] `/goal clear` typed while the agent is working is treated as chat text and never executed](https://github.com/anthropics/claude-code/issues/86406) — 0 comments · 0 reactions · closed
-- **Issue** [\[BUG\] `/goal`: the Stop-hook condition is frozen at creation time and the verifier cannot see later cancellation](https://github.com/anthropics/claude-code/issues/86408) — 0 comments · 0 reactions · closed
-- **Issue** [\[Bug\] Claude ignores project context and memories, requires constant redirection](https://github.com/anthropics/claude-code/issues/86420) — 1 comments · 0 reactions · open
+- **Issue** [\[Bug\] Tool cannot color font and adapt space during clone operation](https://github.com/anthropics/claude-code/issues/86457) — 0 comments · 0 reactions · open
+- **Issue** [\[Bug\] Fable 5 declines explicitly assigned work and insists on delegating it to another agent, immediately after weekly-allowance waste from recovery loops](https://github.com/anthropics/claude-code/issues/86458) — 0 comments · 0 reactions · open
+- **Issue** [\[BUG\] MCP tool array/list parameters get silently stringified mid-call, intermittently — breaks any tool expecting List\[str\]](https://github.com/anthropics/claude-code/issues/86459) — 0 comments · 0 reactions · open
+- **Issue** [\[Feature Request\] Option to use git branch name as the session title (desktop app has no way to automate this)](https://github.com/anthropics/claude-code/issues/86460) — 0 comments · 0 reactions · open
+- **Issue** [\[FEATURE\] Reviewable draft-message relay between Home/chat threads (not Code sessions)](https://github.com/anthropics/claude-code/issues/86461) — 0 comments · 0 reactions · open
+- **Issue** [\[BUG\] Claude Code repeatedly ignores my documented (and re-stated) rules about not triggering needless permission prompts](https://github.com/anthropics/claude-code/issues/86462) — 0 comments · 0 reactions · open
+- **Issue** [\[Bug\] Infinite loop in agentic cycle causing token waste](https://github.com/anthropics/claude-code/issues/86463) — 0 comments · 0 reactions · open
 
 ### [Codex](https://github.com/openai/codex)
 
-- **Issue** [Codex not showing diff](https://github.com/openai/codex/issues/35156) — 5 comments · 37 reactions · open
-- **Issue** [\[Windows 10\] DWM Composition handles accumulate after Codex tasks with tool calls](https://github.com/openai/codex/issues/33192) — 9 comments · 7 reactions · open
-- **Issue** [Add shortcuts to edit or remove specific queued follow-up inputs in the TUI](https://github.com/openai/codex/issues/28864) — 6 comments · 12 reactions · open
-- **Issue** [Consistent 5-second delay when opening historical tasks after Computer Use is started](https://github.com/openai/codex/issues/37686) — 6 comments · 1 reactions · open
-- **Issue** [Subagents need an MCP capability broker: parent allowlists, zero-start by default, bounded pooling, and deterministic teardown](https://github.com/openai/codex/issues/38353) — 4 comments · 0 reactions · open
-- **Issue** [\[Windows 10 / 26.803\] Codex Micro service causes Logitech wireless mouse stutter; full no-device service stub resolves it](https://github.com/openai/codex/issues/37658) — 1 comments · 0 reactions · open
-- **Issue** [ChatGPT macOS app: ~4 GB idle `codex` process makes 8 GB Mac unusable](https://github.com/openai/codex/issues/38404) — 1 comments · 0 reactions · open
-- **Issue** [Add scriptable Codex Cloud environment and task lifecycle management](https://github.com/openai/codex/issues/24777) — 1 comments · 4 reactions · open
-- **Issue** [MCP app-server 0.147 strips trailing slash from expected authorization-server issuer](https://github.com/openai/codex/issues/37373) — 5 comments · 3 reactions · open
-- **Issue** [\[App Server\] stale watched_status overrides completed subagent state during thread enrichment](https://github.com/openai/codex/issues/37916) — 3 comments · 0 reactions · open
-- **Issue** [Plus account shows 100% weekly usage remaining but Codex returns "You've hit your usage limit"](https://github.com/openai/codex/issues/38354) — 2 comments · 0 reactions · open
-- **Issue** [Possible Pro 20x entitlement or weekly quota accounting mismatch](https://github.com/openai/codex/issues/38367) — 2 comments · 0 reactions · open
-- **Issue** [Codex App reports usage limit immediately after upgrading from Free to Plus](https://github.com/openai/codex/issues/38379) — 3 comments · 0 reactions · closed
-- **Issue** [deny-read permission profile silently ineffective on native Windows (ACL state empty) — 0.142.5](https://github.com/openai/codex/issues/31265) — 2 comments · 0 reactions · open
-- **Issue** [Bug: Weekly quota not reset in July 14 global reset (8M users milestone)](https://github.com/openai/codex/issues/33344) — 3 comments · 0 reactions · open
-- **Issue** [\[Windows\] Old subagents remain stuck as running after restarting Codex App](https://github.com/openai/codex/issues/38408) — 2 comments · 0 reactions · open
-- **Issue** [Android/Termux: sandbox reads /proc/sys/kernel/overflowuid before bwrap, fails with Permission denied](https://github.com/openai/codex/issues/36399) — 0 comments · 0 reactions · closed
-- **Issue** [Desktop: periodically auto-update plugin marketplaces without requiring a restart](https://github.com/openai/codex/issues/38401) — 0 comments · 0 reactions · open
-- **Issue** [Codex CLI 0.147.0 fails behind TUN proxy on Windows with os error 10061, MCP failure, and HTTPS fallback failure](https://github.com/openai/codex/issues/38402) — 1 comments · 0 reactions · open
-- **Issue** [GitHub review connector quota failure leaves required exact-head review blocked without retry guidance](https://github.com/openai/codex/issues/38405) — 0 comments · 0 reactions · open
-- **Issue** [Closed at reporter request](https://github.com/openai/codex/issues/38407) — 0 comments · 0 reactions · closed
-- **Pull Request** [Expose conversation history to tool lifecycle extensions](https://github.com/openai/codex/pull/38403) — 0 comments · 1 reactions · closed
-- **Pull Request** [Pool Guardian sampling WebSocket connections](https://github.com/openai/codex/pull/38406) — 0 comments · 1 reactions · closed
-- **Pull Request** [Classify tool calls in the Guardian V2 extension](https://github.com/openai/codex/pull/38409) — 0 comments · 1 reactions · closed
+- **Pull Request** [Classify tool calls in the Guardian V2 extension](https://github.com/openai/codex/pull/38409) — 0 comments · 0 reactions · closed
 
 ### [OpenCode](https://github.com/anomalyco/opencode)
 
-- **Issue** [\[FEATURE\]: Support inline skill invocation using $skill-name](https://github.com/anomalyco/opencode/issues/15617) — 8 comments · 19 reactions · open
-- **Issue** [error: Free usage exceeded, subscribe to Go](https://github.com/anomalyco/opencode/issues/42013) — 9 comments · 4 reactions · open
-- **Issue** [GitHub Action replies in the PR conversation instead of the triggering comment in review thread](https://github.com/anomalyco/opencode/issues/37560) — 2 comments · 5 reactions · open
-- **Issue** [Upstream request failed: \[invalid_bearer_credential\] Missing or invalid bearer credential](https://github.com/anomalyco/opencode/issues/42273) — 2 comments · 4 reactions · closed
-- **Issue** [opencode zen DeepSeek V4 Flash Free requests fail with \[invalid_bearer_credential\]](https://github.com/anomalyco/opencode/issues/42293) — 10 comments · 0 reactions · open
-- **Issue** [opencode upgrade fails with 403 (doesn't respect GITHUB_TOKEN)](https://github.com/anomalyco/opencode/issues/23461) — 4 comments · 2 reactions · open
-- **Issue** [Bug: opencode upgrade fails with 403 Forbidden due to GitHub API Rate Limit (lack of GITHUB_TOKEN/GH_TOKEN environment variable support)](https://github.com/anomalyco/opencode/issues/36260) — 3 comments · 2 reactions · open
-- **Issue** [\[FEATURE\]:Clear session context without creating a new session](https://github.com/anomalyco/opencode/issues/31657) — 2 comments · 1 reactions · open
-- **Issue** [GitHub Action: per-message agent override on session.chat() is ignored when session created without a default agent](https://github.com/anomalyco/opencode/issues/36504) — 2 comments · 1 reactions · open
-- **Issue** [Opencode hangs after model selection with opencode-go/minimax-m3](https://github.com/anomalyco/opencode/issues/42320) — 2 comments · 0 reactions · open
-- **Issue** [.18更新完毕后，使用中开始频繁将客户端弹出和前置窗口到顶部](https://github.com/anomalyco/opencode/issues/42334) — 2 comments · 0 reactions · closed
-- **Issue** [Feedback: Plugin tool missing in GUI desktop session but present in CLI](https://github.com/anomalyco/opencode/issues/42343) — 2 comments · 0 reactions · closed
-- **Issue** [Agent bypassed Plan mode restrictions and posting a GitHub issue comment via gh](https://github.com/anomalyco/opencode/issues/34190) — 4 comments · 0 reactions · open
-- **Issue** [customize-opencode skill has missing global config location](https://github.com/anomalyco/opencode/issues/42336) — 1 comments · 0 reactions · closed
-- **Issue** [Endpoints 404?](https://github.com/anomalyco/opencode/issues/42374) — 1 comments · 1 reactions · open
-- **Issue** [Missing {file:} reference causes entire agent config to fail](https://github.com/anomalyco/opencode/issues/15033) — 3 comments · 0 reactions · closed
-- **Issue** [Bug: Plan mode allows creating GitHub issues via gh CLI](https://github.com/anomalyco/opencode/issues/34390) — 2 comments · 0 reactions · open
-- **Issue** [\[FEATURE\]: Support private GitHub repos in opencode.json instructions remote URLs](https://github.com/anomalyco/opencode/issues/39517) — 3 comments · 0 reactions · open
-- **Issue** [GitHub Action ignores GHES API endpoint variables](https://github.com/anomalyco/opencode/issues/39789) — 2 comments · 0 reactions · open
-- **Issue** [\[FEATURE\]: Support GITHUB_TOKEN in install script (API rate limit + private repos)](https://github.com/anomalyco/opencode/issues/40589) — 2 comments · 0 reactions · open
-- **Issue** [Response text leaks into tool call parameters — malformed API calls with prose as parameter values](https://github.com/anomalyco/opencode/issues/42359) — 1 comments · 0 reactions · open
-- **Issue** [\[FEATURE\]:me pagaron el open code go y me da error en todos los modelos](https://github.com/anomalyco/opencode/issues/42361) — 1 comments · 0 reactions · open
-- **Issue** [DeepSeek compaction can get stuck replaying reasoning/tool history instead of producing a summary](https://github.com/anomalyco/opencode/issues/42363) — 0 comments · 0 reactions · open
-- **Issue** [tui: subagent model not shown anywhere](https://github.com/anomalyco/opencode/issues/42367) — 1 comments · 0 reactions · open
-- **Issue** [tui: no live preview of running subagent's last message](https://github.com/anomalyco/opencode/issues/42368) — 1 comments · 0 reactions · open
-- **Issue** [tui: add right sidebar showing background activities (running subagents)](https://github.com/anomalyco/opencode/issues/42369) — 1 comments · 0 reactions · open
-- **Issue** [Changes don't discard when message is reverted](https://github.com/anomalyco/opencode/issues/42370) — 1 comments · 0 reactions · open
-- **Issue** [tui: /compact fails with "Compaction produced no summary" (deepseek flash)](https://github.com/anomalyco/opencode/issues/42371) — 1 comments · 0 reactions · open
-- **Issue** [Startup takes 10-30s, blocking network fetch of models.dev/api.json on every boot when cache is stale](https://github.com/anomalyco/opencode/issues/42376) — 1 comments · 0 reactions · open
-- **Issue** [fix(tui): generalize contextual keybind precedence](https://github.com/anomalyco/opencode/issues/42377) — 0 comments · 0 reactions · open
+- **Issue** [websearch tool hidden when using the official OpenCode Go (opencode-go) provider](https://github.com/anomalyco/opencode/issues/42378) — 0 comments · 0 reactions · open
+- **Pull Request** [fix(tui): keep shell commands full width](https://github.com/anomalyco/opencode/pull/42339) — 0 comments · 0 reactions · open
 
 ### [Hermes Agent](https://github.com/NousResearch/hermes-agent)
 
-- **Issue** [terminal tool lacks protected-file path validation (bypasses SOUL.md write-protection)](https://github.com/NousResearch/hermes-agent/issues/57955) — 3 comments · 0 reactions · closed
-- **Pull Request** [fix(security): block writes to sensitive paths in managed-files API](https://github.com/NousResearch/hermes-agent/pull/85415) — 1 comments · 0 reactions · open
-- **Pull Request** [fix(acp): resolve symlink targets when guarding sensitive edit auto-approval](https://github.com/NousResearch/hermes-agent/pull/41351) — 3 comments · 0 reactions · open
-- **Pull Request** [fix(research): default tokenizer trust_remote_code to False to prevent RCE](https://github.com/NousResearch/hermes-agent/pull/41440) — 2 comments · 0 reactions · open
-- **Pull Request** [feat(web): add web-native-fetch - local HTTP extract provider (no API key)](https://github.com/NousResearch/hermes-agent/pull/50456) — 2 comments · 0 reactions · open
-- **Pull Request** [feat(junie-acp): JetBrains Junie via ACP — with the self-improvement loop intact (supersedes #69207)](https://github.com/NousResearch/hermes-agent/pull/74743) — 1 comments · 0 reactions · open
-- **Pull Request** [feat(providers): add OpenCode Free provider with keyed auth and opencode User-Agent](https://github.com/NousResearch/hermes-agent/pull/85459) — 0 comments · 0 reactions · open
-- **Pull Request** [feat(enterprise): access gateway — fail-closed identity verification and tenant admission](https://github.com/NousResearch/hermes-agent/pull/85469) — 1 comments · 0 reactions · open
-- **Pull Request** [feat(enterprise): K8s sandbox driver — verified containment before harness start](https://github.com/NousResearch/hermes-agent/pull/85472) — 1 comments · 0 reactions · open
-- **Pull Request** [feat(enterprise): secret brokering — workload-verified, value-free secret operations](https://github.com/NousResearch/hermes-agent/pull/85473) — 1 comments · 0 reactions · open
-- **Issue** [\[Bug\]: Windows: gateway cold-started after 'hermes update' dies silently (no logs, no PID file, no exit record) — offline until manual restart](https://github.com/NousResearch/hermes-agent/issues/84185) — 7 comments · 0 reactions · open
-- **Issue** [Windows: TestGitBashCoreutilsOnPath layout tests compare native-separator paths against forward-slash literals](https://github.com/NousResearch/hermes-agent/issues/69371) — 4 comments · 0 reactions · closed
-- **Issue** [file-mutation verifier falsely claims target was unchanged after terminal mutation](https://github.com/NousResearch/hermes-agent/issues/72884) — 5 comments · 0 reactions · open
-- **Issue** [hermes cron run reports 'Ran now: failed.' for a run whose agent session completed cleanly](https://github.com/NousResearch/hermes-agent/issues/71760) — 3 comments · 0 reactions · open
-- **Issue** [Add parent-scoped list, cancel, and steer controls for live async delegations](https://github.com/NousResearch/hermes-agent/issues/76508) — 2 comments · 0 reactions · closed
-- **Issue** [\[Bug\]: Desktop Agents panel keeps timed-out subagents stuck as running forever](https://github.com/NousResearch/hermes-agent/issues/85492) — 2 comments · 0 reactions · open
-- **Pull Request** [fix(langfuse): omit explicit zero cost_details for subscription-included providers (#43129)](https://github.com/NousResearch/hermes-agent/pull/43130) — 3 comments · 2 reactions · closed
-- **Pull Request** [fix(termux): complete native install, TUI, and Desktop support](https://github.com/NousResearch/hermes-agent/pull/67163) — 10 comments · 0 reactions · open
-- **Pull Request** [feat(openai): configure Responses verbosity](https://github.com/NousResearch/hermes-agent/pull/72638) — 7 comments · 0 reactions · open
-- **Issue** [\[Bug\]: Langfuse plugin shows reasoning: None for reasoning_content models (DeepSeek/Qwen/LM Studio convention)](https://github.com/NousResearch/hermes-agent/issues/29482) — 1 comments · 0 reactions · closed
-- **Issue** [\[Bug\]: kimi-coding streaming request blocks forever in httpcore header read — timeout never applied, fallback never engages](https://github.com/NousResearch/hermes-agent/issues/85446) — 1 comments · 0 reactions · open
-- **Issue** [Fail closed on duplicate plugin identities and attest the loaded source](https://github.com/NousResearch/hermes-agent/issues/85458) — 0 comments · 0 reactions · open
-- **Issue** [Prompt caching is disabled for Anthropic-compatible providers when Claude is selected through a bare alias](https://github.com/NousResearch/hermes-agent/issues/85464) — 0 comments · 0 reactions · open
-- **Issue** [terminal_tool: cron lifecycle guard crashes with ValueError on venv binary paths (os.open raises ValueError, not OSError)](https://github.com/NousResearch/hermes-agent/issues/85491) — 0 comments · 0 reactions · open
-- **Issue** [`--in <dir>` is silently overridden by restored session cwd in one-shot mode (`-z`)](https://github.com/NousResearch/hermes-agent/issues/85495) — 0 comments · 0 reactions · open
-- **Issue** [auth_middleware rejects desktop /api/ws?token= upgrade with HTTP 401 (boot loop)](https://github.com/NousResearch/hermes-agent/issues/85496) — 0 comments · 0 reactions · open
-- **Pull Request** [fix(codex): preserve azure reasoning replay ids with hostname-aware matching](https://github.com/NousResearch/hermes-agent/pull/67667) — 9 comments · 0 reactions · open
-- **Pull Request** [fix(cron): relay-fronted Slack delivery — synthetic creation-thread capture + preflight fronted-platform blindness](https://github.com/NousResearch/hermes-agent/pull/85340) — 4 comments · 0 reactions · open
-- **Pull Request** [fix(langfuse): use update_trace so turn Input/Output columns fill](https://github.com/NousResearch/hermes-agent/pull/61166) — 3 comments · 1 reactions · closed
-- **Pull Request** [test(gateway): make unset model override explicit in background fixture](https://github.com/NousResearch/hermes-agent/pull/72671) — 2 comments · 0 reactions · open
+- **Issue** [DaemonThreadPoolExecutor crashes on Python 3.14: `_initializer` attribute removed](https://github.com/NousResearch/hermes-agent/issues/58596) — 7 comments · 3 reactions · open
+- **Issue** [\[Bug\]: Custom providers lack context length auto-detection when saved via /model command](https://github.com/NousResearch/hermes-agent/issues/2513) — 5 comments · 1 reactions · open
+- **Issue** [feat(memory): Allow synchronous recall for current turn as option for honcho and hindsight](https://github.com/NousResearch/hermes-agent/issues/5820) — 8 comments · 0 reactions · closed
+- **Issue** [terminal_tool: cron lifecycle guard crashes with ValueError on venv binary paths (os.open raises ValueError, not OSError)](https://github.com/NousResearch/hermes-agent/issues/85491) — 1 comments · 0 reactions · open
+- **Issue** [\[Feature\]: kanban HERMES_TENANT has no memory-isolation effect — worker memory pollutes across tenants](https://github.com/NousResearch/hermes-agent/issues/85497) — 0 comments · 0 reactions · open
+- **Pull Request** [fix(cron): relay-fronted Slack delivery — synthetic creation-thread capture + preflight fronted-platform blindness](https://github.com/NousResearch/hermes-agent/pull/85340) — 4 comments · 0 reactions · closed
+- **Pull Request** [feat(pricing): apply DeepSeek peak/off-peak rate card (#72662)](https://github.com/NousResearch/hermes-agent/pull/85388) — 4 comments · 0 reactions · open
+- **Pull Request** [feat(hindsight): memory provider improvements — recall_sync, retain_source, setup templates, memory indicators, error hints](https://github.com/NousResearch/hermes-agent/pull/74379) — 7 comments · 0 reactions · closed
+- **Pull Request** [fix(desktop): bound large composer image previews](https://github.com/NousResearch/hermes-agent/pull/85274) — 3 comments · 0 reactions · open
+- **Pull Request** [fix(memory): auto-install hindsight-all for local_embedded mode](https://github.com/NousResearch/hermes-agent/pull/13101) — 4 comments · 0 reactions · closed
+- **Pull Request** [fix(compress): do not publish micro-compaction when DB sync fails](https://github.com/NousResearch/hermes-agent/pull/85349) — 1 comments · 0 reactions · open
+- **Pull Request** [feat(relay): session-span segmentation for continuous sessions (salvage #85009)](https://github.com/NousResearch/hermes-agent/pull/85467) — 1 comments · 0 reactions · closed
+- **Pull Request** [feat(kanban): explicit notify/wake delivery modes with faithful wake session routing (salvage #37865)](https://github.com/NousResearch/hermes-agent/pull/85487) — 1 comments · 0 reactions · open
+- **Pull Request** [feat(hindsight): memory provider improvements — recall_sync, retain_source, setup templates, memory indicators, error hints](https://github.com/NousResearch/hermes-agent/pull/85494) — 0 comments · 0 reactions · closed
+- **Pull Request** [fix(hindsight): surface missing hindsight-all in local_embedded (#7718)](https://github.com/NousResearch/hermes-agent/pull/46504) — 2 comments · 0 reactions · closed
+- **Pull Request** [feat(memory): add sync_recall option for current-turn relevance](https://github.com/NousResearch/hermes-agent/pull/5838) — 1 comments · 0 reactions · closed
+- **Pull Request** [fix(agent): default context lookup for empty model IDs](https://github.com/NousResearch/hermes-agent/pull/65515) — 1 comments · 0 reactions · open
+- **Pull Request** [feat(relay): session-span segmentation for continuous sessions](https://github.com/NousResearch/hermes-agent/pull/85009) — 1 comments · 0 reactions · closed
+- **Pull Request** [fix(agent): default context lookup for empty model IDs (salvage #65515) — un-reds main CI](https://github.com/NousResearch/hermes-agent/pull/85498) — 0 comments · 0 reactions · open
+- **Pull Request** [fix(cli): show context-length detection result when saving custom provider](https://github.com/NousResearch/hermes-agent/pull/85499) — 1 comments · 0 reactions · open

@@ -37,11 +37,11 @@
     "forks": 1472,
     "openIssues": 704,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:26.607407+00:00"
+    "collectedAt": "2026-08-13T17:47:13.137030+00:00"
   },
   "news": {
     "repository": "DataDog/datadog-agent",
-    "collectedAt": "2026-08-13T17:43:26.607407+00:00",
+    "collectedAt": "2026-08-13T17:47:13.137030+00:00",
     "latestRelease": {
       "repository": "DataDog/datadog-agent",
       "tag": "7.82.1",
@@ -115,6 +115,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 184,
       "changedCount": 50
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 185,
+      "changedCount": 7
     }
   ],
   "signals": [
@@ -141,8 +147,7 @@
       ],
       "author": "renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:issue:54728",
@@ -562,8 +567,7 @@
       ],
       "author": "StephenWakely",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:51861",
@@ -825,8 +829,7 @@
       ],
       "author": "litianningdatadog",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:53033",
@@ -850,8 +853,7 @@
       ],
       "author": "litianningdatadog",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:53246",
@@ -1582,8 +1584,7 @@
       ],
       "author": "theop-dd",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54159",
@@ -1746,8 +1747,7 @@
       ],
       "author": "annacai21",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54195",
@@ -1930,8 +1930,7 @@
       ],
       "author": "triviajon",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54375",
@@ -2073,8 +2072,7 @@
       ],
       "author": "Eokye",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54438",
@@ -2237,8 +2235,7 @@
       ],
       "author": "niharikag09",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54504",
@@ -2325,8 +2322,7 @@
       ],
       "author": "embeaken",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54539",
@@ -2491,6 +2487,34 @@
       "assignees": []
     },
     {
+      "id": "github:DataDog/datadog-agent:pull_request:54556",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "[DOIO-171] Add MySQL query action dispatch",
+      "text": "Data Observability query actions now dispatch remote configuration payloads to MySQL checks as well as Postgres and SAP HANA. The component uses one supported-integration allowlist for startup detection and instance matching, so unrelated integrations cannot activate the subscription or receive query configs. Closes https://linear.app/datadog/issue/DOIO-171",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54556",
+      "createdAt": "2026-08-07T08:28:45Z",
+      "updatedAt": "2026-08-13T17:47:03Z",
+      "timestamp": "2026-08-13T17:47:03Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 7
+      },
+      "labels": [
+        "changelog/no-changelog",
+        "qa/done",
+        "medium review",
+        "team/data-jobs-monitoring",
+        "internal"
+      ],
+      "author": "mobuchowski",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:DataDog/datadog-agent:pull_request:54563",
       "source": "github",
       "group": "observability",
@@ -2630,8 +2654,7 @@
       ],
       "author": "embeaken",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54590",
@@ -2659,8 +2682,7 @@
       ],
       "author": "embeaken",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54591",
@@ -2672,8 +2694,8 @@
       "text": "### What does this PR do? Defines the local control-to-executor channel and implements both ends of it: - Adds the executor gRPC protocol and generated bindings. - Exposes executor health and readiness. - Synchronizes workflow signing keys. - Streams action dispatch outcomes. - Adds the Rust mTLS client and transport support. - Keeps the shared terminal `Outcome` model with the executor layer. This layer provides communication primitives only; polling and process-lifecycle policy remain in later layers. ### Motivation Create a narrow, authenticated local contract between `par-control` and the existing Go executor before introducing OPMS polling or orchestration. ### Validation - Focused Go tests pass locally. - Private Action Runner Go build passes locally. - Portable Rust tests pass locally; native-tls identity coverage requires Linux/Windows. ### Review fixes - **Transport**: 5s connect timeout on both the plain and the mTLS channel, and no panic path in the named-pipe retry loop. Also corrects module docs that claimed Windows named-pipe support was a follow-up while the named-pipe client sits in the same file. - Dropped the redundant `tokio-stream` dev-dependency, since this layer promotes it to a regular dependency. - README records the build caveats: the dev VM's empty `PKG_CONFIG_LIBDIR` breaks `openssl-sys` under cargo, proto-touching changes must be Bazel-verified (under `--cfg=bazel` the bindings come from a separate crate, so the orphan rule differs), and the TLS tests are Linux-only. ### Stack PR 5 of 9. Based on #54590; followed by #54592.",
       "url": "https://github.com/DataDog/datadog-agent/pull/54591",
       "createdAt": "2026-08-07T17:50:14Z",
-      "updatedAt": "2026-08-13T17:35:14Z",
-      "timestamp": "2026-08-13T17:35:14Z",
+      "updatedAt": "2026-08-13T17:46:56Z",
+      "timestamp": "2026-08-13T17:46:56Z",
       "metrics": {
         "reactions": 1,
         "comments": 5
@@ -2700,8 +2722,8 @@
       "text": "### What does this PR do? Adds the authenticated OPMS client used by `par-control`: - Signs requests with runner JWT authentication. - Dequeues workflow tasks. - Publishes terminal task outcomes. - Sends task heartbeats. - Performs runner health checks. - Matches the existing Go wire contracts, proxy behavior, TLS settings, and retry pacing. The implementation and its HTTP/TLS contract tests are kept together in this layer. ### Motivation Separate the remote OPMS protocol from local executor communication and from the orchestration policy that composes them. ### Validation - 46 portable Rust tests pass locally. - Three native-tls tests require Linux/Windows and do not run successfully with the macOS Security Framework backend. ### Stack PR 6 of 9. Based on #54591; followed by #54593.",
       "url": "https://github.com/DataDog/datadog-agent/pull/54592",
       "createdAt": "2026-08-07T17:51:46Z",
-      "updatedAt": "2026-08-13T17:38:20Z",
-      "timestamp": "2026-08-13T17:38:20Z",
+      "updatedAt": "2026-08-13T17:46:54Z",
+      "timestamp": "2026-08-13T17:46:54Z",
       "metrics": {
         "reactions": 1,
         "comments": 5
@@ -2742,8 +2764,7 @@
       ],
       "author": "embeaken",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54594",
@@ -2770,8 +2791,7 @@
       ],
       "author": "embeaken",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54601",
@@ -2916,8 +2936,7 @@
       ],
       "author": "usamasaqib",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54645",
@@ -2929,8 +2948,8 @@
       "text": "### What does this PR do? Sets `SkipSettingGRPCLogger: true` on the `otelcol.CollectorSettings` for the otel-agent and host-profiler collectors, so `otelcol.(*Collector).Run` no longer calls the non-mutex-protected `grpclog.SetLogger` while other gRPC clients (e.g. remote-config/remote-tagger) are active in the same process. ### Motivation Fix a race, found via a race-detector-enabled build in staging. ### Describe how you validated your changes Ran `./comp/otelcol/...` and `./comp/host-profiler/collector/...` tests (including with `--race`) and built `otel-agent`/`host-profiler`, all passing; a real regression test isn't feasible since the race needs real concurrent gRPC/otelcol startup. ### Additional Notes No log routing is lost: `comp/core/tagger/impl-remote` (pulled in by both otel-agent and host-profiler) already sets a Datadog-logger-backed `grpclog` logger in its package `init()`, which runs once before `main()` and is therefore race-free. Skipping otelcol's later, racy `SetLogger` call just stops it from unsafely clobbering that existing assignment — grpc's internal logs keep flowing to our structured logger exactly as before. Similar to https://github.com/DataDog/datadog-agent/pull/15321 for the OTLP endpoint.",
       "url": "https://github.com/DataDog/datadog-agent/pull/54645",
       "createdAt": "2026-08-10T13:59:56Z",
-      "updatedAt": "2026-08-13T16:28:43Z",
-      "timestamp": "2026-08-13T16:28:43Z",
+      "updatedAt": "2026-08-13T17:44:38Z",
+      "timestamp": "2026-08-13T17:44:38Z",
       "metrics": {
         "reactions": 1,
         "comments": 8
@@ -3324,8 +3343,7 @@
       ],
       "author": "Madhu-TV",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54676",
@@ -3762,8 +3780,7 @@
       ],
       "author": "gjulianm",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54723",
@@ -3907,8 +3924,7 @@
       ],
       "author": "jose-manuel-almaza",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54732",
@@ -3941,8 +3957,7 @@
       ],
       "author": "jose-manuel-almaza",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54734",
@@ -3975,8 +3990,7 @@
       ],
       "author": "jose-manuel-almaza",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54735",
@@ -4004,8 +4018,7 @@
       ],
       "author": "jose-manuel-almaza",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54739",
@@ -4521,8 +4534,7 @@
       ],
       "author": "pgimalac",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54768",
@@ -4597,8 +4609,7 @@
       ],
       "author": "hush-hush",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54770",
@@ -4767,8 +4778,7 @@
       ],
       "author": "alopezz",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54777",
@@ -5235,8 +5245,7 @@
       ],
       "author": "dustmop",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54794",
@@ -5342,8 +5351,7 @@
       ],
       "author": "aiuto",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54798",
@@ -5508,8 +5516,7 @@
       ],
       "author": "mwdd146980",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54805",
@@ -5791,8 +5798,7 @@
       ],
       "author": "pgimalac",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54815",
@@ -5820,8 +5826,7 @@
       ],
       "author": "aimenebelfodil",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54816",
@@ -5997,8 +6002,7 @@
       ],
       "author": "gjulianm",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54822",
@@ -6053,8 +6057,7 @@
       ],
       "author": "pgimalac",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54824",
@@ -6192,8 +6195,7 @@
       ],
       "author": "gjulianm",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54829",
@@ -6269,8 +6271,7 @@
       ],
       "author": "dkirov-dd",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54832",
@@ -6367,8 +6368,7 @@
       ],
       "author": "mikesherovdd",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54835",
@@ -6476,8 +6476,7 @@
       "labels": [],
       "author": "dd-gplassard",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54839",
@@ -6538,8 +6537,7 @@
       "state": "open",
       "assignees": [
         "Mathew-Estafanous"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54841",
@@ -6569,8 +6567,7 @@
       "state": "open",
       "assignees": [
         "Mathew-Estafanous"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54842",
@@ -6582,8 +6579,8 @@
       "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Adds a registry and owner-chain resolver for DatadogInstrumentation workload targets. - Models built-in and customer-configured workload profiles using a `target` resource and optional `via` resources. - Identifies every resource by `apiVersion`, kind, and plural resource name. - Walks controller owner references with the dynamic Kubernetes client, validates owner UIDs, caches resolved owners, and limits traversal depth. This PR only introduces the resolver package. It does not expose or activate custom workload target configuration. ### Motivation [CONTP-2006](https://datadoghq.atlassian.net/browse/CONTP-2006) Hard-coding every operator-managed workload does not scale and cannot represent indirect ownership such as Pod to Job to a custom workload. Explicit target and traversal profiles provide a general mechanism that distinguishes API groups and allows deployments to grant read access only to the intermediate resources required for resolution. ### Describe how you validated your changes ### Additional Notes [CONTP-2006]: https://datadoghq.atlassian.net/browse/CONTP-2006?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
       "url": "https://github.com/DataDog/datadog-agent/pull/54842",
       "createdAt": "2026-08-13T15:51:31Z",
-      "updatedAt": "2026-08-13T17:43:18Z",
-      "timestamp": "2026-08-13T17:43:18Z",
+      "updatedAt": "2026-08-13T17:43:26Z",
+      "timestamp": "2026-08-13T17:43:26Z",
       "metrics": {
         "reactions": 1,
         "comments": 5
@@ -6612,13 +6609,20 @@
       "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Connects configurable workload target resolution to DatadogInstrumentation checks and logs. - Adds `instrumentation_crd_controller.custom_workload_targets` configuration. - Starts the Pod workloadmeta store and resolver when at least one custom target is configured. - Accepts registered target GVKs and generates CEL selectors against `container.pod.resolved_targets`. - Includes `apiVersion` when detecting duplicate target references. - Preserves `rootowner` matching for built-in workloads and EndpointSlice delivery for core `v1` Services. For example, a workload reached through an intermediate Kubernetes Job can be configured as: ```yaml instrumentation_crd_controller: custom_workload_targets: - target: apiVersion: example.com/v1 kind: ScheduledWorkload resource: scheduledworkloads via: - apiVersion: batch/v1 kind: Job resource: jobs ``` ### Motivation [CONTP-2006](https://datadoghq.atlassian.net/browse/CONTP-2006) DatadogInstrumentation supports core Kubernetes workload kinds and Argo Rollouts out of the box, but customers also run workloads through controllers such as Ray, Kueue, OpenKruise, and Strimzi. Customers need an opt-in way to declare the workload resources they use and the ownership path from Pods, without relying on a generic fallback or requiring every custom kind to be added to the Agent. ### Describe how you validated your changes ### Additional Notes [CONTP-2006]: https://datadoghq.atlassian.net/browse/CONTP-2006?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
       "url": "https://github.com/DataDog/datadog-agent/pull/54843",
       "createdAt": "2026-08-13T15:53:26Z",
-      "updatedAt": "2026-08-13T17:42:53Z",
-      "timestamp": "2026-08-13T17:42:53Z",
+      "updatedAt": "2026-08-13T17:43:45Z",
+      "timestamp": "2026-08-13T17:43:45Z",
       "metrics": {
         "reactions": 1,
         "comments": 6
       },
-      "labels": [],
+      "labels": [
+        "team/container-platform",
+        "long review",
+        "team/container-integrations",
+        "team/agent-build",
+        "internal",
+        "team/fleet-automation"
+      ],
       "author": "Mathew-Estafanous",
       "state": "open",
       "assignees": [],
@@ -6650,8 +6654,7 @@
       ],
       "author": "temporal-github-worker-1[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54846",
@@ -6677,8 +6680,7 @@
       ],
       "author": "KevinFairise2",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54847",
@@ -6690,8 +6692,8 @@
       "text": "Backport 5dcbd3081dd283e30cf25879eb5be7b55577e50a from #54720. ___ <!-- dd-meta {\"pullId\":\"df13230b-a434-451b-972e-ac9007c02168\",\"source\":\"chat\",\"resourceId\":\"86800824-17f2-4a85-9551-be5b7bf8a830\",\"workflowId\":\"2ce581a4-a03e-4c0a-a1a1-dda5b27f5a0c\",\"codeChangeId\":\"2ce581a4-a03e-4c0a-a1a1-dda5b27f5a0c\",\"sourceType\":\"bits_ai_sre\"} --> ### What does this PR do? Bits AI SRE Investigation • [View in Bits AI SRE Investigation](https://ddstaging.datadoghq.com/bits-ai/investigations/8418dc69-efd2-44d3-ad70-91e14223f69d) Add standard ARM64 (`aarch64-linux-gnu`) NVML library paths for host and NVIDIA GPU Operator installations. ### Motivation GPU checks on ARM64 GPU nodes fail because NVML discovery searches only x86_64 library directories. This causes all GPU metrics to fail on affected ARM64 nodes and can trigger incorrect health responses. ### Describe how you validated your changes Unit tests added ### Additional Notes --- PR by Bits - [View session in Datadog](https://ddstaging.datadoghq.com/code/86800824-17f2-4a85-9551-be5b7bf8a830) Comment @datadog to request changes",
       "url": "https://github.com/DataDog/datadog-agent/pull/54847",
       "createdAt": "2026-08-13T16:30:11Z",
-      "updatedAt": "2026-08-13T17:42:07Z",
-      "timestamp": "2026-08-13T17:42:07Z",
+      "updatedAt": "2026-08-13T17:44:41Z",
+      "timestamp": "2026-08-13T17:44:41Z",
       "metrics": {
         "reactions": 2,
         "comments": 3
@@ -6713,7 +6715,7 @@
       "author": "dd-octo-sts[bot]",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54848",
@@ -6738,8 +6740,7 @@
       ],
       "author": "NouemanKHAL",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54849",
@@ -6763,8 +6764,7 @@
       ],
       "author": "Arpafaucon",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54850",
@@ -6788,8 +6788,7 @@
       ],
       "author": "alyssamui2",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54851",
@@ -6813,8 +6812,7 @@
       ],
       "author": "alyssamui2",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:DataDog/datadog-agent:pull_request:54852",
@@ -6841,8 +6839,7 @@
       ],
       "author": "ken-schneider",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [
@@ -19212,6 +19209,275 @@
         "state": "open",
         "assignees": [],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:789883deb1dc6a4a1023",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54556",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54556",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[DOIO-171] Add MySQL query action dispatch",
+        "text": "Data Observability query actions now dispatch remote configuration payloads to MySQL checks as well as Postgres and SAP HANA. The component uses one supported-integration allowlist for startup detection and instance matching, so unrelated integrations cannot activate the subscription or receive query configs. Closes https://linear.app/datadog/issue/DOIO-171",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54556",
+        "createdAt": "2026-08-07T08:28:45Z",
+        "updatedAt": "2026-08-13T17:47:03Z",
+        "timestamp": "2026-08-13T17:47:03Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 7
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "qa/done",
+          "medium review",
+          "team/data-jobs-monitoring",
+          "internal"
+        ],
+        "author": "mobuchowski",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:925b75ae243cda923f6d",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54591",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54591",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[ACTP] add par-control executor channel",
+        "text": "### What does this PR do? Defines the local control-to-executor channel and implements both ends of it: - Adds the executor gRPC protocol and generated bindings. - Exposes executor health and readiness. - Synchronizes workflow signing keys. - Streams action dispatch outcomes. - Adds the Rust mTLS client and transport support. - Keeps the shared terminal `Outcome` model with the executor layer. This layer provides communication primitives only; polling and process-lifecycle policy remain in later layers. ### Motivation Create a narrow, authenticated local contract between `par-control` and the existing Go executor before introducing OPMS polling or orchestration. ### Validation - Focused Go tests pass locally. - Private Action Runner Go build passes locally. - Portable Rust tests pass locally; native-tls identity coverage requires Linux/Windows. ### Review fixes - **Transport**: 5s connect timeout on both the plain and the mTLS channel, and no panic path in the named-pipe retry loop. Also corrects module docs that claimed Windows named-pipe support was a follow-up while the named-pipe client sits in the same file. - Dropped the redundant `tokio-stream` dev-dependency, since this layer promotes it to a regular dependency. - README records the build caveats: the dev VM's empty `PKG_CONFIG_LIBDIR` breaks `openssl-sys` under cargo, proto-touching changes must be Bazel-verified (under `--cfg=bazel` the bindings come from a separate crate, so the orphan rule differs), and the TLS tests are Linux-only. ### Stack PR 5 of 9. Based on #54590; followed by #54592.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54591",
+        "createdAt": "2026-08-07T17:50:14Z",
+        "updatedAt": "2026-08-13T17:46:56Z",
+        "timestamp": "2026-08-13T17:46:56Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [
+          "long review",
+          "team/agent-devx",
+          "team/agent-build",
+          "team/action-platform",
+          "internal"
+        ],
+        "author": "embeaken",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e7dbcb04022837d4a719",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54592",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54592",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[ACTP] add par-control OPMS client",
+        "text": "### What does this PR do? Adds the authenticated OPMS client used by `par-control`: - Signs requests with runner JWT authentication. - Dequeues workflow tasks. - Publishes terminal task outcomes. - Sends task heartbeats. - Performs runner health checks. - Matches the existing Go wire contracts, proxy behavior, TLS settings, and retry pacing. The implementation and its HTTP/TLS contract tests are kept together in this layer. ### Motivation Separate the remote OPMS protocol from local executor communication and from the orchestration policy that composes them. ### Validation - 46 portable Rust tests pass locally. - Three native-tls tests require Linux/Windows and do not run successfully with the macOS Security Framework backend. ### Stack PR 6 of 9. Based on #54591; followed by #54593.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54592",
+        "createdAt": "2026-08-07T17:51:46Z",
+        "updatedAt": "2026-08-13T17:46:54Z",
+        "timestamp": "2026-08-13T17:46:54Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [
+          "long review",
+          "team/agent-devx",
+          "team/agent-build",
+          "team/action-platform",
+          "internal"
+        ],
+        "author": "embeaken",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:238968d75c4291a1f98a",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54847",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54847",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[Backport 7.83.x]  [EBPF] gpu: Support ARM64 NVML library discovery",
+        "text": "Backport 5dcbd3081dd283e30cf25879eb5be7b55577e50a from #54720. ___ <!-- dd-meta {\"pullId\":\"df13230b-a434-451b-972e-ac9007c02168\",\"source\":\"chat\",\"resourceId\":\"86800824-17f2-4a85-9551-be5b7bf8a830\",\"workflowId\":\"2ce581a4-a03e-4c0a-a1a1-dda5b27f5a0c\",\"codeChangeId\":\"2ce581a4-a03e-4c0a-a1a1-dda5b27f5a0c\",\"sourceType\":\"bits_ai_sre\"} --> ### What does this PR do? Bits AI SRE Investigation • [View in Bits AI SRE Investigation](https://ddstaging.datadoghq.com/bits-ai/investigations/8418dc69-efd2-44d3-ad70-91e14223f69d) Add standard ARM64 (`aarch64-linux-gnu`) NVML library paths for host and NVIDIA GPU Operator installations. ### Motivation GPU checks on ARM64 GPU nodes fail because NVML discovery searches only x86_64 library directories. This causes all GPU metrics to fail on affected ARM64 nodes and can trigger incorrect health responses. ### Describe how you validated your changes Unit tests added ### Additional Notes --- PR by Bits - [View session in Datadog](https://ddstaging.datadoghq.com/code/86800824-17f2-4a85-9551-be5b7bf8a830) Comment @datadog to request changes",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54847",
+        "createdAt": "2026-08-13T16:30:11Z",
+        "updatedAt": "2026-08-13T17:44:41Z",
+        "timestamp": "2026-08-13T17:44:41Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 3
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "team/ebpf-platform",
+          "qa/done",
+          "backport",
+          "bot",
+          "team/container-platform",
+          "medium review",
+          "team/container-integrations",
+          "Bits AI",
+          "internal",
+          "team/gpu-monitoring-agent",
+          "team/fleet-automation"
+        ],
+        "author": "dd-octo-sts[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fc8f01aac1a6f61ec7a7",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54645",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54645",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "fix: avoid data race in grpclog.SetLogger on otelcol collector start",
+        "text": "### What does this PR do? Sets `SkipSettingGRPCLogger: true` on the `otelcol.CollectorSettings` for the otel-agent and host-profiler collectors, so `otelcol.(*Collector).Run` no longer calls the non-mutex-protected `grpclog.SetLogger` while other gRPC clients (e.g. remote-config/remote-tagger) are active in the same process. ### Motivation Fix a race, found via a race-detector-enabled build in staging. ### Describe how you validated your changes Ran `./comp/otelcol/...` and `./comp/host-profiler/collector/...` tests (including with `--race`) and built `otel-agent`/`host-profiler`, all passing; a real regression test isn't feasible since the race needs real concurrent gRPC/otelcol startup. ### Additional Notes No log routing is lost: `comp/core/tagger/impl-remote` (pulled in by both otel-agent and host-profiler) already sets a Datadog-logger-backed `grpclog` logger in its package `init()`, which runs once before `main()` and is therefore race-free. Skipping otelcol's later, racy `SetLogger` call just stops it from unsafely clobbering that existing assignment — grpc's internal logs keep flowing to our structured logger exactly as before. Similar to https://github.com/DataDog/datadog-agent/pull/15321 for the OTLP endpoint.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54645",
+        "createdAt": "2026-08-10T13:59:56Z",
+        "updatedAt": "2026-08-13T17:44:38Z",
+        "timestamp": "2026-08-13T17:44:38Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 8
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "team/opentelemetry",
+          "qa/done",
+          "medium review",
+          "team/profiling-full-host",
+          "internal"
+        ],
+        "author": "pgimalac",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:10552518c1209cbe7308",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54843",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54843",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[CONTP-2006] feat(ddi): Connect custom workload targets to DDI controller and streaming",
+        "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Connects configurable workload target resolution to DatadogInstrumentation checks and logs. - Adds `instrumentation_crd_controller.custom_workload_targets` configuration. - Starts the Pod workloadmeta store and resolver when at least one custom target is configured. - Accepts registered target GVKs and generates CEL selectors against `container.pod.resolved_targets`. - Includes `apiVersion` when detecting duplicate target references. - Preserves `rootowner` matching for built-in workloads and EndpointSlice delivery for core `v1` Services. For example, a workload reached through an intermediate Kubernetes Job can be configured as: ```yaml instrumentation_crd_controller: custom_workload_targets: - target: apiVersion: example.com/v1 kind: ScheduledWorkload resource: scheduledworkloads via: - apiVersion: batch/v1 kind: Job resource: jobs ``` ### Motivation [CONTP-2006](https://datadoghq.atlassian.net/browse/CONTP-2006) DatadogInstrumentation supports core Kubernetes workload kinds and Argo Rollouts out of the box, but customers also run workloads through controllers such as Ray, Kueue, OpenKruise, and Strimzi. Customers need an opt-in way to declare the workload resources they use and the ownership path from Pods, without relying on a generic fallback or requiring every custom kind to be added to the Agent. ### Describe how you validated your changes ### Additional Notes [CONTP-2006]: https://datadoghq.atlassian.net/browse/CONTP-2006?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54843",
+        "createdAt": "2026-08-13T15:53:26Z",
+        "updatedAt": "2026-08-13T17:43:45Z",
+        "timestamp": "2026-08-13T17:43:45Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 6
+        },
+        "labels": [
+          "team/container-platform",
+          "long review",
+          "team/container-integrations",
+          "team/agent-build",
+          "internal",
+          "team/fleet-automation"
+        ],
+        "author": "Mathew-Estafanous",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c2a3e2994d6c5ea86ea4",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54842",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54842",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[CONTP-2006] feat(ddi): Add pod workload target resolution",
+        "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Adds a registry and owner-chain resolver for DatadogInstrumentation workload targets. - Models built-in and customer-configured workload profiles using a `target` resource and optional `via` resources. - Identifies every resource by `apiVersion`, kind, and plural resource name. - Walks controller owner references with the dynamic Kubernetes client, validates owner UIDs, caches resolved owners, and limits traversal depth. This PR only introduces the resolver package. It does not expose or activate custom workload target configuration. ### Motivation [CONTP-2006](https://datadoghq.atlassian.net/browse/CONTP-2006) Hard-coding every operator-managed workload does not scale and cannot represent indirect ownership such as Pod to Job to a custom workload. Explicit target and traversal profiles provide a general mechanism that distinguishes API groups and allows deployments to grant read access only to the intermediate resources required for resolution. ### Describe how you validated your changes ### Additional Notes [CONTP-2006]: https://datadoghq.atlassian.net/browse/CONTP-2006?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54842",
+        "createdAt": "2026-08-13T15:51:31Z",
+        "updatedAt": "2026-08-13T17:43:26Z",
+        "timestamp": "2026-08-13T17:43:26Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "team/container-platform",
+          "medium review",
+          "team/agent-build",
+          "internal"
+        ],
+        "author": "Mathew-Estafanous",
+        "state": "open",
+        "assignees": [
+          "Mathew-Estafanous"
+        ],
+        "change": "updated"
       }
     }
   ]

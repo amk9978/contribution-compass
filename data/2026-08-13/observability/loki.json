@@ -30,11 +30,11 @@
     "forks": 4091,
     "openIssues": 1753,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:28.556337+00:00"
+    "collectedAt": "2026-08-13T17:47:15.472234+00:00"
   },
   "news": {
     "repository": "grafana/loki",
-    "collectedAt": "2026-08-13T17:43:28.556337+00:00",
+    "collectedAt": "2026-08-13T17:47:15.472234+00:00",
     "latestRelease": {
       "repository": "grafana/loki",
       "tag": "v3.7.6",
@@ -76,6 +76,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 60,
       "changedCount": 3
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 60,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -123,8 +129,7 @@
       ],
       "author": "Segflow",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:issue:21926",
@@ -216,8 +221,7 @@
       ],
       "author": "sschmiedleitner",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:19059",
@@ -240,8 +244,7 @@
       ],
       "author": "TheRealNoob",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:grafana/loki:pull_request:21719",

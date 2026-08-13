@@ -39,11 +39,11 @@
     "forks": 1226,
     "openIssues": 300,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:29.993856+00:00"
+    "collectedAt": "2026-08-13T17:47:16.165314+00:00"
   },
   "news": {
     "repository": "dragonflydb/dragonfly",
-    "collectedAt": "2026-08-13T17:43:29.993856+00:00",
+    "collectedAt": "2026-08-13T17:47:16.165314+00:00",
     "latestRelease": {
       "repository": "dragonflydb/dragonfly",
       "tag": "v1.40.1",
@@ -109,6 +109,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 29,
       "changedCount": 1
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 29,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -775,8 +781,7 @@
       "state": "open",
       "assignees": [
         "vyavdoshenko"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:dragonflydb/dragonfly:pull_request:8066",

@@ -23,11 +23,11 @@
     "forks": 885,
     "openIssues": 120,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:22.582498+00:00"
+    "collectedAt": "2026-08-13T17:47:09.753017+00:00"
   },
   "news": {
     "repository": "tigerbeetle/tigerbeetle",
-    "collectedAt": "2026-08-13T17:43:22.582498+00:00",
+    "collectedAt": "2026-08-13T17:47:09.753017+00:00",
     "latestRelease": {
       "repository": "tigerbeetle/tigerbeetle",
       "tag": "0.17.9",
@@ -70,6 +70,12 @@
     {
       "collectedAt": "2026-08-13T17:43:20.785491Z",
       "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 1,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 1,
       "changedCount": 0
     }

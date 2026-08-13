@@ -36,11 +36,11 @@
     "forks": 784,
     "openIssues": 612,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:28.179108+00:00"
+    "collectedAt": "2026-08-13T17:47:14.590496+00:00"
   },
   "news": {
     "repository": "redpanda-data/redpanda",
-    "collectedAt": "2026-08-13T17:43:28.179108+00:00",
+    "collectedAt": "2026-08-13T17:47:14.590496+00:00",
     "latestRelease": {
       "repository": "redpanda-data/redpanda",
       "tag": "v26.1.15",
@@ -104,6 +104,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 43,
       "changedCount": 11
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 42,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -649,8 +655,7 @@
       ],
       "author": "travisdowns",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31366",
@@ -840,8 +845,7 @@
       ],
       "author": "JakeSCahill",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31533",
@@ -951,8 +955,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31542",
@@ -1003,8 +1006,7 @@
       "state": "open",
       "assignees": [
         "oleiman"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31546",
@@ -1099,8 +1101,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31553",
@@ -1196,8 +1197,7 @@
       ],
       "author": "r-vasquez",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31557",
@@ -1294,8 +1294,7 @@
       ],
       "author": "travisdowns",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31561",
@@ -1432,8 +1431,7 @@
       ],
       "author": "nvartolomei",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31567",
@@ -1505,8 +1503,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31570",
@@ -1556,8 +1553,7 @@
       ],
       "author": "vbotbuildovich",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:redpanda-data/redpanda:pull_request:31572",
@@ -1605,8 +1601,7 @@
       ],
       "author": "RafalKorepta",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [

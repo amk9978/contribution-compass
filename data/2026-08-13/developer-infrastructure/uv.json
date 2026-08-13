@@ -24,15 +24,15 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 88717,
+    "stars": 88718,
     "forks": 3483,
     "openIssues": 2819,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:36.442637+00:00"
+    "collectedAt": "2026-08-13T17:47:23.334804+00:00"
   },
   "news": {
     "repository": "astral-sh/uv",
-    "collectedAt": "2026-08-13T17:43:36.442637+00:00",
+    "collectedAt": "2026-08-13T17:47:23.334804+00:00",
     "latestRelease": {
       "repository": "astral-sh/uv",
       "tag": "0.12.3",
@@ -88,6 +88,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 36,
       "changedCount": 11
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 36,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -511,8 +517,7 @@
       ],
       "author": "MichaReiser",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:astral-sh/uv:issue:21096",
@@ -535,8 +540,7 @@
       ],
       "author": "kowanietz",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:astral-sh/uv:issue:2658",
@@ -559,8 +563,7 @@
       ],
       "author": "renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:astral-sh/uv:pull_request:17455",
@@ -909,8 +912,7 @@
       ],
       "author": "renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:astral-sh/uv:pull_request:21038",
@@ -1366,8 +1368,7 @@
       "labels": [],
       "author": "AlexWaygood",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:astral-sh/uv:pull_request:21087",
@@ -1430,8 +1431,7 @@
       "labels": [],
       "author": "zaniebot",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:astral-sh/uv:pull_request:21091",
@@ -1454,8 +1454,7 @@
       ],
       "author": "ewdurbin",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:astral-sh/uv:pull_request:21092",
@@ -1481,8 +1480,7 @@
       "state": "closed",
       "assignees": [
         "zanieb"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:astral-sh/uv:pull_request:21093",
@@ -1505,8 +1503,7 @@
       "state": "closed",
       "assignees": [
         "zanieb"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:astral-sh/uv:pull_request:21094",
@@ -1531,8 +1528,7 @@
       "state": "closed",
       "assignees": [
         "zanieb"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:astral-sh/uv:pull_request:21095",
@@ -1553,8 +1549,7 @@
       "labels": [],
       "author": "charliermarsh",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [

@@ -40,11 +40,11 @@
     "forks": 1808,
     "openIssues": 889,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:24.543478+00:00"
+    "collectedAt": "2026-08-13T17:47:11.519788+00:00"
   },
   "news": {
     "repository": "temporalio/temporal",
-    "collectedAt": "2026-08-13T17:43:24.543478+00:00",
+    "collectedAt": "2026-08-13T17:47:11.519788+00:00",
     "latestRelease": {
       "repository": "temporalio/temporal",
       "tag": "v1.31.2",
@@ -89,6 +89,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 87,
       "changedCount": 20
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 87,
+      "changedCount": 7
     }
   ],
   "signals": [
@@ -546,8 +552,7 @@
       ],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11169",
@@ -658,8 +663,7 @@
       ],
       "author": "robholland",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11304",
@@ -682,8 +686,7 @@
       ],
       "author": "robholland",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11313",
@@ -1251,8 +1254,7 @@
       "labels": [],
       "author": "rkannan82",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11482",
@@ -1329,8 +1331,8 @@
       "text": "Separates diagnostic parsing and timeout parsing into focused files without changing behavior. Existing comments and tests move with their implementations so the later canonical conversion is a semantic diff instead of a delete-and-add rewrite. Stack: depends on #11512. The canonical result model follows in #11514.",
       "url": "https://github.com/temporalio/temporal/pull/11487",
       "createdAt": "2026-08-11T23:31:23Z",
-      "updatedAt": "2026-08-13T17:28:37Z",
-      "timestamp": "2026-08-13T17:28:37Z",
+      "updatedAt": "2026-08-13T17:46:57Z",
+      "timestamp": "2026-08-13T17:46:57Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1351,8 +1353,8 @@
       "text": "Converts test output analysis to package-aware canonical diagnostics and failure evidence. The existing runner reaches the new implementation through a temporary compatibility adapter, so there is still one parser implementation while the production cutover remains isolated. Stack: depends on #11514. The Go test JSON recorder follows in #11515.",
       "url": "https://github.com/temporalio/temporal/pull/11488",
       "createdAt": "2026-08-11T23:31:31Z",
-      "updatedAt": "2026-08-13T17:28:40Z",
-      "timestamp": "2026-08-13T17:28:40Z",
+      "updatedAt": "2026-08-13T17:47:05Z",
+      "timestamp": "2026-08-13T17:47:05Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1648,8 +1650,8 @@
       "text": "Moves testrunner report inputs, outputs, and summaries onto the shared JUnit document types. The existing reporting behavior remains unchanged behind that seam. Stack: depends on #11513. Parser separation follows in #11487.",
       "url": "https://github.com/temporalio/temporal/pull/11512",
       "createdAt": "2026-08-12T22:00:08Z",
-      "updatedAt": "2026-08-13T17:28:36Z",
-      "timestamp": "2026-08-13T17:28:36Z",
+      "updatedAt": "2026-08-13T17:46:52Z",
+      "timestamp": "2026-08-13T17:46:52Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1670,8 +1672,8 @@
       "text": "Strengthens shared JUnit reads and writes. Reads reject trailing XML and include the source path in errors. Writes validate counters and atomically replace the destination so interrupted writes cannot corrupt an existing report. This is the bottom of the testrunner reporting stack.",
       "url": "https://github.com/temporalio/temporal/pull/11513",
       "createdAt": "2026-08-12T22:05:45Z",
-      "updatedAt": "2026-08-13T17:28:34Z",
-      "timestamp": "2026-08-13T17:28:34Z",
+      "updatedAt": "2026-08-13T17:46:49Z",
+      "timestamp": "2026-08-13T17:46:49Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1692,8 +1694,8 @@
       "text": "Defines the package-aware canonical attempt model and its queries for failed leaves, incomplete executions, package aborts, runtime failures, process failures, and retry safety. Tests construct results directly and pin these invariants before production uses the model. Stack: depends on #11487. Scoped canonical diagnostics follow in #11488.",
       "url": "https://github.com/temporalio/temporal/pull/11514",
       "createdAt": "2026-08-12T22:10:10Z",
-      "updatedAt": "2026-08-13T17:28:38Z",
-      "timestamp": "2026-08-13T17:28:38Z",
+      "updatedAt": "2026-08-13T17:47:01Z",
+      "timestamp": "2026-08-13T17:47:01Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1714,8 +1716,8 @@
       "text": "Runs Go tests directly with JSON output and records package-aware canonical attempt results. The recorder owns event attribution, build failures, diagnostics, timeouts, console output, process state, and coverage-path handling, with focused unit and subprocess tests. Stack: depends on #11488. Retry policy follows in #11516.",
       "url": "https://github.com/temporalio/temporal/pull/11515",
       "createdAt": "2026-08-12T22:12:35Z",
-      "updatedAt": "2026-08-13T17:32:16Z",
-      "timestamp": "2026-08-13T17:32:16Z",
+      "updatedAt": "2026-08-13T17:47:08Z",
+      "timestamp": "2026-08-13T17:47:08Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1736,8 +1738,8 @@
       "text": "Moves retry selection, argument rewriting, and missing-rerun validation into a focused policy over canonical attempt results. The current runner still owns orchestration, so this PR changes the decision module without switching the reporting pipeline. Stack: depends on #11515. Canonical JUnit rendering follows in #11517.",
       "url": "https://github.com/temporalio/temporal/pull/11516",
       "createdAt": "2026-08-12T22:14:53Z",
-      "updatedAt": "2026-08-13T17:32:18Z",
-      "timestamp": "2026-08-13T17:32:18Z",
+      "updatedAt": "2026-08-13T17:47:09Z",
+      "timestamp": "2026-08-13T17:47:09Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -1767,8 +1769,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11518",
@@ -1789,8 +1790,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11520",
@@ -1915,8 +1915,7 @@
       "labels": [],
       "author": "rkannan82",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11528",
@@ -2065,8 +2064,7 @@
       ],
       "author": "robholland",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11536",
@@ -2150,8 +2148,7 @@
       "labels": [],
       "author": "prathyushpv",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11542",
@@ -2193,8 +2190,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11544",
@@ -2215,8 +2211,7 @@
       "labels": [],
       "author": "stephanos",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11546",
@@ -2239,8 +2234,7 @@
       ],
       "author": "spkane31",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:temporalio/temporal:pull_request:11548",
@@ -2261,8 +2255,7 @@
       "labels": [],
       "author": "feiyang3cat",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [
@@ -6450,6 +6443,223 @@
         "state": "open",
         "assignees": [],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:b10e8be872e3b945b233",
+      "signalId": "github:temporalio/temporal:pull_request:11514",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11514",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Define canonical Go test attempt results",
+        "text": "Defines the package-aware canonical attempt model and its queries for failed leaves, incomplete executions, package aborts, runtime failures, process failures, and retry safety. Tests construct results directly and pin these invariants before production uses the model. Stack: depends on #11487. Scoped canonical diagnostics follow in #11488.",
+        "url": "https://github.com/temporalio/temporal/pull/11514",
+        "createdAt": "2026-08-12T22:10:10Z",
+        "updatedAt": "2026-08-13T17:47:01Z",
+        "timestamp": "2026-08-13T17:47:01Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:de688776a5ba56d73243",
+      "signalId": "github:temporalio/temporal:pull_request:11488",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11488",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Scope test diagnostics to canonical results",
+        "text": "Converts test output analysis to package-aware canonical diagnostics and failure evidence. The existing runner reaches the new implementation through a temporary compatibility adapter, so there is still one parser implementation while the production cutover remains isolated. Stack: depends on #11514. The Go test JSON recorder follows in #11515.",
+        "url": "https://github.com/temporalio/temporal/pull/11488",
+        "createdAt": "2026-08-11T23:31:31Z",
+        "updatedAt": "2026-08-13T17:47:05Z",
+        "timestamp": "2026-08-13T17:47:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:58080306762eeecf06a0",
+      "signalId": "github:temporalio/temporal:pull_request:11487",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11487",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Separate test diagnostics and timeout parsing",
+        "text": "Separates diagnostic parsing and timeout parsing into focused files without changing behavior. Existing comments and tests move with their implementations so the later canonical conversion is a semantic diff instead of a delete-and-add rewrite. Stack: depends on #11512. The canonical result model follows in #11514.",
+        "url": "https://github.com/temporalio/temporal/pull/11487",
+        "createdAt": "2026-08-11T23:31:23Z",
+        "updatedAt": "2026-08-13T17:46:57Z",
+        "timestamp": "2026-08-13T17:46:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fdc6bcd1c4904c594c94",
+      "signalId": "github:temporalio/temporal:pull_request:11512",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11512",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Use generic JUnit documents at runner boundaries",
+        "text": "Moves testrunner report inputs, outputs, and summaries onto the shared JUnit document types. The existing reporting behavior remains unchanged behind that seam. Stack: depends on #11513. Parser separation follows in #11487.",
+        "url": "https://github.com/temporalio/temporal/pull/11512",
+        "createdAt": "2026-08-12T22:00:08Z",
+        "updatedAt": "2026-08-13T17:46:52Z",
+        "timestamp": "2026-08-13T17:46:52Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:037119f2ed389f52477b",
+      "signalId": "github:temporalio/temporal:pull_request:11513",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11513",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Harden shared JUnit report IO",
+        "text": "Strengthens shared JUnit reads and writes. Reads reject trailing XML and include the source path in errors. Writes validate counters and atomically replace the destination so interrupted writes cannot corrupt an existing report. This is the bottom of the testrunner reporting stack.",
+        "url": "https://github.com/temporalio/temporal/pull/11513",
+        "createdAt": "2026-08-12T22:05:45Z",
+        "updatedAt": "2026-08-13T17:46:49Z",
+        "timestamp": "2026-08-13T17:46:49Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3a45434ec3a3cd1c0dcb",
+      "signalId": "github:temporalio/temporal:pull_request:11516",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11516",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Plan test retries from canonical results",
+        "text": "Moves retry selection, argument rewriting, and missing-rerun validation into a focused policy over canonical attempt results. The current runner still owns orchestration, so this PR changes the decision module without switching the reporting pipeline. Stack: depends on #11515. Canonical JUnit rendering follows in #11517.",
+        "url": "https://github.com/temporalio/temporal/pull/11516",
+        "createdAt": "2026-08-12T22:14:53Z",
+        "updatedAt": "2026-08-13T17:47:09Z",
+        "timestamp": "2026-08-13T17:47:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9b64307fb9f43d2592bc",
+      "signalId": "github:temporalio/temporal:pull_request:11515",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11515",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Record canonical Go test attempt results",
+        "text": "Runs Go tests directly with JSON output and records package-aware canonical attempt results. The recorder owns event attribution, build failures, diagnostics, timeouts, console output, process state, and coverage-path handling, with focused unit and subprocess tests. Stack: depends on #11488. Retry policy follows in #11516.",
+        "url": "https://github.com/temporalio/temporal/pull/11515",
+        "createdAt": "2026-08-12T22:12:35Z",
+        "updatedAt": "2026-08-13T17:47:08Z",
+        "timestamp": "2026-08-13T17:47:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
       }
     }
   ]

@@ -32,11 +32,11 @@
     "forks": 628,
     "openIssues": 162,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:34.691436+00:00"
+    "collectedAt": "2026-08-13T17:47:21.730636+00:00"
   },
   "news": {
     "repository": "testcontainers/testcontainers-go",
-    "collectedAt": "2026-08-13T17:43:34.691436+00:00",
+    "collectedAt": "2026-08-13T17:47:21.730636+00:00",
     "latestRelease": {
       "repository": "testcontainers/testcontainers-go",
       "tag": "v0.44.0",
@@ -81,6 +81,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 2,
       "changedCount": 1
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 2,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -124,8 +130,7 @@
       "labels": [],
       "author": "drawliin",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [

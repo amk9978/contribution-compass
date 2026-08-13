@@ -22,11 +22,11 @@
     "forks": 16037,
     "openIssues": 12486,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:44.969138+00:00"
+    "collectedAt": "2026-08-13T17:47:32.236209+00:00"
   },
   "news": {
     "repository": "openai/codex",
-    "collectedAt": "2026-08-13T17:43:44.969138+00:00",
+    "collectedAt": "2026-08-13T17:47:32.236209+00:00",
     "latestRelease": {
       "repository": "openai/codex",
       "tag": "rust-v0.147.0",
@@ -99,6 +99,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 405,
       "changedCount": 24
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 405,
+      "changedCount": 1
     }
   ],
   "signals": [
@@ -1498,8 +1504,7 @@
       ],
       "author": "Kurry",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:25178",
@@ -2226,8 +2231,7 @@
       ],
       "author": "0xBRM",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:28919",
@@ -2797,8 +2801,7 @@
       ],
       "author": "yoshitakafumoto-xyn",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:31499",
@@ -3389,8 +3392,7 @@
       ],
       "author": "J-ShuJie",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:33263",
@@ -3493,8 +3495,7 @@
       ],
       "author": "caijinghui",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:33493",
@@ -4275,8 +4276,7 @@
       ],
       "author": "garzastrabajo",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:35210",
@@ -4790,8 +4790,7 @@
       ],
       "author": "maxwell-feng",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:36488",
@@ -5297,8 +5296,7 @@
       ],
       "author": "Charpup",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:37398",
@@ -5844,8 +5842,7 @@
       ],
       "author": "yinyin333333",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:37673",
@@ -5898,8 +5895,7 @@
       ],
       "author": "zhangzhenguo-it",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:37695",
@@ -6207,8 +6203,7 @@
       ],
       "author": "Yida147",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:37932",
@@ -9830,8 +9825,7 @@
       ],
       "author": "NgoQuocViet2001",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38354",
@@ -9857,8 +9851,7 @@
       ],
       "author": "freshymc123",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38355",
@@ -10064,8 +10057,7 @@
       ],
       "author": "Lastprismer",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38369",
@@ -10322,8 +10314,7 @@
       ],
       "author": "laeckerv",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38385",
@@ -10600,8 +10591,7 @@
       ],
       "author": "YunKuiLu",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38402",
@@ -10628,8 +10618,7 @@
       ],
       "author": "cleo7221",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38404",
@@ -10654,8 +10643,7 @@
       ],
       "author": "LELIBA",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38405",
@@ -10681,8 +10669,7 @@
       ],
       "author": "henrymodisett",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38407",
@@ -10708,8 +10695,7 @@
       ],
       "author": "patrickmkline",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:38408",
@@ -10735,8 +10721,7 @@
       ],
       "author": "qo4u60418-max",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:issue:4867",
@@ -12345,8 +12330,7 @@
       "labels": [],
       "author": "copyberry[bot]",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:pull_request:38406",
@@ -12367,8 +12351,7 @@
       "labels": [],
       "author": "copyberry[bot]",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:openai/codex:pull_request:38409",
@@ -12383,14 +12366,14 @@
       "updatedAt": "2026-08-13T17:33:36Z",
       "timestamp": "2026-08-13T17:33:36Z",
       "metrics": {
-        "reactions": 1,
+        "reactions": 0,
         "comments": 0
       },
       "labels": [],
       "author": "copyberry[bot]",
       "state": "closed",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:openai/codex:release:369661998",
@@ -28702,6 +28685,37 @@
         "state": "open",
         "assignees": [],
         "change": "new"
+      }
+    },
+    {
+      "id": "event:bb73ccc4c18a73b3af5a",
+      "signalId": "github:openai/codex:pull_request:38409",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:openai/codex:pull_request:38409",
+        "source": "github",
+        "group": "coding-agent-infrastructure",
+        "project": "openai/codex",
+        "kind": "pull_request",
+        "title": "Classify tool calls in the Guardian V2 extension",
+        "text": "Classify tool calls in the Guardian V2 extension ## What changed - Register a tool lifecycle contributor when Guardian V2 is installed. - On tool start, asynchronously ask the existing Luna sampler for a low-effort `action_risk` score constrained to the range from `0.0` to `1.0`. - Bound the tool metadata supplied to the classifier and treat it as untrusted input. - Emit an extension warning if classification sampling fails. ## Testing Add an integration test that verifies the contributor reuses the configured Luna pool and sends the expected model, attribution metadata, reasoning effort, strict output schema, and tool-call context. <!-- copyberry-projection-id: ca27c0d48b20ba21c3b0ce6f07d83309eae29fbaa23978c74a06c73f977680ed -->",
+        "url": "https://github.com/openai/codex/pull/38409",
+        "createdAt": "2026-08-13T17:32:13Z",
+        "updatedAt": "2026-08-13T17:33:36Z",
+        "timestamp": "2026-08-13T17:33:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "copyberry[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
       }
     }
   ]

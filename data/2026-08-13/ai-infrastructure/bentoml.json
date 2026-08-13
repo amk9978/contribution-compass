@@ -39,11 +39,11 @@
     "forks": 1009,
     "openIssues": 202,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:33.170374+00:00"
+    "collectedAt": "2026-08-13T17:47:20.526518+00:00"
   },
   "news": {
     "repository": "bentoml/BentoML",
-    "collectedAt": "2026-08-13T17:43:33.170374+00:00",
+    "collectedAt": "2026-08-13T17:47:20.526518+00:00",
     "latestRelease": {
       "repository": "bentoml/BentoML",
       "tag": "v1.4.39",
@@ -86,6 +86,12 @@
     {
       "collectedAt": "2026-08-13T17:43:20.785491Z",
       "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 3,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 3,
       "changedCount": 0
     }

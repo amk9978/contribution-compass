@@ -42,13 +42,13 @@
     "defaultBranch": "main",
     "stars": 88978,
     "forks": 20648,
-    "openIssues": 6543,
+    "openIssues": 6542,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:34.283492+00:00"
+    "collectedAt": "2026-08-13T17:47:20.819148+00:00"
   },
   "news": {
     "repository": "vllm-project/vllm",
-    "collectedAt": "2026-08-13T17:43:34.283492+00:00",
+    "collectedAt": "2026-08-13T17:47:20.819148+00:00",
     "latestRelease": {
       "repository": "vllm-project/vllm",
       "tag": "v0.27.1",
@@ -88,6 +88,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 500,
       "changedCount": 81
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 500,
+      "changedCount": 2
     }
   ],
   "signals": [
@@ -430,8 +436,7 @@
       ],
       "author": "AndreasKaratzas",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:38175",
@@ -553,8 +558,7 @@
       ],
       "author": "ehfd",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:41814",
@@ -645,8 +649,7 @@
       ],
       "author": "jvadakat",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:46589",
@@ -998,8 +1001,7 @@
       "labels": [],
       "author": "tobby168",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:49986",
@@ -1020,8 +1022,7 @@
       "labels": [],
       "author": "seongyun1104",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:50282",
@@ -1749,8 +1750,7 @@
       "labels": [],
       "author": "joesinvestments",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:51964",
@@ -1893,8 +1893,7 @@
       "labels": [],
       "author": "seongyun1104",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:52025",
@@ -2211,8 +2210,7 @@
       ],
       "author": "nickus",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:52083",
@@ -2485,8 +2483,7 @@
       ],
       "author": "fataswellassad",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:issue:52146",
@@ -2670,8 +2667,7 @@
       ],
       "author": "Tortoise17",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:24235",
@@ -3006,8 +3002,7 @@
       ],
       "author": "JCorners68",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:39413",
@@ -3103,8 +3098,7 @@
       ],
       "author": "roipony",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:40704",
@@ -3214,8 +3208,7 @@
       ],
       "author": "jasl",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:42436",
@@ -3291,8 +3284,7 @@
       ],
       "author": "mgoin",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:42785",
@@ -3349,8 +3341,7 @@
       ],
       "author": "TheEpicDolphin",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:42963",
@@ -3375,8 +3366,7 @@
       ],
       "author": "gcanlin",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:43091",
@@ -3403,8 +3393,7 @@
       ],
       "author": "wxsIcey",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:43107",
@@ -3439,8 +3428,7 @@
       ],
       "author": "njhill",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:43249",
@@ -3465,8 +3453,7 @@
       ],
       "author": "voipmonitor",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:43327",
@@ -3490,8 +3477,7 @@
       ],
       "author": "reger-men",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:43449",
@@ -3542,8 +3528,7 @@
       "state": "open",
       "assignees": [
         "sangstar"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:vllm-project/vllm:pull_request:43642",
@@ -3567,8 +3552,7 @@
       ],
       "author": "lesj0610",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:43671",
@@ -3682,8 +3666,7 @@
       ],
       "author": "Li-brua",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:44544",
@@ -3789,8 +3772,7 @@
       ],
       "author": "AndreasKaratzas",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:44987",
@@ -3991,8 +3973,7 @@
       ],
       "author": "chaunceyjiang",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:45899",
@@ -4395,8 +4376,7 @@
       ],
       "author": "yichengj0",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:47562",
@@ -4615,8 +4595,7 @@
       ],
       "author": "morrison-turnansky",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:48116",
@@ -4835,8 +4814,7 @@
       ],
       "author": "dependabot[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:48560",
@@ -5148,8 +5126,7 @@
       ],
       "author": "KKothuri",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:48882",
@@ -5365,8 +5342,7 @@
       "state": "open",
       "assignees": [
         "sangstar"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49086",
@@ -5624,8 +5600,7 @@
       ],
       "author": "cjackal",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49365",
@@ -5675,8 +5650,7 @@
       ],
       "author": "juhi10071998",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49406",
@@ -5910,8 +5884,7 @@
       ],
       "author": "omerpaz95",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49596",
@@ -5962,8 +5935,7 @@
       "state": "open",
       "assignees": [
         "DarkLight1337"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49639",
@@ -6011,8 +5983,7 @@
       ],
       "author": "CZT0",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49688",
@@ -6090,8 +6061,7 @@
       ],
       "author": "zhou9402",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49819",
@@ -6116,8 +6086,7 @@
       ],
       "author": "sdougbrown",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:49852",
@@ -6323,8 +6292,7 @@
       ],
       "author": "vanshbhatia-amd",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:50156",
@@ -6350,8 +6318,7 @@
       ],
       "author": "kkt-cohere",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:50169",
@@ -6906,8 +6873,7 @@
       ],
       "author": "wangln19",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:50554",
@@ -6983,8 +6949,7 @@
       ],
       "author": "jinbagi",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:50595",
@@ -7112,8 +7077,7 @@
       ],
       "author": "tzulingk",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:50622",
@@ -7233,8 +7197,7 @@
       ],
       "author": "AndreasKaratzas",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:50732",
@@ -7504,8 +7467,7 @@
       ],
       "author": "drakosha",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:50894",
@@ -7653,8 +7615,7 @@
       ],
       "author": "ieaves",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51021",
@@ -7875,8 +7836,7 @@
       ],
       "author": "fxmarty-amd",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51168",
@@ -8131,8 +8091,7 @@
       ],
       "author": "AndreasKaratzas",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51287",
@@ -8432,8 +8391,7 @@
       ],
       "author": "WindChimeRan",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51346",
@@ -8532,8 +8490,7 @@
       ],
       "author": "xinyuran",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51359",
@@ -8682,8 +8639,7 @@
       ],
       "author": "mgoin",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51437",
@@ -8733,8 +8689,7 @@
       ],
       "author": "jcotant-inferact",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51464",
@@ -8781,8 +8736,7 @@
       ],
       "author": "Suppressor72",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51484",
@@ -8852,8 +8806,7 @@
       ],
       "author": "kwen2501",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51538",
@@ -8959,8 +8912,7 @@
       ],
       "author": "maeehart",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51560",
@@ -9228,8 +9180,7 @@
       ],
       "author": "LiuYinfeng01",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51649",
@@ -9373,8 +9324,7 @@
       ],
       "author": "hmellor",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51674",
@@ -9502,8 +9452,7 @@
       ],
       "author": "LucasWilkinson",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51705",
@@ -9579,8 +9528,7 @@
       "state": "open",
       "assignees": [
         "shen-shanshan"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51718",
@@ -9686,6 +9634,32 @@
       "author": "xyang16",
       "state": "open",
       "assignees": []
+    },
+    {
+      "id": "github:vllm-project/vllm:pull_request:51746",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "vllm-project/vllm",
+      "kind": "pull_request",
+      "title": "[Frontend] Add explicit model info cache preparation",
+      "text": "## Purpose PR #23558 by @manoelmarques added the source-hash-validated runtime ModelInfo cache and reported model-class inspection at 10.1034 seconds uncached versus 0.6127 seconds cached, n=1 per state. During review, @hmellor objected to mirroring common runtime requirements into the build. The merged design therefore populated the cache at runtime. Without a matching entry, first activation still pays the subprocess inspection. This PR adds an explicit preparation command for the existing cache format: ```bash vllm prepare-model-info Qwen3ForCausalLM ``` The command runs in the final installed environment and ensures a readable entry exists under `VLLM_CACHE_ROOT/modelinfos`. It does not download model weights. It accepts only an unchanged built-in lazy registration, then verifies that the entry can be read after it is written. Unknown, plugin, eager, and overridden registrations fail. Normal startup behavior is unchanged: missing or stale entries still use the existing subprocess inspection and safe replacement path, and ordinary cache writes remain best-effort. This deliberately does not generate entries during a generic wheel or source build. Model inspection can depend on runtime packages, platform modules, and compiled extensions, so the entry must be prepared in the target runtime or final deployment image. The tradeoff is time shifting, not free work. In the hardware gate, the preparation command took 9.7860 seconds, n=1, and produced an 870-byte entry. It is useful when that prepared cache is baked or distributed to matching fresh deployments with the same installed environment, or when readiness latency matters more than image preparation time. A writable deployment that starts once will populate the same cache on its own. ## Test Plan Focused registry and public CLI coverage: ```bash pytest -q \\ tests/entrypoints/unit_tests/test_launch_cli.py \\ tests/models/test_registry.py::test_prepare_model_info_inspects_builtin_lazy_registration \\ tests/models/test_registry.py::test_lazy_prepare_model_info_requires_readable_cache \\ tests/models/test_registry.py::test_inspect_model_info_keeps_best_effort_cache_write \\ tests/models/test_registry.py::test_lazy_prepare_model_info_accepts_readable_cache \\ tests/models/test_registry.py::test_prepare_model_info_rejects_unsupported_registration ``` All applicable changed-file pre-commit hooks were also run from exact base `b2506d62aec7e6bccc5959b829221a7ae217abf3` to exact head `13f5279875da8dd5e90c9a5a3f779fe839689e54`. The end-to-end gate used Qwen3-0.6B FP16 TP1 on one RTX 4090 Laptop GPU, maximum model length 256, warm model pages, and identical non-ModelInfo generated state. The interleaved sequence was empty, valid, valid, empty, empty, valid. ## Test Result Focused public CLI and registry coverage passed 20 tests. All applicable changed-file pre-commit hooks passed, including Ruff, formatting, markdownlint, Python 3.10 mypy, SPDX, lazy-import, forbidden-import, and configuration checks. | Starting state | Process launch to HTTP ready | Process launch to first correct token | | --- | ---: | ---: | | Empty ModelInfo cache | 20.2773 s median | 20.4360 s median | | Valid prepared entry | 16.0033 s median | 16.1558 s median | | Reduction | 4.2739 s, 21.1% | 4.2802 s, 20.9% | Each arm used n=3. All 18 exact-token requests passed, the deliberately wrong-token control failed, and all six cells passed GPU engagement, cleanup, source-origin, page-cache, and generated-state controls. This hardware result used exact source `8a90f1ab7565b6b6ad824b5643c203bb40bddcac` on base `8bcc916a98a90822882455ab30aba02c409da2a6`. The same feature patch was then rebased without conflicts onto base `b2506d62aec7e6bccc5959b829221a7ae217abf3` at current head `13f5279875da8dd5e90c9a5a3f779fe839689e54`; its stable patch ID is unchanged, and the intervening upstream commits overlap none of the six feature files. It is a Qwen3-0.6B installed-runtime integration result, not an exact-current-head, dense-model, cross-platform, or wheel-build performance claim. The measured source used a recorded compatible precompiled runtime payload. AI assistance was used. I reviewed the changes and can defend the implementation, constraints, and measurements.",
+      "url": "https://github.com/vllm-project/vllm/pull/51746",
+      "createdAt": "2026-08-11T01:35:33Z",
+      "updatedAt": "2026-08-13T17:45:30Z",
+      "timestamp": "2026-08-13T17:45:30Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 4
+      },
+      "labels": [
+        "documentation",
+        "new-model",
+        "frontend"
+      ],
+      "author": "matteso1",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51757",
@@ -9805,8 +9779,7 @@
       ],
       "author": "luyixiao95",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51784",
@@ -10204,8 +10177,7 @@
       ],
       "author": "ZJY0516",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51860",
@@ -10400,8 +10372,7 @@
       ],
       "author": "bnellnm",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:51896",
@@ -11277,8 +11248,7 @@
       ],
       "author": "lukealonso",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52017",
@@ -11302,8 +11272,7 @@
       ],
       "author": "lukealonso",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52018",
@@ -11328,8 +11297,7 @@
       ],
       "author": "lukealonso",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52019",
@@ -12237,8 +12205,7 @@
       "labels": [],
       "author": "Suppressor72",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52072",
@@ -12640,8 +12607,7 @@
       ],
       "author": "DarkLight1337",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52092",
@@ -13544,8 +13510,7 @@
       "state": "open",
       "assignees": [
         "sangstar"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52138",
@@ -13593,8 +13558,7 @@
       ],
       "author": "stefankoncarevic",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52140",
@@ -14149,8 +14113,7 @@
       ],
       "author": "mganczarenko",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52169",
@@ -14200,8 +14163,7 @@
       ],
       "author": "nickus",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52172",
@@ -14248,8 +14210,7 @@
       ],
       "author": "hmellor",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52174",
@@ -14299,8 +14260,7 @@
       ],
       "author": "andrewbcohere",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52176",
@@ -14568,8 +14528,7 @@
       ],
       "author": "wzhao18",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52189",
@@ -14618,8 +14577,7 @@
       ],
       "author": "rbrugaro-amd",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52191",
@@ -14642,8 +14600,7 @@
       ],
       "author": "tianmu-li",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52192",
@@ -14666,8 +14623,7 @@
       ],
       "author": "maxspevack",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52193",
@@ -14690,8 +14646,7 @@
       ],
       "author": "khushali9",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52194",
@@ -14712,8 +14667,7 @@
       "labels": [],
       "author": "feixiangpeng",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52195",
@@ -14736,8 +14690,7 @@
       ],
       "author": "Laalinibh",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52196",
@@ -14760,8 +14713,7 @@
       ],
       "author": "Laalinibh",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:vllm-project/vllm:pull_request:52197",
@@ -14776,7 +14728,7 @@
       "updatedAt": "2026-08-13T17:38:26Z",
       "timestamp": "2026-08-13T17:38:26Z",
       "metrics": {
-        "reactions": 2,
+        "reactions": 3,
         "comments": 0
       },
       "labels": [
@@ -14785,7 +14737,7 @@
       "author": "mgoin",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     }
   ],
   "events": [
@@ -37832,6 +37784,72 @@
           "mrv2"
         ],
         "author": "jasl",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8903dad0307b6a3042ec",
+      "signalId": "github:vllm-project/vllm:pull_request:51746",
+      "event": "discovered",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:51746",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "[Frontend] Add explicit model info cache preparation",
+        "text": "## Purpose PR #23558 by @manoelmarques added the source-hash-validated runtime ModelInfo cache and reported model-class inspection at 10.1034 seconds uncached versus 0.6127 seconds cached, n=1 per state. During review, @hmellor objected to mirroring common runtime requirements into the build. The merged design therefore populated the cache at runtime. Without a matching entry, first activation still pays the subprocess inspection. This PR adds an explicit preparation command for the existing cache format: ```bash vllm prepare-model-info Qwen3ForCausalLM ``` The command runs in the final installed environment and ensures a readable entry exists under `VLLM_CACHE_ROOT/modelinfos`. It does not download model weights. It accepts only an unchanged built-in lazy registration, then verifies that the entry can be read after it is written. Unknown, plugin, eager, and overridden registrations fail. Normal startup behavior is unchanged: missing or stale entries still use the existing subprocess inspection and safe replacement path, and ordinary cache writes remain best-effort. This deliberately does not generate entries during a generic wheel or source build. Model inspection can depend on runtime packages, platform modules, and compiled extensions, so the entry must be prepared in the target runtime or final deployment image. The tradeoff is time shifting, not free work. In the hardware gate, the preparation command took 9.7860 seconds, n=1, and produced an 870-byte entry. It is useful when that prepared cache is baked or distributed to matching fresh deployments with the same installed environment, or when readiness latency matters more than image preparation time. A writable deployment that starts once will populate the same cache on its own. ## Test Plan Focused registry and public CLI coverage: ```bash pytest -q \\ tests/entrypoints/unit_tests/test_launch_cli.py \\ tests/models/test_registry.py::test_prepare_model_info_inspects_builtin_lazy_registration \\ tests/models/test_registry.py::test_lazy_prepare_model_info_requires_readable_cache \\ tests/models/test_registry.py::test_inspect_model_info_keeps_best_effort_cache_write \\ tests/models/test_registry.py::test_lazy_prepare_model_info_accepts_readable_cache \\ tests/models/test_registry.py::test_prepare_model_info_rejects_unsupported_registration ``` All applicable changed-file pre-commit hooks were also run from exact base `b2506d62aec7e6bccc5959b829221a7ae217abf3` to exact head `13f5279875da8dd5e90c9a5a3f779fe839689e54`. The end-to-end gate used Qwen3-0.6B FP16 TP1 on one RTX 4090 Laptop GPU, maximum model length 256, warm model pages, and identical non-ModelInfo generated state. The interleaved sequence was empty, valid, valid, empty, empty, valid. ## Test Result Focused public CLI and registry coverage passed 20 tests. All applicable changed-file pre-commit hooks passed, including Ruff, formatting, markdownlint, Python 3.10 mypy, SPDX, lazy-import, forbidden-import, and configuration checks. | Starting state | Process launch to HTTP ready | Process launch to first correct token | | --- | ---: | ---: | | Empty ModelInfo cache | 20.2773 s median | 20.4360 s median | | Valid prepared entry | 16.0033 s median | 16.1558 s median | | Reduction | 4.2739 s, 21.1% | 4.2802 s, 20.9% | Each arm used n=3. All 18 exact-token requests passed, the deliberately wrong-token control failed, and all six cells passed GPU engagement, cleanup, source-origin, page-cache, and generated-state controls. This hardware result used exact source `8a90f1ab7565b6b6ad824b5643c203bb40bddcac` on base `8bcc916a98a90822882455ab30aba02c409da2a6`. The same feature patch was then rebased without conflicts onto base `b2506d62aec7e6bccc5959b829221a7ae217abf3` at current head `13f5279875da8dd5e90c9a5a3f779fe839689e54`; its stable patch ID is unchanged, and the intervening upstream commits overlap none of the six feature files. It is a Qwen3-0.6B installed-runtime integration result, not an exact-current-head, dense-model, cross-platform, or wheel-build performance claim. The measured source used a recorded compatible precompiled runtime payload. AI assistance was used. I reviewed the changes and can defend the implementation, constraints, and measurements.",
+        "url": "https://github.com/vllm-project/vllm/pull/51746",
+        "createdAt": "2026-08-11T01:35:33Z",
+        "updatedAt": "2026-08-13T17:45:30Z",
+        "timestamp": "2026-08-13T17:45:30Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 4
+        },
+        "labels": [
+          "documentation",
+          "new-model",
+          "frontend"
+        ],
+        "author": "matteso1",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:6eea789bcd87348eaffb",
+      "signalId": "github:vllm-project/vllm:pull_request:52197",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:vllm-project/vllm:pull_request:52197",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "vllm-project/vllm",
+        "kind": "pull_request",
+        "title": "Support DSpark configs with `architectures=DSparkDraftModel` + `model_type=qwen3`",
+        "text": "## Purpose Generic Qwen `DSparkDraftModel` is now normalized to `Qwen3DSparkModel` so models like https://huggingface.co/RadixArk/Qwen3.8-2.4T-A95B-DSpark can now run on vLLM ## Test Plan ## Test Result Tested gsm8k with ``` vllm serve mgoin/Qwen3.8-2.4T-A95B-NVFP4-pruned75 -tp=4 --spec-model RadixArk/Qwen3.8-2.4T-A95B-DSpark --spec-method dspark --spec-tokens 7 ``` --- <details> <summary> Essential Elements of an Effective PR Description Checklist </summary> - [ ] The purpose of the PR, such as \"Fix some issue (link existing issues this PR will resolve)\". - [ ] The test plan, such as providing test command. - [ ] The test results, such as pasting the results comparison before and after, or e2e results - [ ] (Optional) The necessary documentation update, such as updating `supported_models.md` and `examples` for a new model. </details>",
+        "url": "https://github.com/vllm-project/vllm/pull/52197",
+        "createdAt": "2026-08-13T17:37:50Z",
+        "updatedAt": "2026-08-13T17:38:26Z",
+        "timestamp": "2026-08-13T17:38:26Z",
+        "metrics": {
+          "reactions": 3,
+          "comments": 0
+        },
+        "labels": [
+          "qwen"
+        ],
+        "author": "mgoin",
         "state": "open",
         "assignees": [],
         "change": "updated"

@@ -30,11 +30,11 @@
     "forks": 2204,
     "openIssues": 714,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:25.371479+00:00"
+    "collectedAt": "2026-08-13T17:47:12.218721+00:00"
   },
   "news": {
     "repository": "open-telemetry/opentelemetry-collector",
-    "collectedAt": "2026-08-13T17:43:25.371479+00:00",
+    "collectedAt": "2026-08-13T17:47:12.218721+00:00",
     "latestRelease": {
       "repository": "open-telemetry/opentelemetry-collector",
       "tag": "v0.158.0",
@@ -130,6 +130,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 21,
       "changedCount": 6
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 21,
+      "changedCount": 1
     }
   ],
   "signals": [
@@ -220,8 +226,7 @@
       "labels": [],
       "author": "mwear",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:open-telemetry/opentelemetry-collector:issue:8903",
@@ -242,8 +247,7 @@
       "labels": [],
       "author": "renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:open-telemetry/opentelemetry-collector:pull_request:14677",
@@ -585,8 +589,7 @@
       ],
       "author": "renovate[bot]",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:open-telemetry/opentelemetry-collector:pull_request:15753",
@@ -681,8 +684,7 @@
       "labels": [],
       "author": "chethanm99",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:open-telemetry/opentelemetry-collector:pull_request:15757",
@@ -705,8 +707,7 @@
       ],
       "author": "chethanm99",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:open-telemetry/opentelemetry-collector:pull_request:15759",
@@ -718,17 +719,17 @@
       "text": "#### Description While reviewing #15756, I noticed that the behavior for component status was changed in #14638, but the documentation is out of date. This PR updates them to describe the current behavior. #### Link to tracking issue Fixes #15758 #### Authorship - [x] I, a human, wrote this pull request description myself.",
       "url": "https://github.com/open-telemetry/opentelemetry-collector/pull/15759",
       "createdAt": "2026-08-13T17:05:13Z",
-      "updatedAt": "2026-08-13T17:05:37Z",
-      "timestamp": "2026-08-13T17:05:37Z",
+      "updatedAt": "2026-08-13T17:46:59Z",
+      "timestamp": "2026-08-13T17:46:59Z",
       "metrics": {
         "reactions": 0,
-        "comments": 0
+        "comments": 1
       },
       "labels": [],
       "author": "mwear",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     }
   ],
   "events": [
@@ -1758,6 +1759,38 @@
         ],
         "author": "renovate[bot]",
         "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:bdf0b8e576eff8666c8d",
+      "signalId": "github:open-telemetry/opentelemetry-collector:pull_request:15759",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:open-telemetry/opentelemetry-collector:pull_request:15759",
+        "source": "github",
+        "group": "observability",
+        "project": "open-telemetry/opentelemetry-collector",
+        "kind": "pull_request",
+        "title": "[chore] update component status docs to describe current behavior",
+        "text": "#### Description While reviewing #15756, I noticed that the behavior for component status was changed in #14638, but the documentation is out of date. This PR updates them to describe the current behavior. #### Link to tracking issue Fixes #15758 #### Authorship - [x] I, a human, wrote this pull request description myself.",
+        "url": "https://github.com/open-telemetry/opentelemetry-collector/pull/15759",
+        "createdAt": "2026-08-13T17:05:13Z",
+        "updatedAt": "2026-08-13T17:46:59Z",
+        "timestamp": "2026-08-13T17:46:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "mwear",
+        "state": "open",
         "assignees": [],
         "change": "updated"
       }

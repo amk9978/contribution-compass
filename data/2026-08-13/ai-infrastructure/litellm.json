@@ -40,11 +40,11 @@
     "forks": 10548,
     "openIssues": 4897,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:31.737445+00:00"
+    "collectedAt": "2026-08-13T17:47:18.750151+00:00"
   },
   "news": {
     "repository": "BerriAI/litellm",
-    "collectedAt": "2026-08-13T17:43:31.737445+00:00",
+    "collectedAt": "2026-08-13T17:47:18.750151+00:00",
     "latestRelease": {
       "repository": "BerriAI/litellm",
       "tag": "v1.96.2",
@@ -89,6 +89,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 339,
       "changedCount": 33
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 338,
+      "changedCount": 2
     }
   ],
   "signals": [
@@ -869,8 +875,7 @@
       ],
       "author": "winxuan",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:issue:32353",
@@ -1870,8 +1875,7 @@
       "labels": [],
       "author": "upuldi",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:issue:36767",
@@ -1965,8 +1969,7 @@
       ],
       "author": "mohitagrawal-techy",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:issue:36794",
@@ -1989,8 +1992,7 @@
       ],
       "author": "Atharva-Kanherkar",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:20585",
@@ -3560,8 +3562,7 @@
       "labels": [],
       "author": "Srivatsa03",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:31802",
@@ -3856,8 +3857,7 @@
       "labels": [],
       "author": "pyguy",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:33196",
@@ -4382,8 +4382,7 @@
       "labels": [],
       "author": "yuneng-berri",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:34635",
@@ -4735,8 +4734,7 @@
       "labels": [],
       "author": "Harsh23Kashyap",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:35375",
@@ -4799,8 +4797,7 @@
       "labels": [],
       "author": "B-A-M-N",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:35477",
@@ -5073,8 +5070,7 @@
       "labels": [],
       "author": "lets-order-some-fries",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:35990",
@@ -5501,8 +5497,7 @@
       "labels": [],
       "author": "lets-order-some-fries",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36578",
@@ -6644,8 +6639,7 @@
       "labels": [],
       "author": "yassin-berriai",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36678",
@@ -6666,8 +6660,7 @@
       "labels": [],
       "author": "lets-order-some-fries",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36679",
@@ -7236,8 +7229,7 @@
       "labels": [],
       "author": "yuneng-berri",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36708",
@@ -7258,8 +7250,7 @@
       "labels": [],
       "author": "yuneng-berri",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36709",
@@ -7280,8 +7271,7 @@
       "labels": [],
       "author": "yuneng-berri",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36710",
@@ -7598,8 +7588,7 @@
       "labels": [],
       "author": "devin-ai-integration[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36725",
@@ -7619,8 +7608,7 @@
       "labels": [],
       "author": "mateo-berri",
       "state": "closed",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36726",
@@ -8338,8 +8326,7 @@
       "labels": [],
       "author": "pyg410",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36772",
@@ -8444,8 +8431,7 @@
       "labels": [],
       "author": "demianarc",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36779",
@@ -8499,11 +8485,11 @@
       "text": "## TLDR Problem this solves: - Request Logs cannot be narrowed to one authenticated internal user - End User often appears as an opaque JSON blob containing a device ID, so it is not a usable way to find an internal user - Using the global user directory would exclude team admins and expose users outside the caller's Request Logs scope How it solves it: - Adds a **User ID** picker between Key Alias and End User - Populates it from a bounded, paginated spend-log facet containing only users from rows the caller can already read - Makes an explicit `user_id` filter intersect with the existing own-user/permitted-team authorization scope - Reuses the existing `user_id` Request Logs query parameter; no database migration or new index is required ## User Flow Before: a user with Request Logs access cannot narrow the table to one internal user 1. They open `http://localhost:4000/ui/?page=logs` 2. They open the Request Logs filter drawer 3. They see Key Alias followed directly by End User 4. They must scan the Internal User column manually After: the same user can select an internal user from the logs they are authorized to read 1. They open `http://localhost:4000/ui/?page=logs` 2. They open the Request Logs filter drawer 3. They see User ID between Key Alias and End User 4. They search for an exact internal ID or email and see only that user's requests Proxy admins can choose users from all visible logs. Team admins and users with team spend-log permission can choose members appearing in their permitted teams. Other users only receive options from their own visible rows. Server-side authorization remains authoritative, and selecting a user can only narrow the result set. ## Relevant issues ## Linear ticket ## Pre-Submission checklist **Please complete all items before asking a LiteLLM maintainer to review your PR** - [x] I have added meaningful tests - [ ] My PR passes all CI/CD checks (e.g., lint, format, unit tests) - [x] My PR's scope is as isolated as possible; it only solves 1 specific problem - [ ] I have received a Greptile **Confidence Score of at least 4/5** before requesting a maintainer review (Greptile reviews automatically once the PR is opened; only comment `@greptileai` to re-request a review after pushing changes) ## Delays in PR merge? If you're seeing a delay in your PR being merged, ping the LiteLLM Team on [Slack (#pr-review)](https://join.slack.com/t/litellmossslack/shared_invite/zt-3o7nkuyfr-p_kbNJj8taRfXGgQI1~YyA) ## Screenshots / Proof of Fix Both screenshots use clearly labeled synthetic demo data. ### Before applying the User ID filter Six synthetic requests are visible across four internal users <img width=\"1600\" height=\"950\" alt=\"request-logs-user-id-filter-unfiltered-synthetic\" src=\"https://github.com/user-attachments/assets/7e0eb115-275e-4f89-bd99-61ca49a9bf64\" /> ### After applying the User ID filter Alice Nguyen is selected and only her two requests remain <img width=\"1600\" height=\"950\" alt=\"request-logs-user-id-filter-filtered-synthetic\" src=\"https://github.com/user-attachments/assets/0fa8623a-81e9-4418-b4aa-16da6b6e4983\" /> Manual proof steps: 1. Run the proxy on `http://localhost:4000` and sign in as any role that can open Request Logs 2. Open `http://localhost:4000/ui/?page=logs` and select Request Logs 3. Open Filters and confirm User ID is between Key Alias and End User 4. Search for an internal user's exact ID or email and confirm only values from authorized rows are offered 5. Select the user and confirm the table contains only that user's requests 6. For a team-scoped role, confirm the picker includes users from permitted-team rows but not users outside that scope ## Validation - Dashboard: 65 focused Vitest tests passed across the filter component, filter logic, and spend-log user hook - Backend facet: 34 focused pytest tests passed - Spend-log authorization intersection: 5 focused pytest tests passed - Prettier check passed for changed dashboard files - ESLint passed with no errors for changed dashboard files - Ruff passed for changed Python files; the large pre-existing spend test retains one baseline `SIM118` finding outside this patch - OpenAPI-backed dashboard types were regenerated from the proxy schema ## Type 🆕 New Feature ## Caveats (if any) - Synthetic screenshots are visual evidence, not live end-to-end proxy proof - Like the existing End User facet, the picker scans at most the newest 10,000 matching rows in the selected time window to avoid an unbounded query - The repository-wide TypeScript check currently reports pre-existing unrelated errors; the focused Vitest, Prettier, and ESLint checks for this patch pass ### Final Attestation - [ ] The tests check the right things, including the edge cases, and regressions in the respective real-world customer use-cases are not possible after this PR --- 🤖 Generated with Codex",
       "url": "https://github.com/BerriAI/litellm/pull/36781",
       "createdAt": "2026-08-13T15:56:30Z",
-      "updatedAt": "2026-08-13T17:09:54Z",
-      "timestamp": "2026-08-13T17:09:54Z",
+      "updatedAt": "2026-08-13T17:46:39Z",
+      "timestamp": "2026-08-13T17:46:39Z",
       "metrics": {
         "reactions": 1,
-        "comments": 3
+        "comments": 4
       },
       "labels": [],
       "author": "daniel-meismer-zocdoc",
@@ -8530,8 +8516,7 @@
       "labels": [],
       "author": "nightcityblade",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36783",
@@ -8552,8 +8537,7 @@
       "labels": [],
       "author": "nightcityblade",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36785",
@@ -8574,8 +8558,7 @@
       "labels": [],
       "author": "cursor[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36787",
@@ -8596,8 +8579,7 @@
       "labels": [],
       "author": "devin-ai-integration[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36788",
@@ -8620,8 +8602,7 @@
       "state": "open",
       "assignees": [
         "mateo-berri"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36790",
@@ -8642,8 +8623,7 @@
       "labels": [],
       "author": "daniel-meismer-zocdoc",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36791",
@@ -8664,8 +8644,7 @@
       "labels": [],
       "author": "Oxygen56",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36792",
@@ -8686,8 +8665,7 @@
       "labels": [],
       "author": "mateo-berri",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36793",
@@ -8708,8 +8686,7 @@
       "labels": [],
       "author": "yuneng-berri",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36795",
@@ -8730,8 +8707,7 @@
       "labels": [],
       "author": "yuneng-berri",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36796",
@@ -8752,8 +8728,7 @@
       "labels": [],
       "author": "cursor[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:BerriAI/litellm:pull_request:36797",
@@ -8765,17 +8740,17 @@
       "text": "## TLDR Problem this solves: - SIEM scan events don't say which virtual key caused them - Attribution needs a manual lookup in the proxy database - Key aliases are optional, renameable and reusable — unreliable alone How it solves it: - `send_meta` forwards the calling key's identity and attributes - `meta_identity_format` can send `{alias, key_id}` instead of a bare alias - `meta_data_fields` narrows what leaves the proxy - `apply_to_aliases` / `except_aliases` pick which keys get scanned ## User Flow Before: a security analyst reviewing a XecGuard scan event cannot tell which virtual key caused it, so the finding is unattributable. 1. A developer sends `POST https://litellm-domain/v1/chat/completions` with their key and a prompt that the guardrail flags 2. The request comes back `400` with the guardrail's block message and a trace id 3. The analyst opens their SIEM and finds the scan event for that trace id 4. The event carries the verdict and the policies, but nothing identifying the caller — no alias, no key id, no team 5. The analyst asks the proxy admin to search the proxy for the key behind that request; the admin has database access, the analyst does not 6. Days later the alias is renamed and reused, so even the admin's answer no longer maps the old event to the right owner 7. A second developer's key, exempt from scanning by policy, is scanned anyway — the guardrail applies to every request or none After: the same event names the calling key, and the admin can scope scanning to the keys that need it. 1. The proxy admin opens `https://litellm-domain/ui/?page=guardrails`, sets `send_meta` to true, lists the aliases to cover in `apply_to_aliases`, and restarts the proxy 2. A developer sends the same `POST https://litellm-domain/v1/chat/completions` with their key and the same prompt 3. The request comes back `400` with the same block message and trace id 4. The analyst finds the scan event for that trace id — it now carries the calling key's alias and id, its team, and the cost centre the admin tagged the key with 5. The analyst attributes the finding without involving the admin 6. Once the alias is renamed, the key id in the same event still resolves to the right owner 7. The second developer's key, listed in `except_aliases`, is no longer scanned; their prompts never leave for the scan service The developer cannot change any of this from the request body: a caller who declares a different alias or metadata is overwritten with what the proxy holds, so one developer cannot make their traffic look like another's. ## Relevant issues ## Linear ticket ## Pre-Submission checklist **Please complete all items before asking a LiteLLM maintainer to review your PR** - [x] I have added meaningful tests - [x] My PR passes all CI/CD checks (e.g., lint, format, unit tests) - [x] My PR's scope is as isolated as possible; it only solves 1 specific problem - [ ] I have received a Greptile **Confidence Score of at least 4/5** before requesting a maintainer review (Greptile reviews automatically once the PR is opened; only comment `@greptileai` to re-request a review after pushing changes) ## Delays in PR merge? ## Screenshots / Proof of Fix End-to-end walkthrough — no mocks, real LLM calls with real cost, captured at `49e361d629`: **▶ https://youtu.be/UB7XjZyxjKc** One curl trips the guardrail; the Logs page confirms it ran, and Splunk shows the calling key's `meta` arriving alongside the scan. **Before** — guardrail settings, 6 fields (`09889e1986`) <!-- 把 before 截圖拖進這一行 --> **After** — guardrail settings, 11 fields (`49e361d629`) <!-- 把 after 截圖拖進這一行 --> Unit tests (`204 passed`) are in the branch but are not offered as the proof — the walkthrough above uses live calls, per this template. ## Type 🆕 New Feature ## Caveats (if any) - `send_meta` egress includes `user_email`, `spend`, `max_budget` - `XECGUARD_SEND_META=true` enables that egress from the environment alone - The `object` identity form needs a backend that accepts it - Callback credential slots are never forwarded, by design - Widens the shared `LitellmParams`; all five fields default to `None` ### Final Attestation - [x] The tests check the right things, including the edge cases, and regressions in the respective real-world customer use-cases are not possible after this PR",
       "url": "https://github.com/BerriAI/litellm/pull/36797",
       "createdAt": "2026-08-13T17:38:18Z",
-      "updatedAt": "2026-08-13T17:41:16Z",
-      "timestamp": "2026-08-13T17:41:16Z",
+      "updatedAt": "2026-08-13T17:44:01Z",
+      "timestamp": "2026-08-13T17:44:01Z",
       "metrics": {
         "reactions": 1,
-        "comments": 2
+        "comments": 3
       },
       "labels": [],
       "author": "medophin",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     }
   ],
   "events": [
@@ -21012,6 +20987,70 @@
         "labels": [],
         "author": "yuneng-berri",
         "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ab47d3162d5c8ffe1855",
+      "signalId": "github:BerriAI/litellm:pull_request:36781",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:BerriAI/litellm:pull_request:36781",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "BerriAI/litellm",
+        "kind": "pull_request",
+        "title": "feat(ui): add user ID request log filter",
+        "text": "## TLDR Problem this solves: - Request Logs cannot be narrowed to one authenticated internal user - End User often appears as an opaque JSON blob containing a device ID, so it is not a usable way to find an internal user - Using the global user directory would exclude team admins and expose users outside the caller's Request Logs scope How it solves it: - Adds a **User ID** picker between Key Alias and End User - Populates it from a bounded, paginated spend-log facet containing only users from rows the caller can already read - Makes an explicit `user_id` filter intersect with the existing own-user/permitted-team authorization scope - Reuses the existing `user_id` Request Logs query parameter; no database migration or new index is required ## User Flow Before: a user with Request Logs access cannot narrow the table to one internal user 1. They open `http://localhost:4000/ui/?page=logs` 2. They open the Request Logs filter drawer 3. They see Key Alias followed directly by End User 4. They must scan the Internal User column manually After: the same user can select an internal user from the logs they are authorized to read 1. They open `http://localhost:4000/ui/?page=logs` 2. They open the Request Logs filter drawer 3. They see User ID between Key Alias and End User 4. They search for an exact internal ID or email and see only that user's requests Proxy admins can choose users from all visible logs. Team admins and users with team spend-log permission can choose members appearing in their permitted teams. Other users only receive options from their own visible rows. Server-side authorization remains authoritative, and selecting a user can only narrow the result set. ## Relevant issues ## Linear ticket ## Pre-Submission checklist **Please complete all items before asking a LiteLLM maintainer to review your PR** - [x] I have added meaningful tests - [ ] My PR passes all CI/CD checks (e.g., lint, format, unit tests) - [x] My PR's scope is as isolated as possible; it only solves 1 specific problem - [ ] I have received a Greptile **Confidence Score of at least 4/5** before requesting a maintainer review (Greptile reviews automatically once the PR is opened; only comment `@greptileai` to re-request a review after pushing changes) ## Delays in PR merge? If you're seeing a delay in your PR being merged, ping the LiteLLM Team on [Slack (#pr-review)](https://join.slack.com/t/litellmossslack/shared_invite/zt-3o7nkuyfr-p_kbNJj8taRfXGgQI1~YyA) ## Screenshots / Proof of Fix Both screenshots use clearly labeled synthetic demo data. ### Before applying the User ID filter Six synthetic requests are visible across four internal users <img width=\"1600\" height=\"950\" alt=\"request-logs-user-id-filter-unfiltered-synthetic\" src=\"https://github.com/user-attachments/assets/7e0eb115-275e-4f89-bd99-61ca49a9bf64\" /> ### After applying the User ID filter Alice Nguyen is selected and only her two requests remain <img width=\"1600\" height=\"950\" alt=\"request-logs-user-id-filter-filtered-synthetic\" src=\"https://github.com/user-attachments/assets/0fa8623a-81e9-4418-b4aa-16da6b6e4983\" /> Manual proof steps: 1. Run the proxy on `http://localhost:4000` and sign in as any role that can open Request Logs 2. Open `http://localhost:4000/ui/?page=logs` and select Request Logs 3. Open Filters and confirm User ID is between Key Alias and End User 4. Search for an internal user's exact ID or email and confirm only values from authorized rows are offered 5. Select the user and confirm the table contains only that user's requests 6. For a team-scoped role, confirm the picker includes users from permitted-team rows but not users outside that scope ## Validation - Dashboard: 65 focused Vitest tests passed across the filter component, filter logic, and spend-log user hook - Backend facet: 34 focused pytest tests passed - Spend-log authorization intersection: 5 focused pytest tests passed - Prettier check passed for changed dashboard files - ESLint passed with no errors for changed dashboard files - Ruff passed for changed Python files; the large pre-existing spend test retains one baseline `SIM118` finding outside this patch - OpenAPI-backed dashboard types were regenerated from the proxy schema ## Type 🆕 New Feature ## Caveats (if any) - Synthetic screenshots are visual evidence, not live end-to-end proxy proof - Like the existing End User facet, the picker scans at most the newest 10,000 matching rows in the selected time window to avoid an unbounded query - The repository-wide TypeScript check currently reports pre-existing unrelated errors; the focused Vitest, Prettier, and ESLint checks for this patch pass ### Final Attestation - [ ] The tests check the right things, including the edge cases, and regressions in the respective real-world customer use-cases are not possible after this PR --- 🤖 Generated with Codex",
+        "url": "https://github.com/BerriAI/litellm/pull/36781",
+        "createdAt": "2026-08-13T15:56:30Z",
+        "updatedAt": "2026-08-13T17:46:39Z",
+        "timestamp": "2026-08-13T17:46:39Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "daniel-meismer-zocdoc",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:398fccdc5fa3704742c2",
+      "signalId": "github:BerriAI/litellm:pull_request:36797",
+      "event": "changed",
+      "observedAt": "2026-08-13T17:47:07.884300Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:BerriAI/litellm:pull_request:36797",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "BerriAI/litellm",
+        "kind": "pull_request",
+        "title": "feat(guardrails/xecguard): pass the calling virtual key through xecguard to the SIEM (splunk)",
+        "text": "## TLDR Problem this solves: - SIEM scan events don't say which virtual key caused them - Attribution needs a manual lookup in the proxy database - Key aliases are optional, renameable and reusable — unreliable alone How it solves it: - `send_meta` forwards the calling key's identity and attributes - `meta_identity_format` can send `{alias, key_id}` instead of a bare alias - `meta_data_fields` narrows what leaves the proxy - `apply_to_aliases` / `except_aliases` pick which keys get scanned ## User Flow Before: a security analyst reviewing a XecGuard scan event cannot tell which virtual key caused it, so the finding is unattributable. 1. A developer sends `POST https://litellm-domain/v1/chat/completions` with their key and a prompt that the guardrail flags 2. The request comes back `400` with the guardrail's block message and a trace id 3. The analyst opens their SIEM and finds the scan event for that trace id 4. The event carries the verdict and the policies, but nothing identifying the caller — no alias, no key id, no team 5. The analyst asks the proxy admin to search the proxy for the key behind that request; the admin has database access, the analyst does not 6. Days later the alias is renamed and reused, so even the admin's answer no longer maps the old event to the right owner 7. A second developer's key, exempt from scanning by policy, is scanned anyway — the guardrail applies to every request or none After: the same event names the calling key, and the admin can scope scanning to the keys that need it. 1. The proxy admin opens `https://litellm-domain/ui/?page=guardrails`, sets `send_meta` to true, lists the aliases to cover in `apply_to_aliases`, and restarts the proxy 2. A developer sends the same `POST https://litellm-domain/v1/chat/completions` with their key and the same prompt 3. The request comes back `400` with the same block message and trace id 4. The analyst finds the scan event for that trace id — it now carries the calling key's alias and id, its team, and the cost centre the admin tagged the key with 5. The analyst attributes the finding without involving the admin 6. Once the alias is renamed, the key id in the same event still resolves to the right owner 7. The second developer's key, listed in `except_aliases`, is no longer scanned; their prompts never leave for the scan service The developer cannot change any of this from the request body: a caller who declares a different alias or metadata is overwritten with what the proxy holds, so one developer cannot make their traffic look like another's. ## Relevant issues ## Linear ticket ## Pre-Submission checklist **Please complete all items before asking a LiteLLM maintainer to review your PR** - [x] I have added meaningful tests - [x] My PR passes all CI/CD checks (e.g., lint, format, unit tests) - [x] My PR's scope is as isolated as possible; it only solves 1 specific problem - [ ] I have received a Greptile **Confidence Score of at least 4/5** before requesting a maintainer review (Greptile reviews automatically once the PR is opened; only comment `@greptileai` to re-request a review after pushing changes) ## Delays in PR merge? ## Screenshots / Proof of Fix End-to-end walkthrough — no mocks, real LLM calls with real cost, captured at `49e361d629`: **▶ https://youtu.be/UB7XjZyxjKc** One curl trips the guardrail; the Logs page confirms it ran, and Splunk shows the calling key's `meta` arriving alongside the scan. **Before** — guardrail settings, 6 fields (`09889e1986`) <!-- 把 before 截圖拖進這一行 --> **After** — guardrail settings, 11 fields (`49e361d629`) <!-- 把 after 截圖拖進這一行 --> Unit tests (`204 passed`) are in the branch but are not offered as the proof — the walkthrough above uses live calls, per this template. ## Type 🆕 New Feature ## Caveats (if any) - `send_meta` egress includes `user_email`, `spend`, `max_budget` - `XECGUARD_SEND_META=true` enables that egress from the environment alone - The `object` identity form needs a backend that accepts it - Callback credential slots are never forwarded, by design - Widens the shared `LitellmParams`; all five fields default to `None` ### Final Attestation - [x] The tests check the right things, including the edge cases, and regressions in the respective real-world customer use-cases are not possible after this PR",
+        "url": "https://github.com/BerriAI/litellm/pull/36797",
+        "createdAt": "2026-08-13T17:38:18Z",
+        "updatedAt": "2026-08-13T17:44:01Z",
+        "timestamp": "2026-08-13T17:44:01Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "medophin",
+        "state": "open",
         "assignees": [],
         "change": "updated"
       }

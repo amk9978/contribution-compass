@@ -31,11 +31,11 @@
     "forks": 10774,
     "openIssues": 887,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:26.793238+00:00"
+    "collectedAt": "2026-08-13T17:47:13.846526+00:00"
   },
   "news": {
     "repository": "prometheus/prometheus",
-    "collectedAt": "2026-08-13T17:43:26.793238+00:00",
+    "collectedAt": "2026-08-13T17:47:13.846526+00:00",
     "latestRelease": {
       "repository": "prometheus/prometheus",
       "tag": "v3.13.2",
@@ -107,6 +107,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 43,
       "changedCount": 3
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 43,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -205,8 +211,7 @@
       "labels": [],
       "author": "renovate[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:issue:17857",
@@ -1107,8 +1112,7 @@
       "labels": [],
       "author": "prymitive",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:prometheus/prometheus:pull_request:19415",
@@ -1129,8 +1133,7 @@
       "labels": [],
       "author": "ArthurSens",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [

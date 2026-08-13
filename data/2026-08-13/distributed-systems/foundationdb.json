@@ -29,11 +29,11 @@
     "forks": 1547,
     "openIssues": 768,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:23.647942+00:00"
+    "collectedAt": "2026-08-13T17:47:10.444702+00:00"
   },
   "news": {
     "repository": "apple/foundationdb",
-    "collectedAt": "2026-08-13T17:43:23.647942+00:00",
+    "collectedAt": "2026-08-13T17:47:10.444702+00:00",
     "latestRelease": {
       "repository": "apple/foundationdb",
       "tag": "7.3.77",
@@ -90,6 +90,12 @@
       "since": "2026-08-12T17:43:20.785491Z",
       "observedCount": 14,
       "changedCount": 2
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
+      "observedCount": 14,
+      "changedCount": 0
     }
   ],
   "signals": [
@@ -214,8 +220,7 @@
       "labels": [],
       "author": "eshattow",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:apple/foundationdb:pull_request:13748",
@@ -472,8 +477,7 @@
       "labels": [],
       "author": "ploxiln",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     }
   ],
   "events": [

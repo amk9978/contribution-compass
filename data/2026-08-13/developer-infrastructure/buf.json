@@ -30,11 +30,11 @@
     "forks": 366,
     "openIssues": 58,
     "archived": false,
-    "collectedAt": "2026-08-13T17:43:36.435801+00:00"
+    "collectedAt": "2026-08-13T17:47:23.045280+00:00"
   },
   "news": {
     "repository": "bufbuild/buf",
-    "collectedAt": "2026-08-13T17:43:36.435801+00:00",
+    "collectedAt": "2026-08-13T17:47:23.045280+00:00",
     "latestRelease": {
       "repository": "bufbuild/buf",
       "tag": "v1.72.0",
@@ -74,6 +74,12 @@
     {
       "collectedAt": "2026-08-13T17:43:20.785491Z",
       "since": "2026-08-12T17:43:20.785491Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T17:47:07.884300Z",
+      "since": "2026-08-12T17:47:07.884300Z",
       "observedCount": 0,
       "changedCount": 0
     }
