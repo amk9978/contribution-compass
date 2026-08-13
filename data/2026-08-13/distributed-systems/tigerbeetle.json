@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "date": "2026-08-13",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "tigerbeetle",
+    "repo": "tigerbeetle/tigerbeetle",
+    "name": "TigerBeetle"
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-13T12:26:38.318Z",
+      "since": "2026-08-12T12:26:38.318Z",
+      "observedCount": 1,
+      "changedCount": 1
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:tigerbeetle/tigerbeetle:issue:3909",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "tigerbeetle/tigerbeetle",
+      "kind": "issue",
+      "title": "Please allow to build from a non-git directory",
+      "text": "build.zig runs various git commands. Many porting and packaging systems don't use git repositories to build packages - they use tarballs. For example FreeBSD. Please make all git commands optional and allow the user to submit version, git hash, etc values through compilation options.",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/issues/3909",
+      "timestamp": "2026-08-12T23:05:06Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [
+        "triaged"
+      ],
+      "author": "yurivict",
+      "change": "new"
+    }
+  ]
+}

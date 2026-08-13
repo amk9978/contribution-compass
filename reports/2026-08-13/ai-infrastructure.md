@@ -1,0 +1,1457 @@
+# AI Infrastructure Updates — 2026-08-13
+
+> Automatically collected from GitHub. No analysis or synthesis is performed.
+
+Collected changes: 1451 (1451 new, 0 updated).
+
+- [sgl-project/sglang: \[Diffusion\] Unify component residency controls](https://github.com/sgl-project/sglang/pull/34736) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Model Runner V2\]\[Spec Decode\] Support spec decode with draft model](https://github.com/vllm-project/vllm/pull/43091) — 9 comments, 2 reactions
+- [sgl-project/sglang: \[kernel\] One rmsnorm kernel for every hidden size, tuned from Python](https://github.com/sgl-project/sglang/pull/34727) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Preserve Anthropic disable_parallel_tool_use](https://github.com/vllm-project/vllm/pull/52021) — 7 comments, 3 reactions
+- [ray-project/ray: \[docs\] Retire the "Ray Pod" term from the Kubernetes docs](https://github.com/ray-project/ray/pull/65423) — 0 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy/batches): stop forwarding custom_llm_provider twice in list and cancel](https://github.com/BerriAI/litellm/pull/32813) — 9 comments, 1 reactions
+- [BerriAI/litellm: perf(guardrails): stop sending the conversation twice in the noma v2 payload](https://github.com/BerriAI/litellm/pull/36764) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[Bug\] Stale staging watermark subscribers survive prefill failure](https://github.com/sgl-project/sglang/issues/34737) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[bugfix\] \[NPU\] fix K*B dim for transpose batch matmul ops exceed 65536, and change envs to server args.](https://github.com/sgl-project/sglang/pull/34715) — 1 comments, 0 reactions
+- [vllm-project/vllm: support rl feature : weight checker](https://github.com/vllm-project/vllm/pull/51350) — 2 comments, 0 reactions
+- [BerriAI/litellm: feat(proxy): extending Ovalix guardrail](https://github.com/BerriAI/litellm/pull/34132) — 11 comments, 1 reactions
+- [sgl-project/sglang: docs: sync LMSYS SGLang blog cards](https://github.com/sgl-project/sglang/pull/32982) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[PD\] Batch final DSV4 draft SWA transfer](https://github.com/sgl-project/sglang/pull/34724) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[3/N\]\[Feat\]\[Perf\] Add new warmup infrastructure for JITs. Add provider registry and orchestration for JIT warmup](https://github.com/vllm-project/vllm/pull/50174) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Misc\] Add unit tests for the chunked scaled-dot KKT kernels](https://github.com/vllm-project/vllm/pull/45899) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[NPU CI\] Reorganize test output/log directory structure with workflow context](https://github.com/sgl-project/sglang/pull/33685) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[NPU\] Fix ModelSlim NEXTN startup: unquantized MoE fallback and UB-aware mamba scatter](https://github.com/sgl-project/sglang/pull/34353) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): let a fully blocked model fall back to a healthy group](https://github.com/BerriAI/litellm/pull/36751) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[ROCm\] Only run FP8 AITER MLA prefill when using FP8 KV](https://github.com/vllm-project/vllm/pull/48712) — 3 comments, 3 reactions
+- [vllm-project/vllm: \[Feature\]\[DSpark\]: Enable logprobs with adaptive verification](https://github.com/vllm-project/vllm/issues/51873) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[NPU\] \[Diffusion\] support distributed inference pipeline for GLM-Image ](https://github.com/sgl-project/sglang/pull/31320) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Add bpreshuffled blockscaled fp8 GEMM](https://github.com/vllm-project/vllm/pull/51692) — 0 comments, 2 reactions
+- [sgl-project/sglang: kernel: port CUTLASS fp8_scaled_mm to JIT and expand SM120 M tiles](https://github.com/sgl-project/sglang/pull/33216) — 2 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Hardware\]\[Intel\] Disable compiled grouped_topk on XPU](https://github.com/vllm-project/vllm/pull/52159) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[XPU\] Enable Kimi K3 KDA kernel tests on XPU](https://github.com/vllm-project/vllm/pull/51809) — 8 comments, 2 reactions
+- [sgl-project/sglang: \[Diffusion\]\[ERNIE\] Fuse QKNorm with full-width RoPE](https://github.com/sgl-project/sglang/pull/34620) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: mnnvl allreduce workspace init hangs 30s and leaks GPU memory on IB-only multi-node](https://github.com/vllm-project/vllm/issues/51986) — 2 comments, 0 reactions
+- [sgl-project/sglang: K3 cpp](https://github.com/sgl-project/sglang/pull/34735) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix: allow vllm GET passthrough by checking model in query params](https://github.com/BerriAI/litellm/pull/22104) — 13 comments, 1 reactions
+- [sgl-project/sglang: \[Tracking\] CI Test Failures and Fixes](https://github.com/sgl-project/sglang/issues/17050) — 13 comments, 10 reactions
+- [sgl-project/sglang: fix(diffusion): unshard FSDP root group for custom encoder entry points](https://github.com/sgl-project/sglang/pull/34575) — 5 comments, 0 reactions
+- [vllm-project/vllm: \[Fix\] Support heterogeneous models (Gemma 4 / Qwen) failing with AmbiguousGlobalPerLayerAttributeError](https://github.com/vllm-project/vllm/pull/51757) — 3 comments, 2 reactions
+- [sgl-project/sglang: feat(diffusion): rebuild MiniMax-H3 AdaLN outputs on demand](https://github.com/sgl-project/sglang/pull/34650) — 3 comments, 0 reactions
+- [sgl-project/sglang: \[Feature\]\[DSpark\] Support Speculators-format checkpoints and ragged multimodal CUDA graphs](https://github.com/sgl-project/sglang/pull/34734) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Test\] Add pause/resume E2E tests](https://github.com/vllm-project/vllm/pull/52144) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[Bug\] Long DeepGEMM v2 warmup time in latest SGLang leading to NCCL timeout.](https://github.com/sgl-project/sglang/issues/9867) — 18 comments, 0 reactions
+- [sgl-project/sglang: \[Perf\] Free out-of-window SWA pages without a device sync](https://github.com/sgl-project/sglang/pull/33907) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(bedrock): parse cacheDetails for Converse 1h/5m cache write cost split](https://github.com/BerriAI/litellm/pull/36762) — 5 comments, 1 reactions
+- [ray-project/ray: \[serve\] Env-gated observe layer4 mark-down on HAProxy servers](https://github.com/ray-project/ray/pull/65267) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[DeepSeek-V4\] Add Q8KV8 sparse MLA prefill runtime backend](https://github.com/sgl-project/sglang/pull/32327) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[XPU\]\[Tests\] Make tests device-agnostic](https://github.com/vllm-project/vllm/pull/51968) — 0 comments, 0 reactions
+- [vllm-project/vllm: Bump the minor-update group across 1 directory with 174 updates](https://github.com/vllm-project/vllm/pull/51851) — 1 comments, 2 reactions
+- [BerriAI/litellm: fix(router): resolve session.model to the picked deployment in _ageneric_api_call_with_fallbacks_helper](https://github.com/BerriAI/litellm/pull/36749) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[Frontend\] Log output token IDs at DEBUG level](https://github.com/vllm-project/vllm/pull/52098) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[BugFix\] HunyuanOCR - handle duplicate image_start tokens in xdrope positions](https://github.com/vllm-project/vllm/pull/50429) — 1 comments, 2 reactions
+- [vllm-project/vllm: chore: Upstream Cohere parser fixes + tests](https://github.com/vllm-project/vllm/pull/51998) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[Fix\] Fix Qwen3.5 MTP startup with HiCache](https://github.com/sgl-project/sglang/pull/34560) — 4 comments, 0 reactions
+- [ray-project/ray: serve: expose multiplexed model IDs in ReplicaDetails](https://github.com/ray-project/ray/pull/65370) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[HiCache\] Batch PP write and load completion sync](https://github.com/sgl-project/sglang/pull/33473) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[UT\]\[NPU\] Re-register NPU attention unit tests in base-a CI suites](https://github.com/sgl-project/sglang/pull/34733) — 0 comments, 0 reactions
+- [ray-project/ray: \[Data\] Deprecate `ray_remote_args` for Dataset transformations](https://github.com/ray-project/ray/pull/65228) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[MoE\] Size batched Triton MoE tiles from per-expert rows](https://github.com/vllm-project/vllm/pull/51605) — 0 comments, 0 reactions
+- [sgl-project/sglang: Main transport1](https://github.com/sgl-project/sglang/pull/34707) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Apply logits scaling in the Transformers backend](https://github.com/vllm-project/vllm/pull/52158) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fall back to FA2 for Blackwell head-dim-256 paged attention](https://github.com/vllm-project/vllm/pull/52050) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Detect all attention-spelling variants in ModelConfig.is_hybrid](https://github.com/vllm-project/vllm/pull/52161) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[HiCache\]: Optimize hybrid/DSA L3 prefetch result sync and usable-prefix clamping](https://github.com/sgl-project/sglang/pull/31443) — 20 comments, 1 reactions
+- [sgl-project/sglang: \[Diffusion\]\[FLUX.2\] Fuse eager AdaLN and packed SwiGLU](https://github.com/sgl-project/sglang/pull/34616) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Feature\] Should the trtllm allreduce fusion accumulate in fp32, like the mnnvl backends do?](https://github.com/sgl-project/sglang/issues/34603) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Feature\] Should we make the LM head GEMM output fp32 instead of bf16?](https://github.com/sgl-project/sglang/issues/33627) — 1 comments, 1 reactions
+- [BerriAI/litellm: fix(github_copilot): forward reasoning params for all reasoning-capable models](https://github.com/BerriAI/litellm/pull/36754) — 5 comments, 1 reactions
+- [sgl-project/sglang: \[Diffusion\]\[HunyuanVideo\] Fuse eager QKV packing and high-quality QKNorm](https://github.com/sgl-project/sglang/pull/34617) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[JIT Kernel\] Migrate moe_topk_softmax from AOT to JIT](https://github.com/sgl-project/sglang/pull/34509) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Fuse quantized in_proj layers in Qwen3.5](https://github.com/sgl-project/sglang/pull/33068) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] EXAONE 4.5: trim trailing MTP entry from text_config.layer_types](https://github.com/vllm-project/vllm/pull/45584) — 6 comments, 1 reactions
+- [sgl-project/sglang: \[Kimi K3\] Preprocess CPU-transport images on the vision owner](https://github.com/sgl-project/sglang/pull/33921) — 3 comments, 0 reactions
+- [sgl-project/sglang: \[diffusion\] Add --dit-layerwise-residency-policy for strided DiT residency](https://github.com/sgl-project/sglang/pull/34534) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[XPU\]\[test\] Add cache_salt=None to _make_req in test_lmcache_radix_cache.py](https://github.com/sgl-project/sglang/pull/34728) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix Cosmos3-Edge processor after transformers 5.15 release](https://github.com/vllm-project/vllm/pull/51989) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[Unified Tree\] Support Branching-Point Caching for the SWA Component](https://github.com/sgl-project/sglang/pull/34565) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\] Add opt-in dynamic NVFP4 MoE GEMM2 quantization](https://github.com/vllm-project/vllm/pull/52032) — 0 comments, 2 reactions
+- [ray-project/ray: fix(jobs): return structured 503 when job logs are unavailable](https://github.com/ray-project/ray/pull/65405) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[diffusion\] model: support LongCat-Image](https://github.com/sgl-project/sglang/pull/23274) — 6 comments, 0 reactions
+- [sgl-project/sglang: \[kernel\] Content-addressed JIT build cache, generated from our own ninja](https://github.com/sgl-project/sglang/pull/34274) — 0 comments, 0 reactions
+- [vllm-project/vllm:   \[Bugfix\]\[Frontend\] Import parser plugins under the vllm.* namespace so their logs survive](https://github.com/vllm-project/vllm/pull/52026) — 1 comments, 2 reactions
+- [sgl-project/sglang: K3 pp](https://github.com/sgl-project/sglang/pull/34732) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(hosted_vllm): honor custom_llm_provider on atranscription/aspeech/aimage_generation](https://github.com/BerriAI/litellm/pull/36756) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[do not merge\] add new cookbooks](https://github.com/sgl-project/sglang/pull/34658) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[HiCache\] Fix PP inconsistency with HiCache L3 (#22607)](https://github.com/sgl-project/sglang/pull/27010) — 35 comments, 3 reactions
+- [vllm-project/vllm: Add Muse Glimmer model support](https://github.com/vllm-project/vllm/pull/51655) — 34 comments, 15 reactions
+- [BerriAI/litellm: refactor: replace Any with precise types across responses, proxy, and llms modules](https://github.com/BerriAI/litellm/pull/36763) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Misc\] Add missing return type annotations in outputs.py](https://github.com/vllm-project/vllm/pull/52145) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[Fix\] Clamp per-DP-worker max_running_requests to at least 1](https://github.com/sgl-project/sglang/pull/34535) — 2 comments, 0 reactions
+- [sgl-project/sglang: K3 pp](https://github.com/sgl-project/sglang/pull/34415) — 0 comments, 0 reactions
+- [ray-project/ray: \[Core\] Mobilint Accelerator Support](https://github.com/ray-project/ray/pull/61898) — 7 comments, 3 reactions
+- [vllm-project/vllm: \[Attention\]\[Spec Decode\] Support varlen trtllm-gen decode for adaptive verification](https://github.com/vllm-project/vllm/pull/52157) — 0 comments, 2 reactions
+- [sgl-project/sglang: Support decode radix cache on DeepSeek-V4 (hybrid-SWA, SWA-tail prealloc)](https://github.com/sgl-project/sglang/pull/30929) — 3 comments, 2 reactions
+- [sgl-project/sglang: \[diffusion\] Decouple encoder parallelism from the DiT parallel layout](https://github.com/sgl-project/sglang/pull/34713) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[MoE\] Refine FlashInfer one-sided All2All integration](https://github.com/vllm-project/vllm/pull/51924) — 7 comments, 3 reactions
+- [sgl-project/sglang: Widen swapAB dispatch range in SM120 fp8 blockwise GEMM](https://github.com/sgl-project/sglang/pull/34731) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Diffusion\] Make auto residency decisions component-scoped](https://github.com/sgl-project/sglang/pull/34615) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] gfx942: use FlyDSL fp8 MQA logits kernel (ROCm/aiter#3913)](https://github.com/vllm-project/vllm/pull/49544) — 5 comments, 2 reactions
+- [vllm-project/vllm: \[Frontend\]  Support count_reasoning_tokens in the Streaming Parser Engine](https://github.com/vllm-project/vllm/pull/45802) — 8 comments, 2 reactions
+- [vllm-project/vllm: \[Quantization\]\[Humming\] Support MXFP4 weight + block-FP8 activation for MoE](https://github.com/vllm-project/vllm/pull/51332) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Core\] Add shared-disk weight transfer backend](https://github.com/vllm-project/vllm/pull/52152) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Doc\] Fix group numbering in Case 3 of hybrid_kv_cache_manager.md](https://github.com/vllm-project/vllm/pull/52160) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[XPU\] Fix Encoder Decoder KV Cache Alignment](https://github.com/sgl-project/sglang/pull/31730) — 5 comments, 1 reactions
+- [sgl-project/sglang: \[Core\] Organize environment variable registry](https://github.com/sgl-project/sglang/pull/34730) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Suppress multiprocessing resource_tracker warnings in compile_deep_gemm (#32378)](https://github.com/sgl-project/sglang/pull/32444) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Do not require SupportsPP of draft models under pipeline parallelism](https://github.com/vllm-project/vllm/pull/52117) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] CI: drop the spaces from SGL_EVAL_SPEC (fixes ROCm 7.2 stage-a sgl-eval install)](https://github.com/sgl-project/sglang/pull/34689) — 2 comments, 0 reactions
+- [sgl-project/sglang: Retain SWA down to the last state checkpoint](https://github.com/sgl-project/sglang/pull/34729) — 3 comments, 0 reactions
+- [BerriAI/litellm: feat(passthrough): add optional model hint for spend logs](https://github.com/BerriAI/litellm/pull/36757) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[Core\]\[Spec Decode\] Fix KV cache allocation for sliding-window drafters and local-attention pool sizing](https://github.com/vllm-project/vllm/pull/50169) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[Failure Tracker\] PR Test (AMD)](https://github.com/sgl-project/sglang/issues/27937) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Handle HarmonyError in process_chunk to fix gpt-oss streaming 500s](https://github.com/vllm-project/vllm/pull/52055) — 4 comments, 4 reactions
+- [sgl-project/sglang: \[Fix\] Fix Nemotron-H Mamba illegal memory access under DP attention with CUDA graph](https://github.com/sgl-project/sglang/pull/34561) — 2 comments, 0 reactions
+- [ray-project/ray: Fix/tls server cert hot reload](https://github.com/ray-project/ray/pull/65390) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\]\[Spec\] Accelerate Qwen3.5 verification with grouped-head shared KV](https://github.com/sgl-project/sglang/pull/34517) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[Feature\] Optimize TP LMHead with All-to-All](https://github.com/sgl-project/sglang/pull/32313) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Apply attention sinks in the Transformers backend](https://github.com/vllm-project/vllm/pull/52156) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Diffusion\]  Use current_platform instead of hardcoded "cuda" in cosmos3 guardrails ](https://github.com/sgl-project/sglang/pull/34612) — 1 comments, 0 reactions
+- [ray-project/ray: \[doc\]\[History server\] Update doc for history server for `RAY_ROOT_DIR` -> `STORAGE_ROOT_DIR`](https://github.com/ray-project/ray/pull/65441) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[Model\] Support Ling-3.0-flash (BailingMoeV3) ](https://github.com/sgl-project/sglang/pull/33561) — 10 comments, 9 reactions
+- [sgl-project/sglang: \[NPU\]\[Tracking\] Ascend A5 MXFP8/MXFP4 Capability and Model Coverage](https://github.com/sgl-project/sglang/issues/34559) — 0 comments, 0 reactions
+- [vllm-project/vllm: Enable Speculative Decoding for NVIDIA-Nemotron-Parse-2.0](https://github.com/vllm-project/vllm/pull/51168) — 3 comments, 2 reactions
+- [sgl-project/sglang: Optimize delayed sample and mrope position computation](https://github.com/sgl-project/sglang/pull/32637) — 5 comments, 0 reactions
+- [vllm-project/vllm: \[Perf\] Integrate flash-maxsim Triton kernels for late-interaction scoring](https://github.com/vllm-project/vllm/pull/40337) — 29 comments, 3 reactions
+- [sgl-project/sglang: \[NPU\] Add mxfp4-w4a4 MOE Quantization Support for NPU](https://github.com/sgl-project/sglang/pull/30319) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[V1\] Reserve CUDA graph memory in V2 GPU model runner](https://github.com/vllm-project/vllm/pull/49233) — 5 comments, 2 reactions
+- [ray-project/ray: \[doc\]\[KubeRay\] Add mTLS for RayClusters user guide](https://github.com/ray-project/ray/pull/65107) — 7 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: VLLM_BATCH_INVARIANT does not cover convolution, used in VAE blocks](https://github.com/vllm-project/vllm/issues/52155) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(responses_bridge): map max reasoning effort instead of dropping it](https://github.com/BerriAI/litellm/pull/36755) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Build\] Gate cooperative top-k on CUDA 13](https://github.com/vllm-project/vllm/pull/52086) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Renderer\] Shutdown the renderer properly. ](https://github.com/vllm-project/vllm/pull/52124) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[Test\] Add unit tests for reasoning_parser (Apertus2509/CohereCommand4 & ReasoningParser)](https://github.com/sgl-project/sglang/pull/34493) — 2 comments, 1 reactions
+- [BerriAI/litellm: fix(responses): sync logging stream state](https://github.com/BerriAI/litellm/pull/36761) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[Spec\] DSpark support prefill/decode disaggregation](https://github.com/sgl-project/sglang/pull/31466) — 8 comments, 2 reactions
+- [sgl-project/sglang: \[PD\] Prevent outbound ZMQ endpoint cache FD exhaustion](https://github.com/sgl-project/sglang/pull/31922) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[Feature\] Free-Threaded Python (3.14t / nogil) Support for SGLang](https://github.com/sgl-project/sglang/issues/22889) — 10 comments, 12 reactions
+- [sgl-project/sglang: \[Bug\] sgl-model-gateway router rejects /v1/responses requests with tool type "custom" — openai-protocol crate out of sync with Python protocol.py](https://github.com/sgl-project/sglang/issues/30781) — 3 comments, 1 reactions
+- [ray-project/ray: \[Data\] Add support for writing ORC files](https://github.com/ray-project/ray/pull/65453) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Correct prompt lengths for timed_traces benchmark](https://github.com/vllm-project/vllm/pull/45423) — 3 comments, 3 reactions
+- [vllm-project/vllm: \[Bug\] DeepSeek-V4-Flash-0731 intermittently emits malformed DSML tool-call start wrapper on v0.27.1 + DSpark](https://github.com/vllm-project/vllm/issues/51914) — 2 comments, 1 reactions
+- [sgl-project/sglang: fix(scheduler): track max prefill batch size over recent real admissions](https://github.com/sgl-project/sglang/pull/34284) — 5 comments, 0 reactions
+- [ray-project/ray: \[Core\]\[KubeRay\] Route autoscaler INFO logs to stdout instead of stderr](https://github.com/ray-project/ray/pull/65455) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[Review vehicle\] config: the runner-side instance reads finish converging (not for merge)](https://github.com/sgl-project/sglang/pull/34270) — 0 comments, 1 reactions
+- [ray-project/ray: \[Core\] Removing an in-flight placement group can leak prepared bundles and block later placement groups](https://github.com/ray-project/ray/issues/64693) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[CPU\] Shard the MoE experts across NUMA nodes](https://github.com/vllm-project/vllm/pull/51876) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[Refactor\] New EPD](https://github.com/sgl-project/sglang/pull/30398) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Doc\]: Stale rejection_sample_method and synthetic_acceptance_rate in speculative decoding README](https://github.com/vllm-project/vllm/issues/51609) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Doc\] Fix stale rejection_sample_method and synthetic_acceptance_rate](https://github.com/vllm-project/vllm/pull/51611) — 7 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Rust\] MiniMax-M3 tool parser: accept elided first-parameter opening tag](https://github.com/vllm-project/vllm/pull/51075) — 4 comments, 3 reactions
+- [BerriAI/litellm: fix(vllm): track spend for passthrough endpoints that report usage](https://github.com/BerriAI/litellm/pull/33351) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix standalone torch.compile cache loading after relocation](https://github.com/vllm-project/vllm/pull/52142) — 1 comments, 2 reactions
+- [sgl-project/sglang: Add distributed exact input logprobs](https://github.com/sgl-project/sglang/pull/34402) — 1 comments, 0 reactions
+- [sgl-project/sglang: Add distributed exact prompt Top-N logprobs](https://github.com/sgl-project/sglang/pull/34704) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] fd exhaustion on the prefill side](https://github.com/sgl-project/sglang/issues/31766) — 1 comments, 0 reactions
+- [ray-project/ray: \[Data\]\[LLM\] Add multi-host TPU batch inference for Ray Data LLM](https://github.com/ray-project/ray/pull/65422) — 2 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Fuse Kimi-K3 FP8 pre-route projections](https://github.com/vllm-project/vllm/pull/50665) — 2 comments, 2 reactions
+- [BerriAI/litellm: fix(azure_ai): forward reasoning_effort for reasoning-capable models](https://github.com/BerriAI/litellm/pull/33350) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix `--data-parallel-start-rank 0` being treated as unset in `create_engine_config`](https://github.com/vllm-project/vllm/pull/47692) — 8 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: Standalone torch.compile cache uses stale artifact path after relocation](https://github.com/vllm-project/vllm/issues/52154) — 0 comments, 0 reactions
+- [ray-project/ray: \[Data\] Dereference ObjectRefs passed through map UDF `fn_args`](https://github.com/ray-project/ray/pull/65450) — 2 comments, 1 reactions
+- [sgl-project/sglang: Support streaming session on NPU](https://github.com/sgl-project/sglang/pull/32597) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[Parser\] Migrate Hermes tool parser to the new streaming Parser Engine](https://github.com/vllm-project/vllm/pull/51937) — 5 comments, 2 reactions
+- [sgl-project/sglang: add prefill graph support on cpu](https://github.com/sgl-project/sglang/pull/33502) — 1 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: Bedrock passthrough bills 1-hour cache writes at the 5-minute rate (cache_creation.ephemeral_1h_input_tokens not propagated)](https://github.com/BerriAI/litellm/issues/29432) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[PD\] Keep EAGLE DP graph and token metadata consistent](https://github.com/sgl-project/sglang/pull/32196) — 10 comments, 0 reactions
+- [vllm-project/vllm: Pass model EOS ids to xgrammar tokenizer info](https://github.com/vllm-project/vllm/pull/52153) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] Optimize KIMI-K3 with Triton MLA decode kernel by tuning the stage-1 geometry for gfx950](https://github.com/sgl-project/sglang/pull/34580) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Kernel\] Fix divergent warp collectives in partial NeoX QK-Norm+RoPE](https://github.com/vllm-project/vllm/pull/50903) — 17 comments, 2 reactions
+- [BerriAI/litellm: fix(anthropic): emit SSE error event when Responses API bridge stream fails mid-stream](https://github.com/BerriAI/litellm/pull/32475) — 10 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Forward SwiGLU clamp/alpha/beta in compressed-tensors W4A4 MXFP4 MoE](https://github.com/vllm-project/vllm/pull/51029) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[EPD\] Batch embedding cache host-device range copies](https://github.com/sgl-project/sglang/pull/31574) — 5 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]\[ROCm/gfx942\]: DeepSeek-V4-Flash silent retrieval corruption for prompts ≥ ~4-5k tokens (AITER sparse indexer)](https://github.com/vllm-project/vllm/issues/52109) — 1 comments, 0 reactions
+- [vllm-project/vllm: Fix fused add RMSNorm residual-sum variance](https://github.com/vllm-project/vllm/pull/52151) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: DeepSeek-V4-Flash-0731 MTP speculative decoding fails to load: KeyError 'model.layers.43.mtp_block.main_norm.weight'](https://github.com/vllm-project/vllm/issues/52111) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]\[ROCm/gfx942\]: GLM-5.2-FP8 — first request after GPU idle emits garbage; piecewise CUDA graph cold replay corrupts the request's own prefill (workaround: cudagraph_mode=FULL_DECODE_ONLY)](https://github.com/vllm-project/vllm/issues/52150) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Frontend\] Move api_server.py out openai folder](https://github.com/vllm-project/vllm/pull/52131) — 1 comments, 0 reactions
+- [vllm-project/vllm: Add `pydocstyle` to the `ruff` rules](https://github.com/vllm-project/vllm/pull/52136) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\]\[CI\]\[Fix\] Guard FP32 LM head mm(out_dtype) fast path on ROCm](https://github.com/sgl-project/sglang/pull/34681) — 2 comments, 0 reactions
+- [sgl-project/sglang: auto_tune: implement sglang.auto_tune CLI for MoE kernel tuning (subtask 1 of #13363)](https://github.com/sgl-project/sglang/pull/34698) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Intel\]\[XPU\]Enable chunked prefill scnearios for XPU with UT](https://github.com/sgl-project/sglang/pull/33804) — 1 comments, 0 reactions
+- [sgl-project/sglang: DeepSeek V4 Roadmap](https://github.com/sgl-project/sglang/issues/23602) — 74 comments, 29 reactions
+- [sgl-project/sglang: \[KDA\] Close Phase A CAKE engagement and zero-copy admission](https://github.com/sgl-project/sglang/pull/34299) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[NPU\] Enable LLaDA2.2 block routing and graph-captured JTI on Ascend](https://github.com/sgl-project/sglang/pull/32280) — 9 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: Bedrock Converse chat path bills 1-hour cache writes at the 5-minute rate (cacheDetails not parsed)](https://github.com/BerriAI/litellm/issues/36760) — 0 comments, 0 reactions
+- [vllm-project/vllm: EAGLE/MTP block drop + prefix caching is untested for hybrid models with ≥3 attention groups (DeepSeek-V4-Flash + DSpark lands there)](https://github.com/vllm-project/vllm/issues/51771) — 5 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\] xgrammar backend ignores the model's other EOS ids, so guided decoding can stop mid-string](https://github.com/vllm-project/vllm/issues/52146) — 1 comments, 0 reactions
+- [ray-project/ray: \[core\]\[runtime_env\] Support isolated and cached pip dependencies with image_uri containers](https://github.com/ray-project/ray/pull/65366) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Feature\] Add CUTLASS MXFP4A8 (W4A8) grouped-GEMM MoE backend for SM90](https://github.com/sgl-project/sglang/pull/34682) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(mcp): include server_name and alias in /v1/mcp/server/health response](https://github.com/BerriAI/litellm/pull/32476) — 8 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Handle persistent top-k candidate overflow](https://github.com/vllm-project/vllm/pull/52149) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Attention\] Fix FlashInfer SM12x prefill with sinks](https://github.com/vllm-project/vllm/pull/52148) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix: strip codex metadata for copilot responses](https://github.com/BerriAI/litellm/pull/31496) — 5 comments, 1 reactions
+- [sgl-project/sglang: \[VLA\] Bound Pi0.5 CUDA graphs with prompt buckets](https://github.com/sgl-project/sglang/pull/34588) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[diffusion\] Optimize Pi0.5 inference and bounded graph serving](https://github.com/sgl-project/sglang/pull/34599) — 0 comments, 0 reactions
+- [vllm-project/vllm: fix(security): enforce audio decode duration limit in NanoNemotronVL](https://github.com/vllm-project/vllm/pull/50221) — 16 comments, 2 reactions
+- [BerriAI/litellm: \[Bug\]: gen_ai.system still reaches OTel exporter as 'None' in metrics/events paths — PR #26713 only fixed the span-attribute call site](https://github.com/BerriAI/litellm/issues/36759) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix: handle missing httpx_response in Google GenAI logging handler](https://github.com/BerriAI/litellm/pull/31581) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Enable CSA multi-stream overlap for DeepSeek-V4](https://github.com/vllm-project/vllm/pull/51794) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Refactor\]: StructuredOutputManager x Speculative Decoding Refactor](https://github.com/vllm-project/vllm/pull/48200) — 5 comments, 3 reactions
+- [BerriAI/litellm: fix(anthropic): read usage and status from dict-shaped Responses completed events](https://github.com/BerriAI/litellm/pull/32477) — 8 comments, 1 reactions
+- [vllm-project/vllm: \[Perf\]\[ROCm\] Dual-stream decode with hipgraphs](https://github.com/vllm-project/vllm/pull/52033) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Render\]\[1/n\] Paged shared memory storage for mm tensor ipc.](https://github.com/vllm-project/vllm/pull/51349) — 1 comments, 0 reactions
+- [ray-project/ray: \[Core\]\[KubeRay\] Autoscaler sends all log records, including INFO, to stderr](https://github.com/ray-project/ray/issues/65454) — 0 comments, 0 reactions
+- [sgl-project/sglang: fix(dsa): use int64 page offsets in index buffer accessors](https://github.com/sgl-project/sglang/pull/34725) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Kimi-K3 AMD MLA: fuse the q-a and kv-a RMSNorms](https://github.com/vllm-project/vllm/pull/52080) — 0 comments, 0 reactions
+- [BerriAI/litellm: feat(guardrails): add aliyun security guardrail integration](https://github.com/BerriAI/litellm/pull/36753) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\]\[DSpark\]\[DCP\] Support decode context parallelism for Kimi-K3 DSpark](https://github.com/vllm-project/vllm/pull/51705) — 3 comments, 2 reactions
+- [vllm-project/vllm: Hardware-agnostic model definition via HF transformer backend (1/N)](https://github.com/vllm-project/vllm/pull/49458) — 11 comments, 2 reactions
+- [sgl-project/sglang: \[DSV4\] Fix SWA state pool over-allocation by using storage page size instead of model window](https://github.com/sgl-project/sglang/pull/30371) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[CI\] Split Kimi K2.5 performance batches by config](https://github.com/sgl-project/sglang/pull/34669) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[quantization\] Add tuned Triton tile configs for channelwise FP8 GEMM…](https://github.com/sgl-project/sglang/pull/34331) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Humming\] Fuse Kimi SiTU activation + per-token FP8 quant on w2 path](https://github.com/vllm-project/vllm/pull/51707) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Core\] Fix MultiConnector returning duplicate finished_recving signals](https://github.com/vllm-project/vllm/pull/51864) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] Add dense-FP8 for MXFP4 checkpoints with fused silu, mul, activation quant](https://github.com/sgl-project/sglang/pull/28932) — 13 comments, 0 reactions
+- [sgl-project/sglang: \[GDN\] Fused qkvzba split for non-pow2 v-head ratios, default FlashInfer GDN prefill on SM90, and an opt-in Hopper bf16 GEMV backend](https://github.com/sgl-project/sglang/pull/34307) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[EC Connector\] P2P NIXL + CPU EC Connector](https://github.com/vllm-project/vllm/pull/47941) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] \[Docker\] Upgrade Python 3.12 + torch 2.11 + triton 3.7 in ROCm 7.2.4](https://github.com/sgl-project/sglang/pull/30984) — 15 comments, 0 reactions
+- [vllm-project/vllm: Standardise weight tying on `ParallelLMHead.tie_weights`](https://github.com/vllm-project/vllm/pull/52147) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[ROCm\] Route non-divisor small-head MLA decode to Gluon on gfx950](https://github.com/vllm-project/vllm/pull/51403) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Profiler\] Add execution trace capture to torch profiler config](https://github.com/vllm-project/vllm/pull/46336) — 5 comments, 3 reactions
+- [BerriAI/litellm: \[Bug\]: `redact_user_api_key_info: true` does not filter sensitive metadata from OpenTelemetry spans](https://github.com/BerriAI/litellm/issues/36758) — 0 comments, 0 reactions
+- [ray-project/ray: \[TPU\] Add subslice_index to subslice_placement_group](https://github.com/ray-project/ray/pull/65403) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Perf\] Avoid a per-prefill-step GPU->CPU sync in the KDA chunk kernels](https://github.com/vllm-project/vllm/pull/51540) — 7 comments, 2 reactions
+- [vllm-project/vllm: Fix Inkling structured output stop tokens](https://github.com/vllm-project/vllm/pull/52143) — 1 comments, 2 reactions
+- [sgl-project/sglang: Feiyue/mori pp dcp](https://github.com/sgl-project/sglang/pull/34726) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Model\]\[MRV2\] Support pipeline parallelism for DiffusionGemma](https://github.com/vllm-project/vllm/pull/52015) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[rust\] Unify MM feature transport on POSIX shm (drop inline mode)](https://github.com/sgl-project/sglang/pull/34721) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\] Enable V2 model runner for Kimi-K3 on ROCm](https://github.com/vllm-project/vllm/pull/51653) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[XPU\] Add tuned Mamba SSU configs for Intel Arc Pro B70](https://github.com/vllm-project/vllm/pull/50534) — 12 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] GDN linear out-proj fusion](https://github.com/sgl-project/sglang/pull/28655) — 13 comments, 1 reactions
+- [sgl-project/sglang: \[diffusion\] \[NPU\] Optimize LTX-2/2.3 inference performance for NPU](https://github.com/sgl-project/sglang/pull/34722) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] \[GLM5\] Fuse the ROCm DSA indexer q/k prep into aiter's single kernel](https://github.com/sgl-project/sglang/pull/34394) — 0 comments, 0 reactions
+- [sgl-project/sglang: Publish per-scheduler load on a dedicated socket for load-aware routers](https://github.com/sgl-project/sglang/pull/34608) — 1 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: Vector stores from config.yaml are not added](https://github.com/BerriAI/litellm/issues/25947) — 3 comments, 0 reactions
+- [sgl-project/sglang: \[GDN\] Honor configured linear-attn verify backend in the kernel dispatcher](https://github.com/sgl-project/sglang/pull/34592) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[SM120\] Add optional FlashInfer PCIe-IPC all-reduce for switch-free hosts](https://github.com/sgl-project/sglang/pull/34528) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Perf\] Skip trivial DSV4 nonpaged indexer logits](https://github.com/sgl-project/sglang/pull/33857) — 5 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] Paged KV allocator launches allocation kernels before checking OOM](https://github.com/sgl-project/sglang/issues/34399) — 1 comments, 0 reactions
+- [sgl-project/sglang: Add nightly AIME25 test for DeepSeek-V4-Pro on B200](https://github.com/sgl-project/sglang/pull/24891) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Model\] Add MixtureOfExperts support for PhiMoE](https://github.com/vllm-project/vllm/pull/41412) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[Feature\] Add process-local in-memory KV indexer and Router integration](https://github.com/sgl-project/sglang/pull/33370) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Model\]\[Quantization\] Add Ling 3.0 Flash FP4 support](https://github.com/vllm-project/vllm/pull/52140) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] Enable Fast Triton Sparse MLA backend](https://github.com/sgl-project/sglang/pull/30575) — 6 comments, 1 reactions
+- [ray-project/ray: \[Core\] Randomize worker port allocation](https://github.com/ray-project/ray/pull/65448) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[Feature\] Kimi K3 Roadmap](https://github.com/sgl-project/sglang/issues/32607) — 8 comments, 22 reactions
+- [vllm-project/vllm: \[Observability\] add model initializing duration log](https://github.com/vllm-project/vllm/pull/52141) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Spec Decode\] Add FlashInfer CuteDSL non-causal decode path for DFlash](https://github.com/vllm-project/vllm/pull/46638) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[ROCm\]\[CI\] Give the AITER MLA decode metadata stub its MLA dims](https://github.com/vllm-project/vllm/pull/52139) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[CI\] Fix argument quoting in AMD install_with_retry](https://github.com/sgl-project/sglang/pull/34723) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Use fast exponentials in C4 and C128 ROCm kernels](https://github.com/sgl-project/sglang/pull/34296) — 0 comments, 0 reactions
+- [sgl-project/sglang: XPU: Enable GLM5.1 (GlmMoeDsaForCausalLM) DSA Attention](https://github.com/sgl-project/sglang/pull/24959) — 8 comments, 1 reactions
+- [sgl-project/sglang: fix(ci): refresh nightly precision baseline from remote](https://github.com/sgl-project/sglang/pull/34668) — 10 comments, 0 reactions
+- [vllm-project/vllm: fix: aggressively zero speculator buffers to prevent CUDA illegal memory access on H100](https://github.com/vllm-project/vllm/pull/47596) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[RFC\]: vLLM Native Reusable Engine Snapshot Sleep (L3)](https://github.com/vllm-project/vllm/issues/52125) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Frontend\] Add prediction token usage details](https://github.com/vllm-project/vllm/pull/51778) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[Kernel\] Hoist tensor-descriptor build out of unified-attention TD ti…](https://github.com/vllm-project/vllm/pull/51506) — 4 comments, 3 reactions
+- [sgl-project/sglang: XPU: SGLANG_USE_SGL_XPU default to true](https://github.com/sgl-project/sglang/pull/34492) — 6 comments, 0 reactions
+- [vllm-project/vllm: \[XPU\]bump up vllm_xpu_kernels to 0.1.13.1](https://github.com/vllm-project/vllm/pull/52138) — 0 comments, 2 reactions
+- [sgl-project/sglang: fix(dsa): use FlashInfer fused top-k for packed PAGED rows](https://github.com/sgl-project/sglang/pull/33006) — 5 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): use top-level metadata for hanging-request alias](https://github.com/BerriAI/litellm/pull/34709) — 8 comments, 2 reactions
+- [BerriAI/litellm: Fix cascading 400 invalid_encrypted_content when originating deployment is cooled down](https://github.com/BerriAI/litellm/pull/27811) — 8 comments, 0 reactions
+- [BerriAI/litellm: fix(http_handler): preserve upstream error for streaming request bodies](https://github.com/BerriAI/litellm/pull/27857) — 5 comments, 0 reactions
+- [BerriAI/litellm: fix(ci): unflake build_and_test pipeline](https://github.com/BerriAI/litellm/pull/27948) — 3 comments, 0 reactions
+- [BerriAI/litellm: fix(interactions): accept the step-shaped input Google's Interactions API now requires](https://github.com/BerriAI/litellm/pull/36727) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[XPU\] \[Bugfix\] process ragged weights in xpu linear backend](https://github.com/vllm-project/vllm/pull/52118) — 2 comments, 2 reactions
+- [sgl-project/sglang: Make per‑token expert‑distribution recorder use asynchronous data syncing](https://github.com/sgl-project/sglang/pull/18589) — 1 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: `litellm --version` tracebacks with ModuleNotFoundError: No module named 'proxy_server' (1.95.0 through 1.97.0.dev2)](https://github.com/BerriAI/litellm/issues/36752) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[XPU\]\[CI/Release\]\[3/N\] Add xpu wheel release to release pipeline](https://github.com/vllm-project/vllm/pull/52108) — 1 comments, 2 reactions
+- [BerriAI/litellm: fix(sdk): snapshot dict items before iterating in safe_deep_copy and safe_dumps](https://github.com/BerriAI/litellm/pull/34472) — 9 comments, 1 reactions
+- [sgl-project/sglang: \[P/D disagg\] Decode-side radix cache for SWA hybrid models (unified radix tree)](https://github.com/sgl-project/sglang/pull/27770) — 38 comments, 3 reactions
+- [BerriAI/litellm: fix(bedrock): drop toolSpec.strict for Claude Sonnet 5 on Converse](https://github.com/BerriAI/litellm/pull/33196) — 7 comments, 2 reactions
+- [BerriAI/litellm: fix(proxy): propagate Invoke cache-token counts to usage](https://github.com/BerriAI/litellm/pull/34498) — 3 comments, 1 reactions
+- [ray-project/ray: \[Core\] Release RuntimeEnv agent per-job logger file handles after setup](https://github.com/ray-project/ray/pull/65452) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[Bug\] \[XPU\] Qwen3.5 GDN + speculative decode: causal_conv1d_update_xpu() got an unexpected keyword argument 'intermediate_conv_window'](https://github.com/sgl-project/sglang/issues/34720) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[CPU\] Workaround contradictory mamba validation after CPU MLA disables prefix caching](https://github.com/vllm-project/vllm/pull/52045) — 1 comments, 4 reactions
+- [BerriAI/litellm: fix(proxy): disconnect the per-call PrismaClient in global_spend_refresh](https://github.com/BerriAI/litellm/pull/34380) — 6 comments, 1 reactions
+- [BerriAI/litellm: feat(guardrails): add aliyun security guardrail integration](https://github.com/BerriAI/litellm/pull/36611) — 2 comments, 1 reactions
+- [sgl-project/sglang: Add Agentic-Aware Tail-Optimized LRU eviction to the unified radix cache](https://github.com/sgl-project/sglang/pull/34012) — 1 comments, 0 reactions
+- [sgl-project/sglang: Enable 12-head MLA aiter fp8 Gluon decode (batched bh16bn128).](https://github.com/sgl-project/sglang/pull/34647) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Bugfix\] Check paged KV capacity before kernel launch](https://github.com/sgl-project/sglang/pull/34400) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[FlashInfer v0.6.16\] Support FlashInfer CuTe DSL NVFP4 MoE quantization](https://github.com/sgl-project/sglang/pull/28354) — 26 comments, 0 reactions
+- [sgl-project/sglang: \[MiniMax-M3\] Overlap shared and routed experts](https://github.com/sgl-project/sglang/pull/34542) — 1 comments, 0 reactions
+- [ray-project/ray: \[Data\]\[1/N\] add external shuffle runtime library](https://github.com/ray-project/ray/pull/64828) — 4 comments, 1 reactions
+- [BerriAI/litellm: fix(anthropic/adapter): copy input_schema so tool translation stops mutating caller's dict](https://github.com/BerriAI/litellm/pull/34511) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Keep Qwen3Next layer boundaries sequence parallel](https://github.com/vllm-project/vllm/pull/50685) — 9 comments, 3 reactions
+- [sgl-project/sglang: \[mm\] refactor mm code for rust tokenizer manager](https://github.com/sgl-project/sglang/pull/34660) — 0 comments, 0 reactions
+- [vllm-project/vllm: Revert "\[Attention\] Add FlashInfer XQA decode support on SM12x" (#49718)](https://github.com/vllm-project/vllm/pull/51987) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] benchmark/endpoint.py forks the server process after the parent initializes the accelerator (breaks XPU, latent on CUDA)](https://github.com/sgl-project/sglang/issues/34709) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Weight Cache\] Support static DP/EP layouts](https://github.com/sgl-project/sglang/pull/33684) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] Scheduler crashes with AttributeError ('list' object has no attribute 'tolist') on mixed batches with token_ids_logprob — prefill and decode paths, v0.5.14–v0.5.17](https://github.com/sgl-project/sglang/issues/34719) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[qwen3.5\] perf: Skip the GDN qkvzba split kernel on single-token forwards](https://github.com/sgl-project/sglang/pull/33062) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] DeepSeek-V4 MI355X: eliminate bpreshuffle fp8-scale relayout copy in dense w8a8 linear](https://github.com/sgl-project/sglang/pull/33165) — 5 comments, 0 reactions
+- [BerriAI/litellm: fix(logging): snapshot model_call_details items before iterating in success/failure handlers](https://github.com/BerriAI/litellm/pull/34720) — 5 comments, 1 reactions
+- [sgl-project/sglang: \[NVIDIA\] DeepSeek V4 Perf Tracking](https://github.com/sgl-project/sglang/issues/33636) — 8 comments, 5 reactions
+- [sgl-project/sglang: fix: make Cache-DiT actually cache on MiniMax-H3](https://github.com/sgl-project/sglang/pull/33827) — 3 comments, 0 reactions
+- [BerriAI/litellm: fix(responses): merge assistant message + tool calls into a single chat-completions choice](https://github.com/BerriAI/litellm/pull/33931) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Docs\] Fix `WhisperEncoderLayer.forward` docstring in `dots3_note`](https://github.com/vllm-project/vllm/pull/52134) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[minimax m3\]\[npu\]Adaptation of Minimax M3(w8a8) for NPU platforms \[2/2\]](https://github.com/sgl-project/sglang/pull/33040) — 6 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix .../mrope.py::apply_interleaved_rope() when torch.compile is used in torch==2.13](https://github.com/vllm-project/vllm/pull/52005) — 2 comments, 2 reactions
+- [sgl-project/sglang: fix(bcg): preserve Qwen3-VL DeepStack inputs during replay](https://github.com/sgl-project/sglang/pull/33726) — 11 comments, 0 reactions
+- [ray-project/ray: \[Train\] Add NCCL RAS health callback](https://github.com/ray-project/ray/pull/64928) — 2 comments, 1 reactions
+- [sgl-project/sglang: Rainj me/rust server pd lb](https://github.com/sgl-project/sglang/pull/33812) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[diffusion\] Wan2.2-TI2V: fuse per-token adaLN table add into contiguous slices + hoist rope cache (denoise -13.1% H100 / -12.6% H200, bit-exact; eager beats compile)](https://github.com/sgl-project/sglang/pull/34584) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(a2a): stop sending stream in the JSON-RPC body for message/stream](https://github.com/BerriAI/litellm/pull/36404) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\] Strict bit-exact SWA HiCache for DeepSeek-V4 with unified_kv: SWA-window + c4/indexer state riding across L1/L2/L3](https://github.com/sgl-project/sglang/pull/32214) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Intel\]\[XPU\]\[LoRA\] Enable LoRA on Intel XPU](https://github.com/sgl-project/sglang/pull/30345) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Rust Frontend\] Add Hunyuan A13B tool parser](https://github.com/vllm-project/vllm/pull/52133) — 1 comments, 2 reactions
+- [BerriAI/litellm: Fix ModelResponse() PydanticUserError: forward reference not fully defined](https://github.com/BerriAI/litellm/pull/36396) — 1 comments, 1 reactions
+- [vllm-project/vllm: feat: Add support for profile_prefix payload in HTTP /start_profile endpoint](https://github.com/vllm-project/vllm/pull/51974) — 4 comments, 2 reactions
+- [vllm-project/vllm: fix(structured_output): pass new_token_ids to should_advance() to fix MTP spec-decode off-by-one](https://github.com/vllm-project/vllm/pull/44927) — 4 comments, 2 reactions
+- [sgl-project/sglang:  \[dLLM\] Decouple prefill chunk size from decode block size](https://github.com/sgl-project/sglang/pull/31586) — 2 comments, 1 reactions
+- [vllm-project/vllm: Cached blocks never hit eviction first](https://github.com/vllm-project/vllm/pull/51909) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Feature\]: split local/external prefix-cache hits in `prompt_tokens_details`](https://github.com/vllm-project/vllm/issues/52137) — 0 comments, 0 reactions
+- [sgl-project/sglang: Simplify tree_speculative_sampling_target_only signature](https://github.com/sgl-project/sglang/pull/28581) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\] DeepSeek-V4 MI355X: eliminate bpreshuffle fp8-scale copies at producer sites (MoE down, MLA o_proj bmm)](https://github.com/sgl-project/sglang/pull/33166) — 6 comments, 0 reactions
+- [sgl-project/sglang: \[Bugfix\] Bound SGLANG_PORT search to valid TCP range](https://github.com/sgl-project/sglang/pull/34711) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[CI/Build\]\[CPU\] Shrink triton-cpu-build layer by dropping build artifacts](https://github.com/vllm-project/vllm/pull/52127) — 2 comments, 2 reactions
+- [sgl-project/sglang: feat(load-reporter): add push-based engine load reporting](https://github.com/sgl-project/sglang/pull/32523) — 9 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] runai_streamer load-format silently corrupts GLM-5.2 (glm_moe_dsa) weights under TP8 — loads clean, generates token-0 garbage](https://github.com/sgl-project/sglang/issues/29998) — 1 comments, 0 reactions
+- [BerriAI/litellm: feat(github_copilot): route /v1/messages to Copilot native Anthropic endpoint](https://github.com/BerriAI/litellm/pull/31802) — 12 comments, 3 reactions
+- [sgl-project/sglang: move the PD bootstrap registry under api_server::disaggregation](https://github.com/sgl-project/sglang/pull/33895) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Frontend\] Add reusable TP1 initialized-engine snapshots](https://github.com/vllm-project/vllm/pull/51360) — 9 comments, 2 reactions
+- [BerriAI/litellm: \[Bug\]: ReDoS in secret_redaction.redact_string() — catastrophic regex backtracking on large exception strings blocks the event loop for minutes, kills liveness probes, and crash-loops the proxy](https://github.com/BerriAI/litellm/issues/32353) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Bug\] DeepSeek-V4 sparse attention indexer (`fp8_paged_mqa_logits`) illegal memory access with long-context requests](https://github.com/sgl-project/sglang/issues/34718) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Bound GSM8K concurrency in the Qwen3.5-FP8 AR-fusion test (fixes stage-c mamba-cache stall)](https://github.com/sgl-project/sglang/pull/34705) — 1 comments, 0 reactions
+- [sgl-project/sglang: Amd/dsv4 shared experts fusion top6](https://github.com/sgl-project/sglang/pull/32340) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Kimi-K3 Remove prefill pipeline stall in chunk KDA](https://github.com/vllm-project/vllm/pull/51862) — 10 comments, 2 reactions
+- [sgl-project/sglang: \[Metrics\] Add kv_cache_usage_perc Prometheus gauge (#5979)](https://github.com/sgl-project/sglang/pull/34714) — 0 comments, 0 reactions
+- [sgl-project/sglang: Avoid materializing GDN QKV tensors during target verification](https://github.com/sgl-project/sglang/pull/33778) — 4 comments, 0 reactions
+- [vllm-project/vllm: fix(missing_documentation): Class `RequestOutputKind` in vllm/sampling_params.py has no ](https://github.com/vllm-project/vllm/pull/52135) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\]\[CI\] Stop scheduling Grok-1 and Grok-2 on MI30x](https://github.com/sgl-project/sglang/pull/34643) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Model Runner V2\]\[Spec Decode\] Add KV cache support for multi-layer MTP](https://github.com/vllm-project/vllm/pull/50062) — 8 comments, 2 reactions
+- [BerriAI/litellm: \[Feature\] Support Bedrock GPT 5.5 (Mantle platform) - auto-convert Chat Completions to Response API](https://github.com/BerriAI/litellm/issues/30941) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[SM120\] dspark: widen SWA index width to an instantiated sparse-MLA shape](https://github.com/sgl-project/sglang/pull/34717) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: vllm_c fused_add_rms_norm rounds the residual sum before variance](https://github.com/vllm-project/vllm/issues/52104) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Speed up Wan2.2 DiT FP8 attention per-tensor quantization](https://github.com/sgl-project/sglang/pull/34695) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[VLM\] Cache Kimi-K3 per-image processor artifacts](https://github.com/sgl-project/sglang/pull/34404) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Frontend\] Add routed-experts prompt offset](https://github.com/vllm-project/vllm/pull/51906) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[MRV2\]\[Multimodal\] Enable encoder cuda graph for model runner v2](https://github.com/vllm-project/vllm/pull/49852) — 3 comments, 5 reactions
+- [sgl-project/sglang: \[AMD\] Run V4 MTP target-verify through the decode kernel](https://github.com/sgl-project/sglang/pull/34597) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[ROCm\] Direct-write a8w8 bmm output to eliminate o_proj transpose copy](https://github.com/sgl-project/sglang/pull/34498) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(anthropic /v1/messages): route bedrock_mantle Responses-API models to the Responses API](https://github.com/BerriAI/litellm/pull/32293) — 2 comments, 2 reactions
+- [ray-project/ray: \[Core\]\[runtime_env\] RuntimeEnv agent leaks one logger (and its file descriptors) per job, eventually failing all setups with EMFILE`](https://github.com/ray-project/ray/issues/65451) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[MLA\] AITER FP8 ASM prefill backend](https://github.com/vllm-project/vllm/pull/44544) — 9 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: Kimi-K3-NVFP4 on 8xB300 produces degenerate, incoherent output in the reasoning channel on v0.27.0](https://github.com/vllm-project/vllm/issues/51798) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[VLM\] Reuse cached Kimi-K3 embeddings before preprocessing](https://github.com/sgl-project/sglang/pull/34411) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Support prefill context parallel two batch overlap for DeepSeek V4](https://github.com/sgl-project/sglang/pull/33480) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Handle DeepseekV4ForCausalLM in benchmark_moe get_model_params](https://github.com/vllm-project/vllm/pull/52044) — 2 comments, 2 reactions
+- [vllm-project/vllm: Include MM limits predicate in model compute_hash to prevent compile-cache poisoning](https://github.com/vllm-project/vllm/pull/52128) — 1 comments, 0 reactions
+- [vllm-project/vllm: Demote xgrammar accept_tokens rejection log to DEBUG (spec decode replay spam) ](https://github.com/vllm-project/vllm/pull/52129) — 1 comments, 0 reactions
+- [vllm-project/vllm: Don't use the live processor cache for V1 multimodal profiling](https://github.com/vllm-project/vllm/pull/52130) — 1 comments, 0 reactions
+- [BerriAI/litellm: feat(langfuse): migrate the sdk callback to langfuse v4](https://github.com/BerriAI/litellm/pull/36741) — 8 comments, 1 reactions
+- [vllm-project/vllm: \[MM\]\[CG\]\[WIP\] Encoder CUDA graph support for HunyuanVL](https://github.com/vllm-project/vllm/pull/51484) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Misc\] Add unit test for chunk_local_cumsum kernels](https://github.com/vllm-project/vllm/pull/44385) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Model\] Apertus 1.5](https://github.com/vllm-project/vllm/pull/50496) — 13 comments, 5 reactions
+- [vllm-project/vllm: Enhance engine snapshot management and API lifecycle](https://github.com/vllm-project/vllm/pull/52132) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Spec Decode\] Preserve constant effective K schedule semantics](https://github.com/vllm-project/vllm/pull/52087) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[ROCm\] Fuse per-token fp8 activation quant into RMSNorm for per-chann…](https://github.com/sgl-project/sglang/pull/34502) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Bugfix\] Fix causal sliding-window attention in MiMo audio tokenizer](https://github.com/sgl-project/sglang/pull/33198) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] /v1/responses: `created_at` is a float in streaming events but an int in non-streaming responses](https://github.com/sgl-project/sglang/issues/34716) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(token-counter): count Anthropic native image content blocks](https://github.com/BerriAI/litellm/pull/36671) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\] Gate Torch FP8 scaled-MM on architecture support](https://github.com/vllm-project/vllm/pull/51021) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[sleep functionality\] code refactor about sleep/wake_up](https://github.com/vllm-project/vllm/pull/50431) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Feature\] Mask Replay](https://github.com/vllm-project/vllm/pull/49577) — 33 comments, 3 reactions
+- [vllm-project/vllm: Update CODEOWNERS](https://github.com/vllm-project/vllm/pull/52123) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[XPU\] Support sequence parallelism for block fp8 on XPU](https://github.com/vllm-project/vllm/pull/49009) — 1 comments, 2 reactions
+- [sgl-project/sglang:  feat(unified-memory): dense KV views for uniform-row MHA/SWA models](https://github.com/sgl-project/sglang/pull/34602) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[CPU\] Fix NUMA node binding for multi-TP CPU workers](https://github.com/vllm-project/vllm/pull/50525) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[MiniCPM-V\] Fix AssertionError in get_dummy_mm_data when passing VideoDummyOptions to _get_dummy_images](https://github.com/vllm-project/vllm/pull/52122) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[Feature\] Add KV cache usage prometheus metrics](https://github.com/sgl-project/sglang/issues/5979) — 11 comments, 5 reactions
+- [sgl-project/sglang: \[rust-server\] separate input_ids from control plane message](https://github.com/sgl-project/sglang/pull/34699) — 0 comments, 0 reactions
+- [sgl-project/sglang: Add perf and acc test for CPU models for nightly](https://github.com/sgl-project/sglang/pull/34708) — 0 comments, 0 reactions
+- [vllm-project/vllm: fix: prevent PyNvVideoCodec decoder slot limit bypass via ClassVar shadowing](https://github.com/vllm-project/vllm/pull/52126) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[NPU\] add Ascend 950 (Atlas A5) backend paths for DeepSeek-V4](https://github.com/sgl-project/sglang/pull/33030) — 7 comments, 0 reactions
+- [sgl-project/sglang: \[attention\] Default Kimi-K3 DSPARK decode attention backend to cutedsl_mla](https://github.com/sgl-project/sglang/pull/34437) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Spec Decode\]\[Perf\] Fuse the MTP trailing all-reduce; local-argmax draft tokens](https://github.com/vllm-project/vllm/pull/49793) — 15 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: Segfault encountered in qwen3.5-27B  long video (>2G)inference](https://github.com/vllm-project/vllm/issues/46589) — 2 comments, 0 reactions
+- [sgl-project/sglang: refactor error responses into shared utils::response helpers](https://github.com/sgl-project/sglang/pull/33894) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Spawn, don't fork, the benchmark server process](https://github.com/sgl-project/sglang/pull/34712) — 1 comments, 0 reactions
+- [BerriAI/litellm: ci: promote staging to main](https://github.com/BerriAI/litellm/pull/36725) — 5 comments, 0 reactions
+- [vllm-project/vllm: \[PD\] Emit inactive KV blocks for decode affinity](https://github.com/vllm-project/vllm/pull/50732) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: Bugs in kimi-k3 docker image](https://github.com/vllm-project/vllm/issues/51975) — 3 comments, 0 reactions
+- [sgl-project/sglang: GLM5.2 DSA Indexer Fallback](https://github.com/sgl-project/sglang/pull/32947) — 5 comments, 0 reactions
+- [sgl-project/sglang: \[Diffusion\]\[Cosmos3\] Enable breakable CUDA graph](https://github.com/sgl-project/sglang/pull/34618) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[CPU\]\[Zen\] Route Int8 MoE inference through zentorch on AMD](https://github.com/vllm-project/vllm/pull/44834) — 11 comments, 2 reactions
+- [sgl-project/sglang: fix(security): harden SafeUnpickler with exact-name allowlist for generic modules](https://github.com/sgl-project/sglang/pull/34370) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Doc\] Add comprehensive --speculative-config documentation](https://github.com/vllm-project/vllm/pull/37383) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[MoE Refactor\] Migrate SM100 trtllm-gen mxfp4 MoE onto MoeRunner](https://github.com/sgl-project/sglang/pull/32405) — 16 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: Language Models Test (Extended Generation) test_models\[False-False-5-32-bigcode/starcoder2-3b\] test issue](https://github.com/vllm-project/vllm/issues/37304) — 6 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: sleep level 2 causes gibberish outputs](https://github.com/vllm-project/vllm/issues/29341) — 15 comments, 0 reactions
+- [vllm-project/vllm: \[Fix\]: MTP speculative decoding crashes with RuntimeError on heterogeneous per-layer head_dim, fixed below and created a PR](https://github.com/vllm-project/vllm/issues/51737) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[GDN\] perf: Fuse the linear-attention prefill prologue for Flashinfer prefill attn](https://github.com/sgl-project/sglang/pull/30797) — 13 comments, 0 reactions
+- [sgl-project/sglang:  \[Perf\] Occupancy tuning for DSA indexer fp8-quant Q kernel](https://github.com/sgl-project/sglang/pull/32755) — 31 comments, 0 reactions
+- [BerriAI/litellm: fix(langfuse): source the emitted metadata blob from StandardLoggingPayload](https://github.com/BerriAI/litellm/pull/36744) — 6 comments, 1 reactions
+- [sgl-project/sglang: \[Docs\] Standardize diffusion cookbook model pages](https://github.com/sgl-project/sglang/pull/34247) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Spec\] Fix Dspark state divergence across TP rank](https://github.com/sgl-project/sglang/pull/33614) — 12 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: vllm/vllm-openai:latest fails to start Gemma4 with Transformers 5.15.0](https://github.com/vllm-project/vllm/issues/51744) — 14 comments, 5 reactions
+- [ray-project/ray: \[core\] Enable TCP keepalive on GCS<->Redis connections](https://github.com/ray-project/ray/pull/65424) — 2 comments, 2 reactions
+- [sgl-project/sglang: Run the shared-expert MLP on the alternate stream while keeping atten…](https://github.com/sgl-project/sglang/pull/34710) — 0 comments, 0 reactions
+- [BerriAI/litellm: \[feature-request\]: Support grok-4.6](https://github.com/BerriAI/litellm/issues/36750) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[SM12x\] Default the fused MHC post+pre path on](https://github.com/sgl-project/sglang/pull/34019) — 1 comments, 0 reactions
+- [sgl-project/sglang: Prevent Qwen3.5 MTP draft from inheriting GPTQ quantization](https://github.com/sgl-project/sglang/pull/34622) — 2 comments, 0 reactions
+- [sgl-project/sglang: fix(constrained): reject NUL bytes in grammar specs to stop an xgrammar segfault](https://github.com/sgl-project/sglang/pull/34679) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Core\] Configure custom encoder cache managers from VllmConfig](https://github.com/vllm-project/vllm/pull/51251) — 11 comments, 2 reactions
+- [ray-project/ray: \[Data\] ObjectRefs passed to map UDFs through `fn_args` are not dereferenced](https://github.com/ray-project/ray/issues/65449) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\] Initial support for fault tolerant ep using scale-down](https://github.com/vllm-project/vllm/pull/46370) — 2 comments, 2 reactions
+- [BerriAI/litellm: fix(ollama): preserve logged tool schema](https://github.com/BerriAI/litellm/pull/36745) — 4 comments, 1 reactions
+- [BerriAI/litellm: fix(caching): guard disconnect() against None async_redis_conn_pool in cluster mode](https://github.com/BerriAI/litellm/pull/31212) — 7 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: speculative decoding under pipeline parallelism produces wrong output with --no-async-scheduling](https://github.com/vllm-project/vllm/issues/52071) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Spec Decode\] Fix autoregressive draft decode capture with dynamic SD](https://github.com/vllm-project/vllm/pull/49652) — 11 comments, 3 reactions
+- [sgl-project/sglang: \[PD\] Start heartbeat checker for Mori decode](https://github.com/sgl-project/sglang/pull/34697) — 0 comments, 0 reactions
+- [vllm-project/vllm: Revert "\[Perf\]\[ROCm\] Dual-stream decode with hipgraphs"](https://github.com/vllm-project/vllm/pull/52024) — 11 comments, 2 reactions
+- [sgl-project/sglang: Fix rope config compatibility and VL/transformers-fallback weight loading](https://github.com/sgl-project/sglang/pull/31575) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix MiniMax M3 prompt reasoning initialization](https://github.com/vllm-project/vllm/pull/50594) — 21 comments, 2 reactions
+- [vllm-project/vllm: \[Security\] Fix ReDoS in validation error path sanitizer](https://github.com/vllm-project/vllm/pull/52120) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[Test\] Add unit tests for utils/field_validators](https://github.com/sgl-project/sglang/pull/34706) — 1 comments, 0 reactions
+- [BerriAI/litellm: Realtime client_secrets: session.model silently overrides the Router's resolved model when using model groups/aliases](https://github.com/BerriAI/litellm/issues/36742) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Spec\] Add a ctx axis to the adaptive spec _route (BS × ctx → slot)](https://github.com/sgl-project/sglang/pull/31716) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] EXAONE 4.5: drop trailing MTP entry from text_config.layer_types](https://github.com/vllm-project/vllm/pull/45581) — 3 comments, 0 reactions
+- [BerriAI/litellm: fix(router): stop scoring system prompt text for code/technical complexity](https://github.com/BerriAI/litellm/pull/36721) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] EXAONE 4.5: rename Exaone4_5_VisionBlock.forward kwarg seqlens -> sequence_lengths](https://github.com/vllm-project/vllm/pull/45583) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]\[Spec Decode\] Drafter attention backend auto-selection picks FlashInfer on SM90 for a sliding-window drafter, hitting the guard crash](https://github.com/vllm-project/vllm/issues/48495) — 2 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]\[Spec Decode\] num_speculative_tokens_per_batch_size + MTP speculator fails full CUDA graph decode capture (InputBatch.make_dummy assert)](https://github.com/vllm-project/vllm/issues/48494) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Misc\] Add unit test for _fwd_kernel_ep_scatter_1 and _fwd_kernel_ep_…](https://github.com/vllm-project/vllm/pull/46064) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Perf\] DSD arms pay a large baseline tax vs no-spec under production defaults; PIECEWISE override identified as one factor](https://github.com/vllm-project/vllm/issues/49986) — 9 comments, 0 reactions
+- [vllm-project/vllm: \[RFC\]: Context-length-aware speculative token scheduling — extending num_speculative_tokens_per_batch_size with a context-length axis](https://github.com/vllm-project/vllm/issues/48627) — 8 comments, 2 reactions
+- [vllm-project/vllm: \[Spec Decode\] Context-length-aware K in DSD (RFC #48627): extend num_speculative_tokens_per_batch_size with a ctx axis](https://github.com/vllm-project/vllm/pull/48944) — 14 comments, 2 reactions
+- [vllm-project/vllm: \[Performance\]: Qwen3.5 native MTP can be slower than no-MTP CUDA graph baseline despite good acceptance](https://github.com/vllm-project/vllm/issues/47277) — 9 comments, 0 reactions
+- [vllm-project/vllm: \[Misc\] Add unit test for merge_attn_states kernel](https://github.com/vllm-project/vllm/pull/46134) — 3 comments, 2 reactions
+- [sgl-project/sglang: \[NVIDIA\]\[comm\] Merge EP+MoE-TP post-experts all-reduces into one _TP reduction](https://github.com/sgl-project/sglang/pull/32963) — 22 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Use AITER tuned GEMM for the MoE router gate](https://github.com/vllm-project/vllm/pull/50535) — 2 comments, 2 reactions
+- [sgl-project/sglang: feat(diffusion): add MiniMax H3 AdaLN cache](https://github.com/sgl-project/sglang/pull/33991) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Skip redundant sparse index remap on non-indexer layers](https://github.com/vllm-project/vllm/pull/51309) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Skip cleaning sparse prefill MQA logits](https://github.com/vllm-project/vllm/pull/51314) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[Kernel\]\[Perf\] Add fused CUDA post-conv MTP decode kernel for Qwen3.5 GDN](https://github.com/vllm-project/vllm/pull/51674) — 7 comments, 5 reactions
+- [sgl-project/sglang: \[GDN\] Hoist GDN extend preparation across layers](https://github.com/sgl-project/sglang/pull/31172) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Fuse the DSA indexer prologue with AITER](https://github.com/vllm-project/vllm/pull/51315) — 3 comments, 2 reactions
+- [BerriAI/litellm: fix: drop effort parameter for Haiku with azure_ai provider](https://github.com/BerriAI/litellm/pull/31188) — 6 comments, 1 reactions
+- [BerriAI/litellm: fix(guardrails): scan and re-emit raw Anthropic SSE streams in the bedrock post-call hook](https://github.com/BerriAI/litellm/pull/36598) — 25 comments, 1 reactions
+- [vllm-project/vllm: \[EC Connector\] Added Build Connector Worker Meta for EC Connector](https://github.com/vllm-project/vllm/pull/49585) — 6 comments, 2 reactions
+- [sgl-project/sglang: feat(hicache): support Ascend Mamba states with FIA and async IO](https://github.com/sgl-project/sglang/pull/32500) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[NPU\] \[Diffusion\] Support MiniMax H3 on Ascend NPU's](https://github.com/sgl-project/sglang/pull/33569) — 14 comments, 0 reactions
+- [sgl-project/sglang: \[CPU\]\[QUANT\] add amx cpu support for auto-round](https://github.com/sgl-project/sglang/pull/29593) — 3 comments, 0 reactions
+- [ray-project/ray: \[serve\] \[taskiq - 3/n\] Implement full TaskiqTaskProcessorAdapter with E2E tests](https://github.com/ray-project/ray/pull/61053) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Enable draft-extend CUDA graph and reduce bubble for MTP](https://github.com/sgl-project/sglang/pull/29202) — 17 comments, 0 reactions
+- [ray-project/ray: \[train\] Share PlacementGroupCleaner across Train runs](https://github.com/ray-project/ray/pull/65447) — 0 comments, 1 reactions
+- [vllm-project/vllm: buffer size insuffient Dspark sd for FlashInfer MNNVL allreduce](https://github.com/vllm-project/vllm/pull/50932) — 19 comments, 2 reactions
+- [sgl-project/sglang: \[PD Disagg\] Add bootstrap timeout to NIXL prefill sender](https://github.com/sgl-project/sglang/pull/34688) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[DSv4\] Integrate TRT-LLM DSv4 Attention for SM100/103](https://github.com/sgl-project/sglang/pull/30805) — 36 comments, 0 reactions
+- [BerriAI/litellm: fix: allow safe key type updates for non-admins](https://github.com/BerriAI/litellm/pull/35132) — 15 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Fall back to native rotary when flash-attn is installed but fails to load](https://github.com/vllm-project/vllm/pull/52121) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[XPU\]\[UT\] Fix OOM and skip graph case](https://github.com/vllm-project/vllm/pull/49287) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[Model\]\[NVIDIA\] Add PCP support to DeepSeek V3.2 attention](https://github.com/vllm-project/vllm/pull/52046) — 1 comments, 0 reactions
+- [vllm-project/vllm: Remove NIXL reinstall step](https://github.com/vllm-project/vllm/pull/51882) — 11 comments, 2 reactions
+- [BerriAI/litellm: fix(langfuse): coerce header-sourced mask and trace-update steering values](https://github.com/BerriAI/litellm/pull/36740) — 6 comments, 1 reactions
+- [sgl-project/sglang: \[CI\] Route mmlu and GB300 MMMU-Pro evals through sgl-eval](https://github.com/sgl-project/sglang/pull/34477) — 8 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): prevent batch cost reconciliation starvation](https://github.com/BerriAI/litellm/pull/36748) — 3 comments, 1 reactions
+- [sgl-project/sglang: fix/ltx-vocoder-bf16-dtype-mismatch](https://github.com/sgl-project/sglang/pull/34526) — 2 comments, 0 reactions
+- [BerriAI/litellm: feat(complexity_router): calibrate the classifier rubric with worked examples, selectable per router](https://github.com/BerriAI/litellm/pull/36578) — 15 comments, 1 reactions
+- [BerriAI/litellm: fix(helm): render nodeSelector on the migrations job](https://github.com/BerriAI/litellm/pull/36747) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[Feature\] MXFP4 KV Cache Decode for DSV4 on Hopper](https://github.com/sgl-project/sglang/pull/32741) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[XPU\] upgrade sglang xpu backend to PyTorch 2.13](https://github.com/sgl-project/sglang/pull/31751) — 6 comments, 0 reactions
+- [BerriAI/litellm: fix(model-edit): clear a litellm param when it is removed in the editor](https://github.com/BerriAI/litellm/pull/36684) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[Scheduler\] Reuse per-step cuda events uniformly (WAR read_done + copy_done)](https://github.com/sgl-project/sglang/pull/31698) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[Model\] \[Quantization\] Add Ling hybrid MXFP4 routed experts support](https://github.com/vllm-project/vllm/pull/52114) — 2 comments, 2 reactions
+- [sgl-project/sglang: fix(hicache/umbp): support DeepSeek-V4 hybrid HostPoolGroup (multi-po…](https://github.com/sgl-project/sglang/pull/30762) — 15 comments, 1 reactions
+- [vllm-project/vllm: \[Quantization\]\[CT\] fix the mxfp4 inference for MiniMax-M3 with CT format.](https://github.com/vllm-project/vllm/pull/51910) — 0 comments, 2 reactions
+- [BerriAI/litellm: fix(otel): bound and shut down credential-scoped tracer providers](https://github.com/BerriAI/litellm/pull/36591) — 9 comments, 1 reactions
+- [vllm-project/vllm: \[MM\]\[CG\] Enable encoder CUDA Graph for MiniCPM-V](https://github.com/vllm-project/vllm/pull/42785) — 8 comments, 3 reactions
+- [sgl-project/sglang: \[WIP\] Add initial Attention on Heads (AoH) runtime adapter](https://github.com/sgl-project/sglang/pull/34646) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[RFC\]: Support ViT Full CUDA Graph (Tracker)](https://github.com/vllm-project/vllm/issues/38175) — 27 comments, 1 reactions
+- [vllm-project/vllm: \[Security\] Kill regex compilation subprocess on timeout](https://github.com/vllm-project/vllm/pull/52119) — 0 comments, 2 reactions
+- [sgl-project/sglang: config: pin the supplied-instance surface that a raw record would change](https://github.com/sgl-project/sglang/pull/34267) — 0 comments, 0 reactions
+- [ray-project/ray: \[Train\] Share PlacementGroupCleaner across concurrent Train v2 runs](https://github.com/ray-project/ray/issues/65443) — 0 comments, 0 reactions
+- [ray-project/ray: \[Core\] Randomize worker port allocation to reduce deterministic collisions between raylets](https://github.com/ray-project/ray/issues/65444) — 0 comments, 0 reactions
+- [sgl-project/sglang: Fix transcription & audio-understanding for ASR/audio/speech models](https://github.com/sgl-project/sglang/pull/32611) — 2 comments, 0 reactions
+- [sgl-project/sglang: config: decisions keyed on the attention backend read the configured pair](https://github.com/sgl-project/sglang/pull/34264) — 0 comments, 0 reactions
+- [ray-project/ray: \[docs\]\[core\] Document JVM signal conflicts with PyArrow HDFS](https://github.com/ray-project/ray/pull/65445) — 0 comments, 1 reactions
+- [ray-project/ray: \[Data\] Cluster autoscaler requests a bundle larger than the node it was copied from, because node memory is rounded up](https://github.com/ray-project/ray/pull/65446) — 0 comments, 1 reactions
+- [sgl-project/sglang: Fix DP-aware routing for OpenAI Responses API](https://github.com/sgl-project/sglang/pull/34703) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] DP-aware routing rank is dropped for OpenAI Responses API](https://github.com/sgl-project/sglang/issues/34675) — 0 comments, 0 reactions
+- [sgl-project/sglang: fix(router): enforce lifecycle-based admission control](https://github.com/sgl-project/sglang/pull/32491) — 2 comments, 0 reactions
+- [sgl-project/sglang: config: the alias form of the runner-side instance read](https://github.com/sgl-project/sglang/pull/34266) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[MiniMax-M3\] Add MiniMax-M3 DSpark support](https://github.com/sgl-project/sglang/pull/33673) — 1 comments, 0 reactions
+- [sgl-project/sglang: config: state the bag contract as what resolution produced, and the skill rule that goes with it](https://github.com/sgl-project/sglang/pull/34269) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Fix\] Make the linear-attn kernel choice per-runner, and pin draft/target loader-hook parity](https://github.com/sgl-project/sglang/pull/34376) — 0 comments, 1 reactions
+- [sgl-project/sglang: config: the last runner-side instance reads read the bags](https://github.com/sgl-project/sglang/pull/34263) — 1 comments, 1 reactions
+- [sgl-project/sglang: config: a named entry point for the resolution pipeline, and the last dynamic config read](https://github.com/sgl-project/sglang/pull/34265) — 0 comments, 1 reactions
+- [sgl-project/sglang: config: the post-publish consumers of the pinned surface read the bags](https://github.com/sgl-project/sglang/pull/34268) — 0 comments, 1 reactions
+- [sgl-project/sglang: For SM120, the MoE NVFP4 kernel of B12X is added to SGLang](https://github.com/sgl-project/sglang/pull/29190) — 4 comments, 0 reactions
+- [sgl-project/sglang: fix(lora): build the MoE LoRA align JIT kernel on ROCm](https://github.com/sgl-project/sglang/pull/34702) — 0 comments, 0 reactions
+- [sgl-project/sglang: fix(moe): follow the built runner's expert-ID namespace, not the configured backend](https://github.com/sgl-project/sglang/pull/34701) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(anthropic): order messages after system/tools in request body](https://github.com/BerriAI/litellm/pull/36079) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: MTP speculative decoding cannot start under pipeline parallelism — SupportsPP demanded of the draft model](https://github.com/vllm-project/vllm/issues/52069) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[DeepEP\] Use static FP8 communication for W4AFP8 normal dispatch](https://github.com/sgl-project/sglang/pull/34694) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[Roadmap\] sglang auto tuner](https://github.com/sgl-project/sglang/issues/13363) — 13 comments, 29 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Model\] Fix DualChunkRotaryEmbedding hard-coded cuda device crash](https://github.com/vllm-project/vllm/pull/52116) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\]\[Perf\] Fuse GatedDeltaNet QKVZBA split/reshape/cat into a single Triton kernel for Qwen3.5-architecture MoE on HIP](https://github.com/sgl-project/sglang/pull/34421) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[R3\] Size monolithic routing replay buffer for DP](https://github.com/vllm-project/vllm/pull/50874) — 7 comments, 2 reactions
+- [vllm-project/vllm: \[CPU\] Add CPU-tuned autotune configs for FLA (GDN) Triton kernels](https://github.com/vllm-project/vllm/pull/48212) — 2 comments, 2 reactions
+- [BerriAI/litellm: OpenTelemetry: attributes written to ended parent_span — guard checks hasattr(set_status) instead of is_recording()](https://github.com/BerriAI/litellm/issues/36746) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[MoE\] Fix flashinfer TRT-LLM BF16 expert weight reload on refit](https://github.com/sgl-project/sglang/pull/33743) — 4 comments, 0 reactions
+- [sgl-project/sglang: Drop the mmlu case from the unified radix cache kit](https://github.com/sgl-project/sglang/pull/34667) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[CI\] Add persistent cache mounts and fix test download paths](https://github.com/vllm-project/vllm/pull/36951) — 9 comments, 4 reactions
+- [vllm-project/vllm: \[sharded state loader\] support pp in sharded state loader](https://github.com/vllm-project/vllm/pull/52110) — 1 comments, 2 reactions
+- [sgl-project/sglang: Support logprobs with DSpark speculative decoding](https://github.com/sgl-project/sglang/pull/34696) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix: enable reasoning_effort for Mistral reasoning models](https://github.com/BerriAI/litellm/pull/36703) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[BugFix\]\[VLM\] keep Qwen3-VL MoE inference deepstack order](https://github.com/sgl-project/sglang/pull/34690) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[sgl-router\] Worker Snapshot Support for Recoverable KV Placement State in sgl-router](https://github.com/sgl-project/sglang/pull/34407) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Spec Decode\] Add PARD-2 parallel draft model support](https://github.com/vllm-project/vllm/pull/49406) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[AITER\] Add GDN long-prefill split-QKV fast path](https://github.com/vllm-project/vllm/pull/49953) — 9 comments, 2 reactions
+- [sgl-project/sglang: \[diffusion\] feat: track MiniMax-H3 in the nightly diffusion benchmark](https://github.com/sgl-project/sglang/pull/34655) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Model\] Preserve Step3-VL zero-patch CUDA graph outputs](https://github.com/vllm-project/vllm/pull/52115) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Enable fused indexer-Q RoPE+quant kernel for DeepSeek/GLM sparse attention](https://github.com/vllm-project/vllm/pull/47335) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Disable async scheduling when VLLM_BATCH_INVARIANT=1](https://github.com/vllm-project/vllm/pull/51287) — 3 comments, 2 reactions
+- [BerriAI/litellm: fix(UI): add default model pin to complexity router UI](https://github.com/BerriAI/litellm/pull/36615) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Misc\] Add unit test for write_zeros_to_output MoE kernel](https://github.com/vllm-project/vllm/pull/44298) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[BugFix\] Fix memory pinning in Qwen3_VisionTransformer for non-gpu](https://github.com/vllm-project/vllm/pull/52082) — 3 comments, 2 reactions
+- [sgl-project/sglang: \[Kernel\] Replace dsv3_router_gemm with the unified tiny GEMM](https://github.com/sgl-project/sglang/pull/34693) — 0 comments, 0 reactions
+- [sgl-project/sglang: Optimize MiniMax-M2.7 on CPU](https://github.com/sgl-project/sglang/pull/31956) — 2 comments, 0 reactions
+- [sgl-project/sglang: Fix Whisper transcription for audio over 30 seconds](https://github.com/sgl-project/sglang/pull/33604) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[MLA\] Gather only the batch's KV rows for fp8 paged prefill](https://github.com/sgl-project/sglang/pull/34638) — 5 comments, 0 reactions
+- [sgl-project/sglang: \[PD\] Add the missing Prefill bootstrap timeout for NIXL](https://github.com/sgl-project/sglang/pull/34692) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Model\] Fail fast on Inkling's unsupported GPU architectures](https://github.com/vllm-project/vllm/pull/51560) — 10 comments, 2 reactions
+- [sgl-project/sglang: fix: add missing backend key to Kimi-K3 deferred GPU preprocessing config](https://github.com/sgl-project/sglang/pull/34691) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: Engine core livelock (100% CPU, no crash) with MTP speculative decoding + xgrammar structured outputs - regression from v0.24.0](https://github.com/vllm-project/vllm/issues/49210) — 4 comments, 0 reactions
+- [sgl-project/sglang: feat(attention): add architecture-owned SM12x FA4 kernels](https://github.com/sgl-project/sglang/pull/32991) — 9 comments, 0 reactions
+- [sgl-project/sglang: Revert "\[BCG\]\[5/N\] MLA Fully Support"](https://github.com/sgl-project/sglang/pull/34666) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix UVA offload fallback copies](https://github.com/vllm-project/vllm/pull/46690) — 5 comments, 2 reactions
+- [sgl-project/sglang: Add New Intel members into CI permission list](https://github.com/sgl-project/sglang/pull/34671) — 1 comments, 0 reactions
+- [sgl-project/sglang: Fix Kimi-K3 media token resolution](https://github.com/sgl-project/sglang/pull/34427) — 5 comments, 0 reactions
+- [vllm-project/vllm: \[RFC\]: Session-Aware KV Cache Hints for Agentic Workloads](https://github.com/vllm-project/vllm/issues/52113) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[Speculative\] Seed rejection-sampling draft proposals for deterministic inference](https://github.com/sgl-project/sglang/pull/33395) — 5 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Mamba\] Fix overlapping state copy race](https://github.com/vllm-project/vllm/pull/50729) — 14 comments, 2 reactions
+- [sgl-project/sglang: Model serve pr/mamba 2 and 1](https://github.com/sgl-project/sglang/pull/34556) — 0 comments, 0 reactions
+- [sgl-project/sglang: refactor(kernels): split zero-KV fixup by alignment](https://github.com/sgl-project/sglang/pull/33881) — 7 comments, 0 reactions
+- [vllm-project/vllm: NemotronH MTP speculator: 0% draft acceptance on Intel XPU — V1 execution path bypasses standard sampling chain](https://github.com/vllm-project/vllm/issues/52107) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Model\] Match Qwen3.5 GDN BF16 semantics](https://github.com/vllm-project/vllm/pull/51797) — 3 comments, 2 reactions
+- [sgl-project/sglang: Support XQA backend for SpecDec verify](https://github.com/sgl-project/sglang/pull/32269) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[Bugfix\] Fix Llama 4 FA3 local attention with paged KV cache](https://github.com/sgl-project/sglang/pull/32902) — 5 comments, 0 reactions
+- [BerriAI/litellm: fix(deepseek): DeepSeek V4 support - model registry, multi-turn thinking fix, no-prefix routing](https://github.com/BerriAI/litellm/pull/26660) — 12 comments, 11 reactions
+- [sgl-project/sglang: \[Feature\] PP Support PD + DSpark](https://github.com/sgl-project/sglang/pull/33863) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(otel): route Phoenix traces to per-key/team projects under otel v2](https://github.com/BerriAI/litellm/pull/36706) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\]\[feature\] Add new moe backends supporting int4/int8 weight-only…](https://github.com/vllm-project/vllm/pull/49086) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[CI\] Solidify entrypoint LLM lifecycle](https://github.com/vllm-project/vllm/pull/51280) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[ROCm\] Fix a few int4/int8 quantization errors](https://github.com/vllm-project/vllm/pull/52112) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[CI\] /rerun-failed-ci: rerun cancelled runs and target the newest run per workflow](https://github.com/sgl-project/sglang/pull/34057) — 8 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]\[Spec Decode\] DSpark speculative decoding broken on nightly](https://github.com/vllm-project/vllm/issues/50851) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[Kimi-K3\] Add GEMM-RS for sequence parallelism](https://github.com/vllm-project/vllm/pull/52079) — 8 comments, 3 reactions
+- [vllm-project/vllm: \[ModelRunnerV2\] Support prompt embeds](https://github.com/vllm-project/vllm/pull/42963) — 13 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate search and user controls to shadcn](https://github.com/BerriAI/litellm/pull/36694) — 2 comments, 1 reactions
+- [BerriAI/litellm: NA](https://github.com/BerriAI/litellm/issues/36743) — 0 comments, 0 reactions
+- [BerriAI/litellm: refactor(ui): migrate guardrails-monitor, projects, logs to shadcn](https://github.com/BerriAI/litellm/pull/34606) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\]\[AMD\] Kimi-K3 Gap and Roadmap Tracking](https://github.com/vllm-project/vllm/issues/50682) — 16 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]Remove special-case SiTU support model-specific gating](https://github.com/vllm-project/vllm/pull/50597) — 14 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] DeepSeek-V4: add aiter fused mHC post+pre with cross-layer boundary dispatch](https://github.com/sgl-project/sglang/pull/32577) — 3 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] DeepSeek-V4: route decode wo_a bf16 batched matmul to aiter batched_gemm_bf16](https://github.com/sgl-project/sglang/pull/33313) — 8 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\] Enable AITER MXFP4 MoE on gfx942 and optimize tile configurations for MI325X Target Kimi K3 running on MI325X](https://github.com/vllm-project/vllm/pull/50817) — 11 comments, 7 reactions
+- [vllm-project/vllm: \[Bugfix\] Bound KV block zeroing launch geometry](https://github.com/vllm-project/vllm/pull/52058) — 3 comments, 2 reactions
+- [BerriAI/litellm: refactor(ui): migrate guardrail and duration controls to shadcn](https://github.com/BerriAI/litellm/pull/36693) — 2 comments, 1 reactions
+- [vllm-project/vllm: Fix MRV2 Gumbel sampling for non-finite logits](https://github.com/vllm-project/vllm/pull/43249) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Make DSV4 sparse MLA work end-to-end for plain decode, MTP, and DSpark](https://github.com/vllm-project/vllm/pull/51538) — 14 comments, 2 reactions
+- [BerriAI/litellm: refactor(ui): migrate team detail controls to shadcn](https://github.com/BerriAI/litellm/pull/36695) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Tool calling schema to ollama_chat being missing in the UI](https://github.com/BerriAI/litellm/issues/36463) — 1 comments, 0 reactions
+- [ray-project/ray: \[Serve\]\[2/2\] Propagate TracingConfig to proxies via long poll](https://github.com/ray-project/ray/pull/65437) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[CPU\] Ship triton-cpu wheel and fix several hardcoded pin_memory=True](https://github.com/vllm-project/vllm/pull/52092) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[MoE\] Preserve unquantized weight storage on ROCm](https://github.com/vllm-project/vllm/pull/46009) — 8 comments, 2 reactions
+- [ray-project/ray: \[llm\]\[ci\] Upgrade to vllm 0.27.0](https://github.com/ray-project/ray/pull/65351) — 1 comments, 0 reactions
+- [vllm-project/vllm:  \[ROCm\]\[AMD\]\[Installation\] add LMCache kv-connector installation and runtime packages to docker image](https://github.com/vllm-project/vllm/pull/51208) — 5 comments, 3 reactions
+- [vllm-project/vllm: \[Bug\] v0.27.0 engine permanently stalls after ~1 min idle on 4-node TP=4 (GB10/sm_121, aarch64): shm_broadcast writer starves, requests never reach scheduler](https://github.com/vllm-project/vllm/issues/51921) — 9 comments, 0 reactions
+- [vllm-project/vllm: \[Misc\] Remove `override_attention_dtype`](https://github.com/vllm-project/vllm/pull/48684) — 3 comments, 2 reactions
+- [sgl-project/sglang: fix: resolve Qwen3.5 NEXTN HiCache startup failure](https://github.com/sgl-project/sglang/pull/34571) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] ROCm MI355 HiCache Broken -  Poor Performance for Realistic Agentic Workload](https://github.com/sgl-project/sglang/issues/34611) — 3 comments, 0 reactions
+- [sgl-project/sglang: Main transport](https://github.com/sgl-project/sglang/pull/34687) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[diffusion\] Support LTX-2.5](https://github.com/sgl-project/sglang/pull/34471) — 1 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate usage tables to shared DataTable](https://github.com/BerriAI/litellm/pull/36707) — 1 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate guardrails content tables to shared DataTable](https://github.com/BerriAI/litellm/pull/36708) — 3 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate guardrails monitor table to shared DataTable](https://github.com/BerriAI/litellm/pull/36709) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: FP8 block-scaled weights fail on sm120 (RTX 5090) — DeepGEMM "Unknown SF transformation" during process_weights_after_loading](https://github.com/vllm-project/vllm/issues/51884) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Model\] Add DeepGrove Maple (MapleForCausalLM)](https://github.com/vllm-project/vllm/pull/51833) — 3 comments, 2 reactions
+- [sgl-project/sglang: \[NIXL\] Add the missing Prefill bootstrap timeout](https://github.com/sgl-project/sglang/pull/34686) — 0 comments, 0 reactions
+- [BerriAI/litellm: feat(otel): attribute Prisma database spans to PostgreSQL instead of localhost](https://github.com/BerriAI/litellm/pull/36595) — 6 comments, 1 reactions
+- [vllm-project/vllm: Detect ROCm wheel variant from environment for precompiled wheels.](https://github.com/vllm-project/vllm/pull/49365) — 9 comments, 2 reactions
+- [ray-project/ray: \[doc\] Update the number of index.rst document](https://github.com/ray-project/ray/pull/65363) — 1 comments, 1 reactions
+- [BerriAI/litellm: test(interactions): follow Google spec drift replacing Turn with typed steps](https://github.com/BerriAI/litellm/pull/36730) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[DCP\] Share one pack kernel between both a2a backends, hoist fi_a2a send buffers](https://github.com/sgl-project/sglang/pull/34651) — 0 comments, 0 reactions
+- [sgl-project/sglang: Enable unified cache out-of-window slot freeing by default](https://github.com/sgl-project/sglang/pull/34653) — 13 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\]: Populate completion_tokens_details in streaming and non-streaming usage responses](https://github.com/vllm-project/vllm/issues/50895) — 2 comments, 1 reactions
+- [BerriAI/litellm: feat(search): add Nimble as a search provider](https://github.com/BerriAI/litellm/pull/36347) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[LoRA\]\[Gemma4\] Support vision tower LoRA](https://github.com/vllm-project/vllm/pull/42662) — 17 comments, 4 reactions
+- [sgl-project/sglang: \[Bugfix\] Hold references to fire-and-forget tasks in disaggregation](https://github.com/sgl-project/sglang/pull/33048) — 11 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: draft_model speculative decoding crashes at init under TP>1 when draft hidden_size > target (TRT-LLM fused allreduce+RMSNorm workspace sized from target only)](https://github.com/vllm-project/vllm/issues/52023) — 3 comments, 2 reactions
+- [sgl-project/sglang: fix: stream MiMo tool call arguments incrementally](https://github.com/sgl-project/sglang/pull/34685) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[MOE\] Standardize and abstract fused shared expert optimization selection](https://github.com/vllm-project/vllm/pull/51695) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[DSV4\] Support dsv4 decode TBO with deepep backend](https://github.com/sgl-project/sglang/pull/33834) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[Docker\] Update to nixl-1.3.2](https://github.com/vllm-project/vllm/pull/51777) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[XPU\] Use SYCL kernels for topk_transform_512 on XPU](https://github.com/sgl-project/sglang/pull/33318) — 5 comments, 0 reactions
+- [vllm-project/vllm: \[Model\]\[MiniMax-M2\] Fix EAGLE-3 aux hidden-state layer off-by-one](https://github.com/vllm-project/vllm/pull/43671) — 6 comments, 3 reactions
+- [vllm-project/vllm: \[6/N\]\[KV-Cache Layout Refactor\] Standardize KV cache layout](https://github.com/vllm-project/vllm/pull/51718) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[Core\] Extensible (growable) KV cache](https://github.com/vllm-project/vllm/pull/50779) — 17 comments, 5 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Core\] Restore incremental thinking-budget marker scans](https://github.com/vllm-project/vllm/pull/52106) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[Fix\] Gemma4: pick a deterministic-capable attention backend under --enable-deterministic-inference](https://github.com/sgl-project/sglang/pull/34684) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] Radix cache hit changes temperature=0 outputs for Gemma-4 (18/40 greedy flips); --enable-deterministic-inference fails to boot on SM100](https://github.com/sgl-project/sglang/issues/34683) — 0 comments, 0 reactions
+- [sgl-project/sglang: DFLASH support added for XPU](https://github.com/sgl-project/sglang/pull/32798) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Core\]\[WIP\] Check for GPU<->CPU sync during CI](https://github.com/vllm-project/vllm/pull/43107) — 21 comments, 3 reactions
+- [sgl-project/sglang: \[Simulator\] Add high-fidelity CPU-based inference simulator](https://github.com/sgl-project/sglang/pull/33824) — 12 comments, 0 reactions
+- [sgl-project/sglang: Speculative Decoding with NGRAM support for XPU](https://github.com/sgl-project/sglang/pull/31362) — 2 comments, 0 reactions
+- [sgl-project/sglang: Add intel_xpu to DETERMINISTIC_ATTENTION_BACKEND_CHOICES](https://github.com/sgl-project/sglang/pull/29143) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Feature\]\[Intel XPU\] Add memory saver support for Intel XPU via upstream torch_memory_saver](https://github.com/sgl-project/sglang/pull/29935) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[XPU\] Use SYCL kernels for DeepSeek V4 MHC on XPU](https://github.com/sgl-project/sglang/pull/32166) — 6 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Add fused all-reduce RMSNorm per-token FP8/MXFP4 quant](https://github.com/sgl-project/sglang/pull/29723) — 13 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Split MiniMax-M3 prefill index-score K loop](https://github.com/vllm-project/vllm/pull/52059) — 0 comments, 2 reactions
+- [ray-project/ray: \[core\]\[2/N\] Reconnect to Redis in place when the connection drops](https://github.com/ray-project/ray/pull/65298) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[CPU\] Enable C++ causal_conv1d GDN path and float32 SSM cache on non-AMX AVX-512BF16 CPUs](https://github.com/vllm-project/vllm/pull/49688) — 4 comments, 3 reactions
+- [sgl-project/sglang: Fix guided decoding for channel-framed reasoning](https://github.com/sgl-project/sglang/pull/34659) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[XPU\]\[DSV4\] Fix MXFP4 expert scale dtype handling](https://github.com/sgl-project/sglang/pull/33373) — 5 comments, 0 reactions
+- [sgl-project/sglang: \[Spec\] Guard multi-layer EAGLE against diverted dp-attention non-extend batches](https://github.com/sgl-project/sglang/pull/34078) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[speculative\] DSpark: support the mask-filling draft convention (verify width = gamma)](https://github.com/sgl-project/sglang/pull/33831) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Keep DECODE token-ids logprob entries tensor-typed under no_copy_to_cpu](https://github.com/sgl-project/sglang/pull/34075) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[5/N\]\[KV-Cache Layout Refactor\] Backend-published KV packing via customize_spec](https://github.com/vllm-project/vllm/pull/51704) — 18 comments, 2 reactions
+- [vllm-project/vllm: \[Model\] Skip unused Jina V5 output layers](https://github.com/vllm-project/vllm/pull/52037) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[diffusion\] feat: selectable sequence-parallel strategies for LingBot causal attention](https://github.com/sgl-project/sglang/pull/34385) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[XPU\]\[Diffusion\] Enable MiniMax H3 on XPU platforms](https://github.com/sgl-project/sglang/pull/33366) — 15 comments, 0 reactions
+- [vllm-project/vllm: \[Misc\] Use VLLMValidationError in pooling input validation](https://github.com/vllm-project/vllm/pull/51931) — 3 comments, 2 reactions
+- [BerriAI/litellm: os.environ/ substitution in numeric litellm_params (weight/rpm/tpm) yields str, crashing simple_shuffle with TypeError at request time](https://github.com/BerriAI/litellm/issues/36095) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[diffusion\]\[Minimax H3\]support subblock sparse attention on SM90](https://github.com/sgl-project/sglang/pull/34680) — 0 comments, 1 reactions
+- [BerriAI/litellm: fix: forward claude-code-20250219 beta header for anthropic provider](https://github.com/BerriAI/litellm/pull/36736) — 3 comments, 1 reactions
+- [sgl-project/sglang: Reenable breakable CUDA graph for NemotronH](https://github.com/sgl-project/sglang/pull/34538) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[VLM\] Add content-addressed preprocessing cache infrastructure](https://github.com/sgl-project/sglang/pull/34398) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(langfuse): emit otel trace version and release on the keys langfuse v4 reads](https://github.com/BerriAI/litellm/pull/36702) — 6 comments, 1 reactions
+- [BerriAI/litellm: feat(proxy): disclose resolved destinations on team and organization info](https://github.com/BerriAI/litellm/pull/35516) — 12 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: MTP speculative decoding crash with illegal memory access on long sequences (Qwen3.6-27B-FP8, v0.19.1)](https://github.com/vllm-project/vllm/issues/40756) — 36 comments, 14 reactions
+- [BerriAI/litellm: fix(docker): support OpenShift arbitrary-UID runs on the stock image](https://github.com/BerriAI/litellm/pull/36732) — 3 comments, 0 reactions
+- [BerriAI/litellm: feat(observability): expose per-pod request pressure and the enforced concurrency ceiling](https://github.com/BerriAI/litellm/pull/36639) — 7 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Azure openai realtime WebRTC flow](https://github.com/BerriAI/litellm/issues/24659) — 7 comments, 0 reactions
+- [sgl-project/sglang: Fix Qwen3.5 GDN multi-item scoring](https://github.com/sgl-project/sglang/pull/33922) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Streaming: drop only the unknown tool call, not the batch around it](https://github.com/sgl-project/sglang/pull/34678) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Preserve the audio duration-limit error through the PyAV fallback](https://github.com/vllm-project/vllm/pull/50983) — 2 comments, 3 reactions
+- [sgl-project/sglang: \[Bug\] Streaming: one unknown tool name discards or corrupts the other tool calls in the same parallel batch](https://github.com/sgl-project/sglang/issues/34677) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Security\] Enforce server-side num_frames ceiling in VideoMediaIO merge](https://github.com/vllm-project/vllm/pull/51969) — 0 comments, 3 reactions
+- [BerriAI/litellm: fix(batches): stop uncostable batches from starving the cost poll page](https://github.com/BerriAI/litellm/pull/36714) — 11 comments, 1 reactions
+- [BerriAI/litellm: feat(otel): export the trace to the resolved destinations](https://github.com/BerriAI/litellm/pull/35515) — 12 comments, 1 reactions
+- [BerriAI/litellm: fix(ui): resolve Generic Guardrail API config fields not rendering](https://github.com/BerriAI/litellm/pull/35212) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[Bugfix\] Accept int64 top-k IDs in FlashInfer routed MoE packer](https://github.com/sgl-project/sglang/pull/32882) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[CI Failure\]\[Anthropic\] /v1/messages returns 500 when stop_sequences has more than 4 items](https://github.com/vllm-project/vllm/issues/52088) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(interactions): map step and turn history to Responses API roles and content types](https://github.com/BerriAI/litellm/pull/36733) — 3 comments, 1 reactions
+- [BerriAI/litellm: feat(ui): manage admin-owned logging destinations](https://github.com/BerriAI/litellm/pull/35517) — 17 comments, 1 reactions
+- [vllm-project/vllm: \[Model\]\[LoRA\] Add tower/connector LoRA support for Ultravox](https://github.com/vllm-project/vllm/pull/48215) — 29 comments, 2 reactions
+- [vllm-project/vllm: \[XPU\] Fix ragged-N FP8 block-scale GEMM and sparse-MLA metadata sync](https://github.com/vllm-project/vllm/pull/52066) — 1 comments, 2 reactions
+- [BerriAI/litellm: feat(providers): add Bitdeer AI as a JSON-configured provider](https://github.com/BerriAI/litellm/pull/36734) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[XPU\] Enable XPU blockfp8 for DSv3](https://github.com/vllm-project/vllm/pull/49596) — 10 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: sparse_mla_attention forward_mha falls through to unimplemented base class under low max-num-batched-tokens, surfaces as scheduler KeyError](https://github.com/vllm-project/vllm/issues/52105) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Core\]\[Spec Decode\] Add lookahead-aware prefix cache hashing for EAGLE-style draft models](https://github.com/vllm-project/vllm/pull/50897) — 8 comments, 4 reactions
+- [sgl-project/sglang: \[XPU\] Support decode context parallelism (DCP) on Intel XPU](https://github.com/sgl-project/sglang/pull/34355) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Refactor\] Use common sp utils for Qwen3.5 MoE](https://github.com/vllm-project/vllm/pull/51927) — 3 comments, 2 reactions
+- [vllm-project/vllm: Bump fsspec from 2024.12.0 to 2026.6.0](https://github.com/vllm-project/vllm/pull/48560) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\] Reduce AITER MLA FP8 BMM warmup sizes](https://github.com/vllm-project/vllm/pull/52096) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[KV Offload\] Carry request provenance through stored events](https://github.com/vllm-project/vllm/pull/52103) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[WIP\]\[Model Runner V2\] support spec decode + mamba align prefix caching](https://github.com/vllm-project/vllm/pull/42792) — 2 comments, 1 reactions
+- [vllm-project/vllm: \[KV Offload\] Carry chunk index in OffloadKey](https://github.com/vllm-project/vllm/pull/49506) — 8 comments, 2 reactions
+- [vllm-project/vllm: \[RFC\]: KV offload event path refactor — provenance-carrying events and key-only removals](https://github.com/vllm-project/vllm/issues/49413) — 10 comments, 1 reactions
+- [BerriAI/litellm: feat(guardrails): add payload, applicability and dispatch controls to generic_guardrail_api](https://github.com/BerriAI/litellm/pull/36731) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[Attention\]\[MLA\] Fuse Kimi-K3 chunked-context K/V packing](https://github.com/vllm-project/vllm/pull/51772) — 6 comments, 3 reactions
+- [sgl-project/sglang: \[Bug\] Hybrid Mamba prefill allocation failure kills scheduler instead of returning request to waiting queue](https://github.com/sgl-project/sglang/issues/34676) — 0 comments, 0 reactions
+- [BerriAI/litellm: refactor(ui): migrate HistoryTree and CollapsibleMessage to shadcn](https://github.com/BerriAI/litellm/pull/36738) — 6 comments, 1 reactions
+- [sgl-project/sglang: \[BugFix\] Fix race in c128 prefill plan kernel on ragged extend](https://github.com/sgl-project/sglang/pull/32467) — 23 comments, 0 reactions
+- [vllm-project/vllm: \[CI/Build\] Add warning for unsupported global PTX architecture requests in... ](https://github.com/vllm-project/vllm/pull/51901) — 6 comments, 2 reactions
+- [sgl-project/sglang: \[Kimi K3\] Fuse MLA gate projection into QKV-A GEMM](https://github.com/sgl-project/sglang/pull/33623) — 2 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate TokenFlow and JsonViewer to shadcn](https://github.com/BerriAI/litellm/pull/36735) — 3 comments, 1 reactions
+- [BerriAI/litellm: fix(router): don't wipe model_group_alias when updating other router settings](https://github.com/BerriAI/litellm/pull/36680) — 4 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate SimpleMessageBlock and SimpleToolCallBlock to shadcn](https://github.com/BerriAI/litellm/pull/36737) — 2 comments, 1 reactions
+- [sgl-project/sglang: Fix flaky negative penalty test](https://github.com/sgl-project/sglang/pull/34548) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Kernel\] Add B12X dense linear backends](https://github.com/vllm-project/vllm/pull/52016) — 3 comments, 2 reactions
+- [sgl-project/sglang: support qwen 3.8](https://github.com/sgl-project/sglang/pull/34585) — 0 comments, 5 reactions
+- [sgl-project/sglang: Pass uniform_q_len to the FlashInfer prefill plan](https://github.com/sgl-project/sglang/pull/34670) — 0 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: IDE tools (Bash_ide, Skill_ide, Workflow_ide) unavailable when Claude Code routes through LiteLLM /v1/messages](https://github.com/BerriAI/litellm/issues/36683) — 1 comments, 0 reactions
+- [BerriAI/litellm: refactor(ui): migrate TruncatedValue and OutputCard to shadcn](https://github.com/BerriAI/litellm/pull/36739) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Fix\] Decouple `--language-only` from encoder disaggregation](https://github.com/sgl-project/sglang/pull/34479) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Qwen3.5: guard attn layers against empty DP-attention batch](https://github.com/sgl-project/sglang/pull/34474) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Fix ROCm VAE Conv2D fast path breaking spatial-parallel decode](https://github.com/sgl-project/sglang/pull/34424) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\]\[Spec\] Accelerate Qwen3.5 EAGLE with AITER top-k1 and LM-head pruning](https://github.com/sgl-project/sglang/pull/34005) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[kernel\] add triton moe TMA up support](https://github.com/sgl-project/sglang/pull/33559) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Distributed\]\[MoonEP\] BF16 PoC integration of MoonEP balanced EP backend](https://github.com/vllm-project/vllm/pull/52101) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Build\] DeepGEMM pin has no SM120 kernels: family-12 Blackwell cannot run hyperconnections](https://github.com/vllm-project/vllm/pull/51959) — 5 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Build\] Pin minimal DeepGEMM SM120 and SITU revision](https://github.com/vllm-project/vllm/pull/51382) — 11 comments, 4 reactions
+- [sgl-project/sglang: \[AMD\] \[GLM5\] Skip DSA decode indexer when kv_len <= index_topk (dense k-only fast path)](https://github.com/sgl-project/sglang/pull/31324) — 12 comments, 1 reactions
+- [sgl-project/sglang: \[Intel\]\[XPU\] Accept XPU in the shared test CLI --device choices](https://github.com/sgl-project/sglang/pull/34425) — 1 comments, 0 reactions
+- [sgl-project/sglang: perf: fix overlap scheduling and all-reduce fusion for NVIDIA Confidential Computing(CC) on Blackwell](https://github.com/sgl-project/sglang/pull/31447) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[Perf\] optimize mla_kv_pack_quantize_fp8 flat kernel and dispatch](https://github.com/sgl-project/sglang/pull/29090) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Perf\] optimize MLA KV buffer gather](https://github.com/sgl-project/sglang/pull/28993) — 4 comments, 0 reactions
+- [BerriAI/litellm: feat: pre-adoption shadow eval for the auto-router (blind pairwise judge, derived state)](https://github.com/BerriAI/litellm/pull/36587) — 19 comments, 1 reactions
+- [sgl-project/sglang: \[Kimi K2.5\] Fuse deferred MoE finalize into next-layer AR + residual + RMSNorm](https://github.com/sgl-project/sglang/pull/28574) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[XPU\] update UMD to 26.27](https://github.com/vllm-project/vllm/pull/50513) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Fold scalar KV scales in MiniMax-M3 sparse attention](https://github.com/vllm-project/vllm/pull/52060) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Multimodal\] Guard read_frames against empty frame indices](https://github.com/vllm-project/vllm/pull/52102) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[WIP\] Fix AttributeError in compressed-tensors int8 MoE apply_weights (NPU)](https://github.com/sgl-project/sglang/pull/34674) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[WIP\] Restore KTransformers CPU-expert offload for DeepSeek-V4 on Ascend NPU](https://github.com/sgl-project/sglang/pull/34673) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]\[DSV4-Flash\]\[DSpark\] v0.27 weight loader regressed — KeyError routed_experts.w13_weight_scale (v0.26 gracefully skipped)](https://github.com/vllm-project/vllm/issues/51916) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Helm\] Fix chart resource references](https://github.com/vllm-project/vllm/pull/51664) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Kimi-K3\] Use MTP draft model config](https://github.com/vllm-project/vllm/pull/52001) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Docs\] Fix dead class references in MoE design docs](https://github.com/vllm-project/vllm/pull/50599) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[MoE\] Preserve TP sharding with explicit EP](https://github.com/vllm-project/vllm/pull/52100) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Core\]\[MoE\] Add explicit expert-parallel topology](https://github.com/vllm-project/vllm/pull/52099) — 0 comments, 2 reactions
+- [vllm-project/vllm: RFC: Kimi K3 MoonEP integration roadmap](https://github.com/vllm-project/vllm/issues/52095) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Attention\] Avoid redundant mask compute in GDN metadata build](https://github.com/vllm-project/vllm/pull/52078) — 0 comments, 2 reactions
+- [sgl-project/sglang: fix(xpu): enable compressed-tensors FP8 W8A8 on XPU (RedHatAI FP8-dynamic models)](https://github.com/sgl-project/sglang/pull/33057) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[RFC\]: Suffix decoding on GPU (`suffix_gpu`) — GPU-resident suffix decoding compatible with async scheduling](https://github.com/vllm-project/vllm/issues/51788) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(ui_sso): resolve highest privilege Entra app role, not first in claim](https://github.com/BerriAI/litellm/pull/36728) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[Kimi-K3\]\[ROCm\] Fuse KDA upper-triangle zeroing](https://github.com/vllm-project/vllm/pull/50554) — 2 comments, 2 reactions
+- [sgl-project/sglang: fix: restore VLM nightly regression coverage](https://github.com/sgl-project/sglang/pull/34662) — 11 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[MLA\] Use saturated Gluon split bucket for CUDA graphs](https://github.com/vllm-project/vllm/pull/51119) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[DSV4\] Support raw-index output in TopK v2](https://github.com/sgl-project/sglang/pull/33672) — 5 comments, 0 reactions
+- [sgl-project/sglang: \[XPU\] Make checkpoint_engine worker device-agnostic](https://github.com/sgl-project/sglang/pull/32382) — 3 comments, 0 reactions
+- [sgl-project/sglang: Improve M3 performance on MI350](https://github.com/sgl-project/sglang/pull/34014) — 0 comments, 0 reactions
+- [vllm-project/vllm: Avoid AITER FP8 BMM for MLA K projection](https://github.com/vllm-project/vllm/pull/52063) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(spend): preserve deployment identity in spend logs when litellm_metadata is present](https://github.com/BerriAI/litellm/pull/35477) — 5 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Usage dashboard "Ask AI" chat fails for every selectable model (calls litellm.acompletion() directly, bypassing the Router)](https://github.com/BerriAI/litellm/issues/35461) — 2 comments, 0 reactions
+- [BerriAI/litellm: MCP servers granted to a key via /key/update are invisible to tools/list (works if granted at /key/generate, or with a brand-new key)](https://github.com/BerriAI/litellm/issues/35662) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] \[Spec\] Enable stochastic tree verification on ROCm](https://github.com/sgl-project/sglang/pull/34140) — 3 comments, 0 reactions
+- [BerriAI/litellm: adaptive_router: one persisted alpha/beta=0 cell bricks the whole router with 500 gammavariate: alpha and beta must be > 0.0](https://github.com/BerriAI/litellm/issues/35590) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Core\]\[Spec Decode\] Add suffix_gpu drafter for Async Scheduling](https://github.com/vllm-project/vllm/pull/52097) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Reject negative token ids as out-of-vocabulary](https://github.com/vllm-project/vllm/pull/51795) — 13 comments, 2 reactions
+- [sgl-project/sglang: \[NPU\] Support MegaMoE FuseEP mode for Kimi-K3](https://github.com/sgl-project/sglang/pull/34672) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Add Radix-4 MoE top-k router kernel for Kimi-K3 routing](https://github.com/sgl-project/sglang/pull/34490) — 0 comments, 0 reactions
+- [vllm-project/vllm: Auto-ping Cohere on related issues](https://github.com/vllm-project/vllm/pull/52091) — 0 comments, 2 reactions
+- [BerriAI/litellm: chore(typing): clear 1.2k basedpyright Any errors across 16 hotspot files](https://github.com/BerriAI/litellm/pull/36722) — 5 comments, 1 reactions
+- [BerriAI/litellm: Mid-conversation system-role hoist invalidates the entire prompt-cache prefix (AnthropicMessagesConfig)](https://github.com/BerriAI/litellm/issues/36559) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[XPU\]\[CI\] disable SYCL_CACHE_PERSISTENT to fix topk segfault](https://github.com/sgl-project/sglang/pull/34567) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Give CPU attention layers their own metadata when head counts differ](https://github.com/vllm-project/vllm/pull/51852) — 1 comments, 2 reactions
+- [BerriAI/litellm: \[Feature\]: Allow custom client-facing messages for budget exceeded errors](https://github.com/BerriAI/litellm/issues/36729) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\] Add per-call decode budget to sparse-MLA indexer](https://github.com/vllm-project/vllm/pull/43327) — 6 comments, 3 reactions
+- [sgl-project/sglang: \[Model\] Complete dots.note.omni support with native encoders, video preprocessing, and MTP decoding](https://github.com/sgl-project/sglang/pull/33829) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: upgrade vllm from 0.26.0 to 0.27.0 run deepseek v4 flash error](https://github.com/vllm-project/vllm/issues/51758) — 17 comments, 0 reactions
+- [vllm-project/vllm: Revert "\[Perf\] Narrow DeepSeek V4 eager CUDA graph region" (#51430)](https://github.com/vllm-project/vllm/pull/52093) — 2 comments, 2 reactions
+- [BerriAI/litellm: feat(interactions): migrate to Google Interactions API steps schema (May 2026)](https://github.com/BerriAI/litellm/pull/28153) — 13 comments, 1 reactions
+- [vllm-project/vllm: Revert KV block zeroing generalization due to ROCm launch overflow](https://github.com/vllm-project/vllm/pull/52062) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[Diffusion\] Refresh docs, retire stale knobs, and fix nightly attribution](https://github.com/sgl-project/sglang/pull/34663) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\] Enable fused QK-norm+RoPE+gate Triton kernel for Qwen3-Next/Qwen3.5](https://github.com/vllm-project/vllm/pull/51406) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[Model\]\[Bugfix\] Enable GLM-5.2-MXFP4 on the deepseek_v32 path and fix sparse attention correctness](https://github.com/vllm-project/vllm/pull/51915) — 1 comments, 3 reactions
+- [vllm-project/vllm: Revert "\[Bugfix\] Guard DeepSeek V4 MRV1 piecewise CUDA graphs" (#51768)](https://github.com/vllm-project/vllm/pull/52094) — 0 comments, 2 reactions
+- [ray-project/ray: \[data\] Add orc datasource for V2](https://github.com/ray-project/ray/pull/64540) — 7 comments, 1 reactions
+- [sgl-project/sglang: perf(kv-events): coalesce cache events](https://github.com/sgl-project/sglang/pull/31479) — 9 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): requeue Redis spend buffer transactions when the DB commit fails](https://github.com/BerriAI/litellm/pull/33881) — 7 comments, 1 reactions
+- [vllm-project/vllm: \[Attention\] Skip stage2 for single-split Triton MLA decode](https://github.com/vllm-project/vllm/pull/52019) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[ModelRunner V2\] Speculative Decoding NGram GPU Implementations](https://github.com/vllm-project/vllm/pull/40704) — 21 comments, 3 reactions
+- [vllm-project/vllm: \[Bugfix\] Bound accepted-token state lookups in GDN/KDA spec decode](https://github.com/vllm-project/vllm/pull/50021) — 7 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Model\] Pad SigLIP text prompts to the trained sequence length](https://github.com/vllm-project/vllm/pull/51157) — 8 comments, 3 reactions
+- [BerriAI/litellm: fix(mcp): expose client HTTP headers to logging callbacks and hooks](https://github.com/BerriAI/litellm/pull/36724) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): requeue spend logs when the DB write fails with a transport error](https://github.com/BerriAI/litellm/pull/36716) — 10 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[MM\] Profile the multimodal embedding merge during memory profiling](https://github.com/vllm-project/vllm/pull/49540) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Quantization\] Keep unquantized routed experts unquantized under AutoGPTQ](https://github.com/vllm-project/vllm/pull/49539) — 1 comments, 2 reactions
+- [vllm-project/vllm: fix: reject required/named tool_choice for Harmony models without a tool parser](https://github.com/vllm-project/vllm/pull/48672) — 2 comments, 2 reactions
+- [vllm-project/vllm: test(quantization): cover tied lm_head/embed_tokens when lm_head excluded from ModelOpt](https://github.com/vllm-project/vllm/pull/48673) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Test\] Cover detokenize=False in offline beam search](https://github.com/vllm-project/vllm/pull/49541) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[TurboQuant\] Resolve the cache preset when get_kv_cache_shape gets no dtype hint](https://github.com/vllm-project/vllm/pull/51082) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[CI\] Fix nightly test failures](https://github.com/sgl-project/sglang/pull/34637) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Misc\] Bump `openai` to `>=2.25.0` to support namespace tools types](https://github.com/vllm-project/vllm/pull/49104) — 3 comments, 2 reactions
+- [sgl-project/sglang: \[Fix\] Snapshot `req.prefix_indices` when the prefix cache is disabled](https://github.com/sgl-project/sglang/pull/34644) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: VLLM 0.27.0 has not been fixed MiniCPM-V-4.6 startup fails (because vLLM expects k_proj in a fused-qkv ViT attention layer)](https://github.com/vllm-project/vllm/issues/51842) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[BugFix\] Reserve the bonus query slot in DFlash scheduling budget](https://github.com/vllm-project/vllm/pull/51256) — 13 comments, 2 reactions
+- [sgl-project/sglang: \[diffusion\] feat: publish an index of nightly comparison runs](https://github.com/sgl-project/sglang/pull/34652) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(images): preserve explicit provider for async generation](https://github.com/BerriAI/litellm/pull/36346) — 4 comments, 1 reactions
+- [BerriAI/litellm: fix(cost): honor an explicit zero cache-creation cost in batch pricing](https://github.com/BerriAI/litellm/pull/36723) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Feature\]: Expose startup status and health endpoint before model engine is ready](https://github.com/vllm-project/vllm/issues/50282) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Core\] Clearer comments in `BlockPool.free_blocks()`](https://github.com/vllm-project/vllm/pull/52076) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[Intel GPU\] Upgrade pytorch xpu version to 2.13](https://github.com/sgl-project/sglang/pull/31031) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Anthropic /v1/messages ignores use_bearer_for_custom_base for custom API bases](https://github.com/BerriAI/litellm/issues/33055) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] DSpark compact ragged CUDA Graph uses incompatible request-slot geometry for the same token tier](https://github.com/sgl-project/sglang/issues/34384) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[CI\] Fix and extend PR/issue auto-labeling](https://github.com/vllm-project/vllm/pull/51459) — 5 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: Continuous Host Memory Growth / Possible Memory Leak with V2 Runner on Qwen3-14B and Qwen3-Rerank-4B](https://github.com/vllm-project/vllm/issues/52089) — 0 comments, 0 reactions
+- [vllm-project/vllm: Reject oversized media before fully downloading it](https://github.com/vllm-project/vllm/pull/51896) — 7 comments, 2 reactions
+- [vllm-project/vllm: Fix: Deprecated pylance warnings on using AsyncIterator with asynccontextmanager](https://github.com/vllm-project/vllm/pull/52090) — 0 comments, 2 reactions
+- [sgl-project/sglang: Record both architectures in the bit-exact guard docstrings](https://github.com/sgl-project/sglang/pull/34656) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(cohere): preserve multimodal embedding inputs](https://github.com/BerriAI/litellm/pull/36715) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Skip generic required/named tool grammar for parsers that set supports_required_and_named](https://github.com/vllm-project/vllm/pull/50180) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Mypy Fix\] Mypy fix for "vllm/model_executor/models/\[cC\]\[dD\]"](https://github.com/vllm-project/vllm/pull/52003) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Rust Frontend\]\[gRPC\] Add RL lifecycle control](https://github.com/vllm-project/vllm/pull/51316) — 3 comments, 3 reactions
+- [BerriAI/litellm: feat(model_prices): add meta/muse-spark-1.2 and its contributor tier](https://github.com/BerriAI/litellm/pull/36717) — 7 comments, 1 reactions
+- [BerriAI/litellm: docs(claude): drop the @ prefix from the PR template path](https://github.com/BerriAI/litellm/pull/36726) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[XPU\] Use a fused GDN kernel from sgl-kernel for Qwen3.5](https://github.com/sgl-project/sglang/pull/33354) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[WIP\]\[XPU\]\[Test\]add xpu yaml](https://github.com/vllm-project/vllm/pull/48761) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(anthropic): preserve tool reference results](https://github.com/BerriAI/litellm/pull/36557) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[KV Offload\] Emit self-describing CPU events at KV-group block granularity](https://github.com/vllm-project/vllm/pull/51614) — 18 comments, 2 reactions
+- [sgl-project/sglang: \[Docs\] Add decode context parallelism to advanced features](https://github.com/sgl-project/sglang/pull/34654) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[KV Offload\] Expose data-parallel topology to offloading backends](https://github.com/vllm-project/vllm/pull/51879) — 4 comments, 2 reactions
+- [vllm-project/vllm: fix and test EPLB balancedness calculation](https://github.com/vllm-project/vllm/pull/51813) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Kernel\] Gemma-4 FA4 FP8 Kernel](https://github.com/vllm-project/vllm/pull/48666) — 9 comments, 3 reactions
+- [sgl-project/sglang: \[NPU\] Add test for --dllm-fdfo](https://github.com/sgl-project/sglang/pull/33634) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[minimax m3\]\[npu\]Adaptation of Minimax M3(w8a8) for NPU platforms \[1/2\]](https://github.com/sgl-project/sglang/pull/32941) — 16 comments, 0 reactions
+- [BerriAI/litellm: feat(proxy): proactive model deprecation alerts and `/model/deprecations` endpoint](https://github.com/BerriAI/litellm/pull/26900) — 18 comments, 1 reactions
+- [BerriAI/litellm: fix(caching): guard against None async_redis_conn_pool in RedisCache.disconnect](https://github.com/BerriAI/litellm/pull/31211) — 17 comments, 1 reactions
+- [BerriAI/litellm: fix(model_prices): add supports_native_structured_output to claude-haiku-4-5 direct API entries](https://github.com/BerriAI/litellm/pull/31221) — 17 comments, 1 reactions
+- [BerriAI/litellm: fix(sse): map vendor error codes >=600 to 502 in _parse_event_data_for_error](https://github.com/BerriAI/litellm/pull/31312) — 10 comments, 1 reactions
+- [sgl-project/sglang: \[SM12x\] Re-enable the FP8 wo_a GEMM on sm120/sm121](https://github.com/sgl-project/sglang/pull/34018) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Scheduler\] Expose DP-attention MLP sync transport](https://github.com/sgl-project/sglang/pull/34665) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(streaming): record completion_start_time on first chunk in agentic and responses streaming iterators](https://github.com/BerriAI/litellm/pull/31402) — 7 comments, 2 reactions
+- [sgl-project/sglang: \[RFC\] Agent-aware session affinity without routing keys: a router policy](https://github.com/sgl-project/sglang/issues/34513) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Warn when DeepSeek-V4 silently defaults reasoning_effort to "high"](https://github.com/vllm-project/vllm/pull/52085) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[Scheduler\] Expose DP-attention MLP sync transport](https://github.com/sgl-project/sglang/pull/34664) — 0 comments, 0 reactions
+- [sgl-project/sglang: :construction: \[WIP\]\[llm\]\[npu\] Split mixed chunked-prefill FIA into prefill/decode calls on Ascend 950](https://github.com/sgl-project/sglang/pull/34387) — 0 comments, 0 reactions
+- [sgl-project/sglang: fix(openai): skip the required-tool JSON fallback for non-JSON output](https://github.com/sgl-project/sglang/pull/34661) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Scheduler\] Expose DP-attention MLP sync transport](https://github.com/sgl-project/sglang/pull/34657) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[qwen3\] correct linear_attn norm and a_log parameter dtype to F32 for qwen 3.5 series](https://github.com/vllm-project/vllm/pull/51836) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[Model\] Add native LLaVA-OneVision implementation](https://github.com/sgl-project/sglang/pull/34532) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(spend): stop losing spend log rows when a flush is cancelled](https://github.com/BerriAI/litellm/pull/34826) — 8 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: spend rows popped from the queue are lost when a flush is cancelled](https://github.com/BerriAI/litellm/issues/34820) — 0 comments, 0 reactions
+- [BerriAI/litellm: ci: gate PR bodies on the template's HTML comment rules](https://github.com/BerriAI/litellm/pull/36551) — 8 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\] Pin the exact ROCm Triton wheel instead of deferring to AITER](https://github.com/sgl-project/sglang/pull/34403) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Perf\]\[DSV4\] Optimize sparse top-k metadata kernels for higher prefill throughput](https://github.com/vllm-project/vllm/pull/52084) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm/MI325X\] DeepSeek-V4-Flash: Triton fp8_mqa_logits kernel requires 96KB shared memory, MI325X limit is 64KB](https://github.com/vllm-project/vllm/issues/41963) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[UT\]\[NPU\]Add npu unit test for dsv4](https://github.com/sgl-project/sglang/pull/33514) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Perf\] FlashInfer MLA: remove blocking D2H in spec-decode plan](https://github.com/sgl-project/sglang/pull/27689) — 14 comments, 0 reactions
+- [vllm-project/vllm: \[1/N\] HiSparse: host-resident sparse-MLA decode hot-buffering](https://github.com/vllm-project/vllm/pull/51323) — 10 comments, 2 reactions
+- [BerriAI/litellm: fix(budget_reservation): don't reserve budget on token counting routes](https://github.com/BerriAI/litellm/pull/36718) — 6 comments, 1 reactions
+- [BerriAI/litellm: fix(key_management): invalidate cached object permissions on key update](https://github.com/BerriAI/litellm/pull/36719) — 8 comments, 1 reactions
+- [vllm-project/vllm: \[Hardware\]\[Power\] Unqualized MoE Backend for Power (VSX)](https://github.com/vllm-project/vllm/pull/51624) — 4 comments, 2 reactions
+- [BerriAI/litellm: Azure GPT-5.6 terra/luna cost-map rows carry OpenAI's prices, not Azure's published meters](https://github.com/BerriAI/litellm/issues/36192) — 7 comments, 0 reactions
+- [BerriAI/litellm: THROWAWAY — PR e2e gate proof 2 (docs-only fast-pass)](https://github.com/BerriAI/litellm/pull/36713) — 2 comments, 1 reactions
+- [BerriAI/litellm: THROWAWAY — PR e2e gate proof 4 (tier 3, full suite)](https://github.com/BerriAI/litellm/pull/36712) — 3 comments, 1 reactions
+- [BerriAI/litellm: THROWAWAY — PR e2e gate proof 3 (tier 2, suite dir from helper)](https://github.com/BerriAI/litellm/pull/36711) — 3 comments, 1 reactions
+- [BerriAI/litellm: THROWAWAY — PR e2e gate proof 1 (tier 1, single test file)](https://github.com/BerriAI/litellm/pull/36710) — 3 comments, 1 reactions
+- [BerriAI/litellm: fix(spend): requeue spend log batch when a flush is cancelled after dequeue](https://github.com/BerriAI/litellm/pull/34950) — 8 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: Breaking change to DeepSeek-V4-Pro default reasoning effort](https://github.com/vllm-project/vllm/issues/52083) — 0 comments, 0 reactions
+- [sgl-project/sglang: Add bit-exact unified radix cache KL test for hybrid SWA + mamba](https://github.com/sgl-project/sglang/pull/34607) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[Diffusion\]\[GLM-Image\] Retune QK head LayerNorm for SM103](https://github.com/sgl-project/sglang/pull/34619) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(router): let untagged requests bypass a tagged pre-routing strategy on shared model names](https://github.com/BerriAI/litellm/pull/36627) — 6 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: tagged auto-router captures untagged requests to a shared model name, skipping tag matching](https://github.com/BerriAI/litellm/issues/36620) — 0 comments, 0 reactions
+- [ray-project/ray: \[core\] Ray session conflicts with PyArrow+HDFS](https://github.com/ray-project/ray/issues/36415) — 27 comments, 4 reactions
+- [sgl-project/sglang: \[Feature\] Improve Unit Test Coverage](https://github.com/sgl-project/sglang/issues/20865) — 82 comments, 0 reactions
+- [BerriAI/litellm: fix(cost): tiered pricing supports cache creation cost and is all-or-nothing](https://github.com/BerriAI/litellm/pull/36720) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[Kernel\] Add SM120 per-tensor FP8 GEMM for small-M (#33632)](https://github.com/sgl-project/sglang/pull/34429) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[XPU\] eplb](https://github.com/vllm-project/vllm/pull/44987) — 5 comments, 4 reactions
+- [sgl-project/sglang: \[NVIDIA\] Support flashinfer Mega Moe](https://github.com/sgl-project/sglang/pull/31470) — 10 comments, 0 reactions
+- [BerriAI/litellm: fix(model_prices): sync the Groq registry with Groq's docs](https://github.com/BerriAI/litellm/pull/36664) — 6 comments, 1 reactions
+- [vllm-project/vllm: Revert "Avoid long-blocking H2D copies in ViT" (#51841)](https://github.com/vllm-project/vllm/pull/52081) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[FS-Offloading\] : Simplify fs manager](https://github.com/vllm-project/vllm/pull/51767) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[BugFix\] bound FlashMLA sparse decode intermediate tensors size](https://github.com/vllm-project/vllm/pull/49357) — 2 comments, 2 reactions
+- [sgl-project/sglang: TP/PP Consensus checker](https://github.com/sgl-project/sglang/pull/34406) — 1 comments, 4 reactions
+- [sgl-project/sglang: \[AMD\] register diffusion qknorm-rope benchmark for jit-kernel-benchmark-test-amd](https://github.com/sgl-project/sglang/pull/31839) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[diffusion\] CI: cut two setup cycles from the AMD multimodal-gen lanes](https://github.com/sgl-project/sglang/pull/34483) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[RFC\] Enable scoped AITER W8A8 support on gfx1100](https://github.com/vllm-project/vllm/pull/51598) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[NIXL\] Include transfer mode (push/pull) in the compatibility hash](https://github.com/vllm-project/vllm/pull/50620) — 5 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: Qwen3 MoE GPTQ `qzeros` shape mismatch on ROCm gfx1201](https://github.com/vllm-project/vllm/issues/51971) — 2 comments, 0 reactions
+- [vllm-project/vllm: Add generic CI trace collectors](https://github.com/vllm-project/vllm/pull/51982) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[2/2\]\[Model Runner V2\] FULL CUDA graph capture for microbatched steps (DBO)](https://github.com/vllm-project/vllm/pull/51700) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[CI/Release\] Add XPU wheel release build](https://github.com/vllm-project/vllm/pull/50857) — 0 comments, 3 reactions
+- [sgl-project/sglang: Add codeowners for the DCP module](https://github.com/sgl-project/sglang/pull/34648) — 1 comments, 0 reactions
+- [vllm-project/vllm: fix(v1): decouple async Mamba align D2H counts from InputBatch row shifts (#51571)](https://github.com/vllm-project/vllm/pull/51599) — 19 comments, 2 reactions
+- [vllm-project/vllm: \[Helion\] Route fusion-only kernels to Helion during CUDA-graph capture](https://github.com/vllm-project/vllm/pull/48995) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[1/2\]\[Model Runner V2\] DBO support, eager mode](https://github.com/vllm-project/vllm/pull/50945) — 13 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: openai_harmony.HarmonyError: unexpected tokens remaining in message header](https://github.com/vllm-project/vllm/issues/23567) — 47 comments, 24 reactions
+- [vllm-project/vllm: Change the default value of truncate_prompt_tokens in the embedding/rerank/pooling model to -1](https://github.com/vllm-project/vllm/pull/24235) — 18 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: KV Cache Quantization not working on v1 (rtx3090)  "type fp8e4nv not supported in this architecture"](https://github.com/vllm-project/vllm/issues/26431) — 7 comments, 1 reactions
+- [vllm-project/vllm: \[Performance\]: Fully Async Spec-Decoding | Make `seq_lens_cpu` in CommonAttentionMetadata optional](https://github.com/vllm-project/vllm/issues/29134) — 6 comments, 4 reactions
+- [vllm-project/vllm: \[Usage\]: 启动 qwen3 vl 超级超级超级慢，sglang 启动很快，可能的原因是什么？](https://github.com/vllm-project/vllm/issues/29245) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\]: Qwen3 Omni Transcriptions](https://github.com/vllm-project/vllm/issues/29405) — 11 comments, 0 reactions
+- [vllm-project/vllm: Document Ray Serve LLM incompatibility with vLLM v1 engine for PD disaggregation](https://github.com/vllm-project/vllm/issues/29688) — 7 comments, 0 reactions
+- [vllm-project/vllm: TP > 1 with Ray Serve: Use Multiprocessing Executor (Not Ray Executor)](https://github.com/vllm-project/vllm/issues/30016) — 6 comments, 0 reactions
+- [vllm-project/vllm: \[Fix\] Bump lmcache minimum version to 0.3.11](https://github.com/vllm-project/vllm/pull/34143) — 6 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix step3p5 tool parser and unnecessary unstreamed tool args in serving.](https://github.com/vllm-project/vllm/pull/34354) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[BugFix\] Fix MoE g_idx params causing ValueError with actorder=null AWQ models](https://github.com/vllm-project/vllm/pull/35305) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[Usage\]: MoE flatten_tp_size should not unconditionally include dp_size — DP loses its original semantics for MoE layers](https://github.com/vllm-project/vllm/issues/36222) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: AttributeError: 'Qwen3_5TextConfig' object has no attribute 'max_window_layers'](https://github.com/vllm-project/vllm/issues/36315) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[refactor\] Refactor SpeculativeConfig for speculative method extensibility](https://github.com/vllm-project/vllm/pull/36979) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: cudaErrorIllegalAddress in gdn_attn.py:237 when using qwen3_next_mtp with num_speculative_tokens=5 under load](https://github.com/vllm-project/vllm/issues/37035) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[Perf\] Use list.extend() over append loops in FlatLogprobs + minor hot-path cleanups](https://github.com/vllm-project/vllm/pull/37227) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: In_proj_ba of GDN in Qwen3Next use MergeColumnParallelLinear may cause accuracy decrease?](https://github.com/vllm-project/vllm/issues/37271) — 3 comments, 0 reactions
+- [vllm-project/vllm: Fix Quark OCP-MX W4A6 support: dequant dtype + apply_weights](https://github.com/vllm-project/vllm/pull/37390) — 7 comments, 1 reactions
+- [vllm-project/vllm: \[Performance\]: Qwen 3.5 27B Prefix Caching](https://github.com/vllm-project/vllm/issues/38988) — 7 comments, 4 reactions
+- [vllm-project/vllm: Qwen-3.5 9B often producing repetitive/garbled output with Intel Backend](https://github.com/vllm-project/vllm/issues/38994) — 4 comments, 1 reactions
+- [vllm-project/vllm: Use physical device id for get_device_uuid](https://github.com/vllm-project/vllm/pull/39452) — 6 comments, 1 reactions
+- [sgl-project/sglang: \[Bug\] Multi-node TP rank-divergence deadlock: one rank wedges in NCCL proxy append (logits all-gather), peer idles at request broadcast — DeepSeek-V4 + DSpark on 2× DGX Spark (GB10)](https://github.com/sgl-project/sglang/issues/33289) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]\[P/D\]: NIXL handshake failure with asymmetric TP in PD disaggregation (pTP2 + dTP4)](https://github.com/vllm-project/vllm/issues/50765) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\]\[AMD\] MoRI EP: drop record_stream in TBO dispatch/combine (HSA out-of-resources)](https://github.com/sgl-project/sglang/pull/32746) — 8 comments, 0 reactions
+- [vllm-project/vllm: \[Perf\]\[DSV4\] Optimize global top-k index kernel with compile-time constants](https://github.com/vllm-project/vllm/pull/51967) — 1 comments, 4 reactions
+- [ray-project/ray: \[serve\]\[llm\] Governance middleware layer for Ray Serve LLM — PII detection, cost budgets, policy enforcement, and audit trails](https://github.com/ray-project/ray/issues/65259) — 9 comments, 0 reactions
+- [vllm-project/vllm: \[CI\] Mirror external test assets in vLLM S3](https://github.com/vllm-project/vllm/pull/52064) — 5 comments, 2 reactions
+- [sgl-project/sglang: Add thanhhao98 to CI_PERMISSIONS.json](https://github.com/sgl-project/sglang/pull/34649) — 0 comments, 0 reactions
+- [vllm-project/vllm: fix(pooling): validate BGE-M3 combined task ownership](https://github.com/vllm-project/vllm/pull/51823) — 9 comments, 2 reactions
+- [ray-project/ray: \[serve\] Enforce type checking on the scheduling/routing modules](https://github.com/ray-project/ray/pull/65410) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Diffusion\] Fix AttributeError in grouped forward_batch by installing the residency manager](https://github.com/sgl-project/sglang/pull/34417) — 1 comments, 0 reactions
+- [BerriAI/litellm: feat(parallel_ai): add chat + responses LLM provider and full search param support](https://github.com/BerriAI/litellm/pull/36704) — 8 comments, 1 reactions
+- [BerriAI/litellm: fix(bedrock_mantle): 1M context window and long-context pricing for GPT-5.6 Sol/Terra/Luna](https://github.com/BerriAI/litellm/pull/36698) — 5 comments, 1 reactions
+- [ray-project/ray: \[dashboard\] Stream job log responses](https://github.com/ray-project/ray/pull/65173) — 2 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): honor explicit null budget_duration on team and key create + clearable UI dropdowns](https://github.com/BerriAI/litellm/pull/36699) — 7 comments, 1 reactions
+- [sgl-project/sglang: Remove the torchao integration (--torchao-config)](https://github.com/sgl-project/sglang/pull/34304) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[KVConnector\] Add retention interval to OffloadingConnector](https://github.com/vllm-project/vllm/pull/51886) — 0 comments, 2 reactions
+- [sgl-project/sglang: Remove deprecated cafile parameter in http_request](https://github.com/sgl-project/sglang/pull/8462) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[KVConnector\]\[MoRIIO\] Fix MoRIIO port collisions for deployments using both DP and TP](https://github.com/vllm-project/vllm/pull/52014) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[Perf\] Kimi-K3 latent-MoE: overlap the shared all-reduce with the routed up-projection](https://github.com/vllm-project/vllm/pull/51437) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(anthropic): honor bearer auth for messages custom base](https://github.com/BerriAI/litellm/pull/33057) — 3 comments, 1 reactions
+- [BerriAI/litellm: \[Infra\] Promote internal staging to main](https://github.com/BerriAI/litellm/pull/26375) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Perf\] Skip logits and sampling for unfinished prefills](https://github.com/vllm-project/vllm/pull/49171) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[Fix\] Correctly set head_dim fallback](https://github.com/sgl-project/sglang/pull/7368) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[EPD\] Add ECMooncakeConnector for encoder cache over Mooncake TransferEngine](https://github.com/vllm-project/vllm/pull/41567) — 4 comments, 5 reactions
+- [sgl-project/sglang: \[BugFix\] Fix AssertionError: res=<Response \[502\]>, res.text=''](https://github.com/sgl-project/sglang/pull/7341) — 2 comments, 0 reactions
+- [sgl-project/sglang: CUDA implementation supporting the ep_scatter and ep_gather operator](https://github.com/sgl-project/sglang/pull/7127) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] Fix pp failed with aiter/intel_amx/triton backend](https://github.com/sgl-project/sglang/pull/7044) — 5 comments, 1 reactions
+- [sgl-project/sglang: \[Docker\] Use cache mount for pip cache to speed up builds](https://github.com/sgl-project/sglang/pull/6972) — 1 comments, 0 reactions
+- [sgl-project/sglang: Remove redundant requesting to HF HUB when cache exists](https://github.com/sgl-project/sglang/pull/6971) — 4 comments, 0 reactions
+- [sgl-project/sglang: \[Doc\] Update support_new_models.md](https://github.com/sgl-project/sglang/pull/6883) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[bug\] add a length check in sample_sharegpt_requests](https://github.com/sgl-project/sglang/pull/6829) — 1 comments, 0 reactions
+- [sgl-project/sglang: Update bench_one_batch_server.py](https://github.com/sgl-project/sglang/pull/6809) — 1 comments, 0 reactions
+- [sgl-project/sglang: token length check relaxed](https://github.com/sgl-project/sglang/pull/6779) — 1 comments, 0 reactions
+- [sgl-project/sglang: Add the docs for pipeline_parallelism](https://github.com/sgl-project/sglang/pull/6758) — 1 comments, 2 reactions
+- [sgl-project/sglang: Fix OOM When Using Large Context Length](https://github.com/sgl-project/sglang/pull/6744) — 1 comments, 1 reactions
+- [sgl-project/sglang: Partially supports using MHA kernels in MLA forward when page-size > 1.](https://github.com/sgl-project/sglang/pull/6738) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Feature\] support cors middleware setting](https://github.com/sgl-project/sglang/pull/6616) — 2 comments, 0 reactions
+- [ray-project/ray: \[data\] Fair-share allocation overstates runnable task-pool demand](https://github.com/ray-project/ray/issues/65433) — 0 comments, 0 reactions
+- [sgl-project/sglang: add note about race bug to docs](https://github.com/sgl-project/sglang/pull/9235) — 1 comments, 0 reactions
+- [sgl-project/sglang: support torch.compile(dynamic=True) to avoid recompile](https://github.com/sgl-project/sglang/pull/9179) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[feat\] add grammar sessions](https://github.com/sgl-project/sglang/pull/9156) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Kernel\] Fused RMS Norm Quant](https://github.com/sgl-project/sglang/pull/8921) — 4 comments, 2 reactions
+- [sgl-project/sglang: replace role literals with str for more flexible chat templating](https://github.com/sgl-project/sglang/pull/8920) — 1 comments, 0 reactions
+- [sgl-project/sglang: Support GLM4.5 fused moe triton tuning](https://github.com/sgl-project/sglang/pull/8807) — 1 comments, 0 reactions
+- [sgl-project/sglang: Ability to use custom-all-reduce on systems with more than 2 PCIe GPUs via env var](https://github.com/sgl-project/sglang/pull/8765) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] Fix to support compressed tensor 2 4 sparse mm serving in SGLang](https://github.com/sgl-project/sglang/pull/8708) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Feature\] Add support for TNG-R1T2-Chimera tool call parsing.](https://github.com/sgl-project/sglang/pull/8672) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Feature\] Support BurstGPT for server benchmark.](https://github.com/sgl-project/sglang/pull/8605) — 2 comments, 0 reactions
+- [sgl-project/sglang: Add lyra w4afp8 moe and linear](https://github.com/sgl-project/sglang/pull/8573) — 38 comments, 4 reactions
+- [sgl-project/sglang: fix potential memory corruption](https://github.com/sgl-project/sglang/pull/8568) — 4 comments, 0 reactions
+- [sgl-project/sglang: add continuous usage stats for sglang](https://github.com/sgl-project/sglang/pull/8551) — 2 comments, 0 reactions
+- [sgl-project/sglang: feat: introduce async rebalance mode for expert load balancer](https://github.com/sgl-project/sglang/pull/8529) — 10 comments, 1 reactions
+- [sgl-project/sglang: feat: fix router dropping chat_template_kwargs and custom parameters](https://github.com/sgl-project/sglang/pull/8500) — 2 comments, 0 reactions
+- [ray-project/ray: \[data\] BlockOutputBuffer rebuilds the remainder for every row-sized output](https://github.com/ray-project/ray/issues/65434) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[8440\]: Fix rid mismatch with batch size](https://github.com/sgl-project/sglang/pull/8447) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[8254\]: Fix setting up of completion_template name](https://github.com/sgl-project/sglang/pull/8446) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[ROCm\]\[CI\] Restore the DeepSeek-V4 input GEMM override point](https://github.com/vllm-project/vllm/pull/51821) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[CI\] Force source builds for hybrid dependencies](https://github.com/vllm-project/vllm/pull/52043) — 2 comments, 2 reactions
+- [ray-project/ray: refactor(setup): modernize string formatting and ensure explicit file encoding](https://github.com/ray-project/ray/pull/65439) — 0 comments, 1 reactions
+- [ray-project/ray: \[serve\]\[llm\] Surface engine errors on the direct-streaming ASGI app](https://github.com/ray-project/ray/pull/65440) — 0 comments, 1 reactions
+- [ray-project/ray: \[TPU\] Rename dispatch to run_on_slice](https://github.com/ray-project/ray/pull/65442) — 0 comments, 1 reactions
+- [sgl-project/sglang: Modified the triton download method](https://github.com/sgl-project/sglang/pull/34489) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: DeepSeek-V4-Flash-0731 + DSpark fails to start on vLLM 0.27.0 / H100 sm90 (DeepGEMM CUDA_ERROR_ILLEGAL_ADDRESS); works on 0.26.0](https://github.com/vllm-project/vllm/issues/52065) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Report FULL_ATTENTION for uniform-base UniformTypeKVCacheSpecs groups instead of UNKNOWN](https://github.com/vllm-project/vllm/pull/51218) — 15 comments, 2 reactions
+- [sgl-project/sglang: \[DCP\] Support PD disaggregation with DCP + DSPARK](https://github.com/sgl-project/sglang/pull/34343) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\]Fuse Q/K L2 normalization in Qwen3.5 GDN ](https://github.com/sgl-project/sglang/pull/33290) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Regression\]\[SM100/SM103\] FlashInfer TRTLLM NVFP4 MoE tile-192 path produces NaNs](https://github.com/sgl-project/sglang/issues/34629) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): return 400 (not 500) when required body params are missing](https://github.com/BerriAI/litellm/pull/35849) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[scheduler\] Publish per-scheduler load on a dedicated socket for load-aware routers](https://github.com/sgl-project/sglang/pull/28599) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[Spec Decode\]\[V1\] Warm Eagle and DFlash/DSpark spec-decode Triton kernels at startup](https://github.com/vllm-project/vllm/pull/48804) — 6 comments, 2 reactions
+- [vllm-project/vllm: DCP: consume owner-sharded Top-K candidates through symmetric memory](https://github.com/vllm-project/vllm/pull/50366) — 3 comments, 2 reactions
+- [sgl-project/sglang: Modify low errors](https://github.com/sgl-project/sglang/pull/24132) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[KV Offload\] Forward ownership in KV cache events](https://github.com/vllm-project/vllm/pull/52067) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Feature\] Gigachat 3.5 support](https://github.com/vllm-project/vllm/pull/47708) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\]\[Quantization\] Online MXFP4 quantization 4/N - NVFP4 to MXFP4 Online Requantization on AMD GPUs](https://github.com/sgl-project/sglang/pull/29328) — 24 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Handle empty YAML config in `--config` parsing](https://github.com/vllm-project/vllm/pull/52077) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Spec Decode\] Test extract_hidden_states on NemotronH hybrid models](https://github.com/vllm-project/vllm/pull/52073) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Docs\] extract_hidden_states supports chunked prefill](https://github.com/vllm-project/vllm/pull/52074) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Spec Decode\] DSpark confidence-scheduled verification](https://github.com/vllm-project/vllm/pull/47808) — 41 comments, 12 reactions
+- [sgl-project/sglang: \[AMD\]\[CI\] Gate DeepSeek-V4 nightly perf on recorded thresholds](https://github.com/sgl-project/sglang/pull/34640) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Remove silent ×0.85 mem_fraction_static derate for aiter + ctx>8K](https://github.com/sgl-project/sglang/pull/25199) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[Core\] Skip broadcasting mm tensor data to workers for prefix-cache-covered items](https://github.com/vllm-project/vllm/pull/52041) — 3 comments, 0 reactions
+- [ray-project/ray: \[Data\] \[Core\] Deferring gRPC Frees and OSS callbacks to Reduce OSM Usage Update Latency](https://github.com/ray-project/ray/pull/65220) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[npu\] Install vocab for gpt-oss in docker](https://github.com/sgl-project/sglang/pull/21831) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[Feature\]\[Whisper\] Native word-level timestamps (cross-attention + DTW)](https://github.com/vllm-project/vllm/pull/47664) — 12 comments, 9 reactions
+- [vllm-project/vllm: fix(kernel): restore scalar_t RMSNorm intermediate rounding boundary (#49616)](https://github.com/vllm-project/vllm/pull/49639) — 8 comments, 2 reactions
+- [sgl-project/sglang: \[Feature\] Integrate `cute-dsl` backend of `mm_mxfp8` and other improvements](https://github.com/sgl-project/sglang/issues/32950) — 2 comments, 0 reactions
+- [sgl-project/sglang: add flashinfer cute-dsl backend for mxfp8 gemm](https://github.com/sgl-project/sglang/pull/34042) — 3 comments, 0 reactions
+- [sgl-project/sglang: Profiling Enhancements \[2/3\]: detailed execution step annotations](https://github.com/sgl-project/sglang/pull/24911) — 10 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix extreme case in pythonic parser argument json safety ](https://github.com/vllm-project/vllm/pull/51649) — 4 comments, 2 reactions
+- [sgl-project/sglang: Revert "\[Kimi K3\] Fuse MLA gate projection into QKV-A GEMM"](https://github.com/sgl-project/sglang/pull/34642) — 2 comments, 0 reactions
+- [sgl-project/sglang: fix: make automatic NUMA binding configurable](https://github.com/sgl-project/sglang/pull/30394) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\] Accelerate AITER unified-attention decode with scaled FP8 Q](https://github.com/sgl-project/sglang/pull/31856) — 11 comments, 0 reactions
+- [ray-project/ray: \[train\] set Neuron rendezvous env vars in the XLA backend](https://github.com/ray-project/ray/pull/65071) — 3 comments, 1 reactions
+- [ray-project/ray: \[Serve\] Optimize RollingWindow metrics using monotonic deque in O(1)](https://github.com/ray-project/ray/pull/65031) — 2 comments, 1 reactions
+- [ray-project/ray: \[Autoscaler\]\[AWS\] Retry key pair creation after duplicate](https://github.com/ray-project/ray/pull/64738) — 2 comments, 1 reactions
+- [ray-project/ray: \[WIP\]\[serve\] Use `ObjectRefGenerator._get_next_ref_n` to avoid blocking on `_to_object_ref`](https://github.com/ray-project/ray/pull/64451) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Xiaomi MiMo models: 'output_config' parameter causes AsyncCompletions.create() to fail with Claude Code](https://github.com/BerriAI/litellm/issues/24549) — 8 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\]\[CI\] Add GPT-OSS and Kimi-K3 ROCm 7.2 perf benchmarks](https://github.com/sgl-project/sglang/pull/34645) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[XPU\] Add sequence parallelism support for DeepSeek V4](https://github.com/vllm-project/vllm/pull/51346) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Improve context-parallel backend error guidance](https://github.com/vllm-project/vllm/pull/52075) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] Fuse shared_expert_gate GEMV into the MoE append kernel (HIP/aiter)](https://github.com/sgl-project/sglang/pull/28666) — 25 comments, 1 reactions
+- [vllm-project/vllm: \[Kimi-K3\]\[AMD\] Return KDA and MLA projection outputs directly](https://github.com/vllm-project/vllm/pull/50592) — 12 comments, 2 reactions
+- [BerriAI/litellm: fix(cohere): support multimodal embed inputs](https://github.com/BerriAI/litellm/pull/36692) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\]\[CI\] CI: fix AMD 2-GPU multimodal-gen partition-count abort](https://github.com/sgl-project/sglang/pull/34328) — 7 comments, 0 reactions
+- [ray-project/ray: \[Data\] \[DO NOT MERGE\] arrow-rs Parquet reader A/B — treatment arm (release-test trigger)](https://github.com/ray-project/ray/pull/65406) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\] Pad non-aligned AITER MLA heads](https://github.com/vllm-project/vllm/pull/51647) — 11 comments, 2 reactions
+- [ray-project/ray: \[Umbrella\] Ray Sandboxing with gVisor](https://github.com/ray-project/ray/issues/65352) — 7 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] PR CI new test cases to cover](https://github.com/sgl-project/sglang/issues/27521) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] Systematic CUDA illegal memory access in DP-attention forward_idle on NVFP4 trtllm MoE (GLM-5.1, GB300, PD-prefill)](https://github.com/sgl-project/sglang/issues/27987) — 2 comments, 0 reactions
+- [sgl-project/sglang: Session Reaper Mid-Decode Race Condition & /v1/completions Parameter Drop](https://github.com/sgl-project/sglang/issues/23579) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] function call parse error, python 字符串 10220_3939392 转成了 102203939392](https://github.com/sgl-project/sglang/issues/28111) — 1 comments, 0 reactions
+- [ray-project/ray: \[Data\] Fix ResourceBudget backpressure causing pipeline stall](https://github.com/ray-project/ray/pull/64601) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[RL\] Add nccl-m2n sharding-aware weight transfer (worker side)](https://github.com/vllm-project/vllm/pull/51520) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[MoonEP\] BF16 PoC integration for Kimi-K3](https://github.com/sgl-project/sglang/pull/33249) — 4 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: litellm oci gemini model tool call issue](https://github.com/BerriAI/litellm/issues/18654) — 8 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: DB_Models not shown on AI Hub](https://github.com/BerriAI/litellm/issues/19853) — 4 comments, 0 reactions
+- [BerriAI/litellm: fix(ollama): track tool_calls state across streaming chunks for correct finish_reason](https://github.com/BerriAI/litellm/pull/20585) — 7 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): auto-configure PROMETHEUS_MULTIPROC_DIR for multi-worker setups](https://github.com/BerriAI/litellm/pull/20911) — 7 comments, 3 reactions
+- [BerriAI/litellm: fix(caching): sort embedding results by index to prevent cache misalignment](https://github.com/BerriAI/litellm/pull/20949) — 5 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: LiteLLM Proxy - Responses API streaming omits necessary SSE event types](https://github.com/BerriAI/litellm/issues/20975) — 5 comments, 4 reactions
+- [BerriAI/litellm: Rebranding PR for Highflame Guardrails (formerly javelin)](https://github.com/BerriAI/litellm/pull/21132) — 7 comments, 1 reactions
+- [BerriAI/litellm: \[Feature\]: Support custom and dynamic headers for A2A Agents](https://github.com/BerriAI/litellm/issues/21409) — 3 comments, 3 reactions
+- [BerriAI/litellm: feat(anthropic): add top-level cache_control for automatic prompt cac…](https://github.com/BerriAI/litellm/pull/21784) — 8 comments, 4 reactions
+- [BerriAI/litellm: \[Feature\]: add support priority/flex paygo for gemini-2.5-flash and gemini-2.5-flash-lite](https://github.com/BerriAI/litellm/issues/23388) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: issue while adding Custom MCP server](https://github.com/BerriAI/litellm/issues/23869) — 17 comments, 9 reactions
+- [BerriAI/litellm: \[Bug\]: Provider List: https://docs.litellm.ai/docs/providers](https://github.com/BerriAI/litellm/issues/23879) — 6 comments, 6 reactions
+- [BerriAI/litellm: \[Bug\]: Vector store creation fails when using model mapping public model name for embedding_model](https://github.com/BerriAI/litellm/issues/23980) — 4 comments, 0 reactions
+- [BerriAI/litellm: ## Bug: Usage AI Chat fails when selected LiteLLM model name is a proxy alias / model group](https://github.com/BerriAI/litellm/issues/24513) — 5 comments, 0 reactions
+- [BerriAI/litellm: Feature/add hpc ai provider](https://github.com/BerriAI/litellm/pull/24613) — 7 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Critical: Response leakage / Cross-talk between users in Redis Cluster environment on OpenShift](https://github.com/BerriAI/litellm/issues/25447) — 5 comments, 0 reactions
+- [BerriAI/litellm: \[Feature\]: Expose actual served model in response when router falls back to a different deployment](https://github.com/BerriAI/litellm/issues/25503) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(caching): fix AttributeError crashes and embedding fallback for Qdrant semantic cache](https://github.com/BerriAI/litellm/pull/25556) — 8 comments, 1 reactions
+- [BerriAI/litellm: \[Feature\]: OCI provider: Cannot set servingType to DEDICATED (UI missing option)](https://github.com/BerriAI/litellm/issues/25688) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Model\] Register sparse DeepSeek V3.2 MTP](https://github.com/vllm-project/vllm/pull/51938) — 1 comments, 0 reactions
+- [BerriAI/litellm: Staging](https://github.com/BerriAI/litellm/pull/27199) — 5 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in lowest_tpm_rpm_v2.py](https://github.com/BerriAI/litellm/pull/27201) — 4 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in lowest_tpm_rpm.py"](https://github.com/BerriAI/litellm/pull/27202) — 4 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in lowest_cost.py](https://github.com/BerriAI/litellm/pull/27203) — 4 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in prometheus.py](https://github.com/BerriAI/litellm/pull/27204) — 3 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in proxy_server.py](https://github.com/BerriAI/litellm/pull/27205) — 4 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in project_endpoints.py](https://github.com/BerriAI/litellm/pull/27206) — 4 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in internal_user_endpoints.py](https://github.com/BerriAI/litellm/pull/27207) — 4 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in customer_endpoints.py](https://github.com/BerriAI/litellm/pull/27208) — 3 comments, 1 reactions
+- [BerriAI/litellm: Fix typo in router.py](https://github.com/BerriAI/litellm/pull/27209) — 4 comments, 1 reactions
+- [BerriAI/litellm: \[Feature\]: Custom Transport support for acompletion calls](https://github.com/BerriAI/litellm/issues/27213) — 4 comments, 0 reactions
+- [BerriAI/litellm: Fix Prometheus model-per-key rate limit gauges](https://github.com/BerriAI/litellm/pull/27260) — 3 comments, 0 reactions
+- [BerriAI/litellm: fix(anthropic_messages): strip non-user_id keys from metadata before forwarding](https://github.com/BerriAI/litellm/pull/27262) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(responses): handle response.incomplete streaming event in Responses->Chat transform](https://github.com/BerriAI/litellm/pull/27266) — 4 comments, 2 reactions
+- [BerriAI/litellm: \[Feature\]: allow toolset configuration via config](https://github.com/BerriAI/litellm/issues/27287) — 1 comments, 0 reactions
+- [BerriAI/litellm: feat(pricing): add Voyage v4 embedding model pricing](https://github.com/BerriAI/litellm/pull/27288) — 5 comments, 1 reactions
+- [BerriAI/litellm: Add HermesToken provider models and pricing](https://github.com/BerriAI/litellm/pull/27291) — 4 comments, 1 reactions
+- [BerriAI/litellm: fix(ui): wire bulk invite template download button](https://github.com/BerriAI/litellm/pull/27297) — 10 comments, 2 reactions
+- [BerriAI/litellm: fix(usage_ai_chat): route through llm_router so proxy model aliases work](https://github.com/BerriAI/litellm/pull/27298) — 3 comments, 0 reactions
+- [BerriAI/litellm: fix(langfuse): introspect Langfuse.__init__ signature for sdk_integration kwarg](https://github.com/BerriAI/litellm/pull/27312) — 2 comments, 1 reactions
+- [BerriAI/litellm: Fix Prometheus end-user metric cardinality tracking](https://github.com/BerriAI/litellm/pull/27316) — 3 comments, 1 reactions
+- [BerriAI/litellm: Improve budget ownership context](https://github.com/BerriAI/litellm/pull/27321) — 2 comments, 0 reactions
+- [BerriAI/litellm: \[LIT-2880\] @litellm/agent-sdk — TypeScript SDK for Agent → Session → Run](https://github.com/BerriAI/litellm/pull/27327) — 6 comments, 1 reactions
+- [BerriAI/litellm: \[LIT-2888\] B0: EC2 spike — prove RunInstances + user-data + HTTPS callback](https://github.com/BerriAI/litellm/pull/27328) — 5 comments, 1 reactions
+- [BerriAI/litellm: \[LIT-2877\] Epic A: Cursor SDK agent runtime — /v2/agents, /v2/sessions](https://github.com/BerriAI/litellm/pull/27330) — 14 comments, 1 reactions
+- [BerriAI/litellm: \[LIT-2881\] Admin UI — /agents three-pane dashboard (Cursor SDK)](https://github.com/BerriAI/litellm/pull/27331) — 3 comments, 1 reactions
+- [BerriAI/litellm: \[LIT-2891 part 1/2\] Cloud Agents settings — backend API + tests](https://github.com/BerriAI/litellm/pull/27332) — 6 comments, 1 reactions
+- [BerriAI/litellm: \[LIT-2878\] Epic B — VM provisioning (EC2 + AMI + provider abstraction)](https://github.com/BerriAI/litellm/pull/27335) — 4 comments, 1 reactions
+- [BerriAI/litellm: \[LIT-2890\] B2 — Warm pool + hydrate protocol (P95 230ms)](https://github.com/BerriAI/litellm/pull/27338) — 3 comments, 1 reactions
+- [BerriAI/litellm: feat(ambient): add Ambient as a new inference provider](https://github.com/BerriAI/litellm/pull/27882) — 7 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Rate limit error message body leaks full SHA-256 token hash on 429 responses](https://github.com/BerriAI/litellm/issues/27884) — 2 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: set global_max_parallel_requests not work](https://github.com/BerriAI/litellm/issues/27900) — 2 comments, 0 reactions
+- [BerriAI/litellm: feat(helm/job): add support for nodeSelector](https://github.com/BerriAI/litellm/pull/27918) — 5 comments, 1 reactions
+- [BerriAI/litellm: I want the same model alias (e.g., "Qwen3.5-9B-AWQ") to be callable by both /chat/completions and /v1/messages.](https://github.com/BerriAI/litellm/issues/27924) — 2 comments, 0 reactions
+- [BerriAI/litellm: \[WIP\] Litellm Metric Reporting Improvements](https://github.com/BerriAI/litellm/pull/27941) — 3 comments, 1 reactions
+- [BerriAI/litellm: Azure Model Router: /spend/logs stores router model instead of actual selected model](https://github.com/BerriAI/litellm/issues/27942) — 2 comments, 1 reactions
+- [BerriAI/litellm: fix(anthropic): add reasoning_content when converting thinking blocks to OpenAI format](https://github.com/BerriAI/litellm/pull/27947) — 7 comments, 2 reactions
+- [BerriAI/litellm: fix(bedrock): strip `client_metadata` from `filter_internal_params`](https://github.com/BerriAI/litellm/pull/27952) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix(responses): reorder `function_call_output` adjacent to `function_call` before chat-completion conversion](https://github.com/BerriAI/litellm/pull/27953) — 5 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Ollama reasoning_content always null — /api/generate doesn't return thinking field](https://github.com/BerriAI/litellm/issues/27956) — 2 comments, 0 reactions
+- [sgl-project/sglang: fix: preserve output logprobs without input logprobs](https://github.com/sgl-project/sglang/pull/34627) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Performance\]: Dynamic speculative decoding (num_speculative_tokens_per_batch_size) causes catastrophic aggregate-throughput collapse under concurrency at the batch-size threshold (MTP, V1/PIECEWISE)](https://github.com/vllm-project/vllm/issues/49548) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[DSV4\] Opt-in AITER gluon kernel for sparse-MLA decode on gfx950](https://github.com/vllm-project/vllm/pull/51714) — 0 comments, 2 reactions
+- [BerriAI/litellm: feat(skills): self-service skill submission with admin review](https://github.com/BerriAI/litellm/pull/36677) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: security: bump minimum setuptools version in requirements/common.txt](https://github.com/vllm-project/vllm/issues/51993) — 4 comments, 0 reactions
+- [BerriAI/litellm: fix(router): forward auto-router alias params from the marker entry, not the first same-name deployment](https://github.com/BerriAI/litellm/pull/36626) — 5 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: auto-router forwards the first same-name entry's api_base and api_key onto routed tier calls](https://github.com/BerriAI/litellm/issues/36619) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Spec Decode\] Apply suppress_tokens on the Gemma 4 MTP sparse path](https://github.com/vllm-project/vllm/pull/52072) — 1 comments, 2 reactions
+- [BerriAI/litellm: fix(mcp): configurable default top_k for mcp_tool_search](https://github.com/BerriAI/litellm/pull/33444) — 8 comments, 1 reactions
+- [vllm-project/vllm: \[Perf\]\[Spec Decode\] Disable EAGLE cache-hit block drop for always-K=0 dynamic DSD](https://github.com/vllm-project/vllm/pull/52070) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[AMD\] Annotate draft KV cache groups on the hybrid grouping path](https://github.com/vllm-project/vllm/pull/52047) — 0 comments, 2 reactions
+- [BerriAI/litellm: fix(exception_mapping): bare 429 in an error body no longer outranks the status code](https://github.com/BerriAI/litellm/pull/36705) — 3 comments, 2 reactions
+- [BerriAI/litellm: fix(ui): show and edit key-level router settings on a virtual key](https://github.com/BerriAI/litellm/pull/36674) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\]\[DI\]\[Mooncake\] Cap free GPU memory to guard against KFD PeerDirect accounting corruption](https://github.com/sgl-project/sglang/pull/34641) — 0 comments, 0 reactions
+- [sgl-project/sglang: Use piecewise cuda graphs](https://github.com/sgl-project/sglang/pull/31820) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[DCP\]\[Spec\] EAGLE/EAGLE3 support for decode context parallelism — stacked on #21637](https://github.com/sgl-project/sglang/pull/31785) — 1 comments, 1 reactions
+- [sgl-project/sglang: CUDA Coredump Tracker](https://github.com/sgl-project/sglang/issues/26340) — 232 comments, 0 reactions
+- [ray-project/ray: \[doc\]\[TPU\] Document TPU subslicing options with Ray](https://github.com/ray-project/ray/pull/65404) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[feature\] Add response-level input/output token ids to chat completions via SglExt](https://github.com/sgl-project/sglang/pull/34488) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Model\]\[NVIDIA\] Route DSA models to the SM100 implementation](https://github.com/vllm-project/vllm/pull/49790) — 4 comments, 2 reactions
+- [ray-project/ray: \[data\] Cap task pool resource demand by runnable inputs](https://github.com/ray-project/ray/pull/65435) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(ollama): ensure streaming chunks share consistent id and tool_calls finish_reason](https://github.com/BerriAI/litellm/pull/36700) — 1 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\] Switch to the Rock, Keep Python 3.12 and Ubuntu 22.04](https://github.com/vllm-project/vllm/pull/49925) — 12 comments, 2 reactions
+- [vllm-project/vllm: \[KV Offload\] Preserve KV event metadata until final residency removal](https://github.com/vllm-project/vllm/pull/52068) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Model\] deepseek-vl2: restore original DeepseekV2Config defaults for omitted language_config fields](https://github.com/vllm-project/vllm/pull/51302) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Make Gemma 4 suppress-token masking CUDA-graph safe](https://github.com/vllm-project/vllm/pull/48693) — 8 comments, 2 reactions
+- [vllm-project/vllm: \[Feature\] Add native forward-pass metrics emission](https://github.com/vllm-project/vllm/pull/52061) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[CI\] Use default installer for B300 tests](https://github.com/sgl-project/sglang/pull/34635) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[feature\] sglext output ids field](https://github.com/sgl-project/sglang/pull/31633) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[V1\]\[CUDA graph\] Dispatch uniform-decode batches to a padded FULL graph instead of falling to eager PIECEWISE](https://github.com/vllm-project/vllm/pull/52000) — 1 comments, 3 reactions
+- [BerriAI/litellm: feat(proxy): elect one owner per auxiliary DB job and add a worker role](https://github.com/BerriAI/litellm/pull/36618) — 9 comments, 1 reactions
+- [sgl-project/sglang: \[BugFix\] Allow model_loader_extra_config with remote_instance + modelexpress backend](https://github.com/sgl-project/sglang/pull/34639) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Skip padded state slots in the chunked GDN kernel](https://github.com/sgl-project/sglang/pull/33431) — 2 comments, 0 reactions
+- [sgl-project/sglang: feat: add cache salt support to KV cache events](https://github.com/sgl-project/sglang/pull/30827) — 30 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[K3\] Extend FP8 asm MLA prefill to non-divisor small head counts](https://github.com/vllm-project/vllm/pull/51040) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[Memory\] Measure complete CUDA graph capture footprint for KV budgeting](https://github.com/vllm-project/vllm/pull/51590) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[Docs\] Use Meta's canonical Muse Glimmer GGUF filename](https://github.com/sgl-project/sglang/pull/34626) — 0 comments, 0 reactions
+- [sgl-project/sglang: Expose flashinfer_cute_dsl as fp8 gemm backend](https://github.com/sgl-project/sglang/pull/34435) — 2 comments, 0 reactions
+- [BerriAI/litellm: build(deps): bump the github-actions group across 1 directory with 17 updates](https://github.com/BerriAI/litellm/pull/34645) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[DO NOT MERGE\]\[AMD\] Bump Mooncake pin to include cross-node RDMA multi-protocol fix](https://github.com/sgl-project/sglang/pull/30051) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[DCP\] Fuse the a2a pack/unpack copies in the MLA LSE reduce](https://github.com/sgl-project/sglang/pull/34614) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\] \[bugfix\] Chunked prefill paged decode masked load perf ](https://github.com/vllm-project/vllm/pull/50017) — 12 comments, 2 reactions
+- [sgl-project/sglang: \[CI\] Prefetch a scheduled stage's models before the test step](https://github.com/sgl-project/sglang/pull/34207) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Type-stabilize the FA4 split-KV prologue for CuTe DSL 4.6](https://github.com/sgl-project/sglang/pull/34368) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Kernel\] Extend skinny gemm N=5 to N=8 cases on GFX12 (RDNA4) using  SWMMAC optimization](https://github.com/vllm-project/vllm/pull/45559) — 3 comments, 3 reactions
+- [BerriAI/litellm: feat: add Gandr TTS provider](https://github.com/BerriAI/litellm/pull/36624) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[V1\] Chunk prompt-logprobs logits to bound the activation peak](https://github.com/vllm-project/vllm/pull/52054) — 1 comments, 2 reactions
+- [BerriAI/litellm: feat(ui): warn in the Admin UI when no Redis is configured](https://github.com/BerriAI/litellm/pull/36495) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[MRV2\] Respect dynamic K=0 from scheduler in AutoRegressiveSpeculator](https://github.com/vllm-project/vllm/pull/51575) — 2 comments, 2 reactions
+- [sgl-project/sglang: \[router\] cache_aware_zmq: load-aware selection from engine LoadSnapshot](https://github.com/sgl-project/sglang/pull/28600) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): return 401 not 500 on auth failure in master-key-only mode](https://github.com/BerriAI/litellm/pull/35480) — 4 comments, 1 reactions
+- [BerriAI/litellm: Add configurable user banner](https://github.com/BerriAI/litellm/pull/28518) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[do not merge\] check result of CI](https://github.com/sgl-project/sglang/pull/30691) — 28 comments, 0 reactions
+- [sgl-project/sglang: \[CI\] Fix nightly test failures](https://github.com/sgl-project/sglang/pull/34523) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Spec Decode\] Fix KV cache group explosion for hybrid models](https://github.com/vllm-project/vllm/pull/51742) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[Perf\] Move context_lens compute into prefill path for Minimax](https://github.com/vllm-project/vllm/pull/51932) — 0 comments, 2 reactions
+- [sgl-project/sglang: \[Scheduler\] Remove GPU rendezvous from symmetric DP metadata sync](https://github.com/sgl-project/sglang/pull/34625) — 0 comments, 0 reactions
+- [vllm-project/vllm: Feat/spec decode under pipeline parallel](https://github.com/vllm-project/vllm/pull/50514) — 23 comments, 2 reactions
+- [vllm-project/vllm: NIXL: Use int32 array for indices to avoid intermediate conversion](https://github.com/vllm-project/vllm/pull/51952) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Build\]\[AMD\] Update triton_kernels pin for RDNA MXFP4 matmul_ogs config](https://github.com/vllm-project/vllm/pull/52056) — 6 comments, 2 reactions
+- [vllm-project/vllm: \[Model\] Add Cohere2MoE Eagle3 auxiliary hidden states](https://github.com/vllm-project/vllm/pull/49819) — 6 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] ci: cache the CI image instead of re-pulling it in every job](https://github.com/sgl-project/sglang/pull/34487) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[KV-offload\]\[FS\]: Batching for read/write threads](https://github.com/vllm-project/vllm/pull/49225) — 20 comments, 2 reactions
+- [sgl-project/sglang: Fix DeepSeek-V4 routing: sqrtsoftplus underflow and unfloored renorm](https://github.com/sgl-project/sglang/pull/34459) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Frontend\]\[Core\]\[Spec Decode\] Per-request acceptance stats in OpenAI API responses](https://github.com/vllm-project/vllm/pull/48915) — 13 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Emit added/done lifecycle events for zero-delta streaming items](https://github.com/vllm-project/vllm/pull/48282) — 1 comments, 2 reactions
+- [BerriAI/litellm: feat(terraform/aws): make VPC, Aurora, and Redis optional](https://github.com/BerriAI/litellm/pull/36676) — 8 comments, 1 reactions
+- [sgl-project/sglang: \[Fix\] Key DSpark compact ragged CUDA graphs by request-slot geometry](https://github.com/sgl-project/sglang/pull/34636) — 0 comments, 0 reactions
+- [BerriAI/litellm: perf(spend-logs): bound retention cleanup so one run cannot saturate the database](https://github.com/BerriAI/litellm/pull/36594) — 7 comments, 1 reactions
+- [sgl-project/sglang: fix: Add support for using MXFP8 datatype in flashinfer A2A communicator](https://github.com/sgl-project/sglang/pull/30972) — 7 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]: Bump torch 2.13, triton 3.8, torchaudio, torchvision](https://github.com/vllm-project/vllm/pull/50605) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] \[GLM5\] Enable dense-MHA short-context prefill fallback on gfx950](https://github.com/sgl-project/sglang/pull/30808) — 16 comments, 0 reactions
+- [BerriAI/litellm: fix(mcp): oauth discovery must not cause outages](https://github.com/BerriAI/litellm/pull/36599) — 7 comments, 1 reactions
+- [BerriAI/litellm: feat(model_prices): add NVIDIA Nemotron 3.5 Lightning on OpenRouter and DeepInfra](https://github.com/BerriAI/litellm/pull/36696) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix(cost-map): bedrock_mantle gpt-5.6 sol/terra/luna now support 1M context](https://github.com/BerriAI/litellm/pull/36017) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Add Kimi K3 MoE support to benchmark_moe.py](https://github.com/vllm-project/vllm/pull/50082) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[Model\]\[Spec Decode\] Tap the pre-norm AttnRes mixture as the Kimi K3 DFlash aux state](https://github.com/vllm-project/vllm/pull/50487) — 24 comments, 3 reactions
+- [sgl-project/sglang: fix: reasoning_tokens counted when no thinking block is opened](https://github.com/sgl-project/sglang/pull/34634) — 0 comments, 0 reactions
+- [BerriAI/litellm: chore: temporary CI spike (do not review, will be closed)](https://github.com/BerriAI/litellm/pull/36701) — 3 comments, 0 reactions
+- [sgl-project/sglang: Fix _GenerationStreamAccumulator logprob_end off-by-one under retract](https://github.com/sgl-project/sglang/pull/26510) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(cost): honor an explicit zero tier rate instead of the fallback](https://github.com/BerriAI/litellm/pull/36697) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\] Defer `tilelang` import through its import `from vllm.tilelang_utils import tilelang` and relaxed `has_tilelang`](https://github.com/vllm-project/vllm/pull/51159) — 20 comments, 2 reactions
+- [bentoml/BentoML: fix(sdk): check generic args length on bare iterator return annotations to avoid IndexError](https://github.com/bentoml/BentoML/pull/5643) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Stop the Granite reasoning marker leaking into streamed reasoning](https://github.com/vllm-project/vllm/pull/50303) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Feature\]\[DSpark\]: Polish DSpark adaptive timings](https://github.com/vllm-project/vllm/issues/51874) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\]\[DSpark\]: Improve Adaptive DSpark Online Profiling](https://github.com/vllm-project/vllm/issues/52057) — 0 comments, 0 reactions
+- [BerriAI/litellm: refactor(ui): rebuild Default Team Settings on react-hook-form + zod](https://github.com/BerriAI/litellm/pull/34992) — 4 comments, 1 reactions
+- [sgl-project/sglang: \[Fix\] Fence relay staging writes behind the in-flight forward's tail relay writes](https://github.com/sgl-project/sglang/pull/34077) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Pin overlap batch tensors freed while forward-stream kernels still read them](https://github.com/sgl-project/sglang/pull/34076) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[PD\] Fix NIXL P/D serving stall after prefill replacement](https://github.com/sgl-project/sglang/pull/34289) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(router): never price a strategy-router alias](https://github.com/BerriAI/litellm/pull/36691) — 9 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Add DeepseekV4ForCausalLM to benchmark_moe.py model param dispatch](https://github.com/vllm-project/vllm/pull/52048) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Build\] Restore DeepGEMM SM120 support while preserving SITU](https://github.com/vllm-project/vllm/pull/50796) — 12 comments, 2 reactions
+- [vllm-project/vllm: \[Feature\]\[DSpark\]: Evaluate STS for online DSpark confidence alignment](https://github.com/vllm-project/vllm/issues/52053) — 0 comments, 0 reactions
+- [sgl-project/sglang: Fix reasoning_tokens counting the whole output when no thinking block is opened](https://github.com/sgl-project/sglang/pull/34633) — 0 comments, 0 reactions
+- [BerriAI/litellm: feat(vertex): add Lyria model support](https://github.com/BerriAI/litellm/pull/30856) — 8 comments, 1 reactions
+- [vllm-project/vllm: \[ROCm\] Use silu_and_mul_with_clamp's torch._C op](https://github.com/vllm-project/vllm/pull/52052) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: gpt-oss-120b MXFP4 + --enable-expert-parallel crashes at startup: modular MoE finalize allocates padded (3072) output for an unpadded (2880) expert result](https://github.com/vllm-project/vllm/issues/52051) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(router): stop deployment model_info lookups from mutating cached model info](https://github.com/BerriAI/litellm/pull/36690) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix(utils.py): support drop_params for dimensions on Azure and OpenAI compatible embedding calls](https://github.com/BerriAI/litellm/pull/32452) — 12 comments, 1 reactions
+- [sgl-project/sglang: \[AMD\] \[Perf\] Accelerate ROCm top-p selection and tree verification](https://github.com/sgl-project/sglang/pull/34454) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[CI Bug\] Fix ci moe test](https://github.com/vllm-project/vllm/pull/52009) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: Gemma 4 31B MTP - Slower T/S at high context](https://github.com/vllm-project/vllm/issues/52049) — 0 comments, 0 reactions
+- [ray-project/ray: \[Data/LLM\] Non stop CPU autoscaling with vLLM](https://github.com/ray-project/ray/issues/56431) — 11 comments, 0 reactions
+- [ray-project/ray: \[core\] Add opt-in swap accounting to memory monitor and scheduler](https://github.com/ray-project/ray/pull/63793) — 10 comments, 1 reactions
+- [sgl-project/sglang: Support pre-expanded Qwen3-VL video inputs](https://github.com/sgl-project/sglang/pull/34632) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\]\[DSpark\]: Enable varlen for Nemotron-H (Mamba)](https://github.com/vllm-project/vllm/issues/51868) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\]\[DSpark\]: Enable varlen for Qwen 3.x (GDN)](https://github.com/vllm-project/vllm/issues/51869) — 0 comments, 0 reactions
+- [BerriAI/litellm: chore(e2e): port the compat-matrix cron publisher to tests/e2e/claude_code](https://github.com/BerriAI/litellm/pull/36465) — 5 comments, 1 reactions
+- [BerriAI/litellm: feat(tests): Claude Code Compatibility Matrix v0](https://github.com/BerriAI/litellm/pull/28027) — 19 comments, 1 reactions
+- [sgl-project/sglang: \[ray\] expose get_scheduler_actor_name so callers can look up the schedulers](https://github.com/sgl-project/sglang/pull/34621) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Roadmap\] Apple Device Support (2026 Q2)](https://github.com/sgl-project/sglang/issues/19137) — 27 comments, 16 reactions
+- [sgl-project/sglang: \[Bug\] Guided decoding resumes one token too early for channel-framed reasoning formats (Muse Glimmer / ATEM)](https://github.com/sgl-project/sglang/issues/34631) — 0 comments, 0 reactions
+- [ray-project/ray: \[Data\] Throttle OutputBackpressureGuard releases with a per-op interval](https://github.com/ray-project/ray/pull/65202) — 3 comments, 1 reactions
+- [BerriAI/litellm: feat(proxy): add config source precedence toggle](https://github.com/BerriAI/litellm/pull/36669) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[MooncakeStore\] track resumed requests via scheduler's resumed_req_ids](https://github.com/vllm-project/vllm/pull/46595) — 2 comments, 1 reactions
+- [vllm-project/vllm: \[Attention\] Re-enable cross-layer KV cache layout for MLA via stride-aware kernels](https://github.com/vllm-project/vllm/pull/45111) — 0 comments, 3 reactions
+- [BerriAI/litellm: fix: honor drop_params in Anthropic pass-through endpoint (#31030)](https://github.com/BerriAI/litellm/pull/31070) — 19 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: LiteLLM_Config table is overwriting newly deployed config](https://github.com/BerriAI/litellm/issues/12875) — 11 comments, 5 reactions
+- [vllm-project/vllm: \[Perf\]\[Triton\] Reassociate softmax scale onto Q in unified attention](https://github.com/vllm-project/vllm/pull/48857) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): serialize model reconciles so concurrent model writes stop evicting each other](https://github.com/BerriAI/litellm/pull/36687) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] \[Build\] Fix DeepGEMM SM90 paged mqa `prefix_sum` out of range](https://github.com/vllm-project/vllm/pull/51182) — 1 comments, 3 reactions
+- [sgl-project/sglang: \[AMD\]\[CI\] Name extra-suite jobs after the ROCm stack they run](https://github.com/sgl-project/sglang/pull/34630) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: AttributeError: 'DeepseekV4Config' object has no attribute 'num_local_experts' / vllm 0.27.1 / DeepSeek-V4-Flash-0731](https://github.com/vllm-project/vllm/issues/52042) — 1 comments, 0 reactions
+- [sgl-project/sglang: Support deferred MoE finalize for MXFP4 and FP8 block-scale](https://github.com/sgl-project/sglang/pull/34456) — 5 comments, 0 reactions
+- [ray-project/ray: \[doc\] Add a KubeRay nav section and generalize the section sidebar](https://github.com/ray-project/ray/pull/65438) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Build\] Update DeepGEMM pin to deepseek-ai nv_dev tip](https://github.com/vllm-project/vllm/pull/52035) — 2 comments, 4 reactions
+- [vllm-project/vllm: \[Bug\]: Mistral-Small-3.1 FP8 (Pixtral) returns NaN on image inputs with compilation enabled; works with --enforce-eager](https://github.com/vllm-project/vllm/issues/52034) — 1 comments, 0 reactions
+- [ray-project/ray: \[data\] Avoid rebuilding row-sized output buffers](https://github.com/ray-project/ray/pull/65436) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Kimi-K3\] Add opt-in gfx942 MXFP4-to-int4 conversion](https://github.com/vllm-project/vllm/pull/51274) — 2 comments, 0 reactions
+- [ray-project/ray: \[docs\] vendor the KubeRay CRD API reference into the Ray docs](https://github.com/ray-project/ray/pull/65428) — 6 comments, 1 reactions
+- [BerriAI/litellm: test(e2e-ui): verify UI mutations against the API instead of trusting the toast](https://github.com/BerriAI/litellm/pull/36632) — 3 comments, 1 reactions
+- [BerriAI/litellm: feat(spend): add filter_time_by parameter to /spend/logs/v2 for endTime filtering](https://github.com/BerriAI/litellm/pull/36689) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[DCP\] Default query replication for GLM sparse attention](https://github.com/vllm-project/vllm/pull/50382) — 2 comments, 2 reactions
+- [ray-project/ray: \[Data\] read_webdataset emits one DataFrame per sample, causing per-sample size_bytes overhead in the output buffer](https://github.com/ray-project/ray/issues/65350) — 1 comments, 0 reactions
+- [ray-project/ray: \[Data\] Chunk DataFrame emission in WebDatasetDatasource._read_stream](https://github.com/ray-project/ray/pull/65394) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Multimodal\] Add multimodal special tokens for video&audio in Qwen_vl](https://github.com/sgl-project/sglang/pull/18157) — 3 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\]\[CI\] Fix multimodal 2-GPU partition count on AMD](https://github.com/sgl-project/sglang/pull/34628) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(batches): strip NUL bytes from passthrough batch tags before the managed object write](https://github.com/BerriAI/litellm/pull/36688) — 5 comments, 1 reactions
+- [bentoml/BentoML: fix(server): retain CapacityLimiter slot until worker thread completes (#5642)](https://github.com/bentoml/BentoML/pull/5671) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[Profiler\] Add Proton CUDA graph attribution](https://github.com/vllm-project/vllm/pull/51084) — 3 comments, 2 reactions
+- [BerriAI/litellm: feat(azure_ai): add Fireworks FW model pricing on Azure AI Foundry](https://github.com/BerriAI/litellm/pull/35613) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[New Model\]\[Nvidia\] Add SM12x support for DeepSeek V4 Flash with essential fixes](https://github.com/vllm-project/vllm/pull/41834) — 440 comments, 40 reactions
+- [sgl-project/sglang: \[Fix\] top k int32 overflow](https://github.com/sgl-project/sglang/pull/17788) — 3 comments, 0 reactions
+- [sgl-project/sglang: \[Doc\] Replace model docs with redirect stubs to cookbook](https://github.com/sgl-project/sglang/pull/18432) — 1 comments, 0 reactions
+- [vllm-project/vllm:  \[Hardware\]\[AMD\] Enable fused bf16→fp32 router GEMM on ROCm](https://github.com/vllm-project/vllm/pull/50268) — 3 comments, 2 reactions
+- [sgl-project/sglang: Add fmha_v2 attention backend for SM90/120](https://github.com/sgl-project/sglang/pull/23112) — 7 comments, 0 reactions
+- [BerriAI/litellm: feat(realtime): support latest OpenAI audio models](https://github.com/BerriAI/litellm/pull/35600) — 10 comments, 1 reactions
+- [ray-project/ray: \[core\] Tombstone lease ids on CancelWorkerLease](https://github.com/ray-project/ray/pull/65420) — 0 comments, 1 reactions
+- [ray-project/ray: The task_id/put_index contract in `GetGeneratorReturnId` is unenforced (the RAY_CHECK is a tautology)](https://github.com/ray-project/ray/issues/65300) — 0 comments, 0 reactions
+- [ray-project/ray: \[Core\] Enforce the task_id/put_index contract in GetGeneratorReturnId](https://github.com/ray-project/ray/pull/65301) — 1 comments, 1 reactions
+- [sgl-project/sglang: \[Spec\]\[LoRA\] Support multi-adapter LoRA with EAGLE/NEXTN/DFLASH/DSPARK speculative decoding](https://github.com/sgl-project/sglang/pull/34337) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Pin DeepEP by its full commit hash](https://github.com/vllm-project/vllm/pull/52028) — 2 comments, 2 reactions
+- [BerriAI/litellm: fix(logging): stop deepcopying results redaction cannot redact](https://github.com/BerriAI/litellm/pull/36638) — 5 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: impossible to create the mcp-block guardrail from policie template](https://github.com/BerriAI/litellm/issues/30953) — 2 comments, 0 reactions
+- [BerriAI/litellm: \[Bug\]: Headroom respond with 404](https://github.com/BerriAI/litellm/issues/35933) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Kernel\] Fix persistent top-k histogram reuse after short rows](https://github.com/vllm-project/vllm/pull/49139) — 12 comments, 2 reactions
+- [BerriAI/litellm: fix(proxy): expand config-defined model access groups when resolving team models for /v2/model/info](https://github.com/BerriAI/litellm/pull/34211) — 4 comments, 1 reactions
+- [sgl-project/sglang: Add Reasoning-Aware Compression (RAC) pruning recipe for reasoning models](https://github.com/sgl-project/sglang/pull/32414) — 2 comments, 0 reactions
+- [BerriAI/litellm: feat(rust): support Bedrock Anthropic invoke on /v1/messages](https://github.com/BerriAI/litellm/pull/34563) — 6 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Disable fine-grained prefix-cache hits for incompatible hybrid KV layouts](https://github.com/vllm-project/vllm/pull/51843) — 5 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\] \[Bugfix\] Stop registering oversized inputs in the AMD deterministic all-reduce](https://github.com/sgl-project/sglang/pull/34543) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] DSv4: fuse compress+norm+rope, emit bpreshuffle scale natively, keep kv_score in bf16](https://github.com/sgl-project/sglang/pull/34624) — 0 comments, 0 reactions
+- [BerriAI/litellm: feat(ui): add dashboard dark mode (rebase of #18293)](https://github.com/BerriAI/litellm/pull/35615) — 8 comments, 2 reactions
+- [BerriAI/litellm: fix(passthrough): carry the budget reservation into request metadata](https://github.com/BerriAI/litellm/pull/36592) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Performance\]: MM input tensors are re-broadcast to all TP workers on every request, even when the prefix cache fully covers the image tokens (~19 ms per unique image)](https://github.com/vllm-project/vllm/issues/52040) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[TurboQuant\] Fix dangling decode scratch when workspace grows after cudagraph capture](https://github.com/vllm-project/vllm/pull/46067) — 4 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: CuTe FA4 forward (flash_fwd.py SM80/SM120) fails on first call: NameError 'mDynamicCausal' and missing self.is_split_kv](https://github.com/vllm-project/vllm/issues/51776) — 1 comments, 0 reactions
+- [BerriAI/litellm: refactor(ui): migrate policy impact popover to shadcn](https://github.com/BerriAI/litellm/pull/36653) — 5 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate models-and-endpoints to shadcn](https://github.com/BerriAI/litellm/pull/36648) — 8 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate team settings to shadcn](https://github.com/BerriAI/litellm/pull/36641) — 5 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate prompts to shadcn](https://github.com/BerriAI/litellm/pull/36643) — 7 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate users dashboard to shadcn](https://github.com/BerriAI/litellm/pull/36642) — 2 comments, 1 reactions
+- [BerriAI/litellm: refactor(ui): migrate admin-panel to shadcn](https://github.com/BerriAI/litellm/pull/36635) — 4 comments, 1 reactions
+- [vllm-project/vllm: \[Model\] Enable LoRA support for tower and connector in Cosmos3-Edge](https://github.com/vllm-project/vllm/pull/51949) — 2 comments, 2 reactions
+- [BerriAI/litellm: refactor(ui): migrate cost-tracking to shadcn](https://github.com/BerriAI/litellm/pull/36631) — 2 comments, 1 reactions
+- [BerriAI/litellm: feat(vertex-ai): support gemini 3.1 flash tts](https://github.com/BerriAI/litellm/pull/31915) — 5 comments, 0 reactions
+- [BerriAI/litellm: refactor(ui): migrate cost-optimization to shadcn](https://github.com/BerriAI/litellm/pull/36629) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: Cohere Embed v4 mixed text/image inputs are sent in the texts field](https://github.com/BerriAI/litellm/issues/36682) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix packed GDN decode launch for large batch-head grids](https://github.com/vllm-project/vllm/pull/52030) — 4 comments, 2 reactions
+- [BerriAI/litellm: feat(vertex-ai): add veo 3.1 lite model metadata](https://github.com/BerriAI/litellm/pull/30782) — 6 comments, 1 reactions
+- [BerriAI/litellm: fix: enable xhigh reasoning support for gpt-5.4-mini models](https://github.com/BerriAI/litellm/pull/26909) — 5 comments, 2 reactions
+- [BerriAI/litellm: feat(azure-ai): add Grok 4.3 model metadata](https://github.com/BerriAI/litellm/pull/27932) — 6 comments, 2 reactions
+- [BerriAI/litellm: fix(proxy): log requests rejected for an unparsable body in spend logs](https://github.com/BerriAI/litellm/pull/36673) — 5 comments, 1 reactions
+- [sgl-project/sglang: feat(unified-memory): one read-path id-space choke point; enable fa3/flashinfer/trtllm_mha/flashmla](https://github.com/sgl-project/sglang/pull/34613) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(router): await budget redis pipeline before sync reads](https://github.com/BerriAI/litellm/pull/32618) — 5 comments, 0 reactions
+- [BerriAI/litellm: fix(mcp): bound MCP client requests with a session read timeout](https://github.com/BerriAI/litellm/pull/36675) — 6 comments, 1 reactions
+- [vllm-project/vllm: AMD remove sync visible devices](https://github.com/vllm-project/vllm/pull/39448) — 8 comments, 3 reactions
+- [ray-project/ray: \[core\] Add local:// runtime_env URIs for code already in node](https://github.com/ray-project/ray/pull/65245) — 1 comments, 1 reactions
+- [ray-project/ray: \[serve\] remove deprecated Serve APIs](https://github.com/ray-project/ray/pull/65215) — 0 comments, 1 reactions
+- [sgl-project/sglang: fix(glm5.2): restrict MoE weights to local PP layers](https://github.com/sgl-project/sglang/pull/33793) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Gemma4\] Keep image bidirectional attention within the sliding window on the V2 model runner](https://github.com/vllm-project/vllm/pull/50539) — 5 comments, 2 reactions
+- [vllm-project/vllm: \[RFC\]: Packed Variable Length Speculative Decoding](https://github.com/vllm-project/vllm/issues/47839) — 2 comments, 10 reactions
+- [ray-project/ray: \[docs\] Add a Kubernetes and Ray scheduling orientation guide](https://github.com/ray-project/ray/pull/65263) — 1 comments, 1 reactions
+- [ray-project/ray: \[docs\] Add a scheduling overview with defaults to the Ray Core scheduling page](https://github.com/ray-project/ray/pull/65264) — 1 comments, 1 reactions
+- [ray-project/ray: \[doc\] Pin the RocksDB GCS example to the release that introduced it](https://github.com/ray-project/ray/pull/65429) — 0 comments, 1 reactions
+- [ray-project/ray: \[doc\] Correct the fake multi-node docker image guidance](https://github.com/ray-project/ray/pull/65430) — 0 comments, 1 reactions
+- [ray-project/ray: \[ci\] Scope the doc_readme lint check to the files it actually checks](https://github.com/ray-project/ray/pull/65431) — 0 comments, 1 reactions
+- [BerriAI/litellm: fix(utils): report missing API keys for compactifai, clarifai, ovhcloud](https://github.com/BerriAI/litellm/pull/33773) — 4 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: DB-stored auto-router/complexity-router models permanently disappear from /v1/models & /model/info (strategy registries never cleaned on update/delete)](https://github.com/BerriAI/litellm/issues/33168) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Scheduler\] Concurrent chunked prefill via --long-prefill-token-threshold](https://github.com/sgl-project/sglang/pull/34623) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix collect_env.py crash when pip list command fails](https://github.com/vllm-project/vllm/pull/52039) — 1 comments, 2 reactions
+- [sgl-project/sglang: \[Kernel\] Enable Helion backend for Kimi Delta-Attention](https://github.com/sgl-project/sglang/pull/32593) — 9 comments, 0 reactions
+- [ray-project/ray: \[Data\] OpTask._cancel never passes force=True](https://github.com/ray-project/ray/issues/65280) — 1 comments, 0 reactions
+- [vllm-project/vllm: \[RFC\]: LoRA adapter support for DFlash speculative decoding draft models](https://github.com/vllm-project/vllm/issues/52038) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix(batches): isolate CheckBatchCost failures per job](https://github.com/BerriAI/litellm/pull/35375) — 3 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): return rpm_limit and tpm_limit from /v2/user/info](https://github.com/BerriAI/litellm/pull/34085) — 5 comments, 0 reactions
+- [BerriAI/litellm: fix(batches): handle completed all-error batches with no output file](https://github.com/BerriAI/litellm/pull/34077) — 5 comments, 1 reactions
+- [sgl-project/sglang: \[sglang-miles\] RDT/NIXL weight sync support for Ray scheduler actors](https://github.com/sgl-project/sglang/pull/27723) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Feature\]: Kimi K3 Performance Optimization](https://github.com/vllm-project/vllm/issues/50587) — 0 comments, 4 reactions
+- [BerriAI/litellm: test: rename tests that a later definition shadowed](https://github.com/BerriAI/litellm/pull/36685) — 3 comments, 1 reactions
+- [sgl-project/sglang: \[HiCache\] Route --file-storage-path to the file storage backend](https://github.com/sgl-project/sglang/pull/33883) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[MRV2\] Require all requests to be decoding for uniform-decode dispatch](https://github.com/vllm-project/vllm/pull/50532) — 5 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\]\[CI\] Gating more ROCm tests](https://github.com/vllm-project/vllm/pull/44969) — 17 comments, 2 reactions
+- [ray-project/ray: \[docs\] Add Kubernetes and KubeRay conventions to the style guide](https://github.com/ray-project/ray/pull/65239) — 2 comments, 1 reactions
+- [BerriAI/litellm: fix(ui): align spend and budget columns](https://github.com/BerriAI/litellm/pull/35176) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]: nvfp4 reshape_and_cache_flash assumes NHD layout — silently mis-swizzles HND caches when num_kv_heads % 4 == 0](https://github.com/vllm-project/vllm/issues/49012) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(utils): report missing HEROKU_API_KEY in validate_environment](https://github.com/BerriAI/litellm/pull/33791) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] VLLM 0.27.0 has not been fixed MiniCPM-V-4.6 startup fails](https://github.com/vllm-project/vllm/pull/52036) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: online FP8 (--quantization fp8) produces corrupted, non-EOS-terminating output on Qwen2.5-1.5B-Instruct](https://github.com/vllm-project/vllm/issues/51456) — 2 comments, 0 reactions
+- [ray-project/ray: \[core\]\[dashboard\] Return 4xx from node and actor detail APIs](https://github.com/ray-project/ray/pull/65015) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[K3 Perf\] Flash kda out kernel for prefill, 1.1~1.4x kernel performance improvement](https://github.com/vllm-project/vllm/pull/51311) — 10 comments, 2 reactions
+- [BerriAI/litellm: feat(credentials): admin-owned logging credential, access shape, and destination mapping](https://github.com/BerriAI/litellm/pull/35513) — 9 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\] Clamp block table indices in align mode to prevent OOB gather](https://github.com/vllm-project/vllm/pull/51723) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Core\] Fix ValueError on KV load failure with a hybrid KV cache](https://github.com/vllm-project/vllm/pull/50388) — 4 comments, 3 reactions
+- [sgl-project/sglang: Kimi-K3 bug tracking](https://github.com/sgl-project/sglang/issues/32970) — 0 comments, 0 reactions
+- [BerriAI/litellm: test: remove tests that never execute](https://github.com/BerriAI/litellm/pull/36681) — 2 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Model\] Fix DiffusionGemma silently freezing attention mask under CUDA graph replay](https://github.com/vllm-project/vllm/pull/51994) — 1 comments, 2 reactions
+- [BerriAI/litellm: fix(stagger): keep every replica of an elected job on one instant](https://github.com/BerriAI/litellm/pull/36686) — 4 comments, 1 reactions
+- [bentoml/BentoML: docs: note OpenAI client base_url for multi-model gateways](https://github.com/bentoml/BentoML/pull/5681) — 1 comments, 0 reactions
+- [sgl-project/sglang: (fix) Prevent unknown HTTP paths from overloading Prometheus metrics generation](https://github.com/sgl-project/sglang/pull/31193) — 5 comments, 0 reactions
+- [BerriAI/litellm: fix(router): stop re-applying router-selecting request tags to the routed tier's deployments](https://github.com/BerriAI/litellm/pull/36628) — 6 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: tag filtering 401s the auto-router's routed tier unless every tier deployment repeats the marker's tag](https://github.com/BerriAI/litellm/issues/36621) — 1 comments, 0 reactions
+- [vllm-project/vllm: Bolins/shm tensor arena](https://github.com/vllm-project/vllm/pull/51207) — 8 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\] Initialize DeepGemmQuantScaleFMT oracle lazily; bound QuantFP8 UE8M0 packed path to group_size 128](https://github.com/vllm-project/vllm/pull/51359) — 9 comments, 2 reactions
+- [BerriAI/litellm: \[Bug\]: max_parallel_requests not reliable with anthropic adapter](https://github.com/BerriAI/litellm/issues/27955) — 4 comments, 0 reactions
+- [ray-project/ray: \[serve\] Add separate fast path for unary gRPC direct ingress](https://github.com/ray-project/ray/pull/65398) — 0 comments, 1 reactions
+- [ray-project/ray: fix(autoscaler): deduplicate cloud instances during termination](https://github.com/ray-project/ray/pull/65419) — 0 comments, 2 reactions
+- [BerriAI/litellm: feat(otel): resolve a request's trace destinations from its identity](https://github.com/BerriAI/litellm/pull/35514) — 10 comments, 1 reactions
+- [vllm-project/vllm: \[Structured Output\]\[Tool Calling\] Use xgrammar's reasoning parser instead vLLM's](https://github.com/vllm-project/vllm/pull/48116) — 8 comments, 4 reactions
+- [BerriAI/litellm: fix(reasoning): preserve deepseek reasoning effort](https://github.com/BerriAI/litellm/pull/35659) — 7 comments, 1 reactions
+- [BerriAI/litellm: fix(dashscope): bill tiered pricing by the request-size tier, not graduated slicing](https://github.com/BerriAI/litellm/pull/36679) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Rust Frontend\]\[gRPC\] Advertise LoRA capabilities](https://github.com/vllm-project/vllm/pull/52031) — 0 comments, 2 reactions
+- [sgl-project/sglang: docs: note OpenAI client base_url for multi-model gateways](https://github.com/sgl-project/sglang/pull/33316) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(streaming): dict-usage arm drops prompt_tokens_details/completion_tokens_details its sibling arms preserve](https://github.com/BerriAI/litellm/pull/36678) — 3 comments, 1 reactions
+- [vllm-project/vllm: docs(serving): note OpenAI client base_url for multi-model gateways](https://github.com/vllm-project/vllm/pull/50786) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[Feature\] IndexCache for DeepSeek-V4 (validated on V4-Flash-0731, including DSpark on to accelerate on top of ](https://github.com/vllm-project/vllm/pull/51209) — 3 comments, 2 reactions
+- [ray-project/ray: \[doc\] Style pass on the JAX TPU profiling user guide](https://github.com/ray-project/ray/pull/65287) — 2 comments, 1 reactions
+- [ray-project/ray: \[doc\] State that the ray-ml images are deprecated, and stop recommending them](https://github.com/ray-project/ray/pull/65388) — 0 comments, 1 reactions
+- [sgl-project/sglang: \[DSA\] Add LiteTopk fused indexer top-k prefill path for SM100](https://github.com/sgl-project/sglang/pull/32094) — 6 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\]\[DCP 1/N\] add dcp support for aiter backend](https://github.com/sgl-project/sglang/pull/34432) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\]\[DSv4\] Make the C128A decode topk row stride capture-stable](https://github.com/vllm-project/vllm/pull/51318) — 2 comments, 2 reactions
+- [sgl-project/sglang: Reserve multimodal runtime allocations and keep padded inputs aligned](https://github.com/sgl-project/sglang/pull/34141) — 8 comments, 0 reactions
+- [sgl-project/sglang: docs: update Qwen3.8 disaggregated serving configs](https://github.com/sgl-project/sglang/pull/34601) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[NVFP4 MoE\] Support CuTeDSL for ModelOpt W4A16 and pad non-gated experts](https://github.com/vllm-project/vllm/pull/51545) — 1 comments, 2 reactions
+- [vllm-project/vllm: Llamas 3.1 405B fp4 changes upstreaming from 355_wip](https://github.com/vllm-project/vllm/pull/25135) — 8 comments, 0 reactions
+- [BerriAI/litellm: fix(ui): show and edit key-level router settings on a virtual key](https://github.com/BerriAI/litellm/pull/36616) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix(mcp): bound MCP client requests with a session read timeout](https://github.com/BerriAI/litellm/pull/36625) — 7 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): log requests rejected for an unparsable body in spend logs](https://github.com/BerriAI/litellm/pull/36623) — 7 comments, 1 reactions
+- [sgl-project/sglang: \[misc\] update CI_PERMISSIONS.json](https://github.com/sgl-project/sglang/pull/34610) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Sampling\] Bound sampling-mask returns with opt-in truncation](https://github.com/sgl-project/sglang/pull/34037) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Guard tool call argument JSON parsing in chat message postprocessing](https://github.com/vllm-project/vllm/pull/48922) — 2 comments, 2 reactions
+- [sgl-project/sglang: fix(openai): accept a single tool-call object under tool_choice=required](https://github.com/sgl-project/sglang/pull/34609) — 0 comments, 0 reactions
+- [BerriAI/litellm: test: remove four mirror test files that exercise none of their module](https://github.com/BerriAI/litellm/pull/34635) — 2 comments, 1 reactions
+- [BerriAI/litellm: fix(utils): register_model with an empty payload silently turns unknown-model cost errors into $0.0](https://github.com/BerriAI/litellm/pull/36561) — 3 comments, 1 reactions
+- [vllm-project/vllm: \[Test\] e2e hybrid-Mamba prefix-cache corruption regression tests (#43559)](https://github.com/vllm-project/vllm/pull/48970) — 3 comments, 2 reactions
+- [sgl-project/sglang: \[AMD\]\[Not-Merge\]: torch fallbacks for top-k/top-p renorm so DSPARK/DFLASH works on ROCm](https://github.com/sgl-project/sglang/pull/32630) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]: vllm 0.23.0 and 0.24.0 - Qwen3.6-35B-A3B-FP8 - Fails generating code- "400 Unterminated string starting at"](https://github.com/vllm-project/vllm/issues/47761) — 21 comments, 0 reactions
+- [sgl-project/sglang: \[Spec\] Windowed draft-decode attention for built-in EAGLE / MTP drafts](https://github.com/sgl-project/sglang/pull/32673) — 10 comments, 1 reactions
+- [vllm-project/vllm: \[Bugfix\]\[ROCm\]\[MoE\] Update AITER MXFP4 W4A16 tests to the renamed expert_mask](https://github.com/vllm-project/vllm/pull/51980) — 5 comments, 2 reactions
+- [BerriAI/litellm: feat(models): add zai/glm-5.2 pricing](https://github.com/BerriAI/litellm/pull/31077) — 10 comments, 1 reactions
+- [vllm-project/vllm: \[Bug\]:  Rust frontend renders caller-supplied chat templates with no evaluation budget: a 116-byte request body costs 55 CPU-seconds](https://github.com/vllm-project/vllm/issues/52025) — 1 comments, 2 reactions
+- [sgl-project/sglang: feat(diffusion): add OmniDreams autoregressive video world model](https://github.com/sgl-project/sglang/pull/27442) — 15 comments, 1 reactions
+- [sgl-project/sglang: fix(moe): don't crash on a2a dispatch outputs without topk_output in mxfp4 path](https://github.com/sgl-project/sglang/pull/34605) — 0 comments, 0 reactions
+- [sgl-project/sglang: fix(moe): size mori/pplx dispatch-token checks for the DP-attention gather](https://github.com/sgl-project/sglang/pull/34606) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[Usage\]: RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}](https://github.com/vllm-project/vllm/issues/52029) — 0 comments, 0 reactions
+- [BerriAI/litellm: feat(observability): expose scheduled background job and cron lock telemetry](https://github.com/BerriAI/litellm/pull/36636) — 6 comments, 1 reactions
+- [sgl-project/sglang: Use TRTLLM allreduce fusion for Qwen 3.5](https://github.com/sgl-project/sglang/pull/19889) — 8 comments, 1 reactions
+- [sgl-project/sglang: \[Bug\] Kimi-K3 tool call parser fails ~8x/hour in production: TypeError 'string indices must be integers' and json 'unexpected character'](https://github.com/sgl-project/sglang/issues/34604) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Enable DSpark speculative decoding on ROCm](https://github.com/sgl-project/sglang/pull/33301) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] \[GLM5\] Add opt-in PTPC FP8 projections on gfx950](https://github.com/sgl-project/sglang/pull/33602) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] NemotronH --mamba-scheduler-strategy extra_buffer accuracy drop on AIME26 (Nemotron-3-Super-120B)](https://github.com/sgl-project/sglang/issues/31833) — 10 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): skip budget checks for model discovery routes (#31078)](https://github.com/BerriAI/litellm/pull/31081) — 9 comments, 1 reactions
+- [sgl-project/sglang: test: extend NVFP4 Marlin tests to SM120](https://github.com/sgl-project/sglang/pull/34327) — 5 comments, 0 reactions
+- [sgl-project/sglang: \[UT\]\[NPU\] Add npu unit test for ascend_gdn_backend and ascend_hybrid_linear_attn_backend](https://github.com/sgl-project/sglang/pull/32598) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[Bug\]:  logs from a parser loaded with --tool-parser-plugin bypass vLLM's logging config](https://github.com/vllm-project/vllm/issues/52027) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[Bug Fix\] Sync FlashInfer autotune tactic selection across TP ranks](https://github.com/sgl-project/sglang/pull/23317) — 22 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): emit sse keepalive comments during slow time-to-first-token](https://github.com/BerriAI/litellm/pull/34821) — 13 comments, 1 reactions
+- [BerriAI/litellm: feat(terraform/aws): make VPC, Aurora, and Redis optional](https://github.com/BerriAI/litellm/pull/36602) — 5 comments, 1 reactions
+- [vllm-project/vllm: \[CI Bug\] Fix ci qwen3.5](https://github.com/vllm-project/vllm/pull/52007) — 4 comments, 2 reactions
+- [sgl-project/sglang: \[Feature\] Decode context parallelism (DCP) for DSA models (DeepSeek V3.2, GLM-5.x)](https://github.com/sgl-project/sglang/pull/31821) — 13 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[Bugfix\] Restore AITER-compatible Triton 3.7 pin](https://github.com/vllm-project/vllm/pull/51291) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bug\]: With qwen3.5-35b-a3b, the performance is relatively poor both when using dflash and when not using it, but the accepted length of dflash is around 5–6.](https://github.com/vllm-project/vllm/issues/50722) — 6 comments, 0 reactions
+- [vllm-project/vllm: \[Bugfix\] Fix DeepSeek MoE sequence-parallel layout tracking](https://github.com/vllm-project/vllm/pull/50691) — 1 comments, 2 reactions
+- [vllm-project/vllm: \[Bugfix\]\[ROCm\] Stop running shared experts on the aux stream](https://github.com/vllm-project/vllm/pull/52010) — 2 comments, 2 reactions
+- [sgl-project/sglang: Fix IndexError when reducing CPU tensors after monkey_patch_torch_red…](https://github.com/sgl-project/sglang/pull/34595) — 1 comments, 0 reactions
+- [sgl-project/sglang: Honor should_apply_lora when wrapping LoRA target modules](https://github.com/sgl-project/sglang/pull/34428) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[Tests\] Add regression tests for reasoning parser edge cases](https://github.com/sgl-project/sglang/pull/34157) — 2 comments, 0 reactions
+- [sgl-project/sglang: \[Fix\] Harden DeepSeek-V4 tool-call streaming](https://github.com/sgl-project/sglang/pull/34600) — 0 comments, 0 reactions
+- [sgl-project/sglang: \[PD\] Don't release KV pages while Mooncake transfers are in flight](https://github.com/sgl-project/sglang/pull/32564) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Add MiniMax-M3 decode IndexCache (reuse sparse block selection …](https://github.com/sgl-project/sglang/pull/34583) — 2 comments, 0 reactions
+- [vllm-project/vllm: \[DO NOT MERGE\]\[Perf\]\[Feat\] Add generic cuteDSL LL FP32 router (GEMM)](https://github.com/vllm-project/vllm/pull/44343) — 3 comments, 2 reactions
+- [vllm-project/vllm: \[Bug/Perf\]: hybrid-SWA prefix caching collapses to zero for ALL requests in multi-session round-robin at ~25% pool occupancy (Gemma-4-31B; eager-freed SWA tails recycled tail-first)](https://github.com/vllm-project/vllm/issues/48435) — 7 comments, 0 reactions
+- [sgl-project/sglang: \[AMD\] Fix weight checking for AITER-shuffled block FP8 weights](https://github.com/sgl-project/sglang/pull/34330) — 0 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[CI\] Speed Up ROCm Skinny GEMM Tests (reduced parameterizations, ](https://github.com/vllm-project/vllm/pull/51877) — 7 comments, 2 reactions
+- [vllm-project/vllm: \[KV Offload\] Fix store threshold admission counting](https://github.com/vllm-project/vllm/pull/52022) — 2 comments, 2 reactions
+- [vllm-project/vllm: \[CI/Build\]\[The Rock\] Use model_class_overrides so spawned worker can use test PredictableLlamaForCausalLM class when worker spawned using Python 3.14](https://github.com/vllm-project/vllm/pull/49218) — 9 comments, 2 reactions
+- [sgl-project/sglang: \[Kimi K3\] Rework skipped-think fix as opt-in force_nonempty_content with streaming coverage](https://github.com/sgl-project/sglang/pull/34187) — 0 comments, 0 reactions
+- [vllm-project/vllm: replace batch_norm to numerically identical without cudnn](https://github.com/vllm-project/vllm/pull/51734) — 9 comments, 2 reactions
+- [vllm-project/vllm: NixlConnector hardcodes backends=\["UCX"\] default; no env-var override path; LIBFABRIC/EFA operators must discover kv_connector_extra_config.backends from source](https://github.com/vllm-project/vllm/issues/41814) — 4 comments, 0 reactions
+- [ray-project/ray: \[core\]\[gcs\]\[Actice-Passive\] Phase 2.1 Add Active-Passive leader-election interface (protocol, status, client cache)](https://github.com/ray-project/ray/pull/65132) — 2 comments, 1 reactions
+- [vllm-project/vllm: \[CI\] Split Quantization job into three directory-based steps](https://github.com/vllm-project/vllm/pull/51955) — 11 comments, 2 reactions
+- [vllm-project/vllm: \[ModelRunner v2\] Enable MRV2 for pooling models by default](https://github.com/vllm-project/vllm/pull/48290) — 23 comments, 3 reactions
+- [vllm-project/vllm: \[Model\] Add Inkling multi-depth MTP support \[5/N\]](https://github.com/vllm-project/vllm/pull/48768) — 8 comments, 14 reactions
+- [vllm-project/vllm: \[Bugfix\]\[Structured Outputs\] Reject empty JSON schemas](https://github.com/vllm-project/vllm/pull/52020) — 2 comments, 3 reactions
+- [sgl-project/sglang: fix: consolidate typo and grammar fixes across codebase](https://github.com/sgl-project/sglang/pull/34598) — 0 comments, 0 reactions
+- [sgl-project/sglang: fix: correct typos and grammar in code comments](https://github.com/sgl-project/sglang/pull/22085) — 4 comments, 0 reactions
+- [sgl-project/sglang: fix: remove duplicate words in comments and docstrings](https://github.com/sgl-project/sglang/pull/22068) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[ROCm\]\[K3\] Dequantize the fp8 decode query for MLA backends without quant-query support - TRITON_MLA](https://github.com/vllm-project/vllm/pull/51860) — 6 comments, 2 reactions
+- [ray-project/ray: \[serve\] test_cli deflake by adding explicit wait timeouts and stopping tracing config leak](https://github.com/ray-project/ray/pull/65432) — 0 comments, 1 reactions
+- [vllm-project/vllm: \[Responses API\] Fix truncation: auto returning 400 instead of truncating](https://github.com/vllm-project/vllm/pull/39413) — 8 comments, 3 reactions
+- [BerriAI/litellm: fix(proxy): route blocked models through healthy fallbacks](https://github.com/BerriAI/litellm/pull/36672) — 1 comments, 0 reactions
+- [BerriAI/litellm: test(ui): scope the role-gate assertions to each page's own endpoint](https://github.com/BerriAI/litellm/pull/36613) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: metric litellm_deployment_state being output with different labels in different paths](https://github.com/BerriAI/litellm/issues/35653) — 1 comments, 0 reactions
+- [ray-project/ray: \[ci\] Remove the banned-words lint check in favor of Vale](https://github.com/ray-project/ray/pull/65368) — 0 comments, 1 reactions
+- [sgl-project/sglang: Fix GLM streaming unknown-tool filtering](https://github.com/sgl-project/sglang/pull/34090) — 1 comments, 0 reactions
+- [sgl-project/sglang: perf(radix-cache): replace SHA256 with xxhash64 for cache block hashing](https://github.com/sgl-project/sglang/pull/23913) — 5 comments, 0 reactions
+- [sgl-project/sglang: fix: guard against None new_accepted_tokens in vocab boundary check](https://github.com/sgl-project/sglang/pull/23806) — 3 comments, 0 reactions
+- [sgl-project/sglang: fix(nixl): avoid UnboundLocalError in create_backend error handler](https://github.com/sgl-project/sglang/pull/23488) — 3 comments, 0 reactions
+- [sgl-project/sglang: fix: replace bare except with specific exception types in model_runner.py](https://github.com/sgl-project/sglang/pull/23487) — 3 comments, 0 reactions
+- [sgl-project/sglang: fix: reset batch_is_full after prefill-only filter_batch](https://github.com/sgl-project/sglang/pull/22596) — 2 comments, 1 reactions
+- [sgl-project/sglang: \[Test\] Add unit tests for model_loader/utils.py and weight_utils.py](https://github.com/sgl-project/sglang/pull/22451) — 2 comments, 1 reactions
+- [sgl-project/sglang: fix: correct insert_sort logic in add_req_state for ignore_eos scheduling](https://github.com/sgl-project/sglang/pull/22369) — 3 comments, 0 reactions
+- [vllm-project/vllm: \[Perf\]\[ROCm\] Add AITER custom AG/RS](https://github.com/vllm-project/vllm/pull/48247) — 9 comments, 3 reactions
+- [sgl-project/sglang: fix: correct typos in benchmark scripts](https://github.com/sgl-project/sglang/pull/21961) — 8 comments, 0 reactions
+- [sgl-project/sglang: \[Bug\] DeepEP low_latency buffer lazy init fails during CUDA graph capture with PP=2, TP=8, DP-attention, EP=8 on Kimi K2.6 W4A8](https://github.com/sgl-project/sglang/issues/29942) — 4 comments, 0 reactions
+- [vllm-project/vllm: \[KV Connector\] Validate HMA children for MultiConnector subclasses](https://github.com/vllm-project/vllm/pull/48882) — 0 comments, 2 reactions
+- [vllm-project/vllm: \[ROCm\] update triton in base docker for gluon compatibility](https://github.com/vllm-project/vllm/pull/51464) — 12 comments, 2 reactions
+- [vllm-project/vllm: \[RFC\]: Race-free port management: pick ports at bind time, publish over an existing channel](https://github.com/vllm-project/vllm/issues/51275) — 3 comments, 0 reactions
+- [BerriAI/litellm: \[Feature\]: Filter Request Logs by MCP server and namespaced tool](https://github.com/BerriAI/litellm/issues/35950) — 1 comments, 0 reactions
+- [BerriAI/litellm: perf(proxy): stagger scheduled background jobs across jobs and pods](https://github.com/BerriAI/litellm/pull/36589) — 6 comments, 1 reactions
+- [sgl-project/sglang: \[Bug\] MI355X Qwen3.5 MTP throughput is significantly behind B200/B300 on realistic agentic workloads](https://github.com/sgl-project/sglang/issues/34596) — 1 comments, 0 reactions
+- [sgl-project/sglang: \[FP8\]\[MoE\] Honor UE8M0 activation scales in Triton MoE](https://github.com/sgl-project/sglang/pull/33005) — 14 comments, 0 reactions
+- [sgl-project/sglang: Delete cutlass_mla, non-Marlin GPTQ, AWQ AOT kernel, and Dual Chunk Flash Attention](https://github.com/sgl-project/sglang/pull/32114) — 5 comments, 0 reactions
+- [BerriAI/litellm: feat(bedrock): add aws_session_tags support for STS AssumeRole](https://github.com/BerriAI/litellm/pull/34073) — 9 comments, 1 reactions
+- [vllm-project/vllm: \[Kernel\] Add B12X FP4 MoE backend](https://github.com/vllm-project/vllm/pull/52018) — 2 comments, 2 reactions
+- [BerriAI/litellm: fix(helm): wire envFrom secrets and configmaps into migrations job (closes #30311)](https://github.com/BerriAI/litellm/pull/30325) — 8 comments, 1 reactions
+- [sgl-project/sglang: \[Feat\]\[DeepSeek V4\] Shared KV Cache for Prefill CP](https://github.com/sgl-project/sglang/pull/32059) — 9 comments, 0 reactions
+- [ray-project/ray: \[Data\] OpTask._cancel never passes force=True](https://github.com/ray-project/ray/pull/65389) — 0 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]\[Proxy\]: Azure v1 image generation and editing use deployment-scoped routes](https://github.com/BerriAI/litellm/issues/35428) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(proxy): support Azure v1 image generation and editing](https://github.com/BerriAI/litellm/pull/34003) — 3 comments, 1 reactions
+- [BerriAI/litellm: fix(http_handler): dispose aiohttp session when AsyncHTTPHandler is finalized without a running loop](https://github.com/BerriAI/litellm/pull/36670) — 3 comments, 1 reactions
+- [BerriAI/litellm: feat(lint): gate writable TypedDict fields with LIT012](https://github.com/BerriAI/litellm/pull/36590) — 3 comments, 1 reactions
+- [BerriAI/litellm: fix(bedrock): use actual file size when Content-Length missing (#36388)](https://github.com/BerriAI/litellm/pull/36439) — 6 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: `_should_start_new_content_block` crashes on empty-`choices` chunk (`/v1/messages`, non-Anthropic backend)](https://github.com/BerriAI/litellm/issues/36553) — 3 comments, 0 reactions
+- [BerriAI/litellm: fix(mcp): handle integer progress tokens](https://github.com/BerriAI/litellm/pull/32252) — 4 comments, 3 reactions
+- [BerriAI/litellm: Fix "azure/gpt-image-1.5" and "azure/gpt-image-2" entries in "model_prices_and_context_window.json"](https://github.com/BerriAI/litellm/issues/36637) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(router): apply cache_kwargs regardless of Redis presence (#36309)](https://github.com/BerriAI/litellm/pull/36431) — 7 comments, 1 reactions
+- [BerriAI/litellm: fix(logging): handle Anthropic system prompt as list of content blocks (#36402)](https://github.com/BerriAI/litellm/pull/36433) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix(batches): route filtered list_batches through provider fallback](https://github.com/BerriAI/litellm/pull/36266) — 7 comments, 1 reactions
+- [BerriAI/litellm: fix(router): offload sync pre-call checks to thread pool](https://github.com/BerriAI/litellm/pull/36261) — 7 comments, 1 reactions
+- [BerriAI/litellm: Ask AI (Usage) should route through llm_router for proxy model aliases](https://github.com/BerriAI/litellm/issues/36414) — 1 comments, 0 reactions
+- [ray-project/ray: \[docs\] vendor the KubeRay CRD API reference into the Ray docs](https://github.com/ray-project/ray/pull/65426) — 1 comments, 1 reactions
+- [ray-project/ray: \[Docs\] Run pre-commit hooks on doc/source: a per-directory ratchet](https://github.com/ray-project/ray/issues/65427) — 0 comments, 0 reactions
+- [BerriAI/litellm: docs(adr): add architecture decision records, starting with provider usage extras transport](https://github.com/BerriAI/litellm/pull/36668) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]:  Error: litellm.BadRequestError: ChatgptException - {"detail":"System messages are not allowed"}](https://github.com/BerriAI/litellm/issues/21420) — 4 comments, 1 reactions
+- [ray-project/ray: \[CI\] Make the Vale pre-commit hook run, and upgrade Vale to 3.17.1](https://github.com/ray-project/ray/pull/65375) — 0 comments, 1 reactions
+- [BerriAI/litellm: ci: fix input to wow-actions/potential-duplicates - reaction -> reactions](https://github.com/BerriAI/litellm/pull/36667) — 2 comments, 1 reactions
+- [BerriAI/litellm: fix(responses): unwrap object-form tool_choice before calling the Responses API](https://github.com/BerriAI/litellm/pull/36032) — 4 comments, 1 reactions
+- [ray-project/ray: \[CI\] Clear whitespace debt in doc/source/data and drop the pre-commit carve-out](https://github.com/ray-project/ray/pull/65425) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix: include cache_write_tokens in cost calculation for cached-input requests](https://github.com/BerriAI/litellm/pull/33983) — 6 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): track spend for OpenAI passthrough /v1/embeddings](https://github.com/BerriAI/litellm/pull/36660) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix: propagate budget_duration when creating new budget in /customer/update](https://github.com/BerriAI/litellm/pull/36663) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: litellm_content_filter evaluations missing from request logs and Guardrails Monitor](https://github.com/BerriAI/litellm/issues/36566) — 3 comments, 0 reactions
+- [BerriAI/litellm: feat(audio): stream OpenAI TTS through the proxy to cut time-to-first-audio](https://github.com/BerriAI/litellm/pull/33976) — 12 comments, 1 reactions
+- [BerriAI/litellm: feat(logging): add async_post_call_failure_deployment_hook](https://github.com/BerriAI/litellm/pull/36657) — 9 comments, 1 reactions
+- [BerriAI/litellm: feat(azure): add support for apply_guardrail within Azure guardrails](https://github.com/BerriAI/litellm/pull/35990) — 7 comments, 1 reactions
+- [BerriAI/litellm: \[Feature\]: Filter spend logs by endTime in GET /spend/logs/v2](https://github.com/BerriAI/litellm/issues/36666) — 0 comments, 0 reactions
+- [BerriAI/litellm: \[Feature\]: Support adding skills to private repos with authentication (SSH key for local, GitHub access token for remote/private)](https://github.com/BerriAI/litellm/issues/26071) — 8 comments, 13 reactions
+- [BerriAI/litellm: \[Bug\]: Blocking a model's primary deployment(s) skips the configured `fallbacks` chain entirely, instead of routing to the healthy fallback](https://github.com/BerriAI/litellm/issues/36665) — 0 comments, 0 reactions
+- [BerriAI/litellm: fix: guardrail logs miss rows at the date range edges outside UTC](https://github.com/BerriAI/litellm/pull/36662) — 3 comments, 1 reactions
+- [BerriAI/litellm: Guardrail write-back on /v1/messages collapses Anthropic `document` blocks into `image` (400 for PDFs)](https://github.com/BerriAI/litellm/issues/36524) — 2 comments, 0 reactions
+- [BerriAI/litellm: fix(logging): log system prompt when passed as content-block list](https://github.com/BerriAI/litellm/pull/36427) — 6 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: streaming drops upstream `usage` when the final chunk has a non-empty `choices` array (cached_tokens lost, cost billed at full input rate)](https://github.com/BerriAI/litellm/issues/36168) — 1 comments, 0 reactions
+- [BerriAI/litellm: fix(check_batch_cost): retire permanently-unroutable and not-found batches](https://github.com/BerriAI/litellm/pull/36656) — 3 comments, 2 reactions
+- [ray-project/ray: \[dashboard\] Safely skip unsupported process GPU utilization API](https://github.com/ray-project/ray/pull/65417) — 0 comments, 1 reactions
+- [ray-project/ray: \[core\]\[rdt\] nixl: allow pool to serve tensors on a different device](https://github.com/ray-project/ray/pull/65418) — 0 comments, 1 reactions
+- [ray-project/ray: \[ci\] Add credential-free redirect-validation premerge check](https://github.com/ray-project/ray/pull/64413) — 1 comments, 1 reactions
+- [BerriAI/litellm: fix(logging): skip parsing redacted tool arguments](https://github.com/BerriAI/litellm/pull/36658) — 6 comments, 1 reactions
+- [BerriAI/litellm: fix: refactor HTTP handler initialization with client support](https://github.com/BerriAI/litellm/pull/30952) — 19 comments, 1 reactions
+- [BerriAI/litellm: fix: propagate budget_duration when creating new budget in /customer/update](https://github.com/BerriAI/litellm/pull/33982) — 5 comments, 1 reactions
+- [BerriAI/litellm: fix: propagate budget_duration when creating new budget in /customer/update](https://github.com/BerriAI/litellm/pull/36661) — 1 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: OpenAI passthrough `/v1/embeddings` writes no spend log row at all — billable tokens are unattributable, and budgets under-enforce](https://github.com/BerriAI/litellm/issues/36646) — 1 comments, 0 reactions
+- [BerriAI/litellm: feat: add ADEPT deterministic template routing for adaptive SLM delegation in agentic workflows](https://github.com/BerriAI/litellm/pull/31605) — 6 comments, 1 reactions
+- [ray-project/ray: fix(core): fold runtime-env hash instead of truncating to int](https://github.com/ray-project/ray/pull/64895) — 2 comments, 1 reactions
+- [BerriAI/litellm: fix(soniox): align synthesized SRT/VTT cues to real speech timing](https://github.com/BerriAI/litellm/pull/34440) — 7 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): resolve resources/read across multiple MCP servers](https://github.com/BerriAI/litellm/pull/34909) — 4 comments, 1 reactions
+- [BerriAI/litellm: fix(router): strip silent_model before generic Responses/Messages calls](https://github.com/BerriAI/litellm/pull/34892) — 6 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): convert budget window reset_at to UTC before comparing](https://github.com/BerriAI/litellm/pull/34899) — 3 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): preserve Router model_group in SpendLogs when guardrails add litellm_metadata](https://github.com/BerriAI/litellm/pull/34907) — 3 comments, 1 reactions
+- [BerriAI/litellm: fix(proxy): unwrap nested managed batch output file IDs on retrieve](https://github.com/BerriAI/litellm/pull/34083) — 4 comments, 1 reactions
+- [bentoml/BentoML: fix(build): resolve dockerfile_template against build ctx, not cwd](https://github.com/bentoml/BentoML/pull/5673) — 0 comments, 0 reactions
+- [BerriAI/litellm: perf(streaming): add shared JSONFragmentAccumulator for Vertex and Anthropic](https://github.com/BerriAI/litellm/pull/36610) — 5 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: OAUTH_TOKEN_INFO_ENDPOINT is under documented and doesn't exist for MSFT](https://github.com/BerriAI/litellm/issues/36659) — 0 comments, 0 reactions
+- [ray-project/ray: \[core\]\[cgraph\] Deprecate Ray Compiled Graphs](https://github.com/ray-project/ray/pull/65098) — 1 comments, 1 reactions
+- [ray-project/ray: Bump transformers from 4.36.2 to 5.5.0 in /python](https://github.com/ray-project/ray/pull/65020) — 1 comments, 0 reactions
+- [ray-project/ray: \[Core\] Support dynamic node labeling at runtime](https://github.com/ray-project/ray/pull/64986) — 2 comments, 1 reactions
+- [ray-project/ray: \[data\] Fix text_embedding release test via raydepsets python depset](https://github.com/ray-project/ray/pull/64885) — 1 comments, 1 reactions
+- [ray-project/ray: \[core\]\[rdt\] Application-level exclusive NIC assignment for NIXL/UCX t…](https://github.com/ray-project/ray/pull/64542) — 4 comments, 1 reactions
+- [ray-project/ray: \[core\] Post object info pubsub publishes on a dedicated thread](https://github.com/ray-project/ray/pull/64462) — 2 comments, 1 reactions
+- [BerriAI/litellm: \[Bug\]: /v1/messages returns OpenAI-shaped errors — a Bedrock 503 never becomes overloaded_error, so Claude Code shows a bare "API error"](https://github.com/BerriAI/litellm/issues/36655) — 1 comments, 0 reactions

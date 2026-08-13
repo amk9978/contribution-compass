@@ -1,0 +1,74 @@
+# Developer Infrastructure Updates — 2026-08-13
+
+> Automatically collected from GitHub. No analysis or synthesis is performed.
+
+Collected changes: 68 (68 new, 0 updated).
+
+- [astral-sh/uv: Dependency Dashboard](https://github.com/astral-sh/uv/issues/2658) — 0 comments, 0 reactions
+- [astral-sh/uv: Automate fixes for reproduced bugs with retained context](https://github.com/astral-sh/uv/pull/21079) — 1 comments, 0 reactions
+- [dagger/dagger: dagql: reduce e-graph result-removal contention](https://github.com/dagger/dagger/pull/13888) — 0 comments, 0 reactions
+- [astral-sh/uv: Add environment variable to always use `--active` flag](https://github.com/astral-sh/uv/issues/11273) — 16 comments, 26 reactions
+- [dagger/dagger: 🐞 dagger module init fails "outside changeset root" when dagger.toml is in a subdirectory (monorepo layout)](https://github.com/dagger/dagger/issues/13889) — 0 comments, 0 reactions
+- [astral-sh/uv: Deduplicate PubGrub requirement source conversion](https://github.com/astral-sh/uv/pull/21082) — 0 comments, 0 reactions
+- [dagger/dagger: workspace: make changes cwd-relative and isolate SDK generation](https://github.com/dagger/dagger/pull/13855) — 0 comments, 0 reactions
+- [dagger/dagger: workspace: add native polyfill replacements](https://github.com/dagger/dagger/pull/13854) — 0 comments, 0 reactions
+- [astral-sh/uv: move dirhash test_vectors.json generation to uv-dev](https://github.com/astral-sh/uv/pull/21081) — 1 comments, 0 reactions
+- [dagger/dagger: engine: support manual metadata pruning](https://github.com/dagger/dagger/pull/13887) — 0 comments, 0 reactions
+- [astral-sh/uv: Track Git commit changes in linked worktrees](https://github.com/astral-sh/uv/pull/21080) — 1 comments, 0 reactions
+- [dagger/dagger: \[backport-0.21\] engine: prune DAGQL cache by metadata size](https://github.com/dagger/dagger/pull/13886) — 0 comments, 0 reactions
+- [dagger/dagger: \[backport-0.21\] fix(engine): take session teardown off the client shutdown path](https://github.com/dagger/dagger/pull/13884) — 0 comments, 0 reactions
+- [dagger/dagger: \[backport-0.21\] fix: hide registry HTTP probe errors](https://github.com/dagger/dagger/pull/13885) — 0 comments, 0 reactions
+- [astral-sh/uv: Remove lib64-lib symlink in virtualenv](https://github.com/astral-sh/uv/pull/21015) — 6 comments, 0 reactions
+- [dagger/dagger: \[backport-0.21\] fix(engine): decouple active-clients API from session lifecycle locks](https://github.com/dagger/dagger/pull/13865) — 0 comments, 0 reactions
+- [astral-sh/uv: Add code coverage + HTML report machinery](https://github.com/astral-sh/uv/pull/19692) — 5 comments, 0 reactions
+- [dagger/dagger: Elixir SDK is ready for 1.0](https://github.com/dagger/dagger/issues/13867) — 2 comments, 0 reactions
+- [dagger/dagger: fix(elixir): update vulnerable runtime dependencies](https://github.com/dagger/dagger/pull/13872) — 0 comments, 0 reactions
+- [astral-sh/uv: Give a specific error when a PEP 723 closing tag has trailing whitespace](https://github.com/astral-sh/uv/pull/20944) — 5 comments, 0 reactions
+- [astral-sh/uv: Allow locking with an invalid project environment](https://github.com/astral-sh/uv/pull/21068) — 4 comments, 0 reactions
+- [dagger/dagger: feat(schema): require declared Workspace! args on module functions](https://github.com/dagger/dagger/pull/13850) — 1 comments, 0 reactions
+- [dagger/dagger: v0.x modules are given a v1.0 view](https://github.com/dagger/dagger/issues/13883) — 1 comments, 0 reactions
+- [dagger/dagger: feat: add experimental detachable sessions with source callback lifecycle](https://github.com/dagger/dagger/pull/13851) — 0 comments, 0 reactions
+- [astral-sh/uv: Update actions/setup-python action to v7](https://github.com/astral-sh/uv/pull/20874) — 0 comments, 0 reactions
+- [astral-sh/uv: PEP 723 inline metadata tag not found when there's trailing whitespace](https://github.com/astral-sh/uv/issues/10918) — 9 comments, 0 reactions
+- [astral-sh/uv: Allow additional data to be incuded in the user-agent similar to PIP_USER_AGENT_USER_DATA](https://github.com/astral-sh/uv/issues/17839) — 5 comments, 5 reactions
+- [testcontainers/testcontainers-go: \[Feature\]: Honor DOCKER_HOST scheme when launching Ryuk (TCP/TLS daemon support)](https://github.com/testcontainers/testcontainers-go/issues/3662) — 2 comments, 0 reactions
+- [astral-sh/uv: `uv run` uses wrong python interpreter inside virtualenv with copied python](https://github.com/astral-sh/uv/issues/21077) — 2 comments, 0 reactions
+- [astral-sh/uv: Only warn about unbounded build backends for source distributions](https://github.com/astral-sh/uv/pull/21078) — 1 comments, 0 reactions
+- [astral-sh/uv: Enable PGO for Windows x86-64 uv releases](https://github.com/astral-sh/uv/pull/21003) — 1 comments, 0 reactions
+- [astral-sh/uv: Update Rust crate async-trait to v0.1.91](https://github.com/astral-sh/uv/pull/20703) — 1 comments, 0 reactions
+- [astral-sh/uv: Reject conflicts between packages and their own extras](https://github.com/astral-sh/uv/pull/21038) — 2 comments, 0 reactions
+- [astral-sh/uv: Deduplicate binary payloads with archive manifests](https://github.com/astral-sh/uv/pull/19694) — 2 comments, 0 reactions
+- [astral-sh/uv: Heal interpreter metadata cache entries when creating a virtual environment indicates corruption](https://github.com/astral-sh/uv/pull/21073) — 1 comments, 0 reactions
+- [astral-sh/uv: Content-address wheel archives with directory hashes](https://github.com/astral-sh/uv/pull/19693) — 6 comments, 0 reactions
+- [astral-sh/uv: UV recreates the venv on every run.](https://github.com/astral-sh/uv/issues/21066) — 7 comments, 0 reactions
+- [astral-sh/uv: Fix lookahead for transitive extras on path dependencies](https://github.com/astral-sh/uv/pull/20736) — 3 comments, 0 reactions
+- [astral-sh/uv: uv-build: suppress "missing upper bound" warning via env var](https://github.com/astral-sh/uv/issues/21074) — 6 comments, 0 reactions
+- [astral-sh/uv: Enable PGO for Linux ARM64 uv releases](https://github.com/astral-sh/uv/pull/21004) — 1 comments, 0 reactions
+- [astral-sh/uv: Enable PGO for Linux x86-64 uv releases](https://github.com/astral-sh/uv/pull/21001) — 1 comments, 0 reactions
+- [astral-sh/uv: Enable PGO for macOS ARM64 uv releases](https://github.com/astral-sh/uv/pull/21002) — 1 comments, 0 reactions
+- [astral-sh/uv: Account for launcher overrides in interpreter cache keys](https://github.com/astral-sh/uv/pull/21075) — 0 comments, 0 reactions
+- [astral-sh/uv: Update taiki-e/install-action action to v2.85.8](https://github.com/astral-sh/uv/pull/21030) — 1 comments, 0 reactions
+- [astral-sh/uv: Fix formatting of invalid version bump errors](https://github.com/astral-sh/uv/pull/21076) — 0 comments, 0 reactions
+- [dagger/dagger: feat(workspace): import another workspace's dagger.toml](https://github.com/dagger/dagger/pull/13882) — 0 comments, 0 reactions
+- [dagger/dagger: Java SDK is ready for 1.0](https://github.com/dagger/dagger/issues/13630) — 1 comments, 0 reactions
+- [dagger/dagger: Typescript SDK ready for 1.0](https://github.com/dagger/dagger/issues/13627) — 2 comments, 0 reactions
+- [dagger/dagger: Python SDK ready for 1.0](https://github.com/dagger/dagger/issues/13626) — 2 comments, 1 reactions
+- [dagger/dagger: PHP SDK is ready for 1.0](https://github.com/dagger/dagger/issues/13631) — 1 comments, 0 reactions
+- [dagger/dagger: Go SDK is ready for 1.0](https://github.com/dagger/dagger/issues/13628) — 3 comments, 0 reactions
+- [dagger/dagger: Dang SDK is ready for 1.0](https://github.com/dagger/dagger/issues/13629) — 2 comments, 0 reactions
+- [astral-sh/uv: pip-style extra index url retry limit](https://github.com/astral-sh/uv/issues/21037) — 5 comments, 0 reactions
+- [astral-sh/uv: Fix interpreter cache invalidation test](https://github.com/astral-sh/uv/pull/21072) — 0 comments, 0 reactions
+- [astral-sh/uv: uv tree --group specific_group | not showing only specific_group](https://github.com/astral-sh/uv/issues/21064) — 4 comments, 0 reactions
+- [astral-sh/uv: Add regression test for uv#21062](https://github.com/astral-sh/uv/pull/21070) — 0 comments, 0 reactions
+- [astral-sh/uv: Add test coverage for uv#15224](https://github.com/astral-sh/uv/pull/21071) — 0 comments, 0 reactions
+- [astral-sh/uv: `uv lock` errors if `.venv` is not valid](https://github.com/astral-sh/uv/issues/19832) — 1 comments, 0 reactions
+- [astral-sh/uv: No migration path for native-tls -> system-certs with pinned environments](https://github.com/astral-sh/uv/issues/21035) — 4 comments, 0 reactions
+- [astral-sh/uv: --find-links with a relative path in a requirements file fails with "relative URL without a base" (regression since 0.12.x)](https://github.com/astral-sh/uv/issues/21016) — 7 comments, 1 reactions
+- [astral-sh/uv: Stabilize publish index readiness checks](https://github.com/astral-sh/uv/pull/21050) — 0 comments, 0 reactions
+- [astral-sh/uv: Skip stale rebases after pull request base changes](https://github.com/astral-sh/uv/pull/21069) — 0 comments, 0 reactions
+- [astral-sh/uv: uv run resolves a console-script to a different, already-deleted project's stale cached venv](https://github.com/astral-sh/uv/issues/21062) — 2 comments, 0 reactions
+- [astral-sh/uv: Use mimalloc v3](https://github.com/astral-sh/uv/pull/21014) — 12 comments, 0 reactions
+- [astral-sh/uv: Add test coverage for find-links URL and local path classification](https://github.com/astral-sh/uv/pull/21067) — 0 comments, 0 reactions
+- [astral-sh/uv: author field in pyproject.toml is being interpret as TOML 1.1 by uv build](https://github.com/astral-sh/uv/issues/21065) — 2 comments, 0 reactions
+- [dagger/dagger: core: pin latest container and Git releases](https://github.com/dagger/dagger/pull/13754) — 1 comments, 0 reactions
+- [dagger/dagger: fix(check): report the checks a rollup can't run instead of dropping them silently](https://github.com/dagger/dagger/pull/13870) — 0 comments, 0 reactions

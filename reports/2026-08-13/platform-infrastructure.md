@@ -1,0 +1,352 @@
+# Platform / Networking / Runtime Infrastructure Updates — 2026-08-13
+
+> Automatically collected from GitHub. No analysis or synthesis is performed.
+
+Collected changes: 346 (346 new, 0 updated).
+
+- [cilium/cilium: docs: add OpenChoreo to USERS.md](https://github.com/cilium/cilium/pull/47924) — 2 comments, 1 reactions
+- [cilium/cilium: bpf: preserve original source in NodePort tunnel traces](https://github.com/cilium/cilium/pull/47936) — 0 comments, 2 reactions
+- [envoyproxy/envoy: \[WIP\] bazel: Add compatibility stubs for bzlmod](https://github.com/envoyproxy/envoy/pull/43255) — 3 comments, 0 reactions
+- [envoyproxy/envoy: cleanup: replace erase-remove idiom with std::erase_if or absl::erase_if](https://github.com/envoyproxy/envoy/pull/46663) — 1 comments, 0 reactions
+- [cilium/cilium: cilium-cli: Skip HostToWorld if no external IPv6](https://github.com/cilium/cilium/pull/47931) — 2 comments, 2 reactions
+- [envoyproxy/envoy: Fix listFineGrainLoggers so that it lists loggers](https://github.com/envoyproxy/envoy/pull/46573) — 2 comments, 0 reactions
+- [cilium/cilium: test(bpf): parallelize eBPF test execution](https://github.com/cilium/cilium/pull/47427) — 0 comments, 2 reactions
+- [envoyproxy/envoy: Restrict local reply streaming integration tests](https://github.com/envoyproxy/envoy/pull/46682) — 2 comments, 0 reactions
+- [temporalio/temporal: DeleteWorkerDeploymentVersion fails permanently when a version summary outlives its version workflow](https://github.com/temporalio/temporal/issues/11539) — 0 comments, 0 reactions
+- [cilium/cilium: bpf: nat: extract inner IPv6 header from ICMP payload in-place](https://github.com/cilium/cilium/pull/47917) — 6 comments, 2 reactions
+- [cilium/cilium: fix(gateway): fail closed on invalid ExternalAuth](https://github.com/cilium/cilium/pull/47929) — 0 comments, 1 reactions
+- [containerd/containerd: \[release/2.2\] snapshots/erofs: protect snapshot staging from cleanup](https://github.com/containerd/containerd/pull/13950) — 0 comments, 0 reactions
+- [cilium/cilium: With Gateway API, the 3-way handshake fails when Envoy and the Backend Pod are running on the same Node.](https://github.com/cilium/cilium/issues/47591) — 4 comments, 0 reactions
+- [temporalio/temporal: 1.32.0: Prepare release branch](https://github.com/temporalio/temporal/pull/11538) — 1 comments, 0 reactions
+- [cilium/cilium: bpf: clean up 0-initializing for struct csum_offset](https://github.com/cilium/cilium/pull/47935) — 1 comments, 2 reactions
+- [temporalio/temporal: Clamp matching read partition count](https://github.com/temporalio/temporal/pull/11537) — 1 comments, 0 reactions
+- [temporalio/temporal: Fairsim partial counter configuration resets unspecified defaults](https://github.com/temporalio/temporal/issues/11534) — 1 comments, 0 reactions
+- [cilium/cilium: node/manager: Populate node table from manager](https://github.com/cilium/cilium/pull/45953) — 6 comments, 2 reactions
+- [temporalio/temporal: Validate fairsim inputs and preserve counter defaults](https://github.com/temporalio/temporal/pull/11536) — 0 comments, 0 reactions
+- [envoyproxy/envoy: \[WIP\] bazel: Switch to bzlmod](https://github.com/envoyproxy/envoy/pull/42890) — 5 comments, 0 reactions
+- [temporalio/temporal: Update Selected API list.](https://github.com/temporalio/temporal/pull/11535) — 0 comments, 0 reactions
+- [cilium/cilium: bpf: srv6: move SRv6 map structs to srv6.h](https://github.com/cilium/cilium/pull/47934) — 2 comments, 2 reactions
+- [cilium/cilium: Envoy NPDS not updated when new identities are added for GatewayAPI ingress endpoints doing hairpin traffic for (at least) wildcard matching policies](https://github.com/cilium/cilium/issues/43519) — 9 comments, 5 reactions
+- [cilium/cilium: k8s: Use upstream controller-tools](https://github.com/cilium/cilium/pull/45815) — 8 comments, 1 reactions
+- [envoyproxy/envoy: redis: fix use-after-free and connection leak on cluster removal](https://github.com/envoyproxy/envoy/pull/46358) — 3 comments, 0 reactions
+- [envoyproxy/envoy: add ratelimit descriptor extension to use jwt claims as descriptors](https://github.com/envoyproxy/envoy/pull/46138) — 11 comments, 1 reactions
+- [containerd/containerd: vendor: github.com/sirupsen/logrus v1.10.0](https://github.com/containerd/containerd/pull/13294) — 1 comments, 0 reactions
+- [cilium/cilium: gateway-api: log the right route kind when listing TLSRoutes fails](https://github.com/cilium/cilium/pull/47826) — 4 comments, 2 reactions
+- [envoyproxy/envoy: http1: unsafe ctype usage and size_t to int narrowing in the HTTP/1 parser](https://github.com/envoyproxy/envoy/issues/46505) — 1 comments, 0 reactions
+- [cilium/cilium: node: don't select IFA_F_DEPRECATED addresses as the node IP](https://github.com/cilium/cilium/pull/47878) — 3 comments, 1 reactions
+- [envoyproxy/envoy: Support hot restart handoff for connectionless UDP flows](https://github.com/envoyproxy/envoy/pull/46502) — 7 comments, 0 reactions
+- [temporalio/temporal: Return test runner orchestration outcomes](https://github.com/temporalio/temporal/pull/11033) — 0 comments, 0 reactions
+- [temporalio/temporal: Return report persistence errors](https://github.com/temporalio/temporal/pull/11518) — 0 comments, 0 reactions
+- [temporalio/temporal: Simplify test runner attempt state](https://github.com/temporalio/temporal/pull/11517) — 0 comments, 0 reactions
+- [temporalio/temporal: Remove legacy JUnit report merger](https://github.com/temporalio/temporal/pull/11516) — 0 comments, 0 reactions
+- [cilium/cilium: Configurable FQDN DNS Proxy Redirection](https://github.com/cilium/cilium/pull/46824) — 13 comments, 2 reactions
+- [cilium/cilium: Fix: data race for unlocked map read in regeneration goroutine](https://github.com/cilium/cilium/pull/47103) — 0 comments, 2 reactions
+- [temporalio/temporal: Persist canonical test attempt history](https://github.com/temporalio/temporal/pull/11515) — 0 comments, 0 reactions
+- [cilium/cilium: DONOTMERGE : test commit](https://github.com/cilium/cilium/pull/47933) — 0 comments, 2 reactions
+- [envoyproxy/envoy: Hot restart lead to the abnormal exit of the new process](https://github.com/envoyproxy/envoy/issues/7468) — 4 comments, 2 reactions
+- [cilium/cilium: ci: use GitHub App client ID in v1.20 image workflow](https://github.com/cilium/cilium/pull/47787) — 3 comments, 2 reactions
+- [cilium/cilium: ci: replace needs-attention action and use app client ID](https://github.com/cilium/cilium/pull/47788) — 2 comments, 2 reactions
+- [containerd/containerd: containerd crash with program exceeds 10000-thread limit - container-log FIFO open leaks an OS thread per failed CreateContainer](https://github.com/containerd/containerd/issues/13952) — 7 comments, 0 reactions
+- [cilium/cilium: ci: use GitHub App client ID in v1.18 image workflow](https://github.com/cilium/cilium/pull/47785) — 2 comments, 2 reactions
+- [cilium/cilium: ci: use GitHub App client ID in v1.19 image workflow](https://github.com/cilium/cilium/pull/47786) — 2 comments, 2 reactions
+- [cilium/cilium: gateway-api: report all route validation errors in status](https://github.com/cilium/cilium/pull/47843) — 0 comments, 1 reactions
+- [cilium/cilium: Documentation: document mesh security model](https://github.com/cilium/cilium/pull/47912) — 1 comments, 5 reactions
+- [cilium/cilium: bpf: lb: use dedicated new_backend bool](https://github.com/cilium/cilium/pull/47841) — 3 comments, 2 reactions
+- [cilium/cilium: bpf: dsr: only require DSR-info on SYN packet](https://github.com/cilium/cilium/pull/47592) — 2 comments, 2 reactions
+- [cilium/cilium: bpf: dsr: fix CT update in remote note's ingress path](https://github.com/cilium/cilium/pull/47593) — 3 comments, 2 reactions
+- [cilium/cilium: bpf: dsr: don't look for TCP header on fragmented packets](https://github.com/cilium/cilium/pull/47640) — 1 comments, 2 reactions
+- [cilium/cilium: bpf: dsr: also send DSR info on first non-SYN packet towards new backend](https://github.com/cilium/cilium/pull/47529) — 12 comments, 3 reactions
+- [cilium/cilium: bpf: dsr: re-use TCP SYN flag from CT lookup in remote-backend path](https://github.com/cilium/cilium/pull/47388) — 3 comments, 2 reactions
+- [cilium/cilium: \[v1.20\] bpf: dsr: various fixes](https://github.com/cilium/cilium/pull/47881) — 2 comments, 2 reactions
+- [cilium/cilium: clustermesh/endpointslices: explicitly limit maximum decoder memory](https://github.com/cilium/cilium/pull/47932) — 2 comments, 2 reactions
+- [cilium/cilium: kvstore: let \[UserEnforcePresence\] additionally revoke stale roles](https://github.com/cilium/cilium/pull/47915) — 5 comments, 2 reactions
+- [cilium/cilium: gh: verifier: test PR branch before base branch](https://github.com/cilium/cilium/pull/47928) — 3 comments, 2 reactions
+- [cilium/cilium: test(bpf): parallelize eBPF test compilation](https://github.com/cilium/cilium/pull/47426) — 5 comments, 2 reactions
+- [temporalio/temporal: Unable to create visibility database schema for MySQL](https://github.com/temporalio/temporal/issues/9522) — 1 comments, 0 reactions
+- [cilium/cilium: Host datapath BPF programs leak on every device change, exhausting kernel executable memory](https://github.com/cilium/cilium/issues/47730) — 2 comments, 0 reactions
+- [cilium/cilium: bpf: Enable extended masquerade port range for BPF masquerade](https://github.com/cilium/cilium/pull/47301) — 10 comments, 2 reactions
+- [cilium/cilium: cilium-cli/connectivity: detect Cilium version in connectivity perf setup](https://github.com/cilium/cilium/pull/47927) — 1 comments, 1 reactions
+- [envoyproxy/envoy: Newer release available `rules_shell`: v0.9.0 (current: v0.8.0)](https://github.com/envoyproxy/envoy/issues/46681) — 0 comments, 0 reactions
+- [envoyproxy/envoy: Newer release available `dd_trace_cpp`: v2.2.0 (current: v2.1.1)](https://github.com/envoyproxy/envoy/issues/46680) — 0 comments, 0 reactions
+- [envoyproxy/envoy: Add extension point to OpenTelemetry tracer for custom exporters.](https://github.com/envoyproxy/envoy/pull/46679) — 2 comments, 0 reactions
+- [envoyproxy/envoy: tls: share parsed CA trust store (X509_STORE) across contexts built from identical CA material](https://github.com/envoyproxy/envoy/issues/46114) — 1 comments, 0 reactions
+- [envoyproxy/envoy: build(deps): bump mypy from 1.20.2 to 2.3.0 in /mobile/tools/python](https://github.com/envoyproxy/envoy/pull/46113) — 1 comments, 0 reactions
+- [envoyproxy/envoy: Add Support for JA4Latency FingerPrint Hash](https://github.com/envoyproxy/envoy/issues/41065) — 10 comments, 1 reactions
+- [envoyproxy/envoy: reverse_tunnel: Implement proactive pings from the downstream_socket_interface](https://github.com/envoyproxy/envoy/issues/46677) — 1 comments, 0 reactions
+- [cilium/cilium: Fixes #47918: Handle label filters as regex when loading from file](https://github.com/cilium/cilium/pull/47919) — 2 comments, 1 reactions
+- [cilium/cilium: Potential issue with usePrimaryAddress on a t3.small](https://github.com/cilium/cilium/issues/47930) — 0 comments, 0 reactions
+- [envoyproxy/envoy: Manage on-call rotation and ical generation in code](https://github.com/envoyproxy/envoy/pull/43771) — 13 comments, 0 reactions
+- [containerd/containerd: metadata: bound snapshotter Remove during garbage collection](https://github.com/containerd/containerd/pull/13799) — 3 comments, 0 reactions
+- [temporalio/temporal: Fix approximateSize undercounting on activity start and heartbeat paths](https://github.com/temporalio/temporal/pull/11486) — 2 comments, 0 reactions
+- [temporalio/temporal: Drive test retries from attempt results](https://github.com/temporalio/temporal/pull/11488) — 0 comments, 0 reactions
+- [temporalio/temporal: Render crash reports canonically](https://github.com/temporalio/temporal/pull/11514) — 0 comments, 0 reactions
+- [temporalio/temporal: Record canonical Go test attempt results](https://github.com/temporalio/temporal/pull/11487) — 0 comments, 0 reactions
+- [envoyproxy/envoy: fix: health check probes blocked indefinitely when EDS initialFetchTimeout is 0s](https://github.com/envoyproxy/envoy/pull/46667) — 1 comments, 0 reactions
+- [cilium/cilium: cilium-cli/connectivity: detect Cilium version in connectivity perf setup](https://github.com/cilium/cilium/pull/47695) — 8 comments, 2 reactions
+- [cilium/cilium: Dependency Dashboard](https://github.com/cilium/cilium/issues/33550) — 2 comments, 0 reactions
+- [temporalio/temporal: Update test shard salt](https://github.com/temporalio/temporal/pull/11533) — 0 comments, 0 reactions
+- [temporalio/temporal: Update test shard salt](https://github.com/temporalio/temporal/pull/11471) — 0 comments, 0 reactions
+- [cilium/cilium: ipam: Accept native routing CIDR overlapping a secondary VPC CIDR](https://github.com/cilium/cilium/pull/47874) — 6 comments, 1 reactions
+- [cilium/cilium: helm: reflect Socket LB override for kubeProxyReplacement](https://github.com/cilium/cilium/pull/47454) — 4 comments, 2 reactions
+- [cilium/cilium: ci: use GitHub App client ID in v1.17 image workflow](https://github.com/cilium/cilium/pull/47784) — 3 comments, 2 reactions
+- [cilium/cilium: CI: firewall-egress-to-fqdns fails 6% of the time: command terminated with exit code 28](https://github.com/cilium/cilium/issues/47921) — 3 comments, 0 reactions
+- [cilium/cilium: ci: replace unsupported LLVM installation action](https://github.com/cilium/cilium/pull/47776) — 4 comments, 2 reactions
+- [envoyproxy/envoy: http2: allow configuring upstream headers as HPACK never indexed](https://github.com/envoyproxy/envoy/issues/46584) — 3 comments, 0 reactions
+- [cilium/cilium: pkg/idpool: lazy allocate idCache maps](https://github.com/cilium/cilium/pull/47926) — 1 comments, 1 reactions
+- [cilium/cilium: pkg/idpool: use lazy map allocation in NewIDPool to reduce memory usage](https://github.com/cilium/cilium/issues/47925) — 0 comments, 0 reactions
+- [temporalio/temporal: Preserve logger tags across Skip()](https://github.com/temporalio/temporal/pull/11355) — 0 comments, 0 reactions
+- [temporalio/temporal: Fix constant/error-dependent retry jitter being truncated to a no-op](https://github.com/temporalio/temporal/pull/11397) — 0 comments, 0 reactions
+- [envoyproxy/envoy: quic Support With OpenSSL](https://github.com/envoyproxy/envoy/issues/46678) — 0 comments, 0 reactions
+- [temporalio/temporal: Add Schedule V1 to V2 replay and detect coalesced updates](https://github.com/temporalio/temporal/pull/11531) — 0 comments, 0 reactions
+- [temporalio/temporal: Reproduce migrated zero catchup compatibility gap](https://github.com/temporalio/temporal/pull/11532) — 0 comments, 0 reactions
+- [temporalio/temporal: Fix Schedule V2 BUFFER_ONE with a deferred start](https://github.com/temporalio/temporal/pull/11530) — 0 comments, 0 reactions
+- [temporalio/temporal: Schedule v2 replay fidelity](https://github.com/temporalio/temporal/pull/11463) — 0 comments, 0 reactions
+- [cilium/cilium: egressgateway: react to local device/address changes](https://github.com/cilium/cilium/pull/47763) — 7 comments, 2 reactions
+- [cilium/cilium: CFP: OpenTelemetry tracing support for Gateway API-managed Envoy listeners](https://github.com/cilium/cilium/issues/44850) — 8 comments, 23 reactions
+- [cilium/cilium: Add zone locality info to envoy endpoints if service EndPointSlices have zone information.](https://github.com/cilium/cilium/pull/47335) — 3 comments, 2 reactions
+- [cilium/cilium: pkg/mtu: Add fallback to MTU of 1500 and identify the primary ENI by device index](https://github.com/cilium/cilium/pull/47643) — 2 comments, 2 reactions
+- [temporalio/temporal: Jwt audience env config](https://github.com/temporalio/temporal/pull/11470) — 1 comments, 0 reactions
+- [temporalio/temporal: JWT audience env config](https://github.com/temporalio/temporal/pull/11529) — 0 comments, 0 reactions
+- [temporalio/temporal: fix(activity): close standalone activity as TIMED_OUT instead of FAILED on worker-reported schedule timeout](https://github.com/temporalio/temporal/pull/11493) — 0 comments, 0 reactions
+- [cilium/cilium: bpf: stop dropping MLD and router solicitation sent from pods](https://github.com/cilium/cilium/pull/47677) — 0 comments, 2 reactions
+- [envoyproxy/envoy: test: fix flaky xds_failover StartupPrimaryNotResponding for GoogleGrpc TRANSIENT_FAILURE](https://github.com/envoyproxy/envoy/pull/46006) — 3 comments, 0 reactions
+- [containerd/containerd: CRI: tag+digest sandbox image breaks RunPodSandbox](https://github.com/containerd/containerd/issues/13529) — 1 comments, 1 reactions
+- [envoyproxy/envoy: load_aware_locality: add out-of-band ORCA reporting](https://github.com/envoyproxy/envoy/pull/46670) — 5 comments, 0 reactions
+- [cilium/cilium: fix: stale CEC owner UID lets GC delete the in-use Envoy config](https://github.com/cilium/cilium/pull/47923) — 1 comments, 1 reactions
+- [cilium/cilium: gateway-api: filter CEC controls from infrastructure metadata](https://github.com/cilium/cilium/pull/47732) — 4 comments, 2 reactions
+- [envoyproxy/envoy: rds: make the init manager for rds works for filter_chain and oauth2](https://github.com/envoyproxy/envoy/pull/46664) — 5 comments, 0 reactions
+- [containerd/containerd: cri: mv io create from create stage to start stage](https://github.com/containerd/containerd/pull/13956) — 0 comments, 0 reactions
+- [temporalio/temporal: Downscale test runner size, increase shards](https://github.com/temporalio/temporal/pull/10643) — 1 comments, 0 reactions
+- [temporalio/temporal: Add isolated functional test clusters](https://github.com/temporalio/temporal/pull/11465) — 0 comments, 0 reactions
+- [temporalio/temporal: Reduce functional test scheduler worker counts](https://github.com/temporalio/temporal/pull/11474) — 1 comments, 0 reactions
+- [temporalio/temporal: SignalWithStart hangs forever on an orphaned current-execution pointer](https://github.com/temporalio/temporal/issues/10841) — 2 comments, 0 reactions
+- [temporalio/temporal: Improve flaky report presentation](https://github.com/temporalio/temporal/pull/11528) — 2 comments, 0 reactions
+- [temporalio/temporal: Replace LeveledCompactionStrategy (LCS) with Cassandra 5.x default UnifiedCompactionStrategy (UCS) in schema.cql](https://github.com/temporalio/temporal/issues/11314) — 1 comments, 0 reactions
+- [temporalio/temporal: Use Go client for flaky report GitHub API calls](https://github.com/temporalio/temporal/pull/11523) — 1 comments, 0 reactions
+- [temporalio/temporal: Index GitHub Actions runs for flake bisecting](https://github.com/temporalio/temporal/pull/11524) — 1 comments, 1 reactions
+- [temporalio/temporal: Schedule "StartAt" not used when calculating intervals?](https://github.com/temporalio/temporal/issues/6173) — 0 comments, 1 reactions
+- [temporalio/temporal: Schedule deadlocks after Workflow ID reuse when previous scheduled action has Workflow Retry chain](https://github.com/temporalio/temporal/issues/10579) — 0 comments, 0 reactions
+- [temporalio/temporal: Fix sticky queue stats zeroed out](https://github.com/temporalio/temporal/pull/11527) — 0 comments, 0 reactions
+- [cilium/cilium: bpf: populate fib lookup L4 tuple for ECMP path selection](https://github.com/cilium/cilium/pull/45608) — 7 comments, 4 reactions
+- [temporalio/temporal: Scheduled Actions doesn't clear ContinuedFailure on null success payloads](https://github.com/temporalio/temporal/issues/8490) — 2 comments, 2 reactions
+- [temporalio/temporal: \[Scheduled Actions\] Skipped Action Metric](https://github.com/temporalio/temporal/issues/8087) — 1 comments, 1 reactions
+- [temporalio/temporal: Stabilize mixed-brain server rolls](https://github.com/temporalio/temporal/pull/11204) — 0 comments, 0 reactions
+- [temporalio/temporal: Improve flaky-test report collection and bisecting](https://github.com/temporalio/temporal/pull/11419) — 0 comments, 0 reactions
+- [cilium/cilium: bpf: update CT entry when source security identity changes](https://github.com/cilium/cilium/pull/44913) — 11 comments, 0 reactions
+- [cilium/cilium: helm: Support ipFamilyPolicy and ipFamilies for dual-stack in ingressController service](https://github.com/cilium/cilium/pull/45627) — 5 comments, 0 reactions
+- [cilium/cilium: contrib: Don't descend into ~/.cache subdirs when chowning in builder.sh](https://github.com/cilium/cilium/pull/45656) — 9 comments, 0 reactions
+- [cilium/cilium: bpf: sockLB: allow translation for L2-announced ExternalIPs](https://github.com/cilium/cilium/pull/45672) — 11 comments, 3 reactions
+- [cilium/cilium: overlay: Remove unnecessary identity lookup](https://github.com/cilium/cilium/pull/45718) — 5 comments, 0 reactions
+- [cilium/cilium: bandwidth: support DSCP marking for Pod egress traffic](https://github.com/cilium/cilium/pull/45915) — 3 comments, 0 reactions
+- [cilium/cilium: CFP: Use LoadBalancer Service external IP as backend pod egress source IP](https://github.com/cilium/cilium/issues/45965) — 3 comments, 0 reactions
+- [cilium/cilium: bpf: fib: let fib_lookup_v*() handle the tbid processing](https://github.com/cilium/cilium/pull/46049) — 5 comments, 0 reactions
+- [cilium/cilium: Pr/jwi/main/l7lb route](https://github.com/cilium/cilium/pull/46112) — 8 comments, 0 reactions
+- [cilium/cilium: \[POC\] CEL based policy endpoint selectors](https://github.com/cilium/cilium/pull/46199) — 2 comments, 0 reactions
+- [cilium/cilium: bpf: use bpf_redirect_peer() for local pod-to-pod delivery on veth](https://github.com/cilium/cilium/pull/46227) — 12 comments, 0 reactions
+- [cilium/cilium: bpf: nodeport: remove Ingress HostFW Policy between RevSNAT and RevDNAT](https://github.com/cilium/cilium/pull/46232) — 4 comments, 0 reactions
+- [cilium/cilium: .github: Support other versions in bug report template](https://github.com/cilium/cilium/pull/46239) — 3 comments, 0 reactions
+- [cilium/cilium: endpoint: gracefully degrade policy map overflow](https://github.com/cilium/cilium/pull/46287) — 5 comments, 2 reactions
+- [cilium/cilium: Hubble observer server hardening](https://github.com/cilium/cilium/pull/46290) — 4 comments, 2 reactions
+- [cilium/cilium: migrate IPV4_SNAT_CIDR/CIDR_length to runtime config](https://github.com/cilium/cilium/pull/46308) — 2 comments, 2 reactions
+- [cilium/cilium: bpf: pass LWT encap back to kernel](https://github.com/cilium/cilium/pull/46384) — 4 comments, 0 reactions
+- [cilium/cilium: bpf: Migrate IPv6_SNAT_* to runtime config](https://github.com/cilium/cilium/pull/46458) — 3 comments, 2 reactions
+- [cilium/cilium: Operator/IPAM: recover nodes dropped from the instance cache by the full ENI resync](https://github.com/cilium/cilium/issues/46513) — 1 comments, 0 reactions
+- [cilium/cilium: bpf: Migrate SNAT retries to runtime config](https://github.com/cilium/cilium/pull/46577) — 2 comments, 2 reactions
+- [cilium/cilium: On-demand synthetic probing for running workloads](https://github.com/cilium/cilium/issues/46532) — 1 comments, 0 reactions
+- [cilium/cilium: bgp: add BGP Monitoring Protocol (BMP, RFC 7854) support](https://github.com/cilium/cilium/pull/46630) — 1 comments, 2 reactions
+- [cilium/cilium: datapath: reimplement VLAN_FILTER using load-time config array](https://github.com/cilium/cilium/pull/46719) — 1 comments, 2 reactions
+- [cilium/cilium: WIP: pkg/kpr: Move into pkg/loadbalancer](https://github.com/cilium/cilium/pull/46695) — 2 comments, 2 reactions
+- [cilium/cilium: datapath: add a probe for numeric iterators](https://github.com/cilium/cilium/pull/46724) — 3 comments, 2 reactions
+- [cilium/cilium: dnsproxy: use portReleased channel to prevent EADDRINUSE on transparent mode](https://github.com/cilium/cilium/pull/46736) — 14 comments, 2 reactions
+- [cilium/cilium: Moved bgp config flags to bgp cell](https://github.com/cilium/cilium/pull/46748) — 2 comments, 3 reactions
+- [cilium/cilium: gatewayapi: always populate listener supportedKinds in status](https://github.com/cilium/cilium/pull/46765) — 3 comments, 2 reactions
+- [cilium/cilium: RFC: bpf: dsr: carry DSR info on mid-flow packets that create the CT entry](https://github.com/cilium/cilium/pull/47020) — 2 comments, 2 reactions
+- [cilium/cilium: envoy: Support Delta ADS callbacks](https://github.com/cilium/cilium/pull/47146) — 3 comments, 2 reactions
+- [cilium/cilium: docs: wireguard: update Pod-to-remote-backend encryption requirements](https://github.com/cilium/cilium/pull/47149) — 1 comments, 2 reactions
+- [temporalio/temporal: Standardize Claude review comments](https://github.com/temporalio/temporal/pull/11461) — 1 comments, 0 reactions
+- [temporalio/temporal: Extract shared JUnit XML handling](https://github.com/temporalio/temporal/pull/11480) — 1 comments, 0 reactions
+- [envoyproxy/envoy: Avoid excessive hashing for well-known header lookups](https://github.com/envoyproxy/envoy/pull/46560) — 1 comments, 0 reactions
+- [temporalio/temporal: Cleanup/consolidate completionHandler test infra](https://github.com/temporalio/temporal/pull/11482) — 1 comments, 0 reactions
+- [temporalio/temporal: replication: emit source_task_id and source_cluster on passive-side lifecycle events](https://github.com/temporalio/temporal/pull/11479) — 0 comments, 0 reactions
+- [cilium/cilium: \[41867\] Part 5: bpf: nat: skip SNAT for same subnet traffic in hybrid overlay mode](https://github.com/cilium/cilium/pull/45670) — 7 comments, 1 reactions
+- [temporalio/temporal: Record what a replication task carried on the sent lifecycle event](https://github.com/temporalio/temporal/pull/11459) — 0 comments, 0 reactions
+- [temporalio/temporal: Emit handover watermark and shard readiness wide events](https://github.com/temporalio/temporal/pull/11401) — 0 comments, 0 reactions
+- [envoyproxy/envoy: Avoid unnecesary renaming of watcher_target.yaml](https://github.com/envoyproxy/envoy/pull/46656) — 3 comments, 0 reactions
+- [cilium/cilium: operator: prevent CNPs with nodeSelector from silently enforcing nothing](https://github.com/cilium/cilium/pull/47882) — 3 comments, 2 reactions
+- [envoyproxy/envoy: Allow connection teardown even when cert selection is not yet complete](https://github.com/envoyproxy/envoy/pull/46676) — 2 comments, 0 reactions
+- [containerd/containerd: ci: add lima image list for fedora images](https://github.com/containerd/containerd/pull/13955) — 0 comments, 0 reactions
+- [temporalio/temporal: Skip unbuildable replication tasks on stream sender instead of blocking](https://github.com/temporalio/temporal/pull/11422) — 0 comments, 0 reactions
+- [temporalio/temporal: Validator generator \[WiP\]](https://github.com/temporalio/temporal/pull/10200) — 0 comments, 0 reactions
+- [containerd/containerd: shim: send event to a queue to prevent event to be dropped](https://github.com/containerd/containerd/pull/13653) — 4 comments, 1 reactions
+- [temporalio/temporal: Fix flakereport incomplete JUnit failures](https://github.com/temporalio/temporal/pull/11526) — 0 comments, 0 reactions
+- [containerd/containerd: fix(runtime): apply load timeout to load shim](https://github.com/containerd/containerd/pull/13954) — 0 comments, 0 reactions
+- [temporalio/temporal: Detect incompatible metric schemas in mixed-brain tests](https://github.com/temporalio/temporal/pull/11439) — 0 comments, 0 reactions
+- [envoyproxy/envoy: ext_proc: document session affinity configuration](https://github.com/envoyproxy/envoy/pull/46558) — 6 comments, 0 reactions
+- [temporalio/temporal: Add flaky test report input artifact](https://github.com/temporalio/temporal/pull/11522) — 0 comments, 0 reactions
+- [containerd/containerd: CRI image pull is sometimes canceled by image_pull_progress_timeout during unpack](https://github.com/containerd/containerd/issues/13909) — 1 comments, 1 reactions
+- [containerd/containerd: make benchmark never work](https://github.com/containerd/containerd/issues/12973) — 2 comments, 0 reactions
+- [containerd/containerd: Support env variable configuration for logging binary](https://github.com/containerd/containerd/issues/12760) — 2 comments, 0 reactions
+- [containerd/containerd: Unpack failure when mixing remote and local snapshotters](https://github.com/containerd/containerd/issues/12752) — 3 comments, 3 reactions
+- [containerd/containerd: Continuous memory growth in containerd v2.1.4](https://github.com/containerd/containerd/issues/12738) — 20 comments, 2 reactions
+- [containerd/containerd: 容器没有重启功能，是否可以出一个重启功能](https://github.com/containerd/containerd/issues/12728) — 5 comments, 0 reactions
+- [containerd/containerd: Support for time namespaces](https://github.com/containerd/containerd/issues/12517) — 5 comments, 0 reactions
+- [containerd/containerd: containerd on Windows 11 - cannot override root directory using --root parameter](https://github.com/containerd/containerd/issues/12131) — 4 comments, 0 reactions
+- [containerd/containerd: Draft: ctr support print plugin config](https://github.com/containerd/containerd/pull/11477) — 4 comments, 0 reactions
+- [containerd/containerd: ignore update status file when no space](https://github.com/containerd/containerd/pull/11458) — 4 comments, 0 reactions
+- [envoyproxy/envoy: openssl compat: implement CNSA1_202603 compliance policy](https://github.com/envoyproxy/envoy/issues/46104) — 1 comments, 0 reactions
+- [cilium/cilium: bpf: use memset() to 0-initialize IPv6 CT tuple](https://github.com/cilium/cilium/pull/47922) — 3 comments, 2 reactions
+- [cilium/cilium: gh: run BPF tests in parallel](https://github.com/cilium/cilium/pull/47920) — 0 comments, 2 reactions
+- [cilium/cilium: ENI IPAM: agent fatals when ipv4NativeRoutingCIDR is a secondary VPC CIDR association](https://github.com/cilium/cilium/issues/47811) — 2 comments, 1 reactions
+- [envoyproxy/envoy: transport_socket(http_11_proxy): add Proxy-Authorization header support](https://github.com/envoyproxy/envoy/pull/46675) — 2 comments, 0 reactions
+- [cilium/cilium: Improve BPF test speed](https://github.com/cilium/cilium/issues/45133) — 10 comments, 0 reactions
+- [temporalio/temporal: NEXUS-504: Refactor Nexus frontend interceptors](https://github.com/temporalio/temporal/pull/11464) — 0 comments, 0 reactions
+- [cilium/cilium: BPF Runtime Stats CLI](https://github.com/cilium/cilium/pull/47186) — 4 comments, 2 reactions
+- [containerd/containerd: docker fetcher: strip sensitive headers on descriptor URLs](https://github.com/containerd/containerd/pull/12889) — 5 comments, 0 reactions
+- [cilium/cilium: chore(deps): update all github action dependencies (main)](https://github.com/cilium/cilium/pull/47861) — 4 comments, 2 reactions
+- [containerd/containerd: core/remotes/docker: only fetch descriptor urls for foreign layers](https://github.com/containerd/containerd/pull/13775) — 3 comments, 0 reactions
+- [cilium/cilium: chore(deps): update all-dependencies (main)](https://github.com/cilium/cilium/pull/47859) — 8 comments, 2 reactions
+- [envoyproxy/envoy: Rescope Logger::Levels enum so it can be moved to envoy/ directory](https://github.com/envoyproxy/envoy/pull/46668) — 1 comments, 0 reactions
+- [temporalio/temporal: Populate CallbackInfo.outcome](https://github.com/temporalio/temporal/pull/11520) — 1 comments, 0 reactions
+- [envoyproxy/envoy: hot_restart: fix integer overflow in IPC message length handling](https://github.com/envoyproxy/envoy/pull/45882) — 5 comments, 0 reactions
+- [temporalio/temporal: Add completion callbacks to SANOs](https://github.com/temporalio/temporal/pull/11415) — 2 comments, 0 reactions
+- [envoyproxy/envoy: Order dependent bug](https://github.com/envoyproxy/envoy/pull/46673) — 2 comments, 0 reactions
+- [temporalio/temporal: Adaptive test timeouts via Await](https://github.com/temporalio/temporal/pull/10417) — 0 comments, 0 reactions
+- [temporalio/temporal: Await 2.0](https://github.com/temporalio/temporal/pull/10377) — 0 comments, 0 reactions
+- [temporalio/temporal: Richer await timeout diagnostics](https://github.com/temporalio/temporal/pull/10781) — 0 comments, 0 reactions
+- [temporalio/temporal: Add support for worker-variant callbacks](https://github.com/temporalio/temporal/pull/11456) — 1 comments, 0 reactions
+- [cilium/cilium: ci: skip etcd log fetch when kvstore was never started](https://github.com/cilium/cilium/pull/47801) — 1 comments, 2 reactions
+- [cilium/cilium: ipcache: fix CIDR reference counter to use canonical prefixes](https://github.com/cilium/cilium/pull/47208) — 4 comments, 3 reactions
+- [temporalio/temporal: Use generic JUnit documents at runner boundaries](https://github.com/temporalio/temporal/pull/11512) — 0 comments, 0 reactions
+- [cilium/cilium: Revert "gha: don't install LLVM and Clang in integration tests workflow"](https://github.com/cilium/cilium/pull/47780) — 7 comments, 2 reactions
+- [temporalio/temporal: Harden shared JUnit report IO](https://github.com/temporalio/temporal/pull/11513) — 0 comments, 0 reactions
+- [cilium/cilium: Fix endpoint panic when verbose policy logging is enabled](https://github.com/cilium/cilium/pull/47844) — 3 comments, 4 reactions
+- [cilium/cilium: v1.18 Backports 2026-08-10](https://github.com/cilium/cilium/pull/47887) — 2 comments, 0 reactions
+- [cilium/cilium: clustermesh: fix service export sync on missing CRDs](https://github.com/cilium/cilium/pull/47824) — 6 comments, 2 reactions
+- [cilium/cilium: datapath: turn ARP off on the base devices before bringing them up](https://github.com/cilium/cilium/pull/47838) — 2 comments, 2 reactions
+- [cilium/cilium: gateway-api: mark unresolved backend service ports in route status](https://github.com/cilium/cilium/pull/47766) — 1 comments, 2 reactions
+- [cilium/cilium: gateway-api: remove unnecessary TLSRoute support checks](https://github.com/cilium/cilium/pull/47758) — 2 comments, 2 reactions
+- [cilium/cilium: address httpUpstreamLingerTimeout chart templating issues](https://github.com/cilium/cilium/pull/47741) — 6 comments, 3 reactions
+- [cilium/cilium: fix: allow setting endpointPolicyUpdateTimeoutDuration in helm](https://github.com/cilium/cilium/pull/47754) — 3 comments, 2 reactions
+- [cilium/cilium: docs: clarify GAMMA DROP_EP_NOT_READY events](https://github.com/cilium/cilium/pull/47587) — 4 comments, 2 reactions
+- [cilium/cilium: v1.20 Backports 2026-08-10](https://github.com/cilium/cilium/pull/47885) — 2 comments, 2 reactions
+- [envoyproxy/envoy: fix: wasm remote code fetch race writing negative cache entry](https://github.com/envoyproxy/envoy/pull/46674) — 1 comments, 0 reactions
+- [cilium/cilium: golangci-lint: Fix `netlink.AddrList` escaping the forbidigo check](https://github.com/cilium/cilium/pull/47903) — 1 comments, 2 reactions
+- [temporalio/temporal: Enable Claude reviews for OSS Matching](https://github.com/temporalio/temporal/pull/11500) — 0 comments, 0 reactions
+- [temporalio/temporal: Preserve UTF-8 in test summaries](https://github.com/temporalio/temporal/pull/11511) — 0 comments, 0 reactions
+- [temporalio/temporal: Persist Callback terminal failures](https://github.com/temporalio/temporal/pull/11413) — 9 comments, 0 reactions
+- [cilium/cilium: Netkit + endpointRoutes + hostNamespaceOnly reclassifies service replies as new flows](https://github.com/cilium/cilium/issues/47913) — 0 comments, 0 reactions
+- [cilium/cilium: bpf: don't reclassify an already reverse-NATed service reply](https://github.com/cilium/cilium/pull/47914) — 3 comments, 1 reactions
+- [temporalio/temporal: Track process-lifetime object leak baselines](https://github.com/temporalio/temporal/pull/11505) — 1 comments, 0 reactions
+- [containerd/containerd: fix: prevent tar extraction data corruption by limiting reader size](https://github.com/containerd/containerd/pull/13705) — 0 comments, 0 reactions
+- [temporalio/temporal: Skip worker commands task queues in missing TQ check](https://github.com/temporalio/temporal/pull/11481) — 0 comments, 0 reactions
+- [envoyproxy/envoy: GeoIP LookupResult is always const, inhibiting move semantics](https://github.com/envoyproxy/envoy/issues/46531) — 5 comments, 0 reactions
+- [envoyproxy/envoy: \[draft\] dym: go sdk for udp listener filter](https://github.com/envoyproxy/envoy/pull/46672) — 1 comments, 0 reactions
+- [temporalio/temporal: Enable host level events cache by default](https://github.com/temporalio/temporal/pull/11450) — 0 comments, 0 reactions
+- [containerd/containerd: pkg/shim: Report bootstrap API mismatch on startup](https://github.com/containerd/containerd/pull/13910) — 0 comments, 0 reactions
+- [containerd/containerd: fix(cri): CRI image pull is sometimes canceled by image_pull_progress…](https://github.com/containerd/containerd/pull/13924) — 0 comments, 0 reactions
+- [cilium/cilium: docs: warn that Ingress TLS termination does not support ALPN for gRPC](https://github.com/cilium/cilium/pull/47422) — 5 comments, 2 reactions
+- [temporalio/temporal: \[CHASM\] Support WithRequestID on UpdateComponent](https://github.com/temporalio/temporal/pull/11169) — 0 comments, 0 reactions
+- [containerd/containerd: Ensure credentials are forwarded to configured mirrors ](https://github.com/containerd/containerd/pull/13949) — 2 comments, 0 reactions
+- [temporalio/temporal: Stuartwells/gradual connect shedding tasks](https://github.com/temporalio/temporal/pull/11492) — 0 comments, 0 reactions
+- [cilium/cilium: gateway-api/gamma: refresh CEC owner refs on route recreation](https://github.com/cilium/cilium/pull/47840) — 2 comments, 2 reactions
+- [envoyproxy/envoy: Guidance on RPM packaging of official release binaries for RHEL/Rocky Linux](https://github.com/envoyproxy/envoy/issues/45866) — 6 comments, 0 reactions
+- [envoyproxy/envoy: filesystem: refactor win32 watcher_impl to use absl mutex and fix buffer alignment](https://github.com/envoyproxy/envoy/pull/46655) — 1 comments, 0 reactions
+- [containerd/containerd: containerd-shim process isn't reaped for some killed containers](https://github.com/containerd/containerd/issues/5708) — 18 comments, 5 reactions
+- [containerd/containerd: oom: avoid per-wakeup allocations in cgroup v2 OOM watcher (#13558)](https://github.com/containerd/containerd/pull/13635) — 5 comments, 0 reactions
+- [envoyproxy/envoy: network_ext_proc: add onNewConnection event handling](https://github.com/envoyproxy/envoy/pull/46552) — 1 comments, 0 reactions
+- [temporalio/temporal: Reduce worker deployment log spam](https://github.com/temporalio/temporal/pull/11510) — 0 comments, 0 reactions
+- [temporalio/temporal: Reuse one persistence factory during server initialization](https://github.com/temporalio/temporal/pull/11506) — 1 comments, 0 reactions
+- [containerd/containerd: ctr: dedupe CRI image aliases in images list by default](https://github.com/containerd/containerd/pull/13830) — 1 comments, 0 reactions
+- [cilium/cilium: chore(deps): update docker.io/library/golang:1.25.12 docker digest to 2c7ebca (v1.18)](https://github.com/cilium/cilium/pull/47869) — 4 comments, 0 reactions
+- [cilium/cilium: \[41867\]\[Part6\] Hybrid Routing Route Installation](https://github.com/cilium/cilium/pull/45579) — 12 comments, 2 reactions
+- [cilium/cilium: golangci-lint: Forbid stdlib `net.Interface*` functions](https://github.com/cilium/cilium/pull/47902) — 1 comments, 3 reactions
+- [cilium/cilium: bpf, datapath: move IPv{6,4} direct routing address to runtime config](https://github.com/cilium/cilium/pull/47888) — 1 comments, 2 reactions
+- [cilium/cilium: standalone-dns-proxy: return an error when no endpoint is found](https://github.com/cilium/cilium/pull/47791) — 8 comments, 2 reactions
+- [containerd/containerd: Forward credentials to cr mirrors](https://github.com/containerd/containerd/pull/13953) — 0 comments, 0 reactions
+- [envoyproxy/envoy: \[bp/v1.36\] dfp: fix a bug when cluster is removed before async lb be completed (#45064)](https://github.com/envoyproxy/envoy/pull/46460) — 4 comments, 0 reactions
+- [envoyproxy/envoy: \[bp/v1.37\] dfp: fix a bug when cluster is removed before async lb be completed (#45064)](https://github.com/envoyproxy/envoy/pull/46461) — 3 comments, 0 reactions
+- [cilium/cilium: chore(deps): update all-dependencies (v1.19)](https://github.com/cilium/cilium/pull/47679) — 9 comments, 2 reactions
+- [cilium/cilium: fix: Prevent Installation Failures When Hubble TLS Uses External Certificate Volumes](https://github.com/cilium/cilium/pull/47231) — 5 comments, 2 reactions
+- [envoyproxy/envoy: http: add support for the QUERY method (RFC 10008)](https://github.com/envoyproxy/envoy/pull/46496) — 5 comments, 0 reactions
+- [temporalio/temporal: Reduce test runner resources](https://github.com/temporalio/temporal/pull/10129) — 0 comments, 0 reactions
+- [temporalio/temporal: Reorganize CHASM activity codebase](https://github.com/temporalio/temporal/pull/11446) — 1 comments, 0 reactions
+- [cilium/cilium: Label Filters don't treat prefix as a regex when loaded from file](https://github.com/cilium/cilium/issues/47918) — 1 comments, 0 reactions
+- [temporalio/temporal: run admin batch in temporal-system](https://github.com/temporalio/temporal/pull/11509) — 0 comments, 0 reactions
+- [envoyproxy/envoy: ExtProc: clarify docs on end_of_stream_without_message field](https://github.com/envoyproxy/envoy/pull/46671) — 1 comments, 0 reactions
+- [temporalio/temporal: move admin batch jobs to sys ns](https://github.com/temporalio/temporal/pull/11494) — 0 comments, 0 reactions
+- [temporalio/temporal: Add data race summary to CI report](https://github.com/temporalio/temporal/pull/11211) — 0 comments, 0 reactions
+- [cilium/cilium: ces: fix shutdown deadlock](https://github.com/cilium/cilium/pull/47802) — 6 comments, 2 reactions
+- [envoyproxy/envoy: Open Request Cost Aggregation (ORCA)](https://github.com/envoyproxy/envoy/issues/6614) — 47 comments, 13 reactions
+- [containerd/containerd: \[pkg/shim\] implement Windows support for the shim server](https://github.com/containerd/containerd/pull/13948) — 1 comments, 0 reactions
+- [containerd/containerd: containerd 2.2.7](https://github.com/containerd/containerd/releases/tag/v2.2.7)
+- [cilium/cilium: aws/ipam: retry prefix ENI in eligible sibling subnets before /32 fal…](https://github.com/cilium/cilium/pull/46746) — 7 comments, 2 reactions
+- [cilium/cilium: health/client: replace deprecated http.Transport.Dial with DialContext](https://github.com/cilium/cilium/pull/47858) — 1 comments, 1 reactions
+- [containerd/containerd: containerd 2.3.4](https://github.com/containerd/containerd/releases/tag/v2.3.4)
+- [containerd/containerd: Prepare release notes for v2.2.7](https://github.com/containerd/containerd/pull/13946) — 0 comments, 0 reactions
+- [containerd/containerd: Prepare release notes for v2.3.4](https://github.com/containerd/containerd/pull/13942) — 0 comments, 0 reactions
+- [containerd/containerd: \[release/2.3\] snapshots/erofs: protect snapshot staging from cleanup](https://github.com/containerd/containerd/pull/13945) — 0 comments, 0 reactions
+- [envoyproxy/envoy: ai_protocol_manager: add response handling and extract response token usage oai, ahth, gemini](https://github.com/envoyproxy/envoy/pull/46603) — 2 comments, 0 reactions
+- [envoyproxy/envoy: tls: allow multiple TLS certificates in the upstream when using a custom TLS certificate selector](https://github.com/envoyproxy/envoy/pull/46479) — 6 comments, 0 reactions
+- [cilium/cilium: gateway-api: nodeSelector with hostNetwork enabled](https://github.com/cilium/cilium/pull/47463) — 6 comments, 2 reactions
+- [containerd/containerd: remotes/docker: retry blob fetch on connection reset by peer](https://github.com/containerd/containerd/pull/13915) — 2 comments, 0 reactions
+- [containerd/containerd: treat missing runtime state as container already dead during kill](https://github.com/containerd/containerd/pull/13951) — 0 comments, 0 reactions
+- [containerd/containerd: Allow hosts file configuration for proxies per registry](https://github.com/containerd/containerd/pull/13359) — 8 comments, 0 reactions
+- [temporalio/temporal: Recognize the new `commonpb` Worker callback variant](https://github.com/temporalio/temporal/pull/11380) — 1 comments, 0 reactions
+- [temporalio/temporal: Eliminate expected object leak suppressions](https://github.com/temporalio/temporal/pull/11508) — 0 comments, 0 reactions
+- [temporalio/temporal: Close SQLite databases with their owners](https://github.com/temporalio/temporal/pull/11507) — 0 comments, 0 reactions
+- [envoyproxy/envoy: AI Protocol Parser: add ParserConfig for the wuffs JSON parser](https://github.com/envoyproxy/envoy/pull/46300) — 3 comments, 0 reactions
+- [temporalio/temporal: Track process-lifetime object leak baselines](https://github.com/temporalio/temporal/pull/11313) — 1 comments, 0 reactions
+- [temporalio/temporal: Reuse one persistence factory during server initialization](https://github.com/temporalio/temporal/pull/11483) — 1 comments, 0 reactions
+- [temporalio/temporal: Close SQLite databases with their owners](https://github.com/temporalio/temporal/pull/11458) — 0 comments, 0 reactions
+- [temporalio/temporal: Eliminate expected object leak suppressions](https://github.com/temporalio/temporal/pull/11503) — 0 comments, 0 reactions
+- [envoyproxy/envoy: orca: make OOB active_sessions gauge composable across managers](https://github.com/envoyproxy/envoy/pull/46669) — 1 comments, 0 reactions
+- [cilium/cilium: fix(docs): make render-docs target work on macOS](https://github.com/cilium/cilium/pull/47820) — 11 comments, 2 reactions
+- [cilium/cilium: policy: fix bug causing policies using label selectors of long namespace labels being dropped](https://github.com/cilium/cilium/pull/47845) — 6 comments, 2 reactions
+- [cilium/cilium: k8s: migrate from legacy config to ClusterInfo](https://github.com/cilium/cilium/pull/47854) — 9 comments, 2 reactions
+- [temporalio/temporal: Use chasm context NamespaceEntry instead of injecting namespace registry for activity code](https://github.com/temporalio/temporal/pull/11502) — 0 comments, 0 reactions
+- [envoyproxy/envoy: stats: migrate almost all HTTP to new API ](https://github.com/envoyproxy/envoy/pull/45983) — 4 comments, 0 reactions
+- [envoyproxy/envoy: stats: migrate rds/scope rds to use new stats API](https://github.com/envoyproxy/envoy/pull/45914) — 4 comments, 0 reactions
+- [containerd/containerd: tracing: align span attribute keys with OTel semantic conventions](https://github.com/containerd/containerd/pull/13928) — 5 comments, 0 reactions
+- [temporalio/temporal: config: strict mode for configuration parsing](https://github.com/temporalio/temporal/issues/2341) — 5 comments, 1 reactions
+- [cilium/cilium: hubble: Add Kubernetes Pod UID to flow endpoints](https://github.com/cilium/cilium/pull/47906) — 0 comments, 2 reactions
+- [cilium/cilium: network driver: use statedb to manage agent devices](https://github.com/cilium/cilium/pull/47558) — 13 comments, 2 reactions
+- [envoyproxy/envoy: cluster upstream_rq_timeout increments on requests that also complete successfully (rq_success == rq_total, rq_timeout independently non-zero)](https://github.com/envoyproxy/envoy/issues/46665) — 1 comments, 0 reactions
+- [cilium/cilium: chore(deps): update all-dependencies (v1.20)](https://github.com/cilium/cilium/pull/47678) — 18 comments, 2 reactions
+- [envoyproxy/envoy: health check probes blocked indefinitely when EDS initialFetchTimeout is 0s](https://github.com/envoyproxy/envoy/issues/46666) — 0 comments, 0 reactions
+- [cilium/cilium: scaletozero: add datapath demand signalling for service scale-to-zero](https://github.com/cilium/cilium/pull/46641) — 5 comments, 3 reactions
+- [cilium/cilium: Add various routing fixes for ENI IPv6 support](https://github.com/cilium/cilium/pull/47034) — 5 comments, 2 reactions
+- [cilium/cilium: operator: continue identity GC after update races](https://github.com/cilium/cilium/pull/47571) — 2 comments, 2 reactions
+- [cilium/cilium: sysdump: contain WithFileSink output to the sysdump directory](https://github.com/cilium/cilium/pull/46609) — 6 comments, 2 reactions
+- [cilium/cilium: hubble: refactor local node watcher as a cell](https://github.com/cilium/cilium/pull/45713) — 7 comments, 2 reactions
+- [envoyproxy/envoy: Disable fmtlib Unicode support on Windows](https://github.com/envoyproxy/envoy/pull/46601) — 3 comments, 0 reactions
+- [cilium/cilium: feat(endpoint): add managed endpoint table](https://github.com/cilium/cilium/pull/46951) — 4 comments, 2 reactions
+- [cilium/cilium: bpf: host: pass IPv6 to the stack when the IPv6 datapath is disabled](https://github.com/cilium/cilium/pull/46473) — 6 comments, 3 reactions
+- [cilium/cilium: .github: trigger workflow lint checks on merge_group](https://github.com/cilium/cilium/pull/47302) — 5 comments, 2 reactions
+- [cilium/cilium: .github: skip embedded proxy CI for non-functional changes](https://github.com/cilium/cilium/pull/47305) — 2 comments, 2 reactions
+- [cilium/cilium: newly created mount at /sys/fs/bpf while cilium runs causes duplicate tcx links on restart](https://github.com/cilium/cilium/issues/47847) — 6 comments, 0 reactions
+- [envoyproxy/envoy: network: send zero-length UDP datagrams](https://github.com/envoyproxy/envoy/pull/46613) — 1 comments, 0 reactions
+- [cilium/cilium: policy-cidr-match-mode=nodes does not work for wildcard CIDR matches](https://github.com/cilium/cilium/issues/47827) — 1 comments, 1 reactions
+- [cilium/cilium: Issue with backend remove in json state](https://github.com/cilium/cilium/issues/46493) — 14 comments, 0 reactions
+- [cilium/cilium: bpf: Add is_subnet_same_id helper](https://github.com/cilium/cilium/pull/47403) — 1 comments, 4 reactions
+- [cilium/cilium: \[envoy\] Add HTTP CONNECT support](https://github.com/cilium/cilium/pull/45051) — 9 comments, 3 reactions
+- [cilium/cilium: ExternalAuth filter fails unsafely if backendRef is missing a ReferenceGrant](https://github.com/cilium/cilium/issues/47877) — 1 comments, 2 reactions
+- [envoyproxy/envoy: APM: add utilities to define and validate JSON schema. add the first schema - OpenAI chat completion schema](https://github.com/envoyproxy/envoy/pull/46645) — 4 comments, 0 reactions
+- [envoyproxy/envoy: Queue policy extension](https://github.com/envoyproxy/envoy/pull/43355) — 19 comments, 0 reactions
+- [envoyproxy/envoy: repo: remove zuercher from code ownership/maintainer](https://github.com/envoyproxy/envoy/pull/46650) — 0 comments, 0 reactions
+- [temporalio/temporal: VLN-1587: remediate claude-code-action-unhardened](https://github.com/temporalio/temporal/pull/11400) — 2 comments, 1 reactions
+- [cilium/cilium: fix: Print port numbers correctly for map cilium_lb*_reverse_sk ](https://github.com/cilium/cilium/pull/47134) — 18 comments, 2 reactions
+- [containerd/containerd: Add log message when a shim is loaded into the shim manager](https://github.com/containerd/containerd/pull/13943) — 0 comments, 0 reactions
+- [envoyproxy/envoy: c-ares: move dns shared resolver logic to upstream cluster](https://github.com/envoyproxy/envoy/pull/46657) — 2 comments, 0 reactions
+- [temporalio/temporal: Extract replication reader-state handling into replicationReaderGroup](https://github.com/temporalio/temporal/pull/11302) — 0 comments, 0 reactions
+- [envoyproxy/envoy: Migrate build system from WORKSPACE to bzlmod](https://github.com/envoyproxy/envoy/issues/46539) — 0 comments, 0 reactions
+- [envoyproxy/envoy: cluster specifier: support new attempt aware cluster specifier](https://github.com/envoyproxy/envoy/pull/46640) — 1 comments, 0 reactions
+- [temporalio/temporal: Request Patch Release - For High & Critical Vulnerabilities in latest images - AWS Inspector Report](https://github.com/temporalio/temporal/issues/11497) — 0 comments, 0 reactions
+- [cilium/cilium: ipam/multi-pool: Allow regaining ownership of removed CIDRs](https://github.com/cilium/cilium/pull/47916) — 1 comments, 2 reactions
+- [temporalio/temporal: fix(persistence): skip unnecessary joins in MySQL visibility count queries](https://github.com/temporalio/temporal/pull/10992) — 2 comments, 0 reactions
+- [envoyproxy/envoy: Add max cap to guard against malicious number token input](https://github.com/envoyproxy/envoy/pull/45951) — 2 comments, 0 reactions
+- [envoyproxy/envoy: tidy: enforce and apply C++20 container `contains()`](https://github.com/envoyproxy/envoy/pull/46660) — 0 comments, 0 reactions
+- [containerd/containerd: Improve image pull progress in ctr](https://github.com/containerd/containerd/issues/10046) — 4 comments, 0 reactions
+- [cilium/cilium: policy: Implement Shared Policy LPM Trie map](https://github.com/cilium/cilium/pull/47651) — 1 comments, 2 reactions
+- [envoyproxy/envoy: formatter: add formatValueTo to reduce allocation of protobuf value](https://github.com/envoyproxy/envoy/pull/46607) — 4 comments, 0 reactions
+- [cilium/cilium: operator/ipam: recover nodes dropped from the instance cache during resync](https://github.com/cilium/cilium/pull/46839) — 9 comments, 2 reactions
+- [envoyproxy/envoy: reverse_tunnel: add tunnel setup latency stats](https://github.com/envoyproxy/envoy/pull/46614) — 2 comments, 0 reactions

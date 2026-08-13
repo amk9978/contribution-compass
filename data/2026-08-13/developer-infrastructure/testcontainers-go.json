@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "date": "2026-08-13",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "testcontainers-go",
+    "repo": "testcontainers/testcontainers-go",
+    "name": "Testcontainers for Go"
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-13T12:26:38.318Z",
+      "since": "2026-08-12T12:26:38.318Z",
+      "observedCount": 1,
+      "changedCount": 1
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:testcontainers/testcontainers-go:issue:3662",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "testcontainers/testcontainers-go",
+      "kind": "issue",
+      "title": "[Feature]: Honor DOCKER_HOST scheme when launching Ryuk (TCP/TLS daemon support)",
+      "text": "## Problem When `DOCKER_HOST` points at a TCP daemon (`tcp://...` or `https://...`), testcontainers-go itself talks to that endpoint correctly — but Ryuk gets launched with a hard-coded bind-mount of the host Docker socket: ```go // reaper.go ~line 385 hc.Binds = []string{dockerHostMount + \":/var/run/docker.sock\"} ``` This breaks any setup where the test process accesses Docker through a TCP endpoint instead of `/var/run/docker.sock`. Ryuk's own Docker client already honors `DOCKER_HOST` / `DOCKER_TLS_VERIFY` / `DOCKER_CERT_PATH` (see [moby-ryuk main.go](https://github.com/testcontainers/moby-ryuk/blob/main/main.go)), but testcontainers-go never propagates that configuration into Ryuk's env. **Concrete use case**: per-user sandbox isolation on a shared macOS development host. Each user has their own per-user Docker proxy — a policy gate in front of the real daemon that restricts privileged containers, validates bind-mount paths to the user's workspace, and tags containers with an owner label. The proxy listens on TLS-protected `127.0.0.1:NNNN` (per-user CA + mutual auth), not a raw Unix socket. The test process is configured with: ```bash DOCKER_HOST=tcp://localhost:40006 DOCKER_TLS_VERIFY=1 DOCKER_CERT_PATH=/Users/<user>/.docker-proxy ``` Everything works — **except Ryuk**, because testcontainers-go's reaper tries to bind-mount a Unix socket regardless of the scheme. The bind either fails outright (no Unix socket exists on the host) or, if a Unix socket bind exists but the only working endpoint is TLS, Ryuk reports `Cannot connect to the Docker daemon` and times out. There is no env var (`TESTCONTAINERS_RYUK_DOCKER_SOCKET_OVERRIDE` exists in the Java client but not here) to override the bind. **Related**: [testcontainers-java #9137](https://github.com/testcontainers/testcontainers-java/issues/9137) describes the same bug in the Java client — open since August 2024, no fix. Same root cause; both clients hard-code the Unix-socket bind. --- ## Solution Branch on the scheme of `tcConfig.Host` in `reaper.go` `newReaper`: | `DOCKER_HOST` scheme | Ryuk container setup | |---|---| | `unix://` (current default) | Bind-mount the socket — **unchanged** | | `tcp://` / `https://` | Don't bind-mount; set `DOCKER_HOST` env on Ryuk. Translate `localhost`/`127.0.0.1` to gateway IP using existing `getGatewayIP` machinery (the same translation already added for #1373). | | TLS enabled (`TLSVerify=1` + `CertPath` non-empty) | Bind-mount the cert dir to a fixed in-container path (e.g. `/certs`), set `DOCKER_TLS_VERIFY=1` and `DOCKER_CERT_PATH=/certs` env vars on Ryuk. | The config struct in `internal/config/config.go` already exposes `Config.Host`, `Config.TLSVerify`, and `Config.CertPath`. The reaper just needs to read those fields and propagate them to Ryuk's environment instead of hard-coding the bind. Estimated diff: ~40 lines in `reaper.go` + a small helper for host translation + ~80 lines of table-driven tests. --- ## Benefit - Unblocks per-user / per-team Docker-proxy deployments — sandbox isolation, multi-tenant CI runners, audited environments, restricted hosts. - Aligns testcontainers-go with what `moby-ryuk` already supports — no upstream Ryuk change needed. - Users on plain Docker Desktop / OrbStack get exactly the current behavior; the Unix-socket path is preserved as the default. - Closes the long-standing parallel gap with testcontainers-java. --- ## Alternatives 1. **Disable Ryuk (`TESTCONTAINERS_RYUK_DISABLED=true`)** — current workaround, but loses cleanup-on-test-crash, which is the whole point of Ryuk. 2. **Run a custom reaper outside testcontainers** — defeats the purpose of using the library. 3. **Modify Ryuk's image upstream** — not needed; Ryuk already supports `DOCKER_HOST` / `DOCKER_TLS_VERIFY` / `DOCKER_CERT_PATH`. The gap is purely on the testcontainers-go side. --- ## Contribute **Yes** — happy to draft the PR if the maintainers are open to this direction. Posting an issue first to confirm the approach before writing code.",
+      "url": "https://github.com/testcontainers/testcontainers-go/issues/3662",
+      "timestamp": "2026-08-12T19:17:34Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "BorisTyshkevich",
+      "change": "new"
+    }
+  ]
+}

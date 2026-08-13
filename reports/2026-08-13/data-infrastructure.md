@@ -1,0 +1,607 @@
+# Data / Messaging / Storage Infrastructure Updates — 2026-08-13
+
+> Automatically collected from GitHub. No analysis or synthesis is performed.
+
+Collected changes: 601 (601 new, 0 updated).
+
+- [ClickHouse/ClickHouse: S3 tables engine](https://github.com/ClickHouse/ClickHouse/pull/113505) — 2 comments, 3 reactions
+- [ClickHouse/ClickHouse: Do not merge-sort a distributed gather whose sort description is all-constant](https://github.com/ClickHouse/ClickHouse/pull/114626) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix a renamed and dropped column being read from the wrong file while the mutation is pending](https://github.com/ClickHouse/ClickHouse/pull/114601) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Skip the custom-key parallel replicas read when the requested stage cannot absorb finalized data](https://github.com/ClickHouse/ClickHouse/pull/113742) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: fix(Silk): honor O_NONBLOCK in the fiber TLS BIO](https://github.com/ClickHouse/ClickHouse/pull/111852) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add SHARED REGEXP path placement policy to JSON](https://github.com/ClickHouse/ClickHouse/pull/114414) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix missing materialized-CTE gate when a `Merge` table has several children](https://github.com/ClickHouse/ClickHouse/pull/113558) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: add Erathos connector to data ingestion docs](https://github.com/ClickHouse/ClickHouse/pull/113707) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix spelling of 'prefetches' and 'prefetched' in documentation](https://github.com/ClickHouse/ClickHouse/pull/114543) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add an experimental regex-free glob parser](https://github.com/ClickHouse/ClickHouse/pull/91062) — 14 comments, 1 reactions
+- [ClickHouse/ClickHouse: Iterate ColumnObject subcolumns in sorted path order](https://github.com/ClickHouse/ClickHouse/pull/112601) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: RabbitMQ related fix](https://github.com/ClickHouse/ClickHouse/pull/112479) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add unordered stream modifier](https://github.com/ClickHouse/ClickHouse/pull/111794) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Inlined ALIAS body adds constants to the shipped WITH FILL header; parallel replicas throw](https://github.com/ClickHouse/ClickHouse/issues/114404) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112479 to 26.7: RabbitMQ related fix](https://github.com/ClickHouse/ClickHouse/pull/114442) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112479 to 26.6: RabbitMQ related fix](https://github.com/ClickHouse/ClickHouse/pull/114441) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112601 to 26.6: Iterate ColumnObject subcolumns in sorted path order](https://github.com/ClickHouse/ClickHouse/pull/114226) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add table function `obfuscate`](https://github.com/ClickHouse/ClickHouse/pull/42701) — 44 comments, 2 reactions
+- [ClickHouse/ClickHouse: Explain data/expected structure mismatches in INSERT parse errors](https://github.com/ClickHouse/ClickHouse/pull/110626) — 25 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keeper: do not lose a session request when the Raft leader changes](https://github.com/ClickHouse/ClickHouse/pull/114401) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix data race on DataTypeAggregateFunction version during Native serialization](https://github.com/ClickHouse/ClickHouse/pull/110997) — 23 comments, 0 reactions
+- [ClickHouse/ClickHouse: Explain analyze join stats](https://github.com/ClickHouse/ClickHouse/pull/110892) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: feat(clickpipes, docs): document clickpipe DDL DEFAULT propagation logic](https://github.com/ClickHouse/ClickHouse/pull/114320) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Drop for detached tables](https://github.com/ClickHouse/ClickHouse/pull/105499) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix paimon timestamp precision](https://github.com/ClickHouse/ClickHouse/pull/113401) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Release pull request for branch 26.6](https://github.com/ClickHouse/ClickHouse/pull/108336) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support INSERT ... VALUES in the polyglot SQL dialect](https://github.com/ClickHouse/ClickHouse/pull/110321) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix "Not-ready Set" exception when buildOrderedSetInplace fails](https://github.com/ClickHouse/ClickHouse/pull/102192) — 53 comments, 0 reactions
+- [ClickHouse/ClickHouse: TimeSeries: store all tags in the `tags` column](https://github.com/ClickHouse/ClickHouse/pull/114300) — 2 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix Keeper CORRUPTED_DATA after cross-segment writeAt crash (#112101)](https://github.com/ClickHouse/ClickHouse/pull/114003) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add spatial_bbox skip index for MergeTree geometry columns](https://github.com/ClickHouse/ClickHouse/pull/104437) — 9 comments, 1 reactions
+- [ClickHouse/ClickHouse: `RENAME DATABASE` query doesn't work for materialized views ](https://github.com/ClickHouse/ClickHouse/issues/72380) — 3 comments, 1 reactions
+- [redpanda-data/redpanda: \[CORE-15822\] security/audit: make audit initialization controller-leader independent](https://github.com/redpanda-data/redpanda/pull/31411) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix the streaming-insert block wait not expiring under the query profiler](https://github.com/ClickHouse/ClickHouse/pull/109602) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add optimize_row_order_if_no_order_by (reopen #103919)](https://github.com/ClickHouse/ClickHouse/pull/104591) — 44 comments, 0 reactions
+- [ClickHouse/ClickHouse: Improve the performance of `MODIFY TTL`](https://github.com/ClickHouse/ClickHouse/pull/63383) — 33 comments, 1 reactions
+- [ClickHouse/ClickHouse: Make SQL SECURITY views an optimization barrier](https://github.com/ClickHouse/ClickHouse/pull/112847) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add hierarchicalKMeans and assignCentroid](https://github.com/ClickHouse/ClickHouse/pull/112309) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add introspection TCP port](https://github.com/ClickHouse/ClickHouse/pull/110838) — 15 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix flaky 04780_json_subcolumn_index_match_not_quadratic](https://github.com/ClickHouse/ClickHouse/pull/114609) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add the `Cluster` database engine](https://github.com/ClickHouse/ClickHouse/pull/114417) — 4 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix the bit-sliced full adder in `groupNumericIndexedVector`](https://github.com/ClickHouse/ClickHouse/pull/114625) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Distributed ANY INNER JOIN returns one row per key per shard: deduplication is per-shard, not global](https://github.com/ClickHouse/ClickHouse/issues/111271) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add UUID2 data type with correct sorting](https://github.com/ClickHouse/ClickHouse/pull/110084) — 37 comments, 0 reactions
+- [ClickHouse/ClickHouse: Release pull request for branch 26.7](https://github.com/ClickHouse/ClickHouse/pull/111451) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: internationalize master](https://github.com/ClickHouse/ClickHouse/pull/114466) — 38 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: require canonical internal links](https://github.com/ClickHouse/ClickHouse/pull/114323) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Allow Distributed and Remote tables in Replicated databases](https://github.com/ClickHouse/ClickHouse/pull/108820) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: update gui.mdx with CHOPs tool](https://github.com/ClickHouse/ClickHouse/pull/113937) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reject a lossy codec on columns backing keys and indexes](https://github.com/ClickHouse/ClickHouse/pull/114531) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keep the patch release version bump increasing across recoveries](https://github.com/ClickHouse/ClickHouse/pull/114472) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix loss of primary-key pruning for `DateTime64` columns under a `toUnixTimestamp` sorting key](https://github.com/ClickHouse/ClickHouse/pull/114413) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not erase the source column of a filter deferred after FINAL](https://github.com/ClickHouse/ClickHouse/pull/114578) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Report mutation cancellation instead of stopping nested pipelines silently](https://github.com/ClickHouse/ClickHouse/pull/114463) — 5 comments, 0 reactions
+- [nats-io/nats-server: (2.15) \[ADDED\] Peer evacuation and reconciliation of assignments](https://github.com/nats-io/nats-server/pull/8443) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: CI: Cache: restrict cross-branch reuse to pull_request workflows only](https://github.com/ClickHouse/ClickHouse/pull/114623) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: bazel/seastar: enable task queue shuffling in debug builds](https://github.com/redpanda-data/redpanda/pull/31139) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support column matcher expansion for default value expressions and index expressions](https://github.com/ClickHouse/ClickHouse/pull/105045) — 49 comments, 3 reactions
+- [ClickHouse/ClickHouse: Fix target access checks for the Alias engine](https://github.com/ClickHouse/ClickHouse/pull/114596) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keep an S3Queue file retryable after losing the race for its `processing` node](https://github.com/ClickHouse/ClickHouse/pull/112313) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Custom-key parallel replicas over a Merge table with a Distributed child: children are offloaded to a finalized stage (CANNOT_CONVERT_TYPE, logical error in GroupingAggregatedTransform)](https://github.com/ClickHouse/ClickHouse/issues/113741) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Check the query cancellation while filling `system.parts` and its siblings](https://github.com/ClickHouse/ClickHouse/pull/113909) — 8 comments, 0 reactions
+- [redpanda-data/redpanda: \[CORE-16604\] cluster_link: incremental Schema Registry sync by tailing _schemas](https://github.com/redpanda-data/redpanda/pull/31366) — 8 comments, 0 reactions
+- [nats-io/nats-server: (2.15) \[FIXED\] Evict peer-removed peers for group below quorum](https://github.com/nats-io/nats-server/pull/8452) — 3 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix serialization of Map-valued settings in access entities](https://github.com/ClickHouse/ClickHouse/pull/114620) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: add ProbeDeck SQL client integration](https://github.com/ClickHouse/ClickHouse/pull/114508) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not apply DROP fault injection to a refreshable view's cleanup DROP](https://github.com/ClickHouse/ClickHouse/pull/114622) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Find a LowCardinality needle equal to the type's default value](https://github.com/ClickHouse/ClickHouse/pull/114624) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Bump `libssh` to 0.12.0](https://github.com/ClickHouse/ClickHouse/pull/108329) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keeper: don't refuse an empty-data `Set` at the memory soft limit](https://github.com/ClickHouse/ClickHouse/pull/112386) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: MATERIALIZED CTE is not materialized when queried through a VIEW](https://github.com/ClickHouse/ClickHouse/issues/113711) — 2 comments, 2 reactions
+- [ClickHouse/ClickHouse: Reject WITH FILL bounds that do not fit the ORDER BY column type](https://github.com/ClickHouse/ClickHouse/pull/112650) — 19 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: regenerate reference documentation from source](https://github.com/ClickHouse/ClickHouse/pull/114602) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add a full-featured AI agent to the client (the `?` command)](https://github.com/ClickHouse/ClickHouse/pull/114043) — 3 comments, 0 reactions
+- [dragonflydb/dragonfly: chore: add docs/replication.md](https://github.com/dragonflydb/dragonfly/pull/7997) — 6 comments, 0 reactions
+- [nats-io/nats-server: (2.15) \[FIXED\] Migration added offline peers & removed peers before catchup](https://github.com/nats-io/nats-server/pull/8460) — 3 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix use-after-free on a sparse join key in a direct dictionary join](https://github.com/ClickHouse/ClickHouse/pull/112327) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Use the vector similarity index for integer reference vectors](https://github.com/ClickHouse/ClickHouse/pull/114316) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Convert only SEMI JOIN to IN in the convertJoinToIn optimization](https://github.com/ClickHouse/ClickHouse/pull/114422) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add test: Duplicate TLS argument rejection and positional-arity stripping untested](https://github.com/ClickHouse/ClickHouse/pull/114580) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Push tuple element predicates into Parquet and ORC subcolumn reads](https://github.com/ClickHouse/ClickHouse/pull/113383) — 17 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: Improve supported regions page layout](https://github.com/ClickHouse/ClickHouse/pull/114510) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Text index: fix out-of-bounds write in front-coding deserialization](https://github.com/ClickHouse/ClickHouse/pull/114155) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Text index: add trivial count optimization](https://github.com/ClickHouse/ClickHouse/pull/111494) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #113291 to 26.5: Fix for virtual row is not being applied in some cases](https://github.com/ClickHouse/ClickHouse/pull/114219) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Use text index for LIKE/ILIKE with ESCAPE](https://github.com/ClickHouse/ClickHouse/pull/105848) — 38 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix a logical error comparing arrays whose element type is Nothing](https://github.com/ClickHouse/ClickHouse/pull/113609) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Request for office hours for new contributors.](https://github.com/ClickHouse/ClickHouse/issues/112569) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: A `WHERE` predicate on an `arrayJoin`'d column can be rewritten into `arrayFilter` so the array is filtered before expansion](https://github.com/ClickHouse/ClickHouse/issues/112241) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #109932 to 26.6: Fix crash in direct JOIN over MergeTree with PREWHERE (shared PrewhereInfo corrupted by column pruning)](https://github.com/ClickHouse/ClickHouse/pull/113482) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Use higher quality hash for nullable fixed-width keys in external aggregation](https://github.com/ClickHouse/ClickHouse/pull/114210) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support `arrayExists` predicates for text-like indexes](https://github.com/ClickHouse/ClickHouse/pull/109594) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not apply DROP fault injection to CREATE OR REPLACE internal DROPs](https://github.com/ClickHouse/ClickHouse/pull/114420) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Disable read-in-order when primary key selectivity is poor](https://github.com/ClickHouse/ClickHouse/pull/100377) — 40 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #113291 to 26.6: Fix for virtual row is not being applied in some cases](https://github.com/ClickHouse/ClickHouse/pull/114220) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Use `HashSet` for aggregations without aggregates](https://github.com/ClickHouse/ClickHouse/pull/108862) — 7 comments, 1 reactions
+- [ClickHouse/ClickHouse: Do not run the server-side AST fuzzer on the stress harness's own queries](https://github.com/ClickHouse/ClickHouse/pull/113248) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Lazy materialization for reading local Parquet files (`file` / `File`)](https://github.com/ClickHouse/ClickHouse/pull/114262) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112573 to 26.6: Fix async bounded read buffer readbigat race](https://github.com/ClickHouse/ClickHouse/pull/114618) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add Rewrite rules](https://github.com/ClickHouse/ClickHouse/pull/88234) — 61 comments, 1 reactions
+- [ClickHouse/ClickHouse: Refuse Iceberg data compaction until it can publish its result](https://github.com/ClickHouse/ClickHouse/pull/114437) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support per-authentication-method GRANTS clause in CREATE USER and ALTER USER](https://github.com/ClickHouse/ClickHouse/pull/110144) — 22 comments, 0 reactions
+- [dragonflydb/dragonfly: fix(generic): avoid data loss on RENAME when destination write fails](https://github.com/dragonflydb/dragonfly/pull/8053) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Run the documentation examples in CI](https://github.com/ClickHouse/ClickHouse/pull/113024) — 19 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support PromQL @ start() and @ end() modifiers](https://github.com/ClickHouse/ClickHouse/pull/114558) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix an error reading an Iceberg table whose `current-snapshot-id` is JSON null](https://github.com/ClickHouse/ClickHouse/pull/114465) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #113289 to 26.6: Fix quadratic JSON subcolumn skip-index matching over a large dotted constant](https://github.com/ClickHouse/ClickHouse/pull/114476) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add a type-aware Bloom filter index for JSON](https://github.com/ClickHouse/ClickHouse/pull/113022) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #94748 to 25.8: Fix invalid result of joining two `-Cluster` table functions](https://github.com/ClickHouse/ClickHouse/pull/114621) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Make ALTER MODIFY COLUMN on named Tuple metadata-only when adding subfields](https://github.com/ClickHouse/ClickHouse/pull/107305) — 7 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix invalid result of joining two `-Cluster` table functions](https://github.com/ClickHouse/ClickHouse/pull/94748) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Iceberg: propagate table UUID from REST catalog to avoid metadata cac…](https://github.com/ClickHouse/ClickHouse/pull/99981) — 29 comments, 0 reactions
+- [ClickHouse/ClickHouse: Wait for replication before asserting a row count in test_rename_distributed](https://github.com/ClickHouse/ClickHouse/pull/114274) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Revert "Revert the PromQL topk/limitk streaming plan and its shared-subquery materialization"](https://github.com/ClickHouse/ClickHouse/pull/114409) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add a regression test for duplicate parallel replicas announcements from a self-matching merge() child](https://github.com/ClickHouse/ClickHouse/pull/114090) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support `GROUPS` frame mode for window functions](https://github.com/ClickHouse/ClickHouse/pull/108653) — 3 comments, 2 reactions
+- [ClickHouse/ClickHouse: Add exclude_data_from_backup MergeTree setting](https://github.com/ClickHouse/ClickHouse/pull/111895) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112573 to 26.5: Fix async bounded read buffer readbigat race](https://github.com/ClickHouse/ClickHouse/pull/114617) — 1 comments, 0 reactions
+- [nats-io/nats-server: (2.15) \[IMPROVED\] Source stream recreation detection](https://github.com/nats-io/nats-server/pull/8384) — 9 comments, 2 reactions
+- [ClickHouse/ClickHouse: Docs: add ClickStack guide for isolating read and write workloads](https://github.com/ClickHouse/ClickHouse/pull/114536) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Geoparquet rowgroup pruning](https://github.com/ClickHouse/ClickHouse/pull/104435) — 11 comments, 1 reactions
+- [ClickHouse/ClickHouse: Handle non-constant RHS for `IN`](https://github.com/ClickHouse/ClickHouse/pull/104993) — 27 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix vector search with `arrayJoin` below the sort and with a row policy](https://github.com/ClickHouse/ClickHouse/pull/114074) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Enable reading in reverse order with FINAL for ReplacingMergeTree](https://github.com/ClickHouse/ClickHouse/pull/114479) — 2 comments, 1 reactions
+- [ClickHouse/ClickHouse: Push down volume-reducing functions in query plan](https://github.com/ClickHouse/ClickHouse/pull/106199) — 12 comments, 2 reactions
+- [ClickHouse/ClickHouse: Array subscript operator supports array of integers as index.](https://github.com/ClickHouse/ClickHouse/pull/108371) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add VALID FOR clause for users and credentials](https://github.com/ClickHouse/ClickHouse/pull/110171) — 22 comments, 0 reactions
+- [ClickHouse/ClickHouse: MaterializedPostgreSQL: coordinated Replicated/Shared nested tables for HA](https://github.com/ClickHouse/ClickHouse/pull/110886) — 46 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not drop a named collection that a detached table still uses](https://github.com/ClickHouse/ClickHouse/pull/112805) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Populate the submodule working trees in parallel in the build job](https://github.com/ClickHouse/ClickHouse/pull/114340) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: ci: remove stale cache status files](https://github.com/ClickHouse/ClickHouse/pull/114490) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Propagating `getArgumentsThatCanBeOnlyNull` through the combinators silently changes the result type and value of every pre-existing `<agg>If<Combinator>(x, NULL)` expression](https://github.com/ClickHouse/ClickHouse/issues/113763) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Parallelize listing of globbed `s3` table function paths](https://github.com/ClickHouse/ClickHouse/pull/107567) — 32 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix toTime key-expression type mismatch under use_legacy_to_time](https://github.com/ClickHouse/ClickHouse/pull/110958) — 21 comments, 0 reactions
+- [ClickHouse/ClickHouse: Column IDs for MergeTree: the data structure](https://github.com/ClickHouse/ClickHouse/pull/114507) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Require a join subquery alias only when it removes a real ambiguity](https://github.com/ClickHouse/ClickHouse/pull/109368) — 26 comments, 0 reactions
+- [ClickHouse/ClickHouse: Settings profile with a Map setting (`http_response_headers`) does not survive a serialization round trip](https://github.com/ClickHouse/ClickHouse/issues/114591) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Parallelize read-in-order from a single part with PrefetchingConcatProcessor](https://github.com/ClickHouse/ClickHouse/pull/100391) — 41 comments, 1 reactions
+- [dragonflydb/dragonfly: fix(tiering): Use TraverseBySegmentOrder and export more metrics/configs](https://github.com/dragonflydb/dragonfly/pull/8077) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Supporting lazily replicated arrays on arrayElement and arraySlice (reduces memory usage and improves performance)](https://github.com/ClickHouse/ClickHouse/pull/112304) — 4 comments, 2 reactions
+- [ClickHouse/ClickHouse: Cross-compile ClickHouse for Windows](https://github.com/ClickHouse/ClickHouse/pull/112824) — 15 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix wrong results for non-boolean conditions taken out of `and`](https://github.com/ClickHouse/ClickHouse/pull/114533) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[DRAFT\] Add JOIN observability columns to system.query_log](https://github.com/ClickHouse/ClickHouse/pull/113833) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Check column structure against the declared type in `collectOffsetsColumns`](https://github.com/ClickHouse/ClickHouse/pull/114087) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Inconsistent AST formatting: `view((SELECT ...))` in table-function arguments loses subquery parentheses and cannot be parsed back (STID: 1941-1bfa)](https://github.com/ClickHouse/ClickHouse/issues/114004) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Declarative function signatures, continuation of #3775](https://github.com/ClickHouse/ClickHouse/pull/104948) — 38 comments, 0 reactions
+- [dragonflydb/dragonfly: chore(server): Prefetch + cid caching for speedup](https://github.com/dragonflydb/dragonfly/pull/8033) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[WIP\]Add incremental rmv core](https://github.com/ClickHouse/ClickHouse/pull/114152) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: fix: error message for ALTER DROP COLUMN of a key column](https://github.com/ClickHouse/ClickHouse/pull/114468) — 2 comments, 0 reactions
+- [dragonflydb/dragonfly: fix(pubsub): preserve V2 message ordering](https://github.com/dragonflydb/dragonfly/pull/8075) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add `jsonPathValues` tokenizer for JSON text indexes](https://github.com/ClickHouse/ClickHouse/pull/114613) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add test: JSON shared data at the max 256 buckets is untested end-to-end](https://github.com/ClickHouse/ClickHouse/pull/114590) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Silk integration](https://github.com/ClickHouse/ClickHouse/pull/112667) — 1 comments, 1 reactions
+- [dragonflydb/dragonfly: P3 — FLUSHSLOTS TOCTOU between the validation and action hops of a woken multi-stream read](https://github.com/dragonflydb/dragonfly/issues/8074) — 0 comments, 0 reactions
+- [dragonflydb/dragonfly: P2 — `DFLYCLUSTER FLUSHSLOTS` operates on the default namespace regardless of the caller](https://github.com/dragonflydb/dragonfly/issues/8073) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Make the 04780 index-analysis allocation oracle the minimum of several runs](https://github.com/ClickHouse/ClickHouse/pull/114608) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: DPsub join-order reordering with `query_plan_enable_optimizations = 0` silently drops a non-equi `JOIN ON` conjunct on chained joins (post-#109638)](https://github.com/ClickHouse/ClickHouse/issues/111898) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix SQLite WHERE predicate pushdown for strings with special characters](https://github.com/ClickHouse/ClickHouse/pull/104217) — 18 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #113289 to 26.5: Fix quadratic JSON subcolumn skip-index matching over a large dotted constant](https://github.com/ClickHouse/ClickHouse/pull/114475) — 1 comments, 0 reactions
+- [dragonflydb/dragonfly: fix(cluster): scope slot migration finalize pause to migrated slots only](https://github.com/dragonflydb/dragonfly/pull/8058) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Revert "Add aggregate function `gini`"](https://github.com/ClickHouse/ClickHouse/pull/113868) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: sync ErrorCodes.cpp from private](https://github.com/ClickHouse/ClickHouse/pull/114589) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: PostgreSQL: allow an empty TLS contents override when the collection stores no credential](https://github.com/ClickHouse/ClickHouse/pull/114606) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Revert "NATS: add inline credentials setting"](https://github.com/ClickHouse/ClickHouse/pull/114178) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix header column order after the no-rescoring vector search rewrite](https://github.com/ClickHouse/ClickHouse/pull/114457) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix reading Paimon tables with a nullable ARRAY or MAP column](https://github.com/ClickHouse/ClickHouse/pull/113450) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add `sorted_merge` and `parallel_sorted_merge` join algorithms](https://github.com/ClickHouse/ClickHouse/pull/112973) — 12 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix an infinite uncancellable loop in `hop` and `windowID` on an interval whose span wraps modulo 2^32](https://github.com/ClickHouse/ClickHouse/pull/114607) — 2 comments, 0 reactions
+- [dragonflydb/dragonfly: fix(search): reject FT.CREATE missing the SCHEMA keyword](https://github.com/dragonflydb/dragonfly/pull/8054) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Introduce zk leader metrics to Keeper mntr](https://github.com/ClickHouse/ClickHouse/pull/113334) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix flaky 02999_scalar_subqueries_bug_2](https://github.com/ClickHouse/ClickHouse/pull/114604) — 5 comments, 2 reactions
+- [ClickHouse/ClickHouse: diff-review skill second edition](https://github.com/ClickHouse/ClickHouse/pull/114615) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Rework the comments in the Web UI](https://github.com/ClickHouse/ClickHouse/pull/114187) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Implement Prometheus /api/v1/series, /labels, /label/values endpoints](https://github.com/ClickHouse/ClickHouse/pull/97032) — 49 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix a crash when a primary-key range layer produces an empty pipe](https://github.com/ClickHouse/ClickHouse/pull/114177) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix NO_SUCH_COLUMN_IN_TABLE naming a column absent from the table when a part's columns were all renamed or all dropped](https://github.com/ClickHouse/ClickHouse/pull/114562) — 2 comments, 0 reactions
+- [redpanda-data/redpanda: raft/tests: reproduce term span without configuration batch](https://github.com/redpanda-data/redpanda/pull/31502) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: raft: fix election timer starvation and busy reply term loss](https://github.com/redpanda-data/redpanda/pull/31547) — 0 comments, 0 reactions
+- [dragonflydb/dragonfly: Return RESP3 null for empty XREAD and XREADGROUP replies](https://github.com/dragonflydb/dragonfly/issues/8076) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add geo aggregate functions #80186](https://github.com/ClickHouse/ClickHouse/pull/101273) — 36 comments, 0 reactions
+- [ClickHouse/ClickHouse: fix(Analyzer): skip rerunFunctionResolve for 'exists' nodes created by rewrite_in_to_join](https://github.com/ClickHouse/ClickHouse/pull/114067) — 8 comments, 0 reactions
+- [dragonflydb/dragonfly: Blocked XREADGROUP is not woken when the watched stream is deleted or retyped](https://github.com/dragonflydb/dragonfly/issues/7903) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Wait for the RemovePart part_log row in 02950 and 02491](https://github.com/ClickHouse/ClickHouse/pull/114216) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix zero-capacity hash-table statistics cache seeded by lazy FINAL](https://github.com/ClickHouse/ClickHouse/pull/114597) — 2 comments, 0 reactions
+- [nats-io/nats-server: \[FIXED\] Extend dios to cover filestore block syncs](https://github.com/nats-io/nats-server/pull/8462) — 0 comments, 1 reactions
+- [ClickHouse/ClickHouse: Interpolate quantiles in the integer domain](https://github.com/ClickHouse/ClickHouse/pull/114571) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Scale the lldb stacktrace budget by build flavor, keep timed-out dumps](https://github.com/ClickHouse/ClickHouse/pull/114565) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: More settings to randomize](https://github.com/ClickHouse/ClickHouse/pull/106734) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Azure: log batch-delete events when SubmitBatch itself fails](https://github.com/ClickHouse/ClickHouse/pull/112873) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support the Vortex file format](https://github.com/ClickHouse/ClickHouse/pull/112950) — 19 comments, 0 reactions
+- [ClickHouse/ClickHouse: Switch the default compression to ZSTD(3) for table data and network](https://github.com/ClickHouse/ClickHouse/pull/108786) — 69 comments, 1 reactions
+- [ClickHouse/ClickHouse: Backport #112573 to 26.7: Fix async bounded read buffer readbigat race](https://github.com/ClickHouse/ClickHouse/pull/114619) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Read-through filesystem cache for the experimental ReaderExecutor](https://github.com/ClickHouse/ClickHouse/pull/110029) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix async bounded read buffer readbigat race](https://github.com/ClickHouse/ClickHouse/pull/112573) — 4 comments, 1 reactions
+- [ClickHouse/ClickHouse: Allow running queries detached from client session](https://github.com/ClickHouse/ClickHouse/pull/112816) — 2 comments, 3 reactions
+- [ClickHouse/ClickHouse: Ignore redundant parentheses in stored table definitions](https://github.com/ClickHouse/ClickHouse/pull/114188) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: EXPLAIN SYNTAX: return a single record (default on)](https://github.com/ClickHouse/ClickHouse/pull/110479) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[RFC\] Add a `histogram(N)` column statistic for range predicate selectivity](https://github.com/ClickHouse/ClickHouse/issues/114500) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Improve canceling queries with the `url` function](https://github.com/ClickHouse/ClickHouse/pull/112930) — 22 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add query plan cache for complex queries (views, joins, subqueries)](https://github.com/ClickHouse/ClickHouse/pull/107125) — 28 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #113484 to 26.6: Push down plan level constants from joins](https://github.com/ClickHouse/ClickHouse/pull/114492) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix join NDV propagation for distributed aggregation](https://github.com/ClickHouse/ClickHouse/pull/114614) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Log tolerated connection failures to remote MySQL/PostgreSQL databases as warnings instead of errors](https://github.com/ClickHouse/ClickHouse/pull/109472) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Enhance MetadataStorageFromMemory](https://github.com/ClickHouse/ClickHouse/pull/114328) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Document that PREWHERE filters one join input before the JOIN](https://github.com/ClickHouse/ClickHouse/pull/114484) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not merge patch parts across a pending mutation version](https://github.com/ClickHouse/ClickHouse/pull/113998) — 6 comments, 0 reactions
+- [dragonflydb/dragonfly: P2 — Multi-shard error precedence follows shard placement instead of argument order](https://github.com/dragonflydb/dragonfly/issues/8072) — 0 comments, 0 reactions
+- [dragonflydb/dragonfly: P1 — A blocked multi-stream read returns only one stream when several become ready together](https://github.com/dragonflydb/dragonfly/issues/8071) — 0 comments, 0 reactions
+- [dragonflydb/dragonfly: P1 — Multi-stream `XREADGROUP` mutates group state and then returns an error](https://github.com/dragonflydb/dragonfly/issues/8070) — 0 comments, 0 reactions
+- [dragonflydb/dragonfly: P1 — Active expiry never runs for non-default namespaces](https://github.com/dragonflydb/dragonfly/issues/8069) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Materialized CTE over Distributed: 49 LOGICAL_ERROR "Reading from materialized CTE before its materialization completed - DelayedPortsProcessor gate is missing" survives the #108924 fix](https://github.com/ClickHouse/ClickHouse/issues/113184) — 1 comments, 0 reactions
+- [dragonflydb/dragonfly: P1 — `NotifyPending()` is reentrant through a suspending expiry checker](https://github.com/dragonflydb/dragonfly/issues/8068) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add STREAM BOUNDED modifier](https://github.com/ClickHouse/ClickHouse/pull/110653) — 6 comments, 1 reactions
+- [ClickHouse/ClickHouse: Text index: fix read mode of LIKE/ILIKE with an index built on a container](https://github.com/ClickHouse/ClickHouse/pull/114544) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add test: Truncated `Array` elements stream: `CANNOT_READ_ALL_DATA` branch has no test](https://github.com/ClickHouse/ClickHouse/pull/114569) — 4 comments, 0 reactions
+- [dragonflydb/dragonfly: P1 — A heterogeneous blocking queue can hide XREADGROUP forever](https://github.com/dragonflydb/dragonfly/issues/8067) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Adding storage pulsar](https://github.com/ClickHouse/ClickHouse/pull/64184) — 7 comments, 2 reactions
+- [ClickHouse/ClickHouse: Add is_nullable to system.columns, use it in information_schema](https://github.com/ClickHouse/ClickHouse/pull/114600) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Materialize column statistics on INSERT by default](https://github.com/ClickHouse/ClickHouse/pull/112250) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Row policy over a file-backed table breaks `DEFAULT` columns missing from the data file (`UNKNOWN_IDENTIFIER`; silently wrong results on 26.7)](https://github.com/ClickHouse/ClickHouse/issues/114616) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: LOGICAL_ERROR on re-run INSERT … SELECT — sparse Tuple subcolumn breaks the insert-deduplication retry pipeline](https://github.com/ClickHouse/ClickHouse/issues/112018) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add system.s3(azure)_queue_metadata](https://github.com/ClickHouse/ClickHouse/pull/108522) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[RFC\] Add most-common-values (`mcv`) column statistics for better equality/IN selectivity on skewed columns](https://github.com/ClickHouse/ClickHouse/issues/114499) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Heap-use-after-free: Parquet v3 prefetcher reads and writes through a `ReadBuffer` freed by `IInputFormat::onFinish`](https://github.com/ClickHouse/ClickHouse/issues/114612) — 2 comments, 0 reactions
+- [nats-io/nats-server: (2.15) \[ADDED\] Report requested stream config while running at desired origin](https://github.com/nats-io/nats-server/pull/8439) — 5 comments, 1 reactions
+- [ClickHouse/ClickHouse: Reserve memory for merges up front](https://github.com/ClickHouse/ClickHouse/pull/109433) — 69 comments, 0 reactions
+- [redpanda-data/redpanda: sr: fix broker abort when a request fails before its deferred authz check](https://github.com/redpanda-data/redpanda/pull/31559) — 4 comments, 0 reactions
+- [nats-io/nats-server: \[IMPROVED\] Sync the block directory once in syncBlocks](https://github.com/nats-io/nats-server/pull/8461) — 2 comments, 1 reactions
+- [nats-io/nats-server: \[ADDED\] Support PROXY protocol for websocket listeners](https://github.com/nats-io/nats-server/pull/8133) — 2 comments, 2 reactions
+- [nats-io/nats-server: (2.15) \[ADDED\] Drive stream move and cancel move via desired state](https://github.com/nats-io/nats-server/pull/8437) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Logical error: Invalid number of columns in chunk pushed to OutputPort. Expected A, found B (STID: 2270-3258)](https://github.com/ClickHouse/ClickHouse/issues/114611) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Logical error: Unexpected token for lazy mode: A. Multi-block postings must be compressed (STID: 4250-5377)](https://github.com/ClickHouse/ClickHouse/issues/114603) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Measure the compressed size of aggregate states in `estimateSizeOfCompressedState`](https://github.com/ClickHouse/ClickHouse/pull/111985) — 25 comments, 0 reactions
+- [ClickHouse/ClickHouse: Improve canceling queries in nested expression functions in FilterTransform](https://github.com/ClickHouse/ClickHouse/pull/112705) — 32 comments, 0 reactions
+- [ClickHouse/ClickHouse: date_time_overflow_behavior is ignored when reading out-of-range Date32 values via IcebergS3 table engine (works with icebergS3() table function)](https://github.com/ClickHouse/ClickHouse/issues/114286) — 2 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix `JSONAllValues` text index probe coercion](https://github.com/ClickHouse/ClickHouse/pull/113376) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add basic implementation of  `DROP PARTITION` for Iceberg](https://github.com/ClickHouse/ClickHouse/pull/111219) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix JSON/XML format statistics race condition with parallel replicas](https://github.com/ClickHouse/ClickHouse/pull/96978) — 53 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix NOT_IMPLEMENTED exception in system.detached_tables for DatabaseDictionary and similar engines](https://github.com/ClickHouse/ClickHouse/pull/107943) — 16 comments, 0 reactions
+- [ClickHouse/ClickHouse: FULL JOIN USING over a Distributed left table: qualified column t1.a returns the coalesced USING value for right-only rows (or exception 8 at pure defaults)](https://github.com/ClickHouse/ClickHouse/issues/112909) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Lazy-load part-level column statistics](https://github.com/ClickHouse/ClickHouse/pull/114610) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix bitmap subset functions for small-set and promoted signed bitmaps](https://github.com/ClickHouse/ClickHouse/pull/110072) — 11 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix `NOT_FOUND_COLUMN_IN_BLOCK` in `query_plan_convert_join_to_in` with `arrayJoin` JOIN key](https://github.com/ClickHouse/ClickHouse/pull/104809) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not run the LeakSanitizer check on the forced exit path](https://github.com/ClickHouse/ClickHouse/pull/114053) — 7 comments, 0 reactions
+- [nats-io/nats-server: (2.15) \[ADDED\] Desired state reconcilitation for scaling and moves](https://github.com/nats-io/nats-server/pull/8432) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Lazy-load column statistics during query planning](https://github.com/ClickHouse/ClickHouse/pull/104691) — 15 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not create unused aggregate states in aggregation in order with a partial GROUP BY key](https://github.com/ClickHouse/ClickHouse/pull/114010) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reject a Parquet offset index whose first page does not start at row 0](https://github.com/ClickHouse/ClickHouse/pull/114530) — 7 comments, 0 reactions
+- [dragonflydb/dragonfly: fix(server): emit expired keyspace events for already-past expirations](https://github.com/dragonflydb/dragonfly/pull/8065) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Check for cancellation in AggregatingInOrderTransform](https://github.com/ClickHouse/ClickHouse/pull/110104) — 10 comments, 0 reactions
+- [dragonflydb/dragonfly: server: Fix stream size memory accounting](https://github.com/dragonflydb/dragonfly/pull/8066) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: AST fuzzer: do not create a view that duplicates a non-parallel sink](https://github.com/ClickHouse/ClickHouse/pull/114599) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Combine I/O cost with selectivity in PREWHERE condition ordering](https://github.com/ClickHouse/ClickHouse/pull/110695) — 6 comments, 1 reactions
+- [redpanda-data/redpanda: bazel: Apply Wno-backend-plugin to abseil crc_x86_arm_combined.cc](https://github.com/redpanda-data/redpanda/pull/31565) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reject a data lake schema whose column name is empty](https://github.com/ClickHouse/ClickHouse/pull/114394) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: Raise a catchable error instead of LOGICAL_ERROR on spec-violating Iceberg metadata](https://github.com/ClickHouse/ClickHouse/pull/114518) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Unexpected results with a minmax index and a NULL-containing `SOME` comparison](https://github.com/ClickHouse/ClickHouse/issues/112905) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Infinite uncancellable loop in function `hop` at analysis time: a window interval whose span wraps to 0 modulo 2^32 dodges the time-overflow guard](https://github.com/ClickHouse/ClickHouse/issues/114605) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Compare stored table definition expressions by AST instead of formatted text](https://github.com/ClickHouse/ClickHouse/pull/110833) — 71 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add `merge_use_batch_sorting_queue` `MergeTree` setting for ordinary merges](https://github.com/ClickHouse/ClickHouse/pull/108468) — 11 comments, 0 reactions
+- [nats-io/nats-server: Always retain last message for each subject in a stream](https://github.com/nats-io/nats-server/issues/5811) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix `bloom_filter` index skipping granules for a `FixedString` constant](https://github.com/ClickHouse/ClickHouse/pull/114089) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add explicit DB::NsyncSharedMutex and use it for KeeperLogStore changelog locking](https://github.com/ClickHouse/ClickHouse/pull/108017) — 9 comments, 1 reactions
+- [ClickHouse/ClickHouse: Malformed Iceberg schema-evolution metadata aborts the server via LOGICAL_ERROR instead of a normal exception](https://github.com/ClickHouse/ClickHouse/issues/114487) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keep the function name of a stack frame attributed to a libc++ `__functional` header](https://github.com/ClickHouse/ClickHouse/pull/112152) — 16 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix wrapped `Time64` values from an overflowing scale conversion in `convertFieldToType`](https://github.com/ClickHouse/ClickHouse/pull/114546) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Order the /play startup test's load-window keystroke by construction](https://github.com/ClickHouse/ClickHouse/pull/114563) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Hash the AST members that `getTreeHash` did not see](https://github.com/ClickHouse/ClickHouse/pull/114171) — 2 comments, 0 reactions
+- [dragonflydb/dragonfly: ci(tests): add scheduled e2e workflow for ioredis client](https://github.com/dragonflydb/dragonfly/pull/8062) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Strip the cosmetic parenthesized flag before comparing stored definitions](https://github.com/ClickHouse/ClickHouse/pull/113895) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Adaptive Aggregator](https://github.com/ClickHouse/ClickHouse/pull/111459) — 11 comments, 4 reactions
+- [ClickHouse/ClickHouse: Add a failpoint inside the Paimon incremental-read at-most-once window](https://github.com/ClickHouse/ClickHouse/pull/113443) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add setting to omit CSV quotes for date and time types](https://github.com/ClickHouse/ClickHouse/pull/107292) — 10 comments, 1 reactions
+- [ClickHouse/ClickHouse: Horizon Support in ClickHouse](https://github.com/ClickHouse/ClickHouse/pull/114547) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not throw a logical error when an ephemeral node is held by someone else](https://github.com/ClickHouse/ClickHouse/pull/114408) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix a mutated part losing files to the temporary directory cleanup](https://github.com/ClickHouse/ClickHouse/pull/111992) — 12 comments, 0 reactions
+- [dragonflydb/dragonfly: fix(stream): Reply with RESP3 map for XREAD BLOCK](https://github.com/dragonflydb/dragonfly/pull/8064) — 4 comments, 0 reactions
+- [dragonflydb/dragonfly: XREAD BLOCK replies in RESP2 array shape on a RESP3 connection](https://github.com/dragonflydb/dragonfly/issues/8056) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Imply make_distributed_plan from distributed_plan_workers_num](https://github.com/ClickHouse/ClickHouse/pull/114504) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Validate IN tuple/subquery column count mismatch in analyzer](https://github.com/ClickHouse/ClickHouse/pull/97540) — 34 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix quadratic JSON subcolumn skip-index matching over a large dotted constant](https://github.com/ClickHouse/ClickHouse/pull/113289) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #113654 to 26.6: Fix non-atomic Keeper Raft state persistence](https://github.com/ClickHouse/ClickHouse/pull/114119) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #113654 to 26.5: Fix non-atomic Keeper Raft state persistence](https://github.com/ClickHouse/ClickHouse/pull/114118) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #113654 to 26.3: Fix non-atomic Keeper Raft state persistence](https://github.com/ClickHouse/ClickHouse/pull/114117) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Minmax indices by default](https://github.com/ClickHouse/ClickHouse/pull/76867) — 79 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reject a Variant whose ORC branches read back as one type](https://github.com/ClickHouse/ClickHouse/pull/114540) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add support for S3Queue mode='exclusive'](https://github.com/ClickHouse/ClickHouse/pull/110552) — 17 comments, 1 reactions
+- [ClickHouse/ClickHouse: Reject Delta Lake partition column absent from the table schema](https://github.com/ClickHouse/ClickHouse/pull/114538) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Recover a NATS JetStream subscription closed by the broker](https://github.com/ClickHouse/ClickHouse/pull/112828) — 17 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not deserialize a skip index whose on-disk type is stale](https://github.com/ClickHouse/ClickHouse/pull/112484) — 12 comments, 0 reactions
+- [ClickHouse/ClickHouse: Recover an intact part from an empty columns.txt instead of losing it](https://github.com/ClickHouse/ClickHouse/pull/111597) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: RWLockImpl::getLock re-entrant deadlock in CREATE OR REPLACE internal DROP (STID 2043-3c5c)](https://github.com/ClickHouse/ClickHouse/issues/110893) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[Bitmap\] Function subBitmap execution result error](https://github.com/ClickHouse/ClickHouse/issues/109974) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #107028 to 26.6: Fix data race on FileCacheQueryLimit::query_map causing LOGICAL_ERROR](https://github.com/ClickHouse/ClickHouse/pull/114586) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Automatically choose between the plain and the secure port in clickhouse-client](https://github.com/ClickHouse/ClickHouse/pull/110130) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Parallelize aggregation-in-order via key-hash reshuffle (aggregation_in_order_shuffle)](https://github.com/ClickHouse/ClickHouse/pull/110102) — 22 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix `theilsU` window state returning noise when the frame's first argument is constant](https://github.com/ClickHouse/ClickHouse/pull/113691) — 6 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.2.x\] \[ CORE-14329\] tests/node_ops: tolerate chaos testing in decommission progress check](https://github.com/redpanda-data/redpanda/pull/31564) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] \[ CORE-14329\] tests/node_ops: tolerate chaos testing in decommission progress check](https://github.com/redpanda-data/redpanda/pull/31563) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] \[ CORE-14329\] tests/node_ops: tolerate chaos testing in decommission progress check](https://github.com/redpanda-data/redpanda/pull/31562) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #113289 to 26.3: Fix quadratic JSON subcolumn skip-index matching over a large dotted constant](https://github.com/ClickHouse/ClickHouse/pull/114474) — 2 comments, 0 reactions
+- [redpanda-data/redpanda: \[ CORE-14329\] tests/node_ops: tolerate chaos testing in decommission progress check](https://github.com/redpanda-data/redpanda/pull/31461) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #113289 to 25.8: Fix quadratic JSON subcolumn skip-index matching over a large dotted constant](https://github.com/ClickHouse/ClickHouse/pull/114473) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do automatic partition pruning for mutations when it's possible](https://github.com/ClickHouse/ClickHouse/pull/110968) — 36 comments, 0 reactions
+- [ClickHouse/ClickHouse: Check the table name length in `DatabaseOverlay`](https://github.com/ClickHouse/ClickHouse/pull/114567) — 6 comments, 0 reactions
+- [dragonflydb/dragonfly: test_replicaof_reject_on_load](https://github.com/dragonflydb/dragonfly/issues/5662) — 37 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add ALTER TABLE ... RECOMPRESS COLUMN](https://github.com/ClickHouse/ClickHouse/pull/109453) — 24 comments, 0 reactions
+- [ClickHouse/ClickHouse: Accessing tables as files, query construction and out-of-band modification in HTTP interface](https://github.com/ClickHouse/ClickHouse/pull/105249) — 83 comments, 0 reactions
+- [ClickHouse/ClickHouse: MergeTree: rethrow retryable errors from checkDataPart instead of returning empty checksums](https://github.com/ClickHouse/ClickHouse/pull/112874) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Dictionary credentials rotation](https://github.com/ClickHouse/ClickHouse/issues/85293) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add SCANN Vector Index Support](https://github.com/ClickHouse/ClickHouse/pull/105780) — 27 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix presentation URL in `clickhouse-git-import` help](https://github.com/ClickHouse/ClickHouse/pull/114570) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not rewrite arrayExists to has when the element and needle string types differ](https://github.com/ClickHouse/ClickHouse/pull/114496) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix correlated subquery + GROUP BY ROLLUP under group_by_use_nulls](https://github.com/ClickHouse/ClickHouse/pull/104350) — 61 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix "Cannot write to finalized buffer" in MergeTreeDeduplicationLog::rotate](https://github.com/ClickHouse/ClickHouse/pull/110429) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix segfault reading a Parquet file with an inconsistent bloom filter size](https://github.com/ClickHouse/ClickHouse/pull/112498) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add assertions in IColumn::mutate to verify deep unique ownership of sub-columns](https://github.com/ClickHouse/ClickHouse/pull/100185) — 21 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112498 to 26.7: Fix segfault reading a Parquet file with an inconsistent bloom filter size](https://github.com/ClickHouse/ClickHouse/pull/114576) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112498 to 26.6: Fix segfault reading a Parquet file with an inconsistent bloom filter size](https://github.com/ClickHouse/ClickHouse/pull/114575) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Lossy codec (SZ3) on a sorting-key column silently produces mis-sorted parts after a merge (`Sort order of blocks violated` in debug)](https://github.com/ClickHouse/ClickHouse/issues/114406) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: `optimize_inverse_dictionary_lookup` rewrite inside a correlated EXISTS makes decorrelation fail: 48 "Cannot decorrelate query, because 'DelayedCreatingSets' step is not supported"](https://github.com/ClickHouse/ClickHouse/issues/113182) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Constant projection + ORDER BY ALL + LIMIT n BY + LIMIT WITH TIES: exception 10 "Not found column 1_UInt8 in block" at default settings](https://github.com/ClickHouse/ClickHouse/issues/112908) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: serialize_query_plan = 1: WITH ROLLUP / WITH CUBE / Join-engine lookup join in a distributed subquery fails with NOT_IMPLEMENTED "Method serialize is not implemented" — no fallback](https://github.com/ClickHouse/ClickHouse/issues/112903) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Feature: Enable overlay databases for server.](https://github.com/ClickHouse/ClickHouse/pull/86768) — 107 comments, 0 reactions
+- [ClickHouse/ClickHouse: Join-order cardinality estimation runs before MergeTree partition/PK analysis and ignores pruned parts](https://github.com/ClickHouse/ClickHouse/issues/110281) — 2 comments, 1 reactions
+- [ClickHouse/ClickHouse: Unexpected syntax error when using `paste join` with `IcebergS3Cluster`](https://github.com/ClickHouse/ClickHouse/issues/88957) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: TCP server threads metrics (i.e. TCPThreads) is broken for <protocols> (over <tcp_port>/...)](https://github.com/ClickHouse/ClickHouse/issues/80759) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix memory tracker leak when a parent tracker throws MEMORY_LIMIT_EXCEEDED](https://github.com/ClickHouse/ClickHouse/pull/110784) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: PREWHERE Map subcolumn costing performs full-table metadata I/O before pruning](https://github.com/ClickHouse/ClickHouse/issues/114598) — 0 comments, 1 reactions
+- [redpanda-data/redpanda: \[CORE-12930\] - Storage: Some observability improvements for unrecoverable segments](https://github.com/redpanda-data/redpanda/pull/31544) — 2 comments, 0 reactions
+- [redpanda-data/redpanda: \[CORE-16998, CORE-17000, CORE-17001\] - Consumer Groups (Classic): Fix some bugs where the offset map could diverge from the log](https://github.com/redpanda-data/redpanda/pull/31483) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Optimize merges of the text index](https://github.com/ClickHouse/ClickHouse/pull/114525) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Push subcolumn reads into subqueries](https://github.com/ClickHouse/ClickHouse/pull/112688) — 15 comments, 1 reactions
+- [ClickHouse/ClickHouse: Support the NetCDF format](https://github.com/ClickHouse/ClickHouse/pull/111932) — 25 comments, 0 reactions
+- [ClickHouse/ClickHouse: Constant filter folding under materialize](https://github.com/ClickHouse/ClickHouse/pull/105987) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Drop stale totals and extremes ports in MergingAggregatedStep](https://github.com/ClickHouse/ClickHouse/pull/114027) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Implement CREATE HANDLER: SQL-defined HTTP handlers](https://github.com/ClickHouse/ClickHouse/pull/106231) — 79 comments, 1 reactions
+- [ClickHouse/ClickHouse: Reject shorthand setting changes carrying a value for the whole query tree](https://github.com/ClickHouse/ClickHouse/pull/113192) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #107028 to 26.5: Fix data race on FileCacheQueryLimit::query_map causing LOGICAL_ERROR](https://github.com/ClickHouse/ClickHouse/pull/114585) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[Draft/Prototype\] Add mutations_restrict session setting as a mutation safety catch](https://github.com/ClickHouse/ClickHouse/pull/114594) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Lightweight Updates v2](https://github.com/ClickHouse/ClickHouse/pull/103182) — 8 comments, 2 reactions
+- [ClickHouse/ClickHouse: Mongo queries: keep whole documents in a JSON column](https://github.com/ClickHouse/ClickHouse/pull/114577) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Improve pruned statistics planning benchmark and comments](https://github.com/ClickHouse/ClickHouse/pull/114566) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add experimental support for reading Iceberg v3 deletion vectors](https://github.com/ClickHouse/ClickHouse/pull/110781) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Warm statistics estimator on commit to avoid first-SELECT cold load](https://github.com/ClickHouse/ClickHouse/pull/109925) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix MATERIALIZED columns frozen at their INSERT-time value after ALTER UPDATE](https://github.com/ClickHouse/ClickHouse/pull/114561) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: S3Queue (multi-server, hash-ring): a stale per-server Processed cache silently skips a re-appeared object after its tracked-file TTL expires](https://github.com/ClickHouse/ClickHouse/issues/114595) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Write wide integers in Parquet as Decimal](https://github.com/ClickHouse/ClickHouse/pull/113347) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Enable read_in_order_use_virtual_row by default](https://github.com/ClickHouse/ClickHouse/pull/106215) — 37 comments, 0 reactions
+- [ClickHouse/ClickHouse: RESTORE: a mid-attach I/O error leaves an un-rolled-back durable data prefix; the suggested allow_non_empty_tables retry duplicates it](https://github.com/ClickHouse/ClickHouse/issues/114593) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Lightweight UPDATE: a mid-commit failure leaves a read-visible partial update and a retry double-applies](https://github.com/ClickHouse/ClickHouse/issues/114592) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Never cancel a query before its `max_execution_time` has elapsed](https://github.com/ClickHouse/ClickHouse/pull/114559) — 2 comments, 0 reactions
+- [redpanda-data/redpanda: rptest: add OOM crash self-test; allow-list memory diagnostics](https://github.com/redpanda-data/redpanda/pull/31365) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Idempotency key for DDL operations](https://github.com/ClickHouse/ClickHouse/issues/95963) — 1 comments, 2 reactions
+- [ClickHouse/ClickHouse: Materialize column statistics on INSERT for small tables by default](https://github.com/ClickHouse/ClickHouse/pull/109454) — 44 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix logical error on filter push-down with a differently-typed same-name column](https://github.com/ClickHouse/ClickHouse/pull/113984) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix `XDG_CACHE_HOME` being read from `XDG_STATE_HOME`](https://github.com/ClickHouse/ClickHouse/pull/114278) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support specifying or auto-assigning Parquet field_ids for output columns](https://github.com/ClickHouse/ClickHouse/pull/101783) — 43 comments, 0 reactions
+- [ClickHouse/ClickHouse: Show the real per-query verdict in the performance comparison report](https://github.com/ClickHouse/ClickHouse/pull/114451) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Vector similarity: support TurboQuant quantization](https://github.com/ClickHouse/ClickHouse/issues/101474) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cache vended credentials for REST catalogs](https://github.com/ClickHouse/ClickHouse/pull/107960) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add `/dialect`, `/lang`, `/language` client commands](https://github.com/ClickHouse/ClickHouse/pull/114568) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Enable the query condition cache for `ORDER BY ... LIMIT n` queries by default](https://github.com/ClickHouse/ClickHouse/pull/114539) — 5 comments, 0 reactions
+- [redpanda-data/redpanda: bazel: bump the toolchain sysroot to Ubuntu 24.04](https://github.com/redpanda-data/redpanda/pull/31560) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add table schema to SQLInsert output](https://github.com/ClickHouse/ClickHouse/pull/114106) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Automatic LowCardinality serialization based on uniq statistics](https://github.com/ClickHouse/ClickHouse/pull/107436) — 6 comments, 1 reactions
+- [ClickHouse/ClickHouse: Add leader election for non-replicated MergeTree on shared storage](https://github.com/ClickHouse/ClickHouse/pull/101039) — 87 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #113563 to 26.6: Do not analyze the shared row policy AST in place in `Merge`](https://github.com/ClickHouse/ClickHouse/pull/114310) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Prepare changelog for 26.8](https://github.com/ClickHouse/ClickHouse/pull/111720) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #112921 to 26.7: Evaluate randomHadamardTransform once for a constant vector](https://github.com/ClickHouse/ClickHouse/pull/114564) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: bazel: add a remote_download_minimal config to cut CI download volume](https://github.com/redpanda-data/redpanda/pull/31536) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support Variant type in aggregate functions (sum, avg, min, max, ...)](https://github.com/ClickHouse/ClickHouse/pull/109369) — 24 comments, 0 reactions
+- [ClickHouse/ClickHouse: Parallelize reads from a single Parquet file in StorageFile, again](https://github.com/ClickHouse/ClickHouse/pull/104431) — 68 comments, 0 reactions
+- [ClickHouse/ClickHouse: Raise the log-wait timeout in `test_keeper_session_loss_direct_read` to fix flakiness](https://github.com/ClickHouse/ClickHouse/pull/114552) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Clarify `aiSimilarity` cosine similarity range in its documentation](https://github.com/ClickHouse/ClickHouse/pull/114380) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Function `resetSerialID` to reset/remove a `generateSerialID` series](https://github.com/ClickHouse/ClickHouse/issues/114455) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Columns Cache](https://github.com/ClickHouse/ClickHouse/pull/96844) — 77 comments, 5 reactions
+- [ClickHouse/ClickHouse: Column named like an array subcolumn (a.size0) added via ALTER: old parts silently return the subcolumn value instead of the DEFAULT, and merges materialize the wrong values](https://github.com/ClickHouse/ClickHouse/issues/114588) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Build the `arrayIntersect` hash map from the smallest argument](https://github.com/ClickHouse/ClickHouse/pull/113021) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: arrayIntersect overflow guard tests isInteger on a Nullable type, so it never fires](https://github.com/ClickHouse/ClickHouse/issues/114587) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Iceberg: skip eager getContent() JSON serialization when metadata log is disabled](https://github.com/ClickHouse/ClickHouse/pull/105823) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #107028 to 26.3: Fix data race on FileCacheQueryLimit::query_map causing LOGICAL_ERROR](https://github.com/ClickHouse/ClickHouse/pull/114584) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #107028 to 25.8: Fix data race on FileCacheQueryLimit::query_map causing LOGICAL_ERROR](https://github.com/ClickHouse/ClickHouse/pull/114583) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Failed INSERT INTO s3(...) PARTITION BY leaves a durable read-visible prefix; default hive strategy silently duplicates it on retry](https://github.com/ClickHouse/ClickHouse/issues/114582) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: IN (SELECT ...) inside a higher-order-function lambda always evaluates to 0 when the query is a derived table or the lambda is in WHERE](https://github.com/ClickHouse/ClickHouse/issues/114581) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix data race on FileCacheQueryLimit::query_map causing LOGICAL_ERROR](https://github.com/ClickHouse/ClickHouse/pull/107028) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Web UI prototype for framing formats](https://github.com/ClickHouse/ClickHouse/pull/110210) — 23 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix nested disk S3 I/O ignoring inner RESOURCE throttler at CachedObjectStorage delegation points](https://github.com/ClickHouse/ClickHouse/pull/114312) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add early short-circuit evaluation for OR/AND in the analyzer to prevent unnecessary scalar subquery execution](https://github.com/ClickHouse/ClickHouse/pull/83505) — 12 comments, 0 reactions
+- [ClickHouse/ClickHouse: Lazy FINAL with `optimize_aggregation_in_order` merges one group at a time (25000 `mergeBlocks` calls and 50000 log lines for a 35000-row table)](https://github.com/ClickHouse/ClickHouse/issues/114579) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Allow COMMENT after all the other column modifiers](https://github.com/ClickHouse/ClickHouse/pull/112788) — 21 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #113534 to 26.7: Fix a mixed JOIN ON condition evaluated over mismatched column types for a dictionary](https://github.com/ClickHouse/ClickHouse/pull/114560) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Honor `use_statistics_cache` when loading per-part statistics](https://github.com/ClickHouse/ClickHouse/pull/113448) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Mongo queries (wire protocol + dialect)](https://github.com/ClickHouse/ClickHouse/pull/68493) — 25 comments, 1 reactions
+- [ClickHouse/ClickHouse: Add a `string_bounds` column statistic for String columns](https://github.com/ClickHouse/ClickHouse/issues/114498) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cascades cost-based optimizer for distributed query plans](https://github.com/ClickHouse/ClickHouse/pull/86353) — 7 comments, 21 reactions
+- [ClickHouse/ClickHouse: Disable the sampling query profiler under Memory Sanitizer](https://github.com/ClickHouse/ClickHouse/pull/113107) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Framing formats: multiplex data, totals, extremes, progress, logs, and profile events in the HTTP response stream](https://github.com/ClickHouse/ClickHouse/pull/110127) — 19 comments, 0 reactions
+- [ClickHouse/ClickHouse: QueryRunner follow-up: do not occupy threads eagerly](https://github.com/ClickHouse/ClickHouse/pull/114522) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reimplement the KQL (Kusto) dialect on a lexer, an AST and AST translation](https://github.com/ClickHouse/ClickHouse/pull/112932) — 17 comments, 0 reactions
+- [ClickHouse/ClickHouse: Unattended `continue-pr-auto` skill and the `continue-all-prs` driver](https://github.com/ClickHouse/ClickHouse/pull/114557) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: `PREWHERE <bare column>` with `FINAL` throws THERE_IS_NO_COLUMN when PREWHERE is deferred after FINAL](https://github.com/ClickHouse/ClickHouse/issues/114512) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Native Google Cloud Storage integration (google-cloud-cpp)](https://github.com/ClickHouse/ClickHouse/pull/109455) — 12 comments, 0 reactions
+- [ClickHouse/ClickHouse: WIP some perf optimizations](https://github.com/ClickHouse/ClickHouse/pull/81944) — 34 comments, 4 reactions
+- [ClickHouse/ClickHouse: Cherry pick #112498 to 26.5: Fix segfault reading a Parquet file with an inconsistent bloom filter size](https://github.com/ClickHouse/ClickHouse/pull/114574) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #112498 to 26.3: Fix segfault reading a Parquet file with an inconsistent bloom filter size](https://github.com/ClickHouse/ClickHouse/pull/114573) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reapply "Make `postgresql` and `PostgreSQL` engine work against a ClickHouse instance", with a fix for the cancel-request logical error](https://github.com/ClickHouse/ClickHouse/pull/112940) — 20 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #112498 to 25.8: Fix segfault reading a Parquet file with an inconsistent bloom filter size](https://github.com/ClickHouse/ClickHouse/pull/114572) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: metrics: remove one-shot IMDS connect probe](https://github.com/redpanda-data/redpanda/pull/31301) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Rewrite `length(arrayFilter(f, arr))` to `arrayCount(f, arr)`](https://github.com/ClickHouse/ClickHouse/pull/113023) — 19 comments, 0 reactions
+- [ClickHouse/ClickHouse: Range condition in JOIN ON against a single-row side is not used for index analysis (no part pruning) since the logical join step became default](https://github.com/ClickHouse/ClickHouse/issues/112586) — 6 comments, 2 reactions
+- [redpanda-data/redpanda: \[v26.2.x\] k/s/tests: deflake fetch_memory_units cross-shard test](https://github.com/redpanda-data/redpanda/pull/31561) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Feature: Paimon minmax index](https://github.com/ClickHouse/ClickHouse/pull/100160) — 19 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix TSAN data race in executeASTFuzzerQueries clearing caller's transaction](https://github.com/ClickHouse/ClickHouse/pull/103158) — 20 comments, 0 reactions
+- [ClickHouse/ClickHouse: Convert stateless tests that modify the server's data on disk to integration tests](https://github.com/ClickHouse/ClickHouse/pull/114070) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: `break` does not always return a partial result](https://github.com/ClickHouse/ClickHouse/pull/113902) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix ILLEGAL_TYPE_OF_ARGUMENT on nullable MySQL spatial columns](https://github.com/ClickHouse/ClickHouse/pull/110943) — 24 comments, 0 reactions
+- [ClickHouse/ClickHouse: Check table name length on RENAME DATABASE unconditionally](https://github.com/ClickHouse/ClickHouse/pull/113557) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Require full field consumption on every Regexp escaping rule](https://github.com/ClickHouse/ClickHouse/pull/114520) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix cubic complexity of planning a JOIN with a `merge` table](https://github.com/ClickHouse/ClickHouse/pull/113140) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add ProfileEvents and CurrentMetrics for fiber stacks](https://github.com/ClickHouse/ClickHouse/pull/114541) — 2 comments, 1 reactions
+- [ClickHouse/ClickHouse: Push join key filters into MergeTree index during recursive CTE evaluation](https://github.com/ClickHouse/ClickHouse/pull/97254) — 77 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix set index on an expression with a Nullable operand](https://github.com/ClickHouse/ClickHouse/pull/113244) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix use_constant_folding_in_index_analysis issues](https://github.com/ClickHouse/ClickHouse/pull/109896) — 28 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix Iceberg query failure after MODIFY COLUMN to Nullable](https://github.com/ClickHouse/ClickHouse/pull/114521) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Azure: retry transient authentication failures on the remaining object-storage call sites](https://github.com/ClickHouse/ClickHouse/pull/112875) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: convertMySQLDataType wraps Array/Variant-based geo types in Nullable, throwing ILLEGAL_TYPE_OF_ARGUMENT on nullable MySQL spatial columns](https://github.com/ClickHouse/ClickHouse/issues/110933) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: DeltaLake Logical error: 'No version found in table state snapshot'](https://github.com/ClickHouse/ClickHouse/issues/107334) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Logical error: Can't extract iceberg table state from storage snapshot for table location A (STID: 2606-4a47)](https://github.com/ClickHouse/ClickHouse/issues/102037) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix LOGICAL_ERROR crash in IcebergMetadata::iterate when datalake_table_state is missing](https://github.com/ClickHouse/ClickHouse/pull/102033) — 36 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #102033 to 26.5: Fix LOGICAL_ERROR crash in IcebergMetadata::iterate when datalake_table_state is missing](https://github.com/ClickHouse/ClickHouse/pull/114528) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix `date_time_overflow_behavior` being ignored for integer and float casts to DateTime64/Time64](https://github.com/ClickHouse/ClickHouse/pull/101512) — 25 comments, 0 reactions
+- [ClickHouse/ClickHouse: DeltaLake : Use new create table transaction](https://github.com/ClickHouse/ClickHouse/pull/106011) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Perform the `Too many parts` check once per INSERT query](https://github.com/ClickHouse/ClickHouse/pull/113045) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add the `logsql` dialect: LogsQL, the query language of VictoriaLogs](https://github.com/ClickHouse/ClickHouse/pull/113207) — 5 comments, 5 reactions
+- [ClickHouse/ClickHouse: Async insert parallel parsing](https://github.com/ClickHouse/ClickHouse/pull/79509) — 24 comments, 2 reactions
+- [ClickHouse/ClickHouse: Fix a Keeper server never joining the cluster when background snapshot IO is enabled](https://github.com/ClickHouse/ClickHouse/pull/114275) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Check access rights in EXPLAIN QUERY TREE and EXPLAIN SYNTAX](https://github.com/ClickHouse/ClickHouse/pull/110180) — 12 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix division by zero in `ReadFromMergeTree` when `StorageMerge` truncates the number of streams](https://github.com/ClickHouse/ClickHouse/pull/113382) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[RFC\] Query Acceleration: derived structures for transparent query rewrite](https://github.com/ClickHouse/ClickHouse/issues/112444) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Use Gaussian centroids for truncated QBit codes](https://github.com/ClickHouse/ClickHouse/pull/111867) — 12 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support TLS/SSL for PostgreSQL connections](https://github.com/ClickHouse/ClickHouse/pull/110615) — 54 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix flaky `test_url_reconnect`](https://github.com/ClickHouse/ClickHouse/pull/114527) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Ask `@oranjeai` instead of `@groeneai` in the private repository](https://github.com/ClickHouse/ClickHouse/pull/114556) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not let artifact-collection rows discard a bugfix-validation verdict](https://github.com/ClickHouse/ClickHouse/pull/114400) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Evaluate randomHadamardTransform once for a constant vector](https://github.com/ClickHouse/ClickHouse/pull/112921) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Preserve the RabbitMQ broker log in integration tests](https://github.com/ClickHouse/ClickHouse/pull/114434) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: checkTableNameLengthUnlocked in renameDatabase gated behind dependency-checking condition, bypassed with check_table_dependencies=0](https://github.com/ClickHouse/ClickHouse/issues/101747) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Azure: fix ranged copy corruption and harden the copy path](https://github.com/ClickHouse/ClickHouse/pull/112876) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: improve data warehousing diagram rendering](https://github.com/ClickHouse/ClickHouse/pull/114542) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Avoid scans for constant sort keys](https://github.com/ClickHouse/ClickHouse/pull/113899) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: Do not inject random ORDER BY into queries planned to an intermediate stage](https://github.com/ClickHouse/ClickHouse/pull/113266) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Real cache size ](https://github.com/ClickHouse/ClickHouse/pull/79490) — 35 comments, 1 reactions
+- [ClickHouse/ClickHouse: Enable dynamic evaluation of whether a short-circuit function's argument should be lazily executed](https://github.com/ClickHouse/ClickHouse/pull/73776) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix a mixed JOIN ON condition evaluated over mismatched column types for a dictionary](https://github.com/ClickHouse/ClickHouse/pull/113534) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Revert "Resolve the query status per call in functions that check for cancellation"](https://github.com/ClickHouse/ClickHouse/pull/114537) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[DRAFT\] Remove CatBoost integration](https://github.com/ClickHouse/ClickHouse/pull/109710) — 17 comments, 0 reactions
+- [ClickHouse/ClickHouse: Release pull request for branch 26.5](https://github.com/ClickHouse/ClickHouse/pull/105429) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Replace the per-bucket hash map in `timeSeries*ToGrid` with a sorted-append sample array](https://github.com/ClickHouse/ClickHouse/pull/113681) — 6 comments, 1 reactions
+- [ClickHouse/ClickHouse: Add INSERT ... RETURNING (non-atomic, user-supplied SELECT)](https://github.com/ClickHouse/ClickHouse/pull/105714) — 32 comments, 2 reactions
+- [ClickHouse/ClickHouse: Reject STREAM with parallel replicas at plan-build time](https://github.com/ClickHouse/ClickHouse/pull/113754) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: TimeSeries: enable dynamic remote-write routing via URL table prefix](https://github.com/ClickHouse/ClickHouse/pull/93833) — 14 comments, 2 reactions
+- [ClickHouse/ClickHouse: Fix LOGICAL_ERROR in DatabaseReplicatedDDLWorker with max_replication_lag_to_enqueue=0](https://github.com/ClickHouse/ClickHouse/pull/106006) — 20 comments, 0 reactions
+- [ClickHouse/ClickHouse: Added Parquet Shredded VARIANT Support to ParquetReaderv3](https://github.com/ClickHouse/ClickHouse/pull/102499) — 31 comments, 3 reactions
+- [redpanda-data/redpanda: k/s/tests: deflake fetch_memory_units cross-shard test](https://github.com/redpanda-data/redpanda/pull/31512) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix wrong results of the partial aggregation strategy in distributed query plans](https://github.com/ClickHouse/ClickHouse/pull/114523) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Disable uniq, uniq_v2 for high cardinality column types](https://github.com/ClickHouse/ClickHouse/pull/111770) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix data race when tracing profile events](https://github.com/ClickHouse/ClickHouse/pull/113553) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Parallel Replicas: a setting to disable for queries with multiple tables](https://github.com/ClickHouse/ClickHouse/pull/76595) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #113534 to 26.7: Fix a mixed JOIN ON condition evaluated over mismatched column types for a dictionary](https://github.com/ClickHouse/ClickHouse/pull/114423) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Revert "Use libdeflate for gzip/zlib/deflate compression and decompression"](https://github.com/ClickHouse/ClickHouse/pull/114054) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Convert test 04630_merge_over_stale_packed_tmp_dir to an integration test](https://github.com/ClickHouse/ClickHouse/pull/114057) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add aiFilter for natural-language boolean filtering via LLMs.](https://github.com/ClickHouse/ClickHouse/pull/110594) — 11 comments, 0 reactions
+- [ClickHouse/ClickHouse: Delay background mutations by a bounded random amount in stress tests](https://github.com/ClickHouse/ClickHouse/pull/114085) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Compose join-order statistics over parts surviving partition/PK pruning](https://github.com/ClickHouse/ClickHouse/pull/110283) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: MySQL: reject an empty TLS contents override also when the collection stores contents](https://github.com/ClickHouse/ClickHouse/pull/113947) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Targeted tests: skip previously failed tests that no longer exist](https://github.com/ClickHouse/ClickHouse/pull/114495) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keep heavy check in `ColumnArray` only in debug build](https://github.com/ClickHouse/ClickHouse/pull/114469) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix RIGHT JOIN with parallel_replicas_min_number_of_rows_per_replica](https://github.com/ClickHouse/ClickHouse/pull/111332) — 11 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix MaterializedPostgreSQL database/table with ON CLUSTER](https://github.com/ClickHouse/ClickHouse/pull/110493) — 12 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support quoted identifiers in PromQL selectors](https://github.com/ClickHouse/ClickHouse/pull/114551) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: MaterializedPostgreSQL DB Engine: Support for TLS](https://github.com/ClickHouse/ClickHouse/issues/80787) — 0 comments, 1 reactions
+- [ClickHouse/ClickHouse: Use a continuous primary-key range for whole-metric PromQL selectors of TimeSeries tables](https://github.com/ClickHouse/ClickHouse/pull/114131) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support parallel replicas for Merge tables and the merge() table function](https://github.com/ClickHouse/ClickHouse/pull/110972) — 32 comments, 0 reactions
+- [ClickHouse/ClickHouse: Make JSONExtract honour cast_string_to_date_time_mode when parsing DateTime values](https://github.com/ClickHouse/ClickHouse/pull/109252) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix quadratic gzip/zlib streaming decompression of single-block streams](https://github.com/ClickHouse/ClickHouse/pull/114059) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Unconditional `std::adjacent_find` offsets scan in the `ColumnArray` constructor costs 15-31% on array-heavy queries in release builds](https://github.com/ClickHouse/ClickHouse/issues/114105) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: rpk: consolidate plugin version validation on pkg](https://github.com/redpanda-data/redpanda/pull/31557) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Apply optimize_functions_to_subcolumns in WHERE/PREWHERE on shards of distributed queries](https://github.com/ClickHouse/ClickHouse/pull/114204) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Deduplicate the final DISTINCT in parallel](https://github.com/ClickHouse/ClickHouse/pull/114550) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: bazel/packaging: bake rpath at link time instead of patching](https://github.com/redpanda-data/redpanda/pull/31558) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Parallel read in order with multiple parts](https://github.com/ClickHouse/ClickHouse/pull/100394) — 70 comments, 0 reactions
+- [ClickHouse/ClickHouse: In case of trivial views, push whole outer query to shards.](https://github.com/ClickHouse/ClickHouse/pull/101791) — 15 comments, 3 reactions
+- [ClickHouse/ClickHouse: Run the merge queue's stateless flaky check in PR CI too, at comparable concurrency](https://github.com/ClickHouse/ClickHouse/pull/112358) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: Text index: fix accidentally removed columns when the direct read is enabled](https://github.com/ClickHouse/ClickHouse/pull/114460) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[CI crash\] Incorrect type cast during serialization](https://github.com/ClickHouse/ClickHouse/issues/113891) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Let functions answer `canThrow` instead of deriving it from short-circuit suitability](https://github.com/ClickHouse/ClickHouse/pull/114549) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Enhancement for Vortex format](https://github.com/ClickHouse/ClickHouse/pull/114373) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #110283 to 26.7: Compose join-order statistics over parts surviving partition/PK pruning](https://github.com/ClickHouse/ClickHouse/pull/114555) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #110283 to 26.6: Compose join-order statistics over parts surviving partition/PK pruning](https://github.com/ClickHouse/ClickHouse/pull/114554) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Cherry pick #110283 to 26.5: Compose join-order statistics over parts surviving partition/PK pruning](https://github.com/ClickHouse/ClickHouse/pull/114553) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Estimate compact-part input bytes from the part's measured ratio](https://github.com/ClickHouse/ClickHouse/pull/114535) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Parquet: map TIME logical type to Time64 ](https://github.com/ClickHouse/ClickHouse/pull/106019) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix "Not-ready Set" for GLOBAL IN over an object-storage _path / _file filter](https://github.com/ClickHouse/ClickHouse/pull/112968) — 10 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add aiFilter AI function (boolean predicate for WHERE / PREWHERE / JOIN)](https://github.com/ClickHouse/ClickHouse/issues/110352) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Logical error: Shard number is greater than shard count: shard_num=A shard_count=B cluster=C (STID: 5066-564d)](https://github.com/ClickHouse/ClickHouse/issues/101325) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix hang in `--queries-file` / `-q` when stdin is a pipe with no data](https://github.com/ClickHouse/ClickHouse/pull/96494) — 18 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support GCS vended credentials in Unity Catalog](https://github.com/ClickHouse/ClickHouse/pull/113890) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Re-land: make Ctrl+C terminate the output of a result set in the client promptly](https://github.com/ClickHouse/ClickHouse/pull/108078) — 30 comments, 0 reactions
+- [ClickHouse/ClickHouse: \[Umbrella\] JSON type improvements](https://github.com/ClickHouse/ClickHouse/issues/68428) — 107 comments, 67 reactions
+- [ClickHouse/ClickHouse: Let read-in-order propagate through SpillingHashJoin](https://github.com/ClickHouse/ClickHouse/pull/111973) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support quoted PromQL grouping labels](https://github.com/ClickHouse/ClickHouse/pull/114545) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Query result cache on disk](https://github.com/ClickHouse/ClickHouse/pull/79393) — 21 comments, 4 reactions
+- [ClickHouse/ClickHouse: Support trailing commas in PromQL grouping labels](https://github.com/ClickHouse/ClickHouse/pull/114548) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keep the part minmax index over `_block_number` / `_block_offset` across a reload of a mutated part](https://github.com/ClickHouse/ClickHouse/pull/112878) — 19 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add `secondary_indices_materialized` column to `system.parts`](https://github.com/ClickHouse/ClickHouse/pull/89350) — 9 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix local builds compiling vendored Rust code with `opt-level = 0`](https://github.com/ClickHouse/ClickHouse/pull/114083) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Docs: fix absolute documentation component links](https://github.com/ClickHouse/ClickHouse/pull/114534) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add coverage tests for four untested MergeTree and index branches](https://github.com/ClickHouse/ClickHouse/pull/114305) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support binary for aggregate_function_input_format, unify implementation](https://github.com/ClickHouse/ClickHouse/pull/91358) — 28 comments, 1 reactions
+- [ClickHouse/ClickHouse: Do not run distributed-plan rewrites on the child plans of a Merge table](https://github.com/ClickHouse/ClickHouse/pull/113636) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Accept signed PromQL @ timestamps](https://github.com/ClickHouse/ClickHouse/pull/114398) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Text index direct read drops the source column another PREWHERE step needs: NOT_FOUND_COLUMN_IN_BLOCK on a valid query](https://github.com/ClickHouse/ClickHouse/issues/113320) — 1 comments, 0 reactions
+- [dragonflydb/dragonfly: test_replicate_old_master](https://github.com/dragonflydb/dragonfly/issues/8063) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: Support PromQL set binary operators](https://github.com/ClickHouse/ClickHouse/pull/104489) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Web UI: stop the progress spinner when a running query is cancelled](https://github.com/ClickHouse/ClickHouse/pull/110199) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add symbols and lines to error tables](https://github.com/ClickHouse/ClickHouse/pull/100374) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Count a rejected insert once per query in `RejectedInserts`](https://github.com/ClickHouse/ClickHouse/pull/114107) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Use `pread` when `preadv2` with `RWF_NOWAIT` cannot be used, and recognize `EPERM` from it](https://github.com/ClickHouse/ClickHouse/pull/112945) — 25 comments, 0 reactions
+- [ClickHouse/ClickHouse: Randomize tests with DETACH/ATTACH table before query execution](https://github.com/ClickHouse/ClickHouse/pull/96130) — 90 comments, 2 reactions
+- [ClickHouse/ClickHouse: Support `SIMILAR TO` pattern matching predicate](https://github.com/ClickHouse/ClickHouse/pull/101514) — 17 comments, 1 reactions
+- [ClickHouse/ClickHouse: Fix flaky test_zookeeper_fallback_session by waiting for zoo1 to catch up before asserting fallback](https://github.com/ClickHouse/ClickHouse/pull/114055) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix quadratic insert into Poco::ListMap for repeated keys](https://github.com/ClickHouse/ClickHouse/pull/114410) — 2 comments, 2 reactions
+- [redpanda-data/redpanda: \[UX-1427\] chore: bump franz-go to 1.21.6](https://github.com/redpanda-data/redpanda/pull/31556) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix DateTime64 parser consumes Bool column value when small epoch](https://github.com/ClickHouse/ClickHouse/pull/108642) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #102033 to 26.3: Fix LOGICAL_ERROR crash in IcebergMetadata::iterate when datalake_table_state is missing](https://github.com/ClickHouse/ClickHouse/pull/114383) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Keeper log s3](https://github.com/ClickHouse/ClickHouse/pull/79991) — 27 comments, 0 reactions
+- [ClickHouse/ClickHouse: #91631 / Extension of CREATE TABLE IF NOT EXISTS ... AS SELECT](https://github.com/ClickHouse/ClickHouse/pull/102440) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Fix `ORDER BY ... LIMIT` returning too few rows under a row policy](https://github.com/ClickHouse/ClickHouse/pull/114073) — 3 comments, 0 reactions
+- [ClickHouse/ClickHouse: Clear plain LIMIT/OFFSET in the window-view backfill source query](https://github.com/ClickHouse/ClickHouse/pull/114247) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reduce peak memory during JSON advanced shared data merges](https://github.com/ClickHouse/ClickHouse/pull/109636) — 4 comments, 0 reactions
+- [ClickHouse/ClickHouse: Allow creating a Distributed table over a table function](https://github.com/ClickHouse/ClickHouse/pull/110073) — 47 comments, 0 reactions
+- [ClickHouse/ClickHouse: Backport #102033 to 26.6: Fix LOGICAL_ERROR crash in IcebergMetadata::iterate when datalake_table_state is missing](https://github.com/ClickHouse/ClickHouse/pull/114529) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Observe the deadline inside one string search](https://github.com/ClickHouse/ClickHouse/pull/114009) — 13 comments, 0 reactions
+- [redpanda-data/redpanda: hashing: back crc32c with abseil instead of google/crc32c](https://github.com/redpanda-data/redpanda/pull/31517) — 7 comments, 0 reactions
+- [ClickHouse/ClickHouse: Check for cancellation in the h3 array-expanding functions](https://github.com/ClickHouse/ClickHouse/pull/113924) — 13 comments, 0 reactions
+- [ClickHouse/ClickHouse: JWT Auth for native and HTTP protocols](https://github.com/ClickHouse/ClickHouse/issues/92350) — 9 comments, 3 reactions
+- [ClickHouse/ClickHouse: Dropping a nested column group bypasses every ALTER protection](https://github.com/ClickHouse/ClickHouse/issues/114481) — 0 comments, 0 reactions
+- [ClickHouse/ClickHouse: ClickHouse writes an ORC file whose schema it cannot infer: `Variant(String, Int128)`](https://github.com/ClickHouse/ClickHouse/issues/114169) — 5 comments, 0 reactions
+- [ClickHouse/ClickHouse: Metrics for tracking insertions via materialized view](https://github.com/ClickHouse/ClickHouse/pull/110391) — 2 comments, 0 reactions
+- [ClickHouse/ClickHouse: Reject duplicate names in CTE and table expression column alias lists](https://github.com/ClickHouse/ClickHouse/pull/114505) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Add a regression test for the declared type of `identity` for `Variant`](https://github.com/ClickHouse/ClickHouse/pull/112469) — 14 comments, 0 reactions
+- [ClickHouse/ClickHouse: Skip the aggregation hash-table stats cache key without GROUP BY keys](https://github.com/ClickHouse/ClickHouse/pull/113333) — 6 comments, 0 reactions
+- [ClickHouse/ClickHouse: Bump `silk` to the latest `clickhouse-public`](https://github.com/ClickHouse/ClickHouse/pull/113796) — 7 comments, 2 reactions
+- [ClickHouse/ClickHouse: Charge an empty match for the distance it may have scanned in countMatches](https://github.com/ClickHouse/ClickHouse/pull/114100) — 8 comments, 0 reactions
+- [ClickHouse/ClickHouse: Optimization of `GROUP BY` in the presence of `ORDER BY` and `LIMIT`](https://github.com/ClickHouse/ClickHouse/pull/96630) — 13 comments, 8 reactions
+- [ClickHouse/ClickHouse: Backport #111930 to 26.6: Fix Block structure mismatch when the split filter column name clashes with an input](https://github.com/ClickHouse/ClickHouse/pull/114392) — 1 comments, 0 reactions
+- [ClickHouse/ClickHouse: Observe the query time limit while collecting typo-correction hints](https://github.com/ClickHouse/ClickHouse/pull/113996) — 10 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.2.x\] rpk: add load-factor dashboard to generate grafana-dashboard](https://github.com/redpanda-data/redpanda/pull/31555) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: Tq more changes](https://github.com/redpanda-data/redpanda/pull/31542) — 5 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] rpk connect upgrade rejects all currently installed Connect versions (two-digit version regex in VersionFromString)](https://github.com/redpanda-data/redpanda/issues/31552) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] rpk/connect: don't cap version segments at two digits in VersionFromString](https://github.com/redpanda-data/redpanda/pull/31553) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: rpk: add load-factor dashboard to generate grafana-dashboard](https://github.com/redpanda-data/redpanda/pull/31554) — 3 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] rpk connect upgrade rejects all currently installed Connect versions (two-digit version regex in VersionFromString)](https://github.com/redpanda-data/redpanda/issues/31550) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.2.x\] rpk connect upgrade rejects all currently installed Connect versions (two-digit version regex in VersionFromString)](https://github.com/redpanda-data/redpanda/issues/31548) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] Implement cross-segment prefetching for small segments in cloud storage reads](https://github.com/redpanda-data/redpanda/pull/29795) — 3 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] kafka/server: cap fetch memory allocation at max message size limit](https://github.com/redpanda-data/redpanda/pull/30314) — 2 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.2.x\] rpk/connect: don't cap version segments at two digits in VersionFromString](https://github.com/redpanda-data/redpanda/pull/31549) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] rpk/connect: don't cap version segments at two digits in VersionFromString](https://github.com/redpanda-data/redpanda/pull/31551) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] bazel: define an empty ci-remote-cache config](https://github.com/redpanda-data/redpanda/pull/31540) — 3 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.2.x\] bazel: define an empty ci-remote-cache config](https://github.com/redpanda-data/redpanda/pull/31538) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: Add rpk standalone installscript for OSX,Linux](https://github.com/redpanda-data/redpanda/issues/4191) — 10 comments, 0 reactions
+- [redpanda-data/redpanda: Add healthcheck for Docker](https://github.com/redpanda-data/redpanda/issues/2749) — 7 comments, 1 reactions
+- [redpanda-data/redpanda: rpk/connect: don't cap version segments at two digits in VersionFromString](https://github.com/redpanda-data/redpanda/pull/31546) — 4 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] Kgo Verifier Producer set linger to 0](https://github.com/redpanda-data/redpanda/pull/29258) — 5 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] iceberg: Push Parquest column stats to Iceberg manifests](https://github.com/redpanda-data/redpanda/pull/30776) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] `compaction`: avoid recompression of unchanged batches](https://github.com/redpanda-data/redpanda/pull/30673) — 2 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] build/deps: upgrade krb5 to 1.22.2](https://github.com/redpanda-data/redpanda/pull/30716) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] k/s/group_manager: fix inflated consumer group lag after log truncation](https://github.com/redpanda-data/redpanda/pull/30869) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] `storage`: make `_schemas` deletion exempt](https://github.com/redpanda-data/redpanda/pull/31156) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: rpk connect upgrade rejects all currently installed Connect versions (two-digit version regex in VersionFromString)](https://github.com/redpanda-data/redpanda/issues/31545) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: rpk: fix grammar and wording defects in help text](https://github.com/redpanda-data/redpanda/pull/31521) — 7 comments, 0 reactions
+- [nats-io/nats-server: De-flake TestJetStreamSuperClusterStreamDirectGetMirrorQueueGroup](https://github.com/nats-io/nats-server/pull/8457) — 2 comments, 1 reactions
+- [dragonflydb/dragonfly: feat: add time limitation for replication backlog](https://github.com/dragonflydb/dragonfly/pull/8039) — 10 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] iceberg: Push Parquest column stats to Iceberg manifests](https://github.com/redpanda-data/redpanda/pull/30777) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] Add comparison operators to iobuf fuzz test (and other enchancements)](https://github.com/redpanda-data/redpanda/pull/29280) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: \[v25.3.x\] bazel: define an empty ci-remote-cache config](https://github.com/redpanda-data/redpanda/pull/31539) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] config: refresh iceberg_enabled docstring](https://github.com/redpanda-data/redpanda/pull/30531) — 0 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] storage: mark snapshot writer/reader closed regardless of close outcome](https://github.com/redpanda-data/redpanda/pull/31186) — 1 comments, 0 reactions
+- [redpanda-data/redpanda: \[v26.1.x\] kafka/client: authenticate under the reconnect mutex](https://github.com/redpanda-data/redpanda/pull/31192) — 2 comments, 0 reactions
+- [nats-io/nats-server: Update dependencies](https://github.com/nats-io/nats-server/pull/8459) — 1 comments, 1 reactions
+- [nats-io/nats-server: Release v2.14.5](https://github.com/nats-io/nats-server/releases/tag/v2.14.5)
+- [nats-io/nats-server: Release v2.12.15](https://github.com/nats-io/nats-server/releases/tag/v2.12.15)
+- [dragonflydb/dragonfly: fix(tiering): preserve offloaded hashes during serialization](https://github.com/dragonflydb/dragonfly/pull/8026) — 5 comments, 0 reactions
+- [dragonflydb/dragonfly: Use pcre2 regex & enable auto async](https://github.com/dragonflydb/dragonfly/pull/6991) — 3 comments, 0 reactions
+- [nats-io/nats-server: Cherry-picks for 2.14.5](https://github.com/nats-io/nats-server/pull/8458) — 1 comments, 1 reactions
+- [nats-io/nats-server: Cherry-picks for 2.12.15](https://github.com/nats-io/nats-server/pull/8453) — 1 comments, 1 reactions
+- [redpanda-data/redpanda: \[CORE-16631\] tests/rptest: wait for target HWM to settle after failover](https://github.com/redpanda-data/redpanda/pull/31533) — 1 comments, 0 reactions
+- [dragonflydb/dragonfly: fix(tls): atomic context switch and correct tls_bytes accounting](https://github.com/dragonflydb/dragonfly/pull/8043) — 5 comments, 0 reactions
+- [nats-io/nats-server: \[IMPROVED\] Expire MaxAge block prefixes after v4 recovery](https://github.com/nats-io/nats-server/pull/8455) — 4 comments, 1 reactions
+- [nats-io/nats-server: \[FIXED\] `syncBlocks` may skip sync on compacted blocks](https://github.com/nats-io/nats-server/pull/8456) — 2 comments, 1 reactions

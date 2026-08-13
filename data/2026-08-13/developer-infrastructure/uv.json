@@ -1,0 +1,901 @@
+{
+  "version": 1,
+  "date": "2026-08-13",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "uv",
+    "repo": "astral-sh/uv",
+    "name": "uv"
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-13T12:26:38.318Z",
+      "since": "2026-08-12T12:26:38.318Z",
+      "observedCount": 44,
+      "changedCount": 44
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:astral-sh/uv:issue:10918",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "PEP 723 inline metadata tag not found when there's trailing whitespace",
+      "text": "### Summary i have an issue with PEP 723, when you have a blank space at the end of the `# ///` `uv` doesn't properly parse the closing tag. it tells you that there is an error: ``` error: An opening tag (`# /// script`) was found without a closing tag (`# ///`). Ensure that every line between the opening and closing tags (including empty lines) starts with a leading `#`. ``` all the script had was an extra blank space at the end, it can be a bit annoying if this happens. ``` # /// script # requires-python = \">=3.11\" # dependencies = [ # \"requests-oauthlib\", # \"requests\" # \"rich\", # ] # /// ``` but not that it is simply that there is an extra blank space at the end. i'm not sure if it already solved but just letting you know! ### Platform Linux 6.12.9-200.fc41.x86_64 x86_64 GNU/Linux ### Version uv 0.5.1 ### Python version Python 3.11.10",
+      "url": "https://github.com/astral-sh/uv/issues/10918",
+      "timestamp": "2026-08-12T20:17:33Z",
+      "metrics": {
+        "comments": 9,
+        "reactions": 0
+      },
+      "labels": [
+        "error messages"
+      ],
+      "author": "snat-s",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:11273",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "Add environment variable to always use `--active` flag",
+      "text": "### Summary The new `--active` flag (#11189) is a great addition and I think it goes some way to allow `uv` and `pyenv` to work better together (see #6204). Would it be possible to add a new environment variable to make that flag the default? For example, the PR suggested something like `UV_PROJECT_ENVIRONMENT=ACTIVE` but could also be `UV_ACTIVE=1`. Or maybe this already works? If so, it's not clear from the documentation. ### Example _No response_",
+      "url": "https://github.com/astral-sh/uv/issues/11273",
+      "timestamp": "2026-08-13T09:05:16Z",
+      "metrics": {
+        "comments": 16,
+        "reactions": 26
+      },
+      "labels": [
+        "enhancement",
+        "configuration"
+      ],
+      "author": "albireox",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:17839",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "Allow additional data to be incuded in the user-agent similar to PIP_USER_AGENT_USER_DATA",
+      "text": "### Summary My team would like to leverage uv in a similar way to pip, one of the important pieces for us is to append additional information in our user agent for internal tracking. uv does not yet support this, like `pip` does. I would like to see uv have this functionality to maintain parity with pip. per https://pip.pypa.io/en/stable/user_guide/#using-a-proxy-server, > using the environment variable PIP_USER_AGENT_USER_DATA to include a JSON-encoded string in the user-agent variable used in pip’s requests. Thanks! ### Example _No response_",
+      "url": "https://github.com/astral-sh/uv/issues/17839",
+      "timestamp": "2026-08-12T19:20:14Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 5
+      },
+      "labels": [
+        "enhancement"
+      ],
+      "author": "sfc-gh-jmarylander",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:19832",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "`uv lock` errors if `.venv` is not valid",
+      "text": "### Summary When `.venv` folder exists, not empty, and not considered a virtual environment by `uv`, `uv lock` will fail to find a suitable python executable to use and raise an error. I have the following folder structure for managing multiple virtual environments of different python versions for a specific project. They are all created from `uv venv -p <version> \".venv/<version>\"` Directory structure below. ``` .venv/ |-- 3.10/ |-- 3.11/ |-- 3.12/ |-- 3.13/ |-- 3.14/ ``` When running `uv lock`, it (for some reason) check explicitly if the folder `.venv` is a virtual environment (basically to find a suitable python executable). I get the following error (note the path is an absolute path to `.venv` which I replaced with `.`). ``` error: Project virtual environment directory `./.venv` cannot be used because it is not a valid Python environment (no Python executable was found) ``` This doesn't work for my setup because `.venv` is not a virtual environment. The work around is having to rename the folder temporarily to allow `uv lock` to run successfully. Since this can work without a virtual environment at all, `uv lock` should fallback to either the global python or a managed python instance that's currently installed. Alternatively, an flag similar to `--active` could be implemented so that `uv lock` uses that virtual environment instead. To summarize, if `.venv` folder exists and is not empty and is not a complete virtual environment, `uv lock` will fail. The following is a example to setup this situation. ```bash mkdir example cd example mkdir .venv touch .venv/bad echo > pyproject.toml << EOF [project] name = \"example\" version = \"0\" requires-python = \">=3\" EOF uv lock #> error: Project virtual environment directory `.../example/.venv` cannot be used ... ``` ### Platform Linux 7.0.11-arch1-1 x86_64 GNU/Linux ### Version uv 0.11.19 (7b2cff1c3 2026-06-03 x86_64-unknown-linux-gnu) ### Python version _No response_",
+      "url": "https://github.com/astral-sh/uv/issues/19832",
+      "timestamp": "2026-08-12T14:35:52Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "tylerh111",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21016",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "--find-links with a relative path in a requirements file fails with \"relative URL without a base\" (regression since 0.12.x)",
+      "text": "### Summary A `--find-links` line with a relative path inside a requirements.in/requirements.txt file fails to resolve, regardless of whether the path has a `./` prefix, no prefix, or is passed to `uv pip compile` or `uv pip install -r`: ``` error: Invalid URL in `requirements.in` at position N: `./private_wheels/` Caused by: relative URL without a base ``` This used to work in 0.11.26. The changelog for #20832 (\"Resolve `--find-links` paths in requirements files relative to the containing file\", 0.12.1) implies this exact case should be supported, but it does not appear to apply to the `pip compile` / `pip install -r` code path. ## Minimal reproduction ```bash mkdir -p private_wheels cat > requirements.in <<'EOF' --find-links=./private_wheels/ somepkg EOF uv pip compile requirements.in -o requirements.txt ``` Result: `error: Invalid URL in requirements.in at position ...: ./private_wheels/ — Caused by: relative URL without a base` Tried variants, all fail the same way on 0.12.3: - `--find-links=./private_wheels/` - `--find-links=private_wheels/` (no `./` prefix) - Passing an absolute path to `requirements.in` itself (doesn't change the outcome) - `uv pip install --dry-run -r requirements.in` (same error, not specific to pip compile) The `private_wheels/` directory does exist relative to the requirements file, ruling out #7113 (missing directory). ## Expected behavior A relative `--find-links` path in a requirements file should resolve relative to that file's directory, as the 0.12.1 changelog entry states, and as it did in 0.11.26. ## Actual behavior `uv` treats the relative path as a URL needing a base and errors out, for both `pip compile` and `pip install -r`. ## Workaround Using an absolute filesystem path for `--find-links` avoids the error, but isn't portable across machines/CI. `file://` URLs don't help either — they require an absolute path after the scheme, and `file:relative/path` silently resolves against filesystem root instead of the requirements file's directory. ### Platform macOS (x86_64-apple-darwin) ### Version 0.12.3 (also reproduces on 0.12.0–0.12.3; works correctly on 0.11.26) ### Python version Python 3.10.17",
+      "url": "https://github.com/astral-sh/uv/issues/21016",
+      "timestamp": "2026-08-12T14:27:57Z",
+      "metrics": {
+        "comments": 7,
+        "reactions": 1
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "archatas",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21035",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "No migration path for native-tls -> system-certs with pinned environments",
+      "text": "### Summary I'm reporting this as a bug because I see this as an unexpected behavior. The introduction of `--system-certs` introduces an impossible to solve migration dilemma for our use cases. We have: - uv latest version globally installed - uv in pinned virtual environments for reproducibility with different versions - one global uv.toml for both cases So we cannot upgrade to the new setting `--system-certs` without breaking our existing pinned environments. I fear this will cause a deadlock as soon as you remove the `--native-tls` setting. **Expected behavior** Introduce configuration changes which can coexist with existing configuration without warning / breaking. ### Platform Windows ### Version uv 0.12.3 (507230998 2026-08-07 x86_64-pc-windows-msvc) ### Python version _No response_",
+      "url": "https://github.com/astral-sh/uv/issues/21035",
+      "timestamp": "2026-08-12T14:33:42Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [
+        "question"
+      ],
+      "author": "schlamar",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21037",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "pip-style extra index url retry limit",
+      "text": "### Summary My company has a private package index that I can only access when on the network. To accommodate scenarios where I am offsite and not on VPN, I have the following entry in my user pip.ini. ``` [install] extra-index-url = <https://pipindex.company.com> retries = 0 ``` Could something equivalent be implemented for uv? It's pretty handy for seamlessly accessing the index only when it's available and avoiding long timeouts. ### Example _No response_",
+      "url": "https://github.com/astral-sh/uv/issues/21037",
+      "timestamp": "2026-08-12T15:33:30Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement"
+      ],
+      "author": "nbittner-htri",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21062",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "uv run resolves a console-script to a different, already-deleted project's stale cached venv",
+      "text": "### Summary `uv run --project <dir> <console-script>` can execute the console-script file physically sitting in a **different, unrelated, already-deleted** project checkout's `.venv/bin/` instead of the requested project's own — because a stale `Interpreter` query result for that other checkout got cached (apparently keyed correctly, since the cache key is `cache_digest(&(absolute, canonical))` per `crates/uv-python/src/interpreter.rs`) but is nonetheless the value returned for the current, different project. ### Environment - `uv 0.12.2 (46ead6098 2026-08-05 x86_64-apple-darwin)` - macOS 26.6 (Darwin 25.6.0), x86_64 - System Python via Homebrew (`python@3.14`), `.venv/bin/python3` is a symlink to it ### Setup that produced it This happened organically in a repo where every unit of work gets its own disposable `git worktree` (each a full checkout, so each has its own copy of a `slack-watcher/` sub-project with its own `pyproject.toml` + `.venv`): 1. Worktree `W1` is created at path `A`; inside it, `uv sync --project slack-watcher` builds a normal editable-install venv at `A/slack-watcher/.venv`, and `uv run --project slack-watcher <entry-point>` is used successfully several times. 2. `W1` is later removed (`git worktree remove`), and path `A` is deleted from disk (confirmed: not in `git worktree list`, not in `.git/worktrees/`, directory absent). 3. From the **original**, still-live checkout of the same project at path `B` (`B/slack-watcher`, its own separate, healthy, fully-synced `.venv`), running: ``` uv run --project slack-watcher slack-watcher-poll --help ``` deterministically resolves and executes: ``` A/slack-watcher/.venv/bin/slack-watcher-poll ``` (physically re-created by uv on disk after being deleted, but without a working `python3` inside it, so it fails with \"No such file or directory\" on the shebang). `RUST_LOG=trace` output confirms the chosen environment root, interpreter path, and installed-dist-info comparison are all for path `A`, even though workspace/project discovery earlier in the same trace correctly identifies `B/slack-watcher` as the project root and reads `B/slack-watcher/.python-version`. ### What's ruled out - Not `VIRTUAL_ENV` leakage — reproduces from a fully clean environment (`env -i`, no inherited vars), and uv's own warning confirms it's ignoring a mismatched `VIRTUAL_ENV` anyway. - Not `UV_PROJECT_ENVIRONMENT` — setting it explicitly to the correct path doesn't change the outcome. - Not a workspace/`uv.toml` config — no `[tool.uv.workspace]` anywhere, no `uv.toml` at any level. - Not filesystem symlink/hardlink aliasing between the two `.venv`s (different inodes, no symlinked components). - Not fixed by deleting the stale directory — uv recreates `bin/`, `lib/.../site-packages/`, and a matching `*.dist-info/` there on the very next invocation, without ever creating a real `python3` inside it. - Isolated to the one project that had a worktree removed — every other project in the same repo resolves correctly via `uv run --project <name> ...`. ### What's confirmed as the actual mechanism - `uv run --no-cache --project slack-watcher <entry-point>` **always** resolves and runs correctly. - Deleting only `~/.cache/uv/interpreter-v4` (leaving `archive-v0`, `builds-v0`, `sdists-v9`, `simple-v24`, `wheels-v6` untouched) **also** fixes it, repeatably across multiple subsequent runs (the cache regenerates cleanly and stays correct). - Decoding the `.msgpack` files under `~/.cache/uv/interpreter-v4/<shard>/` (they're `rmp_serde`-encoded `CachedByTimestamp<Interpreter>`) shows several pre-existing entries whose `sys_prefix`/`sys_executable`/`sys_path` fields are full absolute paths into the **deleted** worktree `A`. (Note: a naive `grep -rl` byte search across the cache directory finds *nothing*, because `grep -l`/`-I` skip files it detects as binary; msgpack files need `grep -a` or a real decoder to search.) ### What's *not* pinned down I was not able to determine exactly how a cache lookup for `B/slack-watcher/.venv/bin/python3`'s own (absolute, canonical) key — which per `query_cached` in `crates/uv-python/src/interpreter.rs` should be distinct from `A`'s — ends up associated with `A`'s stale data, since: - A fresh, from-scratch `git worktree add` + `uv sync` + delete, repeated against a brand-new scratch path, did **not** reproduce the misresolution for me in a short follow-up test — so it isn't simply \"any worktree deletion always poisons the next lookup.\" Something about the specific history of this one project (many repeated worktree create/sync/delete cycles over ~24h, sharing the same underlying system Python) seems to matter, and I didn't have time/tooling (no `sudo`/SIP-restricted `dtruss`/`fs_usage` available in my environment) to trace the actual syscalls during a live repro to nail down the exact trigger. ### Ask - Does this match a known issue with `Interpreter::query_cached`'s cache-key derivation or the freshness check (`cache.freshness(&cache_entry, ...)`), e.g. around symlinked interpreters shared across many venvs, or eviction/collision in the `interpreter-v4` bucket? - Happy to provide the raw (decoded) cache entries or dig further with more specific guidance — I just don't have a 100%-minimal, always-reproduces-from-scratch recipe yet, only a reliable in-place repro against a project with an accumulated history of worktree churn.",
+      "url": "https://github.com/astral-sh/uv/issues/21062",
+      "timestamp": "2026-08-12T13:59:11Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "nancy-insightfirst",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21064",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "uv tree --group specific_group | not showing only specific_group",
+      "text": "### Summary uv tree do not respect the `--group` arg ```toml [dependency-groups] dev = [ \"ruff==0.16.2\", ] airflow = [ \"a2wsgi==1.10.10\", \"aiofiles==25.1.0\", \"aiohappyeyeballs==2.7.1\", ... ] ``` running ```shell uv tree --group airflow --depth 1 ``` it show all dependencies of the groups airflow and dev ### Platform Linux 7.0.0-28-generic x86_64 GNU/Linux ### Version 0.12.2 ### Python version 3.14",
+      "url": "https://github.com/astral-sh/uv/issues/21064",
+      "timestamp": "2026-08-12T14:58:55Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [
+        "question",
+        "needs-mre"
+      ],
+      "author": "raphaelauv",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21065",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "author field in pyproject.toml is being interpret as TOML 1.1 by uv build",
+      "text": "### Summary I have a `pyproject.toml` file that has an author field that looks like this: ```toml [project] # ... author = [{name = \"rzuckerm\"}] # ... ``` The above is allowed in TOML 1.0 since I can load my `pyproject.toml` file using the old [toml](https://pypi.org/project/toml) package, and that package only supports TOML 1.0. However, when I do `uv build --sdist`, I notice there are `pyproject.toml` and a `pyproject.toml.orig` files in the tarball. The `pyproject.toml.orig` file should not be there. ### Platform Ubuntu 24.04 amd64 ### Version uv 0.12.0 ### Python version Python 3.12.3",
+      "url": "https://github.com/astral-sh/uv/issues/21065",
+      "timestamp": "2026-08-12T13:24:14Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [
+        "question"
+      ],
+      "author": "rzuckerm",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21066",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "UV recreates the venv on every run.",
+      "text": "### Summary ``` uv run -v executor-runner DEBUG Found workspace root: `/mnt/hdd/Toolkits/Tools/AutotestServices` DEBUG Adding root workspace member: `/mnt/hdd/Toolkits/Tools/AutotestServices` DEBUG Found workspace configuration at `/mnt/hdd/Toolkits/Tools/AutotestServices/pyproject.toml` DEBUG Searching for user configuration in: `/home/tester/.config/uv/uv.toml` DEBUG uv 0.12.3 (x86_64-unknown-linux-gnu) DEBUG Found project root: `/mnt/hdd/Toolkits/Tools/AutotestServices` DEBUG Discovered project `autotestservices` at: /mnt/hdd/Toolkits/Tools/AutotestServices DEBUG Reading Python requests from version file at `/mnt/hdd/Toolkits/Tools/AutotestServices/.python-version` DEBUG Using Python request `3.12` from version file at `.python-version` DEBUG Checking for Python environment at: `.venv` DEBUG The interpreter in the project environment has a different version (3.12.2) than it was created with (3.12.13) DEBUG Searching for Python 3.12 in managed installations or search path DEBUG Searching for managed installations at `/home/tester/.local/share/uv/python` DEBUG Found `cpython-3.12.13-linux-x86_64-gnu` at `/usr/local/bin/python3.12` (first executable in the search path) Using CPython 3.12.13 interpreter at: /usr/local/bin/python3.12 Removed virtual environment at: .venv Creating virtual environment at: .venv DEBUG Using base executable for virtual environment: /usr/local/bin/python3.12 DEBUG Using request connect timeout of 10s and read timeout of 30s DEBUG Found static `requires-dist` for: /mnt/hdd/Toolkits/Tools/AutotestServices/ DEBUG Existing `uv.lock` satisfies workspace requirements Resolved 182 packages in 0.89ms ``` After recreating the venv, it remains at version 3.12.2. ``` (autotestservices) tester@2101a367:/mnt/hdd/Toolkits/Tools/AutotestServices$ python Python 3.12.2 (main, Jun 27 2024, 19:25:41) [GCC 11.4.0] on linux Type \"help\", \"copyright\", \"credits\" or \"license\" for more information. >>> ``` Our scripts download the git repository to Vitrual Machine, run `uv sync` in it, and then run `uv run pytest`, and the same situation repeats as above, but it also fails with an error: ``` warning: `VIRTUAL_ENV=/mnt/hdd/Toolkits/Tools/AutotestServices/.venv` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead Using CPython 3.12.13 interpreter at: /usr/local/bin/python3.12 error: failed to remove file `/mnt/hdd/Repositories/autotests_git/.venv/CACHEDIR.TAG`: Permission denied (os error 13) ``` Is something broken in UV for Linux? ### Platform Ubuntu 22.04 amd64 ### Version uv 0.12.3 (x86_64-unknown-linux-gnu) ### Python version uv run python --version Using CPython 3.12.13 interpreter at: /usr/local/bin/python3.12 Removed virtual environment at: .venv Creating virtual environment at: .venv Installed 170 packages in 136ms Python 3.12.2",
+      "url": "https://github.com/astral-sh/uv/issues/21066",
+      "timestamp": "2026-08-12T17:22:42Z",
+      "metrics": {
+        "comments": 7,
+        "reactions": 0
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "Wintreist",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21074",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "uv-build: suppress \"missing upper bound\" warning via env var",
+      "text": "### Summary I frequently work with Python projects where uv is locked by [mise](https://mise.jdx.dev/). A dummy project with mise + uv + configuration scaffolding is [here](https://github.com/manselmi/yospos). Given that 1. [mise locks the uv version](https://github.com/manselmi/yospos/blob/019a251385da23e3ad74254141e156d627ae4074/mise.lock#L22-L42), and 2. given my understanding (which might very well be wrong) that commands such as `uv build` and `uv sync` use a build backend embedded in the `uv` binary, which I assume doesn't need to download the `uv-build` Python package (again, this might be wrong), it seems like it should be safe to omit an upper bound (or any sort of version constraint) for `uv-build` in `build-system.requires` in `pyproject.toml` ([example](https://github.com/manselmi/yospos/blob/019a251385da23e3ad74254141e156d627ae4074/pyproject.toml#L8)). However, as far as I know, there is no way to suppress the following warning without specifying an upper bound on `uv-build`: ``` text warning: `build_system.requires = [\"uv-build\"]` is missing an upper bound on the `uv_build` version such as `<0.13`. Without bounding the `uv_build` version, the source distribution will break when a future, breaking version of `uv_build` is released. ``` I would like to be able to suppress this warning, perhaps via environment variable, in situations where uv is pinned. If uv is pinned then the warning is effectively a false-positive, and the alert should be suppressible to reduce alert fatigue. Also, in this situation it makes sense to specify a `uv`/`uv-build` version constraint in only one place, `mise.toml`, and not in both `mise.toml` and `pyproject.toml`, yet another reason for making the warning suppressible. ``` console % uv --version uv 0.12.3 (Homebrew 2026-08-07 aarch64-apple-darwin) ``` ### Example #### Current behavior Warning emitted, as there's no way to suppress the `uv-build` upper bound warning without supplying an upper bound. First, clone https://github.com/manselmi/yospos/ then run ``` console % mise exec -- uv build --wheel Building wheel... warning: `build_system.requires = [\"uv-build\"]` is missing an upper bound on the `uv_build` version such as `<0.13`. Without bounding the `uv_build` version, the source distribution will break when a future, breaking version of `uv_build` is released. ``` (The example project only supports Linux and macOS but you get the idea.) #### Desired behavior Warning suppressed when some environment variable is truthy. `UV_NO_BUILD_UPPER_BOUND_WARNING` is used in the following example, although that's a mouthful. ``` console % env -- UV_NO_BUILD_UPPER_BOUND_WARNING=1 mise exec -- uv build --wheel Building wheel... ``` In practice, this environment variable would be set in a project-specific `mise.toml` configuration file so that it doesn't need to be manually set.",
+      "url": "https://github.com/astral-sh/uv/issues/21074",
+      "timestamp": "2026-08-12T17:03:32Z",
+      "metrics": {
+        "comments": 6,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement"
+      ],
+      "author": "manselmi",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:21077",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "`uv run` uses wrong python interpreter inside virtualenv with copied python",
+      "text": "### Summary I tried using uv with an old project that creates its own venv using a python version that isn't the system deafult python. The system default /usr/bin/python3, used by default by uv, is python3.9 ```sh % uv run python --version Python 3.9.25 ``` `uv run --with some_dependency` breaks inside venvs that use a different python. Minimal reproduction: ```sh % cd `mktemp -d` % python3.13 <<< 'import venv ; venv.create(\".venv\")' % . .venv/bin/activate % uv run --with ipython ipython Traceback (most recent call last): File \"/home/mneergaa/.cache/uv/builds-v0/.tmpfB0eqd/bin/ipython\", line 4, in <module> from IPython import start_ipython ModuleNotFoundError: No module named 'IPython' ``` Interestingly, it works if I use `python3 -m venv` to create the venv, probably because that uses symlinks instead of copying: ```sh % cd `mktemp -d` % python3.13 -m venv .venv % . .venv/bin/activate % uv run --with ipython ipython Python 3.13.14 (main, Jun 11 2026, 00:00:00) [GCC 11.5.0 20240719 (Red Hat 11.5.0-14)] [...] ``` ### Platform CentOS Stream release 9 ### Version uv 0.12.2 (x86_64-unknown-linux-gnu) ### Python version Python 3.9.25 / Python 3.13.14",
+      "url": "https://github.com/astral-sh/uv/issues/21077",
+      "timestamp": "2026-08-12T18:54:12Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "xim",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:issue:2658",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "issue",
+      "title": "Dependency Dashboard",
+      "text": "> ℹ️ **Note** > > This PR body was truncated due to platform limits. This issue lists Renovate updates and detected dependencies. Read the [Dependency Dashboard](https://docs.renovatebot.com/key-concepts/dashboard/) docs to learn more.<br>[View this repository on the Mend.io Web Portal](https://developer.mend.io/github/astral-sh/uv). ## Abandoned Dependencies The following dependencies have not received updates for an extended period and may be unmaintained. <details> <summary>View abandoned dependencies (31)</summary> > [!NOTE] Packages are marked as abandoned when they exceed the [`abandonmentThreshold`](https://docs.renovatebot.com/configuration-options/#abandonmentthreshold) since their last release. Unlike deprecated packages with official notices, abandonment is detected by release inactivity. > | Datasource | Package | Last Updated | |------------|------|-------------| | cargo | [arcstr](https://redirect.github.com/thomcc/arcstr) | `2024-05-07` | | cargo | [async-channel](https://redirect.github.com/smol-rs/async-channel) | `2025-07-06` | | cargo | [boxcar](https://redirect.github.com/ibraheemdev/boxcar) | `2025-08-13` | | cargo | [byteorder](https://redirect.github.com/BurntSushi/byteorder) | `2023-10-06` | | cargo | [clap_complete_command](https://redirect.github.com/nihaals/clap-complete-command) | `2024-07-14` | | cargo | [dotenvy](https://redirect.github.com/allan2/dotenvy) | `2023-03-22` | | cargo | [dunce](https://gitlab.com/kornelski/dunce) | `2024-08-04` | | cargo | [enumflags2](https://redirect.github.com/meithecatte/enumflags2) | `2025-06-09` | | cargo | [futures-lite](https://redirect.github.com/smol-rs/futures-lite) | `2025-08-04` | | cargo | [globwalk](https://redirect.github.com/gilnaa/globwalk) | `2024-01-06` | | cargo | [hex](https://redirect.github.com/KokaKiwi/rust-hex) | `2021-03-03` | | cargo | [mailparse](https://redirect.github.com/staktrace/mailparse) | `2025-02-27` | | cargo | [markdown](https://redirect.github.com/wooorm/markdown-rs) | `2025-04-23` | | cargo | [miette](https://redirect.github.com/zkat/miette) | `2025-04-27` | | cargo | [path-slash](https://redirect.github.com/rhysd/path-slash) | `2022-08-06` | | cargo | [pathdiff](https://redirect.github.com/Manishearth/pathdiff) | `2024-11-25` | | cargo | [poloto](https://redirect.github.com/tiby312/poloto-project) | `2023-07-09` | | cargo | [pretty_assertions](https://redirect.github.com/rust-pretty-assertions/rust-pretty-assertions) | `2024-09-15` | | cargo | [same-file](https://redirect.github.com/BurntSushi/same-file) | `2020-01-11` | | cargo | [seahash](https://gitlab.redox-os.org/redox-os/seahash) | `2021-01-16` | | cargo | [self-replace](https://redirect.github.com/mitsuhiko/self-replace) | `2024-09-01` | | cargo | [serde_yaml](https://redirect.github.com/dtolnay/serde-yaml) | `2024-03-25` | | cargo | [tagu](https://redirect.github.com/tiby312/tagu) | `2023-07-11` | | cargo | [temp-env](https://redirect.github.com/vmx/temp-env) | `2023-09-24` | | cargo | [test-case](https://redirect.github.com/frondeus/test-case) | `2023-11-17` | | cargo | [textwrap](https://redirect.github.com/mgeisler/textwrap) | `2025-03-03` | | cargo | [ufmt](https://redirect.github.com/japaric/ufmt) | `2022-08-10` | | cargo | [ufmt-write](https://redirect.github.com/japaric/ufmt) | `2019-11-17` | | cargo | [unscanny](https://redirect.github.com/typst/unscanny) | `2022-04-17` | | cargo | [walkdir](https://redirect.github.com/BurntSushi/walkdir) | `2024-03-01` | </details> ## Awaiting Schedule The following updates are awaiting their schedule. To get an update now, click on a checkbox below. - [ ] <!-- unschedule-branch=renovate/amazonlinux-2023 -->Update amazonlinux:2023 Docker digest to 694092a - [ ] <!-- unschedule-branch=renovate/codex-automation-dependencies -->Update dependency @openai/codex to v0.146.1 - [ ] <!-- unschedule-branch=renovate/astral-sh-hawk-0.x -->Update dependency astral-sh/hawk to v0.1.12 - [ ] <!-- unschedule-branch=renovate/astral-sh-uv-0.x -->Update dependency astral-sh/uv to v0.12.3 - [ ] <!-- unschedule-branch=renovate/bytecheck-0.x-lockfile -->Update Rust crate bytecheck to v0.8.3 - [ ] <!-- unschedule-branch=renovate/data-encoding-2.x-lockfile -->Update Rust crate data-encoding to v2.11.1 - [ ] <!-- unschedule-branch=renovate/encoding_rs_io-0.x-lockfile -->Update Rust crate encoding_rs_io to v0.1.8 - [ ] <!-- unschedule-branch=renovate/globset-0.x-lockfile -->Update Rust crate globset to v0.4.20 - [ ] <!-- unschedule-branch=renovate/ignore-0.x-lockfile -->Update Rust crate ignore to v0.4.33 - [ ] <!-- unschedule-branch=renovate/open-5.x-lockfile -->Update Rust crate open to v5.4.1 - [ ] <!-- unschedule-branch=renovate/regex-automata-0.x-lockfile -->Update Rust crate regex-automata to v0.4.18 - [ ] <!-- unschedule-branch=renovate/rkyv-0.x-lockfile -->Update Rust crate rkyv to v0.8.18 - [ ] <!-- unschedule-branch=renovate/similar-3.x-lockfile -->Update Rust crate similar to v3.1.2 - [ ] <!-- unschedule-branch=renovate/swatinem-rust-cache-2.x -->Update Swatinem/rust-cache action to v2.9.2 - [ ] <!-- unschedule-branch=renovate/crate-ci-typos-1.x -->Update crate-ci/typos action to v1.49.0 - [ ] <!-- unschedule-branch=renovate/pre-commit-dependencies -->Update pre-commit hook crate-ci/typos to v1.49.0 - [ ] <!-- unschedule-branch=renovate/embed-manifest-1.x-lockfile -->Update Rust crate embed-manifest to v1.5.0 - [ ] <!-- unschedule-branch=renovate/astral-sh-setup-uv-10.x -->Update astral-sh/setup-uv action to v10 - [ ] <!-- create-all-awaiting-schedule-prs -->🔐 **Create all awaiting schedule PRs at once** 🔐 ## PR Edited (Blocked) The following updates have been manually edited so Renovate will no longer make changes. To discard all commits and start over, click on a checkbox below. - [ ] <!-- rebase-branch=renovate/tikv-jemallocator-0.x -->[Update Rust crate tikv-jemallocator to 0.7.0](../pull/19735) ## Pending Status Checks The following updates await pending status checks. To force their creation now, click on a checkbox below. - [ ] <!-- approvePr-branch=renovate/cgr.dev-chainguard-python-latest-dev -->Update cgr.dev/chainguard/python:latest-dev Docker digest to 78b681a - [ ] <!-- approvePr-branch=renovate/codspeedhq-action-5.x -->Update CodSpeedHQ/action action to v5.0.3 - [ ] <!-- approvePr-branch=renovate/async-trait-0.x-lockfile -->Update Rust crate async-trait to v0.1.92 - [ ] <!-- approvePr-branch=renovate/axoupdater-0.x-lockfile -->Update Rust crate axoupdater to v0.10.2 - [ ] <!-- approvePr-branch=renovate/clap-4.x-lockfile -->Update Rust crate clap to v4.6.6 - [ ] <!-- approvePr-branch=renovate/rust-futures-monorepo -->Update Rust crate futures to v0.3.34 - [ ] <!-- approvePr-branch=renovate/http-body-util-0.x-lockfile -->Update Rust crate http-body-util to v0.1.5 - [ ] <!-- approvePr-branch=renovate/rcgen-0.x-lockfile -->Update Rust crate rcgen to v0.14.9 - [ ] <!-- approvePr-branch=renovate/reqsign-0.x-lockfile -->Update Rust crate reqsign to v0.20.5 - [ ] <!-- approvePr-branch=renovate/spdx-0.x-lockfile -->Update Rust crate spdx to v0.13.5 - [ ] <!-- approvePr-branch=renovate/thiserror-2.x-lockfile -->Update Rust crate thiserror to v2.0.20 - [ ] <!-- approvePr-branch=renovate/webpki-0.x-lockfile -->Update Rust crate webpki to v0.103.14 - [ ] <!-- approvePr-branch=renovate/actions-attest-build-provenance-4.x -->Update actions/attest-build-provenance action to v4.2.2 - [ ] <!-- approvePr-branch=renovate/msrv -->Update MSRV to v1.97.1 ## Open The following updates have all been created. To force a retry/rebase of any, click on a checkbox below. - [ ] <!-- rebase-branch=renovate/aws-actions-configure-aws-credentials-6.x -->[Update aws-actions/configure-aws-credentials action to v6.2.3](../pull/20884) - [ ] <!-- rebase-branch=renovate/digital-blueprint-gitlab-pipeline-trigger-action-1.x -->[Update digital-blueprint/gitlab-pipeline-trigger-action action to v1.4.3](../pull/20886) - [ ] <!-- rebase-branch=renovate/async-compression-0.x-lockfile -->[Update Rust crate async-compression to v0.4.43](../pull/20888) - [ ] <!-- rebase-branch=renovate/test-log-0.x-lockfile -->[Update Rust crate test-log to v0.2.21](../pull/19721) - [ ] <!-- rebase-branch=renovate/toml-1.x-lockfile -->[Update Rust crate toml to v1.1.4](../pull/21028) - [ ] <!-- rebase-branch=renovate/toml_parser-1.x-lockfile -->[Update Rust crate toml_parser to v1.1.3](../pull/21029) - [ ] <!-- rebase-branch=renovate/taiki-e-install-action-2.x -->[Update taiki-e/install-action action to v2.85.8](../pull/21030) - [ ] <!-- rebase-branch=renovate/base64-0.x -->[Update Rust crate base64 to 0.23.0](../pull/20901) - [ ] <!-- rebase-branch=renovate/hyper-1.x-lockfile -->[Update Rust crate hyper to v1.11.0](../pull/20903) - [ ] <!-- rebase-all-open-prs -->**Click on this checkbox to rebase all open PRs at once** ## PR Closed (Blocked) The following updates are blocked by an existing closed PR. To recreate the PR, click on a checkbox below. - [ ] <!-- recreate-branch=renovate/itertools-0.x -->[Update Rust crate itertools to 0.15.0](../pull/20043) - [ ] <!-- recreate-branch=renovate/rand-0.x -->[Update Rust crate rand to 0.10.0](../pull/19256) - [ ] <!-- recreate-branch=renovate/resvg-0.x -->[Update Rust crate resvg to 0.48.0](../pull/21032) - [ ] <!-- recreate-branch=renovate/windows-0.x -->[Update Rust crate windows to 0.62.0](../pull/17600) - [ ] <!-- recreate-branch=renovate/windows-registry-0.x -->[Update Rust crate windows-registry to 0.6.0](../pull/17601) ## Detected Dependencies > [!NOTE] > Detected dependencies section has been truncated <details><summary>cargo (71)</summary> <blockquote> <details><summary>Cargo.toml (155)</summary> - `ambient-id 0.0.11` - `anstream 1.0.0` - `anyhow 1.0.89` - `arcstr 1.2.0` - `arrayvec 0.7.6` - `astral-tokio-tar 0.6.3` - `async-channel 2.3.1` - `async-compression 0.4.12` → [Updates: `0.4.12`] - `async-trait 0.1.82` → [Updates: `0.1.82`] - `async_http_range_reader 0.11.0` - `axoupdater 0.10.0` → [Updates: `0.10.0`] - `backon 1.3.0` - `base64 0.22.1` → [Updates: `0.23.0`] - `bitflags 2.6.0` - `blake2 0.11.0-rc.6` - `blake3 1.8.5` - `boxcar 0.2.5` - `bytecheck 0.8.0` → [Updates: `0.8.0`] - `cargo-util 0.2.14` - `clap 4.5.17` → [Updates: `4.5.17`] - `clap_complete_command 0.6.1` - `configparser 3.1.0` - `console 0.16.0` - `csv 1.3.0` - `ctrlc 3.4.5` - `cyclonedx-bom 0.8.1` - `data-encoding 2.6.0` → [Updates: `2.6.0`] - `diskus 0.9.0` - `dotenvy 0.15.7` - `dunce 1.0.5` - `either 1.13.0` - `encoding_rs_io 0.1.7` → [Updates: `0.1.7`] - `embed-manifest 1.5.0` - `enumflags2 0.7.12` - `etcetera 0.11.0` - `fastrand 2.3.0` - `flate2 1.0.33` - `fs-err 3.2.2` - `futures 0.3.30` → [Updates: `0.3.30`] - `futures-lite 2.6.1` - `glob 0.3.1` - `globset 0.4.15` → [Updates: `0.4.15`] - `globwalk 0.9.1` - `goblin 0.10.0` - `h2 0.4.7` - `hashbrown 0.17.0` - `hex 0.4.3` - `html-escape 0.2.13` - `http 1.1.0` - `indexmap 2.5.0` - `indicatif 0.18.0` - `indoc 2.0.5` - `itertools 0.14.0` → [Updates: `0.15.0`] - `jiff 0.2.0` - `junction 2.0.0` - `libc 0.2.0` - `linux-raw-sys 0.12.1` - `mailparse 0.16.0` - `md-5 0.11.0` - `memchr 2.7.4` - `miette 7.2.0` - `nix 0.31.2` - `open 5.4.0` → [Updates: `5.4.0`] - `owo-colors 4.1.0` - `papaya 0.2.4` - `path-slash 0.2.1` - `pathdiff 0.2.1` - `percent-encoding 2.3.1` - `petgraph 0.8.0` - `proc-macro2 1.0.86` - `procfs 0.18.0` - `pubgrub 0.6.1` - `quote 1.0.37` - `rand 0.9.4` → [Updates: `0.10.0`] - `rayon 1.10.0` - `ref-cast 1.0.24` - `reflink-copy 0.1.19` - `regex 1.13.0` - `regex-automata 0.4.8` → [Updates: `0.4.8`] - `reqsign 0.20.0` → [Updates: `0.20.0`] - `reqwest 0.13.1` - `reqwest-middleware 0.5.1` - `reqwest-retry 0.9.1` - `rkyv 0.8.14` → [Updates: `0.8.14`] - `rmp-serde 1.3.0` - `rustc-hash 2.0.0` - `rustls-native-certs 0.8.3` - `rustls-pki-types 1.14.0` - `rustix 1.0.0` - `same-file 1.0.6` - `schemars 1.0.0` - `seahash 4.1.0` - `secret-service 5.0.0` - `shellexpand 3.1.0` - `security-framework 3` - `self-replace 1.5.0` - `serde 1.0.210` - `serde-untagged 0.1.6` - `serde_json 1.0.128` - `sha2 0.11.0` - `smallvec 1.13.2` - `spdx 0.13.0` → [Updates: `0.13.0`] - `syn 3.0.0` - `tar-codec 0.0.13` - `target-lexicon 0.13.0` - `tempfile 3.14.0` - `terminal_size 0.4.2` - `textwrap 0.16.1` - `thiserror 2.0.0` → [Updates: `2.0.0`] - `astral-tl 0.7.11` - `tokio 1.40.0` - `tokio-stream 0.1.16` - `tokio-util 0.7.12` - `toml 1.1.0` → [Updates: `1.1.0`] - `toml_edit 0.25.8` - `toml_parser 1.1.0` → [Updates: `1.1.0`] - `toml_writer 1.1.0` - `tracing 0.1.40` - `tracing-durations-export 0.3.0` - `tracing-subscriber 0.3.18` - `tracing-test 0.2.5` - `tracing-tree 0.4.0` - `unicode-width 0.2.0` - `unscanny 0.1.0` - `url 2.5.2` - `uuid 1.16.0` - `version-ranges 0.2.2` - `walkdir 2.5.0` - `webpki-root-certs 1` - `which 8.0.0` - `windows 0.61.0` → [Updates: `0.62.0`] - `windows-registry 0.5.0` → [Updates: `0.6.0`] - `windows-version 0.1.6` - `wiremock 0.6.4` - `zeroize 1.8.1` - `assert_cmd 2.0.16` - `assert_fs 1.1.2` - `byteorder 1.5.0` - `bytes 1.10.1` - `filetime 0.2.25` - `http-body-util 0.1.2` → [Updates: `0.1.2`] - `hyper 1.4.1` → [Updates: `1.4.1`] - `hyper-util 0.1.8` - `ignore 0.4.23` → [Updates: `0.4.23`] - `insta 1.46.0` - `predicates 3.1.2` - `rcgen 0.14.5` → [Updates: `0.14.5`] - `rustls 0.23.36` - `similar 3.0.0` → [Updates: `3.0.0`] - `webpki 0.103.10` → [Updates: `0.103.10`] - `x509-parser 0.18.0` - `temp-env 0.3.6` - `test-case 3.3.1` - `test-log 0.2.16` → [Updates: `0.2.16`] - `tokio-rustls 0.26.2` </details> <details><summary>crates/uv-audit/Cargo.toml</summary> </details> <details><summary>crates/uv-auth/Cargo.toml</summary> </details> <details><summary>crates/uv-bench/Cargo.toml (1)</summary> - `criterion 5.0.1` </details> <details><summary>crates/uv-bin-install/Cargo.toml</summary> </details> <details><summary>crates/uv-build-backend/Cargo.toml</summary> </details> <details><summary>crates/uv-build-frontend/Cargo.toml</summary> </details> <details><summary>crates/uv-build/Cargo.toml</summary> </details> <details><summary>crates/uv-cache-info/Cargo.toml</summary> </details> <details><summary>crates/uv-cache-key/Cargo.toml</summary> </details> <details><summary>crates/uv-cache/Cargo.toml</summary> </details> <details><summary>crates/uv-cli/Cargo.toml</summary> </details> <details><summary>crates/uv-client/Cargo.toml</summary> </details> <details><summary>crates/uv-configuration/Cargo.toml</summary> </details> <details><summary>crates/uv-console/Cargo.toml</summary> </details> <details><summary>crates/uv-dev/Cargo.toml (6)</summary> - `markdown 1.0.0` - `poloto 19.1.2` - `pretty_assertions 1.4.1` - `resvg 0.47.0` → [Updates: `0.48.0`] - `serde_yaml 0.9.34` - `tagu 0.1.6` </details> <details><summary>crates/uv-dirs/Cargo.toml</summary> </details> <details><summary>crates/uv-dispatch/Cargo.toml</summary> </details> <details><summary>crates/uv-distribution-filename/Cargo.toml</summary> </details> <details><summary>crates/uv-distribution-types/Cargo.toml</summary> </details> <details><summary>crates/uv-distribution/Cargo.toml</summary> </details> <details><summary>crates/uv-errors/Cargo.toml</summary> </details> <details><summary>crates/uv-extract/Cargo.toml</summary> </details> <details><summary>crates/uv-fastid/Cargo.toml</summary> </details> <details><summary>crates/uv-flags/Cargo.toml</summary> </details> <details><summary>crates/uv-fs/Cargo.toml</summary> </details> <details><summary>crates/uv-git-types/Cargo.toml</summary> </details> <details><summary>crates/uv-git/Cargo.toml</summary> </details> <details><summary>crates/uv-globfilter/Cargo.toml</summary> </details> <details><summary>crates/uv-install-wheel/Cargo.toml</summary> </details> <details><summary>crates/uv-installer/Cargo.toml</summary> </details> <details><summary>crates/uv-keyring/Cargo.toml (1)</summary> - `env_logger 0.11.5` </details> <details><summary>crates/uv-logging/Cargo.toml</summary> </details> <details><summary>crates/uv-macros/Cargo.toml</summary> </details> <details><summary>crates/uv-metadata/Cargo.toml</summary> </details> <details><summary>crates/uv-netrc/Cargo.toml</summary> </details> <details><summary>crates/uv-normalize/Cargo.toml</summary> </details> <details><summary>crates/uv-once-map/Cargo.toml</summary> </details> <details><summary>crates/uv-options-metadata/Cargo.toml</summary> </details> <details><summary>crates/uv-pep440/Cargo.toml</summary> </details> <details><summary>crates/uv-pep508/Cargo.toml</summary> </details> <details><summary>crates/uv-performance-memory-allocator/Cargo.toml (2)</summary> - `mimalloc 0.1.50` - `tikv-jemallocator 0.6.0` → [Updates: `0.7.0`] </details> <details><summary>crates/uv-platform-tags/Cargo.toml</summary> </details> <details><summary>crates/uv-platform/Cargo.toml</summary> </details> <details><summary>crates/uv-preview/Cargo.toml</summary> </details> <details><summary>crates/uv-publish/Cargo.toml</summary> </details> <details><summary>crates/uv-pypi-types/Cargo.toml</summary> </details> <details><summary>crates/uv-python/Cargo.toml</summary> </details> <details><summary>crates/uv-redacted/Cargo.toml</summary> </details> <details><summary>crates/uv-requirements-txt/Cargo.toml</summary> </details> <details><summary>crates/uv-requirements/Cargo.toml</summary> </details> <details><summary>crates/uv-resolver/Cargo.toml</summary> </details> <details><summary>crates/uv-scripts/Cargo.toml</summary> </details> <details><summary>crates/uv-settings/Cargo.toml</summary> </details> <details><summary>crates/uv-shell/Cargo.toml</summary> </details> <details><summary>crates/uv-small-str/Cargo.toml</summary> </details> <details><summary>crates/uv-state/Cargo.toml</summary> </details> <details><summary>crates/uv-static/Cargo.toml</summary> </details> <details><summary>crates/uv-test/Cargo.toml</summary> </details> <details><summary>crates/uv-toml/Cargo.toml</summary> </details> <details><summary>crates/uv-tool/Cargo.toml</summary> </details> <details><summary>crates/uv-torch/Cargo.toml</summary> </details> <details><summary>crates/uv-trampoline-builder/Cargo.toml</summary> </details> <details><summary>crates/uv-trampoline/Cargo.toml (5)</summary> - `windows 0.61.0` → [Updates: `0.62.0`] - `ufmt-write 0.1.0` - `ufmt 0.2.0` - `dunce 1.0.5` - `embed-manifest 1.4.0` → [Updates: `1.4.0`] </details> <details><summary>crates/uv-types/Cargo.toml</summary> </details> <details><summary>crates/uv-unix/Cargo.toml</summary> </details> <details><summary>crates/uv-virtualenv/Cargo.toml</summary> </details> <details><summary>crates/uv-warnings/Cargo.toml</summary> </details> <details><summary>crates/uv-windows/Cargo.toml</summary> </details> <details><summary>crates/uv-workspace/Cargo.toml</summary> </details> <details><summary>crates/uv/Cargo.toml</summary> </details> </blockquote> </details> <details><summary>github-actions (40)</summary> <blockquote> <details><summary>.github/actions/load-codex-thread/action.yml (1)</summary> - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/bench.yml (12)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `CodSpeedHQ/action v5.0.2@0ca9cbbf4623b599a6c3ed4fc8a922942705d9f1` → [Updates: `v5.0.3`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `CodSpeedHQ/action v5.0.2@0ca9cbbf4623b599a6c3ed4fc8a922942705d9f1` → [Updates: `v5.0.3`] </details> <details><summary>.github/workflows/build-dev-binaries.yml (32)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `acj/freebsd-firecracker-action v0.11.0@e04896d2dd91f7ec7381e5f363c6fbe83ee445c3` </details> <details><summary>.github/workflows/build-docker.yml (18)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `docker/login-action v4.6.0@dbcb813823bdd20940b903addbd779551569679f` - `docker/login-action v4.6.0@dbcb813823bdd20940b903addbd779551569679f` - `depot/setup-action v1.7.1@15c09a5f77a0840ad4bce955686522a257853461` - `docker/metadata-action v6.2.0@dc802804100637a589fabce1cb79ff13a1411302` - `depot/build-push-action v1.18.0@98e78adca7817480b8185f474a400b451d74e287` - `actions/attest-build-provenance v4.1.1@0f67c3f4856b2e3261c31976d6725780e5e4c373` → [Updates: `v4.2.2`] - `docker/login-action v4.6.0@dbcb813823bdd20940b903addbd779551569679f` - `docker/login-action v4.6.0@dbcb813823bdd20940b903addbd779551569679f` - `docker/login-action v4.6.0@dbcb813823bdd20940b903addbd779551569679f` - `depot/setup-action v1.7.1@15c09a5f77a0840ad4bce955686522a257853461` - `docker/metadata-action v6.2.0@dc802804100637a589fabce1cb79ff13a1411302` - `depot/build-push-action v1.18.0@98e78adca7817480b8185f474a400b451d74e287` - `actions/attest-build-provenance v4.1.1@0f67c3f4856b2e3261c31976d6725780e5e4c373` → [Updates: `v4.2.2`] - `actions/attest-build-provenance v4.1.1@0f67c3f4856b2e3261c31976d6725780e5e4c373` → [Updates: `v4.2.2`] - `docker/login-action v4.6.0@dbcb813823bdd20940b903addbd779551569679f` - `docker/login-action v4.6.0@dbcb813823bdd20940b903addbd779551569679f` - `actions/attest-build-provenance v4.1.1@0f67c3f4856b2e3261c31976d6725780e5e4c373` → [Updates: `v4.2.2`] </details> <details><summary>.github/workflows/build-release-binaries.yml (89)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `PyO3/maturin-action v1.51.0@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `uraimo/run-on-arch-action v3.1.0@f9b26e3a1a408d5fd530d20c17b9f3f4428ff8d9` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/check-docs.yml (5)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `astral-sh/uv 0.12.3` </details> <details><summary>.github/workflows/check-fmt.yml (5)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `astral-sh/uv 0.12.3` </details> <details><summary>.github/workflows/check-generated-files.yml (4)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `astral-sh/uv 0.12.1` → [Updates: `0.12.3`] </details> <details><summary>.github/workflows/check-lint.yml (24)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `EmbarkStudios/cargo-deny-action v2.1.1@3c6349835b2b7b196a839186cb8b78e02f7b5f25` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `crate-ci/typos v1.48.0@bee27e3a4fd1ea2111cf90ab89cd076c870fce14` → [Updates: `v1.49.0`] - `astral-sh/uv 0.12.3` - `astral-sh/uv 0.12.3` - `astral-sh/uv 0.12.3` - `python 3.14` </details> <details><summary>.github/workflows/check-lock.yml (3)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `astral-sh/uv 0.12.3` </details> <details><summary>.github/workflows/check-publish.yml (2)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] </details> <details><summary>.github/workflows/check-release.yml (1)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` </details> <details><summary>.github/workflows/check-zizmor.yml (2)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `zizmorcore/zizmor-action v0.6.2@3dc1ecc9bcb9e94e9b2c709687979e1298497054` </details> <details><summary>.github/workflows/ci.yml (5)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `pypa/gh-action-pypi-publish v1.14.2@dc37677b2e1c63e2034f94d8a5b11f265b73ba33` - `digital-blueprint/gitlab-pipeline-trigger-action v1.4.0@c59b56e9d2688ab42c1304322ac8831a4ef6f7d2` → [Updates: `v1.4.3`] </details> <details><summary>.github/workflows/diagnose-workflow-failure.yml (3)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` </details> <details><summary>.github/workflows/fix-bug.yml (10)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/issue-triage.yml (6)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/plan.yml (1)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` </details> <details><summary>.github/workflows/promote-pull-request.yml</summary> </details> <details><summary>.github/workflows/publish-crates.yml (2)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `rust-lang/crates-io-auth-action v1.0.5@c6f97d42243bad5fab37ca0427f495c86d5b1a18` </details> <details><summary>.github/workflows/publish-docs.yml (6)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `python 3.14` - `astral-sh/uv 0.12.3` </details> <details><summary>.github/workflows/publish-mirror.yml (1)</summary> - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/publish-pypi.yml (4)</summary> - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/publish-versions.yml (2)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] </details> <details><summary>.github/workflows/pull-request-conflicts.yml (1)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` </details> <details><summary>.github/workflows/pull-request-labels.yml (3)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` </details> <details><summary>.github/workflows/pull-request-security-review.yml (10)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `astral-sh/uv 0.12.3` - `astral-sh/uv 0.12.3` </details> <details><summary>.github/workflows/rebase-conflicted-pull-request.yml (7)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/release-prepare.yml (5)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` </details> <details><summary>.github/workflows/release.yml</summary> </details> <details><summary>.github/workflows/reproduce-bug.yml (10)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` </details> <details><summary>.github/workflows/sync-python-releases.yml (5)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `open-security-tools/ost-simple-sts v0.0.4@bda64bffc5722085512dc618ab85f588b6c49b96` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/sync-uv-dev.yml</summary> </details> <details><summary>.github/workflows/test-ecosystem.yml (3)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/test-integration.yml (48)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `conda-incubator/setup-miniconda v4.0.1@8ee1f361103df19b6f8c8655fd3967a8ecb162d5` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `conda-incubator/setup-miniconda v4.0.1@8ee1f361103df19b6f8c8655fd3967a8ecb162d5` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `Vampire/setup-wsl v7.0.0@d1da7f2c0322a5ee4f24975344f67fc0f5baf364` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `aws-actions/configure-aws-credentials v6.2.2@517a711dbcd0e402f90c77e7e2f81e849156e31d` → [Updates: `v6.2.3`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> <details><summary>.github/workflows/test-smoke.yml (13)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `alpine latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b` </details> <details><summary>.github/workflows/test-system.yml (72)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/setup-python v7.0.0@5fda3b95a4ea91299a34e894583c3862153e4b97` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `conda-incubator/setup-miniconda v4.0.1@8ee1f361103df19b6f8c8655fd3967a8ecb162d5` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `debian 13@sha256:34cd9e9fd437c0a095ec39cb2e73422c9f30821b0d0848ed74fd0d43bae4d958` - `fedora 45@sha256:0c1f63ed8fb818fad16cf6ae091598c410a21d2e1a9adf183beb93189299bfba` - `pyston/pyston 2.3.5@sha256:3e8c851140fb52a183b1d7f478e2a534374275516426acfeda5c2b0a032fc6bb` - `cgr.dev/chainguard/python latest-dev@sha256:c3898a57639a93cb4356fce37d6312f8e9ad44ced420f530148dbcbc5f6797ef` → [Updates: `latest-dev`] - `alpine latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b` - `amazonlinux 2023@sha256:32f61af6a24e178e8142fb7b0079f4af3a5cda6816cd53d2c611a921ef029ca0` → [Updates: `2023`] </details> <details><summary>.github/workflows/test-windows-trampolines.yml (9)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `docker/setup-buildx-action v4.2.0@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] </details> <details><summary>.github/workflows/test.yml (21)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `astral-sh/setup-uv v9.0.0@c771a70e6277c0a99b617c7a806ffedaca235ff9` → [Updates: `v10.0.0`] - `Swatinem/rust-cache v2.9.1@c19371144df3bb44fab255c43d04cbc2ab54d1c4` → [Updates: `v2.9.2`] - `taiki-e/install-action v2.85.6@1beb33eee6d086258184383af9a538940be190ed` → [Updates: `v2.85.8`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `astral-sh/uv 0.12.3` - `astral-sh/uv 0.12.3` - `astral-sh/uv 0.12.3` </details> <details><summary>.github/workflows/update-issue-context.yml (6)</summary> - `actions/checkout v7.0.1@3d3c42e5aac5ba805825da76410c181273ba90b1` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `openai/codex-action v1.11@52fe01ec70a42f454c9d2ebd47598f9fd6893d56` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` </details> </blockquote> </details> <details><summary>pre-commit (1)</summary> <blockquote> <details><summary>.pre-commit-config.yaml (4)</summary> - `abravalheri/validate-pyproject v0.25@4b2e70d08cb2ccd26d1fba73588de41c7a5d50b7` - `crate-ci/typos v1.48.0@bee27e3a4fd1ea2111cf90ab89cd076c870fce14` → [Updates: `v1.49.0`] - `prettier 3` - `astral-sh/ruff-pre-commit v0.16.2@7c55798a78262d14b2074abf623d8a992ebb70d4` </details> </blockquote> </details> <details><summary>regex (3)</summary> <blockquote> <details><summary>.github/workflows/build-release-binaries.yml (4)</summary> - `maturin v1.14.1` - `maturin v1.14.1` - `maturin v1.14.1` - `maturin v1.14.1` </d > ✂ **Note** > > PR body was truncated to here.",
+      "url": "https://github.com/astral-sh/uv/issues/2658",
+      "timestamp": "2026-08-13T12:14:04Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "internal"
+      ],
+      "author": "renovate[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:19692",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Add code coverage + HTML report machinery",
+      "text": "## Summary This adds a new `cargo dev coverage` subcommand, which invokes nextest under our new coverage pesudo-profile. This profile in turn enables `-C instrument-coverage`. `cargo dev coverage` also takes care of merging raw profiling samples into profdata and LCOV reports for us, which our new `coverage-html-report.py` script can turn into a readable (but very large) HTML report. The basic flow for this is: ``` $ # any nextest flags will work $ cargo dev coverage ... ``` That will output something like: ``` Merged profile: .../astral-sh/uv/target/coverage/profdata/b46cc0f3-7cd0-4309-9df2-10ab653e6dd8.profdata LCOV profile: .../astral-sh/uv/target/coverage/lcov/b46cc0f3-7cd0-4309-9df2-10ab653e6dd8.lcov Generate an HTML report with: uv run --script scripts/coverage-html-report.py b46cc0f3-7cd0-4309-9df2-10ab653e6dd8 ``` And then you can run: ``` uv run --script scripts/coverage-html-report.py b46cc0f3-7cd0-4309-9df2-10ab653e6dd8 ``` (or add `--open` to auto-open in the browser). Under the hood, this only uses existing dependencies plus Rust's own LLVM toolchain, plus coverage.py for the HTML report generation. TODOs: - [x] Document this in `CONTRIBUTING.md` - [x] Figure out if/how best to surface this in CI -- maybe we want to export combined LCOVs for each test job, similarly to what we do for JUnit test summaries? ## Test Plan Internal only.",
+      "url": "https://github.com/astral-sh/uv/pull/19692",
+      "timestamp": "2026-08-12T22:42:43Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "coverage"
+      ],
+      "author": "woodruffw",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:19693",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Content-address wheel archives with directory hashes",
+      "text": "## Summary Prior to this change, extracted wheels were persisted in `archive-v0` under randomly generated IDs. As a result, we might store the same wheel multiple times when reached through different cache entries. We now compute a deterministic directory hash while extracting ZIP wheels and use a 24-character, lowercase base-36 encoding as the archive ID. The hash reuses `uv_extract::dirhash::DirhashTree`, includes normalized relative paths, file contents, and empty directories, and ignores ZIP entry order and other archive metadata. Executable permissions are preserved during installation but are intentionally not part of the archive identity. Both streaming and seekable extraction hash file contents while writing them through the shared `blake3_copy` helper. Seekable extraction preserves its existing Rayon per-entry parallelism without adding a hash thread pool, scoped worker threads, or a global buffer semaphore. Computing a hash of each file also enables us to deduplicate large files in #19694. Behavior is entirely gated behind the `content-addressed-cache` preview feature, so it's opt-in for now. ## Benchmarks Measured on a 32-core Linux/x86-64 host using uv's optimized `profiling` profile. Local runs install from a wheel path; remote runs serve the same wheel over loopback HTTP. Every sample uses a fresh cache and installation target, verifies identical installed contents and executable permissions, and counterbalances binary execution order. Values are medians over 12 samples for typing-extensions and NumPy and six samples for PyTorch; the final column compares this simplified implementation with the previous PR implementation. | Source | Wheel | Main | Previous implementation | This PR | Change vs. previous | | ------ | ----------------- | -----: | ----------------------: | ------: | ------------------: | | Local | typing-extensions | 96 ms | 96 ms | 96 ms | −0.3% | | Local | NumPy | 351 ms | 393 ms | 359 ms | **−8.5%** | | Local | PyTorch | 4.23 s | 4.63 s | 4.52 s | **−2.3%** | | Remote | typing-extensions | 102 ms | 102 ms | 101 ms | −0.3% | | Remote | NumPy | 731 ms | 752 ms | 737 ms | −2.0% | | Remote | PyTorch | 8.82 s | 9.15 s | 8.99 s | −1.7% | The Linux NumPy wheel is 15.95 MiB and the PyTorch wheel is 502.21 MiB, so their absolute timings are not directly comparable with the earlier Apple Silicon benchmarks.",
+      "url": "https://github.com/astral-sh/uv/pull/19693",
+      "timestamp": "2026-08-12T17:23:33Z",
+      "metrics": {
+        "comments": 6,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement",
+        "performance",
+        "preview"
+      ],
+      "author": "charliermarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:19694",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Deduplicate binary payloads with archive manifests",
+      "text": "## Summary Prior to this change, content-addressed wheel archives could only deduplicate complete extracted trees. Different wheels containing the same native library still stored separate copies of that `.so`, `.pyd`, `.dll`, or `.dylib` payload in each archive. This PR moves native library payloads into a separate content-addressed `archive-files-v0` bucket keyed by their BLAKE3 content digest and executable bit. Each archive stores a versioned sidecar manifest mapping wheel-relative paths to shared objects; installation reads the manifest and links those objects into the target environment. The default path uses hardlinks for shared payloads when supported, while explicit link modes and copy fallbacks preserve their existing semantics. Cache cleaning and pruning now garbage-collect manifest metadata and unreferenced objects alongside their archives. Conflict detection also includes manifest-backed files, so moving a payload out of the extracted tree does not hide overlapping-package warnings. Stacked on #19693.",
+      "url": "https://github.com/astral-sh/uv/pull/19694",
+      "timestamp": "2026-08-12T17:34:08Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "charliermarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:20703",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Update Rust crate async-trait to v0.1.91",
+      "text": "This PR contains the following updates: | Package | Type | Update | Change | Pending | |---|---|---|---|---| | [async-trait](https://redirect.github.com/dtolnay/async-trait) | workspace.dependencies | patch | `0.1.89` → `0.1.91` | `0.1.92` | --- ### Release Notes <details> <summary>dtolnay/async-trait (async-trait)</summary> ### [`v0.1.91`](https://redirect.github.com/dtolnay/async-trait/compare/0.1.90...0.1.91) [Compare Source](https://redirect.github.com/dtolnay/async-trait/compare/0.1.90...0.1.91) ### [`v0.1.90`](https://redirect.github.com/dtolnay/async-trait/releases/tag/0.1.90) [Compare Source](https://redirect.github.com/dtolnay/async-trait/compare/0.1.89...0.1.90) - Update to syn 3 </details> --- ### Configuration 📅 **Schedule**: (UTC) - Branch creation - Between 12:00 AM and 03:59 AM, only on Monday (`* 0-3 * * 1`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/astral-sh/uv). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0My4yODAuMCIsInVwZGF0ZWRJblZlciI6IjQ0LjEyLjAiLCJ0YXJnZXRCcmFuY2giOiJtYWluIiwibGFiZWxzIjpbImJ1aWxkOnNraXAtZG9ja2VyIiwiYnVpbGQ6c2tpcC1yZWxlYXNlIiwiaW50ZXJuYWwiXX0=-->",
+      "url": "https://github.com/astral-sh/uv/pull/20703",
+      "timestamp": "2026-08-12T17:43:12Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "build:skip-release",
+        "build:skip-docker"
+      ],
+      "author": "renovate[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:20736",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Fix lookahead for transitive extras on path dependencies",
+      "text": "## Summary Fixes #20672. Lookahead previously skipped registry-form requirements such as `target[feature]`, even when the same package was already associated with a path source. As a result, dependencies exposed only by the transitive extra were not visited and were later rejected as undeclared URL dependencies. The fix tracks known non-registry sources by package name and retains registry-form requirements until their source becomes known. When a matching path source is available, lookahead schedules a candidate that preserves the transitive requirement’s extras, dependency groups, markers, and origin while substituting only the known source. This also handles the ordering case where the registry-form extra is encountered before the matching path source is discovered transitively. Pending requirements are deduplicated per package, removed when replayed, and all concrete candidates continue through the existing global `seen` set. ## Test Plan Fail-before/pass-after regression coverage: - transitive extra on an already-known path dependency; - matching path source discovered after the registry-form extra; - false marker does not activate the extra-gated path dependency; - conflicting path sources remain rejected. Executed: - `cargo test -p uv --test lock lock_transitive_extra_path_dependency` - 4 passed - `cargo test -p uv --test lock lock_transitive_extra_path_dependency_disabled_marker` - 1 passed - `cargo test -p uv --test lock lock_transitive_extra_path_dependency_conflicting_source` - 1 passed - `cargo test -p uv --test lock lock_transitive_extra_path_dependency_source_discovered_later` - 1 passed - `cargo test -p uv --test lock lock_transitive_extra` - 5 passed - `cargo test -p uv --test lock lock_editable` - 1 passed - `cargo test -p uv --test it dont_pre_visit_url_packages` - 1 passed - `cargo fmt --all --check` - `cargo clippy -p uv-requirements --all-targets --all-features --locked -- -D warnings`",
+      "url": "https://github.com/astral-sh/uv/pull/20736",
+      "timestamp": "2026-08-12T17:10:19Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "shleder",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:20874",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Update actions/setup-python action to v7",
+      "text": "This PR contains the following updates: | Package | Type | Update | Change | |---|---|---|---| | [actions/setup-python](https://redirect.github.com/actions/setup-python) | action | major | `v6.3.0` → `v7.0.0` | --- ### Release Notes <details> <summary>actions/setup-python (actions/setup-python)</summary> ### [`v7.0.0`](https://redirect.github.com/actions/setup-python/compare/v6.3.0...v7.0.0) [Compare Source](https://redirect.github.com/actions/setup-python/compare/v6.3.0...v7.0.0) </details> --- ### Configuration 📅 **Schedule**: (UTC) - Branch creation - Between 12:00 AM and 03:59 AM, on day 1 of the month (`* 0-3 1 * *`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/astral-sh/uv). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4zLjIiLCJ1cGRhdGVkSW5WZXIiOiI0NC4zLjIiLCJ0YXJnZXRCcmFuY2giOiJtYWluIiwibGFiZWxzIjpbImJ1aWxkOnNraXAtZG9ja2VyIiwiYnVpbGQ6c2tpcC1yZWxlYXNlIiwiaW50ZXJuYWwiXX0=-->",
+      "url": "https://github.com/astral-sh/uv/pull/20874",
+      "timestamp": "2026-08-12T20:18:38Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "build:skip-release",
+        "build:skip-docker"
+      ],
+      "author": "renovate[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:20944",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Give a specific error when a PEP 723 closing tag has trailing whitespace",
+      "text": "## Summary Closes #10918. When a PEP 723 block is closed with `# ///` that has trailing whitespace (e.g. `# /// `), uv can't find the closing tag and returns the generic \"opening tag without a closing tag\" error, which doesn't point at the real cause. Per the discussion on the issue, we still want to reject trailing whitespace to stay consistent with the PEP 723 reference implementation, so this only adds a specific error message for that case rather than changing parsing behaviour. If no exact `# ///` closing tag is found, I check whether a line trims to `///` and, if so, return a dedicated error telling the user to remove the trailing whitespace. ## Test Plan Added a `uv-scripts` unit test (`closing_tag_trailing_whitespace`) next to the existing unclosed-block tests. - `cargo test -p uv-scripts` (20 passed) - `cargo clippy -p uv-scripts --all-targets` (clean) - `cargo fmt -p uv-scripts -- --check` (clean)",
+      "url": "https://github.com/astral-sh/uv/pull/20944",
+      "timestamp": "2026-08-12T21:58:00Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [
+        "error messages"
+      ],
+      "author": "yashs33244",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21001",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Enable PGO for Linux x86-64 uv releases",
+      "text": "## Summary This PR enables PGO for uv releases, starting with Linux x86-64. ### Design The release pipeline is modified as follows: - We build instrumented `uv` and `uvx` release binaries inside the existing manylinux container. - We train directly on eleven shared `test/ecosystem` fixtures: cibuildwheel, Cookiecutter, Flask, HTTPX, LLM, the OpenAI Python SDK, Poetry, pytest-cov, Sentry, Zulip, and the 38-project pyx workspace. - Every project exercises cold and warm `uv pip compile` resolution, cold and warm `uv lock` resolution, `uv export`, `uv pip` installation, and `uv sync` installation on every release platform. - Per-project `exclude-dependencies` settings omit packages without compatible release-platform wheels while preserving the rest of each real dependency graph. - Raw profiles are merged online by workload family, then merged with `llvm-profdata` and fed back into the existing `maturin` build. - JupyterLab, Saleor, Semantic Kernel, Transformers, and Warehouse remain separate, held-out evaluation projects. ### Results We benchmarked the builds on Linux x86-64 using the expanded corpus for training and five separate held-out ecosystem projects for evaluation. | Held-out project | Dependency resolution | Wheel installation | Project locking | Lockfile export | | ---------------- | --------------------: | -----------------: | ---------------: | --------------: | | JupyterLab | 11.2% faster | 0.0% | 10.1% faster | 10.6% faster | | Semantic Kernel | 9.3% faster | 7.1% faster | 12.5% faster | 8.7% faster | | Transformers | 11.7% faster | 4.1% faster | 9.5% faster | 11.0% faster | | Saleor | — | — | 9.7% faster | 10.0% faster | | Warehouse | — | — | 9.7% faster | 7.6% faster | | Geometric mean | **10.7% faster** | **3.7% faster** | **10.3% faster** | **9.6% faster** | Across all sixteen held-out workloads, wall time decreased by **8.9%** (95% CI: 8.4–9.8%) and CPU time decreased by **8.4%** (95% CI: 7.9–9.0%). The matched Linux executable was **13.3% smaller** (58.91 MB to 51.05 MB), or **12.3% smaller** after gzip compression (22.68 MB to 19.90 MB). (Saleor and Warehouse include source-only dependencies, so they are benchmarked on locking and export rather than wheel-only installation.) ### Stack Additional platforms are covered in subsequent PRs in the stack: macOS ARM64, Windows x86-64, and Linux ARM64. Ruff and ty follow the same approach; see the stacks here: - https://github.com/astral-sh/ruff/pull/27570 - https://github.com/astral-sh/ty/pull/4213",
+      "url": "https://github.com/astral-sh/uv/pull/21001",
+      "timestamp": "2026-08-12T16:52:32Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "releases"
+      ],
+      "author": "charliermarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21002",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Enable PGO for macOS ARM64 uv releases",
+      "text": "## Summary This PR enables PGO for uv's macOS ARM64 releases, following the approach outlined in https://github.com/astral-sh/uv/pull/21001.",
+      "url": "https://github.com/astral-sh/uv/pull/21002",
+      "timestamp": "2026-08-12T16:51:58Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "releases"
+      ],
+      "author": "charliermarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21003",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Enable PGO for Windows x86-64 uv releases",
+      "text": "## Summary This PR enables PGO for uv's Windows x86-64 releases, following the approach outlined in https://github.com/astral-sh/uv/pull/21001. The existing static-CRT configuration is preserved.",
+      "url": "https://github.com/astral-sh/uv/pull/21003",
+      "timestamp": "2026-08-12T17:49:10Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "releases"
+      ],
+      "author": "charliermarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21004",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Enable PGO for Linux ARM64 uv releases",
+      "text": "## Summary This PR enables PGO for uv's Linux ARM64 releases, following the approach outlined in https://github.com/astral-sh/uv/pull/21001. (To enable PGO, we also move to a native ARM64 runner.)",
+      "url": "https://github.com/astral-sh/uv/pull/21004",
+      "timestamp": "2026-08-12T16:53:03Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "releases"
+      ],
+      "author": "charliermarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21014",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Use mimalloc v3",
+      "text": "Same as https://github.com/astral-sh/ruff/pull/27586 Close https://github.com/astral-sh/uv/issues/19189",
+      "url": "https://github.com/astral-sh/uv/pull/21014",
+      "timestamp": "2026-08-12T13:42:38Z",
+      "metrics": {
+        "comments": 12,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "chirizxc",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21015",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Remove lib64-lib symlink in virtualenv",
+      "text": "## Summary That behavior is actually problematic. Neither pypa `virtualenv` nor cpython `venv` does it anymore. `platlibdir` directory will be created if necessary based on sysconfig. ## Test Plan Added to `crates/uv/tests/python/venv.rs`.",
+      "url": "https://github.com/astral-sh/uv/pull/21015",
+      "timestamp": "2026-08-13T01:38:50Z",
+      "metrics": {
+        "comments": 6,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "Cycloctane",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21030",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Update taiki-e/install-action action to v2.85.8",
+      "text": "This PR contains the following updates: | Package | Type | Update | Change | Pending | |---|---|---|---|---| | [taiki-e/install-action](https://redirect.github.com/taiki-e/install-action) | action | patch | `v2.85.6` → `v2.85.8` | `v2.85.12` (+3) | --- ### Release Notes <details> <summary>taiki-e/install-action (taiki-e/install-action)</summary> ### [`v2.85.8`](https://redirect.github.com/taiki-e/install-action/releases/tag/v2.85.8): 2.85.8 [Compare Source](https://redirect.github.com/taiki-e/install-action/compare/v2.85.7...v2.85.8) - Update `zizmor@latest` to 1.29.0. - Update `typos@latest` to 1.49.0. - Update `trivy@latest` to 0.73.0. - Update `tombi@latest` to 1.2.6. - Update `prek@latest` to 0.4.12. - Update `mise@latest` to 2026.8.1. - Update `convco@latest` to 0.7.1. - Update `cargo-semver-checks@latest` to 0.50.0. - Update `cargo-crap@latest` to 0.4.1. ### [`v2.85.7`](https://redirect.github.com/taiki-e/install-action/releases/tag/v2.85.7): 2.85.7 [Compare Source](https://redirect.github.com/taiki-e/install-action/compare/v2.85.6...v2.85.7) - Update `wasmtime@latest` to 47.0.3. - Update `uv@latest` to 0.12.1. - Update `rclone@latest` to 1.75.0. - Update `kingfisher@latest` to 1.110.0. </details> --- ### Configuration 📅 **Schedule**: (UTC) - Branch creation - Between 12:00 AM and 03:59 AM, only on Monday (`* 0-3 * * 1`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/astral-sh/uv). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4xMi4wIiwidXBkYXRlZEluVmVyIjoiNDQuMjQuMCIsInRhcmdldEJyYW5jaCI6Im1haW4iLCJsYWJlbHMiOlsiYnVpbGQ6c2tpcC1kb2NrZXIiLCJidWlsZDpza2lwLXJlbGVhc2UiLCJpbnRlcm5hbCJdfQ==-->",
+      "url": "https://github.com/astral-sh/uv/pull/21030",
+      "timestamp": "2026-08-12T16:18:17Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "build:skip-release",
+        "build:skip-docker"
+      ],
+      "author": "renovate[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21038",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Reject conflicts between packages and their own extras",
+      "text": "## Summary - Reject conflicts between a package and one of its own extras, since selecting the extra always selects the package too. - Check this during conflict validation, before resolution starts or a lockfile is written. - Remove `lock_conflicting_workspace_members_depends_direct_extra`. It used this exact conflict as a resolver workaround, so its lock and sync checks can no longer run. Adapts the regression test from astral-sh/uv-dev#413. Closes #20694. ## Test plan - `cargo nextest run --package uv --test lock -E 'test(lock_self_conflicting_extra)'` - `cargo nextest run --package uv --test sync -E 'test(show_settings::invalid_conflicts)'` - `cargo fmt --all -- --check` - `cargo clippy --package uv-pypi-types --package uv --all-targets --all-features --locked -- -D warnings`",
+      "url": "https://github.com/astral-sh/uv/pull/21038",
+      "timestamp": "2026-08-12T17:40:33Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "kowanietz",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21050",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Stabilize publish index readiness checks",
+      "text": "Publishing smoke tests can fail when TestPyPI briefly serves inconsistent simple-index responses after an upload. `wait_for_index` previously accepted the first response containing both artifacts, while concurrent runs could also make its unpinned lookup select a newer release. Resolve the exact uploaded version, require consecutive refreshed index responses, and retry both check-URL publishing assertions when subsequent index responses still regress. Fail explicitly if the index never stabilizes or existing and modified artifacts are not handled correctly after bounded retries.",
+      "url": "https://github.com/astral-sh/uv/pull/21050",
+      "timestamp": "2026-08-12T14:22:33Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "zanieb",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21067",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Add test coverage for find-links URL and local path classification",
+      "text": "Changing requirements-file `--find-links` URL parsing to improve missing-directory errors can break two uncommon but currently supported inputs: uppercase URL schemes such as `FILE://` and `HTTP://`, and existing local directories whose names resemble URL schemes, such as `https:links`. Cover both classifications before changing the diagnostic. See astral-sh/uv#21016.",
+      "url": "https://github.com/astral-sh/uv/pull/21067",
+      "timestamp": "2026-08-12T13:38:26Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "testing"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21068",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Allow locking with an invalid project environment",
+      "text": "`uv lock` fails when `.venv` is a non-empty directory without a Python executable, even though locking only needs an interpreter. Ignore unusable project environments during interpreter discovery while preserving validation before creating an environment, so `uv sync` still refuses to replace unrelated directories. Fixes astral-sh/uv#19832; stacked on astral-sh/uv#21061.",
+      "url": "https://github.com/astral-sh/uv/pull/21068",
+      "timestamp": "2026-08-12T21:33:00Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21069",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Skip stale rebases after pull request base changes",
+      "text": "Stacked pull request bases can advance while a conflicted pull request is being rebased, causing the isolated publisher to reject its artifact even though the ancestry guard is behaving correctly. Record the exact base commit used for the rebase and skip artifacts when that base changes before import, preserving the existing ancestry check and avoiding token issuance or pushes for stale results. Fixes astral-sh/uv-dev#605.",
+      "url": "https://github.com/astral-sh/uv/pull/21069",
+      "timestamp": "2026-08-12T14:05:43Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "automations"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21070",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Add regression test for uv#21062",
+      "text": "`PYTHONEXECUTABLE` changes the interpreter metadata reported for a requested Python executable, but the interpreter cache currently ignores that override. Reproduce the resulting cache pollution directly with `uv python find`: after the override is removed, looking up the same executable still returns the overridden interpreter. The relationship to astral-sh/uv#21062 remains uncertain, but this cache defect is independently reproducible.",
+      "url": "https://github.com/astral-sh/uv/pull/21070",
+      "timestamp": "2026-08-12T14:47:55Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "testing"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21071",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Add test coverage for uv#15224",
+      "text": "`uv sync --no-editable` leaves local projects and workspace members stale after source-only changes because their cached wheels are keyed only by build metadata. Capture the existing behavior for both reused and fresh environments in a regression test for astral-sh/uv#15224.",
+      "url": "https://github.com/astral-sh/uv/pull/21071",
+      "timestamp": "2026-08-12T14:43:05Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "testing"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21072",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Fix interpreter cache invalidation test",
+      "text": "The existing interpreter-cache invalidation test reports a `sys.executable` that does not match its mock executable, so interpreter metadata is never cached and the test passes without exercising cache reuse or invalidation. Point the fixture at the actual mock executable and assert that interpreter metadata is cached, reused without another interpreter query, and refreshed after the executable timestamp changes. This only strengthens existing cache coverage and does not change production behavior.",
+      "url": "https://github.com/astral-sh/uv/pull/21072",
+      "timestamp": "2026-08-12T15:18:23Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "internal",
+        "testing"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21073",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Heal interpreter metadata cache entries when creating a virtual environment indicates corruption",
+      "text": "Interpreter metadata can remain stale when a Python launcher loads a different `libpython` without its executable timestamp changing. For a project without an existing environment, the first `uv run` can select the stale cached base interpreter, create `.venv` with incorrect `pyvenv.cfg` metadata, and evaluate `requires-python` against the wrong Python version. On a subsequent `uv run`, the existing environment exposes the inconsistency: its interpreter reports the actual version while `pyvenv.cfg` and the cached base interpreter report the stale version. When both paths refer to the same underlying interpreter, clear only the base interpreter cache entry before continuing normal interpreter discovery. Discovery then queries the executable, saves the actual version, validates `requires-python` against current metadata, and recreates the environment once with the correct `pyvenv.cfg`; later runs reuse it. Existing environments with genuine incompatibilities retain their normal behavior. This change does not detect a stale base interpreter cache before the first environment is created, so the initial `uv run` can still use incorrect metadata. Recovery begins only when a subsequent invocation observes the inconsistent environment. Fixes astral-sh/uv#21066.",
+      "url": "https://github.com/astral-sh/uv/pull/21073",
+      "timestamp": "2026-08-12T17:24:12Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21075",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Account for launcher overrides in interpreter cache keys",
+      "text": "`PYTHONEXECUTABLE` and `__PYVENV_LAUNCHER__` can change the executable and virtual environment reported by a Python interpreter, but interpreter metadata was cached using only the absolute and canonical paths of the requested executable. Include both launcher overrides in the interpreter cache key so metadata from one launcher context cannot be reused in another. See astral-sh/uv#21062.",
+      "url": "https://github.com/astral-sh/uv/pull/21075",
+      "timestamp": "2026-08-12T16:25:21Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "bug",
+        "cache"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21076",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Fix formatting of invalid version bump errors",
+      "text": "Invalid `uv version --bump` values currently produce unstyled errors without a trailing newline. The custom parser introduced in astral-sh/uv#16555 returned raw, unformatted `clap` errors; construct command-aware errors instead so malformed bump values use the standard styling, usage guidance, and line termination. Fixes astral-sh/uv#21063.",
+      "url": "https://github.com/astral-sh/uv/pull/21076",
+      "timestamp": "2026-08-12T16:11:57Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21078",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Only warn about unbounded build backends for source distributions",
+      "text": "An unbounded `uv_build` requirement currently triggers a warning while building wheels, editable wheels, and metadata even though those artifacts do not distribute build-system requirements. Restrict the missing-upper-bound warning to source-distribution builds while retaining the other build-system compatibility checks for every build. Closes astral-sh/uv#21074.",
+      "url": "https://github.com/astral-sh/uv/pull/21078",
+      "timestamp": "2026-08-12T18:50:33Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21079",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Automate fixes for reproduced bugs with retained context",
+      "text": "This extends our automations for issue triage to take reproducible bugs with a regression-test and attempt to generate a PR fixing the issue. - Context from the issue triage and reproduction are carried over into the job to attempt to fix the bug - The issue branch is updated with details on the fix attempt and result - If a fix is proposed, a draft PR is opened stacked on the regression test PR This also introduces re-usable actions for loading the issue context and codex thread from another workflow.",
+      "url": "https://github.com/astral-sh/uv/pull/21079",
+      "timestamp": "2026-08-13T12:11:35Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "automations"
+      ],
+      "author": "astral-automations-bot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21080",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Track Git commit changes in linked worktrees",
+      "text": "## Summary Previously, uv tracked Git metadata incorrectly in several cases: - Linked worktrees watched their entire worktree metadata directory, so staging an unrelated file invalidated the build even when the commit had not changed. - Branch references updated outside the worktree were not watched, potentially leaving embedded commit hashes, dates, tags, and tag distances stale. - Packed branch references and relative worktree paths registered nonexistent Cargo inputs, forcing a rebuild on every invocation. We now track each worktree's actual `HEAD`, resolve branch references through the shared Git directory, and handle relative paths and packed references. When the current branch is packed, we also watch the nearest existing reference directory so a newly created loose reference becomes visible. This can invalidate a packed-reference worktree when another branch in the same repository changes.",
+      "url": "https://github.com/astral-sh/uv/pull/21080",
+      "timestamp": "2026-08-13T03:35:02Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "internal"
+      ],
+      "author": "charliermarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21081",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "move dirhash test_vectors.json generation to uv-dev",
+      "text": "Also replace the `generate.py` script with `dirhash.py`, and have the Rust `test_vectors_json` test case exercise it.",
+      "url": "https://github.com/astral-sh/uv/pull/21081",
+      "timestamp": "2026-08-13T05:31:49Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "oconnor663",
+      "change": "new"
+    },
+    {
+      "id": "github:astral-sh/uv:pull_request:21082",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "astral-sh/uv",
+      "kind": "pull_request",
+      "title": "Deduplicate PubGrub requirement source conversion",
+      "text": "## Summary We have `from_registry_requirement` that does the equivalent of all of this code. (Cleanup in preparation for PR to fix #20477.) ## Test Plan Existing coverage.",
+      "url": "https://github.com/astral-sh/uv/pull/21082",
+      "timestamp": "2026-08-13T08:40:04Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "internal"
+      ],
+      "author": "EliteTK",
+      "change": "new"
+    }
+  ]
+}

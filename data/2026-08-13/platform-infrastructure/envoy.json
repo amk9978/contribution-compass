@@ -1,0 +1,1266 @@
+{
+  "version": 1,
+  "date": "2026-08-13",
+  "group": {
+    "id": "platform-infrastructure",
+    "name": "Platform / Networking / Runtime Infrastructure"
+  },
+  "repository": {
+    "id": "envoy",
+    "repo": "envoyproxy/envoy",
+    "name": "Envoy"
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-13T12:26:38.318Z",
+      "since": "2026-08-12T12:26:38.318Z",
+      "observedCount": 64,
+      "changedCount": 64
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:envoyproxy/envoy:issue:41065",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "Add Support for JA4Latency FingerPrint Hash",
+      "text": "*Title*: *One line description* *Description*: >Describe the desired behavior, what scenario it enables and how it would be used. Envoy Proxy supports JA3 and JA4 Fingerprint Hashes today https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/filters/listener/tls_inspector/v3/tls_inspector.proto.html#extensions-filters-listener-tls-inspector-v3-tlsinspector Would be great to also support JA4Latency https://blog.foxio.io/ja4+-network-fingerprinting which helps understand client locality useful from a security perspective [optional *Relevant Links*:] >Any extra documentation required to understand the issue.",
+      "url": "https://github.com/envoyproxy/envoy/issues/41065",
+      "timestamp": "2026-08-13T08:27:23Z",
+      "metrics": {
+        "comments": 10,
+        "reactions": 1
+      },
+      "labels": [
+        "enhancement",
+        "area/tls",
+        "stale",
+        "area/tls_inspector"
+      ],
+      "author": "arkodg",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:45866",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "Guidance on RPM packaging of official release binaries for RHEL/Rocky Linux",
+      "text": "I want to package the official Envoy binary from GitHub releases (e.g., envoy-1.38.3-linux-x86_64) into an RPM for Rocky Linux 9 VM. A few questions: 1. What is the recommended package name when redistributing the official binary as an RPM ? 2. What files should be included for license compliance? Is LICENSE + NOTICE from the repo sufficient? 3. Is there a published GPG public key to verify the signature on checksums.txt.asc? 4. The install docs cover Debian via apt.envoyproxy.io but not RHEL-family. Is self-packaging from GitHub release binaries the recommended approach, or is an RPM repo planned? Relevant Links: - #16867 - #16830 - https://www.envoyproxy.io/docs/envoy/latest/start/install (https://www.envoyproxy.io/docs/envoy/latest/start/install)",
+      "url": "https://github.com/envoyproxy/envoy/issues/45866",
+      "timestamp": "2026-08-12T20:11:29Z",
+      "metrics": {
+        "comments": 6,
+        "reactions": 0
+      },
+      "labels": [
+        "question",
+        "stale",
+        "area/install"
+      ],
+      "author": "SHWETHABHAT1",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46104",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "openssl compat: implement CNSA1_202603 compliance policy",
+      "text": "## Description The OpenSSL compat layer does not implement the `ssl_compliance_policy_cnsa1_202603` case in `SSL_CTX_set_compliance_policy`. When a user configures CNSA1 on an Envoy build using OpenSSL, the TLS context creation fails and Envoy refuses to start. BoringSSL implements CNSA1 natively via `SSL_CTX_set_compliance_policy(ssl_compliance_policy_cnsa1_202603)`, which configures: - TLS 1.2 or TLS 1.3 - For TLS 1.2, only `TLS_ECDHE_[ECDSA|RSA]_WITH_AES_256_GCM_SHA384` - For TLS 1.3, only AES-256-GCM - ML-KEM-1024 or P-384 for key agreement, preferring ML-KEM-1024 - For handshake signatures, only ECDSA with P-384/SHA-384 or RSA with SHA-384 ## What's needed A full implementation in the compat layer requires: 1. **ML-KEM-1024 TLS group support** — OpenSSL 3.5+ supports ML-KEM-1024 as a cryptographic primitive and has hybrid groups like `SecP384r1MLKEM1024`, but the compat layer has the group mappings commented out (`ossl_NID_MLKEM1024`). These need to be enabled and tested first. 2. **TLS 1.3 ciphersuite restriction** — The compat layer needs to restrict TLS 1.3 to AES-256-GCM only (via `SSL_CTX_set_ciphersuites` in OpenSSL). 3. **Signature algorithm and key agreement configuration** — P-384 group, SHA-384 signature algorithms, and server cipher preference. These are straightforward using existing compat layer patterns. ## Context - CNSA1 support was added to Envoy in #46089 - The compat layer currently returns 0 (unsupported) for this policy, which is the correct behavior until a full implementation is available - Relevant file: `compat/openssl/source/SSL_CTX_set_compliance_policy.cc`",
+      "url": "https://github.com/envoyproxy/envoy/issues/46104",
+      "timestamp": "2026-08-13T00:12:48Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "area/tls",
+        "stale"
+      ],
+      "author": "jwendell",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46114",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "tls: share parsed CA trust store (X509_STORE) across contexts built from identical CA material",
+      "text": "## Title tls: share parsed CA trust store (`X509_STORE`) across contexts built from identical CA material ## Problem Envoy builds a parsed CA trust store (`X509_STORE`) once per `Ssl::ContextImpl`, and a `ContextImpl` is created once per transport-socket factory — i.e. once per cluster, and again on every SDS rotation. When many clusters validate against the **same** CA bundle, Envoy re-parses that bundle (PEM → X509 → ASN.1) into a separate store per cluster. There is no content-addressed sharing, so memory grows with **(#clusters) × (CA bundle size)** instead of with the number of distinct CAs. This is the pathology Envoy already fixed for CRLs via `CrlCache`, never extended to the CA store. ## Why it happens - `ContextManagerImpl::createSslClientContext` never dedups by content — it builds a fresh `ClientContextImpl` every call (`context_manager_impl.cc:30`); `contexts_` is a pointer-keyed set for stats only. - Each `ContextImpl` allocates its own `SSL_CTX`/store (`context_impl.cc:107`), and the validator re-parses the CA into it with no cache lookup (`default_validator.cc:147-160`). - Sharing at SDS doesn't help: SDS dedups raw bytes by name (`secret_manager_impl.h:88`), but each subscribing factory still rebuilds a full store on load and rotation (`context_config_impl.cc:318`, `client_ssl_socket.cc:47`). ## Evidence Heap profiling of a gateway with many clusters sharing one corporate CA shows ~90% of the data-plane heap under upstream TLS validation: ``` Ssl::ClientContextImpl -> ContextImpl -> DefaultCertValidator -> BoringSSL PEM_X509_INFO_read / x_x509 / asn1 parsing -> malloc ``` Reducing worker concurrency doesn't lower it — confirming per-context, not per-worker, state. ## Impact Deployments with many backends behind a shared CA can use multiple GB at idle, scaling with cluster count rather than distinct-CA count. Common for gateways/meshes that emit one cluster per route destination, each referencing the same CA. ## Proposal Add a process-wide, content-addressed trust-store cache, modeled on the existing `CrlCache` (`default_validator.cc:52-93`), so contexts with identical CA material + store-affecting settings share one refcounted `X509_STORE`. ## Precedent `CrlCache` (`default_validator.cc:52-93`) is this exact pattern for CRLs — singleton, keyed on `SHA256(crl_pem)`, refcounted, `weak_ptr` eviction. Its doc comment (`default_validator.h:56-70`) describes this very problem (\"parsed and held in memory once per context\"). This generalizes it to the CA store.",
+      "url": "https://github.com/envoyproxy/envoy/issues/46114",
+      "timestamp": "2026-08-13T08:27:33Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "stale"
+      ],
+      "author": "zhaohuabing",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46505",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "http1: unsafe ctype usage and size_t to int narrowing in the HTTP/1 parser",
+      "text": "*Title*: http1: unsafe ctype usage and size_t to int narrowing in the HTTP/1 parser *Description*: Two type-safety defects in the HTTP/1 parser, found while working on #46496. Neither appears to be a security issue. There's no crash, no memory-safety consequence on supported platforms, and no reachable trigger for (2), so I'm raising publicly. Happy to move this to a security advisory if a maintainer disagrees. **1. ctype calls on raw `char` in `isUrlValid()`** - `balsa_parser.cc:114,120,139` `std::isalpha`/`isdigit`/`isalnum` require an argument representable as `unsigned char` or `EOF`. Where `char` is signed (x86-64 Linux), a request-target byte >= 0x80 arrives as a negative `int` which is undefined behaviour, and reachable from untrusted input: `isUrlValid()` is called from `OnRequestFirstLineInput()` (line 330), and line 114 runs before any range check, because line 105 only short-circuits targets beginning `/` or `*`. These functions are also locale-sensitive by contract. No impact in practice: glibc's ctype table is defined for -128..255, musl handles negatives, and Envoy never calls `setlocale`. `isVersionValid()` in the same file (line 164) already uses `absl::ascii_isdigit`. Switching the three sites to the `absl::ascii_*` equivalents is locale-independent and well-defined, and `absl/strings/ascii.h` is already included. Happy to send that PR. **2. `size_t` to `int` narrowing on the parse path** - `parser.h:121` `Parser::execute()` takes `int len`, but is fed `RawSlice::len_` (a `size_t`, `buffer.h:32`) via `dispatchSlice()` (`codec_impl.cc:668`). A slice above `INT_MAX` truncates negative; every guard in `BalsaParser::execute()` tests `> 0` or `== 0` (lines 217, 238, 245), so all are skipped and line 251 hands the negative value to `BalsaFrame::ProcessInput()`, where it widens to a large `size_t`. `LegacyHttpParserImpl` has the same shape (`legacy_parser_impl.cc:83,141`). The bound on the returned count in `codec_impl.cc` is a debug-only `ASSERT`. Envoy's read path never produces slices near 2 GB, so this is latent rather than triggerable. The fix touches `Parser`, `BalsaParser` and `LegacyHttpParserImpl` - worth a maintainer's view on scope before anyone writes it. [optional *Relevant Links*:] 1. https://github.com/envoyproxy/envoy/pull/46496 - the PR this was found alongside 2. https://en.cppreference.com/w/cpp/string/byte/isalpha - argument requirements for the ctype functions",
+      "url": "https://github.com/envoyproxy/envoy/issues/46505",
+      "timestamp": "2026-08-13T10:42:05Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "bug",
+        "area/http"
+      ],
+      "author": "guy-with-a-why",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46531",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "GeoIP LookupResult is always const, inhibiting move semantics",
+      "text": "*Description*: In `envoy/geoip/geoip_provider_driver.h`, the type `LookupResult` is defined as an alias to `const absl::flat_hash_map<std::string, std::string>`. The type is usually passed around by rvalue-reference: ``` // from source/extensions/filters/http/geoip/geoip_filter.cc driver_->lookup( Geolocation::LookupRequest{std::move(remote_address)}, [self, &dispatcher = decoder_callbacks_->dispatcher()](Geolocation::LookupResult&& result) { dispatcher.post([self, result]() { if (GeoipFilterSharedPtr filter = self.lock()) { filter->onLookupComplete(std::move(result)); } }); }); ``` Hiding the `const` in the type like this makes the code confusing and makes it impossible to move a `LookupResult`. In the code above for instance, the `result` could be moved into the lambda instead of copied. It can also trigger linters that check for unnecessary uses of `std::move`, for people who have those enabled. I would be willing to refactor this if you're open to it. I think it would not be a big change, just remove the `const` and maybe add some `move`s to take advantage of it. But I thought I'd ask in case this `const` is intended like this.",
+      "url": "https://github.com/envoyproxy/envoy/issues/46531",
+      "timestamp": "2026-08-12T21:12:39Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement",
+        "area/geoip"
+      ],
+      "author": "syntax-case",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46539",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "Migrate build system from WORKSPACE to bzlmod",
+      "text": "## Summary Envoy currently uses WORKSPACE mode with bzlmod explicitly disabled (`.bazelrc`: `--noenable_bzlmod`, `--enable_workspace`), despite using Bazel 8.7.0 where bzlmod is the default. A minimal `MODULE.bazel` exists with 12 `bazel_dep` entries but is inactive. The [toolshed registry](https://github.com/envoyproxy/toolshed/tree/main/bazel-registry/modules) already packages ~69 modules for bzlmod, and `api/MODULE.bazel` has a working bzlmod setup with module extensions that can serve as a template. Prior art: #42890 (stalled) demonstrated a working all-at-once migration (~139 files, +2966/-4618 lines). This issue tracks an incremental approach. ## Approach Per maintainer feedback: avoid a \"half migration\" that just wraps `repository_locations.bzl` as module extensions. Instead, convert deps directly to proper `bazel_dep` entries using the toolshed registry (and BCR for standard deps). Module extensions should only be used for the small number of deps that genuinely have no module in any registry. Toolshed itself (`envoy_toolshed`) should be pulled as a proper bzlmod module. ## Plan ### Phase 0 — Pre-work (in envoy repo, no functional change) - [x] Sync `MODULE.bazel` versions with `repository_locations.bzl` (#46540) - [x] Add `bzlmod` parameter to `envoy_dependencies()` (default `False`, skips WORKSPACE-only deps when `True`) (#46540) ### Phase 1 — Toolshed registry updates (in envoyproxy/toolshed) Update stale modules to match envoy main. Major version gaps: | Module | Envoy version | Toolshed version | |---|---|---| | wasmtime | 45.0.2 | 24.0.0 | | v8 | 14.6.202.10 | 13.8.258.26 | | protobuf | 35.1 | 33.4 | | grpc | 1.83.0 | 1.76.0 | | simdutf | 8.1.0 | 7.3.4 | Plus ~19 modules with minor/patch gaps (opentelemetry-cpp, perfetto, thrift, libevent, liburing, rules_rust, etc.). ### Phase 2 — Enable hybrid mode and migrate deps (in envoy repo) - [ ] Enable `--enable_bzlmod` alongside `--enable_workspace` in `.bazelrc` - [ ] Add toolshed registry URL to `.bazelrc` - [ ] Pull `envoy_toolshed` as a proper `bazel_dep` from the toolshed registry - [ ] Move deps to `bazel_dep` entries — start with deps already matching in toolshed registry (~35 modules) and BCR (abseil-cpp, googletest, fmt, re2, etc.) - [ ] For each dep moved to `bazel_dep`, guard its `external_http_archive` call behind the `bzlmod` flag in `envoy_dependencies()` - [ ] Add module extensions only for deps that can't be `bazel_dep` (e.g., quiche with custom BUILD file) ### Phase 3 — Migrate toolchains and remaining infrastructure - [ ] Migrate toolchain setup to `MODULE.bazel` (LLVM, Go, Rust, Python/pip) - [ ] Migrate `envoy_repo()` to a module extension - [ ] Update BUILD files for any dep name changes (use `repo_name` on `bazel_dep` where possible to minimize churn) ### Phase 4 — Flip and cleanup - [ ] Switch to `--noenable_workspace` in `.bazelrc` - [ ] Remove old WORKSPACE loading pipeline (`bazel/repositories.bzl`, `bazel/repository_locations.bzl`, etc.) - [ ] Delete patches and custom BUILD files absorbed by registry modules ## Key decisions - **Use toolshed registry, not BCR** — BCR modules make assumptions that don't match Envoy's needs. Standard deps (abseil, rules_cc, etc.) can still come from BCR. - **No half-migration** — don't just wrap `repository_locations.bzl`/`envoy_dependencies()` in module extensions. Convert deps to proper `bazel_dep` entries individually. - **Prefer `bazel_dep(repo_name=...)` over renaming** — legacy dep names (e.g., `@com_github_grpc_grpc`) can't be safely renamed in WORKSPACE mode because deps internally hardcode them. `bazel_dep(repo_name=...)` avoids the need. - **`quiche` is the holdout** — the one dep that couldn't go into a registry in #42890, needs a module extension. ## References - Prior art: #42890 - Toolshed registry: https://github.com/envoyproxy/toolshed/tree/main/bazel-registry/modules - Bazel bzlmod docs: https://bazel.build/external/overview#bzlmod",
+      "url": "https://github.com/envoyproxy/envoy/issues/46539",
+      "timestamp": "2026-08-12T13:27:29Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "area/build"
+      ],
+      "author": "jwendell",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46584",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "http2: allow configuring upstream headers as HPACK never indexed",
+      "text": "*Title*: http2: allow configuring upstream headers as HPACK never indexed *Description*: Envoy should allow operators to configure HTTP/2 request headers to use HPACK's \"Literal Header Field Never Indexed\" representation when forwarding requests to an upstream. This is useful for high-cardinality values such as request IDs, trace IDs, or per-request tokens. These values are unlikely to be reused, so adding them to the dynamic HPACK table provides little compression benefit while causing unnecessary insertions, lookups, and evictions. Marking them as never indexed avoids this table churn and can reduce CPU usage in Envoy and the upstream HTTP/2 decoder. Envoy terminates the downstream HTTP/2 connection and creates a separate upstream HTTP/2 connection. Therefore, the client's HPACK indexing decision cannot be preserved automatically. Envoy must apply the configured policy when it re-encodes the headers for the upstream connection. Example configuration: ```yaml static_resources: clusters: - name: upstream connect_timeout: 2s type: STRICT_DNS load_assignment: cluster_name: upstream endpoints: - lb_endpoints: - endpoint: address: socket_address: address: upstream.example.com port_value: 8080 typed_extension_protocol_options: envoy.extensions.upstreams.http.v3.HttpProtocolOptions: \"@type\": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions explicit_http_config: http2_protocol_options: headers_to_never_index: - x-request-id - x-trace-id - x-high-cardinality-token ``` Configured headers are forwarded unchanged, but their upstream HTTP/2 header fields are encoded using the never-indexed representation. Headers not listed in the configuration retain their existing HPACK indexing behavior. *Relevant Links*: - [POC Implementation branch](https://github.com/petedmarsh/envoy/tree/http2-never-index-headers) - [RFC 7541 section 6.2.3: Literal Header Field Never Indexed](https://www.rfc-editor.org/rfc/rfc7541#section-6.2.3) The POC implementation branch was generated by OpenAI Codex using GPT-5. It works and improves both cpu and bytes transferred in my benchmarks, but I am not a C++ programmer so I cannot vouch for the code. It is a POC/example only.",
+      "url": "https://github.com/envoyproxy/envoy/issues/46584",
+      "timestamp": "2026-08-13T07:01:53Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement",
+        "area/http"
+      ],
+      "author": "petedmarsh",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46665",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "cluster upstream_rq_timeout increments on requests that also complete successfully (rq_success == rq_total, rq_timeout independently non-zero)",
+      "text": "### Summary For one specific upstream cluster, `envoy_cluster_upstream_rq_timeout` (and the equivalent `/clusters?format=json` admin stat `rq_timeout`) increments on requests that also complete successfully. On the same host, in the same admin snapshot, `rq_success` equals `rq_total` exactly, while `rq_timeout` is simultaneously non-zero — i.e. Envoy is counting some fraction of requests as *both* fully successful and timed out. This is not a rare edge case: on the affected cluster the ratio is currently 68-72% (`rq_timeout`/`rq_total`) and has persisted across proxy restarts, a route timeout config change, and an Envoy patch version bump, with the underlying application-level failure rate provably at zero throughout. ### Environment - Envoy `v1.35.10` (also reproduced on `v1.35.9`), via Contour `1.33.3` (`projectcontour/contour` chart) - Downstream: Gateway API `HTTPRoute`, no retry/hedge policy configured - Upstream: a single Kubernetes Service, 2 endpoints, plain HTTP/1.1 (no TLS), `StreamableHTTP`/JSON-over-HTTP traffic (not gRPC) - Traffic pattern: bursty/low-volume (roughly 1 request every few seconds), long-lived-ish client sessions, some requests carry `Connection: keep-alive` ### Evidence `GET /clusters?format=json` on the Contour-managed Envoy, same cluster, two hosts, one snapshot: ``` host .229: cx_connect_fail: (absent/0) cx_total: 226 rq_success: 290 rq_timeout: 199 rq_total: 290 host .87: cx_connect_fail: (absent/0) cx_total: 229 rq_success: 289 rq_timeout: 207 rq_total: 289 ``` `rq_success == rq_total` on both hosts. `rq_timeout` is not subtracted from either — it is tracked as an independent, non-exclusive counter. Cross-checked against the equivalent Prometheus stats (`envoy_cluster_upstream_rq_completed`, `envoy_cluster_upstream_rq_timeout`, `envoy_cluster_upstream_rq{envoy_response_code=...}`) over the same window: - `envoy_cluster_upstream_rq_completed` == `sum(envoy_cluster_upstream_rq)` by response code, exactly, at every sampled timestamp — every completed request has a normal, successful response code (`200`, mostly). No unaccounted/uncoded completions. - `envoy_cluster_upstream_cx_connect_fail`, `..._cx_connect_timeout`, `..._cx_pool_overflow`, `..._cx_idle_timeout`, `..._rq_per_try_timeout`, `..._rq_max_duration_reached`, `..._rq_rx_reset`, `..._rq_tx_reset` are all zero for this cluster throughout the observation window. - `envoy_cluster_health_check_*` does not exist for this cluster at all — no active health check is configured. - `histogram_quantile` on `envoy_cluster_upstream_rq_time_bucket` shows p50/p90/p99 well under any configured timeout (single-digit-to-low-double-digit milliseconds at the median; a small tail up to a few seconds). - No retry or hedge policy is configured on the route (confirmed via the live `config_dump`), so `rq_timeout` cannot be a per-try-timeout artifact of a retry we don't have. - The route in question does have an explicit `timeouts.request: 60s` (via Gateway API `HTTPRoute.spec.rules[].timeouts.request`, Contour v1.28.0+) — adding this reduced the *rate* of the effect by roughly 2-3x but did not eliminate it, and did not change the qualitative pattern (still `rq_success == rq_total` with `rq_timeout` ticking independently). ### What I've ruled out - Retries/hedging inflating `rq_timeout` via per-try semantics — none configured. - Connection pool exhaustion / stale pooled connections — all `cx_*` failure counters are zero. - A downstream idle/stream-idle timeout mismatch — `cx_idle_timeout` is zero, and Contour's `stream-idle-timeout` default (5m) is far looser than the actual p99 latency (low seconds). - Health-check-related eviction/probing — no health check exists on this cluster. - Actual application-level failures — response-code accounting balances exactly with zero 5xx growth throughout multi-hour windows, including windows where the timeout ratio itself was 60-90%. ### What I have NOT been able to determine The exact internal code path that increments `rq_timeout` without the request otherwise appearing to fail. My working hypothesis, unconfirmed, is a race in the router filter between the per-request timer callback and the upstream response-decode callback — i.e. the timer fires (and increments the stat) at approximately the same instant the real response is already committed and gets forwarded downstream anyway — but I have not been able to prove this without Envoy-internal tracing/debug logging beyond what `/stats` and `/clusters` expose. ### Reproduction I don't yet have a minimal standalone repro (e.g. a bare Envoy config + toy upstream) — this is observed on a real Contour-managed deployment with the traffic characteristics described above (low/bursty request volume, plain HTTP/1.1, JSON-RPC-over-HTTP style requests with `Connection: keep-alive`, no retries configured, an explicit but generous `route.timeout`). If a maintainer can suggest what to instrument or which debug log level would isolate the code path (e.g. `router` or `connection` debug components), I'm happy to reproduce with that logging enabled and report back. ### Ask - Does anything in the router filter legitimately increment `rq_timeout` for a request that ultimately succeeds (e.g. a timer/response race, or a stat that's intentionally non-exclusive with `rq_success`)? If this is expected/documented behavior I've missed, a pointer would be appreciated. - If not, any guidance on what to capture (debug log component/level, `/stats` more targeted) to pin the exact code path down further would let me turn this into a proper minimal repro.",
+      "url": "https://github.com/envoyproxy/envoy/issues/46665",
+      "timestamp": "2026-08-12T15:33:19Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "aleemshah-insignis",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46666",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "health check probes blocked indefinitely when EDS initialFetchTimeout is 0s",
+      "text": "*Title*: *health check probes blocked indefinitely when EDS initialFetchTimeout is 0s* *Description*: After I set EDS initialFetchTimeout as 0s, all envoy gateway conformance and e2e test cases failed in waiting for health check activity to appear. *Repro steps*: 1. set initialFetchTimeout: 0s 2. rerun all envoy gateway e2e test cases *Logs*: > === RUN TestE2E/BackendHealthCheckActiveHTTP/active_http > helpers.go:821: 2026-08-11T12:51:31.009924331Z: Conditions matched expectations > helpers.go:821: 2026-08-11T12:51:31.009977872Z: Route gateway-conformance-infra/http-with-health-check-active-http-pass Parents matched expectations > … > backend_health_check.go:112: 2026-08-11T12:52:40.144747982Z: cluster fail health check: new failure count: 2 (total: 2) > http.go:306: 2026-08-11T12:52:41.046201267Z: timeout while waiting after 60 attempts, 0/3 successes > > === RUN TestGatewayAPIConformance/BackendTLSPolicyConflictResolution/BackendTLSPolicies_targeting_the_same_Service_with_and_without_a_section_name/HTTP_request_sent_to_Service_using_the_BackendTLSPolicy_with_section_name_should_succeed > backendtlspolicy-conflict-resolution.go:130: 2026-08-11T12:52:47.817510589Z: Making GET request to host abc.example.com via http://172.18.0.200/backendtlspolicy-not-conflicted-with-section-name > http.go:325: 2026-08-11T12:52:47.828189571Z: Response expectation failed for request: {URL: {Scheme:http Opaque: User: Host:172.18.0.200 Path:/backendtlspolicy-not-conflicted-with-section-name Fragment: RawQuery: RawPath: RawFragment: ForceQuery:false OmitHost:false}, Host: abc.example.com, Protocol: HTTP, Method: GET, Headers: map[X-Echo-Set-Header:[]], UnfollowRedirect: false, ServerName: , ServerCertificate: <truncated>, ClientCertificate: <truncated>, ClientCertificateKey: <truncated>} not ready yet: expected status code to be one of [200], got 400. CRes: &{400 -1 HTTP/1.1 map[Date:[Tue, 11 Aug 2026 12:52:47 GMT]] <nil> []} (after 1.732µs) >",
+      "url": "https://github.com/envoyproxy/envoy/issues/46666",
+      "timestamp": "2026-08-12T15:30:55Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "bug",
+        "triage"
+      ],
+      "author": "yuehaii",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46677",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "reverse_tunnel: Implement proactive pings from the downstream_socket_interface",
+      "text": "*Title*: reverse_tunnel: Implement proactive pings from the downstream_socket_interface *Description*: Currently the downstream_socket_interface does not proactive ping the upstream side using the RPING mechanism -> it only responds to pings this makes the downstream side invisible to reachability. Worse if the network falls through the downstream never detects it while the upstream thinks the connection is gone. This could have prevented issues like [this](https://github.com/envoyproxy/envoy/pull/46556). Expectation here is to implement http2 style ping and pong frames and have keepalive duration and timeout before the socket is upgraded to http2 for such detections from both ends.",
+      "url": "https://github.com/envoyproxy/envoy/issues/46677",
+      "timestamp": "2026-08-13T08:22:42Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement",
+        "no stalebot",
+        "area/reverse_tunnels"
+      ],
+      "author": "aakugan",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46678",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "quic Support With OpenSSL",
+      "text": "*Title*: *One line description* Support QUIC when Envoy is compiled with OpenSSL support enabled. *Description*: Desired Behaviour: Envoy when compiled with OpenSSL, should be able to serve quic based requests.",
+      "url": "https://github.com/envoyproxy/envoy/issues/46678",
+      "timestamp": "2026-08-13T06:32:03Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "enhancement",
+        "triage"
+      ],
+      "author": "Sukhdev841",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46680",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "Newer release available `dd_trace_cpp`: v2.2.0 (current: v2.1.1)",
+      "text": "Package Name: dd_trace_cpp@2.1.1 Current Version: v2.1.1@2026-06-19 Available Version: v2.2.0@2026-08-12 Upstream releases: https://github.com/DataDog/dd-trace-cpp/releases",
+      "url": "https://github.com/envoyproxy/envoy/issues/46680",
+      "timestamp": "2026-08-13T08:33:29Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "area/build",
+        "no stalebot",
+        "dependencies"
+      ],
+      "author": "github-actions[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:46681",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "Newer release available `rules_shell`: v0.9.0 (current: v0.8.0)",
+      "text": "Package Name: rules_shell@0.8.0 Current Version: v0.8.0@2026-04-15 Available Version: v0.9.0@2026-08-13 Upstream releases: https://github.com/bazelbuild/rules_shell/releases",
+      "url": "https://github.com/envoyproxy/envoy/issues/46681",
+      "timestamp": "2026-08-13T08:33:30Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [
+        "area/build",
+        "no stalebot",
+        "dependencies"
+      ],
+      "author": "github-actions[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:6614",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "Open Request Cost Aggregation (ORCA)",
+      "text": "Today in Envoy, simple load balancing decisions can be made by taking into account local or global knowledge of a backend’s load, for example CPU. More sophisticated load balancing decisions are possible with application specific knowledge, e.g. queue depth, or by combining multiple metrics. This is useful for services that may be resource constrained along multiple dimensions (e.g. both CPU and memory may become bottlenecks, depending on the applied load and execution environment, it’s not possible to tell which upfront) and where these dimensions do not slot within predefined categories (e.g. the resource may be “number of free threads in a pool”, disk IOPS, etc.). https://docs.google.com/document/d/1NSnK3346BkBo1JUU3I9I5NYYnaJZQPt8_Z_XCBCI3uA/edit# provides a design proposal for an Open Request Cost Aggregation (ORCA) standard for conveying this information between proxies like Envoy and upstreams. We propose that this become a standard part of UDPA and supported by Envoy. The design document is in draft stage; from offline discussions I think the need for something like this is not very controversial, we can iterate on aspects of the design here.",
+      "url": "https://github.com/envoyproxy/envoy/issues/6614",
+      "timestamp": "2026-08-12T18:03:46Z",
+      "metrics": {
+        "comments": 47,
+        "reactions": 13
+      },
+      "labels": [
+        "enhancement",
+        "help wanted"
+      ],
+      "author": "htuch",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:issue:7468",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "issue",
+      "title": "Hot restart lead to the abnormal exit of the new process",
+      "text": "*Title*: *Hot restart lead to the abnormal exit of the new process* *Description*: During the hot restart, the new Envoy process will start a timer to send `sendParentTerminateRequest` messages after taking over the traffic. but if the parent process quits early, can lead to ` sendParentTerminateRequest ` trigger RELEASE_ASSERT send failure, this kind of behavior is unacceptable, because the new process has already started to take over the traffic. ``` void DrainManagerImpl::startParentShutdownSequence() { ASSERT(!parent_shutdown_timer_); parent_shutdown_timer_ = server_.dispatcher().createTimer([this]() -> void { // Shut down the parent now. It should have already been draining. ENVOY_LOG(info, \"shutting down parent after drain\"); server_.hotRestart().sendParentTerminateRequest(); }); parent_shutdown_timer_->enableTimer(std::chrono::duration_cast<std::chrono::milliseconds>( server_.options().parentShutdownTime())); } void HotRestartingChild::sendParentTerminateRequest() { if (restart_epoch_ == 0 || parent_terminated_) { return; } HotRestartMessage wrapped_request; wrapped_request.mutable_request()->mutable_terminate(); sendHotRestartMessage(parent_address_, wrapped_request); parent_terminated_ = true; // Once setting parent_terminated_ == true, we can send no more hot restart RPCs, and therefore // receive no more responses, including stats. So, now safe to forget our stat transferral state. // // This destruction is actually important far beyond memory efficiency. The scope-based temporary // counter logic relies on the StatMerger getting destroyed once hot restart's stat merging is // all done. (See stat_merger.h for details). stat_merger_.reset(); } void HotRestartingBase::sendHotRestartMessage(sockaddr_un& address, const HotRestartMessage& proto) { ...... const int rc = sendmsg(my_domain_socket_, &message, 0); RELEASE_ASSERT(rc == static_cast<int>(cur_chunk_size), fmt::format(\"hot restart sendmsg() failed: returned {}, errno {}\", rc, errno)); } RELEASE_ASSERT(fcntl(my_domain_socket_, F_SETFL, O_NONBLOCK) != -1, fmt::format(\"Set domain socket nonblocking failed, errno = {}\", errno)); } ``` I think need to refactor ` sendHotRestartMessage `, send the results of the return, can be treated with the result of sending calls, rather than a unified RELEASE_ASSERT to deal with.",
+      "url": "https://github.com/envoyproxy/envoy/issues/7468",
+      "timestamp": "2026-08-13T09:37:09Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 2
+      },
+      "labels": [
+        "question"
+      ],
+      "author": "zyfjeff",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:42890",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "[WIP] bazel: Switch to bzlmod",
+      "url": "https://github.com/envoyproxy/envoy/pull/42890",
+      "timestamp": "2026-08-13T11:32:30Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [
+        "no stalebot",
+        "api",
+        "v2-freeze",
+        "deps",
+        "workflows:untested"
+      ],
+      "author": "phlax",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:43255",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "[WIP] bazel: Add compatibility stubs for bzlmod",
+      "text": "this provides some of the compatibility required for bzlmod, without breaking workspace mode will follow up to fully enable bzlmod (as non-default in subsequent pr)",
+      "url": "https://github.com/envoyproxy/envoy/pull/43255",
+      "timestamp": "2026-08-13T12:24:27Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [
+        "no stalebot",
+        "deps",
+        "ai:assisted"
+      ],
+      "author": "phlax",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:43355",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Queue policy extension",
+      "text": "As agreed in https://github.com/envoyproxy/envoy/pull/28982 we first introduce extension point for queue policy to support more algorithms in future (e.g. codel, adaptive lifo). This PR introduces fifo queue extension currently used in core code. Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/43355",
+      "timestamp": "2026-08-12T14:18:42Z",
+      "metrics": {
+        "comments": 19,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "nezdolik",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:43771",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Manage on-call rotation and ical generation in code",
+      "text": "Commit Message: Manage on-call rotation and ical generation in code Additional Description: Our dependency on opsgenie appears to have run its course - our notifications keep drifting out of sync, the calendar isn't working very well, and we don't have enough seats to even have the scheduling be correct. These scripts should make it fairly easy to manage the oncall rotation through code, without need for external accounts. The generated ical calendar is required to be up-to-date by a `py_test` target that will fail if changes are not kept synchronized, keeping us from accidentally drifting out of sync. Removing people from the rotation should be cleaner with this script, as it makes a concerted effort to minimize schedule disruption - the goal is to keep schedule changes at least 2 months in the future (provided someone is willing to volunteer to substitute for one shift for a removed person - if not, there is a `dirty` option to allow schedules to be disrupted.) followups TODO: - [ ] update `GOVERNANCE.md` (search \"opsgenie\") to instead reference the new ical. - [ ] Update the google calendar to source from the new ical. - [ ] Update `tools/repo/notify.py` to source from the helper library. Risk Level: None, doesn't change anything currently active. Testing: Manually validated adding and each of the variations of removing, ensuring that the ical file was updated appropriately in each case. Docs Changes: Just the included README.md. Release Notes: n/a Platform Specific Features: n/a",
+      "url": "https://github.com/envoyproxy/envoy/pull/43771",
+      "timestamp": "2026-08-13T08:17:46Z",
+      "metrics": {
+        "comments": 13,
+        "reactions": 0
+      },
+      "labels": [
+        "no stalebot",
+        "waiting"
+      ],
+      "author": "ravenblackx",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:45882",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "hot_restart: fix integer overflow in IPC message length handling",
+      "text": "Description: The hot restart IPC protocol reads a uint64_t message length from the first 8 bytes of an incoming datagram and uses it to compute the required receive buffer size. When expected_proto_length_ is close to UINT64_MAX, adding sizeof(uint64_t) may wrap around due to unsigned integer overflow, producing an invalid buffer size value. Add an explicit overflow check before resizing the receive buffer, matching existing overflow-detection patterns used elsewhere in the Envoy codebase. Also adds unit tests covering overflow edge cases and normal message processing. Risk Level: Low Testing: * Added unit tests for UINT64_MAX * Added unit tests for UINT64_MAX - 7 * Added unit tests for normal-length messages Docs Changes: N/A Release Notes: Included Fixes #45872",
+      "url": "https://github.com/envoyproxy/envoy/pull/45882",
+      "timestamp": "2026-08-12T23:04:13Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [
+        "stale",
+        "waiting"
+      ],
+      "author": "ghaithabdulreda",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:45914",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "stats: migrate rds/scope rds to use new stats API",
+      "text": "Commit Message: stats: migrate rds/scope rds to use new stats API Additional Description: Parts of #20289. This migrate the previous stats creation to use new tags-friendly API. But note, before we merge https://github.com/envoyproxy/envoy/pull/45846 and enable it explicitly. This won't bring any changes to the final behavior because the legacy mode will ignore the provided tags but only use the flat name. Risk Level: low. Testing: unit. Docs Changes: n/a. Release Notes: n/a. Platform Specific Features: n/a.",
+      "url": "https://github.com/envoyproxy/envoy/pull/45914",
+      "timestamp": "2026-08-12T16:17:37Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [
+        "stale"
+      ],
+      "author": "wbpcode",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:45951",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Add max cap to guard against malicious number token input",
+      "text": "For Number token, there are two cases, this cap is only applicable to the case 2 (1) Huge Number token that arrive complete with their terminator in the same chunk: This is not subject to attack vector here, hence the limit in this PR here is not applicable, as it is bounded by the max_body_bytes limit in the upper layer (2) Huge Number token is split and sent via many small data chunks by attacker, when NUMBER token straddles a chunk boundary, it will cause Wuffs to rewind its ead cursor and the cursor to save the unread bytes in pending_bytes_. Thus we need to cap the pending_bytes here. Tests have been added. https://github.com/envoyproxy/envoy/issues/44681",
+      "url": "https://github.com/envoyproxy/envoy/pull/45951",
+      "timestamp": "2026-08-12T12:56:02Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "tyxia",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:45983",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "stats: migrate almost all HTTP to new API ",
+      "text": "Commit Message: stats: migrate almost all HTTP to new API Additional Description: Parts of https://github.com/envoyproxy/envoy/issues/20289. This migrate the previous stats creation to use new tags-friendly API. But note, before we merge https://github.com/envoyproxy/envoy/pull/45846 and enable it explicitly. This won't bring any changes to the final behavior because the legacy mode will ignore the provided tags but only use the flat name. Risk Level: mid. Changed too much code. Orz. Testing: unit. Docs Changes: n/a. Release Notes: n/a. Platform Specific Features: n/a.",
+      "url": "https://github.com/envoyproxy/envoy/pull/45983",
+      "timestamp": "2026-08-12T16:17:39Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [
+        "stale"
+      ],
+      "author": "wbpcode",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46006",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "test: fix flaky xds_failover StartupPrimaryNotResponding for GoogleGrpc TRANSIENT_FAILURE",
+      "text": "`XdsFailoverAdsIntegrationTest.StartupPrimaryNotResponding/15` (IPv6, GoogleGrpc, UnifiedDelta) fails intermittently under ASAN due to a race between gRPC's real-time channel backoff and Envoy's simulated-time retry timer. ## Root cause After the first `primaryConnectionFailure()` closes the TCP connection, the gRPC channel enters `TRANSIENT_FAILURE` with a ~1s real-time backoff. `waitForPrimaryXdsRetryTimer()` advances **simulated** time, firing Envoy's retry timer before that real-time backoff expires. The gRPC library immediately rejects the `establishNewStream()` attempt (no TCP connection made), which counts as the 2nd consecutive failure and triggers failover. The test's second `primaryConnectionFailure()` then waits 30s (ASAN `DefaultTimeout`) for a primary TCP connection that never arrives — Envoy has already switched to failover — hitting the `RELEASE_ASSERT`. This race is timing-sensitive: for IPv4 the gRPC library fast-retries before `onEstablishmentFailure` fires (channel stays in `CONNECTING`), so the race doesn't manifest there. ## Fix In `StartupPrimaryNotResponding`, before the second `primaryConnectionFailure()` call, poll (real-time only, **no** simulated clock advancement) for `cds.update_failure ≥ 2` within `200×TIMEOUT_FACTOR` ms. If the counter reaches 2, the 2nd failure already occurred via `TRANSIENT_FAILURE` and the explicit TCP-close step is skipped: ```cpp bool second_failure_via_transient_failure = false; if (clientType() == Grpc::ClientType::GoogleGrpc) { const auto deadline = absl::Now() + absl::Milliseconds(200 * TIMEOUT_FACTOR); constexpr absl::Duration kPollInterval = absl::Milliseconds(5); while (absl::Now() < deadline) { const auto counter = TestUtility::findCounter( test_server_->statStore(), \"cluster_manager.cds.update_failure\"); if (counter != nullptr && counter->value() >= 2) { second_failure_via_transient_failure = true; break; } absl::SleepFor(kPollInterval); } } if (!second_failure_via_transient_failure) { primaryConnectionFailure(); ASSERT_TRUE(xds_connection_->waitForDisconnect()); } ``` Polling uses real time (not `advanceTimeWait`) to avoid firing additional simulated timers that could interfere with test state. The `200×TIMEOUT_FACTOR` window is well above the typical <60ms propagation latency for the gRPC completion queue → Envoy main thread path. ## Files changed - **`test/extensions/config_subscription/grpc/xds_failover_integration_test.cc`** — TRANSIENT_FAILURE detection + `absl/time` includes - **`test/extensions/config_subscription/grpc/BUILD`** — added `@abseil-cpp//absl/time` dep",
+      "url": "https://github.com/envoyproxy/envoy/pull/46006",
+      "timestamp": "2026-08-13T04:32:57Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [
+        "stale"
+      ],
+      "author": "Copilot",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46113",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "build(deps): bump mypy from 1.20.2 to 2.3.0 in /mobile/tools/python",
+      "text": "Bumps [mypy](https://github.com/python/mypy) from 1.20.2 to 2.3.0. <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/python/mypy/blob/master/CHANGELOG.md\">mypy's changelog</a>.</em></p> <blockquote> <h1>Mypy Release Notes</h1> <h2>Next Release</h2> <h3>Packaging changes</h3> <ul> <li>No longer provide mypyc-accelerated wheels for macOS x86_64 [mypyc-wheels <a href=\"https://redirect.github.com/python/mypy/issues/119\">#119</a>](<a href=\"https://redirect.github.com/mypyc/mypy_mypyc-wheels/pull/119\">mypyc/mypy_mypyc-wheels#119</a>)</li> </ul> <h2>Mypy 2.3</h2> <p>We've just uploaded mypy 2.3.0 to the Python Package Index (<a href=\"https://pypi.org/project/mypy/\">PyPI</a>). Mypy is a static type checker for Python. This release includes new features, performance improvements and bug fixes. You can install it as follows:</p> <pre><code>python3 -m pip install -U mypy </code></pre> <p>You can read the full documentation for this release on <a href=\"http://mypy.readthedocs.io\">Read the Docs</a>.</p> <h3>The Upcoming Switch to the New Native Parser</h3> <p>We are planning to enable the new native parser (<code>--native-parser</code>) by default soon. We recommend that you test the native parser in your projects and report any issues in the <a href=\"https://github.com/python/mypy/issues\">mypy issue tracker</a>.</p> <h3>Mypyc Free-threading Memory Safety</h3> <p>Free-threaded Python builds that don't have the GIL require additional synchronization primitives or lock-free algorithms to ensure memory safety when there are race conditions (for example, when a thread reads a list item while another thread writes the same list item concurrently). This release greatly improves memory safety of free threading.</p> <p>List operations are now memory-safe on free threaded Python builds, even in the presence of race conditions. This has some performance cost. For list-heavy workloads, using <code>librt.vecs.vec</code> instead of list is often significantly faster, but note that <code>vec</code> is not (and likely won't be) fully memory safe, and the user is expected to avoid race conditions. The newly introduced <code>librt.threading.Lock</code> helps with this. Using variable-length tuples can also be more efficient than lists, since tuples are immutable and don't require expensive synchronization to ensure memory safety.</p> <p>Instance attribute access is also (mostly) memory safe now on free-threaded builds in the presence of race conditions. We are planning to fix the remaining unsafe cases in a future release.</p> <p>Full list of changes:</p> <ul> <li>Make attribute access memory safe on free-threaded builds (Jukka Lehtosalo, PR <a href=\"https://redirect.github.com/python/mypy/pull/21705\">21705</a>)</li> <li>Fix unsafe borrowing of instance attributes with free-threading (Jukka Lehtosalo, PR <a href=\"https://redirect.github.com/python/mypy/pull/21688\">21688</a>)</li> <li>Make list get/set item more memory safe on free-threaded builds (Jukka Lehtosalo, PR <a href=\"https://redirect.github.com/python/mypy/pull/21683\">21683</a>)</li> <li>Don't borrow list items on free-threaded builds (Jukka Lehtosalo, PR <a href=\"https://redirect.github.com/python/mypy/pull/21679\">21679</a>)</li> <li>Make multiple assignment from list memory-safe on free-threaded builds (Jukka Lehtosalo, PR <a href=\"https://redirect.github.com/python/mypy/pull/21684\">21684</a>)</li> </ul> <!-- raw HTML omitted --> </blockquote> <p>... (truncated)</p> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/python/mypy/commit/8aabf8435357eaffceca7237f371e293b8168e54\"><code>8aabf84</code></a> Drop +dev from version</li> <li><a href=\"https://github.com/python/mypy/commit/4d8ad2ab5e86c99581b73775f2c00b9b8265b589\"><code>4d8ad2a</code></a> Update changelog for 2.3 release (<a href=\"https://redirect.github.com/python/mypy/issues/21728\">#21728</a>)</li> <li><a href=\"https://github.com/python/mypy/commit/2c2154672040c52e481f423854d104e6cf172585\"><code>2c21546</code></a> [mypyc] Update documentation of race conditions under free threading (<a href=\"https://redirect.github.com/python/mypy/issues/21726\">#21726</a>)</li> <li><a href=\"https://github.com/python/mypy/commit/a9f62a3cf98a58a7a2607b7c81695802b39f5edc\"><code>a9f62a3</code></a> [mypyc] Make attribute access memory safe on free-threaded builds (<a href=\"https://redirect.github.com/python/mypy/issues/21705\">#21705</a>)</li> <li><a href=\"https://github.com/python/mypy/commit/0faa413ebf7c924a864ef5dabd70303d898e7766\"><code>0faa413</code></a> Use <code>PYODIDE</code> environment variable for Emscripten cross-compilation detection...</li> <li><a href=\"https://github.com/python/mypy/commit/3d75cdb09f0928fa8b83e5ef03572ed878ac8d09\"><code>3d75cdb</code></a> [mypyc] Borrow final attributes more aggressively (<a href=\"https://redirect.github.com/python/mypy/issues/21702\">#21702</a>)</li> <li><a href=\"https://github.com/python/mypy/commit/24c237d85b48f618e655ffff1dc0f19089d9b599\"><code>24c237d</code></a> [mypyc] Improve documentation of Final (<a href=\"https://redirect.github.com/python/mypy/issues/21713\">#21713</a>)</li> <li><a href=\"https://github.com/python/mypy/commit/b5be217392b9b2771d1764066b9d600bf93ce7a8\"><code>b5be217</code></a> [mypyc] Update free threading Python compatibility docs (<a href=\"https://redirect.github.com/python/mypy/issues/21711\">#21711</a>)</li> <li><a href=\"https://github.com/python/mypy/commit/cbcb51add3094ec91b29cdd4c624943bf251b63f\"><code>cbcb51a</code></a> Narrow for frozendict membership check (<a href=\"https://redirect.github.com/python/mypy/issues/21709\">#21709</a>)</li> <li><a href=\"https://github.com/python/mypy/commit/af2bc0f3cc7f2f129f0c11294158d0c292692c3d\"><code>af2bc0f</code></a> Sync typeshed (<a href=\"https://redirect.github.com/python/mypy/issues/21707\">#21707</a>)</li> <li>Additional commits viewable in <a href=\"https://github.com/python/mypy/compare/v1.20.2...v2.3.0\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=mypy&package-manager=pip&previous-version=1.20.2&new-version=2.3.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+      "url": "https://github.com/envoyproxy/envoy/pull/46113",
+      "timestamp": "2026-08-13T08:27:31Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "stale",
+        "dependencies",
+        "python"
+      ],
+      "author": "dependabot[bot]",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46138",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "add ratelimit descriptor extension to use jwt claims as descriptors",
+      "text": "Commit Message: add ratelimit descriptor extension to use jwt claims as descriptors Additional Description: Adds a new rate limit descriptor extension that extracts jwt claims and uses it to rate limit. This is useful in cases where the actual JWT validation is done by the application but we want to apply rate limits based on jwt claims Risk Level: Low Testing: Docs Changes: Release Notes:",
+      "url": "https://github.com/envoyproxy/envoy/pull/46138",
+      "timestamp": "2026-08-13T11:01:29Z",
+      "metrics": {
+        "comments": 11,
+        "reactions": 1
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "ramaraochavali",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46300",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "AI Protocol Parser: add ParserConfig for the wuffs JSON parser",
+      "text": "Introduces ParserConfig to bound the parsing and capture and control streaming JSON field extraction on top of WuffsJsonCursor. The use of ParserConfig are shown in the test handler, agentic(MCP/A2A) and LLM(openAI/Gemini) handler will be implemented in the next PRs. Capture limitation, (TODO define good defaults) - max_body_bytes: pre-feed cap on raw bytes entering the cursor. - max_per_scalar_bytes: per-string-value cap. Over-budget values are rejected — dropped entirely - max_total_scalar_capture_bytes: body-wide retention budget across all captured values. A value that would overflow the total is dropped without consuming budget, so later smaller values still fit. - max_element_capture_bytes: per container byte-range capture. Two capture modes 1. Spec-based extraction (`extract_fields`) — the caller declares which fields to extract as pattern paths (\"model\", \"params._meta.traceparent\", \"messages[].role\", \"tools[].function.name\"). 2. Capture-all mode (`capture_all_scalars`) — captures every scalar value (strings, numbers, booleans, nulls) at every depth to maxDepth Clean-up and Clarification - clean up and polish the code comment - buildIndex/PatternPath and path tracking are not needed anymore, replaced by matchesPatternPath - number token is also bounded by max_body_bytes introduced in this PR. https://github.com/envoyproxy/envoy/issues/44681",
+      "url": "https://github.com/envoyproxy/envoy/pull/46300",
+      "timestamp": "2026-08-12T16:41:27Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "tyxia",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46358",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "redis: fix use-after-free and connection leak on cluster removal",
+      "text": "Commit Message: redis: fix use-after-free and connection leak on cluster removal Additional Description: Each discovery client holds a shared_ptr back to the `RedisDiscoverySession` (as its client `Config`), so `~RedisCluster()` dropping its reference does not destroy the session while a discovery connection is open — the common steady state. The session then outlives the cluster with its resolve timer still armed, and the next fire dereferences the destroyed cluster. In-flight hostname resolutions (`CLUSTER SLOTS` entries that return hostnames, e.g. AWS ElastiCache) and zone-discovery `INFO` requests were never cancelled either. Cluster teardown now explicitly shuts the session down: it cancels the in-flight slot request, zone-discovery `INFO` requests and hostname resolutions (their `resolve()` handles are now tracked), disables the resolve timer, and closes the discovery connections (previously leaked). A session-owned `shutdown_` flag gates the entry points that can still reach the surviving session. All discovery work runs on the main thread, so the `is_destroying_` atomic is removed. Risk Level: low Testing: new unit tests (cluster destruction with held client config references, in-flight hostname resolution cancellation, in-flight zone-discovery `INFO` cancellation); existing redis_cluster_test suite green Docs Changes: n/a Release Notes: changelogs/current/bug_fixes/redis_proxy__cluster-destruction-use-after-free.rst Platform Specific Features: n/a",
+      "url": "https://github.com/envoyproxy/envoy/pull/46358",
+      "timestamp": "2026-08-13T11:02:47Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "bellatoris",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46460",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "[bp/v1.36] dfp: fix a bug when cluster is removed before async lb be completed (#45064)",
+      "text": "Commit Message: dfp: fix a bug when cluster is removed before async lb be completed Additional Description: In the previous implementation, both the router/DFP cluster may access invalid pointer if a cluster is removed then the request is pending and waiting the async load balancing result. Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46460",
+      "timestamp": "2026-08-12T18:45:55Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "wbpcode",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46461",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "[bp/v1.37] dfp: fix a bug when cluster is removed before async lb be completed (#45064)",
+      "text": "Commit Message: dfp: fix a bug when cluster is removed before async lb be completed Additional Description: In the previous implementation, both the router/DFP cluster may access invalid pointer if a cluster is removed then the request is pending and waiting the async load balancing result. Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46461",
+      "timestamp": "2026-08-12T18:45:37Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "wbpcode",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46479",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "tls: allow multiple TLS certificates in the upstream when using a custom TLS certificate selector",
+      "text": "Commit Message: Allow multiple TLS certificates in the upstream tls context when using a custom TLS certificate selector. The single cert check is kept if one is not defined. Additional Description: We are working on an internal TLS certificate selector for UpstreamTLSContext that can select between multiple client certificate. By default only one is allowed, so we need a way to allow multiple once our custom TLS certificate selector is enabled. Risk Level: Medium Testing: Added unit tests, tested manually to check it works with our custom cert selector. Docs Changes: Added documentation in the API proto for `tls_certificates` to indicate multiple certs are allowed in a client context when a custom TLS certificate selector is used. Release Notes: Added a release note under new features. Platform Specific Features: N/A",
+      "url": "https://github.com/envoyproxy/envoy/pull/46479",
+      "timestamp": "2026-08-12T17:33:01Z",
+      "metrics": {
+        "comments": 6,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "Berro321",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46496",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "http: add support for the QUERY method (RFC 10008)",
+      "text": "## Commit Message Adds support for the `QUERY` request method registered by `RFC 10008`. Before this change, an `HTTP/1` request using the `QUERY` method was rejected by the codec with a `400` and `HPE_INVALID_METHOD`, because the method token is matched against a fixed list of known methods that predates the RFC. `HTTP/2` and `HTTP/3` have no equivalent method allowlist and already forwarded `QUERY`, so the behaviour differed by protocol version. This change adds `QUERY` to that list, so the method is recognized and routed on all three protocol versions. `QUERY` is also added to the `IANA` method registry enforced by the default header validator's `restrict_http_methods` option, so enabling that option no longer rejects a registered method. Recognizing a previously rejected method is user visible, so it is guarded by `envoy.reloadable_features.http1_allow_query_method`, which defaults to true. The guard is latched when the `HTTP/1` parser is constructed, which happens per connection, so flipping it takes effect on new connections without adding a runtime lookup to per-request method validation. Setting it to false restores the previous rejection. Operators could already accept `QUERY` by setting `allow_custom_methods`, but that accepts any token as a method and is marked work-in-progress in the API. ## Additional Description Scoped to Envoy's role as a proxy. Two related areas are deliberately left out: - `QUERY` is not added to `Http::Utility::isSafeRequest()`. Although `RFC 10008` defines `QUERY` as safe and idempotent, that function's callers treat it as \"safe and without content\": it gates whether a request may be sent over `0-RTT` early data, which the default route policy allows for safe requests, and it auto-enables retry on `425`, which for a request with content means buffering that content for the retry. `QUERY` always carries content, so including it changes both behaviours and deserves its own change and guard. A test case pins the current exclusion so the decision is explicit rather than an oversight. - Body-keyed cache keys and the `Accept-Query` response field are origin server concerns rather than proxy ones. The `http_inspector` listener filter is unaffected. Its Balsa path is constructed with `allow_custom_methods` enabled and so never consults the known-method list. Its legacy `http_parser` path rejects every method outside its own list, which is pre-existing behavior already encoded in the `InvalidHttpMethod` test's early return for Balsa. ## Risk Level Low Guarded, and limited to recognizing one additional method token. ## Testing - Unit tests in `balsa_parser_test.cc` covering `QUERY` accepted by default, `QUERY` rejected with the guard disabled, an unrelated method unaffected by the guard, and `QUERY` still accepted via `allow_custom_methods` with the guard off. - Unit test in `codec_impl_test.cc` asserting a `QUERY` request with content-length reaches the decoder with its method, content-type and body intact. - Unit test extension in `base_header_validator_test.cc` for `restrict_http_methods`. - Integration test in `protocol_integration_test.cc` asserting `QUERY` is routed upstream with method and body intact across the full mesh of downstream and upstream protocols, plus a guard-disabled test asserting the `HTTP/1` `400` and that `HTTP/2` and `HTTP/3` are unaffected. ## Docs Changes N/A ## Release Notes ``` changelogs/current/minor_behavior_changes/http__query-method.rst ``` ## Platform Specific Features N/A ## Runtime guard ``` envoy.reloadable_features.http1_allow_query_method ``` defaults to `true`; set to `false` to restore rejecting `QUERY` on `HTTP/1` . Fixes #46404",
+      "url": "https://github.com/envoyproxy/envoy/pull/46496",
+      "timestamp": "2026-08-12T18:34:28Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "guy-with-a-why",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46502",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Support hot restart handoff for connectionless UDP flows",
+      "text": "Commit Message: udp: Support hot restart handoff for connectionless UDP flows Additional Description: The parent instance keeps serving established UDP flows while draining and forwards packets of unknown flows to the child over the hot restart RPC, instead of going dark between drain start and parent shutdown. Risk Level: Medium Testing: Added unit and integration tests, manual Docs Changes: - Added `envoy.resource_limits.listener.<name of listener>.udp_flow_limit`. - Added `downstream_flows_active, Gauge`, if equal to the limit, flows might get misrouted during hotrestart Release Notes: Added new_features entry Platform Specific Features: N/A Fixes #34732",
+      "url": "https://github.com/envoyproxy/envoy/pull/46502",
+      "timestamp": "2026-08-13T10:28:24Z",
+      "metrics": {
+        "comments": 7,
+        "reactions": 0
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "filipcacky",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46552",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "network_ext_proc: add onNewConnection event handling",
+      "text": "Commit Message: network_ext_proc: add onNewConnection event handling Additional Description: This PR adds first-class support for `onNewConnection` event handling in the NetworkExternalProcessor Key changes: 1. **API Updates**: - `api/envoy/extensions/filters/network/ext_proc/v3/ext_proc.proto`: Added `ConnectionSendMode process_new_connection` (defaulting to `SKIP` for backwards compatibility). - `api/envoy/service/network_ext_proc/v3/network_external_processor.proto`: Added `message NewConnection` containing downstream remote address, downstream local address, requested server name (SNI), and negotiated protocol (ALPN), and added `NewConnection new_connection = 4` to `ProcessingRequest`. 2. **Filter State Machine**: - In `onNewConnection()`: When enabled (`process_new_connection: SEND`), dispatches `ProcessingRequest` with connection attributes and dynamic metadata, starts a timeout timer, and returns `FilterStatus::StopIteration`. - In `onData()` / `onWrite()`: Halts and buffers incoming payload while `onNewConnection` is pending. - In `onReceiveMessage()`: Parses `dynamic_metadata` into `StreamInfo`, handles `connection_status` (CONTINUE, CLOSE, CLOSE_RST), honors `close_stream_to_ext_proc_server` to allow subsequent raw TCP payload to bypass ext_proc, and resumes the filter chain with `read_callbacks_->continueReading()`. - Timeouts & Error Handling: Respects `failure_mode_allow` to either fail-open (`continueReading()`) or close the connection. 3. **Observability**: - Added `new_connection_sent` counter stat. 4. **Documentation & Release Notes**: - Updated network filter docs and added changelog fragment. AI assistance disclosure: This PR was prepared with AI coding assistance. Risk Level: Low (new configuration field defaults to `SKIP`, preserving existing behavior) Testing: Added comprehensive unit tests in `ext_proc_test.cc` and `config_test.cc` covering request contents, dynamic metadata propagation, stream close bypass, connection close/reset, fail-open/fail-close on timeouts and gRPC errors.",
+      "url": "https://github.com/envoyproxy/envoy/pull/46552",
+      "timestamp": "2026-08-12T19:58:58Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "botengyao",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46558",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "ext_proc: document session affinity configuration",
+      "text": "Commit Message: ext_proc: document session affinity configuration Additional Description: Documents the existing configuration path for keeping requests with the same session key on one external processor endpoint. The downstream key is copied into Envoy gRPC initial metadata and used by a matching cluster-level hash policy. Adds integration coverage for header affinity, passive-cookie affinity, and requests without an affinity key. No production behavior changes are introduced. A runnable Go demonstration is available at https://github.com/dio/ext-proc-session-affinity. AI assistance was used to help prepare the documentation and tests; the submitter reviewed and validated the resulting change. Risk Level: Low Testing: Focused ext_proc integration test. The runnable demo also measured header and passive-cookie affinity across 32 sessions and 160 requests per mode, with both processor endpoints observed and zero affinity violations. Docs Changes: Adds ext_proc session-affinity configuration guidance and examples. Release Notes: N/A Platform Specific Features: N/A Fixes #46159",
+      "url": "https://github.com/envoyproxy/envoy/pull/46558",
+      "timestamp": "2026-08-13T00:38:52Z",
+      "metrics": {
+        "comments": 6,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "dio",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46560",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Avoid excessive hashing for well-known header lookups",
+      "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46560",
+      "timestamp": "2026-08-13T02:03:13Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "etruong42",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46573",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Fix listFineGrainLoggers so that it lists loggers",
+      "text": "Also add test to avoid regression Change-Id: I93d401aad43ea51a853725a8939f5b5524b3f8e1 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46573",
+      "timestamp": "2026-08-13T12:15:29Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "etruong42",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46601",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Disable fmtlib Unicode support on Windows",
+      "text": "The FMT_UNICODE is a Windows MSVC specific option. It has not effect on Linux build. Risk Level: none Testing: unit tests Docs Changes: no Release Notes: no Platform Specific Features: Windows specific",
+      "url": "https://github.com/envoyproxy/envoy/pull/46601",
+      "timestamp": "2026-08-12T15:04:19Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "yanavlasov",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46603",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "ai_protocol_manager: add response handling and extract response token usage oai, ahth, gemini",
+      "text": "Adds response-side (encode-path) handling to the AI Protocol Manager filter: 2xx SSE and JSON responses in the OpenAI (Chat Completions + Responses API), Anthropic (Messages), and Gemini (`generateContent`/`streamGenerateContent`) dialects are observed as they stream through, and normalized token usage is published as dynamic metadata at a clean end of stream. Observe-only: the filter never stops iteration or mutates the response, and extraction failures cannot affect the stream. - one namespace (default `envoy.ai.token_usage`) in both metadata forms — a typed `envoy.data.ai.v3.TokenUsage` record (authoritative, full `uint64` precision) and an untyped Struct projection of it for `%DYNAMIC_METADATA%`/CEL. ext_proc consumers receive it via `metadata_options.forwarding_namespaces`. - `input_tokens`/`output_tokens` are inclusive in every dialect (cache, tool-use, and reasoning buckets are subset breakdowns), and `total_tokens` is their sum; a disagreeing provider total is kept as `reported_total_tokens`. Counts accumulate natively per event and are canonicalized once at end of stream. `extraction_status` (`complete`/`partial`) reports extraction quality. - dialect auto-detected from response shape, or pinned via `api_format` (a wire format, not a provider identity). The extractor config is a `oneof` for future custom extractors. - SSE state hard-capped by `max_event_size` (1MiB default), JSON by `max_inspected_body_size`, per-stream parse work by `max_parsed_events`; in-frame events are zero-copy, non-usage events are skipped before parsing, and buffers charge the stream's memory account. - dual filter with identical extraction in either chain; first publication owns the namespace. `request_handling.payload_offload_enabled: false` enables a response-only installation (pure request passthrough), e.g. for observation on a DFP egress cluster. For API shepherds: (1) placement of the emitted message under `envoy.data.ai.v3` (WIP-annotated); (2) the future `custom_extractor` oneof member. Deferred with rationale: selective streaming (SAX) extractor, common SSE decoder shared with `sse_to_metadata`, per-route `api_format` pinning, usage-on-abort publication. **Testing:** - E2E (live providers, DFP + auto-detect) — access-log records from a real run: | Provider | Framing | Extracted (in/out/total) | Notes | |---|---|---|---| | OpenAI `gpt-4o-mini` | JSON + SSE | 13 / 7 / 20 | terminal `include_usage` chunk | | Anthropic `claude-haiku-4-5` | JSON + SSE | 13 / 10 / 23 | total computed (absent on wire) | | Gemini `gemini-3.6-flash` | JSON | 6 / 661 / 667 | 654 reasoning tokens summed into output | | Gemini `gemini-3.6-flash` | SSE | 6 / 760 / 766 | cumulative snapshots, last wins | All six requests: `extraction_status: complete`, auto-detected `api_format`, zero parse-error/partial/budget counters. Also validated live: OpenAI Responses API, OpenAI prompt caching (`cached_input_tokens: 2816`), and Anthropic cache write/read (wire `input_tokens: 9` + `cache_read: 6761` → canonical `input_tokens: 6770`). https://github.com/botengyao/envoy/pull/1736/changes Commit Message: add response handling and extract response token usage oai, ahth, gemini Additional Description: Risk Level: Low — opt-in behavior in an alpha (work-in-progress) filter; observe-only and fail-open by construction. Testing: all unit, integration, fuzz, and benchmark tests are added. Docs Changes: yes",
+      "url": "https://github.com/envoyproxy/envoy/pull/46603",
+      "timestamp": "2026-08-12T17:42:07Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "botengyao",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46607",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "formatter: add formatValueTo to reduce allocation of protobuf value",
+      "text": "Commit Message: formatter: add formatValueTo to reduce allocation of protobuf value Additional Description: Similar to https://github.com/envoyproxy/envoy/pull/46593, but support the typed value. ``` Baseline — HEAD BM_AccessLogFormatter_mean 131 ns 131 ns 5 BM_AccessLogFormatterTextMockJson_mean 131 ns 131 ns 5 BM_JsonAccessLogFormatter_mean 242 ns 242 ns 5 BM_JsonAccessLogFormatterKeepEmptyValues_mean 197 ns 196 ns 5 BM_JsonAccessLogFormatterOmitEmptyValues_mean 334 ns 333 ns 5 Your branch BM_AccessLogFormatter_mean 120 ns 120 ns 5 BM_AccessLogFormatterTextMockJson_mean 121 ns 121 ns 5 BM_JsonAccessLogFormatter_mean 172 ns 172 ns 5 BM_JsonAccessLogFormatterKeepEmptyValues_mean 130 ns 130 ns 5 BM_JsonAccessLogFormatterOmitEmptyValues_mean 287 ns 287 ns 5 ``` | Benchmark | before | after | delta | |---|---|---|---| | `BM_AccessLogFormatter` | 131 | 120 | −8.4% | | `BM_AccessLogFormatterTextMockJson` | 131 | 121 | −7.6% | | `BM_JsonAccessLogFormatter` | 242 | 172 | −28.9% | | `BM_JsonAccessLogFormatterKeepEmptyValues` | 196 | 130 | −33.7% | | `BM_JsonAccessLogFormatterOmitEmptyValues` | 333 | 287 | −13.8% | Risk Level: low. Testing: unit. Docs Changes: n/a. Release Notes: n/a. Platform Specific Features: n/a.",
+      "url": "https://github.com/envoyproxy/envoy/pull/46607",
+      "timestamp": "2026-08-12T12:39:47Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "wbpcode",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46613",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "network: send zero-length UDP datagrams",
+      "text": "Preserve empty datagrams across all UDP send paths. Justification: RFC 768 permits UDP datagrams with an empty payload: the minimum UDP Length is 8 octets, corresponding to the UDP header alone. Envoy currently treats these valid datagrams as no-op writes and silently drops them. This change ensures they reach the socket send operation for connected and unconnected UDP sockets. Commit Message: Additional Description: Risk Level: Testing: Done Docs Changes: Release Notes: Platform Specific Features:",
+      "url": "https://github.com/envoyproxy/envoy/pull/46613",
+      "timestamp": "2026-08-12T14:38:16Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "nezdolik",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46614",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "reverse_tunnel: add tunnel setup latency stats",
+      "text": "## Commit Message reverse_tunnel: add tunnel setup latency stats ## Description Adds max_tunnel_setup_time on the downstream reverse-tunnel initiator and emits tunnel_setup_time (histogram) / tunnel_setup_time_exceeded (counter) for how long it takes a host to reach its configured connection count. Attempts continue after the deadline; late completions are not recorded as setup-time samples. Episode timing is reused across retries within an establishment episode and resets when capacity drops. ## Testing Unit tests + integ tests for the counter and histogram added.",
+      "url": "https://github.com/envoyproxy/envoy/pull/46614",
+      "timestamp": "2026-08-12T12:28:37Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "aakugan",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46640",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "cluster specifier: support new attempt aware cluster specifier",
+      "text": "Commit Message: cluster specifier: support new attempt aware cluster specifier Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46640",
+      "timestamp": "2026-08-12T13:20:24Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "wbpcode",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46645",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "APM: add utilities to define and validate JSON schema. add the first schema - OpenAI chat completion schema",
+      "text": "Commit Message: add utilities to define and validate JSON schema. add the first schema - OpenAI chat completion schema This allows us to structurally define a JSON payload schema for AI requests. It is useful for validation, and later transcoding. This is part of #44681. I used AI to generate this PR. I have read and fully understand this PR. Additional Description: https://github.com/penguingao/thoughts/blob/main/20260727_AI_FILTER.md Risk Level: Medium Testing: unit tests Docs Changes: updated the extension docs, but this is still an alpha filter under development Release Notes: N/A - WIP alpha filter Platform Specific Features: no",
+      "url": "https://github.com/envoyproxy/envoy/pull/46645",
+      "timestamp": "2026-08-12T14:22:25Z",
+      "metrics": {
+        "comments": 4,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "penguingao",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46650",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "repo: remove zuercher from code ownership/maintainer",
+      "text": "Risk Level: low Testing: n/a Docs Changes: n/a Release Notes: n/a Platform Specific Features: n/a",
+      "url": "https://github.com/envoyproxy/envoy/pull/46650",
+      "timestamp": "2026-08-12T14:10:14Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "zuercher",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46655",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "filesystem: refactor win32 watcher_impl to use absl mutex and fix buffer alignment",
+      "text": "Additional Description: Refactors the Win32 filesystem watcher (`WatcherImpl`): - Replaces `<concurrent_queue.h>` (`concurrency::concurrent_queue`) with a thread-safe `ThreadSafeQueue` using `absl::Mutex`. This eliminates duplicate symbol link conflicts between `libc++` and MSVC `libconcrt.lib`. - Changes `DirectoryWatch` buffer type from `std::vector<uint8_t>` to `std::vector<DWORD>` ensuring 4-byte DWORD alignment required by `ReadDirectoryChangesW` and `FILE_NOTIFY_INFORMATION`. - Synchronizes access to `DirectoryWatch::watches_` with an `absl::Mutex`. - Adds `callAndLogOnError` with exception handling and rate-limited logging. - Updates `watcher_impl_test.cc` to ensure file handles are cleanly closed before read events and flushes. Risk Level: medium (Win32 filesystem watcher refactor) Testing: `bazel test //test/common/filesystem:watcher_impl_test` Docs Changes: n/a Release Notes: Included under bug_fixes for Win32 watcher Platform Specific Features: Windows",
+      "url": "https://github.com/envoyproxy/envoy/pull/46655",
+      "timestamp": "2026-08-12T20:10:42Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "waiting"
+      ],
+      "author": "citrus7",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46656",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Avoid unnecesary renaming of watcher_target.yaml",
+      "text": "This avoids the race condition where watcher_target.yaml is not present Change-Id: I7f8c67023ac31f3a9cac294caca5c0d18c30ee1d <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46656",
+      "timestamp": "2026-08-13T01:59:51Z",
+      "metrics": {
+        "comments": 3,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "etruong42",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46657",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "c-ares: move dns shared resolver logic to upstream cluster",
+      "text": "Commit Message: c-ares: move dns shared resolver logic to upstream cluster Additional Description: In #45073 I added qcache_max_ttl for the c-ares resolver and shared the resolver across clusters with identical c-ares configs so the query cache is shared. However, I didn't realize the UDP DNS filter also calls CaresDnsResolverFactory::createDnsResolver() directly, once per worker thread with that worker's dispatcher. Two workers with the same config would share a resolver bound to the wrong dispatcher, causing c-ares callbacks to fire on the wrong event loop. Instead of adding a mutex and keying on dispatcher identity, I moved the sharing logic into the upstream cluster layer. The new `ClusterDnsResolverCache` is owned by ProdClusterManagerFactory (one per server, main thread only), so createDnsResolver() callers like the DNS filter are unaffected and always get their own resolver. Other notes: - Sharing remains limited to c-ares; other resolver types get one resolver per cluster as before. The lookup key is hashed at the `TypedExtensionConfig` level rather than on the unpacked c-ares config. - The default server-wide resolver (dnsResolver()) is already shared for clusters without a custom resolver config; I deliberately left that path unchanged to minimize scope. - Because of some workaround people used I found after my original PR merged(see [Comment](https://github.com/envoyproxy/envoy/pull/45073#issuecomment-4974660723)), I decided to leave the `envoy.restart_features.shared_cares_dns_resolver` to false by default for now. Also related to https://github.com/envoyproxy/envoy/pull/46577 AI Disclosure: this PR is mostly generated by AI with just a few hand edit and updates. I did iterated several times with AI to come up with this solution and understand all the changes. Risk Level: low Testing: Added unit tests and also manually tested with tcpdump and the shared resolver feature on and off to confirm the query cache is working to reduce dns lookup to the server. Docs Changes: Release Notes: Fixed race caused by shared c-ares dns resolvers. Platform Specific Features: [Optional Runtime guard:] \"envoy.restart_features.shared_cares_dns_resolver\" is set to false by default now",
+      "url": "https://github.com/envoyproxy/envoy/pull/46657",
+      "timestamp": "2026-08-12T13:47:39Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "andy-fong",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46660",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "tidy: enforce and apply C++20 container `contains()`",
+      "text": "Enable the `readability-container-contains` clang-tidy check so that `count(k)`/`find(k) != end()` membership tests are flagged going forward, and apply the `.contains()` conversion across the non-extensions code (the extensions tree was cleaned up separately). Readability cleanup with no behavior change.",
+      "url": "https://github.com/envoyproxy/envoy/pull/46660",
+      "timestamp": "2026-08-12T12:54:04Z",
+      "metrics": {
+        "comments": 0,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "jwendell",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46663",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "cleanup: replace erase-remove idiom with std::erase_if or absl::erase_if",
+      "text": "### Description Replace the traditional erase-remove idiom with the more concise `std::erase_if` and `absl::erase_if` APIs where applicable. This improves readability by expressing the intent to remove elements matching a predicate directly, while preserving the existing behavior. ### Changes Replace `std::remove_if` followed by `erase` with `std::erase_if` for standard containers. Replace the same pattern with `absl::erase_if` for supported Abseil containers. No functional behavior changes are intended.",
+      "url": "https://github.com/envoyproxy/envoy/pull/46663",
+      "timestamp": "2026-08-13T12:22:54Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "Amila-Rukshan",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46664",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "rds: make the init manager for rds works for filter_chain and oauth2",
+      "text": "Commit Message: rds: make the init manager for rds works for filter_chain and oauth2 Additional Description: Now, all configuration on the route could optionally add an async warming target to the route level init manager. The change of oauth2 showed how it works. Risk Level: n/a. Testing: unit. Docs Changes: n/a. Release Notes: added. Platform Specific Features: n/a.",
+      "url": "https://github.com/envoyproxy/envoy/pull/46664",
+      "timestamp": "2026-08-13T03:25:33Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "wbpcode",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46667",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "fix: health check probes blocked indefinitely when EDS initialFetchTimeout is 0s",
+      "text": "_Commit Message:_ when a cluster is configured with EDS and initialFetchTimeout: 0s, the cluster stays in warming state indefinitely until EDS delivers its first response, no timeout fires to unblock it. _Additional Description:_ added a bypass in ClusterImplBase::setHealthChecker(). when health_check_after_cluster_warming is enabled, health checks are still started immediately if both conditions hold: 1. the EDS config source has initialFetchTimeout: 0s (hasZeroInitialFetchTimeout() == true) 2. there are no pending SDS init targets (init_manager_.uninitializedCount() == 0) _Risk Level:_ Low _Testing:_ Will be added soon. _Release Notes:_ fix health check probes being blocked indefinitely on EDS clusters configured with initialFetchTimeout: 0s. With health_check_after_cluster_warming enabled(default), health checks are no longer deferred when EDS warming has no timeout deadline. Fixes #46666",
+      "url": "https://github.com/envoyproxy/envoy/pull/46667",
+      "timestamp": "2026-08-13T08:06:21Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "yuehaii",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46668",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Rescope Logger::Levels enum so it can be moved to envoy/ directory",
+      "text": "The main change is in the source/common/common/base_logger.h, moving the Levels enum out of the Logger class into the outer Logger namespace. This is intermediate step to using this enum in Envoy's interfaces in the envoy/ directory. This will prevent leaking of the spdlog dependency to proprietary components that need to manipulate Envoy's log level programmatically. Risk Level: low Testing: unit tests Docs Changes: no Release Notes: no Platform Specific Features: no",
+      "url": "https://github.com/envoyproxy/envoy/pull/46668",
+      "timestamp": "2026-08-12T23:13:51Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "yanavlasov",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46669",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "orca: make OOB active_sessions gauge composable across managers",
+      "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46669",
+      "timestamp": "2026-08-12T16:37:14Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "jukie",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46670",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "load_aware_locality: add out-of-band ORCA reporting",
+      "text": "Commit Message: implement out-of-band ORCA reporting for load_aware_locality Additional Description: Follow-up to https://github.com/envoyproxy/envoy/pull/45725 to wire up ORCA out-of-band reporting with the additional below changes: - Adds oob_reporting_config proto field - Graduates envoy.load_balancing_policies.load_aware_locality from `wip` to `alpha` in extensions_metadata.yaml. - Fixes `lb_orca_oob.active_sessions` accounting in the shared OrcaOobManager Risk Level: Low - still an alpha marked policy and opt-in only Testing: Added end-to-end OOB integration test and other coverage Docs Changes: Yes Release Notes: Updated existing (still unreleased) Platform Specific Features: N/A xRef https://github.com/envoyproxy/envoy/issues/43665 xRef https://github.com/envoyproxy/envoy/issues/6614",
+      "url": "https://github.com/envoyproxy/envoy/pull/46670",
+      "timestamp": "2026-08-13T04:22:17Z",
+      "metrics": {
+        "comments": 5,
+        "reactions": 0
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "jukie",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46671",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "ExtProc: clarify docs on end_of_stream_without_message field",
+      "text": "Commit Message: ExtProc: clarify docs on end_of_stream_without_message field Additional Description: Clarify description of the field, and mark it as not-implemented-hide to exclude from Envoy docs. Risk Level: Low Testing: N/A Docs Changes: Included in PR Release Notes: N/A Platform Specific Features: N/A CC @yanjunxiang-google",
+      "url": "https://github.com/envoyproxy/envoy/pull/46671",
+      "timestamp": "2026-08-12T18:15:20Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "markdroth",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46672",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "[draft] dym: go sdk for udp listener filter",
+      "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46672",
+      "timestamp": "2026-08-12T21:04:45Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "ovadiagal",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46673",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Order dependent bug",
+      "text": "Commit Message: Fix flaky order-dependent stats_test failures via physical test file separation Additional Description: The tests `NonNumberValueFormatted` and `GaugeNonNumberValueFormatted` both trigger identical error logs emitted via `ENVOY_LOG_PERIODIC_MISC` in `stats.cc`. Because this macro rate-limits logging to prevent log spam, running these tests consecutively in the same target process led to one suppressing the other, causing flaky test failures under randomized execution ordering. Risk Level: low Testing: NA Docs Changes: NA Release Notes: NA Platform Specific Features: NA",
+      "url": "https://github.com/envoyproxy/envoy/pull/46673",
+      "timestamp": "2026-08-12T22:54:18Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "Wenwei-Zhao",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46674",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "fix: wasm remote code fetch race writing negative cache entry",
+      "text": "● Problem When multiple Envoy worker threads simultaneously call createWasm() for a remote wasm plugin, Thread A starts the HTTP fetch and marks the cache entry in_progress = true. Threads B–N find the entry in_progress, call cb(nullptr) to signal failure, then fall through (missing return) to the code.empty() block. There, they write a negative cache entry (TTL=10s) and start competing fetch attempts. Thread A's successful download is now racing against a poisoned negative cache. For the next 10 seconds, any new call to createWasm() hits RemoteLoadCacheNegativeHit and immediately fails, holding all wasm-filtered requests for up to 10 seconds before fail_open releases them. ``` if (it->second.in_progress) { cb(nullptr); // ← signals FAILURE to the plugin } // ← NO return! falls through code = it->second.code; // empty (Thread 1 still downloading) if (code.empty()) { fetch = true; // ← Thread 2 ALSO starts downloading now it->second.in_progress = true; } ``` ● Fix Add return false immediately after cb(nullptr) in the in_progress branch. Threads B–N still signal failure to the plugin (allowing fail_open to pass the request through), but they no longer fall through to write the negative cache entry or start duplicate fetches. Thread A's download completes uncontested, populates the cache as a successful hit, and all subsequent requests resolve instantly. ● Impact - Eliminates the RemoteLoadCacheNegativeHit cascade that causes 10-second dead zones for wasm-filtered requests - Fixes the CPU spike from competing parallel fetches (all threads racing to download the same binary) - Related: https://github.com/envoyproxy/envoy/issues/25052",
+      "url": "https://github.com/envoyproxy/envoy/pull/46674",
+      "timestamp": "2026-08-12T22:29:24Z",
+      "metrics": {
+        "comments": 1,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "eformat",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46675",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "transport_socket(http_11_proxy): add Proxy-Authorization header support",
+      "text": "Commit Message: This patch adds support in HTTP/1.1 Proxy for HTTP proxy authorization. The HTTP/1.1 Proxy looks up the encoded credentials in its host's typed filter metadata and sends it with the Proxy-Authorization HTTP header in the CONNECT request to the proxy. Proxy authorization is still unsupported when filter state metadata is used. Additional Description: AI used to write tests Risk Level: Low Testing: Unit and integration test added Docs Changes: No Release Notes: Platform Specific Features: No",
+      "url": "https://github.com/envoyproxy/envoy/pull/46675",
+      "timestamp": "2026-08-12T23:53:10Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "glennc24",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46676",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Allow connection teardown even when cert selection is not yet complete",
+      "text": "Change-Id: I155b874accd54affa65bfa0b744ff99154060570 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46676",
+      "timestamp": "2026-08-13T01:59:17Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "etruong42",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46679",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Add extension point to OpenTelemetry tracer for custom exporters.",
+      "text": "<!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> ### Commit Message Added support for custom exporters in the OpenTelemetry tracer. In implementing this feature, I also changed some existing code in opentelemetry_tracer_impl.cc to make it more thread safe, such as moving the instantiation of the gRPC client factory out of the worker threads and into the main thread. This means that if the factory creation returns an error, it won't crash the worker thread, and thereby the whole Envoy proxy. ### Additional Description AI was used to generate the code and tests in this PR. I have reviewed – and fully understand – the code. ### Risk Level Low ### Testing I've added unit tests testing both the control plane and data plane code flows. ### Docs Changes None required ### Release Notes Added a changelog under new_features (area: tracing) ### Platform Specific Features None",
+      "url": "https://github.com/envoyproxy/envoy/pull/46679",
+      "timestamp": "2026-08-13T08:30:05Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [
+        "api"
+      ],
+      "author": "jakebennert",
+      "change": "new"
+    },
+    {
+      "id": "github:envoyproxy/envoy:pull_request:46682",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "envoyproxy/envoy",
+      "kind": "pull_request",
+      "title": "Restrict local reply streaming integration tests",
+      "text": "... so that it runs only on Envoy gRPC Change-Id: If3ff45c3ee9db39b14ed506a7ef85ae00ec7db24 <!-- !!!ATTENTION!!! If you are fixing **any** crash or **any** potential security issue, **do not open a pull request**. Instead, please [open a GitHub Security Advisory](https://github.com/envoyproxy/envoy/security/advisories/new) (preferred). Alternatively, you may email envoy-security@googlegroups.com. Thank you in advance for helping to keep Envoy secure. !!!ATTENTION!!! For an explanation of how to fill out the fields, please see the relevant section in [PULL_REQUESTS.md](https://github.com/envoyproxy/envoy/blob/main/PULL_REQUESTS.md) !!!ATTENTION!!! Please check the [use of generative AI policy](https://github.com/envoyproxy/envoy/blob/main/CONTRIBUTING.md?plain=1#L41). You may use generative AI only if you fully understand the code. You need to disclose this usage in the PR description to ensure transparency. --> Commit Message: Additional Description: Risk Level: Testing: Docs Changes: Release Notes: Platform Specific Features: [Optional Runtime guard:] [Optional Fixes #Issue] [Optional Fixes commit #PR or SHA] [Optional Deprecated:] [Optional [API Considerations](https://github.com/envoyproxy/envoy/blob/main/api/review_checklist.md):]",
+      "url": "https://github.com/envoyproxy/envoy/pull/46682",
+      "timestamp": "2026-08-13T12:14:09Z",
+      "metrics": {
+        "comments": 2,
+        "reactions": 0
+      },
+      "labels": [],
+      "author": "etruong42",
+      "change": "new"
+    }
+  ]
+}
