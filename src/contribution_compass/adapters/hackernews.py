@@ -48,6 +48,7 @@ class HackerNewsCollector:
         story_text = _plain_text(item.get("text"))
         story_url = str(item.get("url") or "")
         haystack = f"{title} {story_text} {story_url}".casefold()
+        title_haystack = title.casefold()
         reasons: list[str] = []
         slug = repo.repo.casefold()
         if slug in haystack or f"github.com/{slug}" in story_url.casefold():
@@ -55,7 +56,7 @@ class HackerNewsCollector:
         reasons.extend(
             f"keyword:{keyword}"
             for keyword in repo.hackernews_keywords
-            if _contains_phrase(haystack, keyword)
+            if _contains_phrase(title_haystack, keyword)
         )
         return tuple(dict.fromkeys(reasons))
 

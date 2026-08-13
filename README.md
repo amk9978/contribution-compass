@@ -136,8 +136,9 @@ repo_groups:
 ```
 
 Each repository ID must be globally unique. `repos: []` and `hackernews_keywords: []` mean empty.
-HN keywords should be specific enough to avoid ambiguous matches; exact links to the configured
-GitHub repository are matched independently. Set `hackernews.enabled: false` to disable the source.
+HN keywords are matched against story titles and should be specific enough to avoid ambiguity;
+exact references to the configured GitHub repository are matched independently. Set
+`hackernews.enabled: false` to disable the source.
 
 Human pages use static pagination: 20 contribution leads, 10 project-news cards, or 50 project
 Signals per page. JSON, RSS, MCP, and direct GitHub/HN links remain available for deeper reading.

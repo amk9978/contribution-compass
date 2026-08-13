@@ -119,3 +119,21 @@ def test_hackernews_skips_old_dead_and_unmatched_stories() -> None:
             )
 
     assert asyncio.run(collect()).discussions == ()
+
+
+def test_hackernews_keyword_mentions_inside_story_body_do_not_create_news_matches() -> None:
+    item = {
+        "id": 10,
+        "type": "story",
+        "time": 1786586400,
+        "title": "Launch HN: A different coding tool",
+        "text": "We compare ourselves with Claude Code and several other tools.",
+        "url": "https://different-tool.example",
+    }
+    repo = RepoConfig(
+        "claude-code",
+        "anthropics/claude-code",
+        "Claude Code",
+        hackernews_keywords=("Claude Code",),
+    )
+    assert HackerNewsCollector._matches(item, repo) == ()
