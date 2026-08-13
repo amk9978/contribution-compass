@@ -29,6 +29,15 @@ def _text(record: dict[str, Any], key: str, path: str) -> str:
     return value.strip()
 
 
+def _string_array(record: dict[str, Any], key: str, path: str) -> tuple[str, ...]:
+    value = record.get(key, [])
+    if not isinstance(value, list) or any(
+        not isinstance(item, str) or not item.strip() for item in value
+    ):
+        _fail(f"{path}.{key}", "expected an array of non-empty strings")
+    return tuple(dict.fromkeys(item.strip() for item in value))
+
+
 def parse_config(value: Any) -> CompassConfig:
     root = _record(value, "root")
     raw_groups = _record(root.get("repo_groups"), "repo_groups")
@@ -65,6 +74,7 @@ def parse_config(value: Any) -> CompassConfig:
                     repo=slug,
                     name=_text(repo, "name", repo_path),
                     paginated=paginated,
+                    hackernews_keywords=_string_array(repo, "hackernews_keywords", repo_path),
                 )
             )
         description = group.get("description")
@@ -82,7 +92,25 @@ def parse_config(value: Any) -> CompassConfig:
     lookback = root.get("lookback_hours", 24)
     if not isinstance(lookback, int) or isinstance(lookback, bool) or lookback <= 0:
         _fail("root.lookback_hours", "expected a positive integer")
-    return CompassConfig(repo_groups=tuple(groups), lookback_hours=lookback)
+    hackernews = root.get("hackernews", {})
+    if not isinstance(hackernews, dict):
+        _fail("root.hackernews", "expected an object")
+    hackernews_enabled = hackernews.get("enabled", False)
+    if not isinstance(hackernews_enabled, bool):
+        _fail("root.hackernews.enabled", "expected a boolean")
+    story_limit = hackernews.get("story_limit", 200)
+    if (
+        not isinstance(story_limit, int)
+        or isinstance(story_limit, bool)
+        or not 1 <= story_limit <= 500
+    ):
+        _fail("root.hackernews.story_limit", "expected an integer from 1 to 500")
+    return CompassConfig(
+        repo_groups=tuple(groups),
+        lookback_hours=lookback,
+        hackernews_enabled=hackernews_enabled,
+        hackernews_story_limit=story_limit,
+    )
 
 
 def load_config(path: str | Path = "config.yml") -> CompassConfig:

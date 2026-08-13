@@ -31,10 +31,15 @@ def json_text(value: Any) -> str:
 
 
 def signal_page_url(signal: Signal, dataset: RepositoryDataset, context: SiteContext) -> str:
-    return (
-        f"{context.site_url}/updates/{dataset.date}/{dataset.group_id}/"
-        f"{dataset.repository_id}.html#{signal_anchor(signal)}"
+    ranked = sorted(
+        dataset.signals,
+        key=lambda item: (-(importance_score(item)), item.id),
     )
+    position = next((index for index, item in enumerate(ranked) if item.id == signal.id), 0)
+    page = position // 50 + 1
+    base = f"{context.site_url}/updates/{dataset.date}/{dataset.group_id}/{dataset.repository_id}"
+    page_url = f"{base}.html" if page == 1 else f"{base}/page/{page}/"
+    return f"{page_url}#{signal_anchor(signal)}"
 
 
 class MachineView:
@@ -55,9 +60,9 @@ class MachineView:
                 "name": "Contribution Compass",
                 "generatedAt": self.generated_at,
                 "description": (
-                    "Factual project context, release and public-roadmap news, normalized GitHub "
-                    "signals, append-only observation events, and evidence-backed contribution "
-                    "leads."
+                    "Factual project context, release and public-roadmap news, separately labeled "
+                    "Hacker News discussions, normalized GitHub signals, append-only observation "
+                    "events, and evidence-backed contribution leads."
                 ),
                 "latestDate": dates[0] if dates else None,
                 "links": {
@@ -340,6 +345,29 @@ class MachineView:
                         },
                     }
                 )
+            for discussion in entry.news.community_discussions:
+                items.append(
+                    {
+                        "id": f"community:{entry.repository}:{discussion.id}",
+                        "url": project_page,
+                        "external_url": discussion.discussion_url,
+                        "title": f"[{entry.project_name}] HN: {discussion.title}",
+                        "content_text": (
+                            f"{discussion.score} points and {discussion.comments} comments. "
+                            "Community discussion; not maintainer evidence."
+                        ),
+                        "date_published": discussion.published_at,
+                        "tags": ["hackernews", entry.group_id, entry.repository],
+                        "_contribution_compass": {
+                            "kind": "community_discussion",
+                            "project": entry.repository,
+                            "articleUrl": discussion.url,
+                            "discussionUrl": discussion.discussion_url,
+                            "score": discussion.score,
+                            "comments": discussion.comments,
+                        },
+                    }
+                )
         items.sort(key=lambda item: str(item.get("date_published", "")), reverse=True)
         return json_text(
             {
@@ -347,7 +375,10 @@ class MachineView:
                 "title": "Contribution Compass Project News",
                 "home_page_url": f"{self.context.site_url}/news/",
                 "feed_url": f"{self.context.site_url}/news/feed.json",
-                "description": "Latest stable releases and publicly indicated upcoming work.",
+                "description": (
+                    "Latest stable releases, publicly indicated upcoming work, and separately "
+                    "labeled Hacker News discussions."
+                ),
                 "items": items[:100],
             }
         )
@@ -364,7 +395,10 @@ class MachineView:
         return self._rss_document(
             json.loads(self.news_json_feed()),
             title="Contribution Compass Project News",
-            description="Latest stable releases and publicly indicated upcoming work.",
+            description=(
+                "Latest stable releases, publicly indicated upcoming work, and Hacker News "
+                "discussions."
+            ),
             feed_url=f"{self.context.site_url}/news/feed.xml",
         )
 
@@ -381,6 +415,13 @@ class MachineView:
                     published_rfc822 = format_datetime(parsed)
                 except ValueError:
                     published_rfc822 = None
+            compass_data = item.get("_contribution_compass")
+            source_label = (
+                "Hacker News discussion"
+                if isinstance(compass_data, dict)
+                and compass_data.get("kind") == "community_discussion"
+                else "GitHub evidence"
+            )
             items.append(
                 "    <item>\n"
                 f"      <title>{escape(item['title'])}</title>\n"
@@ -392,7 +433,7 @@ class MachineView:
                     else ""
                 )
                 + f"      <description>{escape(item['content_text'])}</description>\n"
-                + f"      <source url={quoteattr(item['external_url'])}>GitHub evidence</source>\n"
+                + f"      <source url={quoteattr(item['external_url'])}>{source_label}</source>\n"
                 "    </item>"
             )
         return (
@@ -428,6 +469,7 @@ class MachineView:
 - Signal URLs are primary GitHub evidence.
 - Observation Events form the factual trail of discovered and changed Signals.
 - Release highlights are extracted from original notes; public upcoming items are not commitments.
+- Hacker News entries are community discussions, not maintainer evidence or endorsement.
 - Maintainer-Invited Leads have explicit invitation labels.
 - Triage Leads are lower-confidence and are not maintainer-approved work.
 - Re-check the live issue for state, assignment, scope, and contribution policy.

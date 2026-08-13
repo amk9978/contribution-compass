@@ -3,13 +3,15 @@
 Contribution Compass keeps developers current on important activity in curated open-source projects
 and finds evidence-backed sweet spots where a contribution may be useful.
 
-It is a data gatherer first. GitHub evidence, repository context, and observation history stay
-separate from interpretation. No OpenAI, Anthropic, or other model credential is required.
+It is a data gatherer first. GitHub evidence, separately labeled Hacker News discussions,
+repository context, and observation history stay separate from interpretation. No OpenAI,
+Anthropic, or other model credential is required.
 
 ```text
 config.yml Project Sensors
         ↓
-GitHub issues, pull requests, releases, and project metadata
+GitHub issues, pull requests, releases, milestones, and project metadata
+        + current Hacker News discussions matched to configured projects
         ↓
 normalized Signals + append-only Observation Events
         ↓
@@ -27,6 +29,7 @@ A list of repository activity is not enough. Contribution Compass helps answer:
 - What important projects changed recently?
 - What major developments shipped in their latest stable releases?
 - What prereleases or milestones publicly indicate where a project is heading?
+- Where are Hacker News readers discussing these configured projects?
 - Which issues explicitly invite community help?
 - Which unassigned issues may be worth discussing with maintainers?
 - What context surrounds the project and issue?
@@ -51,8 +54,14 @@ Each repository dataset contains:
 - normalized issue, pull-request, and release Signals;
 - direct URLs to original GitHub evidence;
 - append-only Observation Events containing discovered/changed snapshots and changed fields;
-- collection-run metadata; and
-- a Project News Snapshot with its latest stable release and publicly visible upcoming items.
+- collection-run metadata;
+- a Project News Snapshot with its latest stable release and publicly visible upcoming items; and
+- current matched Hacker News stories with article and discussion URLs, score, comments, and match
+  reason.
+
+Hacker News is shown as community discussion, never as maintainer evidence. The collector uses the
+official `topstories` and `beststories` lists, applies the configured lookback and item cap, and does
+not crawl the full comment tree.
 
 ```text
 data/
@@ -111,6 +120,10 @@ Edit `config.yml` with arbitrary project groups:
 ```yaml
 lookback_hours: 24
 
+hackernews:
+  enabled: true
+  story_limit: 200
+
 repo_groups:
   compilers:
     name: Compiler Engineering
@@ -119,9 +132,15 @@ repo_groups:
         repo: llvm/llvm-project
         name: LLVM
         paginated: true
+        hackernews_keywords: [LLVM]
 ```
 
-Each repository ID must be globally unique. `repos: []` means empty.
+Each repository ID must be globally unique. `repos: []` and `hackernews_keywords: []` mean empty.
+HN keywords should be specific enough to avoid ambiguous matches; exact links to the configured
+GitHub repository are matched independently. Set `hackernews.enabled: false` to disable the source.
+
+Human pages use static pagination: 20 contribution leads, 10 project-news cards, or 50 project
+Signals per page. JSON, RSS, MCP, and direct GitHub/HN links remain available for deeper reading.
 
 ## Local use
 
@@ -157,8 +176,9 @@ Tests use fixtures and mocks; they make no live GitHub requests.
 
 ## GitHub Actions
 
-The scheduled `Contribution Compass` workflow uses GitHub's built-in `GITHUB_TOKEN`, collects data,
-and commits `data/`, `reports/`, and `.state/`. The Pages workflow publishes all human and machine
+The scheduled `Contribution Compass` workflow uses GitHub's built-in `GITHUB_TOKEN`, collects data
+from GitHub and the keyless official Hacker News interface, and commits `data/`, `reports/`, and
+`.state/`. The Pages workflow publishes all human and machine
 views after a successful collection. No extra secret is required.
 
 For a fork:

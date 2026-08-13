@@ -95,6 +95,18 @@ def render_project_news(date: str, name: str, snapshot: ProjectNewsSnapshot) -> 
             lines.append(f"- **{item.kind.title()}** [{_safe(item.title)}]({item.url}){detail}")
     else:
         lines.append("No public prerelease or open milestone was found.")
+    lines.extend(("", "## Hacker News discussions", ""))
+    if snapshot.community_discussions:
+        for discussion in snapshot.community_discussions:
+            lines.append(
+                f"- [{_safe(discussion.title)}]({discussion.url}) — "
+                f"[{discussion.score} points · {discussion.comments} comments]"
+                f"({discussion.discussion_url})"
+            )
+        lines.append("")
+        lines.append("Community discussion; not maintainer evidence.")
+    else:
+        lines.append("No matching current Hacker News discussion was found.")
     return "\n".join(lines).rstrip() + "\n"
 
 
@@ -120,6 +132,7 @@ class MarkdownReportWriter:
             f"- {len(leads)} evidence-qualified contribution leads",
             f"- {sum(item.latest_release is not None for item in news)} projects with release news",
             f"- {sum(bool(item.upcoming) for item in news)} projects with public upcoming items",
+            f"- {sum(len(item.community_discussions) for item in news)} Hacker News discussions",
             "",
             "- [Project news](./news/index.md)",
             "",

@@ -30,7 +30,7 @@ class ProjectNewsEntry:
 
 
 class NewsQueries:
-    """Deep read interface for factual release and public-roadmap news."""
+    """Read maintainer evidence and separately labeled community discussions."""
 
     def __init__(self, catalog: Catalog) -> None:
         self._catalog = catalog
@@ -65,12 +65,13 @@ class NewsQueries:
         entries.sort(key=lambda entry: entry.repository)
         entries.sort(
             key=lambda entry: (
+                bool(entry.news.community_discussions),
                 bool(entry.news.upcoming),
                 (entry.news.latest_release.published_at if entry.news.latest_release else ""),
             ),
             reverse=True,
         )
-        return entries[: min(max(limit, 1), 100)]
+        return entries[: min(max(limit, 1), 1000)]
 
     @staticmethod
     def _search_text(entry: ProjectNewsEntry) -> str:
@@ -80,4 +81,6 @@ class NewsQueries:
             parts.extend((release.title, release.tag, *release.highlights))
         for item in entry.news.upcoming:
             parts.extend((item.title, item.description or "", item.tag or ""))
+        for discussion in entry.news.community_discussions:
+            parts.append(discussion.title)
         return " ".join(parts).casefold()

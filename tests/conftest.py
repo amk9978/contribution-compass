@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from contribution_compass.domain.models import (
+    CommunityDiscussion,
     CrawlRun,
     ObservationEvent,
     ProjectContext,
@@ -91,6 +92,21 @@ def make_dataset(signal: Signal | None = None) -> RepositoryDataset:
                     progress=40,
                     open_issues=6,
                     closed_issues=4,
+                ),
+            ),
+            community_discussions=(
+                CommunityDiscussion(
+                    id="hackernews:123",
+                    source="hackernews",
+                    repository="acme/widget",
+                    title="Widget lifecycle design discussion",
+                    url="https://example.com/widget-lifecycle",
+                    discussion_url="https://news.ycombinator.com/item?id=123",
+                    published_at="2026-08-13T08:00:00Z",
+                    score=85,
+                    comments=31,
+                    author="hacker",
+                    matched_by=("keyword:Widget",),
                 ),
             ),
         ),

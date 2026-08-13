@@ -3,8 +3,11 @@ from __future__ import annotations
 import html
 import os
 import shutil
+from collections.abc import Callable
 from dataclasses import dataclass
+from math import ceil
 from pathlib import Path
+from typing import TypeVar
 from urllib.parse import urlparse
 from xml.sax.saxutils import escape as xml_escape
 
@@ -14,6 +17,8 @@ from contribution_compass.domain.importance import importance_score, rank_update
 from contribution_compass.domain.models import ContributionLead, RepositoryDataset, Signal
 from contribution_compass.ports import Catalog
 from contribution_compass.views.machine import MachineView, SiteContext, signal_anchor
+
+T = TypeVar("T")
 
 
 def h(value: object) -> str:
@@ -37,6 +42,10 @@ def short_date(value: str | None) -> str:
     return value[:10] if value else "date unavailable"
 
 
+def page_count(total: int, page_size: int) -> int:
+    return max(1, ceil(total / page_size))
+
+
 @dataclass(frozen=True, slots=True)
 class SiteBuild:
     output_root: str
@@ -53,6 +62,55 @@ class HtmlView:
         self.queries = CatalogQueries(catalog)
         self.news_queries = NewsQueries(catalog)
         self.context = context
+        self._signal_page_cache: dict[tuple[str, str], dict[str, int]] = {}
+
+    @staticmethod
+    def _window(values: list[T], page: int, page_size: int) -> list[T]:
+        start = (page - 1) * page_size
+        return values[start : start + page_size]
+
+    def _pagination(
+        self,
+        current: int,
+        total: int,
+        url_for_page: Callable[[int], str],
+        *,
+        item_total: int,
+    ) -> str:
+        if total <= 1:
+            return ""
+        url = url_for_page
+        previous = (
+            f'<a rel="prev" href="{h(url(current - 1))}">← Previous</a>'
+            if current > 1
+            else '<span class="disabled">← Previous</span>'
+        )
+        following = (
+            f'<a rel="next" href="{h(url(current + 1))}">Next →</a>'
+            if current < total
+            else '<span class="disabled">Next →</span>'
+        )
+        return f'<nav class="pagination" aria-label="Pagination">{previous}<span>Page {current} of {total} · {item_total} items</span>{following}</nav>'
+
+    def _section_page_url(self, section: str, page: int) -> str:
+        if page == 1:
+            return f"{self.context.site_url}/{section}/"
+        return f"{self.context.site_url}/{section}/page/{page}/"
+
+    def _repository_page_url(self, dataset: RepositoryDataset, page: int) -> str:
+        base = f"{self.context.site_url}/updates/{dataset.date}/{dataset.group_id}"
+        if page == 1:
+            return f"{base}/{dataset.repository_id}.html"
+        return f"{base}/{dataset.repository_id}/page/{page}/"
+
+    def _signal_page(self, dataset: RepositoryDataset, signal: Signal) -> int:
+        key = (dataset.date, dataset.repository)
+        if key not in self._signal_page_cache:
+            ranked = rank_updates(dataset.signals, len(dataset.signals))
+            self._signal_page_cache[key] = {
+                item.id: position // 50 + 1 for position, item in enumerate(ranked)
+            }
+        return self._signal_page_cache[key].get(signal.id, 1)
 
     def page(self, title: str, description: str, content: str, *, api_url: str) -> str:
         return f"""<!doctype html>
@@ -76,7 +134,7 @@ class HtmlView:
     <nav class="topnav"><a href="{self.context.site_url}/contribute/">Contribute</a><a href="{self.context.site_url}/news/">News</a><a href="{self.context.site_url}/api/v1/index.json">Data</a><a class="secondary-nav" href="{self.context.site_url}/feed.xml">RSS</a><a class="secondary-nav" href="{self.context.repository_url}">GitHub</a><button class="theme-toggle" type="button" aria-label="Toggle color theme">◐</button></nav>
   </header>
   {content}
-  <footer class="footer"><span>Primary GitHub evidence · No generated analysis</span><span><a href="{self.context.site_url}/llms.txt">LLM guide</a> · <a href="{self.context.repository_url}/blob/main/docs/MCP.md">MCP</a></span></footer>
+  <footer class="footer"><span>Direct GitHub and Hacker News evidence · No generated analysis</span><span><a href="{self.context.site_url}/llms.txt">LLM guide</a> · <a href="{self.context.repository_url}/blob/main/docs/MCP.md">MCP</a></span></footer>
   <script src="{self.context.site_url}/assets/app.js" defer></script>
 </body>
 </html>"""
@@ -102,12 +160,12 @@ class HtmlView:
         labels = "".join(
             f'<span class="label">{h(label)}</span>' for label in lead.signal.labels[:5]
         )
-        collected_url = (
-            f"{self.context.site_url}/updates/{dataset.date}/{dataset.group_id}/"
-            f"{dataset.repository_id}.html#{signal_anchor(lead.signal)}"
-            if dataset
-            else "#"
-        )
+        collected_url = "#"
+        if dataset:
+            signal_page = self._signal_page(dataset, lead.signal)
+            collected_url = (
+                f"{self._repository_page_url(dataset, signal_page)}#{signal_anchor(lead.signal)}"
+            )
         search = " ".join(
             (lead.signal.title, lead.signal.project or "", *lead.signal.labels)
         ).casefold()
@@ -145,10 +203,19 @@ class HtmlView:
             f"""<li><span class="news-kind {item.kind}">{h(item.kind)}</span><div><a href="{safe_url(item.url)}">{h(item.title)}</a><small>{h(f"Due {short_date(item.due_at)}" if item.due_at else f"Published {short_date(item.published_at)}" if item.published_at else "Publicly indicated")}</small>{f'<span class="progress-label">{item.progress}% complete · {item.open_issues} open</span>' if item.progress is not None else ""}</div></li>"""
             for item in entry.news.upcoming[:5]
         )
+        discussions = "".join(
+            f'<li><div><a href="{safe_url(item.url)}">{h(item.title)}</a><small>{item.score} points · {item.comments} comments · {h(short_date(item.published_at))}</small></div><a class="hn-link" href="{safe_url(item.discussion_url)}">HN discussion ↗</a></li>'
+            for item in entry.news.community_discussions[:4]
+        )
+        community_html = (
+            f'<div class="community-news"><h3>Hacker News discussions</h3><ul>{discussions}</ul><p class="news-caveat">Community discussion, matched to this configured project; not maintainer evidence.</p></div>'
+            if discussions
+            else ""
+        )
         project_url = (
             f"{self.context.site_url}/updates/{entry.date}/{entry.group_id}/{entry.project_id}.html"
         )
-        return f"""<article class="news-card"><header><div><span class="repo-slug">{h(entry.repository)}</span><h2><a href="{project_url}">{h(entry.project_name)}</a></h2></div><span>{h(entry.group_name)}</span></header>{release_html}<div class="upcoming-news"><h3>Publicly indicated next</h3><ul>{upcoming or '<li class="unavailable">No public prerelease or open milestone found.</li>'}</ul><p class="news-caveat">Prereleases and milestones indicate public plans; they are not delivery commitments.</p></div></article>"""
+        return f"""<article class="news-card"><header><div><span class="repo-slug">{h(entry.repository)}</span><h2><a href="{project_url}">{h(entry.project_name)}</a></h2></div><span>{h(entry.group_name)}</span></header>{release_html}<div class="upcoming-news"><h3>Publicly indicated next</h3><ul>{upcoming or '<li class="unavailable">No public prerelease or open milestone found.</li>'}</ul><p class="news-caveat">Prereleases and milestones indicate public plans; they are not delivery commitments.</p></div>{community_html}</article>"""
 
     def home(self) -> str:
         dates = self.catalog.dates()
@@ -163,7 +230,7 @@ class HtmlView:
         date = dates[0]
         datasets = self.catalog.repositories(date)
         signals = [signal for dataset in datasets for signal in dataset.signals]
-        leads = self.queries.contribution_leads(limit=100)
+        leads = self.queries.contribution_leads(limit=1000)
         news = self.news_queries.list(limit=6)
         invited = [lead for lead in leads if lead.tier == "maintainer-invited"]
         by_repo = {dataset.repository: dataset for dataset in datasets}
@@ -185,7 +252,7 @@ class HtmlView:
 <section class="metrics shell">{self._metric("Signals", metrics["signals"], "new or changed")}{self._metric("Contribution leads", len(leads), "evidence-qualified")}{self._metric("Maintainer invited", len(invited), "explicitly labeled")}{self._metric("Projects", metrics["repositories"], "with activity")}{self._metric("Trail events", metrics["events"], "append-only")}</section>
 <section class="section shell"><div class="section-heading"><div><span class="eyebrow">PROJECT MAP</span><h2>Curated communities</h2></div><span>{len(groups)} groups</span></div><div class="group-grid">{group_cards}</div></section>
 <section class="section shell"><div class="section-heading"><div><span class="eyebrow">CONTRIBUTION COMPASS</span><h2>Evidence-backed places to help</h2></div><a href="{self.context.site_url}/contribute/">View all →</a></div><p class="section-intro">Explicit invitations are separated from lower-confidence triage leads. Check the live issue before starting.</p><div class="contribution-grid">{lead_cards or '<div class="no-leads">The next collection will populate leads after state and assignee metadata is available.</div>'}</div></section>
-<section class="section shell"><div class="section-heading"><div><span class="eyebrow">PROJECT NEWS</span><h2>What shipped—and what may be next</h2></div><a href="{self.context.site_url}/news/">All project news →</a></div><p class="section-intro">Latest stable releases plus public prereleases and milestones, directly from maintainer GitHub evidence.</p><div class="news-grid">{news_cards or '<div class="no-leads">Project news will appear after the next collection.</div>'}</div></section>
+<section class="section shell"><div class="section-heading"><div><span class="eyebrow">PROJECT NEWS</span><h2>What shipped—and what may be next</h2></div><a href="{self.context.site_url}/news/">All project news →</a></div><p class="section-intro">Maintainer release and roadmap evidence, plus relevant Hacker News discussions kept clearly separate.</p><div class="news-grid">{news_cards or '<div class="no-leads">Project news will appear after the next collection.</div>'}</div></section>
 <section class="section shell archive"><div class="section-heading"><div><span class="eyebrow">IMPORTANT UPDATES</span><h2>What deserves attention</h2></div><a href="{self.context.site_url}/feed.json">JSON Feed →</a></div><div class="signal-list compact-list">{updates}</div></section>
 </main>"""
         return self.page(
@@ -195,41 +262,61 @@ class HtmlView:
             api_url=f"{self.context.site_url}/api/v1/index.json",
         )
 
-    def contributions(self) -> str:
+    def contributions(self, page: int = 1, page_size: int = 20) -> str:
         date = next(iter(self.catalog.dates()), "none")
         datasets = self.catalog.repositories(None)
         by_repo = {dataset.repository: dataset for dataset in datasets}
-        leads = self.queries.contribution_leads(limit=100)
+        leads = self.queries.contribution_leads(limit=1000)
+        pages = page_count(len(leads), page_size)
+        page = min(max(page, 1), pages)
+        visible = self._window(list(leads), page, page_size)
         invited = sum(lead.tier == "maintainer-invited" for lead in leads)
         cards = "".join(
-            self._lead_card(lead, by_repo.get(lead.signal.project or "")) for lead in leads
+            self._lead_card(lead, by_repo.get(lead.signal.project or "")) for lead in visible
+        )
+        pagination = self._pagination(
+            page,
+            pages,
+            lambda value: self._section_page_url("contribute", value),
+            item_total=len(leads),
         )
         content = f"""<main class="shell detail-page"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>Contribute</span></nav>
 <section class="detail-hero"><span class="eyebrow">CONTRIBUTION COMPASS · {date}</span><h1>Find a concrete place<br>to contribute.</h1><p>Discovery leads—not generated project ideas—with the evidence and caveat behind every result.</p></section>
 <section class="lead-method"><div><strong>{invited}</strong><span>Maintainer-invited</span><p>Explicit contribution labels.</p></div><div><strong>{len(leads) - invited}</strong><span>Triage leads</span><p>Worth asking about; not pre-approved.</p></div><div><strong>Live check</strong><span>Required</span><p>Confirm state, assignment, and scope.</p></div></section>
-<section class="filter-bar contribution-filter"><input id="contribution-search" type="search" placeholder="Search project, issue, group, or label…"><div class="filter-buttons"><button class="active" data-contribution-filter="all">All</button><button data-contribution-filter="maintainer-invited">Maintainer invited</button><button data-contribution-filter="triage-lead">Triage leads</button></div><span id="contribution-count">{len(leads)} shown</span></section>
+<section class="filter-bar contribution-filter"><input id="contribution-search" type="search" placeholder="Search this page…"><div class="filter-buttons"><button class="active" data-contribution-filter="all">All</button><button data-contribution-filter="maintainer-invited">Maintainer invited</button><button data-contribution-filter="triage-lead">Triage leads</button></div><span id="contribution-count">{len(visible)} shown</span></section>
 <section class="contribution-grid">{cards or '<div class="no-leads">No evidence-qualified leads are available in this snapshot.</div>'}</section>
+{pagination}
 </main>"""
         return self.page(
-            "Contribution opportunities",
+            f"Contribution opportunities — page {page}",
             "Evidence-backed open-source contribution leads",
             content,
             api_url=f"{self.context.site_url}/api/v1/opportunities.json",
         )
 
-    def news(self) -> str:
+    def news(self, page: int = 1, page_size: int = 10) -> str:
         date = next(iter(self.catalog.dates()), "none")
-        entries = self.news_queries.list(limit=100)
+        entries = self.news_queries.list(limit=1000)
+        pages = page_count(len(entries), page_size)
+        page = min(max(page, 1), pages)
+        visible = self._window(list(entries), page, page_size)
         with_upcoming = sum(bool(entry.news.upcoming) for entry in entries)
         with_release = sum(entry.news.latest_release is not None for entry in entries)
-        cards = "".join(self._news_card(entry) for entry in entries)
+        discussions = sum(len(entry.news.community_discussions) for entry in entries)
+        cards = "".join(self._news_card(entry) for entry in visible)
+        pagination = self._pagination(
+            page,
+            pages,
+            lambda value: self._section_page_url("news", value),
+            item_total=len(entries),
+        )
         content = f"""<main class="shell detail-page"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>News</span></nav>
-<section class="detail-hero"><span class="eyebrow">PROJECT NEWS · {date}</span><h1>See what shipped.<br>Understand what may be next.</h1><p>Release-note developments and public roadmap evidence that can help contributors choose timely, relevant work.</p></section>
-<section class="lead-method"><div><strong>{with_release}</strong><span>Latest releases</span><p>Stable release notes from GitHub.</p></div><div><strong>{with_upcoming}</strong><span>Public roadmaps</span><p>Prereleases or open milestones.</p></div><div><strong>Evidence</strong><span>Required</span><p>Every item links to its source.</p></div></section>
-<section class="news-explainer"><strong>How to read this</strong><p>Highlights are extracted headings and bullets, not generated summaries. “Upcoming” means publicly indicated; it does not promise scope or timing. <a href="{self.context.site_url}/news/feed.xml">Subscribe to project-news RSS →</a></p></section>
-<section class="news-grid news-grid-full">{cards or '<div class="no-leads">No project news has been collected yet.</div>'}</section></main>"""
+<section class="detail-hero"><span class="eyebrow">PROJECT NEWS · {date}</span><h1>See what shipped.<br>Follow where people are talking.</h1><p>Release developments, public roadmap evidence, and relevant Hacker News discussions for configured projects.</p></section>
+<section class="lead-method"><div><strong>{with_release}</strong><span>Latest releases</span><p>Stable release notes from GitHub.</p></div><div><strong>{with_upcoming}</strong><span>Public roadmaps</span><p>Prereleases or open milestones.</p></div><div><strong>{discussions}</strong><span>HN discussions</span><p>Current community conversations.</p></div></section>
+<section class="news-explainer"><strong>How to read this</strong><p>GitHub releases and roadmaps are maintainer evidence. Hacker News is community discussion and is labeled separately. No generated summaries are used. <a href="{self.context.site_url}/news/feed.xml">Subscribe to project-news RSS →</a></p></section>
+<section class="news-grid news-grid-full">{cards or '<div class="no-leads">No project news has been collected yet.</div>'}</section>{pagination}</main>"""
         return self.page(
-            "Project news",
+            f"Project news — page {page}",
             "Latest releases and publicly indicated upcoming work across monitored projects",
             content,
             api_url=f"{self.context.site_url}/api/v1/news.json",
@@ -265,15 +352,23 @@ class HtmlView:
             api_url=f"{self.context.site_url}/api/v1/dates/{date}/groups/{group_id}/index.json",
         )
 
-    def repository(self, dataset: RepositoryDataset) -> str:
+    def repository(self, dataset: RepositoryDataset, page: int = 1, page_size: int = 50) -> str:
         context = dataset.context
         context_html = (
             f'<section class="project-context"><p>{h(context.description or "No repository description.")}</p><div class="signal-meta"><span>{compact(context.stars)} stars</span><span>{compact(context.forks)} forks</span><span>{h(context.language or "language unknown")}</span><span>{h(context.license or "license unknown")}</span>{"".join(f'<span class="label">{h(topic)}</span>' for topic in context.topics[:8])}</div></section>'
             if context
             else '<section class="project-context"><p>Project context will be collected on the next run.</p></section>'
         )
-        signals = "".join(
-            self._signal_card(signal) for signal in rank_updates(dataset.signals, 1000)
+        ranked = rank_updates(dataset.signals, len(dataset.signals))
+        pages = page_count(len(ranked), page_size)
+        page = min(max(page, 1), pages)
+        visible = self._window(list(ranked), page, page_size)
+        signals = "".join(self._signal_card(signal) for signal in visible)
+        pagination = self._pagination(
+            page,
+            pages,
+            lambda value: self._repository_page_url(dataset, value),
+            item_total=len(ranked),
         )
         trail = "".join(
             f"<li><time>{h(event.observed_at)}</time><strong>{h(event.event)}</strong><span>{h(', '.join(event.changed_fields) or 'initial snapshot')}</span></li>"
@@ -293,13 +388,13 @@ class HtmlView:
             else None
         )
         news_html = (
-            f'<section class="project-news"><div class="section-heading"><div><span class="eyebrow">PROJECT NEWS</span><h2>Latest release and public roadmap</h2></div><a href="{self.context.site_url}/news/">All news →</a></div>{self._news_card(news_entry)}</section>'
+            f'<section class="project-news"><div class="section-heading"><div><span class="eyebrow">PROJECT NEWS</span><h2>Release, roadmap, and discussion</h2></div><a href="{self.context.site_url}/news/">All news →</a></div>{self._news_card(news_entry)}</section>'
             if news_entry
             else '<section class="project-context"><p>Project news will be collected on the next run.</p></section>'
         )
-        content = f"""<main class="shell detail-page"><section class="repo-hero"><div><span class="eyebrow">{h(dataset.repository)}</span><h1>{h(dataset.repository_name)}</h1><p>{len(dataset.signals)} signals · {len(dataset.events)} observation events</p></div><a class="primary-button" href="https://github.com/{h(dataset.repository)}">Open repository ↗</a></section>{context_html}{news_html}<section class="timeline"><h2>Observation trail</h2><ol>{trail or "<li>Trail events begin with the next collection.</li>"}</ol></section><section class="filter-bar"><input id="signal-search" type="search" placeholder="Search signals…"><div class="filter-buttons"><button class="active" data-filter="all">All</button><button data-filter="issue">Issues</button><button data-filter="pull_request">PRs</button><button data-filter="release">Releases</button></div><span id="filter-count">{len(dataset.signals)} shown</span></section><section class="signal-list">{signals or '<div class="no-signals">No changed signals.</div>'}</section></main>"""
+        content = f"""<main class="shell detail-page"><section class="repo-hero"><div><span class="eyebrow">{h(dataset.repository)}</span><h1>{h(dataset.repository_name)}</h1><p>{len(dataset.signals)} signals · {len(dataset.events)} observation events</p></div><a class="primary-button" href="https://github.com/{h(dataset.repository)}">Open repository ↗</a></section>{context_html}{news_html}<section class="timeline"><h2>Observation trail</h2><ol>{trail or "<li>Trail events begin with the next collection.</li>"}</ol></section><section class="filter-bar"><input id="signal-search" type="search" placeholder="Search this page…"><div class="filter-buttons"><button class="active" data-filter="all">All</button><button data-filter="issue">Issues</button><button data-filter="pull_request">PRs</button><button data-filter="release">Releases</button></div><span id="filter-count">{len(visible)} shown</span></section><section class="signal-list">{signals or '<div class="no-signals">No changed signals.</div>'}</section>{pagination}</main>"""
         return self.page(
-            dataset.repository_name,
+            f"{dataset.repository_name} — page {page}",
             f"Context and observation trail for {dataset.repository}",
             content,
             api_url=(
@@ -357,6 +452,16 @@ class StaticSitePublisher:
         ]
         pages = 3
         machine_files = 7
+        contribution_pages = page_count(len(html_view.queries.contribution_leads(limit=1000)), 20)
+        for page in range(2, contribution_pages + 1):
+            self._write(f"contribute/page/{page}/index.html", html_view.contributions(page))
+            page_urls.append(f"{self.context.site_url}/contribute/page/{page}/")
+            pages += 1
+        news_pages = page_count(len(html_view.news_queries.list(limit=1000)), 10)
+        for page in range(2, news_pages + 1):
+            self._write(f"news/page/{page}/index.html", html_view.news(page))
+            page_urls.append(f"{self.context.site_url}/news/page/{page}/")
+            pages += 1
         for date in self.catalog.dates():
             datasets = self.catalog.repositories(date)
             self._write(f"updates/{date}/index.html", html_view.date(date, datasets))
@@ -394,6 +499,18 @@ class StaticSitePublisher:
                     )
                     pages += 1
                     machine_files += 1
+                    repository_pages = page_count(len(dataset.signals), 50)
+                    for page in range(2, repository_pages + 1):
+                        self._write(
+                            f"updates/{date}/{group_id}/{dataset.repository_id}/page/"
+                            f"{page}/index.html",
+                            html_view.repository(dataset, page),
+                        )
+                        page_urls.append(
+                            f"{self.context.site_url}/updates/{date}/{group_id}/"
+                            f"{dataset.repository_id}/page/{page}/"
+                        )
+                        pages += 1
         self._write(
             "sitemap.xml",
             '<?xml version="1.0" encoding="UTF-8"?>\n'

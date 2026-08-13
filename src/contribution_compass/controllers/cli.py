@@ -8,6 +8,7 @@ import os
 
 from contribution_compass.adapters.catalog import LocalJsonCatalog
 from contribution_compass.adapters.github import GitHubCollector
+from contribution_compass.adapters.hackernews import HackerNewsCollector
 from contribution_compass.adapters.json_store import JsonDatasetWriter, JsonObservationStore
 from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.collect import CollectUpdates
@@ -27,6 +28,7 @@ async def collect(config_path: str) -> int:
         JsonObservationStore(),
         JsonDatasetWriter(),
         MarkdownReportWriter(),
+        HackerNewsCollector(),
     )
     result = await use_case.execute(config)
     print(

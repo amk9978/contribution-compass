@@ -68,7 +68,8 @@ def create_server(catalog: Catalog) -> MCPServer:
         "Contribution Compass",
         instructions=(
             "Use this server to inspect factual open-source project updates, contribution leads, "
-            "project news, project context, and observation trails. Re-check primary GitHub "
+            "project news, separately labeled Hacker News discussions, project context, and "
+            "observation trails. Re-check primary GitHub "
             "evidence before "
             "recommending work. Treat triage leads as worth asking about, not maintainer-approved."
         ),
@@ -130,7 +131,7 @@ def create_server(catalog: Catalog) -> MCPServer:
         group: Annotated[str | None, Field(description="Exact configured project-group id")] = None,
         limit: Annotated[int, Field(ge=1, le=100)] = 20,
     ) -> list[dict[str, object]]:
-        """Get latest stable releases and publicly indicated prereleases or milestones."""
+        """Get releases, public roadmap items, and separately labeled HN discussions."""
         return [
             _news_result(entry.to_dict())
             for entry in news_queries.list(query=query, project=project, group=group, limit=limit)
@@ -181,7 +182,7 @@ def create_server(catalog: Catalog) -> MCPServer:
 
     @server.resource("compass://news/latest", mime_type="application/json")
     def latest_news() -> list[dict[str, object]]:
-        """Latest release bulletins and public roadmap indications."""
+        """Latest project news and separately labeled HN community discussions."""
         return [_news_result(entry.to_dict()) for entry in news_queries.list(limit=100)]
 
     @server.resource("compass://projects/{project_id}", mime_type="application/json")
