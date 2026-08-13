@@ -15,9 +15,10 @@ Items. Extract a small set of headings and bullets from release notes determinis
 while retaining the original notes and evidence URL.
 
 Also collect current Hacker News stories matched to configured projects by explicit per-project
-keywords or exact repository references. Store the article URL, HN discussion URL, score, comment
-count, timestamp, and match reason. Present these as Community Discussions in a separate labeled
-section; never treat them as maintainer roadmap or release evidence. Do not crawl the comment tree.
+title keywords or exact repository references. Store the article URL, HN discussion URL, score,
+comment count, timestamp, and match reason. Present these as Community Discussions in a separate
+labeled section; never treat them as maintainer roadmap or release evidence. Do not crawl the
+comment tree.
 
 The GitHub and Hacker News adapters own source normalization. The domain news module owns evidence
 selection and highlight extraction. HTML, JSON, Markdown, CLI, and MCP views consume the same model.

@@ -38,10 +38,10 @@ time.
 
 ### Community Discussion
 
-A current Hacker News story matched to a configured Project Sensor by explicit keywords or an exact
-repository reference. It retains both article and discussion URLs, score, comment count, author, and
-match reason. It is community evidence, not maintainer evidence or endorsement. Avoid “project
-announcement” unless the source itself establishes that fact.
+A current Hacker News story matched to a configured Project Sensor by explicit title keywords or an
+exact repository reference. It retains both article and discussion URLs, score, comment count,
+author, and match reason. It is community evidence, not maintainer evidence or endorsement. Avoid
+“project announcement” unless the source itself establishes that fact.
 
 ### Release Bulletin
 
