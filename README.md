@@ -1,51 +1,55 @@
-# Engineering Radar
+# Contribution Compass
 
-Engineering Radar is a scheduled, evidence-first contribution radar for a curated set of GitHub
-repositories. It is designed primarily for machine readers and LLM-backed developer tools, while
-remaining useful to humans looking for a concrete place to contribute.
+Contribution Compass keeps developers current on important activity in curated open-source projects
+and finds evidence-backed sweet spots where a contribution may be useful.
 
-It performs no LLM analysis, clustering, synthesis, or speculative opportunity generation. Its job is to gather
-recent issues, pull requests, and releases, detect new or changed observations, and commit durable
-data that another project can analyze later. A deterministic contribution classifier surfaces
-maintainer-invited and lower-confidence triage leads without pretending to understand maintainer
-intent.
+It is a data gatherer first. GitHub evidence, repository context, and observation history stay
+separate from interpretation. No OpenAI, Anthropic, or other model credential is required.
 
 ```text
-config.yml
-    ↓
-GitHub REST API
-    ↓
-normalized, deduplicated signals
-    ↓
-data/YYYY-MM-DD/<group>/<repository>.json
-reports/YYYY-MM-DD/<group>.md
-    ↓
-static date/group/repository pages + RSS
-    ↓
-versioned JSON API + contribution leads + LLM guide
+config.yml Project Sensors
+        ↓
+GitHub issues, pull requests, releases, and project metadata
+        ↓
+normalized Signals + append-only Observation Events
+        ↓
+folder-separated JSON catalog
+        ↓
+human pages · JSON/feeds · CLI · MCP
+        ↓
+optional evidence-citing Inference Extensions
 ```
 
-## What it collects
+## Why it exists
 
-For each repository configured in `config.yml`:
+A list of repository activity is not enough. Contribution Compass helps answer:
 
-- issues;
-- pull requests;
-- releases;
-- titles and bodies;
-- timestamps;
-- comments and reactions;
-- labels and authors;
-- open/closed state and current assignees;
-- direct URLs to the original GitHub evidence.
+- What important projects changed recently?
+- Which issues explicitly invite community help?
+- Which unassigned issues may be worth discussing with maintainers?
+- What context surrounds the project and issue?
+- When was a Signal discovered, and what changed afterward?
 
-GitHub's Issues API includes pull requests, so the collector checks the `pull_request` marker and
-classifies each observation exactly once. High-volume repositories can opt into bounded pagination.
-A failure in one repository is logged and does not stop the remaining repositories.
+Contribution Leads are conservative and transparent:
 
-## Outputs
+- **Maintainer-Invited:** an open, unassigned issue labeled `good first issue`, `help wanted`, or an
+  equivalent explicit invitation.
+- **Triage Lead:** unassigned documentation work or an engaged bug/enhancement without explicit
+  maintainer invitation.
 
-The primary interface for downstream analysis is separated by date, group, and repository:
+Closed, assigned, stale, duplicate, invalid, blocked, question, needs-info, and needs-reproduction
+issues are excluded. A lead is not a guarantee of difficulty or acceptance; check the live issue and
+talk to maintainers before substantial work.
+
+## Evidence and history
+
+Each repository dataset contains:
+
+- Project Context: description, topics, language, license, default branch, stars, forks, and activity;
+- normalized issue, pull-request, and release Signals;
+- direct URLs to original GitHub evidence;
+- append-only Observation Events containing discovered/changed snapshots and changed fields; and
+- collection-run metadata.
 
 ```text
 data/
@@ -54,92 +58,48 @@ data/
     distributed-systems/
       foundationdb.json
       tigerbeetle.json
-    observability/
-      prometheus.json
 ```
 
-Each repository JSON file contains:
+Data remains separated by date, group, and repository. Empty configuration groups stay empty; the
+loader never inserts hidden defaults.
 
-- collection-run metadata;
-- normalized signals marked as `new` or `updated`;
-- stable IDs and original evidence URLs;
-- that repository's same-day updates, retained across repeated workflow runs.
+## Human and machine access
 
-The manifest contains only run counts and paths; it does not merge repository updates. Human-readable
-logs follow the same date separation, with `reports/YYYY-MM-DD/summary.md` linking to one Markdown
-file per configured group. They contain no generated interpretation.
+- Website: <https://amk9978.github.io/contribution-compass/>
+- Contribution view: <https://amk9978.github.io/contribution-compass/contribute/>
+- Machine catalog: <https://amk9978.github.io/contribution-compass/api/v1/index.json>
+- Contribution leads: <https://amk9978.github.io/contribution-compass/api/v1/opportunities.json>
+- JSON Feed: <https://amk9978.github.io/contribution-compass/feed.json>
+- RSS: <https://amk9978.github.io/contribution-compass/feed.xml>
+- LLM guide: <https://amk9978.github.io/contribution-compass/llms.txt>
+- MCP setup: [docs/MCP.md](docs/MCP.md)
 
-`.state/github.json` contains fingerprints used to avoid emitting unchanged observations again.
-The scheduled workflow commits all three locations.
+LLM-backed tools should use MCP or the versioned JSON catalog instead of scraping visual HTML.
 
-## Static site and RSS
+## Architecture
 
-GitHub Pages publishes a visual explorer at
-[amk9978.github.io/engineering-radar](https://amk9978.github.io/engineering-radar/). It is generated
-entirely from the checked-in `data/` folders and provides:
-
-- an activity overview for the newest collection;
-- an evidence-backed contribution radar;
-- an archive page for each date;
-- a separate page for every group;
-- a searchable, filterable page for every repository;
-- direct links from every displayed item to its original GitHub evidence;
-- light and dark themes;
-- an [RSS 2.0 feed](https://amk9978.github.io/engineering-radar/feed.xml) containing the 100 most
-  recent signals;
-- a [JSON Feed](https://amk9978.github.io/engineering-radar/feed.json), versioned
-  [machine API](https://amk9978.github.io/engineering-radar/api/v1/index.json), and
-  [`llms.txt`](https://amk9978.github.io/engineering-radar/llms.txt).
-
-This display layer does not perform semantic analysis or make cross-project claims. Its contribution
-ranking is a transparent rules-based index over collected evidence. The generated `.site/` directory
-is a build artifact and is not committed. Build it locally with:
-
-```bash
-pnpm site:build
-```
-
-For local browsing, serve `.site/` with any static file server. To override links for a custom Pages
-domain, set `SITE_URL` before building.
-
-## Contribution radar
-
-The contribution view does not ask a model to brainstorm work. It deterministically evaluates the
-latest normalized issues:
-
-- **Maintainer-invited:** open, unassigned issues explicitly labeled `good first issue`,
-  `help wanted`, `up for grabs`, or an equivalent invitation.
-- **Triage lead:** open, unassigned documentation work or an engaged bug/enhancement without an
-  explicit invitation.
-- **Excluded:** closed, assigned, stale, duplicate, invalid, blocked, question, needs-info, and
-  needs-reproduction issues.
-
-Every lead contains its reasons, caveat, current collected state, and original evidence URL. A lead
-is never a guarantee of difficulty, availability, suitability, or maintainer acceptance. Developers
-and agents should check the live issue and communicate with maintainers before doing substantial
-work.
-
-## Machine and LLM access
-
-Bots should start at `api/v1/index.json` or `llms.txt` rather than scraping visual HTML. The API is
-folder-separated like the underlying storage:
+The Python core uses explicit module seams while avoiding pass-through abstraction:
 
 ```text
-api/v1/index.json
-api/v1/opportunities.json
-api/v1/schema.json
-api/v1/dates/<date>/index.json
-api/v1/dates/<date>/groups/<group>/index.json
-api/v1/dates/<date>/groups/<group>/repositories/<repository>.json
+src/contribution_compass/
+  domain/          models, invariants, importance, contribution rules
+  application/     collection and catalog use cases
+  ports.py         small interfaces implemented by real adapters
+  adapters/        GitHub, local JSON, hosted JSON, state, persistence
+  controllers/     CLI and MCP transports
+  views/           Markdown, HTML, JSON, RSS, and LLM navigation
+web/assets/        progressive browser CSS/JavaScript only
 ```
 
-`api/v1/opportunities.json` documents the ranking method and distinguishes explicit maintainer
-invitations from weaker triage leads. `feed.json` follows JSON Feed 1.1. `llms-full.txt` provides a
-compact Markdown snapshot with direct links; it is navigation context, not synthesized analysis.
+Domain modules know nothing about GitHub HTTP, files, HTML, or MCP. Controllers configure adapters
+and invoke application modules. Local and hosted catalogs implement the same read interface. Views
+render application results but do not classify opportunities.
 
-## Configuration
+See [CONTEXT.md](CONTEXT.md) for domain language and [docs/adr](docs/adr) for architectural decisions.
 
-Repository groups are arbitrary and data-driven:
+## Configure a fork
+
+Edit `config.yml` with arbitrary project groups:
 
 ```yaml
 lookback_hours: 24
@@ -154,93 +114,69 @@ repo_groups:
         paginated: true
 ```
 
-Each repository needs a globally unique `id`, a GitHub `owner/repository` slug, and a display
-`name`. An empty `repos: []` stays empty; no defaults or hidden repositories are restored. Set
-`RADAR_CONFIG` to use a different configuration file.
+Each repository ID must be globally unique. `repos: []` means empty.
 
-The checked-in configuration contains the requested distributed systems, platform, observability,
-data infrastructure, AI infrastructure, developer infrastructure, and small coding-agent
-infrastructure groups.
+## Local use
 
-## Local setup
-
-Requirements: Node.js 22+ and pnpm.
+Requirements: Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-pnpm install
+uv sync --all-extras
 export GITHUB_TOKEN="$(gh auth token)"
-pnpm start
+uv run contribution-compass collect
+uv run contribution-compass site
 ```
 
-No OpenAI, Anthropic, or other model credentials are used.
-
-Run the verification suite with:
+Query without MCP:
 
 ```bash
-pnpm lint
-pnpm format:check
-pnpm typecheck
-pnpm test
-pnpm site:build
+uv run contribution-compass query opportunities --limit 10
+uv run contribution-compass query updates --query cancellation
+uv run contribution-compass query timeline 'github:owner/repo:issue:123'
 ```
 
-Tests use mocked API responses and do not depend on live GitHub calls.
+Verification:
+
+```bash
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy src
+uv run pytest
+uv run contribution-compass site
+```
+
+Tests use fixtures and mocks; they make no live GitHub requests.
 
 ## GitHub Actions
 
-The workflow in `.github/workflows/radar.yml` runs daily and supports `workflow_dispatch`. It uses
-GitHub Actions' built-in `GITHUB_TOKEN`, runs the collector, and commits `data/`, `reports/`, and
-`.state/` back to the current repository. The separate `.github/workflows/pages.yml` workflow builds
-and deploys the website and RSS after a successful radar run or a relevant push.
+The scheduled `Contribution Compass` workflow uses GitHub's built-in `GITHUB_TOKEN`, collects data,
+and commits `data/`, `reports/`, and `.state/`. The Pages workflow publishes all human and machine
+views after a successful collection. No extra secret is required.
 
-After pushing the project, enable Actions read/write permissions under:
+For a fork:
 
-```text
-Repository Settings → Actions → General → Workflow permissions → Read and write permissions
-```
+1. Enable **Read and write permissions** in Settings → Actions → General.
+2. Select **GitHub Actions** as the Pages source in Settings → Pages.
+3. Edit `config.yml`.
+4. Run the `Contribution Compass` workflow manually once.
 
-Enable GitHub Pages with **GitHub Actions** as its source under:
+URLs derive from the fork owner and repository name. Set the optional `SITE_URL` Actions variable
+only for a custom domain.
 
-```text
-Repository Settings → Pages → Build and deployment → Source → GitHub Actions
-```
+## Optional inference extensions
 
-Then trigger the first scan:
+The catalog and MCP interface are the intended seam for future LLM-backed inference. An extension
+should write to a separate namespace, record its method/model/run, distinguish inference from direct
+evidence, and cite immutable Signal or Observation Event IDs. It must not overwrite evidence.
 
-```bash
-gh workflow run radar.yml
-gh run watch
-```
+## Difference from agents-radar
 
-No additional Actions secrets or variables are required. The site URL is calculated from the fork's
-owner and repository name, so changing `config.yml` and enabling the two workflows is sufficient for
-a fork. If you use a custom domain, create an Actions variable named `SITE_URL` with its full origin.
-
-## Consuming the data elsewhere
-
-A separate analysis project should walk each date's `manifest.json` and read the referenced
-repository files, using `Signal.id` for identity and `Signal.url` for primary evidence. The collector
-deliberately does not make cross-project claims or transform observations into hypotheses.
-
-See [examples/example-daily.md](examples/example-daily.md) for the human-readable format and
-`src/signals/types.ts` for the data contract.
-
-## Architecture
-
-```text
-src/config       YAML loading and strict validation
-src/contributions deterministic, evidence-based contribution lead classification
-src/sources      GitHub REST collection and bounded pagination
-src/signals      normalized signal types and GitHub mapping
-src/storage      fingerprints and daily JSON persistence
-src/reports      deterministic Markdown update log
-src/site         static HTML, split JSON API, feeds, LLM indexes, and sitemap generation
-src/index.ts     collection orchestration
-src/__tests__    mocked unit tests
-```
+See [docs/COMPARISON.md](docs/COMPARISON.md) for the concise comparison. In short, agents-radar is a
+broad AI-news digest with LLM synthesis; Contribution Compass is a Python, domain-agnostic evidence
+catalog centered on contribution discovery, project context, and event trails.
 
 ## Attribution
 
-Bounded GitHub pagination and workflow patterns were adapted from the MIT-licensed
+Implementation patterns were selectively adapted from the MIT-licensed
 [agents-radar](https://github.com/duanyytop/agents-radar). See [NOTICE.md](NOTICE.md) and
 [LICENSE](LICENSE).

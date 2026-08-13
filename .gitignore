@@ -1,7 +1,13 @@
-node_modules/
 .env
-coverage/
+node_modules/
 *.log
 .idea/
 .state/*.tmp
 .site/
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
