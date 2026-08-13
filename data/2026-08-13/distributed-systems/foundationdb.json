@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "date": "2026-08-13",
   "group": {
     "id": "distributed-systems",
@@ -10,10 +10,37 @@
     "repo": "apple/foundationdb",
     "name": "FoundationDB"
   },
+  "context": {
+    "repository": "apple/foundationdb",
+    "url": "https://github.com/apple/foundationdb",
+    "description": "FoundationDB - the open source, distributed, transactional key-value store",
+    "homepage": "https://apple.github.io/foundationdb/",
+    "language": "C++",
+    "topics": [
+      "acid",
+      "distributed-database",
+      "foundationdb",
+      "key-value-store",
+      "transactional"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16602,
+    "forks": 1546,
+    "openIssues": 767,
+    "archived": false,
+    "collectedAt": "2026-08-13T13:48:03.414571+00:00"
+  },
   "runs": [
     {
       "collectedAt": "2026-08-13T12:26:38.318Z",
       "since": "2026-08-12T12:26:38.318Z",
+      "observedCount": 16,
+      "changedCount": 16
+    },
+    {
+      "collectedAt": "2026-08-13T13:48:00.446149Z",
+      "since": "2026-08-12T13:48:00.446149Z",
       "observedCount": 16,
       "changedCount": 16
     }
@@ -27,14 +54,18 @@
       "kind": "issue",
       "title": "Db",
       "url": "https://github.com/apple/foundationdb/issues/13852",
+      "createdAt": "2026-08-12T07:10:47Z",
+      "updatedAt": "2026-08-12T15:19:11Z",
       "timestamp": "2026-08-12T15:19:11Z",
       "metrics": {
-        "comments": 0,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 0
       },
       "labels": [],
       "author": "mo74m3ed",
-      "change": "new"
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:issue:13857",
@@ -44,14 +75,18 @@
       "kind": "issue",
       "title": "Lsduse",
       "url": "https://github.com/apple/foundationdb/issues/13857",
+      "createdAt": "2026-08-13T01:01:00Z",
+      "updatedAt": "2026-08-13T01:01:00Z",
       "timestamp": "2026-08-13T01:01:00Z",
       "metrics": {
-        "comments": 0,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 0
       },
       "labels": [],
       "author": "mo74m3ed",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:issue:13858",
@@ -59,17 +94,21 @@
       "group": "distributed-systems",
       "project": "apple/foundationdb",
       "kind": "issue",
-      "title": " RHEL Body ",
+      "title": "RHEL Body",
       "text": "### Result of foundationdb-pr-cluster-tests on Linux RHEL 9 * Commit ID: 2c9d0df92aad201171ba3d025e87e216aee7a66a * Duration 1:29:03 * Result: :white_check_mark: **SUCCEEDED** * Error: `N/A` * [Build Log](https://d1e0l78xbkh3xa.cloudfront.net/foundationdb/foundationdb-pr-cluster-tests/7590ad32-3ea2-4cd4-9352-d221b57f7f08.gz) terminal output (available for 30 days) * [Build Workspace](https://d1e0l78xbkh3xa.cloudfront.net/foundationdb-pr-cluster-tests/7590ad32-3ea2-4cd4-9352-d221b57f7f08/workspace.zip) zip file of the working directory (available for 30 days) * [Cluster Test Logs](https://d1e0l78xbkh3xa.cloudfront.net/foundationdb-pr-cluster-tests/7590ad32-3ea2-4cd4-9352-d221b57f7f08/cluster_test_logs.zip) zip file of the test logs (available for 30 days) _Originally posted by @foundationdb-ci in https://github.com/apple/foundationdb/issues/13855#issuecomment-5272816300_",
       "url": "https://github.com/apple/foundationdb/issues/13858",
+      "createdAt": "2026-08-13T01:36:18Z",
+      "updatedAt": "2026-08-13T01:36:18Z",
       "timestamp": "2026-08-13T01:36:18Z",
       "metrics": {
-        "comments": 0,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 0
       },
       "labels": [],
       "author": "mo74m3ed",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:issue:13859",
@@ -79,14 +118,18 @@
       "kind": "issue",
       "title": "Issuse",
       "url": "https://github.com/apple/foundationdb/issues/13859",
+      "createdAt": "2026-08-13T01:37:42Z",
+      "updatedAt": "2026-08-13T01:37:42Z",
       "timestamp": "2026-08-13T01:37:42Z",
       "metrics": {
-        "comments": 0,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 0
       },
       "labels": [],
       "author": "mo74m3ed",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:issue:13860",
@@ -96,14 +139,18 @@
       "kind": "issue",
       "title": "Issu",
       "url": "https://github.com/apple/foundationdb/issues/13860",
+      "createdAt": "2026-08-13T01:37:54Z",
+      "updatedAt": "2026-08-13T01:37:54Z",
       "timestamp": "2026-08-13T01:37:54Z",
       "metrics": {
-        "comments": 0,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 0
       },
       "labels": [],
       "author": "mo74m3ed",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13748",
@@ -114,14 +161,18 @@
       "title": "Backport status sub-fetcher timeout isolation to release-7.3",
       "text": "This backports [#10791](https://github.com/apple/foundationdb/pull/10791) ([`22ddb8a92`](https://github.com/apple/foundationdb/commit/22ddb8a92d473aafb18f15c436bb8cce17e562ee)) to `release-7.3`. The async status backport in #13068 can still let coordinator DNS, blob-granule, or blob-restore sub-fetcher timeouts escape the status actor. That aborts status collection and can bubble the timeout to the cluster controller instead of returning the partial status document. While working on this, the agent highlighted that some of the blob granule timeout messages are not correctly propagated out, but it seems that this feature is not in main anymore, so I opted to not fix those issues here. #10791 is already on `release-7.4` and doesn't need a backport to that version. # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [ ] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
       "url": "https://github.com/apple/foundationdb/pull/13748",
+      "createdAt": "2026-07-20T09:49:49Z",
+      "updatedAt": "2026-08-13T01:19:38Z",
       "timestamp": "2026-08-13T01:19:38Z",
       "metrics": {
-        "comments": 4,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 4
       },
       "labels": [],
       "author": "hxu",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13800",
@@ -132,14 +183,18 @@
       "title": "Fix old-epoch backup worker cleanup after backup completion",
       "text": "## Summary A partitioned backup can finish after recovery has selected backup workers for an older transaction-log generation but before those workers read the backup-start key. When the last active backup clears that key, the old-generation workers wait for a future backup instead of acknowledging completion. Their obsolete transaction-log generation remains retained, preventing full cluster recovery. Allow only workers with a finite old-generation range to exit when no backup is active. This uses the existing acknowledged worker-completion path so the obsolete generation can be retired. Current-generation workers continue waiting for future backups, and active and paused backups retain their existing behavior. ## Validation - `fdbserver_backupworker_test`. - `tests/slow/BackupAndRestore.toml` with fault injection and buggification. - `tests/slow/BackupCorrectnessPartitioned.toml` with fault injection and buggification.",
       "url": "https://github.com/apple/foundationdb/pull/13800",
+      "createdAt": "2026-07-29T04:27:43Z",
+      "updatedAt": "2026-08-13T00:37:45Z",
       "timestamp": "2026-08-13T00:37:45Z",
       "metrics": {
-        "comments": 7,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 7
       },
       "labels": [],
       "author": "tclinkenbeard-oai",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13815",
@@ -150,17 +205,21 @@
       "title": "Bump setuptools from 78.1.1 to 83.0.0 in /documentation/sphinx in the pip group across 1 directory",
       "text": "Bumps the pip group with 1 update in the /documentation/sphinx directory: [setuptools](https://github.com/pypa/setuptools). Updates `setuptools` from 78.1.1 to 83.0.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/pypa/setuptools/blob/main/NEWS.rst\">setuptools's changelog</a>.</em></p> <blockquote> <h1>v83.0.0</h1> <h2>Features</h2> <ul> <li>Require Python 3.10 or later.</li> </ul> <h2>Bugfixes</h2> <ul> <li><code>MANIFEST.in</code> matching (via <code>FileList</code>) is now insensitive to Unicode normalization form. A pattern authored in one form (e.g. NFC, as typically saved by editors) now matches a file whose name is stored on disk in another (e.g. NFD, as produced by macOS APFS/HFS+). Previously an <code>exclude</code>, <code>global-exclude</code>, <code>recursive-exclude</code>, or <code>prune</code> rule could silently fail to drop a non-ASCII-named file from the source distribution, publishing it despite the exclusion -- see GHSA-h35f-9h28-mq5c.</li> </ul> <h2>Deprecations and Removals</h2> <ul> <li><code>pypa/distutils#334</code></li> </ul> <h1>v82.0.1</h1> <h2>Bugfixes</h2> <ul> <li>Fix the loading of <code>launcher manifest.xml</code> file. (<a href=\"https://redirect.github.com/pypa/setuptools/issues/5047\">#5047</a>)</li> <li>Replaced deprecated <code>json.__version__</code> with fixture in tests. (<a href=\"https://redirect.github.com/pypa/setuptools/issues/5186\">#5186</a>)</li> </ul> <h2>Improved Documentation</h2> <ul> <li>Add advice about how to improve predictability when installing sdists. (<a href=\"https://redirect.github.com/pypa/setuptools/issues/5168\">#5168</a>)</li> </ul> <h2>Misc</h2> <ul> <li><a href=\"https://redirect.github.com/pypa/setuptools/issues/4941\">#4941</a>, <a href=\"https://redirect.github.com/pypa/setuptools/issues/5157\">#5157</a>, <a href=\"https://redirect.github.com/pypa/setuptools/issues/5169\">#5169</a>, <a href=\"https://redirect.github.com/pypa/setuptools/issues/5175\">#5175</a></li> </ul> <p>v82.0.0</p> <!-- raw HTML omitted --> </blockquote> <p>... (truncated)</p> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/pypa/setuptools/commit/6519f728c6f23c992df81a5691ef7655184a20eb\"><code>6519f72</code></a> Bump version: 82.0.1 → 83.0.0</li> <li><a href=\"https://github.com/pypa/setuptools/commit/d1151b125b29a6ee1c7db860f7ee6c365d525b5f\"><code>d1151b1</code></a> Merge pull request <a href=\"https://redirect.github.com/pypa/setuptools/issues/5250\">#5250</a> from pypa/feature/distutils-d7633fbed</li> <li><a href=\"https://github.com/pypa/setuptools/commit/a2df31e6a741b0fe775969618fe6a3a3d032e900\"><code>a2df31e</code></a> Capture removal of dry_run parameter in changelog.</li> <li><a href=\"https://github.com/pypa/setuptools/commit/00144dc3fb6d023fd81cdc26c380a012b084df9b\"><code>00144dc</code></a> Moved newsfragment to the release where it occurred.</li> <li><a href=\"https://github.com/pypa/setuptools/commit/a4a5a2b160357be77626aa077ddd1d8ee53be50f\"><code>a4a5a2b</code></a> Add news fragment.</li> <li><a href=\"https://github.com/pypa/setuptools/commit/77470c23c35031c9e37d7512694ac5ca52bfcaac\"><code>77470c2</code></a> Merge <a href=\"https://github.com/pypa/distutils\">https://github.com/pypa/distutils</a> into feature/distutils-d7633fbed</li> <li><a href=\"https://github.com/pypa/setuptools/commit/3c43897420f25a1be1afe6eaa905d056009cc736\"><code>3c43897</code></a> Merge pull request <a href=\"https://redirect.github.com/pypa/setuptools/issues/5247\">#5247</a> from pypa/copilot/fix-pypy-version-issue</li> <li><a href=\"https://github.com/pypa/setuptools/commit/bb6ea66b4bd01cb35d7c68a1bc61b96d59190269\"><code>bb6ea66</code></a> Bump PyPy from 3.10 to 3.11 in CI workflow</li> <li><a href=\"https://github.com/pypa/setuptools/commit/a2bc3aca2f55eb9b93ea633e58ba68170ce14451\"><code>a2bc3ac</code></a> Fix broken intersphinx reference to build's installation docs</li> <li><a href=\"https://github.com/pypa/setuptools/commit/2d6a739c64cfedc65e1f635af7b52340aac8d99b\"><code>2d6a739</code></a> Use stacked parametrize decorators instead of itertools.product</li> <li>Additional commits viewable in <a href=\"https://github.com/pypa/setuptools/compare/v78.1.1...v83.0.0\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=setuptools&package-manager=pip&previous-version=78.1.1&new-version=83.0.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore <dependency name> major version` will close this group update PR and stop Dependabot creating any more for the specific dependency's major version (unless you unignore this specific dependency's major version or upgrade to it yourself) - `@dependabot ignore <dependency name> minor version` will close this group update PR and stop Dependabot creating any more for the specific dependency's minor version (unless you unignore this specific dependency's minor version or upgrade to it yourself) - `@dependabot ignore <dependency name>` will close this group update PR and stop Dependabot creating any more for the specific dependency (unless you unignore this specific dependency or upgrade to it yourself) - `@dependabot unignore <dependency name>` will remove all of the ignore conditions of the specified dependency - `@dependabot unignore <dependency name> <ignore condition>` will remove the ignore condition of the specified dependency and ignore conditions You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/apple/foundationdb/network/alerts). </details>",
       "url": "https://github.com/apple/foundationdb/pull/13815",
+      "createdAt": "2026-08-05T04:55:19Z",
+      "updatedAt": "2026-08-12T14:43:02Z",
       "timestamp": "2026-08-12T14:43:02Z",
       "metrics": {
-        "comments": 11,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 11
       },
       "labels": [
         "dependencies",
         "python"
       ],
       "author": "dependabot[bot]",
-      "change": "new"
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13829",
@@ -171,14 +230,18 @@
       "title": "Add ipv6 support to docker container",
       "text": "Added functionality for `fdb.bash` to support ipv6, provided the new env variable `FDB_IP_VERSION` is set to 6 (or any string containing 6, such as v6, ipv6, iwantipv6, etc. ) There is an unfortunate caveat of no dual stack support, as FDB coordinators are recognized by their IP+port and not their machineid, to the best of my knowledge. If I'm wrong and FDB does not double count a coordinator with both IPv4 and IPv6 addresses in the cluster file, I would be happy to add dual stack support to this. This was part of now-split-up #13822, with slightly more robust logic. # Changes ## IPv6 Support ### Issue Before now, `fdb.bash` would throw an error if `hostname -i` resolved to a v6 address, as it would not be encased in brackets. ### New Behavior Depending on the value of `FDB_IP_VERSION`, `fdb.bash` will try and find the machine's v4 or v6 address. IPv4 is the default pick. If `hostname -i` resolves to the correct IP version, that is used as the public IP (as before.) Otherwise, the first valid ip in `hostname -I` is used. This will prevent a dual stack container from erroring out if IPv6 is desired, as `hostname -i` seems to prefer the v4 address to the v6 if both are present. Otherwise, an error is thrown that no valid IP could be found. ## Enhanced FDB_COORDINATOR ip resolution ### Issue FDB Coordinator discovery always looks up IPv4 addresses, as `dig` by default searches for A records. It also doesn't respect the local `/etc/hosts` file. ### New Behavior Based on the value of `FDB_IP_VERSION`, fdb coordinator ip is discovered with either `getent ahostsv4` or `getent ahostsv6`. This will prefer the local hosts file if it has the name, otherwise it will try to reach a remote DNS server.",
       "url": "https://github.com/apple/foundationdb/pull/13829",
+      "createdAt": "2026-08-07T21:58:37Z",
+      "updatedAt": "2026-08-12T19:35:43Z",
       "timestamp": "2026-08-12T19:35:43Z",
       "metrics": {
-        "comments": 0,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 0
       },
       "labels": [],
       "author": "edameki",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13848",
@@ -189,14 +252,18 @@
       "title": "Separate CDC routing from metadata mutation application",
       "text": "## Summary - Extract native CDC stream and tag routing into a dedicated `CDCRoutingTable` log-system module. - Keep metadata mutation application focused on durable metadata updates while making the commit proxy's routing dependency explicit. - Preserve stream metadata ordering, tag-version rotation, overlapping ranges, and shared-tag routing. - Add focused routing coverage for out-of-order metadata, stale and equal-version tags, and shared-tag range replacement. ## Testing - `fdbserver_logsystem_test -f /NativeCDC/` - `fdbserver_logsystem_test` - `fdbserver_commitproxy_test`",
       "url": "https://github.com/apple/foundationdb/pull/13848",
+      "createdAt": "2026-08-11T19:49:17Z",
+      "updatedAt": "2026-08-12T18:47:21Z",
       "timestamp": "2026-08-12T18:47:21Z",
       "metrics": {
-        "comments": 22,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 22
       },
       "labels": [],
       "author": "tclinkenbeard-oai",
-      "change": "new"
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13849",
@@ -207,14 +274,18 @@
       "title": "Exercise stale CDC stream initialization deterministically",
       "text": "## Summary - Pause CDC stream initialization after its durable metadata read using existing simulation-only pop controls. - Synchronize the existing test-only status endpoint with pending stream initialization without changing CDC interfaces or serialized state. - Remove a paused stream in the assignment-publication workload, verify the outstanding consume fails with `wrong_shard_server`, and deterministically exercise stale-initialization cleanup. ## Validation - `clang-format --dry-run --Werror fdbserver/cdcproxy/CDCProxy.cpp fdbserver/workloads/NativeCdcEndToEnd.cpp` - `fdbserver_cdcproxy_test -f /NativeCDC/StreamInitializationLifecycle` (1 test passed) - `fdbserver_cdcproxy_test` (11 tests passed) - `fdbserver -r simulation -f tests/fast/NativeCdcAssignmentPublication.toml --seed {1,2,3,4,5} --buggify off` (5 runs passed; stale-initialization probe covered in every run) - `fdbserver -r simulation -f tests/fast/NativeCdcDurableAckScan.toml --seed 11 --buggify off` - `fdbserver -r simulation -f tests/fast/NativeCdcRetiredRecovery.toml --seed 12 --buggify off` - `fdbserver -r simulation -f tests/fast/NativeCdcRetiredSharedTagSnapshot.toml --seed 13 --buggify off` - `fdbserver -r simulation -f tests/fast/NativeCdcMemoryBound.toml --seed 14 --buggify off`",
       "url": "https://github.com/apple/foundationdb/pull/13849",
+      "createdAt": "2026-08-11T21:57:13Z",
+      "updatedAt": "2026-08-12T16:53:59Z",
       "timestamp": "2026-08-12T16:53:59Z",
       "metrics": {
-        "comments": 50,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 50
       },
       "labels": [],
       "author": "tclinkenbeard-oai",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13850",
@@ -225,14 +296,18 @@
       "title": "Exercise stale CDC stream ownership deterministically",
       "text": "## Summary - Reject acknowledgements and removals sent to a non-owning CDC proxy. - Ensure removal retried with an obsolete stream ID cannot delete its same-name replacement. - Promote all three deterministically covered ownership probes from rare to required coverage. ## Testing - `fdbclient_test`: 90/90 passed. - `fdbserver_cdcproxy_test`: 11/11 passed. - Six focused `NativeCdcAssignmentPublication.toml` simulation seeds and eight adjacent Native CDC smoke tests passed. - 10,000 filtered Native CDC simulations passed with zero failures. - Each of the three ownership probes was hit 1,355 times.",
       "url": "https://github.com/apple/foundationdb/pull/13850",
+      "createdAt": "2026-08-12T02:33:49Z",
+      "updatedAt": "2026-08-13T00:30:19Z",
       "timestamp": "2026-08-13T00:30:19Z",
       "metrics": {
-        "comments": 45,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 45
       },
       "labels": [],
       "author": "tclinkenbeard-oai",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13851",
@@ -243,14 +318,18 @@
       "title": "documentation: update to sphinx 6.2.1 and remove setuptools",
       "text": "I think setuptools really isn't needed here, I think it was added for an older version of python and pip. I'm not sure it really worked in this spot anyway: it's possible that someone may have had to install or update setuptools before pip could install some source package requirements here, but that would have to happen before the pip install of these requirements. So the first commit is my proposal to address https://github.com/apple/foundationdb/pull/13815 After that I tried to update the deps a bit. There's a good reason to update to sphinx 6.2.1 which is that older versions don't work with python-3.13+ but this update also required some other adjustments. The build container images already have sphinx-5.1.1 installed and you can see there was some struggle to get cmake to require the newer version. And the update required some tweaks to make our sphinx theme work the same. In addition to looking at the generated docs and clicking around, I diffed the full static site code, I'll post a summary of that tomorrow. All that said, I'd be happy to split out or trim down to just the minimal \"remove setuptools\", and stick with sphinx-5.1.1 for now.",
       "url": "https://github.com/apple/foundationdb/pull/13851",
+      "createdAt": "2026-08-12T05:03:50Z",
+      "updatedAt": "2026-08-12T14:42:29Z",
       "timestamp": "2026-08-12T14:42:29Z",
       "metrics": {
-        "comments": 8,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 8
       },
       "labels": [],
       "author": "ploxiln",
-      "change": "new"
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13854",
@@ -261,14 +340,18 @@
       "title": "Convert LoadBalance.actor.h to standard coroutines",
       "text": "## Summary - Convert load-balancing, replica-comparison, and TSS-comparison actors to standard C++ coroutines. - Consolidate the migrated implementation into `fdbrpc/LoadBalance.h` and update direct includes so the header no longer requires actor compilation. - Preserve request ownership, cancellation, inert `Never()` handling, race ordering, replica consistency checks, and `Void`-reply compatibility. ## Testing - `fdbrpc_test -f /fdbrpc/waitValueOrSignal/` — 3 tests passed. - `fdbclient_test -f /StorageServerInterface/TSSCompare/` — 1 test passed. - Built `fdbserver` successfully. - `tests/fast/CycleTest.toml` with replica consistency checking enabled — 2 simulation tests passed. - `clang-format` and `git diff --check` passed.",
       "url": "https://github.com/apple/foundationdb/pull/13854",
+      "createdAt": "2026-08-12T10:34:28Z",
+      "updatedAt": "2026-08-12T23:20:47Z",
       "timestamp": "2026-08-12T23:20:47Z",
       "metrics": {
-        "comments": 22,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 22
       },
       "labels": [],
       "author": "tclinkenbeard-oai",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13855",
@@ -279,14 +362,18 @@
       "title": "documentation: update downloads links with foundationdb-7.3.77",
       "text": "also update supported OS version guidance (will validate by building docs locally and testing the links) After this, I can backport all docs-site updates to release-7.4 branch for inclusion in the next 7.4.x release. We could consider updating these version numbers just _before_ building the release, to match the impending release, but we do not mark a release stable right away - that comes some weeks later.",
       "url": "https://github.com/apple/foundationdb/pull/13855",
+      "createdAt": "2026-08-12T17:10:42Z",
+      "updatedAt": "2026-08-12T23:52:11Z",
       "timestamp": "2026-08-12T23:52:11Z",
       "metrics": {
-        "comments": 30,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 30
       },
       "labels": [],
       "author": "ploxiln",
-      "change": "new"
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:apple/foundationdb:pull_request:13856",
@@ -297,14 +384,483 @@
       "title": "Preserve DD maintenance start versions across transaction retries",
       "text": "## Summary - Preserve the first observed maintenance-window start version when a transaction must be retried. - Adopt an already committed start after ambiguous commits, concurrent writers, or data-distributor recruitment. - Retry stale-start cleanup when maintenance ends while preserving the existing maintenance tracing and durable storage format. - Cover failed starts, ambiguous commits, competing writers, failed clears, changed maintenance zones, and recruitment with six focused regression tests. ## Testing - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test -f /DataDistribution/Maintenance/` - 6 passed, 0 failed. - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test` - 56 passed, 0 failed. - `clang-format` 19 and `git diff --check` passed.",
       "url": "https://github.com/apple/foundationdb/pull/13856",
+      "createdAt": "2026-08-12T20:04:26Z",
+      "updatedAt": "2026-08-13T07:51:59Z",
       "timestamp": "2026-08-13T07:51:59Z",
       "metrics": {
-        "comments": 49,
-        "reactions": 0
+        "reactions": 0,
+        "comments": 49
       },
       "labels": [],
       "author": "tclinkenbeard-oai",
-      "change": "new"
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:caa74a822831aaa0dc9d",
+      "signalId": "github:apple/foundationdb:pull_request:13856",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13856",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Preserve DD maintenance start versions across transaction retries",
+        "text": "## Summary - Preserve the first observed maintenance-window start version when a transaction must be retried. - Adopt an already committed start after ambiguous commits, concurrent writers, or data-distributor recruitment. - Retry stale-start cleanup when maintenance ends while preserving the existing maintenance tracing and durable storage format. - Cover failed starts, ambiguous commits, competing writers, failed clears, changed maintenance zones, and recruitment with six focused regression tests. ## Testing - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test -f /DataDistribution/Maintenance/` - 6 passed, 0 failed. - GCC 13, `-DUSE_WERROR=ON -DWITH_ROCKSDB=OFF`: `fdbserver_datadistributor_test` - 56 passed, 0 failed. - `clang-format` 19 and `git diff --check` passed.",
+        "url": "https://github.com/apple/foundationdb/pull/13856",
+        "createdAt": "2026-08-12T20:04:26Z",
+        "updatedAt": "2026-08-13T07:51:59Z",
+        "timestamp": "2026-08-13T07:51:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 49
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d2f26f9f4d4e56e7df42",
+      "signalId": "github:apple/foundationdb:issue:13860",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:issue:13860",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "issue",
+        "title": "Issu",
+        "url": "https://github.com/apple/foundationdb/issues/13860",
+        "createdAt": "2026-08-13T01:37:54Z",
+        "updatedAt": "2026-08-13T01:37:54Z",
+        "timestamp": "2026-08-13T01:37:54Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "mo74m3ed",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c00ce34fc3ab7699b242",
+      "signalId": "github:apple/foundationdb:issue:13859",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:issue:13859",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "issue",
+        "title": "Issuse",
+        "url": "https://github.com/apple/foundationdb/issues/13859",
+        "createdAt": "2026-08-13T01:37:42Z",
+        "updatedAt": "2026-08-13T01:37:42Z",
+        "timestamp": "2026-08-13T01:37:42Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "mo74m3ed",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fe5eb6e634d969c3c3b5",
+      "signalId": "github:apple/foundationdb:issue:13858",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:issue:13858",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "issue",
+        "title": "RHEL Body",
+        "text": "### Result of foundationdb-pr-cluster-tests on Linux RHEL 9 * Commit ID: 2c9d0df92aad201171ba3d025e87e216aee7a66a * Duration 1:29:03 * Result: :white_check_mark: **SUCCEEDED** * Error: `N/A` * [Build Log](https://d1e0l78xbkh3xa.cloudfront.net/foundationdb/foundationdb-pr-cluster-tests/7590ad32-3ea2-4cd4-9352-d221b57f7f08.gz) terminal output (available for 30 days) * [Build Workspace](https://d1e0l78xbkh3xa.cloudfront.net/foundationdb-pr-cluster-tests/7590ad32-3ea2-4cd4-9352-d221b57f7f08/workspace.zip) zip file of the working directory (available for 30 days) * [Cluster Test Logs](https://d1e0l78xbkh3xa.cloudfront.net/foundationdb-pr-cluster-tests/7590ad32-3ea2-4cd4-9352-d221b57f7f08/cluster_test_logs.zip) zip file of the test logs (available for 30 days) _Originally posted by @foundationdb-ci in https://github.com/apple/foundationdb/issues/13855#issuecomment-5272816300_",
+        "url": "https://github.com/apple/foundationdb/issues/13858",
+        "createdAt": "2026-08-13T01:36:18Z",
+        "updatedAt": "2026-08-13T01:36:18Z",
+        "timestamp": "2026-08-13T01:36:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "mo74m3ed",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9b02657abb6a93abcbda",
+      "signalId": "github:apple/foundationdb:pull_request:13748",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13748",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Backport status sub-fetcher timeout isolation to release-7.3",
+        "text": "This backports [#10791](https://github.com/apple/foundationdb/pull/10791) ([`22ddb8a92`](https://github.com/apple/foundationdb/commit/22ddb8a92d473aafb18f15c436bb8cce17e562ee)) to `release-7.3`. The async status backport in #13068 can still let coordinator DNS, blob-granule, or blob-restore sub-fetcher timeouts escape the status actor. That aborts status collection and can bubble the timeout to the cluster controller instead of returning the partial status document. While working on this, the agent highlighted that some of the blob granule timeout messages are not correctly propagated out, but it seems that this feature is not in main anymore, so I opted to not fix those issues here. #10791 is already on `release-7.4` and doesn't need a backport to that version. # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [ ] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
+        "url": "https://github.com/apple/foundationdb/pull/13748",
+        "createdAt": "2026-07-20T09:49:49Z",
+        "updatedAt": "2026-08-13T01:19:38Z",
+        "timestamp": "2026-08-13T01:19:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "hxu",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:5941949452df2ac36a78",
+      "signalId": "github:apple/foundationdb:issue:13857",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:issue:13857",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "issue",
+        "title": "Lsduse",
+        "url": "https://github.com/apple/foundationdb/issues/13857",
+        "createdAt": "2026-08-13T01:01:00Z",
+        "updatedAt": "2026-08-13T01:01:00Z",
+        "timestamp": "2026-08-13T01:01:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "mo74m3ed",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:92f8938c4dd114c80423",
+      "signalId": "github:apple/foundationdb:pull_request:13850",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13850",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Exercise stale CDC stream ownership deterministically",
+        "text": "## Summary - Reject acknowledgements and removals sent to a non-owning CDC proxy. - Ensure removal retried with an obsolete stream ID cannot delete its same-name replacement. - Promote all three deterministically covered ownership probes from rare to required coverage. ## Testing - `fdbclient_test`: 90/90 passed. - `fdbserver_cdcproxy_test`: 11/11 passed. - Six focused `NativeCdcAssignmentPublication.toml` simulation seeds and eight adjacent Native CDC smoke tests passed. - 10,000 filtered Native CDC simulations passed with zero failures. - Each of the three ownership probes was hit 1,355 times.",
+        "url": "https://github.com/apple/foundationdb/pull/13850",
+        "createdAt": "2026-08-12T02:33:49Z",
+        "updatedAt": "2026-08-13T00:30:19Z",
+        "timestamp": "2026-08-13T00:30:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 45
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a1b8ca46dc2e8b8c839f",
+      "signalId": "github:apple/foundationdb:pull_request:13855",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13855",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: update downloads links with foundationdb-7.3.77",
+        "text": "also update supported OS version guidance (will validate by building docs locally and testing the links) After this, I can backport all docs-site updates to release-7.4 branch for inclusion in the next 7.4.x release. We could consider updating these version numbers just _before_ building the release, to match the impending release, but we do not mark a release stable right away - that comes some weeks later.",
+        "url": "https://github.com/apple/foundationdb/pull/13855",
+        "createdAt": "2026-08-12T17:10:42Z",
+        "updatedAt": "2026-08-12T23:52:11Z",
+        "timestamp": "2026-08-12T23:52:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 30
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4e7b8e13f14bcf17d0d5",
+      "signalId": "github:apple/foundationdb:pull_request:13854",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13854",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert LoadBalance.actor.h to standard coroutines",
+        "text": "## Summary - Convert load-balancing, replica-comparison, and TSS-comparison actors to standard C++ coroutines. - Consolidate the migrated implementation into `fdbrpc/LoadBalance.h` and update direct includes so the header no longer requires actor compilation. - Preserve request ownership, cancellation, inert `Never()` handling, race ordering, replica consistency checks, and `Void`-reply compatibility. ## Testing - `fdbrpc_test -f /fdbrpc/waitValueOrSignal/` — 3 tests passed. - `fdbclient_test -f /StorageServerInterface/TSSCompare/` — 1 test passed. - Built `fdbserver` successfully. - `tests/fast/CycleTest.toml` with replica consistency checking enabled — 2 simulation tests passed. - `clang-format` and `git diff --check` passed.",
+        "url": "https://github.com/apple/foundationdb/pull/13854",
+        "createdAt": "2026-08-12T10:34:28Z",
+        "updatedAt": "2026-08-12T23:20:47Z",
+        "timestamp": "2026-08-12T23:20:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 22
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:408a3b59171ebbda4843",
+      "signalId": "github:apple/foundationdb:pull_request:13800",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13800",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Fix old-epoch backup worker cleanup after backup completion",
+        "text": "## Summary A partitioned backup can finish after recovery has selected backup workers for an older transaction-log generation but before those workers read the backup-start key. When the last active backup clears that key, the old-generation workers wait for a future backup instead of acknowledging completion. Their obsolete transaction-log generation remains retained, preventing full cluster recovery. Allow only workers with a finite old-generation range to exit when no backup is active. This uses the existing acknowledged worker-completion path so the obsolete generation can be retired. Current-generation workers continue waiting for future backups, and active and paused backups retain their existing behavior. ## Validation - `fdbserver_backupworker_test`. - `tests/slow/BackupAndRestore.toml` with fault injection and buggification. - `tests/slow/BackupCorrectnessPartitioned.toml` with fault injection and buggification.",
+        "url": "https://github.com/apple/foundationdb/pull/13800",
+        "createdAt": "2026-07-29T04:27:43Z",
+        "updatedAt": "2026-08-13T00:37:45Z",
+        "timestamp": "2026-08-13T00:37:45Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2fba2caacc5b43c96129",
+      "signalId": "github:apple/foundationdb:pull_request:13829",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13829",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Add ipv6 support to docker container",
+        "text": "Added functionality for `fdb.bash` to support ipv6, provided the new env variable `FDB_IP_VERSION` is set to 6 (or any string containing 6, such as v6, ipv6, iwantipv6, etc. ) There is an unfortunate caveat of no dual stack support, as FDB coordinators are recognized by their IP+port and not their machineid, to the best of my knowledge. If I'm wrong and FDB does not double count a coordinator with both IPv4 and IPv6 addresses in the cluster file, I would be happy to add dual stack support to this. This was part of now-split-up #13822, with slightly more robust logic. # Changes ## IPv6 Support ### Issue Before now, `fdb.bash` would throw an error if `hostname -i` resolved to a v6 address, as it would not be encased in brackets. ### New Behavior Depending on the value of `FDB_IP_VERSION`, `fdb.bash` will try and find the machine's v4 or v6 address. IPv4 is the default pick. If `hostname -i` resolves to the correct IP version, that is used as the public IP (as before.) Otherwise, the first valid ip in `hostname -I` is used. This will prevent a dual stack container from erroring out if IPv6 is desired, as `hostname -i` seems to prefer the v4 address to the v6 if both are present. Otherwise, an error is thrown that no valid IP could be found. ## Enhanced FDB_COORDINATOR ip resolution ### Issue FDB Coordinator discovery always looks up IPv4 addresses, as `dig` by default searches for A records. It also doesn't respect the local `/etc/hosts` file. ### New Behavior Based on the value of `FDB_IP_VERSION`, fdb coordinator ip is discovered with either `getent ahostsv4` or `getent ahostsv6`. This will prefer the local hosts file if it has the name, otherwise it will try to reach a remote DNS server.",
+        "url": "https://github.com/apple/foundationdb/pull/13829",
+        "createdAt": "2026-08-07T21:58:37Z",
+        "updatedAt": "2026-08-12T19:35:43Z",
+        "timestamp": "2026-08-12T19:35:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "edameki",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4b36dd7a845272f80d75",
+      "signalId": "github:apple/foundationdb:pull_request:13848",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13848",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Separate CDC routing from metadata mutation application",
+        "text": "## Summary - Extract native CDC stream and tag routing into a dedicated `CDCRoutingTable` log-system module. - Keep metadata mutation application focused on durable metadata updates while making the commit proxy's routing dependency explicit. - Preserve stream metadata ordering, tag-version rotation, overlapping ranges, and shared-tag routing. - Add focused routing coverage for out-of-order metadata, stale and equal-version tags, and shared-tag range replacement. ## Testing - `fdbserver_logsystem_test -f /NativeCDC/` - `fdbserver_logsystem_test` - `fdbserver_commitproxy_test`",
+        "url": "https://github.com/apple/foundationdb/pull/13848",
+        "createdAt": "2026-08-11T19:49:17Z",
+        "updatedAt": "2026-08-12T18:47:21Z",
+        "timestamp": "2026-08-12T18:47:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 22
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:cd26af18eb858479e8fa",
+      "signalId": "github:apple/foundationdb:pull_request:13849",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13849",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Exercise stale CDC stream initialization deterministically",
+        "text": "## Summary - Pause CDC stream initialization after its durable metadata read using existing simulation-only pop controls. - Synchronize the existing test-only status endpoint with pending stream initialization without changing CDC interfaces or serialized state. - Remove a paused stream in the assignment-publication workload, verify the outstanding consume fails with `wrong_shard_server`, and deterministically exercise stale-initialization cleanup. ## Validation - `clang-format --dry-run --Werror fdbserver/cdcproxy/CDCProxy.cpp fdbserver/workloads/NativeCdcEndToEnd.cpp` - `fdbserver_cdcproxy_test -f /NativeCDC/StreamInitializationLifecycle` (1 test passed) - `fdbserver_cdcproxy_test` (11 tests passed) - `fdbserver -r simulation -f tests/fast/NativeCdcAssignmentPublication.toml --seed {1,2,3,4,5} --buggify off` (5 runs passed; stale-initialization probe covered in every run) - `fdbserver -r simulation -f tests/fast/NativeCdcDurableAckScan.toml --seed 11 --buggify off` - `fdbserver -r simulation -f tests/fast/NativeCdcRetiredRecovery.toml --seed 12 --buggify off` - `fdbserver -r simulation -f tests/fast/NativeCdcRetiredSharedTagSnapshot.toml --seed 13 --buggify off` - `fdbserver -r simulation -f tests/fast/NativeCdcMemoryBound.toml --seed 14 --buggify off`",
+        "url": "https://github.com/apple/foundationdb/pull/13849",
+        "createdAt": "2026-08-11T21:57:13Z",
+        "updatedAt": "2026-08-12T16:53:59Z",
+        "timestamp": "2026-08-12T16:53:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 50
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:38fea47495a8463bd213",
+      "signalId": "github:apple/foundationdb:issue:13852",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:issue:13852",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "issue",
+        "title": "Db",
+        "url": "https://github.com/apple/foundationdb/issues/13852",
+        "createdAt": "2026-08-12T07:10:47Z",
+        "updatedAt": "2026-08-12T15:19:11Z",
+        "timestamp": "2026-08-12T15:19:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "mo74m3ed",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f873eac80c8a50147c8b",
+      "signalId": "github:apple/foundationdb:pull_request:13815",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13815",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Bump setuptools from 78.1.1 to 83.0.0 in /documentation/sphinx in the pip group across 1 directory",
+        "text": "Bumps the pip group with 1 update in the /documentation/sphinx directory: [setuptools](https://github.com/pypa/setuptools). Updates `setuptools` from 78.1.1 to 83.0.0 <details> <summary>Changelog</summary> <p><em>Sourced from <a href=\"https://github.com/pypa/setuptools/blob/main/NEWS.rst\">setuptools's changelog</a>.</em></p> <blockquote> <h1>v83.0.0</h1> <h2>Features</h2> <ul> <li>Require Python 3.10 or later.</li> </ul> <h2>Bugfixes</h2> <ul> <li><code>MANIFEST.in</code> matching (via <code>FileList</code>) is now insensitive to Unicode normalization form. A pattern authored in one form (e.g. NFC, as typically saved by editors) now matches a file whose name is stored on disk in another (e.g. NFD, as produced by macOS APFS/HFS+). Previously an <code>exclude</code>, <code>global-exclude</code>, <code>recursive-exclude</code>, or <code>prune</code> rule could silently fail to drop a non-ASCII-named file from the source distribution, publishing it despite the exclusion -- see GHSA-h35f-9h28-mq5c.</li> </ul> <h2>Deprecations and Removals</h2> <ul> <li><code>pypa/distutils#334</code></li> </ul> <h1>v82.0.1</h1> <h2>Bugfixes</h2> <ul> <li>Fix the loading of <code>launcher manifest.xml</code> file. (<a href=\"https://redirect.github.com/pypa/setuptools/issues/5047\">#5047</a>)</li> <li>Replaced deprecated <code>json.__version__</code> with fixture in tests. (<a href=\"https://redirect.github.com/pypa/setuptools/issues/5186\">#5186</a>)</li> </ul> <h2>Improved Documentation</h2> <ul> <li>Add advice about how to improve predictability when installing sdists. (<a href=\"https://redirect.github.com/pypa/setuptools/issues/5168\">#5168</a>)</li> </ul> <h2>Misc</h2> <ul> <li><a href=\"https://redirect.github.com/pypa/setuptools/issues/4941\">#4941</a>, <a href=\"https://redirect.github.com/pypa/setuptools/issues/5157\">#5157</a>, <a href=\"https://redirect.github.com/pypa/setuptools/issues/5169\">#5169</a>, <a href=\"https://redirect.github.com/pypa/setuptools/issues/5175\">#5175</a></li> </ul> <p>v82.0.0</p> <!-- raw HTML omitted --> </blockquote> <p>... (truncated)</p> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/pypa/setuptools/commit/6519f728c6f23c992df81a5691ef7655184a20eb\"><code>6519f72</code></a> Bump version: 82.0.1 → 83.0.0</li> <li><a href=\"https://github.com/pypa/setuptools/commit/d1151b125b29a6ee1c7db860f7ee6c365d525b5f\"><code>d1151b1</code></a> Merge pull request <a href=\"https://redirect.github.com/pypa/setuptools/issues/5250\">#5250</a> from pypa/feature/distutils-d7633fbed</li> <li><a href=\"https://github.com/pypa/setuptools/commit/a2df31e6a741b0fe775969618fe6a3a3d032e900\"><code>a2df31e</code></a> Capture removal of dry_run parameter in changelog.</li> <li><a href=\"https://github.com/pypa/setuptools/commit/00144dc3fb6d023fd81cdc26c380a012b084df9b\"><code>00144dc</code></a> Moved newsfragment to the release where it occurred.</li> <li><a href=\"https://github.com/pypa/setuptools/commit/a4a5a2b160357be77626aa077ddd1d8ee53be50f\"><code>a4a5a2b</code></a> Add news fragment.</li> <li><a href=\"https://github.com/pypa/setuptools/commit/77470c23c35031c9e37d7512694ac5ca52bfcaac\"><code>77470c2</code></a> Merge <a href=\"https://github.com/pypa/distutils\">https://github.com/pypa/distutils</a> into feature/distutils-d7633fbed</li> <li><a href=\"https://github.com/pypa/setuptools/commit/3c43897420f25a1be1afe6eaa905d056009cc736\"><code>3c43897</code></a> Merge pull request <a href=\"https://redirect.github.com/pypa/setuptools/issues/5247\">#5247</a> from pypa/copilot/fix-pypy-version-issue</li> <li><a href=\"https://github.com/pypa/setuptools/commit/bb6ea66b4bd01cb35d7c68a1bc61b96d59190269\"><code>bb6ea66</code></a> Bump PyPy from 3.10 to 3.11 in CI workflow</li> <li><a href=\"https://github.com/pypa/setuptools/commit/a2bc3aca2f55eb9b93ea633e58ba68170ce14451\"><code>a2bc3ac</code></a> Fix broken intersphinx reference to build's installation docs</li> <li><a href=\"https://github.com/pypa/setuptools/commit/2d6a739c64cfedc65e1f635af7b52340aac8d99b\"><code>2d6a739</code></a> Use stacked parametrize decorators instead of itertools.product</li> <li>Additional commits viewable in <a href=\"https://github.com/pypa/setuptools/compare/v78.1.1...v83.0.0\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=setuptools&package-manager=pip&previous-version=78.1.1&new-version=83.0.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore <dependency name> major version` will close this group update PR and stop Dependabot creating any more for the specific dependency's major version (unless you unignore this specific dependency's major version or upgrade to it yourself) - `@dependabot ignore <dependency name> minor version` will close this group update PR and stop Dependabot creating any more for the specific dependency's minor version (unless you unignore this specific dependency's minor version or upgrade to it yourself) - `@dependabot ignore <dependency name>` will close this group update PR and stop Dependabot creating any more for the specific dependency (unless you unignore this specific dependency or upgrade to it yourself) - `@dependabot unignore <dependency name>` will remove all of the ignore conditions of the specified dependency - `@dependabot unignore <dependency name> <ignore condition>` will remove the ignore condition of the specified dependency and ignore conditions You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/apple/foundationdb/network/alerts). </details>",
+        "url": "https://github.com/apple/foundationdb/pull/13815",
+        "createdAt": "2026-08-05T04:55:19Z",
+        "updatedAt": "2026-08-12T14:43:02Z",
+        "timestamp": "2026-08-12T14:43:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [
+          "dependencies",
+          "python"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2dc060a07404a68ed6c8",
+      "signalId": "github:apple/foundationdb:pull_request:13851",
+      "event": "changed",
+      "observedAt": "2026-08-13T13:48:00.446149Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13851",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: update to sphinx 6.2.1 and remove setuptools",
+        "text": "I think setuptools really isn't needed here, I think it was added for an older version of python and pip. I'm not sure it really worked in this spot anyway: it's possible that someone may have had to install or update setuptools before pip could install some source package requirements here, but that would have to happen before the pip install of these requirements. So the first commit is my proposal to address https://github.com/apple/foundationdb/pull/13815 After that I tried to update the deps a bit. There's a good reason to update to sphinx 6.2.1 which is that older versions don't work with python-3.13+ but this update also required some other adjustments. The build container images already have sphinx-5.1.1 installed and you can see there was some struggle to get cmake to require the newer version. And the update required some tweaks to make our sphinx theme work the same. In addition to looking at the generated docs and clicking around, I diffed the full static site code, I'll post a summary of that tomorrow. All that said, I'd be happy to split out or trim down to just the minimal \"remove setuptools\", and stick with sphinx-5.1.1 for now.",
+        "url": "https://github.com/apple/foundationdb/pull/13851",
+        "createdAt": "2026-08-12T05:03:50Z",
+        "updatedAt": "2026-08-12T14:42:29Z",
+        "timestamp": "2026-08-12T14:42:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
     }
   ]
 }

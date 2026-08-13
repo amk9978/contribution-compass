@@ -1,331 +1,140 @@
-# Observability & Reliability Updates — 2026-08-13
+# Observability & Reliability — 2026-08-13
 
-> Automatically collected from GitHub. No analysis or synthesis is performed.
+> Factual GitHub evidence collected by Contribution Compass. No LLM analysis is performed.
 
-Collected changes: 325 (325 new, 0 updated).
+## Contribution Leads
 
-- [DataDog/datadog-agent: \[DSEC-232\] Destroy scanner and free cache once rust check finish](https://github.com/DataDog/datadog-agent/pull/54548) — 4 comments, 2 reactions
-- [DataDog/datadog-agent: \[DSEC\] Move dd-sds dependency to shared workspace](https://github.com/DataDog/datadog-agent/pull/54815) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: \[EBPF\] gpu: add NVLink capability tag](https://github.com/DataDog/datadog-agent/pull/54828) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: Deflake `TestKeepTryingLockingIfPermissionDenied` with `synctest`](https://github.com/DataDog/datadog-agent/pull/54830) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: \[EBPF\] gpu: improve collector run telemetry](https://github.com/DataDog/datadog-agent/pull/54829) — 0 comments, 1 reactions
-- [DataDog/datadog-agent: Remove visual_studio.bzl](https://github.com/DataDog/datadog-agent/pull/54768) — 7 comments, 2 reactions
-- [DataDog/datadog-agent: ci: default to GIT_DEPTH=1, full clone for jobs needing git history](https://github.com/DataDog/datadog-agent/pull/54790) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: fix(flare): mark TestWindowsFlareSuite/TestFlareDefaultFiles as flaky](https://github.com/DataDog/datadog-agent/pull/54825) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: \[EBPF\] Download gpu-burner for GPU tests](https://github.com/DataDog/datadog-agent/pull/54826) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: \[procmgr\] Windows spawn profiles foundation](https://github.com/DataDog/datadog-agent/pull/54731) — 24 comments, 1 reactions
-- [DataDog/datadog-agent: feat(notableevents): add macOS shutdown-cause notable event](https://github.com/DataDog/datadog-agent/pull/54824) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\] Improve PAR error when an aciton is not allowed](https://github.com/DataDog/datadog-agent/pull/54827) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: Force LF line endings for text files by default on gitattributes](https://github.com/DataDog/datadog-agent/pull/54776) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: \[AAD-37\] Optimize observer series count](https://github.com/DataDog/datadog-agent/pull/54822) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: Move tools/tar_checksums to bazel/tools](https://github.com/DataDog/datadog-agent/pull/54812) — 2 comments, 2 reactions
-- [DataDog/datadog-agent: Add telemetry to dogstatsd http server](https://github.com/DataDog/datadog-agent/pull/54785) — 5 comments, 2 reactions
-- [grafana/loki: fix(deps): Update github.com/prometheus/prometheus digest to 762bc8a (main)](https://github.com/grafana/loki/pull/23627) — 1 comments, 0 reactions
-- [grafana/loki: Dependency Dashboard](https://github.com/grafana/loki/issues/23439) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Read embedded Python version from Bazel in the python-version task](https://github.com/DataDog/datadog-agent/pull/54748) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: fix(data plane): run preflight mode for entire SMP experiment duration](https://github.com/DataDog/datadog-agent/pull/54794) — 6 comments, 2 reactions
-- [grafana/loki: fix(deps): Update module github.com/IBM/ibm-cos-sdk-go to v1.15.0 (main)](https://github.com/grafana/loki/pull/23792) — 0 comments, 0 reactions
-- [grafana/loki: fix(deps): Update module github.com/aws/aws-sdk-go-v2/service/s3 to v1.107.0 (main)](https://github.com/grafana/loki/pull/23870) — 0 comments, 0 reactions
-- [grafana/loki: chore(deps): Update github.com/grafana/objstore digest to ec72e5a (main)](https://github.com/grafana/loki/pull/23741) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: \[EBPF\] Disable parallel GPU collection by default](https://github.com/DataDog/datadog-agent/pull/54817) — 3 comments, 1 reactions
-- [grafana/loki: fix(deps): Update module github.com/tjhop/slog-gokit to v0.2.2 (main)](https://github.com/grafana/loki/pull/23397) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[procmgr\] Extract shared Rust client](https://github.com/DataDog/datadog-agent/pull/54676) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: fix(flare): mark newly-failing flare tests as flaky](https://github.com/DataDog/datadog-agent/pull/54759) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: Dependency Dashboard](https://github.com/DataDog/datadog-agent/issues/33469) — 0 comments, 0 reactions
-- [prometheus/prometheus: Dependency Dashboard](https://github.com/prometheus/prometheus/issues/17691) — 5 comments, 0 reactions
-- [DataDog/datadog-agent: \[procmgr\] Secret backend resolution for config gates](https://github.com/DataDog/datadog-agent/pull/54734) — 1 comments, 2 reactions
-- [prometheus/prometheus: tsdb: document that OOO chunk IDs are no longer monotonically increasing](https://github.com/prometheus/prometheus/pull/19401) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: fix(aix): discover Python checks via integrations-core AIX manifest tag](https://github.com/DataDog/datadog-agent/pull/54823) — 1 comments, 2 reactions
-- [DataDog/datadog-agent: aix: populate datadog.yaml from env vars in the config script](https://github.com/DataDog/datadog-agent/pull/54767) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: \[procmgr\] Supervise process-agent on Windows via dd-procmgr](https://github.com/DataDog/datadog-agent/pull/54735) — 1 comments, 2 reactions
-- [DataDog/datadog-agent: \[procmgr\] Config gates for processes.d auto-start](https://github.com/DataDog/datadog-agent/pull/54732) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: chore: Update devcontainer prebuilt image reference](https://github.com/DataDog/datadog-agent/pull/54813) — 1 comments, 2 reactions
-- [DataDog/datadog-agent: Remove bazel strptime_cgo_testlib override](https://github.com/DataDog/datadog-agent/pull/54810) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: \[CWS\] Fix: handle activity dump endpoint host that already embeds a port](https://github.com/DataDog/datadog-agent/pull/54774) — 4 comments, 2 reactions
-- [DataDog/datadog-agent: packaging/aix: use rmssys only in unconfig, drop odmdelete](https://github.com/DataDog/datadog-agent/pull/51861) — 5 comments, 2 reactions
-- [DataDog/datadog-agent: \[EBPF\] gpu: serialize NVML field value queries](https://github.com/DataDog/datadog-agent/pull/54821) — 4 comments, 2 reactions
-- [DataDog/datadog-agent: Add Observer pipeline telemetry](https://github.com/DataDog/datadog-agent/pull/54755) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: Copy python files to avoid junction issues](https://github.com/DataDog/datadog-agent/pull/54819) — 5 comments, 2 reactions
-- [grafana/loki: test(logql): Run logqltest scripts through query-frontend and query-scheduler](https://github.com/grafana/loki/pull/23909) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Skip nss failover e2e test it if the fakeintakes are still in use](https://github.com/DataDog/datadog-agent/pull/54814) — 4 comments, 2 reactions
-- [DataDog/datadog-agent: Pedro.cordeiro/macos thermal notable event](https://github.com/DataDog/datadog-agent/pull/54820) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\]\[e2e\]\[incident-59050\] restore fake runner keys injection for PAR e2e test](https://github.com/DataDog/datadog-agent/pull/54781) — 1 comments, 2 reactions
-- [DataDog/datadog-agent: Remove unused SyncCapture](https://github.com/DataDog/datadog-agent/pull/54779) — 4 comments, 2 reactions
-- [prometheus/prometheus: Add more spans to tracing](https://github.com/prometheus/prometheus/pull/19410) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: optimize the complexity of the trace_contention_begin](https://github.com/DataDog/datadog-agent/pull/54634) — 8 comments, 1 reactions
-- [DataDog/datadog-agent: \[WP\] ICMPv4 packet flow classification](https://github.com/DataDog/datadog-agent/pull/54157) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: \[procmgr\] Show profile and user in list and describe](https://github.com/DataDog/datadog-agent/pull/53568) — 26 comments, 1 reactions
-- [DataDog/datadog-agent: fix(autoscaling): stop informer in test fixture to fix TestPodAutoscalerLocalOwnerObjectsLimit flake](https://github.com/DataDog/datadog-agent/pull/54764) — 8 comments, 2 reactions
-- [DataDog/datadog-agent: Fail bazel build on Windows if vault isn't found](https://github.com/DataDog/datadog-agent/pull/54818) — 2 comments, 2 reactions
-- [grafana/loki: fix(operator): Remove BoltDB alerts, recording rules, and Grafana dashboards](https://github.com/grafana/loki/pull/23884) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Improve support for Windows across Invoke tasks](https://github.com/DataDog/datadog-agent/pull/54762) — 11 comments, 2 reactions
-- [DataDog/datadog-agent: \[Backport 7.83.x\]  \[EBPF\] gpu: Skip unsupported vGPU max-clock queries](https://github.com/DataDog/datadog-agent/pull/54816) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: \[EBPF\] gpu: Skip unsupported vGPU max-clock queries](https://github.com/DataDog/datadog-agent/pull/54729) — 11 comments, 3 reactions
-- [DataDog/datadog-agent: Unify converter features behavior](https://github.com/DataDog/datadog-agent/pull/52993) — 5 comments, 2 reactions
-- [DataDog/datadog-agent: feat(cancel): Force cancellation of running jobs](https://github.com/DataDog/datadog-agent/pull/54809) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: Make dda tasks use bazel's Go sdk](https://github.com/DataDog/datadog-agent/pull/54808) — 1 comments, 1 reactions
-- [DataDog/datadog-agent: fix(cluster-agent): gate pprof/expvar debug endpoints to loopback](https://github.com/DataDog/datadog-agent/pull/54508) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: \[AAD-36\] Use anomaly scorer by default](https://github.com/DataDog/datadog-agent/pull/54716) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: Add test2json and UTOF output to bazel-driven go tests](https://github.com/DataDog/datadog-agent/pull/54655) — 4 comments, 1 reactions
-- [grafana/loki: \[DO NOT MERGE\] LogQL metric queries with stream-first iteration (prototype)](https://github.com/grafana/loki/pull/23641) — 5 comments, 0 reactions
-- [DataDog/datadog-agent: \[EBPF\] Collect NVLink fields per port](https://github.com/DataDog/datadog-agent/pull/54719) — 4 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: fix(memorylimiter): report health status only on state changes](https://github.com/open-telemetry/opentelemetry-collector/pull/15756) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: fix: avoid data race in grpclog.SetLogger on otelcol collector start](https://github.com/DataDog/datadog-agent/pull/54645) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: Add source to distributions via checks.](https://github.com/DataDog/datadog-agent/pull/51295) — 5 comments, 2 reactions
-- [DataDog/datadog-agent: Use bazel driven windows resources in windows_resources.py](https://github.com/DataDog/datadog-agent/pull/54780) — 3 comments, 2 reactions
-- [open-telemetry/opentelemetry-collector: Drop only oversized items instead of the full batch](https://github.com/open-telemetry/opentelemetry-collector/pull/15267) — 4 comments, 0 reactions
-- [grafana/loki: refactor(logql): One sample per log line](https://github.com/grafana/loki/pull/23937) — 0 comments, 0 reactions
-- [prometheus/prometheus: alerting: expose activeAt for alert templating](https://github.com/prometheus/prometheus/issues/17273) — 7 comments, 0 reactions
-- [grafana/loki: fix: Add meaningful chunk fetch loss metrics](https://github.com/grafana/loki/pull/23925) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: feat(autodiscovery): tag configuration-discovery instances to mitigate duplicate metrics risk](https://github.com/DataDog/datadog-agent/pull/54660) — 6 comments, 3 reactions
-- [prometheus/prometheus: scrape: use a dedicated HTTP client per unix socket target](https://github.com/prometheus/prometheus/pull/19399) — 1 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: exporterhelper: record queue batch send size after batching](https://github.com/open-telemetry/opentelemetry-collector/pull/15510) — 8 comments, 1 reactions
-- [grafana/loki: chore: Always close decbufs and do it the less verbose way](https://github.com/grafana/loki/pull/23922) — 0 comments, 0 reactions
-- [prometheus/prometheus: TSDB: improve isolation performance](https://github.com/prometheus/prometheus/pull/19286) — 10 comments, 0 reactions
-- [grafana/loki: feat(storage): Add OCI Thanos object store backend](https://github.com/grafana/loki/pull/23710) — 8 comments, 0 reactions
-- [DataDog/datadog-agent: \[automated\] Upgrade embedded Python patch version to 3.13.15](https://github.com/DataDog/datadog-agent/pull/54696) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: \[datasecurity\] add malloc trim](https://github.com/DataDog/datadog-agent/pull/54567) — 4 comments, 0 reactions
-- [DataDog/datadog-agent: \[AAD-15\] Add scoped anomaly scorer telemetry](https://github.com/DataDog/datadog-agent/pull/54811) — 4 comments, 1 reactions
-- [grafana/loki: fix(querier): Prevent sample query plan marshal race 🤖🤖🤖](https://github.com/grafana/loki/pull/23349) — 4 comments, 0 reactions
-- [grafana/loki: fix(querier): Prevent log query plan marshal race 🤖🤖🤖](https://github.com/grafana/loki/pull/23357) — 1 comments, 0 reactions
-- [prometheus/prometheus: __address__ label from pod discovered through kubernetes discovery does not include port when relabelling](https://github.com/prometheus/prometheus/issues/11678) — 4 comments, 0 reactions
-- [prometheus/prometheus: docs: note that Kubernetes pod __address__ may omit the port](https://github.com/prometheus/prometheus/pull/19408) — 0 comments, 0 reactions
-- [prometheus/prometheus: discovery/file: wait for a matching snapshot instead of failing on empty updates](https://github.com/prometheus/prometheus/pull/19407) — 0 comments, 0 reactions
-- [grafana/loki: fix(deps): Update github.com/thanos-io/objstore digest to 9ad2de9 (main)](https://github.com/grafana/loki/pull/23939) — 0 comments, 0 reactions
-- [grafana/loki: chore(deps): Update module github.com/oschwald/maxminddb-golang/v2 to v2.5.0 (main) - autoclosed](https://github.com/grafana/loki/pull/23917) — 0 comments, 0 reactions
-- [grafana/loki: chore(deps): Update golang:1.26.5 Docker digest to 705e964 (main)](https://github.com/grafana/loki/pull/23762) — 0 comments, 0 reactions
-- [prometheus/prometheus: promql/parser: preserve parentheses around duration literals](https://github.com/prometheus/prometheus/pull/19403) — 0 comments, 0 reactions
-- [grafana/loki: feat(operator): Watch object storage Services for NetworkPolicy updates and surface ports in status](https://github.com/grafana/loki/pull/22436) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Add design spec for e2ectl interactive dashboard](https://github.com/DataDog/datadog-agent/pull/54778) — 1 comments, 1 reactions
-- [open-telemetry/opentelemetry-collector: Add Certificate Revocation List (CRL) support](https://github.com/open-telemetry/opentelemetry-collector/pull/15685) — 2 comments, 0 reactions
-- [DataDog/datadog-agent: configfilesdiscovery: collect redis env vars](https://github.com/DataDog/datadog-agent/pull/54375) — 5 comments, 1 reactions
-- [prometheus/prometheus: config: promote retry_on_http_429 to GA](https://github.com/prometheus/prometheus/pull/19390) — 4 comments, 0 reactions
-- [prometheus/prometheus: promql/parser: reject offset expressions and @ start()/end() before range selectors](https://github.com/prometheus/prometheus/pull/19406) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: chore(devx): clean up and align CODEOWNERS](https://github.com/DataDog/datadog-agent/pull/54777) — 1 comments, 2 reactions
-- [grafana/loki: chore: Implement streaming reading of series](https://github.com/grafana/loki/pull/23790) — 2 comments, 0 reactions
-- [grafana/loki: chore: Implement streaming reading of label methods](https://github.com/grafana/loki/pull/23802) — 0 comments, 0 reactions
-- [grafana/loki: chore: Implement streaming reading of symbols section](https://github.com/grafana/loki/pull/23730) — 2 comments, 0 reactions
-- [grafana/loki: chore: Implement streaming reading of fingerprint offsets table](https://github.com/grafana/loki/pull/23768) — 0 comments, 0 reactions
-- [grafana/loki: chore: Implement streaming reading of postings offset table](https://github.com/grafana/loki/pull/23767) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Gitignore the .pi-subagents folder](https://github.com/DataDog/datadog-agent/pull/54807) — 0 comments, 2 reactions
-- [grafana/loki: fix: deduplicate log lines split across stream shards](https://github.com/grafana/loki/pull/23907) — 7 comments, 0 reactions
-- [grafana/loki: chore: Rename variables to include reader](https://github.com/grafana/loki/pull/23938) — 0 comments, 0 reactions
-- [grafana/loki: fix(logql): Count unwrapped samples in the sharded avg_over_time denominator](https://github.com/grafana/loki/pull/23906) — 2 comments, 0 reactions
-- [grafana/loki: Sharded avg_over_time(... | unwrap ...) with grouping under-reports the average](https://github.com/grafana/loki/issues/23890) — 0 comments, 0 reactions
-- [prometheus/prometheus: docs: Add troubleshooting section with common issues and solutions](https://github.com/prometheus/prometheus/pull/19373) — 1 comments, 0 reactions
-- [grafana/loki: feat(distributor): add -distributor.extend-writes to keep write quorum during ingester scale-down](https://github.com/grafana/loki/pull/23908) — 5 comments, 0 reactions
-- [grafana/loki: Duplicate log lines can be introduced by automatic stream sharding](https://github.com/grafana/loki/issues/18760) — 3 comments, 13 reactions
-- [grafana/loki: test(logql): Expand logqltest label filter coverage and correct the docs](https://github.com/grafana/loki/pull/23902) — 1 comments, 0 reactions
-- [grafana/loki: fix: Large requests returned 400 instead 413](https://github.com/grafana/loki/pull/23864) — 1 comments, 0 reactions
-- [prometheus/prometheus: fix(deps): update kubernetes go dependencies to v0.36.3](https://github.com/prometheus/prometheus/pull/18757) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[ACTP\] \[PAR split deployment\] shut down idle private action executor](https://github.com/DataDog/datadog-agent/pull/54670) — 4 comments, 1 reactions
-- [prometheus/prometheus: discovery/aws: don't panic on ECS tasks with absent optional fields](https://github.com/prometheus/prometheus/pull/19396) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[CWS\] Kill container and cgroup scopes with cgroup v2 cgroup.kill](https://github.com/DataDog/datadog-agent/pull/54225) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: \[Backport 7.83.x\]  \[EBPF\] Gate NVML workloadmeta collector on GPU monitoring](https://github.com/DataDog/datadog-agent/pull/54806) — 0 comments, 2 reactions
-- [prometheus/prometheus: tsdb: make panic lock-release test OS agnostic](https://github.com/prometheus/prometheus/pull/19339) — 0 comments, 0 reactions
-- [prometheus/prometheus: cmd/prometheus: fix flaky TestRuntimeGOGCConfig](https://github.com/prometheus/prometheus/pull/19341) — 2 comments, 0 reactions
-- [DataDog/datadog-agent: \[Backport 7.82.x\]  \[EBPF\] Gate NVML workloadmeta collector on GPU monitoring](https://github.com/DataDog/datadog-agent/pull/54805) — 0 comments, 2 reactions
-- [grafana/loki: refactor(compression): Export Codecs() and de-duplicate test codec lists](https://github.com/grafana/loki/pull/23936) — 0 comments, 0 reactions
-- [grafana/loki: fix: Recognise thanos/minio S3 throttling errors as retryable and add backoff](https://github.com/grafana/loki/pull/23454) — 2 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: \[pdata/pprofile\] MergeTo: reserve index 0 of empty destination dictionary tables](https://github.com/open-telemetry/opentelemetry-collector/pull/15662) — 7 comments, 0 reactions
-- [DataDog/datadog-agent: \[EBPF\] Gate NVML workloadmeta collector on GPU monitoring](https://github.com/DataDog/datadog-agent/pull/54563) — 10 comments, 1 reactions
-- [prometheus/prometheus: discovery/aws: paginate Lightsail GetInstances so all instances are discovered](https://github.com/prometheus/prometheus/pull/19180) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: Increase Quality Gate memory thresholds for ADP pre-flight mode](https://github.com/DataDog/datadog-agent/pull/54792) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: Add a typed file provisioner, to allow using existing infrastructure more easily](https://github.com/DataDog/datadog-agent/pull/54782) — 11 comments, 1 reactions
-- [grafana/loki: refactor(chunks-inspect): Report block parse errors and drop the duplicate time.go](https://github.com/grafana/loki/pull/23721) — 0 comments, 0 reactions
-- [grafana/loki: refactor(logql): One extractor per sample expression](https://github.com/grafana/loki/pull/23935) — 1 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: \[chore\]\[component/componentstatus\]: remove timestamp removal TODO](https://github.com/open-telemetry/opentelemetry-collector/pull/15757) — 0 comments, 0 reactions
-- [grafana/loki: fix(deps): Update module github.com/parquet-go/parquet-go to v0.31.0 (main)](https://github.com/grafana/loki/pull/23933) — 0 comments, 0 reactions
-- [grafana/loki: fix(deps): Update module github.com/oschwald/geoip2-golang/v2 to v2.3.0 (main)](https://github.com/grafana/loki/pull/23918) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[anomalydetection\] Test: per source scorer](https://github.com/DataDog/datadog-agent/pull/54773) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: Add macOS thermal check reading AppleSMC sensors and thermal pressure](https://github.com/DataDog/datadog-agent/pull/54504) — 6 comments, 2 reactions
-- [DataDog/datadog-agent: \[AAD-39\] Format logs in scorer events](https://github.com/DataDog/datadog-agent/pull/54633) — 4 comments, 1 reactions
-- [prometheus/prometheus: storage: add OriginalLabelsHash() method to SeriesSet](https://github.com/prometheus/prometheus/pull/19200) — 2 comments, 0 reactions
-- [DataDog/datadog-agent: fix(e2e): retry ensure-adws-started on transient SSH/script failures](https://github.com/DataDog/datadog-agent/pull/54683) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: LLMO PoC: emit spans + capture LLM request bodies via eBPF](https://github.com/DataDog/datadog-agent/pull/52986) — 7 comments, 1 reactions
-- [DataDog/datadog-agent: feat(softinv): report OS updates and OEM driver packages](https://github.com/DataDog/datadog-agent/pull/54758) — 4 comments, 1 reactions
-- [prometheus/prometheus: tsdb: avoid retaining oversized record buffers](https://github.com/prometheus/prometheus/pull/19409) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: \[CONTINT-5442\] Add pod state handlers to container_lifecycle](https://github.com/DataDog/datadog-agent/pull/54743) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: apm: use url.template for OTLP HTTP client resource names](https://github.com/DataDog/datadog-agent/pull/54496) — 7 comments, 2 reactions
-- [DataDog/datadog-agent: fix(installer): embed -nocap systemd unit templates](https://github.com/DataDog/datadog-agent/pull/54804) — 1 comments, 1 reactions
-- [open-telemetry/opentelemetry-collector: \[pdata\] move useProtoPooling to beta](https://github.com/open-telemetry/opentelemetry-collector/pull/15684) — 3 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: Fix grammatical errors and remove duplicate code in logs_router](https://github.com/open-telemetry/opentelemetry-collector/pull/15655) — 2 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: feat: add support for identity compression algorithm in confighttp](https://github.com/open-telemetry/opentelemetry-collector/pull/15656) — 3 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: feat(confignet): add Unix domain socket lifecycle management](https://github.com/open-telemetry/opentelemetry-collector/pull/15667) — 1 comments, 0 reactions
-- [grafana/loki: docs: Add Apache APISIX to third-party clients 🤖🤖🤖](https://github.com/grafana/loki/pull/23934) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: Fix AWS CLI install/download flakiness in Windows E2E host_cache](https://github.com/DataDog/datadog-agent/pull/54725) — 2 comments, 0 reactions
-- [DataDog/datadog-agent: fix(logs): score timestamps on window density, not run average](https://github.com/DataDog/datadog-agent/pull/54756) — 6 comments, 2 reactions
-- [DataDog/datadog-agent: fix(logs): stop diluting leading timestamp matches](https://github.com/DataDog/datadog-agent/pull/54753) — 4 comments, 2 reactions
-- [DataDog/datadog-agent: WIF-48: add delegated-auth dual-shipping foundation](https://github.com/DataDog/datadog-agent/pull/53517) — 7 comments, 1 reactions
-- [DataDog/datadog-agent: WIF-48: wire delegated auth into endpoint subsystems](https://github.com/DataDog/datadog-agent/pull/54803) — 4 comments, 1 reactions
-- [prometheus/prometheus: \[BugFix\]promql: Reject offset/@ modifiers immediately before subquery range](https://github.com/prometheus/prometheus/pull/17852) — 6 comments, 0 reactions
-- [prometheus/prometheus: discovery/file: Flaky `TestInvalidFileUpdate`  and `TestUpdateFileWithPartialWrites` tests](https://github.com/prometheus/prometheus/issues/18269) — 4 comments, 0 reactions
-- [prometheus/prometheus: promql/parser: fix error position for duration division by zero](https://github.com/prometheus/prometheus/pull/19211) — 6 comments, 0 reactions
-- [prometheus/prometheus: docker SD: add Image + ImageID to labels](https://github.com/prometheus/prometheus/pull/19386) — 1 comments, 0 reactions
-- [grafana/loki: chore(deps): Update Terraform google to v7.43.0 (main)](https://github.com/grafana/loki/pull/22967) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: DELA-251 - Initial implementation of cloud auth proof for an API key](https://github.com/DataDog/datadog-agent/pull/43554) — 4 comments, 0 reactions
-- [DataDog/datadog-agent: system-probe: Run bazel build for checks](https://github.com/DataDog/datadog-agent/pull/46209) — 3 comments, 0 reactions
-- [DataDog/datadog-agent: Update OTel Collector dependencies to v](https://github.com/DataDog/datadog-agent/pull/36401) — 6 comments, 0 reactions
-- [DataDog/datadog-agent: \[do not merge\] Implement kubernetes_state.pod.time_to_ready \[A\]](https://github.com/DataDog/datadog-agent/pull/45934) — 3 comments, 0 reactions
-- [DataDog/datadog-agent: Revert "\[SINT-3775\] Use CI Identities IAM Role in Windows Jobs"](https://github.com/DataDog/datadog-agent/pull/46235) — 4 comments, 0 reactions
-- [DataDog/datadog-agent: \[TEST\] \[DONOTMERGE\] Try out cross-pipeline job dependencies](https://github.com/DataDog/datadog-agent/pull/46240) — 6 comments, 0 reactions
-- [DataDog/datadog-agent: \[agenthealth\] add e2e test](https://github.com/DataDog/datadog-agent/pull/45747) — 5 comments, 0 reactions
-- [DataDog/datadog-agent: Paulcacheux/unmarshal binary opt](https://github.com/DataDog/datadog-agent/pull/45964) — 2 comments, 0 reactions
-- [DataDog/datadog-agent: fix(ci):comment ci-identities calls](https://github.com/DataDog/datadog-agent/pull/46236) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: See if we can hack a way around project.extra_package_file](https://github.com/DataDog/datadog-agent/pull/45535) — 4 comments, 0 reactions
-- [DataDog/datadog-agent: WIF-57: retry (not drop) 403s on delegated-auth-pending domains](https://github.com/DataDog/datadog-agent/pull/54169) — 6 comments, 0 reactions
-- [prometheus/prometheus: discovery/aws: don't panic on ElastiCache caches with absent optional fields](https://github.com/prometheus/prometheus/pull/19405) — 0 comments, 0 reactions
-- [prometheus/prometheus: discovery/kubernetes: populate loadbalancer IP from status.ingress](https://github.com/prometheus/prometheus/pull/19404) — 0 comments, 0 reactions
-- [prometheus/prometheus: __meta_kubernetes_service_loadbalancer_ip not working as expected](https://github.com/prometheus/prometheus/issues/14398) — 23 comments, 0 reactions
-- [prometheus/prometheus: promql/parser: parentheses around a plain duration literal are lost on round-trip](https://github.com/prometheus/prometheus/issues/18770) — 2 comments, 0 reactions
-- [prometheus/prometheus: Populate __meta_kubernetes_service_loadbalancer_ip from status.loadBalancer.ingress with fallback to spec.loadBalancerIP](https://github.com/prometheus/prometheus/pull/17136) — 9 comments, 0 reactions
-- [prometheus/prometheus: fix(discovery/aws): guard nil Placement and ImageId in EC2 discovery](https://github.com/prometheus/prometheus/pull/19375) — 1 comments, 0 reactions
-- [prometheus/prometheus: feat: add metric analyzer utilities for Prometheus metrics analysis](https://github.com/prometheus/prometheus/pull/19377) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[AAD-23\] Remove CUSUM detector](https://github.com/DataDog/datadog-agent/pull/54437) — 8 comments, 1 reactions
-- [open-telemetry/opentelemetry-collector: AIX support for tier 2](https://github.com/open-telemetry/opentelemetry-collector/issues/15704) — 0 comments, 0 reactions
-- [grafana/loki: chore(deps): Update module go.etcd.io/etcd/client/v3 to v3.7.1 (main)](https://github.com/grafana/loki/pull/23000) — 2 comments, 0 reactions
-- [grafana/loki: chore(deps): Update module go.etcd.io/etcd/client/pkg/v3 to v3.7.1 (main)](https://github.com/grafana/loki/pull/22575) — 1 comments, 0 reactions
-- [grafana/loki: chore(deps): Update module go.etcd.io/etcd/api/v3 to v3.7.1 (main)](https://github.com/grafana/loki/pull/22574) — 1 comments, 0 reactions
-- [prometheus/prometheus: Incorrect Markdown link formatting due to space between \[\] and ()](https://github.com/prometheus/prometheus/issues/18044) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: feat(gpu): Add experimental Apple Silicon monitoring](https://github.com/DataDog/datadog-agent/pull/54789) — 4 comments, 1 reactions
-- [grafana/loki: feat(indexgateway): Add admission control to bound concurrent requests](https://github.com/grafana/loki/pull/23932) — 1 comments, 0 reactions
-- [prometheus/prometheus: cmd/prometheus: OS agnostic tests](https://github.com/prometheus/prometheus/pull/19340) — 2 comments, 0 reactions
-- [prometheus/prometheus: config: fix windows config tests](https://github.com/prometheus/prometheus/pull/19370) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: \[DO NOT MERGE\] One-off e2e run with ADP enabled by default](https://github.com/DataDog/datadog-agent/pull/53415) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: feat(otel-logs): map instrumentation scope name to otel.scope.name](https://github.com/DataDog/datadog-agent/pull/52945) — 4 comments, 3 reactions
-- [DataDog/datadog-agent: perf: move #54639's `proto.Client` clone from `seen` to `activeClients`](https://github.com/DataDog/datadog-agent/pull/54800) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: dyninst/irgen: name the unsupported operation in condition errors](https://github.com/DataDog/datadog-agent/pull/54601) — 8 comments, 2 reactions
-- [DataDog/datadog-agent: Update dependency @sentry/dotagents to v3](https://github.com/DataDog/datadog-agent/pull/54802) — 2 comments, 1 reactions
-- [grafana/loki: docs: Add Thanos storage examples  🤖🤖🤖](https://github.com/grafana/loki/pull/23777) — 3 comments, 0 reactions
-- [DataDog/datadog-agent: Add `datadog.ncm.check_failure` metric](https://github.com/DataDog/datadog-agent/pull/54540) — 4 comments, 1 reactions
-- [grafana/loki: fix(docs): correct broken 'pipeline errors' link in log queries](https://github.com/grafana/loki/pull/23927) — 2 comments, 0 reactions
-- [prometheus/prometheus: discovery/stackit: add support for postgres targets discovery](https://github.com/prometheus/prometheus/pull/19400) — 2 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: Dependency Dashboard](https://github.com/open-telemetry/opentelemetry-collector/issues/8903) — 0 comments, 0 reactions
-- [grafana/loki: chore(deps): Update module github.com/knadh/koanf/maps to v0.1.3 (main)](https://github.com/grafana/loki/pull/23931) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: ci: default GitLab jobs to shallow clones, keep full history where needed](https://github.com/DataDog/datadog-agent/pull/54799) — 2 comments, 1 reactions
-- [grafana/loki: chore(deps): Update logstash:9.4.4 Docker digest to bdb7d35 (main)](https://github.com/grafana/loki/pull/23757) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: \[APM\] Reduce allocations on the trace decode path](https://github.com/DataDog/datadog-agent/pull/54798) — 6 comments, 2 reactions
-- [DataDog/datadog-agent: \[ABLD-419\]  Only install bazelisk with dda inv install-tools on macos](https://github.com/DataDog/datadog-agent/pull/54746) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: \[ABLD-395\] MVP macos .pkg file rule.](https://github.com/DataDog/datadog-agent/pull/54115) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: NDM Agent Workload Balancing: switch RC product from NDM_AGENT_WORKLOAD_BALANCING to HA_AGENT](https://github.com/DataDog/datadog-agent/issues/54801) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: \[WINA-2940\] Break Group Policy passes into timed CSE invocations](https://github.com/DataDog/datadog-agent/pull/54546) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: Sign macos DMG only on nightly instead of main](https://github.com/DataDog/datadog-agent/pull/54797) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: Add allowlist for valid conntrack_path values](https://github.com/DataDog/datadog-agent/pull/54603) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: \[release\] Update last stable to 7.82.1](https://github.com/DataDog/datadog-agent/pull/54653) — 6 comments, 2 reactions
-- [DataDog/datadog-agent: Add BUILD files for some straggler test tools](https://github.com/DataDog/datadog-agent/pull/54549) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: add BUILD file for pkg/network/usm/debugger/cmd](https://github.com/DataDog/datadog-agent/pull/54662) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: \[release\] Update last stable to 7.82.0](https://github.com/DataDog/datadog-agent/pull/54478) — 4 comments, 2 reactions
-- [DataDog/datadog-agent: \[AAD-23\] Remove unused correlators](https://github.com/DataDog/datadog-agent/pull/54435) — 6 comments, 0 reactions
-- [DataDog/datadog-agent: refactor(fleet): make procmgr an independent Linux service manager](https://github.com/DataDog/datadog-agent/pull/54168) — 4 comments, 0 reactions
-- [DataDog/datadog-agent: \[Backport 7.83.x\]  feat(wls): add K8S target through Remote Config](https://github.com/DataDog/datadog-agent/pull/54761) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: test(network/usm): run the USM and classification suites on the fentry tracer](https://github.com/DataDog/datadog-agent/pull/54796) — 6 comments, 2 reactions
-- [DataDog/datadog-agent: \[ACTP\] add par-control OPMS client](https://github.com/DataDog/datadog-agent/pull/54592) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: macos: notable-events collector health stats](https://github.com/DataDog/datadog-agent/pull/54547) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\] add par-control effective configuration](https://github.com/DataDog/datadog-agent/pull/54590) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\] wire split runner ownership](https://github.com/DataDog/datadog-agent/pull/54594) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\] orchestrate par-control tasks](https://github.com/DataDog/datadog-agent/pull/54593) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\] add par-control process lifecycle](https://github.com/DataDog/datadog-agent/pull/54589) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\] add par-control executor channel](https://github.com/DataDog/datadog-agent/pull/54591) — 5 comments, 1 reactions
-- [grafana/loki: docs: Configuration best practices had "Simple Storage Storage" mistake](https://github.com/grafana/loki/pull/23924) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: test(ndm): add e2e coverage for Agent Workload Balancing](https://github.com/DataDog/datadog-agent/pull/54795) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: \[ACTP\] package and activate par-control](https://github.com/DataDog/datadog-agent/pull/54529) — 5 comments, 1 reactions
-- [open-telemetry/opentelemetry-collector: scraperhelper: clarify collection_interval documentation](https://github.com/open-telemetry/opentelemetry-collector/pull/15734) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[ACIX-1440\]  Only sign and notarize packages on nightly](https://github.com/DataDog/datadog-agent/pull/49282) — 5 comments, 0 reactions
-- [DataDog/datadog-agent: \[ABLD-457\] Rust version of tool to make md5sums file of a tar file.](https://github.com/DataDog/datadog-agent/pull/50457) — 12 comments, 0 reactions
-- [DataDog/datadog-agent: Revert "SBOM e2e: scan host and container images across runtimes"](https://github.com/DataDog/datadog-agent/pull/52200) — 6 comments, 0 reactions
-- [DataDog/datadog-agent: \[Backport 7.82.x\] Bump google.golang.org/grpc to v1.82.1](https://github.com/DataDog/datadog-agent/pull/54757) — 4 comments, 2 reactions
-- [grafana/loki: chore: Implement streaming reading of header and TOC](https://github.com/grafana/loki/pull/23696) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: fix(cws): register connected sockets in the `flow_pid` map](https://github.com/DataDog/datadog-agent/pull/54691) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: Keep injected redacted_compat.h file out of the windows python's build inputs](https://github.com/DataDog/datadog-agent/pull/54783) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: Remove schemaBuilder and createschema command](https://github.com/DataDog/datadog-agent/pull/54793) — 5 comments, 2 reactions
-- [DataDog/datadog-agent: \[Backport 7.83.x\]  pkg/dyninst: Fix procscan backoff](https://github.com/DataDog/datadog-agent/pull/54682) — 3 comments, 1 reactions
-- [grafana/loki: docs: Update Helm Charts docs  🤖🤖🤖 \[release-3.7.x\]](https://github.com/grafana/loki/pull/23930) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: feat(fleet): Report installer status through local API](https://github.com/DataDog/datadog-agent/pull/54784) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: AGNTLOG-706 Increase logging for fingerprinting tailing](https://github.com/DataDog/datadog-agent/pull/54680) — 4 comments, 1 reactions
-- [grafana/loki: docs: Update Helm Charts docs  🤖🤖🤖](https://github.com/grafana/loki/pull/23899) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[Backport 7.83.x\]  \[autoscaling\] Filter Preview DPAs from pod patcher](https://github.com/DataDog/datadog-agent/pull/54710) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: APM: Enable convert-traces feature by default (take 2)](https://github.com/DataDog/datadog-agent/pull/53732) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: Add Windows `powershell` check](https://github.com/DataDog/datadog-agent/pull/53641) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: \[CONTP-1773\] Fix(workloadmeta): signal initialization when no collector is applicable](https://github.com/DataDog/datadog-agent/pull/54727) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: remove unneeded python spec in legcay omnibus](https://github.com/DataDog/datadog-agent/pull/54744) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: \[ABLD-366\] Fix build file for cmd/loader so it can also build for macos.](https://github.com/DataDog/datadog-agent/pull/54739) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: Add support for renamed settings](https://github.com/DataDog/datadog-agent/pull/53496) — 2 comments, 0 reactions
-- [DataDog/datadog-agent: Split network-devices section in it's own file and fix ID links](https://github.com/DataDog/datadog-agent/pull/54769) — 1 comments, 1 reactions
-- [DataDog/datadog-agent: \[WP\] Ignore unsupported socket types in flow_pid map during snapshot](https://github.com/DataDog/datadog-agent/pull/54166) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: Add BUILD file for pkg/network/protocols/http/gotls/lookup/internal](https://github.com/DataDog/datadog-agent/pull/54658) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: \[MVP\]\[CONTP-1967\] feat(ddi): Support custom targer refs for DDI checks and logs](https://github.com/DataDog/datadog-agent/pull/54791) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: add eviction configs](https://github.com/DataDog/datadog-agent/pull/52587) — 5 comments, 0 reactions
-- [DataDog/datadog-agent: \[CNM-5556\] Add diagnostics for TLS traffic reported as tls_encrypted:false](https://github.com/DataDog/datadog-agent/pull/54384) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: Add BUILD file for tools/retry_file_dump](https://github.com/DataDog/datadog-agent/pull/54665) — 4 comments, 0 reactions
-- [DataDog/datadog-agent: fix(agent-integrations): bump AIX embedded Python version in patch upgrade task](https://github.com/DataDog/datadog-agent/pull/54702) — 3 comments, 2 reactions
-- [DataDog/datadog-agent: \[SBOM\] Derive image inUse from workloadmeta](https://github.com/DataDog/datadog-agent/pull/54713) — 7 comments, 0 reactions
-- [DataDog/datadog-agent: add skeletal authored script action](https://github.com/DataDog/datadog-agent/pull/54675) — 7 comments, 1 reactions
-- [DataDog/datadog-agent: \[NETPATH-1108\] Remove flaky RC re-poll gate from Dynamic Path e2e test Setup](https://github.com/DataDog/datadog-agent/pull/54788) — 2 comments, 1 reactions
-- [grafana/loki: \[Bug\] PutObject fails with 400 InvalidArgument on non-AWS S3 (NetApp ONTAP, others) after PR #21848/#21849  -  x-amz-content-sha256 PAYLOAD-TRAILER not supported](https://github.com/grafana/loki/issues/21926) — 9 comments, 0 reactions
-- [grafana/loki: feat(kafka): support configurable SASL mechanism (PLAIN, SCRAM-SHA-256, SCRAM-SHA-512)](https://github.com/grafana/loki/pull/21719) — 0 comments, 1 reactions
-- [DataDog/datadog-agent: Bump dd-compile-policy to v0.1.13](https://github.com/DataDog/datadog-agent/pull/54148) — 4 comments, 1 reactions
-- [grafana/loki: chore: Fix flaky test TestTCPErrs](https://github.com/grafana/loki/pull/23929) — 1 comments, 0 reactions
-- [grafana/loki: chore(loki): Fix flaky test](https://github.com/grafana/loki/pull/23928) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: CONTINT-5539 - use correct kind version and kubeadm version](https://github.com/DataDog/datadog-agent/pull/54775) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: feat(remote-config): expose remote config state over the agent IPC HTTP API](https://github.com/DataDog/datadog-agent/pull/53753) — 6 comments, 2 reactions
-- [DataDog/datadog-agent: e2e: add local Docker-based Kind provisioner as a cheaper alternative to AWS-VM](https://github.com/DataDog/datadog-agent/pull/53864) — 8 comments, 1 reactions
-- [DataDog/datadog-agent: \[FA\] Categorize installer OOM/resource-exhaustion errors](https://github.com/DataDog/datadog-agent/pull/53905) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: Add experimental prepared startup for Agent rollouts](https://github.com/DataDog/datadog-agent/pull/54032) — 8 comments, 1 reactions
-- [DataDog/datadog-agent: When uploading artifacts to yumtesting, also download the datadog-fip…](https://github.com/DataDog/datadog-agent/pull/54134) — 5 comments, 2 reactions
-- [DataDog/datadog-agent: \[CWS\] Persist profile when cgroup is deleted / agent shutdown](https://github.com/DataDog/datadog-agent/pull/54138) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: \[cisco-sdwan\] Add config detail to max_pages pagination error](https://github.com/DataDog/datadog-agent/pull/54145) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: experiment(observer): add configurable time-aware log count view](https://github.com/DataDog/datadog-agent/pull/54147) — 7 comments, 1 reactions
-- [DataDog/datadog-agent: \[CWS\] Fix glob bypass](https://github.com/DataDog/datadog-agent/pull/54159) — 7 comments, 2 reactions
-- [DataDog/datadog-agent: DO NOT MERGE: validate datadog-agent-buildimages toolchains_mass branch](https://github.com/DataDog/datadog-agent/pull/54162) — 8 comments, 1 reactions
-- [grafana/loki: feat: Introduce tsdb.shipper.index-reader-mode feature flag](https://github.com/grafana/loki/pull/23663) — 3 comments, 0 reactions
-- [DataDog/datadog-agent: Pedro.cordeiro/macos ec2 snapshot poc 2](https://github.com/DataDog/datadog-agent/pull/54786) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: \[otel-agent\] Use zstd compression for all signals](https://github.com/DataDog/datadog-agent/pull/52758) — 10 comments, 1 reactions
-- [DataDog/datadog-agent: Pedro.cordeiro/macos ec2 snapshot poc 3](https://github.com/DataDog/datadog-agent/pull/54787) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: \[NTWK-799\] Allow custom namespaces on Synthetics to enable NDM resolution](https://github.com/DataDog/datadog-agent/pull/53700) — 6 comments, 1 reactions
-- [grafana/loki: chore: Wire up a separate logsobj builder config](https://github.com/grafana/loki/pull/23914) — 0 comments, 0 reactions
-- [grafana/loki: chore: Run index merge phase multiple times per log merge phase](https://github.com/grafana/loki/pull/23913) — 0 comments, 0 reactions
-- [grafana/loki: chore: Treat objects as runs in compaction planning](https://github.com/grafana/loki/pull/23910) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Remove deprecated Install-Datadog.ps1 script](https://github.com/DataDog/datadog-agent/pull/54438) — 3 comments, 1 reactions
-- [DataDog/datadog-agent: sbom: remove the Trivy on-disk cache](https://github.com/DataDog/datadog-agent/pull/53411) — 5 comments, 0 reactions
-- [DataDog/datadog-agent: \[Backport main\]  Changelog update for 7.82.1 release](https://github.com/DataDog/datadog-agent/pull/54631) — 2 comments, 2 reactions
-- [open-telemetry/opentelemetry-collector: \[extension/memorylimiterextension\] Add otelcol_memorylimiter_refused_requests metric](https://github.com/open-telemetry/opentelemetry-collector/pull/15738) — 1 comments, 0 reactions
-- [grafana/loki: Replace `go.uber.go/atomic` with Go standard library `sync/atomic`](https://github.com/grafana/loki/issues/20673) — 5 comments, 0 reactions
-- [DataDog/datadog-agent: Improve E2E test-writing skill](https://github.com/DataDog/datadog-agent/pull/54195) — 6 comments, 1 reactions
-- [prometheus/prometheus: \[PREVIEW\] storage/remote: combine exemplars and samples in same PRW v2 request](https://github.com/prometheus/prometheus/pull/19402) — 1 comments, 0 reactions
-- [grafana/loki: fix(iter): Fix error handling and resource leaks in chained sample and entry iterators](https://github.com/grafana/loki/pull/23921) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Build with race detector](https://github.com/DataDog/datadog-agent/pull/54333) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: Pedro.cordeiro/macos ec2 snapshot poc](https://github.com/DataDog/datadog-agent/pull/53982) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: docs(ncm): document network_config_management conf.yaml.example](https://github.com/DataDog/datadog-agent/pull/54330) — 3 comments, 1 reactions
-- [prometheus/prometheus: promql: safely derive info series evaluation time](https://github.com/prometheus/prometheus/pull/19387) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Update dependency DataDog/dd-apm-library-python to v4.13.0](https://github.com/DataDog/datadog-agent/pull/54444) — 17 comments, 2 reactions
-- [DataDog/datadog-agent: rtloader: Test ignored event_object field](https://github.com/DataDog/datadog-agent/pull/54055) — 6 comments, 2 reactions
-- [open-telemetry/opentelemetry-collector: Update module github.com/golangci/golangci-lint/v2 to v2.12.2](https://github.com/open-telemetry/opentelemetry-collector/pull/14677) — 5 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: Update github-actions deps](https://github.com/open-telemetry/opentelemetry-collector/pull/15576) — 1 comments, 0 reactions
-- [grafana/loki: chore(deps): Update github.com/go-openapi/analysis (main)](https://github.com/grafana/loki/pull/23916) — 0 comments, 0 reactions
-- [DataDog/datadog-agent: Use hermetic MSVC and msbuild to build cpython on Windows](https://github.com/DataDog/datadog-agent/pull/54718) — 4 comments, 2 reactions
-- [open-telemetry/opentelemetry-collector: Update module github.com/santhosh-tekuri/jsonschema/v6 to v6.0.3](https://github.com/open-telemetry/opentelemetry-collector/pull/15753) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: Titouan.guesdon/clusteragent gomemlimit](https://github.com/DataDog/datadog-agent/pull/54298) — 7 comments, 1 reactions
-- [DataDog/datadog-agent: ebpf: validate runtime-compiler cache directory and open cached objects via verified fd](https://github.com/DataDog/datadog-agent/pull/54585) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: HA(e2e): Move tests to RC fakeintake to fix flakiness](https://github.com/DataDog/datadog-agent/pull/53246) — 13 comments, 2 reactions
-- [DataDog/datadog-agent: feat(privateactionrunner): sync kubernetes admissionregistration, networking, and cluster CRD bundles](https://github.com/DataDog/datadog-agent/pull/53936) — 5 comments, 2 reactions
-- [DataDog/datadog-agent: Clean bazelignore from invalid folder path](https://github.com/DataDog/datadog-agent/pull/54770) — 5 comments, 2 reactions
-- [DataDog/datadog-agent: Upgrade embedded Python patch version to 3.13.15](https://github.com/DataDog/datadog-agent/pull/54723) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: Bump AIX embedded Python to 3.13.15](https://github.com/DataDog/datadog-agent/pull/54749) — 2 comments, 1 reactions
-- [DataDog/datadog-agent: \[ABLD-536\] Bazelify `gotestsum` usage across the repo](https://github.com/DataDog/datadog-agent/pull/54107) — 7 comments, 3 reactions
-- [grafana/loki: feat: Update Loki / Write Resources dashboard](https://github.com/grafana/loki/pull/23923) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: tagger: refuse reserved tag names from workload-controlled metadata](https://github.com/DataDog/datadog-agent/pull/54667) — 10 comments, 1 reactions
-- [prometheus/prometheus: docs: document NaN behaviour of clamp_max() and clamp_min()](https://github.com/prometheus/prometheus/pull/19274) — 7 comments, 0 reactions
-- [DataDog/datadog-agent: Split macOS-only corechecks into MACOS_CORECHECKS](https://github.com/DataDog/datadog-agent/pull/54566) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: \[WP\] Fix isolation re-apply mechanism](https://github.com/DataDog/datadog-agent/pull/54056) — 4 comments, 1 reactions
-- [DataDog/datadog-agent: Manage MSYS2 via Bazel](https://github.com/DataDog/datadog-agent/pull/54772) — 4 comments, 1 reactions
-- [open-telemetry/opentelemetry-collector: Update module github.com/knadh/koanf/maps to v0.1.3 - abandoned](https://github.com/open-telemetry/opentelemetry-collector/pull/15750) — 2 comments, 0 reactions
-- [open-telemetry/opentelemetry-collector: Update module google.golang.org/protobuf to v1.36.12](https://github.com/open-telemetry/opentelemetry-collector/pull/15754) — 1 comments, 0 reactions
-- [grafana/loki: fix: Include query and query_hash in byte-limit rejection log lines](https://github.com/grafana/loki/pull/23495) — 1 comments, 0 reactions
-- [prometheus/prometheus: bug(sending RW2): RW2 sends disconnected exemplars without samples](https://github.com/prometheus/prometheus/issues/17857) — 9 comments, 1 reactions
-- [prometheus/prometheus: tsdb: fix OOO chunk ID overflow via modular wrapping](https://github.com/prometheus/prometheus/pull/19216) — 1 comments, 0 reactions
-- [DataDog/datadog-agent: \[NDM\] Implement the `connectivityCheck` Private Action](https://github.com/DataDog/datadog-agent/pull/52174) — 16 comments, 1 reactions
-- [DataDog/datadog-agent: Errortracking: pass pcs via context rather than record attribute](https://github.com/DataDog/datadog-agent/pull/54760) — 7 comments, 2 reactions
-- [DataDog/datadog-agent: Update integrations-core digest to 1524101](https://github.com/DataDog/datadog-agent/pull/54765) — 5 comments, 1 reactions
-- [DataDog/datadog-agent: (fleet) add installer metadata payload over a read-only status socket](https://github.com/DataDog/datadog-agent/pull/54717) — 6 comments, 1 reactions
-- [DataDog/datadog-agent: service.namespace is not mapped to a metric tag, unlike its service.* siblings](https://github.com/DataDog/datadog-agent/issues/54728) — 4 comments, 0 reactions
-- [DataDog/datadog-agent: Add DD_LOG_LEVEL install-time option](https://github.com/DataDog/datadog-agent/pull/54741) — 4 comments, 1 reactions
+### [Replace `go.uber.go/atomic` with Go standard library `sync/atomic`](https://github.com/grafana/loki/issues/20673)
+
+- Project: `grafana/loki`
+- Tier: `maintainer-invited`
+- Evidence: Maintainers marked this as a good first issue; No assignee is listed
+- Caveat: Confirm scope and availability with the maintainers before starting work.
+
+### [Duplicate log lines can be introduced by automatic stream sharding](https://github.com/grafana/loki/issues/18760)
+
+- Project: `grafana/loki`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+## Important Updates
+
+### [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector)
+
+- **Pull Request** [exporterhelper: record queue batch send size after batching](https://github.com/open-telemetry/opentelemetry-collector/pull/15510) — 8 comments · 1 reactions · open
+- **Issue** [AIX support for tier 2](https://github.com/open-telemetry/opentelemetry-collector/issues/15704) — 0 comments · 0 reactions · open
+- **Issue** [Dependency Dashboard](https://github.com/open-telemetry/opentelemetry-collector/issues/8903) — 0 comments · 0 reactions · open
+- **Pull Request** [\[pdata/pprofile\] MergeTo: reserve index 0 of empty destination dictionary tables](https://github.com/open-telemetry/opentelemetry-collector/pull/15662) — 7 comments · 0 reactions · open
+- **Pull Request** [Update module github.com/golangci/golangci-lint/v2 to v2.12.2](https://github.com/open-telemetry/opentelemetry-collector/pull/14677) — 5 comments · 0 reactions · open
+- **Pull Request** [Drop only oversized items instead of the full batch](https://github.com/open-telemetry/opentelemetry-collector/pull/15267) — 4 comments · 0 reactions · open
+- **Pull Request** [Fix grammatical errors and remove duplicate code in logs_router](https://github.com/open-telemetry/opentelemetry-collector/pull/15655) — 2 comments · 0 reactions · open
+- **Pull Request** [feat: add support for identity compression algorithm in confighttp](https://github.com/open-telemetry/opentelemetry-collector/pull/15656) — 3 comments · 0 reactions · open
+- **Pull Request** [\[pdata\] move useProtoPooling to beta](https://github.com/open-telemetry/opentelemetry-collector/pull/15684) — 3 comments · 0 reactions · open
+- **Pull Request** [Add Certificate Revocation List (CRL) support](https://github.com/open-telemetry/opentelemetry-collector/pull/15685) — 2 comments · 0 reactions · open
+- **Pull Request** [Update github-actions deps](https://github.com/open-telemetry/opentelemetry-collector/pull/15576) — 1 comments · 0 reactions · open
+- **Pull Request** [feat(confignet): add Unix domain socket lifecycle management](https://github.com/open-telemetry/opentelemetry-collector/pull/15667) — 1 comments · 0 reactions · open
+- **Pull Request** [scraperhelper: clarify collection_interval documentation](https://github.com/open-telemetry/opentelemetry-collector/pull/15734) — 1 comments · 0 reactions · open
+- **Pull Request** [\[extension/memorylimiterextension\] Add otelcol_memorylimiter_refused_requests metric](https://github.com/open-telemetry/opentelemetry-collector/pull/15738) — 1 comments · 0 reactions · open
+- **Pull Request** [Update module github.com/santhosh-tekuri/jsonschema/v6 to v6.0.3](https://github.com/open-telemetry/opentelemetry-collector/pull/15753) — 1 comments · 0 reactions · closed
+- **Pull Request** [fix(memorylimiter): report health status only on state changes](https://github.com/open-telemetry/opentelemetry-collector/pull/15756) — 0 comments · 0 reactions · open
+- **Pull Request** [\[chore\]\[component/componentstatus\]: remove timestamp removal TODO](https://github.com/open-telemetry/opentelemetry-collector/pull/15757) — 0 comments · 0 reactions · open
+
+### [Datadog Agent](https://github.com/DataDog/datadog-agent)
+
+- **Pull Request** [Increase Quality Gate memory thresholds for ADP pre-flight mode](https://github.com/DataDog/datadog-agent/pull/54792) — 5 comments · 2 reactions · open
+- **Pull Request** [\[ABLD-536\] Bazelify `gotestsum` usage across the repo](https://github.com/DataDog/datadog-agent/pull/54107) — 7 comments · 3 reactions · closed
+- **Pull Request** [\[CWS\] Fix glob bypass](https://github.com/DataDog/datadog-agent/pull/54159) — 7 comments · 2 reactions · open
+- **Pull Request** [apm: use url.template for OTLP HTTP client resource names](https://github.com/DataDog/datadog-agent/pull/54496) — 7 comments · 2 reactions · open
+- **Pull Request** [fix(data plane): run preflight mode for entire SMP experiment duration](https://github.com/DataDog/datadog-agent/pull/54794) — 6 comments · 2 reactions · open
+- **Pull Request** [\[CWS\] Fix: handle activity dump endpoint host that already embeds a port](https://github.com/DataDog/datadog-agent/pull/54774) — 4 comments · 2 reactions · closed
+- **Pull Request** [\[WP\] ICMPv4 packet flow classification](https://github.com/DataDog/datadog-agent/pull/54157) — 6 comments · 1 reactions · open
+- **Pull Request** [\[WP\] Fix isolation re-apply mechanism](https://github.com/DataDog/datadog-agent/pull/54056) — 4 comments · 1 reactions · open
+- **Pull Request** [\[WP\] Ignore unsupported socket types in flow_pid map during snapshot](https://github.com/DataDog/datadog-agent/pull/54166) — 5 comments · 1 reactions · closed
+- **Pull Request** [\[CWS\] Kill container and cgroup scopes with cgroup v2 cgroup.kill](https://github.com/DataDog/datadog-agent/pull/54225) — 4 comments · 1 reactions · open
+- **Pull Request** [Build with race detector](https://github.com/DataDog/datadog-agent/pull/54333) — 4 comments · 1 reactions · open
+- **Pull Request** [fix(cws): register connected sockets in the `flow_pid` map](https://github.com/DataDog/datadog-agent/pull/54691) — 5 comments · 1 reactions · closed
+- **Pull Request** [\[SBOM\] Refresh every image when spreading the refresh](https://github.com/DataDog/datadog-agent/pull/54715) — 4 comments · 2 reactions · open
+- **Pull Request** [Revert "SBOM e2e: scan host and container images across runtimes"](https://github.com/DataDog/datadog-agent/pull/52200) — 6 comments · 0 reactions · closed
+- **Pull Request** [\[procmgr\] Show profile and user in list and describe](https://github.com/DataDog/datadog-agent/pull/53568) — 26 comments · 1 reactions · open
+- **Pull Request** [\[CWS\] Persist profile when cgroup is deleted / agent shutdown](https://github.com/DataDog/datadog-agent/pull/54138) — 3 comments · 1 reactions · open
+- **Pull Request** [\[SBOM\] Derive image inUse from workloadmeta](https://github.com/DataDog/datadog-agent/pull/54713) — 7 comments · 0 reactions · closed
+- **Pull Request** [DELA-251 - Initial implementation of cloud auth proof for an API key](https://github.com/DataDog/datadog-agent/pull/43554) — 4 comments · 0 reactions · closed
+- **Pull Request** [sbom: remove the Trivy on-disk cache](https://github.com/DataDog/datadog-agent/pull/53411) — 5 comments · 0 reactions · open
+- **Pull Request** [\[CWS-6177\] Use dynamic sampling](https://github.com/DataDog/datadog-agent/pull/54471) — 5 comments · 1 reactions · open
+- **Pull Request** [\[procmgr\] Windows spawn profiles foundation](https://github.com/DataDog/datadog-agent/pull/54731) — 25 comments · 1 reactions · open
+- **Pull Request** [Split network-devices section in it's own file and fix ID links](https://github.com/DataDog/datadog-agent/pull/54769) — 1 comments · 1 reactions · open
+- **Pull Request** [Paulcacheux/unmarshal binary opt](https://github.com/DataDog/datadog-agent/pull/45964) — 2 comments · 0 reactions · closed
+- **Pull Request** [Update dependency DataDog/dd-apm-library-python to v4.13.0](https://github.com/DataDog/datadog-agent/pull/54444) — 17 comments · 2 reactions · closed
+- **Pull Request** [\[EBPF\] gpu: Skip unsupported vGPU max-clock queries](https://github.com/DataDog/datadog-agent/pull/54729) — 11 comments · 3 reactions · closed
+- **Pull Request** [HA(e2e): Move tests to RC fakeintake to fix flakiness](https://github.com/DataDog/datadog-agent/pull/53246) — 13 comments · 2 reactions · closed
+- **Pull Request** [feat(autodiscovery): tag configuration-discovery instances to mitigate duplicate metrics risk](https://github.com/DataDog/datadog-agent/pull/54660) — 8 comments · 3 reactions · closed
+- **Pull Request** [Improve support for Windows across Invoke tasks](https://github.com/DataDog/datadog-agent/pull/54762) — 11 comments · 2 reactions · closed
+- **Pull Request** [Add source to distributions via checks.](https://github.com/DataDog/datadog-agent/pull/51295) — 8 comments · 2 reactions · open
+- **Pull Request** [feat(otel-logs): map instrumentation scope name to otel.scope.name](https://github.com/DataDog/datadog-agent/pull/52945) — 4 comments · 3 reactions · closed
+
+### [Prometheus](https://github.com/prometheus/prometheus)
+
+- **Issue** [__meta_kubernetes_service_loadbalancer_ip not working as expected](https://github.com/prometheus/prometheus/issues/14398) — 23 comments · 0 reactions · open
+- **Issue** [alerting: expose activeAt for alert templating](https://github.com/prometheus/prometheus/issues/17273) — 7 comments · 0 reactions · open
+- **Issue** [__address__ label from pod discovered through kubernetes discovery does not include port when relabelling](https://github.com/prometheus/prometheus/issues/11678) — 4 comments · 0 reactions · closed
+- **Issue** [Dependency Dashboard](https://github.com/prometheus/prometheus/issues/17691) — 5 comments · 0 reactions · open
+- **Issue** [discovery/file: Flaky `TestInvalidFileUpdate`  and `TestUpdateFileWithPartialWrites` tests](https://github.com/prometheus/prometheus/issues/18269) — 4 comments · 0 reactions · open
+- **Issue** [promql/parser: parentheses around a plain duration literal are lost on round-trip](https://github.com/prometheus/prometheus/issues/18770) — 2 comments · 0 reactions · open
+- **Pull Request** [TSDB: improve isolation performance](https://github.com/prometheus/prometheus/pull/19286) — 10 comments · 0 reactions · open
+- **Issue** [Incorrect Markdown link formatting due to space between \[\] and ()](https://github.com/prometheus/prometheus/issues/18044) — 0 comments · 0 reactions · closed
+- **Pull Request** [Populate __meta_kubernetes_service_loadbalancer_ip from status.loadBalancer.ingress with fallback to spec.loadBalancerIP](https://github.com/prometheus/prometheus/pull/17136) — 9 comments · 0 reactions · open
+- **Pull Request** [\[BugFix\]promql: Reject offset/@ modifiers immediately before subquery range](https://github.com/prometheus/prometheus/pull/17852) — 6 comments · 0 reactions · open
+- **Pull Request** [promql/parser: fix error position for duration division by zero](https://github.com/prometheus/prometheus/pull/19211) — 6 comments · 0 reactions · open
+- **Pull Request** [docs: document NaN behaviour of clamp_max() and clamp_min()](https://github.com/prometheus/prometheus/pull/19274) — 7 comments · 0 reactions · open
+- **Pull Request** [config: promote retry_on_http_429 to GA](https://github.com/prometheus/prometheus/pull/19390) — 4 comments · 0 reactions · open
+- **Pull Request** [storage: add OriginalLabelsHash() method to SeriesSet](https://github.com/prometheus/prometheus/pull/19200) — 2 comments · 0 reactions · open
+- **Pull Request** [cmd/prometheus: OS agnostic tests](https://github.com/prometheus/prometheus/pull/19340) — 2 comments · 0 reactions · closed
+- **Pull Request** [cmd/prometheus: fix flaky TestRuntimeGOGCConfig](https://github.com/prometheus/prometheus/pull/19341) — 2 comments · 0 reactions · closed
+- **Pull Request** [docker SD: add Image + ImageID to labels](https://github.com/prometheus/prometheus/pull/19386) — 2 comments · 0 reactions · open
+- **Pull Request** [discovery/stackit: add support for postgres targets discovery](https://github.com/prometheus/prometheus/pull/19400) — 2 comments · 0 reactions · open
+- **Pull Request** [fix(deps): update kubernetes go dependencies to v0.36.3](https://github.com/prometheus/prometheus/pull/18757) — 1 comments · 0 reactions · open
+- **Pull Request** [discovery/aws: paginate Lightsail GetInstances so all instances are discovered](https://github.com/prometheus/prometheus/pull/19180) — 1 comments · 0 reactions · open
+- **Pull Request** [tsdb: make panic lock-release test OS agnostic](https://github.com/prometheus/prometheus/pull/19339) — 0 comments · 0 reactions · closed
+- **Pull Request** [config: fix windows config tests](https://github.com/prometheus/prometheus/pull/19370) — 0 comments · 0 reactions · closed
+- **Pull Request** [docs: Add troubleshooting section with common issues and solutions](https://github.com/prometheus/prometheus/pull/19373) — 1 comments · 0 reactions · closed
+- **Pull Request** [fix(discovery/aws): guard nil Placement and ImageId in EC2 discovery](https://github.com/prometheus/prometheus/pull/19375) — 1 comments · 0 reactions · open
+- **Pull Request** [feat: add metric analyzer utilities for Prometheus metrics analysis](https://github.com/prometheus/prometheus/pull/19377) — 1 comments · 0 reactions · open
+- **Pull Request** [promql: safely derive info series evaluation time](https://github.com/prometheus/prometheus/pull/19387) — 0 comments · 0 reactions · open
+- **Pull Request** [discovery/aws: don't panic on ECS tasks with absent optional fields](https://github.com/prometheus/prometheus/pull/19396) — 1 comments · 0 reactions · closed
+- **Pull Request** [scrape: use a dedicated HTTP client per unix socket target](https://github.com/prometheus/prometheus/pull/19399) — 1 comments · 0 reactions · open
+- **Pull Request** [tsdb: document that OOO chunk IDs are no longer monotonically increasing](https://github.com/prometheus/prometheus/pull/19401) — 1 comments · 0 reactions · closed
+- **Pull Request** [\[PREVIEW\] storage/remote: combine exemplars and samples in same PRW v2 request](https://github.com/prometheus/prometheus/pull/19402) — 1 comments · 0 reactions · closed
+
+### [Loki](https://github.com/grafana/loki)
+
+- **Issue** [Duplicate log lines can be introduced by automatic stream sharding](https://github.com/grafana/loki/issues/18760) — 3 comments · 13 reactions · open
+- **Issue** [\[Bug\] PutObject fails with 400 InvalidArgument on non-AWS S3 (NetApp ONTAP, others) after PR #21848/#21849  -  x-amz-content-sha256 PAYLOAD-TRAILER not supported](https://github.com/grafana/loki/issues/21926) — 9 comments · 0 reactions · open
+- **Issue** [Replace `go.uber.go/atomic` with Go standard library `sync/atomic`](https://github.com/grafana/loki/issues/20673) — 5 comments · 0 reactions · open
+- **Issue** [Dependency Dashboard](https://github.com/grafana/loki/issues/23439) — 0 comments · 0 reactions · open
+- **Issue** [Sharded avg_over_time(... | unwrap ...) with grouping under-reports the average](https://github.com/grafana/loki/issues/23890) — 0 comments · 0 reactions · closed
+- **Pull Request** [feat(storage): Add OCI Thanos object store backend](https://github.com/grafana/loki/pull/23710) — 8 comments · 0 reactions · open
+- **Pull Request** [fix: deduplicate log lines split across stream shards](https://github.com/grafana/loki/pull/23907) — 7 comments · 0 reactions · open
+- **Pull Request** [feat(kafka): support configurable SASL mechanism (PLAIN, SCRAM-SHA-256, SCRAM-SHA-512)](https://github.com/grafana/loki/pull/21719) — 0 comments · 1 reactions · open
+- **Pull Request** [fix(querier): Prevent sample query plan marshal race 🤖🤖🤖](https://github.com/grafana/loki/pull/23349) — 4 comments · 0 reactions · open
+- **Pull Request** [\[DO NOT MERGE\] LogQL metric queries with stream-first iteration (prototype)](https://github.com/grafana/loki/pull/23641) — 5 comments · 0 reactions · open
+- **Pull Request** [feat(distributor): add -distributor.extend-writes to keep write quorum during ingester scale-down](https://github.com/grafana/loki/pull/23908) — 5 comments · 0 reactions · open
+- **Pull Request** [chore(deps): Update module go.etcd.io/etcd/client/v3 to v3.7.1 (main)](https://github.com/grafana/loki/pull/23000) — 2 comments · 0 reactions · open
+- **Pull Request** [fix: Recognise thanos/minio S3 throttling errors as retryable and add backoff](https://github.com/grafana/loki/pull/23454) — 2 comments · 0 reactions · open
+- **Pull Request** [feat: Introduce tsdb.shipper.index-reader-mode feature flag](https://github.com/grafana/loki/pull/23663) — 3 comments · 0 reactions · closed
+- **Pull Request** [chore: Implement streaming reading of symbols section](https://github.com/grafana/loki/pull/23730) — 2 comments · 0 reactions · open
+- **Pull Request** [docs: Add Thanos storage examples  🤖🤖🤖](https://github.com/grafana/loki/pull/23777) — 3 comments · 0 reactions · closed
+- **Pull Request** [chore: Implement streaming reading of series](https://github.com/grafana/loki/pull/23790) — 2 comments · 0 reactions · open
+- **Pull Request** [fix(logql): Count unwrapped samples in the sharded avg_over_time denominator](https://github.com/grafana/loki/pull/23906) — 2 comments · 0 reactions · closed
+- **Pull Request** [fix(docs): correct broken 'pipeline errors' link in log queries](https://github.com/grafana/loki/pull/23927) — 2 comments · 0 reactions · closed
+- **Pull Request** [feat(indexgateway): Add admission control to bound concurrent requests](https://github.com/grafana/loki/pull/23932) — 2 comments · 0 reactions · open
+- **Pull Request** [feat(operator): Watch object storage Services for NetworkPolicy updates and surface ports in status](https://github.com/grafana/loki/pull/22436) — 0 comments · 0 reactions · open
+- **Pull Request** [chore(deps): Update module go.etcd.io/etcd/api/v3 to v3.7.1 (main)](https://github.com/grafana/loki/pull/22574) — 1 comments · 0 reactions · open
+- **Pull Request** [chore(deps): Update module go.etcd.io/etcd/client/pkg/v3 to v3.7.1 (main)](https://github.com/grafana/loki/pull/22575) — 1 comments · 0 reactions · open
+- **Pull Request** [chore(deps): Update Terraform google to v7.43.0 (main)](https://github.com/grafana/loki/pull/22967) — 1 comments · 0 reactions · open
+- **Pull Request** [fix(querier): Prevent log query plan marshal race 🤖🤖🤖](https://github.com/grafana/loki/pull/23357) — 1 comments · 0 reactions · open
+- **Pull Request** [fix(deps): Update module github.com/tjhop/slog-gokit to v0.2.2 (main)](https://github.com/grafana/loki/pull/23397) — 1 comments · 0 reactions · open
+- **Pull Request** [fix(deps): Update github.com/prometheus/prometheus digest to 762bc8a (main)](https://github.com/grafana/loki/pull/23627) — 1 comments · 0 reactions · open
+- **Pull Request** [chore: Implement streaming reading of header and TOC](https://github.com/grafana/loki/pull/23696) — 0 comments · 0 reactions · closed
+- **Pull Request** [refactor(chunks-inspect): Report block parse errors and drop the duplicate time.go](https://github.com/grafana/loki/pull/23721) — 0 comments · 0 reactions · closed
+- **Pull Request** [chore(deps): Update github.com/grafana/objstore digest to ec72e5a (main)](https://github.com/grafana/loki/pull/23741) — 0 comments · 0 reactions · open

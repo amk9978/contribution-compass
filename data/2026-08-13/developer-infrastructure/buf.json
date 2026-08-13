@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "date": "2026-08-13",
   "group": {
     "id": "developer-infrastructure",
@@ -10,13 +10,42 @@
     "repo": "bufbuild/buf",
     "name": "Buf"
   },
+  "context": {
+    "repository": "bufbuild/buf",
+    "url": "https://github.com/bufbuild/buf",
+    "description": "The best way of working with Protocol Buffers.",
+    "homepage": "https://buf.build",
+    "language": "Go",
+    "topics": [
+      "buf-cli",
+      "buf-schema-registry",
+      "grpc",
+      "protobuf",
+      "protoc",
+      "protocol-buffers"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 11333,
+    "forks": 366,
+    "openIssues": 58,
+    "archived": false,
+    "collectedAt": "2026-08-13T13:48:15.411158+00:00"
+  },
   "runs": [
     {
       "collectedAt": "2026-08-13T12:26:38.318Z",
       "since": "2026-08-12T12:26:38.318Z",
       "observedCount": 0,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T13:48:00.446149Z",
+      "since": "2026-08-12T13:48:00.446149Z",
+      "observedCount": 0,
+      "changedCount": 0
     }
   ],
-  "signals": []
+  "signals": [],
+  "events": []
 }

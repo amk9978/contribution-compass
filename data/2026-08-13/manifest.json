@@ -1,218 +1,248 @@
 {
-  "version": 1,
+  "version": 2,
   "date": "2026-08-13",
-  "collectedAt": "2026-08-13T12:26:38.318Z",
-  "since": "2026-08-12T12:26:38.318Z",
+  "collectedAt": "2026-08-13T13:48:00.446149Z",
+  "since": "2026-08-12T13:48:00.446149Z",
   "repositories": [
     {
       "group": "distributed-systems",
       "repository": "apple/foundationdb",
       "path": "distributed-systems/foundationdb.json",
       "observedCount": 16,
-      "changedCount": 16
+      "changedCount": 16,
+      "eventCount": 16
     },
     {
       "group": "distributed-systems",
       "repository": "tigerbeetle/tigerbeetle",
       "path": "distributed-systems/tigerbeetle.json",
       "observedCount": 1,
-      "changedCount": 1
+      "changedCount": 1,
+      "eventCount": 1
     },
     {
       "group": "distributed-systems",
       "repository": "etcd-io/raft",
       "path": "distributed-systems/etcd-raft.json",
       "observedCount": 0,
-      "changedCount": 0
+      "changedCount": 0,
+      "eventCount": 0
     },
     {
       "group": "distributed-systems",
       "repository": "tikv/raft-rs",
       "path": "distributed-systems/raft-rs.json",
       "observedCount": 0,
-      "changedCount": 0
+      "changedCount": 0,
+      "eventCount": 0
     },
     {
       "group": "distributed-systems",
       "repository": "jepsen-io/jepsen",
       "path": "distributed-systems/jepsen.json",
       "observedCount": 0,
-      "changedCount": 0
+      "changedCount": 0,
+      "eventCount": 0
     },
     {
       "group": "platform-infrastructure",
       "repository": "cilium/cilium",
       "path": "platform-infrastructure/cilium.json",
-      "observedCount": 151,
-      "changedCount": 151
+      "observedCount": 150,
+      "changedCount": 150,
+      "eventCount": 150
     },
     {
       "group": "platform-infrastructure",
       "repository": "envoyproxy/envoy",
       "path": "platform-infrastructure/envoy.json",
-      "observedCount": 64,
-      "changedCount": 64
+      "observedCount": 65,
+      "changedCount": 65,
+      "eventCount": 65
     },
     {
       "group": "platform-infrastructure",
       "repository": "temporalio/temporal",
       "path": "platform-infrastructure/temporal.json",
-      "observedCount": 90,
-      "changedCount": 90
+      "observedCount": 88,
+      "changedCount": 88,
+      "eventCount": 88
     },
     {
       "group": "platform-infrastructure",
       "repository": "containerd/containerd",
       "path": "platform-infrastructure/containerd.json",
-      "observedCount": 41,
-      "changedCount": 41
+      "observedCount": 40,
+      "changedCount": 40,
+      "eventCount": 40
     },
     {
       "group": "observability",
       "repository": "open-telemetry/opentelemetry-collector",
       "path": "observability/otel-collector.json",
-      "observedCount": 19,
-      "changedCount": 19
+      "observedCount": 17,
+      "changedCount": 17,
+      "eventCount": 17
     },
     {
       "group": "observability",
       "repository": "DataDog/datadog-agent",
       "path": "observability/datadog-agent.json",
-      "observedCount": 201,
-      "changedCount": 201
+      "observedCount": 199,
+      "changedCount": 199,
+      "eventCount": 199
     },
     {
       "group": "observability",
       "repository": "prometheus/prometheus",
       "path": "observability/prometheus.json",
       "observedCount": 40,
-      "changedCount": 40
+      "changedCount": 40,
+      "eventCount": 40
     },
     {
       "group": "observability",
       "repository": "grafana/loki",
       "path": "observability/loki.json",
-      "observedCount": 65,
-      "changedCount": 65
+      "observedCount": 64,
+      "changedCount": 64,
+      "eventCount": 64
     },
     {
       "group": "data-infrastructure",
       "repository": "nats-io/nats-server",
       "path": "data-infrastructure/nats-server.json",
-      "observedCount": 19,
-      "changedCount": 19
+      "observedCount": 15,
+      "changedCount": 15,
+      "eventCount": 15
     },
     {
       "group": "data-infrastructure",
       "repository": "redpanda-data/redpanda",
       "path": "data-infrastructure/redpanda.json",
-      "observedCount": 54,
-      "changedCount": 54
+      "observedCount": 56,
+      "changedCount": 56,
+      "eventCount": 56
     },
     {
       "group": "data-infrastructure",
       "repository": "ClickHouse/ClickHouse",
       "path": "data-infrastructure/clickhouse.json",
       "observedCount": 500,
-      "changedCount": 500
+      "changedCount": 500,
+      "eventCount": 500
     },
     {
       "group": "data-infrastructure",
       "repository": "dragonflydb/dragonfly",
       "path": "data-infrastructure/dragonfly.json",
-      "observedCount": 28,
-      "changedCount": 28
+      "observedCount": 27,
+      "changedCount": 27,
+      "eventCount": 27
     },
     {
       "group": "ai-infrastructure",
       "repository": "BerriAI/litellm",
       "path": "ai-infrastructure/litellm.json",
-      "observedCount": 350,
-      "changedCount": 350
+      "observedCount": 340,
+      "changedCount": 340,
+      "eventCount": 340
     },
     {
       "group": "ai-infrastructure",
       "repository": "vllm-project/vllm",
       "path": "ai-infrastructure/vllm.json",
       "observedCount": 500,
-      "changedCount": 500
+      "changedCount": 500,
+      "eventCount": 500
     },
     {
       "group": "ai-infrastructure",
       "repository": "sgl-project/sglang",
       "path": "ai-infrastructure/sglang.json",
       "observedCount": 500,
-      "changedCount": 500
+      "changedCount": 500,
+      "eventCount": 500
     },
     {
       "group": "ai-infrastructure",
       "repository": "ray-project/ray",
       "path": "ai-infrastructure/ray.json",
-      "observedCount": 97,
-      "changedCount": 97
+      "observedCount": 96,
+      "changedCount": 96,
+      "eventCount": 96
     },
     {
       "group": "ai-infrastructure",
       "repository": "bentoml/BentoML",
       "path": "ai-infrastructure/bentoml.json",
-      "observedCount": 4,
-      "changedCount": 4
+      "observedCount": 3,
+      "changedCount": 3,
+      "eventCount": 3
     },
     {
       "group": "developer-infrastructure",
       "repository": "dagger/dagger",
       "path": "developer-infrastructure/dagger.json",
-      "observedCount": 23,
-      "changedCount": 23
+      "observedCount": 21,
+      "changedCount": 21,
+      "eventCount": 21
     },
     {
       "group": "developer-infrastructure",
       "repository": "astral-sh/uv",
       "path": "developer-infrastructure/uv.json",
       "observedCount": 44,
-      "changedCount": 44
+      "changedCount": 44,
+      "eventCount": 44
     },
     {
       "group": "developer-infrastructure",
       "repository": "testcontainers/testcontainers-go",
       "path": "developer-infrastructure/testcontainers-go.json",
       "observedCount": 1,
-      "changedCount": 1
+      "changedCount": 1,
+      "eventCount": 1
     },
     {
       "group": "developer-infrastructure",
       "repository": "bufbuild/buf",
       "path": "developer-infrastructure/buf.json",
       "observedCount": 0,
-      "changedCount": 0
+      "changedCount": 0,
+      "eventCount": 0
     },
     {
       "group": "coding-agent-infrastructure",
       "repository": "anthropics/claude-code",
       "path": "coding-agent-infrastructure/claude-code.json",
       "observedCount": 502,
-      "changedCount": 502
+      "changedCount": 502,
+      "eventCount": 502
     },
     {
       "group": "coding-agent-infrastructure",
       "repository": "openai/codex",
       "path": "coding-agent-infrastructure/codex.json",
-      "observedCount": 407,
-      "changedCount": 407
+      "observedCount": 403,
+      "changedCount": 403,
+      "eventCount": 403
     },
     {
       "group": "coding-agent-infrastructure",
       "repository": "anomalyco/opencode",
       "path": "coding-agent-infrastructure/opencode.json",
       "observedCount": 502,
-      "changedCount": 502
+      "changedCount": 502,
+      "eventCount": 502
     },
     {
       "group": "coding-agent-infrastructure",
       "repository": "NousResearch/hermes-agent",
       "path": "coding-agent-infrastructure/hermes-agent.json",
       "observedCount": 100,
-      "changedCount": 100
+      "changedCount": 100,
+      "eventCount": 100
     }
   ]
 }

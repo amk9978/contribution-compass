@@ -1,1517 +1,762 @@
-# Coding-Agent Infrastructure Updates — 2026-08-13
+# Coding-Agent Infrastructure — 2026-08-13
 
-> Automatically collected from GitHub. No analysis or synthesis is performed.
+> Factual GitHub evidence collected by Contribution Compass. No LLM analysis is performed.
 
-Collected changes: 1511 (1511 new, 0 updated).
+## Contribution Leads
 
-- [NousResearch/hermes-agent: fix(webhook): stop route scripts from losing authenticated delivery identity](https://github.com/NousResearch/hermes-agent/pull/85263) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(cli): bound operator quick-command execution](https://github.com/NousResearch/hermes-agent/pull/46057) — 3 comments, 0 reactions
-- [openai/codex: # Codex extension fails to start: "The extension couldn't load its resources"](https://github.com/openai/codex/issues/37458) — 52 comments, 11 reactions
-- [NousResearch/hermes-agent: fix(whatsapp): gate group media downloads](https://github.com/NousResearch/hermes-agent/pull/68810) — 12 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(webhook): queue verified events to target sessions](https://github.com/NousResearch/hermes-agent/pull/85275) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): propagate compression exhaustion result](https://github.com/NousResearch/hermes-agent/pull/85276) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(mcp): normalize numeric stdio environment values](https://github.com/NousResearch/hermes-agent/pull/85277) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(agent): collapse provider aliases in the fallback-chain dedup](https://github.com/NousResearch/hermes-agent/pull/85280) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(cli): Windows PowerShell same-surface guard weak + pid_alive fallback chain + spinner-loop interval asymmetry + voice auto-restart direct invalidate](https://github.com/NousResearch/hermes-agent/issues/85278) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] ​/goal​ reports "No goal set" while the goal is still set after a mid-session CLI auto-update](https://github.com/anthropics/claude-code/issues/86361) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: Docker example with HERMES_DASHBOARD=1 starts dashboard on 0.0.0.0, which is then rejected by the auth gate](https://github.com/NousResearch/hermes-agent/issues/49567) — 4 comments, 1 reactions
-- [NousResearch/hermes-agent: feat(plugins): queue-safe message injection, non_control H-107, on_session_open hook](https://github.com/NousResearch/hermes-agent/pull/85279) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Add ability to unqueue messages](https://github.com/anomalyco/opencode/issues/4821) — 23 comments, 98 reactions
-- [anthropics/claude-code: Background subagent task-notifications dropped when child completes while parent agent is mid-turn → permanent silent stall of fan-out skills (e.g. /code-review)](https://github.com/anthropics/claude-code/issues/86365) — 0 comments, 0 reactions
-- [anthropics/claude-code: Desktop Browser pane: allow user-approved local hostnames (hosts-file aliases) as trusted preview origins — currently all subresources blocked with ERR_BLOCKED_BY_CLIENT](https://github.com/anthropics/claude-code/issues/86228) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Fable 5 cybersecurity classifier false positive on defensive threat modeling and risk assessment](https://github.com/anthropics/claude-code/issues/86364) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: Auxiliary title_generation fails on DeepSeek: HTTP 400 "This response_format type is unavailable now"](https://github.com/NousResearch/hermes-agent/issues/83390) — 3 comments, 2 reactions
-- [NousResearch/hermes-agent: Triage: the seven mechanisms behind the 77 open stall/hang reports](https://github.com/NousResearch/hermes-agent/issues/84047) — 7 comments, 0 reactions
-- [anomalyco/opencode: docs: fix package manager code blocks](https://github.com/anomalyco/opencode/pull/42313) — 0 comments, 0 reactions
-- [anthropics/claude-code: Background git access to the working repo's remote (SSH git-upload-pack) with no user-issued remote command, and no setting to disable it](https://github.com/anthropics/claude-code/issues/86363) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]:对大模型的主动联网行为进行控制](https://github.com/anomalyco/opencode/issues/42288) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(desktop): update composer dropzone](https://github.com/anomalyco/opencode/pull/42312) — 0 comments, 0 reactions
-- [anomalyco/opencode: opencode zen DeepSeek V4 Flash Free requests fail with \[invalid_bearer_credential\]](https://github.com/anomalyco/opencode/issues/42293) — 6 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Code silently deletes conversation transcripts after 30 days by  default](https://github.com/anthropics/claude-code/issues/62476) — 13 comments, 19 reactions
-- [anomalyco/opencode: opencode2 mutates shared V1 database and breaks opencode 1.x coexistence](https://github.com/anomalyco/opencode/issues/42260) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(tools): compose deferred tools in execute_code](https://github.com/NousResearch/hermes-agent/pull/82243) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Browser pane blocks same-origin subresources with ERR_BLOCKED_BY_CLIENT for local dev domains mapped to 127.0.0.1 via /etc/hosts — page renders blank](https://github.com/anthropics/claude-code/issues/86362) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: intent_ack_continuation never fires in established sessions with local models](https://github.com/NousResearch/hermes-agent/issues/69778) — 3 comments, 0 reactions
-- [anomalyco/opencode: opencode run --format json emits auto-compaction internals as ordinary text events](https://github.com/anomalyco/opencode/issues/42238) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: \[skills-index-watchdog\] Skills index is stale or degraded (degraded)](https://github.com/NousResearch/hermes-agent/issues/66616) — 22 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(desktop): bound large composer image previews](https://github.com/NousResearch/hermes-agent/pull/85274) — 0 comments, 0 reactions
-- [openai/codex: Windows 11 Insider Build 26200: ChatGPT Desktop continuously flickers before login, renderer remains alive (OpenAI.Codex 26.715.7063.0)](https://github.com/openai/codex/issues/34351) — 5 comments, 0 reactions
-- [anomalyco/opencode: \[Bug\] v1 path drops variant body fields (e.g. \reasoning_split`) for @ai-sdk/openai-compatible provider`](https://github.com/anomalyco/opencode/issues/42300) — 2 comments, 0 reactions
-- [anthropics/claude-code: Remote control: side panel cannot open any file, including plain text inside the working directory](https://github.com/anthropics/claude-code/issues/86360) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(kanban): expose privacy-safe lifecycle activity](https://github.com/NousResearch/hermes-agent/pull/83348) — 3 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(desktop): downscale large images in composer preview to prevent UI freeze](https://github.com/NousResearch/hermes-agent/pull/68744) — 3 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(providers): support authentication-free model providers](https://github.com/NousResearch/hermes-agent/pull/85270) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(desktop): restore Docker sandbox artifact preview and downloads](https://github.com/NousResearch/hermes-agent/pull/85271) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): avoid false stale for symlinked launchd venvs](https://github.com/NousResearch/hermes-agent/pull/85273) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: Telegram adapter fails to connect on python-telegram-bot 22.8 — "Any cannot be instantiated" (regression after 22.6→22.8 pin bump in v0.20.0)](https://github.com/NousResearch/hermes-agent/issues/85272) — 0 comments, 0 reactions
-- [openai/codex: Update models.json](https://github.com/openai/codex/pull/31817) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop (Windows): UI-archived conversations reappear in active sidebar after refresh, and archive triggers flashing terminal cleanup](https://github.com/openai/codex/issues/25541) — 3 comments, 1 reactions
-- [NousResearch/hermes-agent: feat(desktop): complete and polish German locale](https://github.com/NousResearch/hermes-agent/pull/85236) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(desktop): add 'Add as context' right-click to message blocks and file explorer](https://github.com/NousResearch/hermes-agent/pull/85222) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(plugins): add safe exact-session message delivery seam](https://github.com/NousResearch/hermes-agent/pull/83661) — 2 comments, 0 reactions
-- [openai/codex: Subagents panel permanently shows completed agents as Active and Working](https://github.com/openai/codex/issues/38364) — 1 comments, 0 reactions
-- [anthropics/claude-code: Context-continuation sessions bypass CLAUDE.md instructions in favor of compaction summary](https://github.com/anthropics/claude-code/issues/86359) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(api): resolve configured session identities early](https://github.com/NousResearch/hermes-agent/pull/65102) — 6 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(kanban): report why work stopped and whether it is moving](https://github.com/NousResearch/hermes-agent/pull/85266) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(sessions): report that person-driven work exists, without reporting what it is](https://github.com/NousResearch/hermes-agent/pull/85267) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(guard): tolerate NUL bytes in referenced-script paths (os.open ValueError)](https://github.com/NousResearch/hermes-agent/pull/85268) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(stt): add optional LLM transcript cleanup](https://github.com/NousResearch/hermes-agent/pull/75866) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix: use native Ollama tags for local model discovery](https://github.com/NousResearch/hermes-agent/pull/67934) — 9 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(kanban): harden orchestration and add report-only workspace lifecycle](https://github.com/NousResearch/hermes-agent/pull/85269) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: test(kanban): cover delegated CLI refusal exit status](https://github.com/NousResearch/hermes-agent/pull/70667) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: test(gateway): fix background cleanup fixture](https://github.com/NousResearch/hermes-agent/pull/72671) — 1 comments, 0 reactions
-- [openai/codex: Error when trying to create a side thread](https://github.com/openai/codex/issues/38248) — 4 comments, 0 reactions
-- [openai/codex: Request too large for gpt-5.6-luna in organization org](https://github.com/openai/codex/issues/38366) — 0 comments, 0 reactions
-- [openai/codex: Support reliable cross-provider session handoff with normalized tool history](https://github.com/openai/codex/issues/38365) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: Tracking: unified deadline layer — architectural fix for the timeout/hang backlog (4 phases)](https://github.com/NousResearch/hermes-agent/issues/85125) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: .](https://github.com/NousResearch/hermes-agent/issues/84744) — 1 comments, 0 reactions
-- [openai/codex: Persist security risk scores in rollout history](https://github.com/openai/codex/pull/38363) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(stt): add prompt files and Speaches hotwords](https://github.com/NousResearch/hermes-agent/pull/31623) — 3 comments, 0 reactions
-- [anomalyco/opencode: LM Studio: First prompt in new session processed twice, causing phantom generation & slowdown](https://github.com/anomalyco/opencode/issues/23445) — 5 comments, 1 reactions
-- [NousResearch/hermes-agent: fix(cli): resolve named custom provider credentials through the profile secret scope](https://github.com/NousResearch/hermes-agent/pull/84496) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(approval): unwrap command wrappers before detection (#84551)](https://github.com/NousResearch/hermes-agent/pull/84577) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Desktop\] Cron sessions render only user prompt — tool calls and LLM response invisible until gateway restart](https://github.com/NousResearch/hermes-agent/issues/43121) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(delegation): allow safe per-task model selection](https://github.com/NousResearch/hermes-agent/pull/85228) — 0 comments, 0 reactions
-- [openai/codex: Input box remain dark after the system theme turn to light](https://github.com/openai/codex/issues/18942) — 6 comments, 2 reactions
-- [NousResearch/hermes-agent: .](https://github.com/NousResearch/hermes-agent/issues/84745) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: .](https://github.com/NousResearch/hermes-agent/issues/84741) — 0 comments, 0 reactions
-- [openai/codex: \[Windows\] Computer Use cannot enumerate or launch desktop apps on one machine](https://github.com/openai/codex/issues/37932) — 4 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Native Model Fallback / Failover Support](https://github.com/anomalyco/opencode/issues/7602) — 30 comments, 107 reactions
-- [openai/codex: MCP stdio servers leak pipe fds + orphan child processes → cumulative EMFILE ("Too many open files", os error 24)](https://github.com/openai/codex/issues/26984) — 20 comments, 4 reactions
-- [anomalyco/opencode: feat(tui): show optional daily session cost](https://github.com/anomalyco/opencode/pull/39807) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: .](https://github.com/NousResearch/hermes-agent/issues/84748) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Diff line numbers appearing as boxes instead in Claude for VS Code](https://github.com/anthropics/claude-code/issues/85869) — 3 comments, 0 reactions
-- [openai/codex: Stabilize exec-server byte-budget tests](https://github.com/openai/codex/pull/38362) — 0 comments, 1 reactions
-- [NousResearch/hermes-agent: .](https://github.com/NousResearch/hermes-agent/issues/84742) — 1 comments, 0 reactions
-- [anomalyco/opencode: chore(catalog): remove wrangler state](https://github.com/anomalyco/opencode/pull/42311) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): cascade auto permissions to subagent sessions](https://github.com/anomalyco/opencode/pull/42310) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: test(lazy-deps): cover _venv_pip_install tiers, prompt paths, and ensure_and_bind for 100% coverage](https://github.com/NousResearch/hermes-agent/pull/52124) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(execute_code): forward session_id to nested tool calls via RPC](https://github.com/NousResearch/hermes-agent/pull/52000) — 8 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(delegate): cap total subagent children per parent session (#52484)](https://github.com/NousResearch/hermes-agent/pull/59233) — 8 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Cowork: new projects lost "Choose a folder" — Context menu replaced with Chat-style upload-only knowledge menu after Chat/Cowork merge](https://github.com/anthropics/claude-code/issues/76694) — 10 comments, 5 reactions
-- [NousResearch/hermes-agent: fix(session): filter technical history from auto-title guard](https://github.com/NousResearch/hermes-agent/pull/76867) — 3 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): route approval/denial replies before busy handler](https://github.com/NousResearch/hermes-agent/pull/81088) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): report config parse errors against the original text](https://github.com/anomalyco/opencode/pull/42309) — 0 comments, 0 reactions
-- [openai/codex: \[Windows\] Codex Desktop 26.803.10989.0: "Error: write EOF" main-process modal keeps appearing (with log evidence and my analysis)](https://github.com/openai/codex/issues/38360) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(optional-mcps): add Apple macOS MCP servers (mail, notes, numbers, photos)](https://github.com/NousResearch/hermes-agent/pull/51466) — 15 comments, 0 reactions
-- [anthropics/claude-code: Auto-updater fails repeatedly with "claude.exe in use" whenever a session is running (Windows)](https://github.com/anthropics/claude-code/issues/86357) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: Codex weekly-only primary_window is mislabeled as Session](https://github.com/NousResearch/hermes-agent/issues/65387) — 5 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\] Windows desktop: closing the app kills the gateway, reopening never respawns it — stale gateway_state.json shows DingTalk 'connected' while all messages are silently dropped](https://github.com/NousResearch/hermes-agent/issues/85265) — 1 comments, 0 reactions
-- [openai/codex: Test hook rejection for explicitly started queue items](https://github.com/openai/codex/pull/38361) — 0 comments, 1 reactions
-- [anthropics/claude-code: Cowork / Claude in Chrome extension navigated a real Chrome tab to an unrelated external site (aisle.wedding) without any prompt requesting it](https://github.com/anthropics/claude-code/issues/79596) — 5 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: Desktop client renderer/GPU processes spin at 100%+ CPU at idle — constant re-render loop, high energy usage](https://github.com/NousResearch/hermes-agent/issues/73082) — 12 comments, 1 reactions
-- [anthropics/claude-code: \[Bug\] Claude 3.5 Opus model exhibits increased hallucination rate](https://github.com/anthropics/claude-code/issues/86358) — 0 comments, 0 reactions
-- [openai/codex: Cloud Browser provisioning failure on ChatGPT Pro](https://github.com/openai/codex/issues/38357) — 2 comments, 0 reactions
-- [anthropics/claude-code: "Usage credits are required for long context requests" fires on Claude Pro despite low usage (43% session / 15% weekly)](https://github.com/anthropics/claude-code/issues/86356) — 0 comments, 0 reactions
-- [anthropics/claude-code: Feature: populate session_scope.displayName so Claude-in-Chrome tab groups are labeled per session](https://github.com/anthropics/claude-code/issues/86355) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] HTTP MCP: OAuth succeeds, then initialize hangs until CONNECT_TIMEOUT (raising MCP_TIMEOUT doesn't help)](https://github.com/anthropics/claude-code/issues/86227) — 1 comments, 0 reactions
-- [anomalyco/opencode: .git/index.lock stuck with "Resource busy" (EBUSY) — opencode holds `.git` dir open on encrypted APFS volume](https://github.com/anomalyco/opencode/issues/42304) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): drain every known Windows gateway PID on stop, not just the lock-tracked one](https://github.com/NousResearch/hermes-agent/pull/85264) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: Session lifecycle plugin payloads lack cross-surface transition and workspace parity](https://github.com/NousResearch/hermes-agent/issues/85262) — 0 comments, 0 reactions
-- [openai/codex: Cursor 3.15+: Codex sidebar with session history fails to open; no Activity Bar fallback](https://github.com/openai/codex/issues/38359) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: issue starting latest container image - v2026.8.3](https://github.com/NousResearch/hermes-agent/issues/78193) — 3 comments, 0 reactions
-- [openai/codex: Computer Use unavailable on Windows: Application Protected files fail to copy from WindowsApps](https://github.com/openai/codex/issues/34764) — 5 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]:](https://github.com/anomalyco/opencode/issues/42294) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix: dedup context engine tools + fix kimi aux deadcode model name](https://github.com/NousResearch/hermes-agent/pull/17736) — 3 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): clear typing indicator when cancel_session_processing gives up](https://github.com/NousResearch/hermes-agent/pull/20696) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): stop typing indicator on Telegram after session completion](https://github.com/NousResearch/hermes-agent/pull/20959) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Previous session messages reinserted in current session with exposed internal tags](https://github.com/anthropics/claude-code/issues/86354) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\]  Apps gateway serves Claude Desktop an `otlpEndpoint` pointing at its own bearer-gated OTLP ingest but no `otlpHeaders`, so every Desktop telemetry flush is rejected with `missing_token`](https://github.com/anthropics/claude-code/issues/82092) — 8 comments, 5 reactions
-- [NousResearch/hermes-agent: feat(compaction): trust explicit Responses proxy origins](https://github.com/NousResearch/hermes-agent/pull/83272) — 0 comments, 0 reactions
-- [openai/codex: Optimize orphan output normalization](https://github.com/openai/codex/pull/38358) — 0 comments, 1 reactions
-- [NousResearch/hermes-agent: fix(telegram): always deliver TTS replies as native voice bubbles](https://github.com/NousResearch/hermes-agent/pull/85254) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(state): evict a poisoned pooled read connection instead of requeuing it](https://github.com/NousResearch/hermes-agent/pull/85255) — 0 comments, 0 reactions
-- [anomalyco/opencode: Why does Opencode require me to subscribe when your official website states it's 100% free?](https://github.com/anomalyco/opencode/issues/42143) — 9 comments, 22 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app: cross-session messages render in target session's UI but never reach the runtime input queue (regression 2.1.222 -> 2.1.227)](https://github.com/anthropics/claude-code/issues/86237) — 3 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(url_safety): allow QQ Bot API hosts to resolve to fake-ip range](https://github.com/NousResearch/hermes-agent/pull/85256) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(dashboard): stamp web bundle provenance so the deployed bundle identifies itself](https://github.com/NousResearch/hermes-agent/pull/85258) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: Add model picker card and prevent cron output overwriting](https://github.com/NousResearch/hermes-agent/pull/85259) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(desktop): idempotent beginEdit guard for 'Edit already in progress' refresh race](https://github.com/NousResearch/hermes-agent/pull/85260) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix: restore session model on resume instead of falling back to config default](https://github.com/NousResearch/hermes-agent/pull/85261) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Desktop\] MEDIA file link label shows percent-encoded filename for non-ASCII names](https://github.com/NousResearch/hermes-agent/issues/85257) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] persist/auto-set session color (/color) via settings or hook](https://github.com/anthropics/claude-code/issues/86353) — 0 comments, 0 reactions
-- [openai/codex: Codex will not enter Plan Mode](https://github.com/openai/codex/issues/35237) — 4 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]:User message quick-jump sidebar](https://github.com/anomalyco/opencode/issues/32165) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Claude Code cybersecurity safeguards blocking approved Cyber Verification Program users](https://github.com/anthropics/claude-code/issues/86352) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): mark reply-to snippet truncation explicitly](https://github.com/NousResearch/hermes-agent/pull/85082) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): mark truncated reply-to snippet with "... \[N more chars\]" suffix](https://github.com/NousResearch/hermes-agent/pull/84922) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(desktop): page remote profile session reads](https://github.com/NousResearch/hermes-agent/pull/85242) — 1 comments, 0 reactions
-- [anthropics/claude-code: /exit is denied ("isn't available in this environment") in sessions spawned by `claude remote-control` server mode — no clean way to end a remote session from either side](https://github.com/anthropics/claude-code/issues/80095) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[FEATURE\] VS Code extension: make user-message blocks visually distinguishable (themable color / configurable style)](https://github.com/anthropics/claude-code/issues/86351) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\]\[cyber\] False positive blocks firmware RE: enumerating bundled decryption keys in OSS tool (req_011CcUEJdu5C2bvcqR1KmGTn)](https://github.com/anthropics/claude-code/issues/71844) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\]\[aup\] Setting up GitHub SSH auth and verifying git identity wrongly blocked mid-task (req_011CcUDyNY51dAwfKwegWQJg)](https://github.com/anthropics/claude-code/issues/71840) — 3 comments, 0 reactions
-- [NousResearch/hermes-agent: anthropic_prompt_cache_policy: missing positional agent parameter](https://github.com/NousResearch/hermes-agent/pull/67017) — 6 comments, 0 reactions
-- [openai/codex: Add setting to disable the auto-resolve in 60 seconds for questions](https://github.com/openai/codex/issues/28969) — 72 comments, 198 reactions
-- [anthropics/claude-code: \[Bug\] Claude generates overly complex French with convoluted metaphors and incorrect terminology](https://github.com/anthropics/claude-code/issues/86350) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): replay the transcript spool in drop order with full fidelity on restart (supersedes #78323)](https://github.com/NousResearch/hermes-agent/pull/84785) — 3 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(signal): add policy-aware read receipts](https://github.com/NousResearch/hermes-agent/pull/67495) — 8 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(kanban): pre-compute task_graph_context inside connect_closing() block (#11)](https://github.com/NousResearch/hermes-agent/pull/85247) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(plugins): scope register_context_reference to profile + track in ownership ledger](https://github.com/NousResearch/hermes-agent/pull/85249) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(gateway): detect actual systemd scope before timing-alignment check](https://github.com/NousResearch/hermes-agent/pull/85250) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(desktop): invalidate composer suggestion-provider caches on profile switch](https://github.com/NousResearch/hermes-agent/pull/85253) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\] Hermes Desktop auto-starts duplicate service processes causing conflicts](https://github.com/NousResearch/hermes-agent/issues/85248) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: MiniMax Anthropic endpoint: prior-round thinking blocks are stripped, breaking interleaved thinking](https://github.com/NousResearch/hermes-agent/issues/85251) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: cron: stale-watchdog abort ineffective on hung sockets in non-streaming inline path (direct_api_call) — stalls exceed threshold by 5-11x](https://github.com/NousResearch/hermes-agent/issues/85252) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] MCP HTTP connection hangs indefinitely at 'basic HTTP connectivity' pre-check (custom CA-merge agent) — external tools connect instantly](https://github.com/anthropics/claude-code/issues/86349) — 0 comments, 0 reactions
-- [anthropics/claude-code: --thinking-display is not propagated to the Bedrock request (thinking blocks stay empty on Sonnet 5)](https://github.com/anthropics/claude-code/issues/79060) — 1 comments, 1 reactions
-- [NousResearch/hermes-agent: fix(tests): live module must not import the developer's .env at collection](https://github.com/NousResearch/hermes-agent/pull/80343) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(web): a benched lazy-install must not disable an importable SDK](https://github.com/NousResearch/hermes-agent/pull/80022) — 0 comments, 0 reactions
-- [anomalyco/opencode: TUI: main thread burns ~100% CPU continuously redrawing a spinner (~15fps writev to tty) with no active output](https://github.com/anomalyco/opencode/issues/42306) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(fallback): benched credentials must not disqualify a chain entry](https://github.com/NousResearch/hermes-agent/pull/79840) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(guardrails): loop-detect read-only shell commands in terminal](https://github.com/NousResearch/hermes-agent/pull/79839) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: feat(prompt): agent.skills_catalog_mode to compact the skills catalog on chat surfaces](https://github.com/NousResearch/hermes-agent/pull/72200) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(cron): guard against PyPI utils package shadowing local utils.py](https://github.com/NousResearch/hermes-agent/pull/82520) — 5 comments, 0 reactions
-- [anthropics/claude-code: Cross-session send_message silently lost after worktree recycle (reports sent, never delivered)](https://github.com/anthropics/claude-code/issues/86348) — 0 comments, 0 reactions
-- [anomalyco/opencode: some experimental perf improvements](https://github.com/anomalyco/opencode/pull/40427) — 6 comments, 0 reactions
-- [openai/codex: Responses Lite turns custom base-instruction overrides into additive developer messages](https://github.com/openai/codex/issues/38355) — 1 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: Buzz gateway](https://github.com/NousResearch/hermes-agent/issues/78449) — 4 comments, 0 reactions
-- [NousResearch/hermes-agent: fix: hide Windows console-flash on 3 new/untreated subprocess spawn sites](https://github.com/NousResearch/hermes-agent/pull/85243) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(plugins): route platform_actions through profile-aware adapter resolution](https://github.com/NousResearch/hermes-agent/pull/85245) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(reasoning): hide unsupported effort choices in model pickers](https://github.com/NousResearch/hermes-agent/pull/85246) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(webhook): propagate authenticated event and delivery metadata to route scripts](https://github.com/NousResearch/hermes-agent/issues/85244) — 0 comments, 0 reactions
-- [anthropics/claude-code: Rate-limit auto-resume checkbox shown in one session but not in a concurrent session](https://github.com/anthropics/claude-code/issues/86347) — 0 comments, 0 reactions
-- [anthropics/claude-code: Background tasks spawned by subagents leak: no process, no handle, no way to clear](https://github.com/anthropics/claude-code/issues/86345) — 0 comments, 0 reactions
-- [anthropics/claude-code: Bash tool: "wc" via command substitution fails with "command not found" inside a for-loop with 2+ items](https://github.com/anthropics/claude-code/issues/86346) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(logging): isolate multiplexed profile log files](https://github.com/NousResearch/hermes-agent/pull/84954) — 1 comments, 0 reactions
-- [anomalyco/opencode: On Enhancing AI Programming Assistants: Three Practical Suggestions for Tooling Optimization](https://github.com/anomalyco/opencode/issues/42285) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(cli): stop `run` from sleeping through an exhausted quota](https://github.com/anomalyco/opencode/pull/42289) — 2 comments, 0 reactions
-- [anomalyco/opencode: Feature: opencode CLI uses fixed input + scrollable output pane, breaks Neovim-style scrolling](https://github.com/anomalyco/opencode/issues/8600) — 4 comments, 8 reactions
-- [NousResearch/hermes-agent: Cap Teams attachment downloads](https://github.com/NousResearch/hermes-agent/pull/55063) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app: turns started by session resume or inter-session message hang with no first token, watchdog kills after ~980s (no_response) — spiked after auto-update 1.26832.0 → 1.28929.0](https://github.com/anthropics/claude-code/issues/86344) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(desktop): label windows by active tab](https://github.com/anomalyco/opencode/pull/41729) — 0 comments, 0 reactions
-- [openai/codex: Support sandboxed file streaming in exec-server](https://github.com/openai/codex/pull/38356) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: ECONNRESET with exhausted retries in Claude desktop app](https://github.com/anthropics/claude-code/issues/83994) — 10 comments, 4 reactions
-- [NousResearch/hermes-agent: fix: honor max turns in ACP sessions](https://github.com/NousResearch/hermes-agent/pull/85240) — 2 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(relay): bound ensure_session's interpreter-shutdown fallback](https://github.com/NousResearch/hermes-agent/pull/85239) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: fix(desktop): route integrated terminals by active profile](https://github.com/NousResearch/hermes-agent/pull/85241) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: Hermes Desktop remote-profile sessions disappear after profile switching](https://github.com/NousResearch/hermes-agent/issues/85237) — 0 comments, 0 reactions
-- [NousResearch/hermes-agent: \[Bug\]: Desktop — agent-sandbox files unreachable for preview, MEDIA delivery and downloads shelf in SSH-remote + docker topology](https://github.com/NousResearch/hermes-agent/issues/85238) — 0 comments, 0 reactions
-- [anomalyco/opencode: Config parse errors echo the substituted text, not the file as written](https://github.com/anomalyco/opencode/issues/42308) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop ignores project-local model_catalog_json for fresh project threads](https://github.com/openai/codex/issues/26308) — 3 comments, 1 reactions
-- [anthropics/claude-code: Claude in Chrome extension 1.0.85: all Claude Code tab operations return 'No tab available' on Chrome 149 AND 151 (side panel automation works)](https://github.com/anthropics/claude-code/issues/86321) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Inconsistent preserveFocus on diff-open calls causes IME composition loss (VS Code extension)](https://github.com/anthropics/claude-code/issues/77979) — 1 comments, 0 reactions
-- [openai/codex: Remaining usage decreases while Codex is fully closed](https://github.com/openai/codex/issues/38352) — 3 comments, 0 reactions
-- [anomalyco/opencode: Tool call JSON payload truncated — all tools fail with 'Unterminated string in JSON'](https://github.com/anomalyco/opencode/issues/42307) — 1 comments, 0 reactions
-- [openai/codex: Plus account shows 100% weekly usage remaining but Codex returns "You've hit your usage limit"](https://github.com/openai/codex/issues/38354) — 1 comments, 0 reactions
-- [anomalyco/opencode: ACP: Zed: Doesn't broadcast how big the context is, and how full it currently is.](https://github.com/anomalyco/opencode/issues/31960) — 4 comments, 0 reactions
-- [anomalyco/opencode: ACP: Zed: Deepseek V4 Flash Free doesn't consistently broadcast reasoning effort](https://github.com/anomalyco/opencode/issues/31961) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Add settings to hide token counter and version display in status line](https://github.com/anthropics/claude-code/issues/21867) — 10 comments, 31 reactions
-- [anomalyco/opencode: DeepSeek V4 Flash on suddenly requires "Enable models hosted in China" for OpenCode Go subscription](https://github.com/anomalyco/opencode/issues/39845) — 22 comments, 31 reactions
-- [anthropics/claude-code: \[FEATURE\] Session continuity between Cowork and the Microsoft 365 add-ins](https://github.com/anthropics/claude-code/issues/86343) — 0 comments, 0 reactions
-- [openai/codex: Subagents need an MCP capability broker: parent allowlists, zero-start by default, bounded pooling, and deterministic teardown](https://github.com/openai/codex/issues/38353) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] `--continue` cannot find sessions created by `-p` (interactive resume)](https://github.com/anthropics/claude-code/issues/82536) — 12 comments, 0 reactions
-- [openai/codex: sandbox escalation approval times out after Codex update; CLI cannot access macOS Keychain](https://github.com/openai/codex/issues/24204) — 4 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Cowork: Scheduled reserved-path overlap blocks mounting ~/Documents/Claude and every parent folder — no scheduled tasks ever created](https://github.com/anthropics/claude-code/issues/71307) — 13 comments, 2 reactions
-- [openai/codex: GitHub @codex work task gets no tool to push back to existing PR despite write access](https://github.com/openai/codex/issues/38351) — 0 comments, 0 reactions
-- [openai/codex: Session repeatedly "waiting for agents" although all subagents are stopped](https://github.com/openai/codex/issues/37301) — 2 comments, 1 reactions
-- [openai/codex: \[Bug\] Recurring scheduled tasks disable themselves after successful runs without user authorization](https://github.com/openai/codex/issues/38350) — 0 comments, 0 reactions
-- [openai/codex: chat open in new window shows something went wrong](https://github.com/openai/codex/issues/37551) — 4 comments, 1 reactions
-- [openai/codex: Severe session sync issues between tui/desktop/mobile](https://github.com/openai/codex/issues/29719) — 2 comments, 1 reactions
-- [openai/codex: Codex App 26.715.9868.0 / CLI 0.145.0: spawn_agent rejects gpt-5.6-luna with multi_agent_v2 enabled](https://github.com/openai/codex/issues/34700) — 14 comments, 36 reactions
-- [openai/codex: High CPU Usage Triggered by Windows Defender & WMI When Launching Codex Desktop on Windows 10](https://github.com/openai/codex/issues/33875) — 17 comments, 19 reactions
-- [anomalyco/opencode: Refund Request – OpenCode Go Subscription](https://github.com/anomalyco/opencode/issues/42305) — 1 comments, 0 reactions
-- [anthropics/claude-code: Stop hook does not fire reliably in VSCode extension (works via CLI, confirmed via git history)](https://github.com/anthropics/claude-code/issues/77480) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] `advisor` tool doubles the reported context size, firing auto-compact at ~50% of the real window](https://github.com/anthropics/claude-code/issues/81620) — 2 comments, 2 reactions
-- [anomalyco/opencode: tui: crash on /vcs/diff 404 on both git repo and non git repo directories](https://github.com/anomalyco/opencode/issues/36415) — 2 comments, 1 reactions
-- [openai/codex: Plugin cache install silently drops symlinks from local plugin sources](https://github.com/openai/codex/issues/18863) — 1 comments, 3 reactions
-- [openai/codex: Plugin install: support symlinks per the cross-agent marketplace contract](https://github.com/openai/codex/issues/24770) — 1 comments, 0 reactions
-- [anomalyco/opencode: deepseek-v4-pro and deepseek-v4-flash slugs serve non-DeepSeek models (identity probe evidence)](https://github.com/anomalyco/opencode/issues/42228) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Support for Claude Opus 5.0 and newer model versions](https://github.com/anthropics/claude-code/issues/86342) — 0 comments, 0 reactions
-- [openai/codex: Resume is slow for large legacy sessions due to duplicate full-history processing](https://github.com/openai/codex/issues/38349) — 1 comments, 0 reactions
-- [anthropics/claude-code: Auto-mode permission classifier blocks authorized actions and is intermittently unavailable](https://github.com/anthropics/claude-code/issues/86341) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Auto-continue after subscription rate limit resets](https://github.com/anthropics/claude-code/issues/35744) — 17 comments, 90 reactions
-- [openai/codex: \[macOS\] Computer Use captures Stage Manager thumbnail, poisons ScreenCaptureKit stream (-3811/-3812)](https://github.com/openai/codex/issues/38348) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Worktree isolation blocks all Bash commands due to parser abort in bash-command classifier](https://github.com/anthropics/claude-code/issues/86340) — 0 comments, 0 reactions
-- [anthropics/claude-code: Session cut mid-task by credit limit — no warning, context lost, costly model switch](https://github.com/anthropics/claude-code/issues/64211) — 5 comments, 1 reactions
-- [anthropics/claude-code: \[Bug\]\[cyber\] ClAudit false-positive in DJI — req_011CcUECPy19bngpixSPw7t9](https://github.com/anthropics/claude-code/issues/71842) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\]\[cyber\] Safety block incorrectly halts firmware extraction and encryption-key analysis for defensive rese (req_011CcUEHYKSUpWP2jeLRZWc8)](https://github.com/anthropics/claude-code/issues/71843) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\]\[aup\] Refused analyzing owned-device firmware and prior public research builds for offline USB/ADB inspec (req_011CcUDMYpCcNCTwgKYFo8NE)](https://github.com/anthropics/claude-code/issues/71828) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\]\[cyber\] ClAudit false-positive in DJI — req_011CcUCoXHXhVnD1FVWiQuqJ](https://github.com/anthropics/claude-code/issues/71830) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\]\[aup\] Blocked setting up FOSS repo to collect and analyze owned-drone firmware for research (req_011CcUDQvewGgVQ2U96Q7KkS)](https://github.com/anthropics/claude-code/issues/71833) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\]\[cyber\] ClAudit false-positive in DJI — req_011CcUDY4dMjWrzVBGYbJHco](https://github.com/anthropics/claude-code/issues/71835) — 3 comments, 0 reactions
-- [anthropics/claude-code: Auto-mode classifier: ~310s permission decisions that resolve to "Allowed" — the 30s classifier timeout never fires](https://github.com/anthropics/claude-code/issues/86339) — 0 comments, 1 reactions
-- [anomalyco/opencode: fix(opencode): surface clear error when output token limit truncates tool calls](https://github.com/anomalyco/opencode/pull/42303) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Parabolic Usage Spike June 20, 2026 7pm PT](https://github.com/anthropics/claude-code/issues/69892) — 8 comments, 2 reactions
-- [anthropics/claude-code: Right-click / copy-paste stops working in terminal during long sessions](https://github.com/anthropics/claude-code/issues/71823) — 1 comments, 0 reactions
-- [anthropics/claude-code: Tool results with non-text content blocks render as "(eval omitted)" after context compaction (v2.0.74)](https://github.com/anthropics/claude-code/issues/71817) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Misleading error: says 'requires a Posix shell' but actually requires bash or zsh](https://github.com/anthropics/claude-code/issues/71822) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] programmatic conversation renaming in Claude Cowork](https://github.com/anthropics/claude-code/issues/64231) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[FEATURE\] Allow hooks to spawn subagents / background agents (programmatic dispatch from hook events)](https://github.com/anthropics/claude-code/issues/64898) — 5 comments, 0 reactions
-- [anthropics/claude-code: Feature: Named sessions via --session <name> flag for easier session management](https://github.com/anthropics/claude-code/issues/69836) — 5 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Tool invocation loop: Bash command executed repeatedly without progress on user request](https://github.com/anthropics/claude-code/issues/71816) — 2 comments, 0 reactions
-- [anthropics/claude-code: Permission-mode changes don't sync reliably between the iOS app and terminal in Remote Control](https://github.com/anthropics/claude-code/issues/71819) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] High failure and repeat rate in tool execution (47% failure rate across threads)](https://github.com/anthropics/claude-code/issues/71820) — 2 comments, 0 reactions
-- [anthropics/claude-code: Opus 4.8 in Claude Code fabricates tool results in-turn (writes fake output as prose right after emitting an invoke)](https://github.com/anthropics/claude-code/issues/71806) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Cowork: in-session file attach picker grays out ALL files (every type), making selection impossible](https://github.com/anthropics/claude-code/issues/71818) — 1 comments, 0 reactions
-- [anthropics/claude-code: VSCode extension does not surface claude.ai account connectors (MCP) that the CLI exposes — same version 2.1.156](https://github.com/anthropics/claude-code/issues/71736) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Trackpad scroll on macOS (VS Code terminal): ~3 lines/notch, no scrollbar, distance scales with gesture velocity; CLAUDE_CODE_SCROLL_SPEED=1 no help](https://github.com/anthropics/claude-code/issues/66534) — 3 comments, 3 reactions
-- [anthropics/claude-code: Plugin LSP server silently not registered when its lspServers entry declares restartOnCrash or shutdownTimeout (schema-valid fields the runtime registrar drops)](https://github.com/anthropics/claude-code/issues/71800) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Allow opening the terminal in a brand-new (empty) Code tab session](https://github.com/anthropics/claude-code/issues/71797) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Full screen renderer copy/paste shortcuts use Ctrl+C/V on macOS instead of Cmd+C/V](https://github.com/anthropics/claude-code/issues/70751) — 2 comments, 4 reactions
-- [anthropics/claude-code: Conversation history unexpectedly syncs across devices without user consent](https://github.com/anthropics/claude-code/issues/71794) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Add toggle to disable prompt suggestions](https://github.com/anthropics/claude-code/issues/71788) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Better Multi Agent Management Visualization](https://github.com/anthropics/claude-code/issues/66101) — 2 comments, 1 reactions
-- [anthropics/claude-code: BROKEN: "Always allow actions on this site" does NOTHING - Claude in Chrome re-prompts on every single action](https://github.com/anthropics/claude-code/issues/71790) — 1 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] User message sent after `/clear` is serialized as a bare line inside the `/clear` turn's `<local-command-caveat>` scope — model treats it as command output and ignores it (not limited to file paths)](https://github.com/anthropics/claude-code/issues/71782) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Add a small attention icon to the "Relaunch to update" banner](https://github.com/anthropics/claude-code/issues/71784) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Remote Control (Android app): /clear leaves the session stuck on a loading spinner and silently drops the next prompt](https://github.com/anthropics/claude-code/issues/71777) — 3 comments, 0 reactions
-- [anthropics/claude-code: Allow adjusting font size of the chat/conversation panel independently from the editor](https://github.com/anthropics/claude-code/issues/71786) — 1 comments, 0 reactions
-- [anthropics/claude-code: Regression (since 2026-05-29): intermittent "tool call was malformed and could not be parsed" — tool_use block absent on a stop_reason=tool_use turn](https://github.com/anthropics/claude-code/issues/64235) — 7 comments, 4 reactions
-- [anthropics/claude-code: VSCode extension: switching open folder hides/loses session from sidebar list](https://github.com/anthropics/claude-code/issues/71710) — 3 comments, 0 reactions
-- [anthropics/claude-code: VS Code extension: collapsible tool/diff blocks + jump-to-latest-message to cut scrolling](https://github.com/anthropics/claude-code/issues/71467) — 2 comments, 2 reactions
-- [anthropics/claude-code: claude remote-control --permission-mode bypassPermissions is silently ignored on mobile (native Windows)](https://github.com/anthropics/claude-code/issues/71518) — 4 comments, 0 reactions
-- [anthropics/claude-code: Worktree edits can silently land in the parent repo checkout (nested .claude/worktrees/ + no out-of-worktree write guard)](https://github.com/anthropics/claude-code/issues/69026) — 4 comments, 6 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API safeguard hard-blocks CVP-verified defensive malware analysis with fatal error instead of soft refusal](https://github.com/anthropics/claude-code/issues/71767) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Show native browser context menu on second right click](https://github.com/anthropics/claude-code/issues/71763) — 2 comments, 0 reactions
-- [anthropics/claude-code: Feature request: add "Copy selection" to right-click menu](https://github.com/anthropics/claude-code/issues/61484) — 8 comments, 3 reactions
-- [anthropics/claude-code: Workflow tool: args not delivered to a workflow that validates inputs at the top (regression ~2.1.158→2.1.185)](https://github.com/anthropics/claude-code/issues/71762) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Connectors continue to appear in `claude mcp list` even after disconnected in the Claude.ai web UI](https://github.com/anthropics/claude-code/issues/48275) — 7 comments, 5 reactions
-- [anthropics/claude-code: \[BUG\] VS Code extension resumes huge sessions without warning and rapidly exhausts Max usage](https://github.com/anthropics/claude-code/issues/71478) — 10 comments, 0 reactions
-- [anthropics/claude-code: PreCompact hook: add blocking mode for interactive turn before compaction](https://github.com/anthropics/claude-code/issues/71625) — 2 comments, 0 reactions
-- [anthropics/claude-code: `/context` command injects output into conversation history, burning the context it measures](https://github.com/anthropics/claude-code/issues/71715) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Context contamination in bridged sessions: exfiltration-shaped instructions and fabricated tool results present in model context but absent from saved transcripts (3 incidents / 3 days)](https://github.com/anthropics/claude-code/issues/67283) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] \[BUG\] Long-session context bleed: assistant fabricated a user-reported bug that was never reported](https://github.com/anthropics/claude-code/issues/71681) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] UI freezes during "thinking" phase; token count shows incorrect inflated values after recent update](https://github.com/anthropics/claude-code/issues/71754) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] \[VS Code Extension\] Input field intercepts Ctrl+J, preventing macOS IME input source toggle (Regression in v2.1.195)](https://github.com/anthropics/claude-code/issues/71759) — 1 comments, 2 reactions
-- [anthropics/claude-code: \[FEATURE\] Vivid markers for diff changed lines](https://github.com/anthropics/claude-code/issues/71760) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] naming convention should not use "-" as the replacement for "/" as it creates file and directories that start with "-".](https://github.com/anthropics/claude-code/issues/64248) — 2 comments, 0 reactions
-- [anthropics/claude-code: claude.yml workflow triggers on substring match, fires on incidental @​claude* strings in quoted text](https://github.com/anthropics/claude-code/issues/66773) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] relatorio_bug_instalacao](https://github.com/anthropics/claude-code/issues/71375) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\]](https://github.com/anthropics/claude-code/issues/71756) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Windows 11: Write tool and Bash tool cannot write files visible to the real file system](https://github.com/anthropics/claude-code/issues/71750) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Sidebar panel does not resize when dragging the sidebar edge](https://github.com/anthropics/claude-code/issues/71752) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting (temporary request throttling)](https://github.com/anthropics/claude-code/issues/71748) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting During Normal Usage](https://github.com/anthropics/claude-code/issues/71746) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting on requests](https://github.com/anthropics/claude-code/issues/71747) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting during requests](https://github.com/anthropics/claude-code/issues/71745) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting during normal usage](https://github.com/anthropics/claude-code/issues/71741) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting During Normal Usage](https://github.com/anthropics/claude-code/issues/71742) — 1 comments, 0 reactions
-- [anthropics/claude-code: Remote sessions require local access to enable - no way to take control purely remotely](https://github.com/anthropics/claude-code/issues/71731) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting during normal usage](https://github.com/anthropics/claude-code/issues/71740) — 1 comments, 0 reactions
-- [anthropics/claude-code: VS Code extension runs statusLine (never rendered in IDE) -> focus/panel-reveal war across multiple chat sessions in one window (Windows)](https://github.com/anthropics/claude-code/issues/70497) — 5 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] First-time Dispatch never connects on Windows 11 — messages send but no response renders, mobile "failed to load sessions](https://github.com/anthropics/claude-code/issues/71739) — 1 comments, 0 reactions
-- [anthropics/claude-code: Add setting to disable auto-opening file/diff tabs in VS Code extension](https://github.com/anthropics/claude-code/issues/68395) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] 動かない](https://github.com/anthropics/claude-code/issues/71732) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Custom vocabulary support for voice dictation to improve technical acronym and accent handling](https://github.com/anthropics/claude-code/issues/71721) — 3 comments, 0 reactions
-- [anthropics/claude-code: Fleet-of-sessions in tmux: Agent tool spawns new pane subagents instead of delegating to existing sessions](https://github.com/anthropics/claude-code/issues/86338) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop (Epitaxy) copy-link on a model-authored file link yields a dead https://claude.ai/epitaxy/local_<uuid> URL instead of the file path](https://github.com/anthropics/claude-code/issues/67490) — 5 comments, 0 reactions
-- [anthropics/claude-code: Desktop app (Windows): SendUserFile attachment cards open the file instead of offering a download](https://github.com/anthropics/claude-code/issues/86337) — 0 comments, 0 reactions
-- [openai/codex: GPT-5.6 Sol normal mode appears to consume Codex quota unusually fast on $100 plan](https://github.com/openai/codex/issues/38233) — 2 comments, 0 reactions
-- [openai/codex: Windows elevated sandbox fails on session-scoped mapped-drive cwd with error 267](https://github.com/openai/codex/issues/38347) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(app): add workspace flows to new layout](https://github.com/anomalyco/opencode/pull/38790) — 5 comments, 2 reactions
-- [openai/codex: Windows: opening Codex causes sustained WMI Provider Host CPU usage and system stutter](https://github.com/openai/codex/issues/33940) — 4 comments, 0 reactions
-- [anthropics/claude-code: Session becomes inaccessible via --resume / desktop UI despite intact .jsonl transcript (stale session index after directory path change)](https://github.com/anthropics/claude-code/issues/74043) — 1 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] AskUserQuestion prompts fire Notification hook as notification_type=permission_prompt instead of a question-specific type](https://github.com/anthropics/claude-code/issues/74052) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Bulk session operations unavailable with multi-select in desktop app](https://github.com/anthropics/claude-code/issues/74057) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[MODEL\] Confidently incorrect answer about Cloudflare Cache Rules evaluation order (first-match vs last-match) — risk of PII exposure via cache misconfiguration](https://github.com/anthropics/claude-code/issues/74054) — 0 comments, 0 reactions
-- [anthropics/claude-code: Shift+Enter no longer inserts newline — submits instead (regression ~June 30)](https://github.com/anthropics/claude-code/issues/74056) — 0 comments, 4 reactions
-- [anthropics/claude-code: \[BUG\] Fullscreen mode ignores --dangerously-skip-permissions](https://github.com/anthropics/claude-code/issues/72479) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Main agent using /loop to wait for](https://github.com/anthropics/claude-code/issues/74050) — 0 comments, 1 reactions
-- [anthropics/claude-code: "Request too large (max 32MB)" hard-stops the conversation instead of letting the model recover](https://github.com/anthropics/claude-code/issues/74048) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Remote-control spawned session ignores UI-selected model — picker shows Fable 5, first request serves claude-opus-4-8](https://github.com/anthropics/claude-code/issues/74049) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Safeguard False Positive: Routine Code Review Flagged as Sensitive](https://github.com/anthropics/claude-code/issues/74045) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Request Flagged During Codebase Audit](https://github.com/anthropics/claude-code/issues/74046) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[Windows\] Task list hangs and becomes unresponsive when interacting with todos](https://github.com/anomalyco/opencode/issues/42302) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Design subagent returns incomplete responses ("Complete.") without usable content](https://github.com/anthropics/claude-code/issues/74044) — 0 comments, 0 reactions
-- [anthropics/claude-code: Desktop app: session permanently wedged after manual /compact — deferred local-command send is echo-tracked by a uuid that never echoes](https://github.com/anthropics/claude-code/issues/74017) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Command line auth browser selection for OAuth login flow (--no-browser / BROWSER env)](https://github.com/anthropics/claude-code/issues/74041) — 0 comments, 0 reactions
-- [anthropics/claude-code: Add native binary support for linux/riscv64](https://github.com/anthropics/claude-code/issues/59813) — 5 comments, 2 reactions
-- [anthropics/claude-code: /design-sync skill: reconciliation-delete/no-anchor logic can destroy content added by claude.ai/design's in-app "Generate" step](https://github.com/anthropics/claude-code/issues/74042) — 0 comments, 0 reactions
-- [anthropics/claude-code: Auto-mode classifier repeatedly flags Agent dispatches as prompt injection due to harness-injected context-mode plugin block](https://github.com/anthropics/claude-code/issues/74036) — 0 comments, 0 reactions
-- [anthropics/claude-code: claude.ai/design: no indication that a project already has an uploaded component library before routing into the from-scratch "Generate" wizard](https://github.com/anthropics/claude-code/issues/74037) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Add customizable ASCII art and animation support for terminal display](https://github.com/anthropics/claude-code/issues/74034) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Fable 5 usage increases without model invocation](https://github.com/anthropics/claude-code/issues/74000) — 1 comments, 0 reactions
-- [anthropics/claude-code: Windows: worktrees in git-lfs repos get a stray dev/null/ directory with LFS hooks (hooksPath suppression bypassed via GIT_CONFIG_PARAMETERS)](https://github.com/anthropics/claude-code/issues/74033) — 0 comments, 0 reactions
-- [anthropics/claude-code: `!` shell commands block on Claude's response before accepting the next `!` command](https://github.com/anthropics/claude-code/issues/74029) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Thinking Spinner Used Inappropriate Word](https://github.com/anthropics/claude-code/issues/74031) — 0 comments, 3 reactions
-- [anthropics/claude-code: \[BUG\] Cloud sessions: WebFetch surfaces egress-policy denials as bare 403s — and the allowlist blocks claude.com itself](https://github.com/anthropics/claude-code/issues/74025) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] LaTeX rendering support in Claude Code VS Code extension chat/output panel](https://github.com/anthropics/claude-code/issues/74027) — 0 comments, 0 reactions
-- [anthropics/claude-code: Model behavior report (Sonnet 5): overconfident unverified claims, out-of-scope config changes, doubting user's verified failure reports](https://github.com/anthropics/claude-code/issues/74005) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] claude recommends adding non-existent directory to PATH](https://github.com/anthropics/claude-code/issues/74026) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting - Temporary Request Limit](https://github.com/anthropics/claude-code/issues/73660) — 2 comments, 0 reactions
-- [anthropics/claude-code: Feature request: inline feedback (thumbs up/down) during a session, not just GitHub Issues](https://github.com/anthropics/claude-code/issues/74024) — 0 comments, 1 reactions
-- [anthropics/claude-code: \[Bug\] Claude Code CLI truncates long input messages without warning](https://github.com/anthropics/claude-code/issues/74004) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] \[Model is refusing to help me train a model for CSAM detection\[](https://github.com/anthropics/claude-code/issues/74022) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] File paths in chat panel responses not ctrl+clickable (plain text and backtick format)](https://github.com/anthropics/claude-code/issues/69645) — 1 comments, 2 reactions
-- [anthropics/claude-code: \[telegram plugin\] Orphaned `bun server.ts` poller spins at 100% CPU indefinitely; self-termination guards all fail](https://github.com/anthropics/claude-code/issues/74019) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Dual-use safeguard false positive downgrades Claude 5 to Opus 4.8 during authorized security review of own codebase](https://github.com/anthropics/claude-code/issues/74020) — 0 comments, 0 reactions
-- [anthropics/claude-code: Agent-mode sessions on unattended Mac: silent mid-turn drops after tool_result + UI stream detaching from healthy sessions (WarmLifecycle idle_timeout suspected)](https://github.com/anthropics/claude-code/issues/73389) — 1 comments, 1 reactions
-- [anthropics/claude-code: Desktop: archived sessions are hard to discover — no visible "Archived" filter or section](https://github.com/anthropics/claude-code/issues/74018) — 0 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Wrong context usage and tokens shown](https://github.com/anthropics/claude-code/issues/74011) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Time to complete estimation](https://github.com/anthropics/claude-code/issues/74014) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Code intermittenly fails to include Co-Authored-By in git commit messages](https://github.com/anthropics/claude-code/issues/58033) — 3 comments, 0 reactions
-- [anthropics/claude-code: "Group by projects" view renders empty on desktop AND claude.ai web - "group by date" works fine](https://github.com/anthropics/claude-code/issues/74002) — 0 comments, 0 reactions
-- [anthropics/claude-code: Feature request: group conversations into Projects in the sidebar](https://github.com/anthropics/claude-code/issues/74008) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] "Reset to default" on invalid settings.json overwrites the file without creating a backup](https://github.com/anthropics/claude-code/issues/72454) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Install script's new out-of-memory explanation needs a troubleshooting entry in the installation pages](https://github.com/anthropics/claude-code/issues/73997) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Voice dictation troubleshooting never lists the misleading "Voice connection failed" message fixed in v2.1.200](https://github.com/anthropics/claude-code/issues/73994) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Fullscreen `fullscreen.md` tmux caveat still says synchronized output is unsupported; v2.1.200 enabled it for tmux 3.4+](https://github.com/anthropics/claude-code/issues/73995) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `axScreenReader` description lists only "decorative borders and animations"; v2.1.200 added glyph hiding, transcript labels, and nested-table-as-`Header: value.` rendering](https://github.com/anthropics/claude-code/issues/73996) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Project-scoped plugins loading from git worktrees is fixed in v2.1.200 but never documented in the plugin reference or discover-plugins guide](https://github.com/anthropics/claude-code/issues/73992) — 0 comments, 0 reactions
-- [anomalyco/opencode: Comment Box UX Bug: Comment Popup appears upon hitting a line meanwhile should appear if the user Hits plus '+' icon button for adding Comment](https://github.com/anomalyco/opencode/issues/42269) — 2 comments, 0 reactions
-- [anomalyco/opencode: Upstream request failed: \[invalid_bearer_credential\] Missing or invalid bearer credential](https://github.com/anomalyco/opencode/issues/42273) — 2 comments, 3 reactions
-- [anthropics/claude-code: Agent restates a known fix across many turns instead of applying it; deferrals persist after explicit instruction to act](https://github.com/anthropics/claude-code/issues/86336) — 0 comments, 0 reactions
-- [anomalyco/opencode: I cannot use my OpenCode Go subscription](https://github.com/anomalyco/opencode/issues/42301) — 1 comments, 0 reactions
-- [openai/codex: apply_patch fails on Windows because Codex cannot spawn codex.exe from WindowsApps (CreateProcessAsUserW failed: 5)](https://github.com/openai/codex/issues/13965) — 14 comments, 11 reactions
-- [anomalyco/opencode: serve: idle service burns 20-45% CPU in silent bursts from launch; memory creeps](https://github.com/anomalyco/opencode/issues/42299) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): persist selected console organization](https://github.com/anomalyco/opencode/pull/37298) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\]: /compact is not advertised over ACP](https://github.com/anomalyco/opencode/issues/37229) — 3 comments, 1 reactions
-- [openai/codex: Shift+Enter and Alt+Enter no longer insert newlines in Konsole](https://github.com/openai/codex/issues/21562) — 3 comments, 0 reactions
-- [anomalyco/opencode: TUI does not re-layout on terminal shrink (only on grow), leaving stale width](https://github.com/anomalyco/opencode/issues/42225) — 2 comments, 0 reactions
-- [openai/codex: Shared project not showing in Desktop app](https://github.com/openai/codex/issues/38346) — 0 comments, 0 reactions
-- [openai/codex: Codex for Windows: Luna cannot be used as a sub-agent when Sol is selected as the main model](https://github.com/openai/codex/issues/38343) — 1 comments, 0 reactions
-- [anthropics/claude-code: Asserts unverified tool behavior as fact and compounds errors across self-corrections (effort: high)](https://github.com/anthropics/claude-code/issues/86335) — 0 comments, 0 reactions
-- [openai/codex: Sub-agent launcher rejects configured gpt-5.6-luna while direct Codex Luna run succeeds](https://github.com/openai/codex/issues/38344) — 1 comments, 0 reactions
-- [openai/codex: Codex Windows App failed to start after switching to WSL mode](https://github.com/openai/codex/issues/38345) — 0 comments, 0 reactions
-- [anomalyco/opencode: opencode run hangs indefinitely when the usage quota is exhausted, instead of reporting the error it already has](https://github.com/anomalyco/opencode/issues/40747) — 2 comments, 0 reactions
-- [anthropics/claude-code: Desktop app (Windows): cross-session messages silently dropped — held for an approval the UI never offers, then expire (~5 min); regression since app 1.28929.0](https://github.com/anthropics/claude-code/issues/86298) — 3 comments, 0 reactions
-- [anthropics/claude-code: disableSideloadFlags: true in managed settings does not reject --mcp-config (v2.1.228 / v2.1.231, macOS)](https://github.com/anthropics/claude-code/issues/86334) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Organization custom desktop extensions no longer appear in the Connectors Directory (browse, search, or detail page)](https://github.com/anthropics/claude-code/issues/86332) — 1 comments, 0 reactions
-- [anthropics/claude-code: Rewind/undo reverts file changes but not conversation context, causing confident-but-stale answers](https://github.com/anthropics/claude-code/issues/86324) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] remote-control rejects --agent, --append-system-prompt and --settings, so server-spawned sessions cannot be given a role at launch](https://github.com/anthropics/claude-code/issues/86330) — 1 comments, 0 reactions
-- [anthropics/claude-code: GitHub MCP connector app is missing Administration permission, blocking repo creation](https://github.com/anthropics/claude-code/issues/86333) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] autoMemoryEnabled=false does not suppress the ~11-16k memory preamble (re: closed #44829)](https://github.com/anthropics/claude-code/issues/63903) — 43 comments, 0 reactions
-- [anomalyco/opencode: \[Bug\] Desktop TUI: "Files changed" (last round) panel always empty on Windows, file/patch parts never persisted](https://github.com/anomalyco/opencode/issues/42298) — 0 comments, 0 reactions
-- [openai/codex: \[macOS Desktop\] Enabled plugin skill is injected but its stdio MCP tools are absent after full restart](https://github.com/openai/codex/issues/38342) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Improve security classifier to reduce false positives on authorized defensive engineering and security-product development tasks](https://github.com/anthropics/claude-code/issues/86331) — 0 comments, 0 reactions
-- [anomalyco/opencode: prompt_async returns 204 after startup failure, leaving empty child sessions that appear frozen](https://github.com/anomalyco/opencode/issues/33394) — 1 comments, 0 reactions
-- [openai/codex: codex resume omits a thread after an ordinal mismatch](https://github.com/openai/codex/issues/38341) — 1 comments, 0 reactions
-- [openai/codex: Codex Desktop: completed subagents restore as Active after reload](https://github.com/openai/codex/issues/37042) — 5 comments, 2 reactions
-- [anthropics/claude-code: \[FEATURE\] Surface CLI-style tips/hints in the VS Code extension panel](https://github.com/anthropics/claude-code/issues/86329) — 0 comments, 0 reactions
-- [openai/codex: Codex IDE extension freezes code-server sidebar on desktop Chromium browsers](https://github.com/openai/codex/issues/28726) — 21 comments, 5 reactions
-- [anomalyco/opencode: fix(session-ui): preserve caret after prompt editor rebuild](https://github.com/anomalyco/opencode/pull/42297) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] remote-control --name is silently ignored: the client shows repository and branch (or the folder name) instead](https://github.com/anthropics/claude-code/issues/86328) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Permission model: let a specific allow override a broad deny (specificity-aware precedence)](https://github.com/anthropics/claude-code/issues/79759) — 2 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] remote-control blocks on the interactive spawn-mode prompt when stdin is not a TTY: the process stays alive but never serves a session](https://github.com/anthropics/claude-code/issues/86327) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[MODEL\] Claude verbose code comments by default — ignores instructions to stop.](https://github.com/anthropics/claude-code/issues/65961) — 11 comments, 105 reactions
-- [openai/codex: macOS Codex CLI 0.147.0 blocked as malware due to missing notarization ticket](https://github.com/openai/codex/issues/38340) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(stats): keep tablet chart tooltips above bars](https://github.com/anomalyco/opencode/pull/42197) — 0 comments, 0 reactions
-- [openai/codex: \[macOS\]\[regression\] Desktop cannot resume Remote Control / CLI thread: `already has an active writer` after latest update](https://github.com/openai/codex/issues/37403) — 17 comments, 10 reactions
-- [openai/codex: \[macOS\]\[Codex App\]\[Plugins/Hooks\] Removed plugin Stop hook keeps running until full app restart](https://github.com/openai/codex/issues/38339) — 1 comments, 0 reactions
-- [anomalyco/opencode: BUG: `deepseek-v4-pro` on zen/go `/v1/messages` returns 400 `Empty input messages` for string content (flash works on same request)](https://github.com/anomalyco/opencode/issues/42091) — 5 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): drop empty text separators between signed reasoning blocks](https://github.com/anomalyco/opencode/pull/42296) — 1 comments, 0 reactions
-- [openai/codex: Codex Desktop on Windows flashes visible PowerShell/console windows during background process polling](https://github.com/openai/codex/issues/26613) — 12 comments, 1 reactions
-- [openai/codex: ChatGPT Desktop: local MCP tools are discovered successfully but not exposed to Chat sessions](https://github.com/openai/codex/issues/38162) — 3 comments, 0 reactions
-- [openai/codex: Qonto MCP regression in 0.147.0: startup completes without caching or exposing tools](https://github.com/openai/codex/issues/37567) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app: a message delivered to a session that is still starting up is silently lost — the query never starts and the session is dead for the full ~16min watchdog](https://github.com/anthropics/claude-code/issues/86326) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop (macOS) 1.28929.0: pinned sessions in the Claude Code sidebar accumulate duplicate entries over time](https://github.com/anthropics/claude-code/issues/86325) — 0 comments, 0 reactions
-- [openai/codex: Current Windows Desktop still fails remote compaction for image-heavy long-running tasks (reconnect 5/5)](https://github.com/openai/codex/issues/36232) — 2 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]:Token Usage & Cache Hit Dashboard per Session](https://github.com/anomalyco/opencode/issues/42295) — 1 comments, 0 reactions
-- [openai/codex: Responses WebSocket falls back when compacted replacement_history contains large inline images](https://github.com/openai/codex/issues/24550) — 6 comments, 1 reactions
-- [anthropics/claude-code: \[Bug\] Model selection reverts to Claude 3.5 Opus unexpectedly](https://github.com/anthropics/claude-code/issues/86323) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(opencode): add local server provider with auto model discovery](https://github.com/anomalyco/opencode/pull/19959) — 3 comments, 4 reactions
-- [openai/codex: Chrome plugin, browser and computer use refuse to interact with certain sites.](https://github.com/openai/codex/issues/29343) — 14 comments, 1 reactions
-- [openai/codex: \[Linux/Android\] Luna Max reasoning effort missing on desktop; remote Max session displays as Medium](https://github.com/openai/codex/issues/38338) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Anthropic API safety filters blocking legitimate healthcare and lifescience research use cases](https://github.com/anthropics/claude-code/issues/86322) — 0 comments, 0 reactions
-- [anthropics/claude-code: remote-control: session children exit on expired session_token with no refresh, then daemon permanently refuses to re-spawn them](https://github.com/anthropics/claude-code/issues/85656) — 1 comments, 0 reactions
-- [anomalyco/opencode: Bun segfault (address 0x0) recurring with identical crash signature during long agentic sessions with high subprocess-spawn count](https://github.com/anomalyco/opencode/issues/40219) — 2 comments, 0 reactions
-- [anomalyco/opencode: “Copied to clipboard” doesn't work](https://github.com/anomalyco/opencode/issues/41470) — 14 comments, 1 reactions
-- [anthropics/claude-code: Bash tool: grep→ugrep shim exits 2 when one operand is missing even though another matched (GNU grep/POSIX -q exits 0)](https://github.com/anthropics/claude-code/issues/86320) — 0 comments, 0 reactions
-- [openai/codex: Local compaction v2 retains unbounded input_image payloads, causing repeated auto-compaction](https://github.com/openai/codex/issues/33493) — 10 comments, 6 reactions
-- [anthropics/claude-code: \[BUG\] Grep content output: text before the first colon of context lines is path-normalized on Windows (single-file searches; '//' becomes '\')](https://github.com/anthropics/claude-code/issues/83175) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): show N/A spent for models without pricing](https://github.com/anomalyco/opencode/pull/39863) — 1 comments, 0 reactions
-- [anthropics/claude-code: Cross-session message delivered to transcript but receiving session never processes it](https://github.com/anthropics/claude-code/issues/86319) — 0 comments, 0 reactions
-- [openai/codex: CLI 0.147.0: Esc-Esc backtrack cannot find selected prompt in persisted thread](https://github.com/openai/codex/issues/37421) — 6 comments, 35 reactions
-- [anthropics/claude-code: \[BUG\] Windows Desktop 2.1.227: cross-session send_message to a paused session is never delivered to the model, leaving the session in a permanent phantom turn](https://github.com/anthropics/claude-code/issues/86138) — 5 comments, 0 reactions
-- [openai/codex: Auto-review reviewer state is not shown with a custom permission profile](https://github.com/openai/codex/issues/38337) — 0 comments, 0 reactions
-- [openai/codex: ChatGPT Pro (20x) accounts appear to receive Pro 5x Codex usage capacity](https://github.com/openai/codex/issues/38157) — 2 comments, 2 reactions
-- [openai/codex: \[BUG\] Undo/redo often fails in native Windows environment when apply_patch edits are tracked as full-file rewrites](https://github.com/openai/codex/issues/19943) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(session): recover orphaned task runs](https://github.com/anomalyco/opencode/pull/42292) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Session stuck in persistent Anthropic API 529 overload errors despite service status green](https://github.com/anthropics/claude-code/issues/86318) — 0 comments, 0 reactions
-- [anomalyco/opencode: Abort leaves orphaned task calls pending](https://github.com/anomalyco/opencode/issues/42286) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Connection closed mid-response](https://github.com/anthropics/claude-code/issues/86317) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(app): scope review panel to the session's own file changes](https://github.com/anomalyco/opencode/pull/42290) — 3 comments, 0 reactions
-- [anomalyco/opencode: Auto-updater breaks global npm install: stub binary + missing shims, hung npm processes left behind](https://github.com/anomalyco/opencode/issues/42291) — 1 comments, 0 reactions
-- [openai/codex: Improve subagent provider visibility](https://github.com/openai/codex/issues/17312) — 5 comments, 1 reactions
-- [anomalyco/opencode: \[Zen\] AuthError: "Request blocked by upstream provider" — all Zen models broken, account recreated](https://github.com/anomalyco/opencode/issues/39827) — 10 comments, 7 reactions
-- [anthropics/claude-code: \[BUG\] Live artifact connector permission prompt never appears after remote update_artifact (Cowork)](https://github.com/anthropics/claude-code/issues/86316) — 0 comments, 0 reactions
-- [anomalyco/opencode: Conversation history too large to compact - exceeds model context limit](https://github.com/anomalyco/opencode/issues/40196) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(core): bound compaction request size](https://github.com/anomalyco/opencode/pull/36589) — 1 comments, 0 reactions
-- [anthropics/claude-code: Bundled ugrep OOMs the host: -E with two bounded {0,N} intervals explodes DFA construction to multiple GB](https://github.com/anthropics/claude-code/issues/67021) — 18 comments, 3 reactions
-- [anomalyco/opencode: Session title silently empty when the title model is a reasoning model (returns only a `<think>` block)](https://github.com/anomalyco/opencode/issues/42287) — 0 comments, 0 reactions
-- [anomalyco/opencode: Report: `deepseek-v4-pro` fails on OpenCode Go `/v1/responses` with 503 while `deepseek-v4-flash` works](https://github.com/anomalyco/opencode/issues/42279) — 1 comments, 0 reactions
-- [openai/codex: Add Guardian V2 extension scaffold](https://github.com/openai/codex/pull/38336) — 0 comments, 1 reactions
-- [anthropics/claude-code: \[Feature Request\] Add option to redact subscription tier from startup banner](https://github.com/anthropics/claude-code/issues/86315) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop dictation fails in API-key auth mode because /backend-api/transcribe rejects API keys](https://github.com/openai/codex/issues/20668) — 1 comments, 8 reactions
-- [openai/codex: ChatGPT Plus: Codex always attempts gpt-5.6-sol and fails](https://github.com/openai/codex/issues/32036) — 1 comments, 3 reactions
-- [anomalyco/opencode: \[BUG\]: Windows Desktop sidecar crashes with exitCode -2147483645, then "Failed to fetch"](https://github.com/anomalyco/opencode/issues/41714) — 3 comments, 0 reactions
-- [anthropics/claude-code: tool_use streaming stall: large tool-input string argument causes /v1/messages stream to hang silently for 80+ seconds with no error](https://github.com/anthropics/claude-code/issues/86314) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app update silently wiped the internal scheduled-tasks registry (scheduledTasks: \[\]) — all scheduled tasks died at once, with zero user notification](https://github.com/anthropics/claude-code/issues/85565) — 3 comments, 0 reactions
-- [anomalyco/opencode: Opencode Desktop fails to upgrade](https://github.com/anomalyco/opencode/issues/40401) — 1 comments, 0 reactions
-- [anthropics/claude-code: Cross-session messages leave the recipient's query completely unresponsive (hadFirstResponse=false, reason=no_response) until Desktop's own idle-timeout force-kills it 15-20 min later](https://github.com/anthropics/claude-code/issues/86012) — 11 comments, 3 reactions
-- [openai/codex: \[Pro 20x\] Severe 7-day quota depletion during light workloads + frequent "Selected model is at capacity" with usage remaining](https://github.com/openai/codex/issues/38335) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop 1.28929.0 (Windows MSIX): Browser pane kills whole app - CI blocks vk_swiftshader.dll (no CodeIntegrity.cat in package), GPU exit 101457950; regression from 1.26832.0](https://github.com/anthropics/claude-code/issues/86313) — 0 comments, 0 reactions
-- [anomalyco/opencode: Opening a folder with the same name in different project directories navigates to the previously opened project](https://github.com/anomalyco/opencode/issues/42284) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Workflow-backed code review PR comment posting silently fails while reporting success](https://github.com/anthropics/claude-code/issues/84474) — 2 comments, 0 reactions
-- [openai/codex: Codex Security scan cannot be loaded due to attackPath.impact schema mismatch](https://github.com/openai/codex/issues/38334) — 0 comments, 0 reactions
-- [anomalyco/opencode: Unable to open certain projects](https://github.com/anomalyco/opencode/issues/42040) — 6 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] False positive content filter block on legitimate lidar-sensor coding task](https://github.com/anthropics/claude-code/issues/86312) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Subagent experiencing high error rate - communication betweet session](https://github.com/anthropics/claude-code/issues/86311) — 0 comments, 0 reactions
-- [openai/codex: Codex App: repeated current-date developer context causes tool-loop repetition and role drift](https://github.com/openai/codex/issues/38333) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix: keep prompt input inert during Safari IME composition](https://github.com/anomalyco/opencode/pull/38728) — 1 comments, 0 reactions
-- [anomalyco/opencode: Failed compaction silently drops pre-tail history from the model context](https://github.com/anomalyco/opencode/issues/42282) — 0 comments, 0 reactions
-- [anthropics/claude-code: Relocating a project dir (symlink / new mount) orphans all session history, memory & context — project keyed by raw cwd path](https://github.com/anthropics/claude-code/issues/71568) — 3 comments, 3 reactions
-- [anomalyco/opencode: fix(session): ignore failed compaction summaries when reordering](https://github.com/anomalyco/opencode/pull/42283) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[MODEL\] When asked to configure autoMode, Claude wrote the settings.json at the project level](https://github.com/anthropics/claude-code/issues/86310) — 0 comments, 0 reactions
-- [openai/codex: Unexpected weekly usage reset overwrites active Codex window and moves reset date — third occurrence](https://github.com/openai/codex/issues/38332) — 1 comments, 0 reactions
-- [anthropics/claude-code: Plugin relevance: cap how often a given plugin can be suggested (overlapping plugins create persistent noise)](https://github.com/anthropics/claude-code/issues/86098) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] CVP-approved Claude.ai organization still receives cyber safeguard blocks in Claude Code](https://github.com/anthropics/claude-code/issues/84352) — 91 comments, 12 reactions
-- [anthropics/claude-code: This is a single feature request (not multiple features)](https://github.com/anthropics/claude-code/issues/86309) — 0 comments, 0 reactions
-- [anthropics/claude-code: v2.1.231](https://github.com/anthropics/claude-code/releases/tag/v2.1.231)
-- [anomalyco/opencode: fix(core): apply external plugin changes after startup batch commits](https://github.com/anomalyco/opencode/pull/42281) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Focus View: keep "human-related" messages and tasks visibile](https://github.com/anthropics/claude-code/issues/83746) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): apply external plugin changes after startup batch commits](https://github.com/anomalyco/opencode/pull/42245) — 3 comments, 0 reactions
-- [anthropics/claude-code: Desktop app: paused (disabled) scheduled tasks disappear from the Routines list](https://github.com/anthropics/claude-code/issues/86115) — 1 comments, 0 reactions
-- [anomalyco/opencode: V2 external plugins silently fail to register agents/tools after startup](https://github.com/anomalyco/opencode/issues/42280) — 0 comments, 0 reactions
-- [openai/codex: False positive about trusted access and biological context](https://github.com/openai/codex/issues/38331) — 1 comments, 0 reactions
-- [openai/codex: Codex TUI freezes after Zellij detach/reattach; suspending before detach avoids it](https://github.com/openai/codex/issues/36338) — 4 comments, 5 reactions
-- [anomalyco/opencode: fix(opencode): keep shell tail when oversized line ends with newline](https://github.com/anomalyco/opencode/pull/42278) — 0 comments, 0 reactions
-- [anomalyco/opencode: shell tool returns "(no output)" when a single line exceeds the byte limit](https://github.com/anomalyco/opencode/issues/42277) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(lsp): allow per-server diagnostics wait timeouts](https://github.com/anomalyco/opencode/pull/41219) — 1 comments, 0 reactions
-- [anthropics/claude-code: Account switch reverts active session .jsonl transcript and silently stops disk writes](https://github.com/anthropics/claude-code/issues/73937) — 2 comments, 0 reactions
-- [openai/codex: Support multi-account and multi-machine Codex mobile Remote Control connections](https://github.com/openai/codex/issues/31187) — 2 comments, 1 reactions
-- [openai/codex: Selected model is at capacity. Please try a different model.](https://github.com/openai/codex/issues/38330) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Let the desktop app surface on-disk transcripts (cross-machine session continuity)](https://github.com/anthropics/claude-code/issues/81835) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): persist Config.update to the loaded config file](https://github.com/anomalyco/opencode/pull/42257) — 2 comments, 0 reactions
-- [anthropics/claude-code: CRITICAL: Conversations disappear when closing VSCode or navigating away](https://github.com/anthropics/claude-code/issues/24172) — 13 comments, 25 reactions
-- [anthropics/claude-code: \[Feature Request\] Add ability to disable individual Claude plugin skills](https://github.com/anthropics/claude-code/issues/14920) — 15 comments, 86 reactions
-- [anthropics/claude-code: \[BUG\] GitHub connector missing entirely from mobile app connector list (private account) — not just disconnected](https://github.com/anthropics/claude-code/issues/86308) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(desktop): proactive RAM memory management](https://github.com/anomalyco/opencode/pull/41553) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(app): add Run button to titlebar for project startup commands](https://github.com/anomalyco/opencode/pull/41555) — 2 comments, 0 reactions
-- [openai/codex: Codex Desktop for macOS repeatedly triggers `syspolicyd` / `trustd` CPU and memory runaway](https://github.com/openai/codex/issues/25719) — 84 comments, 445 reactions
-- [anthropics/claude-code: \[FEATURE\] Sync conversation history between CLI and Claude Code desktop app](https://github.com/anthropics/claude-code/issues/28791) — 33 comments, 146 reactions
-- [openai/codex: "Yes, and don't ask again" remembers exact command instead of command/executable](https://github.com/openai/codex/issues/38328) — 1 comments, 0 reactions
-- [openai/codex: Audio attachments: add playback speed control, and allow HTTP(S) audio sources (not just local files)](https://github.com/openai/codex/issues/38329) — 0 comments, 0 reactions
-- [anthropics/claude-code: Crashed ultrareview (cloud code review) still consumed a free ultrareview credit](https://github.com/anthropics/claude-code/issues/86307) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Possible Claude Max usage bug: session limit consumed without using](https://github.com/anthropics/claude-code/issues/82506) — 29 comments, 8 reactions
-- [openai/codex: Add explicit mode for interrupting](https://github.com/openai/codex/issues/38327) — 1 comments, 0 reactions
-- [anomalyco/opencode: Config.update() writes runtime local config to ignored project-root config.json (re-open)](https://github.com/anomalyco/opencode/issues/42276) — 0 comments, 0 reactions
-- [openai/codex: LSP integration (auto-detect + auto-install) for Codex CLI](https://github.com/openai/codex/issues/8745) — 61 comments, 542 reactions
-- [openai/codex: Managed worktrees should use readable, task-derived names instead of opaque IDs (883f, 576d11db-…)](https://github.com/openai/codex/issues/38326) — 0 comments, 0 reactions
-- [anomalyco/opencode: Memory leak: PDF attachments are base64-encoded without size limit and re-encoded every turn, causing OOM](https://github.com/anomalyco/opencode/issues/42263) — 2 comments, 4 reactions
-- [anthropics/claude-code: \[BUG\] Auto-update wrote a corrupted claude.exe (same size, different SHA256) - instant 0xC0000005, claude update cannot self-recover (Windows native installer)](https://github.com/anthropics/claude-code/issues/86295) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Excessive safety flags when dealing with biology/cheminformatic/ML research (models - Sonnet, Opus)](https://github.com/anthropics/claude-code/issues/86306) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix (core): Multiple clones of same repo are different projects](https://github.com/anomalyco/opencode/pull/35311) — 16 comments, 7 reactions
-- [anthropics/claude-code: \[Windows\] Desktop app: GPU process crash (exit code 101457950) kills entire app and all running sessions](https://github.com/anthropics/claude-code/issues/81698) — 26 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Resume/attach silently overwrites background agent session titles with another session's name](https://github.com/anthropics/claude-code/issues/81899) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Max 20 subscription is being fully consumed without any usage](https://github.com/anthropics/claude-code/issues/81684) — 5 comments, 5 reactions
-- [anomalyco/opencode: fix(core): resolve child process exit signal on exit event](https://github.com/anomalyco/opencode/pull/42275) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(shell): encode PowerShell commands to preserve multi-line output](https://github.com/anomalyco/opencode/pull/42274) — 0 comments, 0 reactions
-- [openai/codex: Image generation ("Codex Image 2") fails with generic "network request failed" — root cause is sandbox setup failing to create/init dedicated Windows accounts (CodexSandboxOnline/Offline)](https://github.com/openai/codex/issues/32937) — 3 comments, 0 reactions
-- [anomalyco/opencode: TUI stuck when a message is queue and questions pop out](https://github.com/anomalyco/opencode/issues/42272) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Usage percentage jumps unexpectedly large amounts in a single prompt](https://github.com/anthropics/claude-code/issues/86305) — 0 comments, 0 reactions
-- [anomalyco/opencode: `opencode run` (headless) never exits after a fatal non-retryable provider error — hung 3 days on "Monthly usage limit reached"](https://github.com/anomalyco/opencode/issues/42268) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[MODEL\] git stash/pop run for an unrelated build check silently destroyed the user's staged index](https://github.com/anthropics/claude-code/issues/86304) — 0 comments, 0 reactions
-- [openai/codex: \[Windows Desktop\] Failed Cloud chat creation leaves the conversation stuck with no way back to Local](https://github.com/openai/codex/issues/38325) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): Old messages disappearing during long sessions](https://github.com/anomalyco/opencode/pull/26861) — 2 comments, 7 reactions
-- [openai/codex: Feature request: allow folding verbose MCP tool result bodies in the Codex CLI TUI](https://github.com/openai/codex/issues/26279) — 4 comments, 2 reactions
-- [anomalyco/opencode: service: idle background daemon holds ~700-800MB RSS](https://github.com/anomalyco/opencode/issues/42271) — 1 comments, 0 reactions
-- [anomalyco/opencode: service: restart leaves stale daemon and duplicated MCP servers running](https://github.com/anomalyco/opencode/issues/42270) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Cowork file_upload: paths parameter arrives as undefined at server (Zod validation fails on every call)](https://github.com/anthropics/claude-code/issues/86303) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Terminal input routing not returning to shell after subagent view navigation on macOS](https://github.com/anthropics/claude-code/issues/86302) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Environment Contributions warning continuously reappears](https://github.com/anthropics/claude-code/issues/3301) — 45 comments, 83 reactions
-- [anomalyco/opencode: feat(desktop): add radio group button for switching agent mode](https://github.com/anomalyco/opencode/pull/38274) — 3 comments, 0 reactions
-- [openai/codex: Windows computer control plugin cannot read windows and still returns EPERM after permission is granted — Environment: Windows, Codex desktop app](https://github.com/openai/codex/issues/38293) — 3 comments, 0 reactions
-- [openai/codex: Codex App 26.803.61601 on macOS: dictation button stalls before Realtime starts](https://github.com/openai/codex/issues/38324) — 0 comments, 0 reactions
-- [openai/codex: Codex crashes when credits are exhausted](https://github.com/openai/codex/issues/38322) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app (Windows Store 1.28929.0): every background session turn dies silently (zero output, no error, exclamation badge); interactive session unaffected](https://github.com/anthropics/claude-code/issues/86208) — 1 comments, 0 reactions
-- [openai/codex: Windows Codex app missing “\control other devices"” tab in Settings > Connections](https://github.com/openai/codex/issues/28919) — 31 comments, 33 reactions
-- [anthropics/claude-code: GitHub connector links repositories successfully but Claude cannot access content for ANY repository (account-wide, public and private alike) — recent regression](https://github.com/anthropics/claude-code/issues/71542) — 55 comments, 51 reactions
-- [openai/codex: Browser Use and Chrome backend time out despite installed extension and valid native host](https://github.com/openai/codex/issues/22057) — 5 comments, 1 reactions
-- [openai/codex: Built-in image generation repeatedly fails with network error after July 9 desktop update](https://github.com/openai/codex/issues/32297) — 23 comments, 8 reactions
-- [anthropics/claude-code: Feature request: deferred/lazy-loaded skill catalog (analog of MCP's defer_loading)](https://github.com/anthropics/claude-code/issues/82346) — 1 comments, 0 reactions
-- [anomalyco/opencode: desktop: sent user message not visible in chat — client sends limit=0 on message fetch, server rejects with 400](https://github.com/anomalyco/opencode/issues/42267) — 0 comments, 0 reactions
-- [anomalyco/opencode: desktop: bundled sidecar (next-17403) crashes with 'Path is not absolute: global' — all API 500s, failed to load sessions](https://github.com/anomalyco/opencode/issues/42266) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Windows\] Desktop app 1.24012.1: fatal GPU-process crash (0x060C201E) via in-app Browser tab; crash leaves MSIX package unlaunchable (appxState=2) until Repair](https://github.com/anthropics/claude-code/issues/80444) — 31 comments, 3 reactions
-- [anthropics/claude-code: Bug: Claude Code current session limit reaches 100% despite low visible local session usage](https://github.com/anthropics/claude-code/issues/54750) — 17 comments, 11 reactions
-- [anomalyco/opencode: \[FEATURE\]:Pay Go with crypto](https://github.com/anomalyco/opencode/issues/23153) — 18 comments, 60 reactions
-- [openai/codex: Codex CLI 0.146.0: /backend-api/codex/responses/compact returns 404 {"detail":"Not Found"}](https://github.com/openai/codex/issues/38323) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(app): add subagents tab to the session side panel](https://github.com/anomalyco/opencode/pull/39382) — 0 comments, 0 reactions
-- [anomalyco/opencode: TUI: text disappears during LLM streaming, main thread stuck in timerfd busy-loop (TreeSitter worker stack overflow)](https://github.com/anomalyco/opencode/issues/42264) — 0 comments, 0 reactions
-- [anomalyco/opencode: Web/new layout: direct /:dir/session creates a draft but does not register the directory as an opened project](https://github.com/anomalyco/opencode/issues/42265) — 0 comments, 0 reactions
-- [anthropics/claude-code: Feature request: per-subagent skill allowlisting (not just preloading or full block)](https://github.com/anthropics/claude-code/issues/82341) — 2 comments, 0 reactions
-- [openai/codex: Make gRPC code-mode yield tests deterministic](https://github.com/openai/codex/pull/38321) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Windows auto-update deploys into running claude.exe + CoworkVMService (0x80073CF9/0x80073D02), app left unlaunchable (NeedsRemediation); recovery churn incl. dev-only PreserveApplicationData (0x80073CFA) — twice in one day](https://github.com/anthropics/claude-code/issues/83932) — 10 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] "Run failed: Claude Issue Triage - main" emails when interacting with bugs](https://github.com/anthropics/claude-code/issues/81632) — 3 comments, 0 reactions
-- [anomalyco/opencode: Memory Megathread](https://github.com/anomalyco/opencode/issues/20695) — 129 comments, 151 reactions
-- [anomalyco/opencode: Codex OAuth Fast models run at standard throughput](https://github.com/anomalyco/opencode/issues/39864) — 1 comments, 0 reactions
-- [openai/codex: Feature request: Cross-device sync for Codex Projects and Chats](https://github.com/openai/codex/issues/21803) — 3 comments, 30 reactions
-- [anthropics/claude-code: Auto-update fails repeatedly with ENOTEMPTY error on macOS with nvm](https://github.com/anthropics/claude-code/issues/12026) — 5 comments, 7 reactions
-- [anthropics/claude-code: \[BUG\] Claude Desktop 1.28929.0 (Windows/MSIX): GPU process crashes on session preview — regression from 1.26832.0](https://github.com/anthropics/claude-code/issues/86301) — 0 comments, 0 reactions
-- [openai/codex: 0.147-alpha (Windows): App keeps thread writer for every opened thread until full app exit; no attach path for external clients](https://github.com/openai/codex/issues/37450) — 2 comments, 0 reactions
-- [openai/codex: \[Windows 10\] DWM Composition handles accumulate after Codex tasks with tool calls](https://github.com/openai/codex/issues/33192) — 8 comments, 7 reactions
-- [openai/codex: Windows standalone auto-upgrade installs a broken AppData CLI launcher without sandbox resources](https://github.com/openai/codex/issues/38039) — 2 comments, 0 reactions
-- [anomalyco/opencode: Todos not updating properly](https://github.com/anomalyco/opencode/issues/42261) — 3 comments, 0 reactions
-- [openai/codex: Codex Security: recoverable finalization schema error permanently fails completed scan](https://github.com/openai/codex/issues/37587) — 2 comments, 1 reactions
-- [anthropics/claude-code: \[Bug\] Compact limit error triggered despite available context and free space](https://github.com/anthropics/claude-code/issues/86300) — 0 comments, 0 reactions
-- [openai/codex: Chat gpt - chat is finished in the codex desktop app but still calculating in the browser and the message is stuck in the browser](https://github.com/openai/codex/issues/38320) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(app): unify v2 server and session lifecycle](https://github.com/anomalyco/opencode/pull/41930) — 7 comments, 0 reactions
-- [openai/codex: Windows: WebSocket transport times out with respect_system_proxy, works with HTTP_PROXY/HTTPS_PROXY](https://github.com/openai/codex/issues/29958) — 5 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): align skill descriptions with wide characters](https://github.com/anomalyco/opencode/pull/42262) — 1 comments, 0 reactions
-- [openai/codex: \[Windows\]\[Codex Desktop\]\[IAB\] `browser.tabs.finalize()` silently terminates the entire app](https://github.com/openai/codex/issues/35210) — 11 comments, 0 reactions
-- [anthropics/claude-code: Stop hook decision:block is rendered as 'Stop hook error', making intentional instructional blocks look like failures](https://github.com/anthropics/claude-code/issues/84385) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Prompt cache invalidated by rewrites of messages in long sessions](https://github.com/anthropics/claude-code/issues/76606) — 6 comments, 0 reactions
-- [anthropics/claude-code: Prompt cache fully re-created after turns with many parallel tool calls (cache_read collapses to system+tools floor) — ~74% of cache writes wasted on Opus 4.8 / v2.1.15x](https://github.com/anthropics/claude-code/issues/63930) — 9 comments, 6 reactions
-- [anomalyco/opencode: fix(opencode): propagate session errors and surface tool-load warnings in the UI](https://github.com/anomalyco/opencode/pull/42253) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): skip tool files that fail to load](https://github.com/anomalyco/opencode/pull/42252) — 3 comments, 0 reactions
-- [openai/codex: Windows execpolicy cannot bind a bare PowerShell command to an approved launcher path](https://github.com/openai/codex/issues/36179) — 0 comments, 0 reactions
-- [openai/codex: Windows CLI /app fails to open Desktop thread with Start-Process Access denied](https://github.com/openai/codex/issues/28667) — 7 comments, 1 reactions
-- [openai/codex: Desktop compaction repeatedly embeds full image base64 in compacted checkpoints](https://github.com/openai/codex/issues/23257) — 12 comments, 5 reactions
-- [anthropics/claude-code: All sessions appear as background agents; subagents stall 100% of the time](https://github.com/anthropics/claude-code/issues/76220) — 2 comments, 2 reactions
-- [anthropics/claude-code: \[BUG\] Windows: Claude Code directory enumeration triggers kernel BSOD (0x139 in Ntfs!FindNextIndexEntry2) — reproducible on 2.1.216](https://github.com/anthropics/claude-code/issues/81154) — 5 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Resuming a session on a later calendar day silently invalidates the entire message-history cache (currentDate block re-synthesized on resume)](https://github.com/anthropics/claude-code/issues/86299) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Loading a tool for the first time mid-session (e.g. skill, MCP, tool-search) invalidates cache](https://github.com/anthropics/claude-code/issues/75142) — 4 comments, 0 reactions
-- [anomalyco/opencode: Tool files that fail to load crash the whole session/registry instead of being skipped](https://github.com/anomalyco/opencode/issues/42258) — 2 comments, 0 reactions
-- [anomalyco/opencode: Session run defects are silently dropped — UI shows no error, session just goes idle](https://github.com/anomalyco/opencode/issues/42259) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Allow "cancelled" agents to be resumed anyway](https://github.com/anthropics/claude-code/issues/83809) — 2 comments, 1 reactions
-- [anomalyco/opencode: \[FEATURE\]:Add a dedicated panel for viewing shell tool invocations by the agent](https://github.com/anomalyco/opencode/issues/42247) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(app): redesign non-modal settings](https://github.com/anomalyco/opencode/pull/40845) — 17 comments, 0 reactions
-- [anomalyco/opencode: Session run defects are silently dropped — UI shows no error, session just goes idle](https://github.com/anomalyco/opencode/issues/42251) — 1 comments, 0 reactions
-- [anomalyco/opencode: Tool files that fail to load crash the whole session/registry instead of being skipped](https://github.com/anomalyco/opencode/issues/42250) — 3 comments, 0 reactions
-- [openai/codex: GPT‑5.6 regression: stronger planning, weaker execution and instruction adherence](https://github.com/openai/codex/issues/36229) — 5 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Teammate subagents of a forked-skill agent cannot reply to their parent; SendMessage to "team-lead" false-succeeds into an orphaned inbox](https://github.com/anthropics/claude-code/issues/85949) — 2 comments, 0 reactions
-- [openai/codex: Allow configuring retry policy and honor `Retry-After` for TPM rate limits in Codex](https://github.com/openai/codex/issues/34053) — 2 comments, 2 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Content Flagged by Safety Filters on Legitimate Code Tasks](https://github.com/anthropics/claude-code/issues/86197) — 2 comments, 1 reactions
-- [openai/codex: Codex CLI 0.147.0 Sends Empty Tool Description to Azure Responses API](https://github.com/openai/codex/issues/37487) — 9 comments, 3 reactions
-- [openai/codex: 0.148.0-alpha.12](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.12)
-- [openai/codex: Support first-class Windows-to-Windows Codex App pairing and remote control](https://github.com/openai/codex/issues/30573) — 2 comments, 1 reactions
-- [anthropics/claude-code: Feature request: programmatic/scriptable way to check current Pro/Max weekly usage quota](https://github.com/anthropics/claude-code/issues/86297) — 0 comments, 0 reactions
-- [anthropics/claude-code: ExitWorktree's safety check false-positives after every squash-merge — ancestry is the wrong predicate](https://github.com/anthropics/claude-code/issues/84856) — 1 comments, 1 reactions
-- [anthropics/claude-code: Model behavior: /goal Stop-hook directive cited as authorization for unrequested actions; absence-from-search treated as evidence of absence; structure-as-substance under pushback](https://github.com/anthropics/claude-code/issues/60705) — 113 comments, 0 reactions
-- [openai/codex: Codex Desktop no longer shows file tree, review pane, or branch UI despite Git being detected](https://github.com/openai/codex/issues/30484) — 9 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Desktop crashes when browser preview renders Cloudflare Turnstile — reproducible across multiple machines/GPUs, app becomes unlaunchable](https://github.com/anthropics/claude-code/issues/83403) — 8 comments, 1 reactions
-- [anthropics/claude-code: Skill frontmatter `model:` override ignored in interactive mode but honored in print mode (v2.1.227)](https://github.com/anthropics/claude-code/issues/85658) — 1 comments, 0 reactions
-- [anomalyco/opencode: refactor(app): consolidate desktop server data contexts](https://github.com/anomalyco/opencode/pull/42256) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Microsoft Business Central MCP server: all tool invocations fail with Internal_CompanyNotFound since MCP 2026-07-28 stateless spec rollout — header-bound context lost per-request](https://github.com/anthropics/claude-code/issues/81965) — 6 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] CVP Safety Filter False Positive with Active Exemption](https://github.com/anthropics/claude-code/issues/86296) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[Bug\]:Chinese is not displayed on the screen when the commands are open](https://github.com/anomalyco/opencode/issues/42255) — 1 comments, 0 reactions
-- [anomalyco/opencode: event table keeps every message.updated.1 snapshot: 378 MB of it is superseded copies](https://github.com/anomalyco/opencode/issues/42249) — 2 comments, 0 reactions
-- [anomalyco/opencode: Unbounded growth of the `event` table: opencode.db reaches 13GB+, mostly `message.updated.1` snapshots (no retention/compaction)](https://github.com/anomalyco/opencode/issues/33356) — 17 comments, 5 reactions
-- [anomalyco/opencode: docs(plugins): add apify plugin](https://github.com/anomalyco/opencode/pull/42254) — 2 comments, 0 reactions
-- [openai/codex: bad result](https://github.com/openai/codex/issues/38319) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug Report: Unintelligible error report submitted\]](https://github.com/anthropics/claude-code/issues/86294) — 0 comments, 0 reactions
-- [anomalyco/opencode: I use deepseek-v4-flash on Hermes agents, with no glm-5, but glm-5 is being used according to the Usage page](https://github.com/anomalyco/opencode/issues/27712) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] managed-settings.d hooks are silently dropped when the signed-in org has server-managed settings — they only load when the remote fetch 404s](https://github.com/anthropics/claude-code/issues/86293) — 0 comments, 0 reactions
-- [openai/codex: Execpolicy allow rules silently stay sandboxed when any denied-read path is configured](https://github.com/openai/codex/issues/38318) — 0 comments, 0 reactions
-- [anthropics/claude-code: Mobile app: cloud environment selector allows switching/creating but not editing existing environments](https://github.com/anthropics/claude-code/issues/86292) — 0 comments, 0 reactions
-- [openai/codex: \[macOS\] Scheduled automation returns to sleep after dispatch during DarkWake](https://github.com/openai/codex/issues/34794) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(session): interrupt a running prompt when a new one is submitted](https://github.com/anomalyco/opencode/pull/41748) — 3 comments, 0 reactions
-- [openai/codex: \[Windows\] `codex app` falsely reports Desktop missing when StartApps entry is named ChatGPT](https://github.com/openai/codex/issues/32464) — 3 comments, 1 reactions
-- [openai/codex: TUI finalized assistant messages can render blank Markdown lines as two viewport rows](https://github.com/openai/codex/issues/34094) — 1 comments, 0 reactions
-- [openai/codex: Windows sandbox helpers race while updating deny_read_acl_state.json](https://github.com/openai/codex/issues/34013) — 1 comments, 0 reactions
-- [openai/codex: codex-windows-sandbox-setup.exe not found by CLI setup after clean install due to bin junction](https://github.com/openai/codex/issues/30829) — 9 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Windows: Claude Desktop MSIX package reverts to Modified, NeedsRemediation within minutes of clean install; Repair impossible due to CoworkVMService](https://github.com/anthropics/claude-code/issues/85887) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\]  Claude in Chrome — "blocked by your organization's policy" on all sites (personal Ubuntu machine, no managed policies)](https://github.com/anthropics/claude-code/issues/59974) — 7 comments, 0 reactions
-- [openai/codex: Codex app subagent cards can remain stuck/visible after close while close/readback reports no live agent](https://github.com/openai/codex/issues/23930) — 20 comments, 4 reactions
-- [anthropics/claude-code: \[BUG\] Claude Desktop (Windows/MSIX): recurring "GPU process gone" crashes on hybrid GPU laptop — occurs on BOTH Intel Arc and NVIDIA; MSIX blocks every GPU workaround](https://github.com/anthropics/claude-code/issues/86199) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop: scheduled-task sessions never terminate — WarmLifecycle:session idle timeout disconnects, then re-arms indefinitely](https://github.com/anthropics/claude-code/issues/82023) — 3 comments, 0 reactions
-- [openai/codex: Failed to use /btw](https://github.com/openai/codex/issues/38317) — 1 comments, 0 reactions
-- [anthropics/claude-code: Desktop app freezes on "Use verification code to continue" screen when signing in on a second device — requires full reboot to recover](https://github.com/anthropics/claude-code/issues/80987) — 2 comments, 0 reactions
-- [anthropics/claude-code: Memory regression after 2.1.227/desktop 1.28929.0: 3-6x footprint growth causes OOM SIGKILLs misreported as "Blocked by endpoint security"](https://github.com/anthropics/claude-code/issues/86288) — 1 comments, 0 reactions
-- [openai/codex: \[Windows Desktop 26.803.10989.0\] Intermittent whole-window UI freezes with normal system resources](https://github.com/openai/codex/issues/38315) — 2 comments, 0 reactions
-- [openai/codex: Codex uses bundled pnpm instead of host toolchain](https://github.com/openai/codex/issues/30440) — 21 comments, 28 reactions
-- [openai/codex: `auto_review.policy` silently replaces the catalog security policy despite being described as additional instructions](https://github.com/openai/codex/issues/38316) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Ctrl+C and Ctrl+Shift+C silently clear prompt input with no confirmation or recovery](https://github.com/anthropics/claude-code/issues/59408) — 15 comments, 10 reactions
-- [anthropics/claude-code: Typed input queued mid-turn is silently dropped at turn end (end_turn, no Escape involved) -- interactive TUI](https://github.com/anthropics/claude-code/issues/85603) — 21 comments, 0 reactions
-- [anomalyco/opencode: bug: mouse escape sequences garbled after TUI exit](https://github.com/anomalyco/opencode/issues/20458) — 6 comments, 4 reactions
-- [anomalyco/opencode: credit card declined](https://github.com/anomalyco/opencode/issues/33264) — 15 comments, 3 reactions
-- [openai/codex: node_repl js only returns execution_duration_ms to the model when nodeRepl.write emits output](https://github.com/openai/codex/issues/38311) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Reasoning loop on repeated Read of same file offset — Claude Code v2.1.220 stops making progress after compaction](https://github.com/anthropics/claude-code/issues/86291) — 0 comments, 0 reactions
-- [openai/codex: Background subprocesses/subagents do not wake the calling agent on completion](https://github.com/openai/codex/issues/15723) — 15 comments, 8 reactions
-- [anomalyco/opencode: deepseek-v4-pro on opencode-go /responses fails on any multi-turn request (flash & official API both work)](https://github.com/anomalyco/opencode/issues/42135) — 5 comments, 0 reactions
-- [anthropics/claude-code: reserve % of quota for specific tasks](https://github.com/anthropics/claude-code/issues/81554) — 9 comments, 0 reactions
-- [anomalyco/opencode: 在使用较宽字符作为技能名时，技能描述不对齐](https://github.com/anomalyco/opencode/issues/40605) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): preserve prompt cache affinity](https://github.com/anomalyco/opencode/pull/42248) — 1 comments, 0 reactions
-- [openai/codex: logs_2.sqlite never reclaims freed pages: auto_vacuum=INCREMENTAL is set but never run, so the file grows monotonically despite working 10-day retention](https://github.com/openai/codex/issues/35823) — 4 comments, 1 reactions
-- [openai/codex: \[macOS app\] Existing chats hang after Wi-Fi SSID switch until restart](https://github.com/openai/codex/issues/38314) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] PR state badges missing from session sidebar in Claude app](https://github.com/anthropics/claude-code/issues/86289) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Background agent sessions cannot copy to tmux buffer: TMUX is stripped when daemon spawns bg-pty-host](https://github.com/anthropics/claude-code/issues/86290) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Background agent sessions cannot copy to tmux buffer: TMUX is stripped when daemon spawns bg-pty-host](https://github.com/anthropics/claude-code/issues/84177) — 0 comments, 0 reactions
-- [openai/codex: Random compaction bug blocking session completely.](https://github.com/openai/codex/issues/38240) — 4 comments, 0 reactions
-- [anomalyco/opencode: V2 drops prompt cache affinity for OpenRouter and OpenAI Chat](https://github.com/anomalyco/opencode/issues/42246) — 0 comments, 0 reactions
-- [openai/codex: Fix RTL/LTR text rendering for mixed Arabic and English in Codex](https://github.com/openai/codex/issues/26250) — 15 comments, 0 reactions
-- [anthropics/claude-code: RTL (Right-to-Left) text direction support](https://github.com/anthropics/claude-code/issues/37183) — 9 comments, 34 reactions
-- [anomalyco/opencode: \[Bug\] zen/go model compatibility in Anthropic /v1/messages for coding-agent tool use](https://github.com/anomalyco/opencode/issues/34331) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude desktop session indexing bug](https://github.com/anthropics/claude-code/issues/85794) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Claude Desktop (Windows/MSIX): GPU process crash (exitCode 101457950) kills entire app on AMD integrated graphics — recurring, all OS-level mitigations exhausted](https://github.com/anthropics/claude-code/issues/86287) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\] OpenCode Go subscription paid successfully but workspace shows "Insufficient balance"](https://github.com/anomalyco/opencode/issues/37790) — 13 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Scrollback duplication on terminal resize persists in 2.1.116 (VS Code integrated terminal, macOS)](https://github.com/anthropics/claude-code/issues/51828) — 25 comments, 33 reactions
-- [anthropics/claude-code: Windows desktop app: cross-session send_message silently fails (reports success, never delivered) after runtime 2.1.222→2.1.227 auto-update](https://github.com/anthropics/claude-code/issues/86275) — 3 comments, 1 reactions
-- [openai/codex: Composer text becomes unreadable after live terminal theme switch](https://github.com/openai/codex/issues/14105) — 2 comments, 4 reactions
-- [anthropics/claude-code: \[Feature Request\] VS Code extension should keep plan open after acceptance instead of closing it](https://github.com/anthropics/claude-code/issues/86286) — 0 comments, 0 reactions
-- [openai/codex: Guardian infrastructure failures still surface as high-risk denials after retries are exhausted](https://github.com/openai/codex/issues/38235) — 2 comments, 0 reactions
-- [openai/codex: Codex Desktop: keep active tasks visible in a persistent sidebar section](https://github.com/openai/codex/issues/33730) — 3 comments, 1 reactions
-- [anthropics/claude-code: Desktop app: session in Recents keeps showing a blinking/flashing status dot that won't clear](https://github.com/anthropics/claude-code/issues/74227) — 3 comments, 1 reactions
-- [anomalyco/opencode: fix(console): drop non-function tools when converting Responses to chat completions](https://github.com/anomalyco/opencode/pull/42231) — 4 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): detach clipboard helper processes to survive SIGTSTP](https://github.com/anomalyco/opencode/pull/42233) — 3 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Zen dashboard - usage totals, per-model breakdown, and invoices](https://github.com/anomalyco/opencode/issues/13497) — 6 comments, 10 reactions
-- [anthropics/claude-code: \[BUG\] Conversation history is lost in VSCode extension](https://github.com/anthropics/claude-code/issues/29017) — 27 comments, 23 reactions
-- [anthropics/claude-code: Localization support for status/spinner text (e.g. "Wandering...", "Ideating...")](https://github.com/anthropics/claude-code/issues/82827) — 1 comments, 0 reactions
-- [openai/codex: Bug: Answers Are Internally Truncated Unpredictably](https://github.com/openai/codex/issues/36358) — 6 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Populate a stable teammate identity in PreToolUse/SubagentStart hook payloads (Agent Teams)](https://github.com/anthropics/claude-code/issues/86285) — 0 comments, 0 reactions
-- [openai/codex: Odd content injection](https://github.com/openai/codex/issues/11966) — 12 comments, 8 reactions
-- [openai/codex: \[Documents skill\] Page-cited DOCX Q&A can trigger full PDF/PNG rendering; renderer lacks page-range and timeout support](https://github.com/openai/codex/issues/38313) — 0 comments, 0 reactions
-- [anomalyco/opencode: CJK characters garbled when copying text via OSC52 clipboard (WSL2 + VSCode terminal)](https://github.com/anomalyco/opencode/issues/32144) — 2 comments, 0 reactions
-- [openai/codex: Bug: tool-call envelope leaked into assistant text + occasional lottery/ads injection](https://github.com/openai/codex/issues/13114) — 4 comments, 6 reactions
-- [openai/codex: Codex Desktop repeatedly re-enters the model during wait/status polling, consuming substantial credits](https://github.com/openai/codex/issues/35259) — 13 comments, 7 reactions
-- [openai/codex: GPT-5.4 emits internal `multi_tool_use.parallel` format as plain text with training data artifacts](https://github.com/openai/codex/issues/13867) — 7 comments, 0 reactions
-- [openai/codex: Unknown model gpt-5.6-luna](https://github.com/openai/codex/issues/37910) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app ignores mcpServers "alwaysLoad": true (stdio server) — tools deferred behind ToolSearch; identical config honored by CLI](https://github.com/anthropics/claude-code/issues/86284) — 0 comments, 0 reactions
-- [openai/codex: Windows Desktop app-server repeatedly spawns duplicate MCP stdio process pools (183 node.exe / 13GB private memory)](https://github.com/openai/codex/issues/31499) — 7 comments, 1 reactions
-- [anomalyco/opencode: tui: default_agent is ignored on startup in V2](https://github.com/anomalyco/opencode/issues/37225) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] `rate_limits` still missing from statusline JSON on v2.1.228 (macOS, Pro, firstParty auth) — same as closed #40094](https://github.com/anthropics/claude-code/issues/86169) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): list default agent first](https://github.com/anomalyco/opencode/pull/42243) — 1 comments, 0 reactions
-- [anomalyco/opencode: moonshot AI kimi k2 all get error.](https://github.com/anomalyco/opencode/issues/6056) — 7 comments, 0 reactions
-- [openai/codex: \[Critical data loss\] Codex deleted important project files without an explicit deletion request or confirmation](https://github.com/openai/codex/issues/38312) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] PostRewind hook event — hooks that manage external state can't observe /rewind (re-files stale-closed #18858)](https://github.com/anthropics/claude-code/issues/86283) — 0 comments, 0 reactions
-- [openai/codex: fix: harden symlinked project config writes](https://github.com/openai/codex/pull/15730) — 4 comments, 0 reactions
-- [openai/codex: Dictation with codex on Android flakes out regularly](https://github.com/openai/codex/issues/30862) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Cowork projects still lost on update in v1.28929.0 — same migration bug as #29373 / #35131 / #49276, all closed without a fix](https://github.com/anthropics/claude-code/issues/86282) — 0 comments, 0 reactions
-- [anthropics/claude-code: Multi-agent: EnterWorktree/isolation state is session-global — concurrent subagents hijack each other's cwd and guard identity](https://github.com/anthropics/claude-code/issues/84685) — 9 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Cowork (macOS): scheduled-task storage root is global and ignores the creating project; its reserved path permanently blocks mounting the containing folder](https://github.com/anthropics/claude-code/issues/86274) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app: clicking a notification focuses the main window instead of the window where the session is open](https://github.com/anthropics/claude-code/issues/86281) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix: deduplicate identical permission prompts in same session](https://github.com/anomalyco/opencode/pull/42244) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Renamed session works on first resume but the name disappears after the second exit](https://github.com/anthropics/claude-code/issues/25090) — 33 comments, 29 reactions
-- [anthropics/claude-code: \[BUG\] All Cowork projects lost — local-agent-mode-sessions recreated empty after macOS update/reboot; separately, cleanupPeriodDays=30 default silently deleted session transcripts](https://github.com/anthropics/claude-code/issues/86280) — 0 comments, 0 reactions
-- [openai/codex: \[Windows\]\[Desktop\] Typing `/` crashes MSIX-launched Codex with Chromium breakpoint exception](https://github.com/openai/codex/issues/38310) — 2 comments, 0 reactions
-- [anthropics/claude-code: MCP OAuth loopback redirect uses 127.0.0.1 instead of localhost — breaks providers (e.g. Salesforce) that only allow localhost callback URLs](https://github.com/anthropics/claude-code/issues/86233) — 2 comments, 0 reactions
-- [anomalyco/opencode: Missing tool description (undefined) on a plugin tool causes ALL sessions to crash with "Expected string, got undefined at \[description\]"](https://github.com/anomalyco/opencode/issues/42026) — 2 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Support Multiple Skills in a Single Prompt — Critical for Multi-Framework Workflows](https://github.com/anomalyco/opencode/issues/25570) — 7 comments, 18 reactions
-- [anthropics/claude-code: send_message (cross-session) never delivers and leaves the target session hung on an empty turn](https://github.com/anthropics/claude-code/issues/86279) — 0 comments, 0 reactions
-- [openai/codex: Linux Codex App: Usage quota drops by ~50% immediately after reset without any activity](https://github.com/openai/codex/issues/38309) — 3 comments, 0 reactions
-- [openai/codex: \[Windows\]\[26.803.10989.0\] Multiple embedded browser tabs accumulate WebView2 processes and crash Codex when a task finishes](https://github.com/openai/codex/issues/38308) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): exit on empty non-interactive stdin](https://github.com/anomalyco/opencode/pull/42235) — 2 comments, 1 reactions
-- [openai/codex: Windows app stuck on "Finish Windows setup" — sandbox setup never triggers a real UAC prompt, "Retry" fails instantly](https://github.com/openai/codex/issues/32492) — 10 comments, 5 reactions
-- [anomalyco/opencode: Linux/Wayland: clipboard hangs after Ctrl-Z because wl-copy stays in OpenCode process group](https://github.com/anomalyco/opencode/issues/42162) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Add opencode-sandbox to ecosystem documentation](https://github.com/anomalyco/opencode/issues/42242) — 1 comments, 0 reactions
-- [anomalyco/opencode: docs: add opencode-sandbox to ecosystem plugins](https://github.com/anomalyco/opencode/pull/13570) — 0 comments, 2 reactions
-- [openai/codex: Codex asks for permission despite full access and approval prompts disabled](https://github.com/openai/codex/issues/29235) — 3 comments, 17 reactions
-- [anthropics/claude-code: User complaint (filed by the agent on user's behalf): autonomous session merged ~24 PRs with green CI while the user hit 9 live regressions in one evening](https://github.com/anthropics/claude-code/issues/86278) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(merman): support cherry-pick in GitGraph diagrams](https://github.com/anomalyco/opencode/pull/42241) — 0 comments, 0 reactions
-- [openai/codex: \[macOS\] Two profiles run duplicate Computer Use services at high CPU; disabling one does not tear it down](https://github.com/openai/codex/issues/38307) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(opencode): let tools opt into strict mode](https://github.com/anomalyco/opencode/pull/42236) — 0 comments, 0 reactions
-- [anomalyco/opencode: Readme fork](https://github.com/anomalyco/opencode/pull/42240) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Session history missing from Desktop app UI after data reset (transcripts still on disk)](https://github.com/anthropics/claude-code/issues/86277) — 0 comments, 0 reactions
-- [openai/codex: 🩹 Restore archived chats access from the main Codex UI](https://github.com/openai/codex/issues/27207) — 8 comments, 10 reactions
-- [openai/codex: Messages sent during active work can be dropped instead of steering or queuing](https://github.com/openai/codex/issues/34599) — 4 comments, 4 reactions
-- [anthropics/claude-code: \[BUG\] Login authenticates but has_finished_claudeai_onboarding=false walls existing paid Max account behind new-account onboarding (web/desktop/setup-token) — 10th public report of this signature, first with the mechanism captured on the wire](https://github.com/anthropics/claude-code/issues/83633) — 17 comments, 0 reactions
-- [openai/codex: /agent command takes extremely long to switch back to the main agent](https://github.com/openai/codex/issues/34776) — 2 comments, 1 reactions
-- [anthropics/claude-code: Desktop app worktree session fails on repos with an empty HEAD tree: "Background full checkout failed: other"](https://github.com/anthropics/claude-code/issues/86276) — 0 comments, 0 reactions
-- [openai/codex: Switching global provider hides previous sessions from the sidebar](https://github.com/openai/codex/issues/17316) — 12 comments, 8 reactions
-- [anomalyco/opencode: 35;125;28M in console after existing](https://github.com/anomalyco/opencode/issues/42239) — 2 comments, 0 reactions
-- [openai/codex: 0.148.0-alpha.11](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.11)
-- [openai/codex: Protect inline visualization viewers from sandbox writes](https://github.com/openai/codex/pull/38306) — 0 comments, 0 reactions
-- [anomalyco/opencode: snapshot: corrupt index causes repeated capture failures and unresponsive service](https://github.com/anomalyco/opencode/issues/42237) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Desktop 3P: disabling Cowork also removes Chat and Home still attempts Cowork sessions](https://github.com/anthropics/claude-code/issues/86273) — 0 comments, 0 reactions
-- [anthropics/claude-code: Headless `claude -p` reports "You've hit your session limit" while the account is at 11% and the parent session works](https://github.com/anthropics/claude-code/issues/86272) — 0 comments, 0 reactions
-- [openai/codex: Research: Codex Plan mode behavior and prompt architecture](https://github.com/openai/codex/issues/38305) — 1 comments, 0 reactions
-- [anthropics/claude-code: Model fabricated a user turn inside its own text block, then executed the fabricated instruction (claude-fable-5, CLI 2.1.226, bg session)](https://github.com/anthropics/claude-code/issues/86271) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Code 2.1.228 repeatedly fails with ECONNRESET on Windows 11, while 2.1.220 works normally](https://github.com/anthropics/claude-code/issues/86043) — 4 comments, 0 reactions
-- [anomalyco/opencode: MCP Proxmox MVP - Proxmox Server Monitoring & Basic Commands](https://github.com/anomalyco/opencode/issues/42204) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): make file paths in read/grep/glob tool output clickable](https://github.com/anomalyco/opencode/pull/38645) — 4 comments, 1 reactions
-- [anomalyco/opencode: fix(desktop): make file:// chat links clickable](https://github.com/anomalyco/opencode/pull/39206) — 4 comments, 1 reactions
-- [anomalyco/opencode: Desktop: make file paths in chat clickable (open in editor / reveal in Finder)](https://github.com/anomalyco/opencode/issues/37891) — 4 comments, 1 reactions
-- [openai/codex: GPT-5.6 consistently aborts functions.exec / tools.exec_command, while GPT-5.5 works](https://github.com/openai/codex/issues/38187) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1 breaks Stop-hook/background evaluator requests: omits `thinking` while still attaching `clear_thinking_20251015`](https://github.com/anthropics/claude-code/issues/86270) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] macOS desktop app loses auth ~daily on two machines; abandoned sessions remain active server-side](https://github.com/anthropics/claude-code/issues/85687) — 1 comments, 0 reactions
-- [openai/codex: Windows Desktop: unbounded taskkill.exe/conhost.exe cleanup storm exhausts WMI](https://github.com/openai/codex/issues/34260) — 34 comments, 13 reactions
-- [anthropics/claude-code: Desktop app renders Task* tool calls as an empty, non-expandable "Updated tasks" row (schema mismatch with the TodoWrite renderer)](https://github.com/anthropics/claude-code/issues/86269) — 0 comments, 0 reactions
-- [openai/codex: TUI still shows “Implement this plan?” after implementation starts from another client](https://github.com/openai/codex/issues/38304) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `claude --cloud` bundles local repo state even when GitHub can serve the branch — documented clone behavior and "push first" guidance do not match observed behavior](https://github.com/anthropics/claude-code/issues/86268) — 0 comments, 0 reactions
-- [anomalyco/opencode: TUI stays alive with EOF stdin and no TTY](https://github.com/anomalyco/opencode/issues/42234) — 1 comments, 1 reactions
-- [openai/codex: macOS Codex Desktop 26.707.91948 still overrides custom profile with never/user](https://github.com/openai/codex/issues/33552) — 2 comments, 0 reactions
-- [openai/codex: Add interrupted turn recovery](https://github.com/openai/codex/pull/38303) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(opencode): add Kiro provider](https://github.com/anomalyco/opencode/pull/20491) — 54 comments, 48 reactions
-- [anthropics/claude-code: \[BUG\] Installation failed  Failed to fetch version from stable: AxiosError: timeout of 30000ms exceeded](https://github.com/anthropics/claude-code/issues/13498) — 13 comments, 14 reactions
-- [anthropics/claude-code: Long-running CLI host process grew to ~16.7 GB RSS over 4 weeks (Windows)](https://github.com/anthropics/claude-code/issues/86267) — 0 comments, 0 reactions
-- [anthropics/claude-code: Feature request: configurable output pacing / scroll throttle for streamed responses](https://github.com/anthropics/claude-code/issues/86266) — 0 comments, 0 reactions
-- [anomalyco/opencode: Open Path" Error - ENOENT Spawn Failure](https://github.com/anomalyco/opencode/issues/27481) — 3 comments, 0 reactions
-- [anomalyco/opencode: opencode邀请失效了](https://github.com/anomalyco/opencode/issues/40295) — 5 comments, 1 reactions
-- [anomalyco/opencode: \[OpenCode Go\] deepseek-v4-pro via Responses API: 400 tools\[N\].function missing field 'name' (web_search tool rejected)](https://github.com/anomalyco/opencode/issues/42090) — 4 comments, 1 reactions
-- [anthropics/claude-code: Session archive is one-way: no unarchive tool and no Archived view in desktop](https://github.com/anthropics/claude-code/issues/67835) — 5 comments, 4 reactions
-- [anthropics/claude-code: \[FEATURE\] claude.ai: decouple automatic context management from Code Execution, and add a recoverable session handoff](https://github.com/anthropics/claude-code/issues/86263) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Windows Desktop\] GPU process crashes with exitCode 101457950 (0x060C201E) - reproduces with --disable-gpu, across 1.26832/1.28929](https://github.com/anthropics/claude-code/issues/86265) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\]](https://github.com/anthropics/claude-code/issues/86264) — 0 comments, 0 reactions
-- [openai/codex: Codex app-server can grow to 30-40 GB when local rollout history is huge](https://github.com/openai/codex/issues/29510) — 5 comments, 1 reactions
-- [anomalyco/opencode: titlebar update button extra spacing](https://github.com/anomalyco/opencode/issues/42232) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Interactive mode ignores ANTHROPIC_API_KEY environment variable](https://github.com/anthropics/claude-code/issues/86262) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Show timestamp on permission prompts (Ask/Approve dialogs)](https://github.com/anomalyco/opencode/issues/42124) — 1 comments, 0 reactions
-- [anomalyco/opencode: Windows ARM64 native: OpenTUI fails to initialize with bun:ffi dlopen TinyCC error](https://github.com/anomalyco/opencode/issues/19130) — 17 comments, 12 reactions
-- [anomalyco/opencode: fix(tui): correct working directory when continuing session in a new directory](https://github.com/anomalyco/opencode/pull/42223) — 0 comments, 0 reactions
-- [anomalyco/opencode: opencode -c resumes a session from a different working directory (across root-level git worktrees of the same repo)](https://github.com/anomalyco/opencode/issues/41562) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Repeated  "Image  couldn't  be  processed"  API  errors  consuming  usage  limit  in  Claude  Code](https://github.com/anthropics/claude-code/issues/62466) — 31 comments, 21 reactions
-- [openai/codex: \[Codex App\]\[Windows\] Make response file references and artifact cards draggable to external apps](https://github.com/openai/codex/issues/26620) — 1 comments, 0 reactions
-- [openai/codex: Codex Desktop: bulk export all generated outputs from a chat](https://github.com/openai/codex/issues/38302) — 0 comments, 0 reactions
-- [openai/codex: Codex App file manager: support drag-and-drop import and right-click delete](https://github.com/openai/codex/issues/29316) — 1 comments, 1 reactions
-- [openai/codex: Drag/Drop in the File Browser Sidebar](https://github.com/openai/codex/issues/31674) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[MODEL\] Accepts an explicit finish condition, restates it, then stops short — same instruction given 5 times across 5 sessions](https://github.com/anthropics/claude-code/issues/86261) — 0 comments, 1 reactions
-- [anthropics/claude-code: \[Bug\] Agent ignoring explicit user instructions and executing unauthorized actions](https://github.com/anthropics/claude-code/issues/86260) — 0 comments, 0 reactions
-- [openai/codex: \[Windows\]\[Desktop 26.803.10989.0\] cert-parent-death sentinel opens visible Terminal error 0x800700E8](https://github.com/openai/codex/issues/38301) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Auto-Compact consumes excessive session usage quota](https://github.com/anthropics/claude-code/issues/79793) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Support inline skill invocation using $skill-name](https://github.com/anomalyco/opencode/issues/15617) — 8 comments, 18 reactions
-- [openai/codex: `spawn_agent` silently creates empty sub-agents for any non-OpenAI Responses provider — task body sent as `encrypted_content` and dropped, with zero diagnostics](https://github.com/openai/codex/issues/37237) — 3 comments, 0 reactions
-- [anomalyco/opencode: New session created via /new gets projectID=global instead of the directory's project, making prior sessions invisible in /sessions](https://github.com/anomalyco/opencode/issues/42230) — 1 comments, 0 reactions
-- [openai/codex: Codex Security plugin burned through 60–70% of my weekly quota on 200$ plan with no results](https://github.com/openai/codex/issues/38266) — 2 comments, 0 reactions
-- [openai/codex: Codex (ChatGPT 5.6 Ultra) is giving reproducible, severe quality regressions since yesterday, this is not normal model variance](https://github.com/openai/codex/issues/36086) — 3 comments, 0 reactions
-- [anthropics/claude-code: Sidebar project grouping is inconsistent; add a way to disable directory-based grouping](https://github.com/anthropics/claude-code/issues/84040) — 1 comments, 2 reactions
-- [anthropics/claude-code: \[FEATURE\] Show each session's working directory in the desktop sidebar](https://github.com/anthropics/claude-code/issues/86259) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): reject inherited workspace providers](https://github.com/anomalyco/opencode/pull/42227) — 0 comments, 0 reactions
-- [openai/codex: Error running remote compact task](https://github.com/openai/codex/issues/14860) — 106 comments, 93 reactions
-- [anomalyco/opencode: OpenCode Go, the model does not support FIM](https://github.com/anomalyco/opencode/issues/26911) — 6 comments, 5 reactions
-- [anomalyco/opencode: opencode pr #<number> parses PR number as NaN](https://github.com/anomalyco/opencode/issues/32251) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(desktop): MiniMax CN fails with certificate error in desktop but works in TUI](https://github.com/anomalyco/opencode/issues/32250) — 2 comments, 1 reactions
-- [anomalyco/opencode: When updating agents.md for the qwen3.6 27b model, it always triggers prompt processing at 100%.](https://github.com/anomalyco/opencode/issues/32246) — 2 comments, 1 reactions
-- [anomalyco/opencode: /file/content reads can retain filesystem search state](https://github.com/anomalyco/opencode/issues/32237) — 1 comments, 0 reactions
-- [anomalyco/opencode: Bug: PR comment context omits PR number, allowing agent to edit wrong PR](https://github.com/anomalyco/opencode/issues/32233) — 1 comments, 0 reactions
-- [anomalyco/opencode: Ollama local provider is not appearing](https://github.com/anomalyco/opencode/issues/19326) — 6 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\] Linux: main binary shipped as ai.opencode.desktop makes KDE Dolphin hang on the install directory](https://github.com/anomalyco/opencode/issues/32229) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: open TUI diff viewer directly from CLI](https://github.com/anomalyco/opencode/issues/32227) — 1 comments, 1 reactions
-- [anomalyco/opencode: ~ not expanded in file tool path arguments (Read, Write, Edit, Glob, Grep)](https://github.com/anomalyco/opencode/issues/32223) — 1 comments, 0 reactions
-- [anomalyco/opencode: Inconsistent Kimi K2.7 Code model ID in OpenCode Go docs](https://github.com/anomalyco/opencode/issues/32196) — 1 comments, 3 reactions
-- [anomalyco/opencode: \[FEATURE\]: Add native TUI support to configure OpenRouter Fusion presets for openrouter/fusion](https://github.com/anomalyco/opencode/issues/32219) — 2 comments, 11 reactions
-- [anomalyco/opencode: \[FEATURE\]: Add option to edit model or provider in GUI settings without deleting them](https://github.com/anomalyco/opencode/issues/32218) — 2 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: TUI plugin API: session projection | session list adapters](https://github.com/anomalyco/opencode/issues/26077) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Add version input to the GitHub action](https://github.com/anomalyco/opencode/issues/31387) — 2 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Add SHA256 checksum verification to the install script](https://github.com/anomalyco/opencode/issues/31390) — 2 comments, 0 reactions
-- [anomalyco/opencode: Bug: Read Tool Incorrectly Adds Extra Space](https://github.com/anomalyco/opencode/issues/20969) — 3 comments, 2 reactions
-- [anomalyco/opencode: Stats header actions are misaligned causing Geo Breakdown to not be clickable](https://github.com/anomalyco/opencode/issues/32210) — 1 comments, 0 reactions
-- [anomalyco/opencode: Desktop-launched WSL server hangs on POST: stdout pipe deadlocks under `--print-logs`](https://github.com/anomalyco/opencode/issues/32206) — 1 comments, 0 reactions
-- [anomalyco/opencode: `@` file reference search is broken after `/move` to a git worktree](https://github.com/anomalyco/opencode/issues/32204) — 2 comments, 0 reactions
-- [anomalyco/opencode: Perplexity Agent provider fails with `unknown field "store"` on `/v1/responses`](https://github.com/anomalyco/opencode/issues/32108) — 2 comments, 3 reactions
-- [anomalyco/opencode: \[server exited unexpectedly\] when running Open Code within tmux session](https://github.com/anomalyco/opencode/issues/19651) — 6 comments, 5 reactions
-- [anomalyco/opencode: permission required cannot select](https://github.com/anomalyco/opencode/issues/27436) — 18 comments, 11 reactions
-- [anomalyco/opencode: Web UI not showing my sessions](https://github.com/anomalyco/opencode/issues/10519) — 8 comments, 12 reactions
-- [anomalyco/opencode: gpt-5.5 does not work](https://github.com/anomalyco/opencode/issues/31962) — 5 comments, 3 reactions
-- [anomalyco/opencode: Unhandled promise rejections in session operations crash the TUI](https://github.com/anomalyco/opencode/issues/32176) — 3 comments, 0 reactions
-- [anomalyco/opencode: SSE reconnection never fires after initial connection failure](https://github.com/anomalyco/opencode/issues/32175) — 3 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: add Ads integration](https://github.com/anomalyco/opencode/issues/32106) — 6 comments, 7 reactions
-- [anomalyco/opencode: Tools error when using Gemini models via custom api](https://github.com/anomalyco/opencode/issues/22473) — 3 comments, 1 reactions
-- [anomalyco/opencode: \[FEATURE\]: worker pool execution mode  when do some parallel job rolling new subagent when any one is done](https://github.com/anomalyco/opencode/issues/32171) — 2 comments, 1 reactions
-- [anomalyco/opencode: \[FEATURE\]: Display subagent status in TUI prompt footer](https://github.com/anomalyco/opencode/issues/23784) — 7 comments, 0 reactions
-- [anomalyco/opencode: Nested Subagent Fails Silently in 3-Layer Deep Chain (Works Fine in 2-Layer)](https://github.com/anomalyco/opencode/issues/23091) — 2 comments, 0 reactions
-- [anomalyco/opencode: Too many thought messages with MiniMax-M3](https://github.com/anomalyco/opencode/issues/31999) — 5 comments, 3 reactions
-- [anomalyco/opencode: TUI startup initializes the same instance twice](https://github.com/anomalyco/opencode/issues/32161) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]:One Key Copy](https://github.com/anomalyco/opencode/issues/32160) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(core): replace webfetch markdown renderer](https://github.com/anomalyco/opencode/pull/42229) — 0 comments, 0 reactions
-- [anomalyco/opencode: Desktop App: Spell Checker  annoyance](https://github.com/anomalyco/opencode/issues/32155) — 2 comments, 0 reactions
-- [anomalyco/opencode: Feature request: Start and continue a session with opencode run -s (modify flag behavior)](https://github.com/anomalyco/opencode/issues/3434) — 8 comments, 14 reactions
-- [anomalyco/opencode: Plugin @latest cache can stay pinned to stale npm version](https://github.com/anomalyco/opencode/issues/25293) — 6 comments, 6 reactions
-- [anomalyco/opencode: Too many requests on Xiaomi MimoV2.5](https://github.com/anomalyco/opencode/issues/29912) — 4 comments, 5 reactions
-- [openai/codex: When exactly will Codex fix the recent slowdown and quality degradation?](https://github.com/openai/codex/issues/24649) — 9 comments, 16 reactions
-- [anomalyco/opencode: opencode go访问响应速度过慢](https://github.com/anomalyco/opencode/issues/20404) — 13 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Mouse click to refocus terminal triggers permission prompt unintentionally](https://github.com/anthropics/claude-code/issues/71539) — 11 comments, 23 reactions
-- [anthropics/claude-code: Repeated hard-stop "API Error: Sonnet 5 can't help with this. Start a new session to continue" errors](https://github.com/anthropics/claude-code/issues/86111) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Fable 5 on Max: "You've hit your monthly spend limit" despite Unlimited spend limit and meters at 5% session / 41% weekly](https://github.com/anthropics/claude-code/issues/77819) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Agent hallucinates and over-interprets instructions, causing uncontrolled execution and token wastage](https://github.com/anthropics/claude-code/issues/86258) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): highlight Bash commands](https://github.com/anomalyco/opencode/pull/42214) — 0 comments, 0 reactions
-- [anthropics/claude-code: Feature request: Korean (한글) bilingual display for CLI chrome text (spinner verbs, "Tip:" lines)](https://github.com/anthropics/claude-code/issues/86257) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Interrupted auto-update leaves MSIX in Servicing/Staged state (AddPackage times out after 5 min); orphaned CoworkVMService undeletable via SCM even as SYSTEM](https://github.com/anthropics/claude-code/issues/80876) — 2 comments, 2 reactions
-- [anthropics/claude-code: Assistant authored a fabricated user turn, acted on its instructions, and the text re-entered as user input](https://github.com/anthropics/claude-code/issues/81301) — 4 comments, 0 reactions
-- [openai/codex: Route network access through the shared approval pipeline](https://github.com/openai/codex/pull/38299) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop IAB dispatches input events but native text selection never changes](https://github.com/openai/codex/issues/38300) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Subagents inherit session model without cost confirmation, causing unintended quota drain on limited-quota models](https://github.com/anthropics/claude-code/issues/84667) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): position composer top slot above queue](https://github.com/anomalyco/opencode/pull/42226) — 1 comments, 0 reactions
-- [openai/codex: Amazon Bedrock Mantle /responses/compact retains all supplied assistant items across repeated CLI 0.147.0-compatible calls](https://github.com/openai/codex/issues/38298) — 0 comments, 0 reactions
-- [anthropics/claude-code: Agent states unverifiable claims about external/client-side system state as confirmed fact, then repeats the same failure mode immediately after correction](https://github.com/anthropics/claude-code/issues/86256) — 0 comments, 0 reactions
-- [openai/codex: TUI fork keeps the parent thread's writer active, preventing resume from another TUI](https://github.com/openai/codex/issues/38297) — 1 comments, 0 reactions
-- [openai/codex: Codex Desktop analytics queue saturation emits thousands of warnings and drops events](https://github.com/openai/codex/issues/38296) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Claude Code ignores conciseness instructions and over-elaborates responses](https://github.com/anthropics/claude-code/issues/86112) — 2 comments, 0 reactions
-- [openai/codex: Codex Desktop crashes entire application due to missing tool call result](https://github.com/openai/codex/issues/32653) — 9 comments, 0 reactions
-- [openai/codex: Bundled spreadsheets plugin emits invalid icon path warnings on every startup](https://github.com/openai/codex/issues/32960) — 1 comments, 0 reactions
-- [openai/codex: MCP server processes leak: per-thread processes never cleaned up (9+ GB RSS)](https://github.com/openai/codex/issues/30408) — 29 comments, 8 reactions
-- [openai/codex: Memories enabled but no stage-1 outputs generated because imported threads keep has_user_event=0](https://github.com/openai/codex/issues/17490) — 1 comments, 0 reactions
-- [anthropics/claude-code: CLI /model picker doesn't list Sonnet 5 as a preset; shows custom model instead](https://github.com/anthropics/claude-code/issues/72692) — 8 comments, 1 reactions
-- [anthropics/claude-code: \[FEATURE\] Stable, documented schema for ~/.claude/projects/<encoded-cwd>/<uuid>.jsonl line types](https://github.com/anthropics/claude-code/issues/53516) — 8 comments, 5 reactions
-- [openai/codex: Cannot create a local Work chat inside a ChatGPT Project (Windows Desktop App)](https://github.com/openai/codex/issues/34499) — 16 comments, 7 reactions
-- [anthropics/claude-code: Subagent-attributed "Ready to code?" approval dialog shows the AO's own plan-mode content, not the subagent's, and isn't gated on the subagent actually requesting approval](https://github.com/anthropics/claude-code/issues/86255) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Reimplement Claude Code in pure Rust to eliminate CPU spikes and terminal flickering](https://github.com/anthropics/claude-code/issues/84192) — 1 comments, 1 reactions
-- [anomalyco/opencode: fix(tui): highlight queued prompts on hover](https://github.com/anomalyco/opencode/pull/42219) — 0 comments, 0 reactions
-- [anomalyco/opencode: docs(zh-cn): sync agents page with latest English version](https://github.com/anomalyco/opencode/pull/41980) — 0 comments, 0 reactions
-- [anomalyco/opencode: Large tool arguments (>~30KB) are truncated at the content boundary, causing "Unterminated string in JSON" — affects all tools incl. MCP](https://github.com/anomalyco/opencode/issues/42224) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] PreToolUse hooks are registered and listed by /hooks, but never execute (v2.1.219, Windows)](https://github.com/anthropics/claude-code/issues/85904) — 1 comments, 0 reactions
-- [anthropics/claude-code: Claude in Chrome extension won't connect to any Cowork session (cloud or local) — "Sign-in unavailable, must be opened from claude.com"](https://github.com/anthropics/claude-code/issues/86252) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] ScheduleWakeup has no fallback when tengu_kairos_loop_dynamic is off — self-pacing unreachable for all non-first-party deployments, and non-/loop callers fail opaquely](https://github.com/anthropics/claude-code/issues/86245) — 2 comments, 0 reactions
-- [openai/codex: MCP tools wrapped as "namespace" tool type are ignored by non-OpenAI endpoints](https://github.com/openai/codex/issues/33263) — 4 comments, 0 reactions
-- [openai/codex: macOS: same-version Chrome plugin cache reconciliation deletes chrome/latest while the plugin remains current](https://github.com/openai/codex/issues/37059) — 7 comments, 0 reactions
-- [anomalyco/opencode: fix(core): reject invalid UTF-8 directory paths in serve](https://github.com/anomalyco/opencode/pull/38314) — 6 comments, 0 reactions
-- [openai/codex: Windows: all Claude-marketplace plugin hooks fail — hook bash resolves to the WSL shim; async hook protocol unsupported; failures report only 'Failed' with no diagnostics](https://github.com/openai/codex/issues/38295) — 1 comments, 0 reactions
-- [anomalyco/opencode: refactor(util): replace xdg-basedir](https://github.com/anomalyco/opencode/pull/42222) — 0 comments, 0 reactions
-- [anthropics/claude-code: Plugin-namespaced slash commands (plugin:skill) feel cluttered in the picker/autocomplete](https://github.com/anthropics/claude-code/issues/86254) — 0 comments, 0 reactions
-- [anomalyco/opencode: opencode -c in a new directory shows the wrong working directory](https://github.com/anomalyco/opencode/issues/42221) — 1 comments, 0 reactions
-- [openai/codex: Detailed transcript view in codex.](https://github.com/openai/codex/issues/38120) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(session): edge-trigger build-switch reminder instead of scanning full session history](https://github.com/anomalyco/opencode/pull/38067) — 1 comments, 0 reactions
-- [openai/codex: Codex Desktop: switching Local to Cloud cannot switch back; summary panel fails to render](https://github.com/openai/codex/issues/36824) — 1 comments, 2 reactions
-- [anomalyco/opencode: chore: move drive and catalog ownership](https://github.com/anomalyco/opencode/pull/42207) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Sync zh-cn agents doc page with the latest English version](https://github.com/anomalyco/opencode/issues/42220) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Claude Code uses vague, made-up, or fancy wording instead of plainly describing the code](https://github.com/anthropics/claude-code/issues/86205) — 3 comments, 2 reactions
-- [anthropics/claude-code: managed-settings disableBypassPermissionsMode does not block --dangerously-skip-permissions (file proven loaded via deny rule in same session)](https://github.com/anthropics/claude-code/issues/86253) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): refresh fallback file search](https://github.com/anomalyco/opencode/pull/42218) — 0 comments, 0 reactions
-- [anomalyco/opencode: Error: unknown certificate verification error，v1.1.53](https://github.com/anomalyco/opencode/issues/12562) — 4 comments, 1 reactions
-- [anomalyco/opencode: \[FEATURE\] Desktop: voice input for prompts (mic → text) and optional voice summary output](https://github.com/anomalyco/opencode/issues/41364) — 2 comments, 0 reactions
-- [anthropics/claude-code: Left arrow accidentally navigates to agents screen (not rebindable) and breaks main session view on return](https://github.com/anthropics/claude-code/issues/75899) — 15 comments, 19 reactions
-- [anthropics/claude-code: \[Feature Request\] Improve Claude Code agent focus on high-level analysis and business-critical differentiation](https://github.com/anthropics/claude-code/issues/86251) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(mcp): retry local server connection on transient spawn failures](https://github.com/anomalyco/opencode/pull/42020) — 3 comments, 0 reactions
-- [anomalyco/opencode: 一个会话中执行完毕一次任务之后，继续发送文字 不会调用大模型的API](https://github.com/anomalyco/opencode/issues/42217) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\] Cyclic symlinks in global skills cause blank TUI and unbounded memory growth](https://github.com/anomalyco/opencode/issues/42216) — 2 comments, 0 reactions
-- [openai/codex: Codex credits consumed ~38,000–39,000 overnight with zero tasks issued — recurring bug, cap not enforced, no warning given](https://github.com/openai/codex/issues/38294) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Auto-enable /fast at session start via fastMode: true setting on Opus 4.7 \[1M\]](https://github.com/anthropics/claude-code/issues/86250) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[Desktop\] Tab switch resets scroll position — returns to bottom instead of where you left off](https://github.com/anomalyco/opencode/issues/42213) — 2 comments, 0 reactions
-- [anomalyco/opencode: Deepseek V4 Pro (new)](https://github.com/anomalyco/opencode/issues/42134) — 1 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Chat artifacts not showing in mobile app Artifacts menu (Android)](https://github.com/anthropics/claude-code/issues/86249) — 0 comments, 0 reactions
-- [anthropics/claude-code: frequesnt and invalid Fable 5's safeguards flag](https://github.com/anthropics/claude-code/issues/86241) — 1 comments, 1 reactions
-- [openai/codex: Codex Renderer is consuming excessive memory](https://github.com/openai/codex/issues/38176) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Code wastes paid sessions fixing self-created bugs — no accountability, no forward progress](https://github.com/anthropics/claude-code/issues/71618) — 4 comments, 0 reactions
-- [anthropics/claude-code: Opus 5.0 nerfed: terrible quality and does not deliver work even after 5 retries](https://github.com/anthropics/claude-code/issues/82162) — 9 comments, 3 reactions
-- [anomalyco/opencode: Getting 429 Rate Limited In A New Sessopm](https://github.com/anomalyco/opencode/issues/42215) — 1 comments, 2 reactions
-- [openai/codex: Windows Codex Desktop spawns powershell.exe every second for full process polling, causing high CPU usage](https://github.com/openai/codex/issues/25453) — 25 comments, 7 reactions
-- [openai/codex: Add durable reverts for paginated threads](https://github.com/openai/codex/pull/38292) — 0 comments, 0 reactions
-- [anthropics/claude-code: MCP server silently killed+respawned mid-session (SIGINT/SIGTERM), transient sessionId leaks into task path](https://github.com/anthropics/claude-code/issues/86040) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(client): cancel SSE readers after handshake](https://github.com/anomalyco/opencode/pull/42209) — 1 comments, 0 reactions
-- [anomalyco/opencode: docs(desktop): add Solid best practices guidance](https://github.com/anomalyco/opencode/pull/42211) — 0 comments, 0 reactions
-- [openai/codex: Subagents do not inherit Responses API client metadata from parent turns](https://github.com/openai/codex/issues/37760) — 1 comments, 0 reactions
-- [anthropics/claude-code: MCP servers declaring draft-07 outputSchema are entirely unusable: "unsupported dialect" rejected client-side before dispatch](https://github.com/anthropics/claude-code/issues/86142) — 2 comments, 1 reactions
-- [openai/codex: Git branch names fail to display in the statusline with these settings.](https://github.com/openai/codex/issues/23968) — 4 comments, 0 reactions
-- [openai/codex: Remove unused apply_patch prompt fallback](https://github.com/openai/codex/pull/38291) — 0 comments, 1 reactions
-- [anomalyco/opencode: fix(opencode): bridge question tool to ACP elicitation](https://github.com/anomalyco/opencode/pull/42158) — 0 comments, 0 reactions
-- [openai/codex: Codex search/grep tool processes run indefinitely with no timeout — orphaned rg floods network FS (Lustre/NFS)](https://github.com/openai/codex/issues/37770) — 2 comments, 1 reactions
-- [anthropics/claude-code: Windows: GPU process crash (exit 101457950) kills entire app when Browser pane composites heavy page; MSIX then fails to relaunch](https://github.com/anthropics/claude-code/issues/86248) — 0 comments, 0 reactions
-- [openai/codex: CreateProcess: Rejected("Failed to create unified exec process: helper_unknown_error: setup refresh had errors")](https://github.com/openai/codex/issues/38290) — 1 comments, 0 reactions
-- [openai/codex: Unable to install after clicking Update in the Codex app today](https://github.com/openai/codex/issues/37002) — 28 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Calling advisor tool crash or stop the claude code with following API error Unsupported content type: server_tool_use](https://github.com/anthropics/claude-code/issues/64158) — 8 comments, 13 reactions
-- [openai/codex: App-server: expose atomic idle-only turn admission](https://github.com/openai/codex/issues/38289) — 0 comments, 0 reactions
-- [openai/codex: Reset failed, did not apply and 1 reset is wasted](https://github.com/openai/codex/issues/31606) — 56 comments, 69 reactions
-- [anomalyco/opencode: test(core): reuse project service stub](https://github.com/anomalyco/opencode/pull/42208) — 0 comments, 0 reactions
-- [openai/codex: \[Windows\] Codex desktop incorrectly shows “You don’t have access to Codex yet” and does not load account information](https://github.com/openai/codex/issues/35113) — 8 comments, 5 reactions
-- [anthropics/claude-code: Model repeatedly writes self-matching pgrep -f guards in check-then-launch Bash commands (esp. over SSH)](https://github.com/anthropics/claude-code/issues/86247) — 0 comments, 0 reactions
-- [anomalyco/opencode: define managed service replacement authority across version skew](https://github.com/anomalyco/opencode/issues/42212) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]:提供单一会话内的大纲级别预览和快速跳转，方便在多轮对话之间寻找关键信息](https://github.com/anomalyco/opencode/issues/42210) — 1 comments, 0 reactions
-- [openai/codex: Auto-compaction uses stale token usage after tool output, causing unrecoverable context overflow](https://github.com/openai/codex/issues/32888) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(client): require authenticated service stop](https://github.com/anomalyco/opencode/pull/42186) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): retry migration status transport errors](https://github.com/anomalyco/opencode/pull/42188) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(client): prevent stale service replacement](https://github.com/anomalyco/opencode/pull/42185) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): omit implicit cd autocomplete prefix](https://github.com/anomalyco/opencode/pull/42206) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Allow custom provider models to reference official model definitions from Models.dev](https://github.com/anomalyco/opencode/issues/30519) — 4 comments, 1 reactions
-- [openai/codex: Support gRPC code-mode hosts in app server](https://github.com/openai/codex/pull/38288) — 0 comments, 0 reactions
-- [anthropics/claude-code: Claude in Chrome extension fails to connect / connects then drops intermittently](https://github.com/anthropics/claude-code/issues/86246) — 0 comments, 0 reactions
-- [anthropics/claude-code: Advisor turns roll up usage summed across iterations, doubling apparent context; auto-compact fires ~300-500K tokens early (subagents hit hardest)](https://github.com/anthropics/claude-code/issues/84738) — 1 comments, 1 reactions
-- [anomalyco/opencode: Rename 'frapper' to 'bash' in tools documentation](https://github.com/anomalyco/opencode/pull/42171) — 5 comments, 0 reactions
-- [anomalyco/opencode: Cant Compact or Use subagents with free models](https://github.com/anomalyco/opencode/issues/42043) — 4 comments, 1 reactions
-- [anomalyco/opencode: fix(permission): make * not match / in wildcard patterns, add ** globstar support](https://github.com/anomalyco/opencode/pull/28689) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix: retry truncated provider streams](https://github.com/anomalyco/opencode/pull/39473) — 5 comments, 1 reactions
-- [anomalyco/opencode: test(core): reuse permission service stub](https://github.com/anomalyco/opencode/pull/42205) — 0 comments, 0 reactions
-- [anomalyco/opencode: Azure OpenAI large models (gpt-5.6-luna/sol, gpt-5.4, o3) hang in OpenCode due to Responses API streaming](https://github.com/anomalyco/opencode/issues/42147) — 4 comments, 0 reactions
-- [anomalyco/opencode: refactor(app): align UI packages with solid best practices](https://github.com/anomalyco/opencode/pull/41977) — 3 comments, 0 reactions
-- [anomalyco/opencode: Error: Unexpected error  disk I/O error](https://github.com/anomalyco/opencode/issues/32571) — 6 comments, 0 reactions
-- [openai/codex: Desktop wait/status orchestration re-meters full cached context every 10-30s; stale 'running' subagents keep it looping (90% of weekly Pro in 15.5h)](https://github.com/openai/codex/issues/37299) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(deskltop): use opencode2 in WSL](https://github.com/anomalyco/opencode/pull/42199) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(opencode): add per-session budget limit](https://github.com/anomalyco/opencode/pull/42202) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): restore workspace.project_id for project ID remaps](https://github.com/anomalyco/opencode/pull/42169) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] A background auto-update invalidates every existing session's prompt cache: the next --resume re-caches the entire context](https://github.com/anthropics/claude-code/issues/86244) — 1 comments, 0 reactions
-- [openai/codex: MCP tool results lose content when structuredContent is present (Codex App 26.803.81509)](https://github.com/openai/codex/issues/38287) — 2 comments, 0 reactions
-- [anomalyco/opencode: v1.18.18](https://github.com/anomalyco/opencode/releases/tag/v1.18.18)
-- [anthropics/claude-code: \[BUG\] Desktop app (Windows) crashes/hangs while using the built-in Claude Browser pane; one crash reset the app profile](https://github.com/anthropics/claude-code/issues/84951) — 5 comments, 1 reactions
-- [anomalyco/opencode: \[FEATURE\]: Add command palette action to reload configuration without restart](https://github.com/anomalyco/opencode/issues/6815) — 8 comments, 92 reactions
-- [anthropics/claude-code: Worktree/cwd isolation state is shared and racy across sibling background sessions launched from the same parent job](https://github.com/anthropics/claude-code/issues/86243) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): skip shell parsing when permissions allow all](https://github.com/anomalyco/opencode/pull/42203) — 0 comments, 0 reactions
-- [anthropics/claude-code: System-reminder falsely claims Gmail/Google Calendar/Google Drive MCP connectors need authorization — never configured](https://github.com/anthropics/claude-code/issues/86242) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop can remain blank indefinitely when opening tasks with stale subagents](https://github.com/openai/codex/issues/38250) — 3 comments, 0 reactions
-- [openai/codex: Browser Use cannot upload files because file chooser / setInputFiles is not exposed in Codex Desktop IAB](https://github.com/openai/codex/issues/20785) — 5 comments, 0 reactions
-- [openai/codex: Codex desktop in-app browser screenshots are DPI-scaled twice and tiled on Windows](https://github.com/openai/codex/issues/31693) — 2 comments, 0 reactions
-- [openai/codex: Desktop app: explicit cross-thread orchestration over existing thread/* and turn/* primitives](https://github.com/openai/codex/issues/14923) — 16 comments, 3 reactions
-- [anomalyco/opencode: fix(tui): repair baseline unit failures](https://github.com/anomalyco/opencode/pull/42198) — 0 comments, 0 reactions
-- [openai/codex: Windows Desktop local state is not crash-safe after power loss: pins/projects reset, config regresses, future timestamps](https://github.com/openai/codex/issues/26990) — 14 comments, 0 reactions
-- [openai/codex: macOS standalone: apply_patch fs helper re-exec through current symlink fails with EPERM](https://github.com/openai/codex/issues/38286) — 0 comments, 0 reactions
-- [openai/codex: Allow request_user_input in Default mode to wait indefinitely](https://github.com/openai/codex/issues/37472) — 2 comments, 1 reactions
-- [anomalyco/opencode: test(drive): parse generated JSONC config](https://github.com/anomalyco/opencode/pull/42200) — 1 comments, 0 reactions
-- [anthropics/claude-code: Worktree sessions reuse an existing worktree directory from a previous session instead of creating a fresh one](https://github.com/anthropics/claude-code/issues/79366) — 11 comments, 7 reactions
-- [anthropics/claude-code: \[Bug\] Workflow Script Parser: Unexpected token on backtick string literal](https://github.com/anthropics/claude-code/issues/86240) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Desktop app: make it obvious how to collapse an expanded thinking block (and hold scroll position)](https://github.com/anthropics/claude-code/issues/83418) — 1 comments, 1 reactions
-- [anthropics/claude-code: \[FEATURE\] Opt-in neutral naming for session worktrees and branches (topic-derived names expose past session subjects)](https://github.com/anthropics/claude-code/issues/86239) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(catalog): auto-generated Open Graph cards per capture](https://github.com/anomalyco/opencode/pull/42201) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] -p --resume from a git repo: any `git status` change between turns invalidates the entire prompt cache (full-prefix re-creation)](https://github.com/anthropics/claude-code/issues/78720) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(desktop): use matching v2 CLI in WSL](https://github.com/anomalyco/opencode/pull/42193) — 2 comments, 0 reactions
-- [openai/codex: Move `codex-execpolicy` to protocol dev dependencies](https://github.com/openai/codex/pull/38285) — 0 comments, 1 reactions
-- [anomalyco/opencode: refactor(desktop): run local server from source](https://github.com/anomalyco/opencode/pull/42194) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Let me mark an agent session as completed / dismiss it from the agents view](https://github.com/anthropics/claude-code/issues/66202) — 4 comments, 20 reactions
-- [anthropics/claude-code: \[BUG\] Agent view has no "needs input, sleeping" indicator — the alive/sleeping distinction exists for done sessions but not for blocked ones](https://github.com/anthropics/claude-code/issues/86082) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): truncate queued prompt preview](https://github.com/anomalyco/opencode/pull/42196) — 0 comments, 0 reactions
-- [anthropics/claude-code: Post-mortem 2026-04-28: 12 multi-agent coordination bugs surfaced across a single autonomous-overnight cycle](https://github.com/anthropics/claude-code/issues/54393) — 27 comments, 0 reactions
-- [openai/codex: Collect plugin metrics from remote executors](https://github.com/openai/codex/pull/38283) — 0 comments, 0 reactions
-- [openai/codex: Reset card does not display specific expiration time](https://github.com/openai/codex/issues/38284) — 1 comments, 0 reactions
-- [openai/codex: Add thread usage to TUI status surfaces](https://github.com/openai/codex/pull/38282) — 0 comments, 0 reactions
-- [anthropics/claude-code: Bundled ugrep runs with no memory limit or timeout — model-generated regex consumed 13.6 GB and thrashed the host](https://github.com/anthropics/claude-code/issues/86238) — 0 comments, 0 reactions
-- [openai/codex: Show estimated thread usage in `/status`](https://github.com/openai/codex/pull/38281) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(catalog): click-to-annotate captures with GitHub issue handoff](https://github.com/anomalyco/opencode/pull/42183) — 0 comments, 0 reactions
-- [openai/codex: Use protobuf's built-in Bazel proto rule](https://github.com/openai/codex/pull/38280) — 0 comments, 1 reactions
-- [anomalyco/opencode: refactor(desktop): run local server from source](https://github.com/anomalyco/opencode/pull/42192) — 1 comments, 0 reactions
-- [openai/codex: Codex silently reduced a paper-replication task, then presented a smoke test as evidence about the paper being "unsupported"](https://github.com/openai/codex/issues/38279) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(cli): inset update footer](https://github.com/anomalyco/opencode/pull/42189) — 0 comments, 0 reactions
-- [anomalyco/opencode: Local MCP server subprocess launch (Playwright) hangs forever when hosted by Desktop, works fine from a terminal](https://github.com/anomalyco/opencode/issues/42191) — 0 comments, 0 reactions
-- [anomalyco/opencode: Local MCP server spawned twice (duplicate process) on every Desktop restart](https://github.com/anomalyco/opencode/issues/42190) — 1 comments, 0 reactions
-- [openai/codex: \[CLI/TUI\] thread/resume silently drops the newest turns on heavily compacted threads](https://github.com/openai/codex/issues/38169) — 2 comments, 0 reactions
-- [openai/codex: Codex Desktop can get stuck on sqlite state backfill with partial new index while legacy state is complete](https://github.com/openai/codex/issues/28087) — 2 comments, 2 reactions
-- [anomalyco/opencode: chore(ci): surface bun exit code with ::warning:: on failure](https://github.com/anomalyco/opencode/pull/42151) — 5 comments, 0 reactions
-- [anomalyco/opencode: v2 provider: HTTP 400 from Copilot model restarts active session server](https://github.com/anomalyco/opencode/issues/42089) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): render Mermaid GitGraph diagrams](https://github.com/anomalyco/opencode/pull/42179) — 0 comments, 0 reactions
-- [openai/codex: Add app-server coverage for plugin measurement analytics](https://github.com/openai/codex/pull/38278) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\]Claude Desktop repeatedly crashes and requires “Advanced Options → Repair” on Windows](https://github.com/anthropics/claude-code/issues/85199) — 13 comments, 2 reactions
-- [openai/codex: Add configurable audible alert for pending permission approvals in Codex CLI](https://github.com/openai/codex/issues/11604) — 3 comments, 0 reactions
-- [openai/codex: \[Bug\] Multi-Agent V2 child gets service_tier=priority after parent switches to default, even when spawn_agent omits the field](https://github.com/openai/codex/issues/38277) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(client): validate promise service discovery](https://github.com/anomalyco/opencode/pull/42187) — 0 comments, 0 reactions
-- [openai/codex: Track plugin metrics for background unified exec commands](https://github.com/openai/codex/pull/38276) — 0 comments, 0 reactions
-- [openai/codex: Unify turn input submission and routing](https://github.com/openai/codex/pull/38275) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Improve Claude Code output readability and conversation UX](https://github.com/anthropics/claude-code/issues/86236) — 0 comments, 0 reactions
-- [anthropics/claude-code: Cowork/Claude Code: repeated "course" filler tokens flood inline output](https://github.com/anthropics/claude-code/issues/80724) — 3 comments, 0 reactions
-- [openai/codex: Represent persisted world state as JSON objects](https://github.com/openai/codex/pull/38274) — 0 comments, 1 reactions
-- [anomalyco/opencode: core: shell permission scanning on runtimes without tree-sitter WASM (workerd)](https://github.com/anomalyco/opencode/issues/42184) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): subagent sessions inherit ancestor deny rules](https://github.com/anomalyco/opencode/pull/42174) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): render Mermaid timelines](https://github.com/anomalyco/opencode/pull/42130) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(cli): harden managed service replacement](https://github.com/anomalyco/opencode/pull/41946) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Security: permissions.deny rules not working](https://github.com/anthropics/claude-code/issues/61268) — 5 comments, 0 reactions
-- [anomalyco/opencode: feat(github): allow configured bots to trigger actions](https://github.com/anomalyco/opencode/pull/42047) — 0 comments, 0 reactions
-- [anthropics/claude-code: claude.ai META mcp connector times out in Claude Code CLI while working in claude.ai web chat](https://github.com/anthropics/claude-code/issues/86023) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Tool call completes on server but response never reaches client (4-min timeout) in Claude Desktop](https://github.com/anthropics/claude-code/issues/86235) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(sdk): re-export Event schema from sdk-next](https://github.com/anomalyco/opencode/pull/42175) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] /plugin update does not invalidate plugin cache](https://github.com/anthropics/claude-code/issues/14061) — 25 comments, 32 reactions
-- [openai/codex: \[Linux Desktop 26.803.81509\] Opening Git-backed Codex threads crashes the app with SIGILL in git worker](https://github.com/openai/codex/issues/38123) — 1 comments, 0 reactions
-- [anthropics/claude-code: Claude Desktop (Windows): heavy ad-stack page in in-app Claude Browser pane crashes entire app, no crash dump, kills all hosted sessions](https://github.com/anthropics/claude-code/issues/86234) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[Catalog feedback\] Help](https://github.com/anomalyco/opencode/issues/42182) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[Catalog feedback\] Status](https://github.com/anomalyco/opencode/issues/42181) — 0 comments, 0 reactions
-- [anthropics/claude-code: Windows MSIX desktop app: Browser pane crashes Electron GPU process and kills the app; failed MSIX self-repair then uninstalls it and wipes packaged data](https://github.com/anthropics/claude-code/issues/85905) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[Catalog feedback\] Debug](https://github.com/anomalyco/opencode/issues/42180) — 0 comments, 0 reactions
-- [anomalyco/opencode: chore: upgrade opentui 0.5.1](https://github.com/anomalyco/opencode/pull/41605) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(ui): standardize v2 tooltip delay](https://github.com/anomalyco/opencode/pull/38403) — 5 comments, 0 reactions
-- [anomalyco/opencode: fix(app): navigate tabs by selection history](https://github.com/anomalyco/opencode/pull/37927) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(cli): survive broken stdio pipes](https://github.com/anomalyco/opencode/pull/41968) — 4 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\]: Gemini 3 Pro function calling fails - missing `thoughtSignature` support](https://github.com/anomalyco/opencode/issues/4832) — 35 comments, 14 reactions
-- [anthropics/claude-code: \[Bug\] Claude Opus 5 generates hallucinated responses not present in previous versions](https://github.com/anthropics/claude-code/issues/82326) — 9 comments, 0 reactions
-- [anomalyco/opencode: fix(core): apply variable substitution to v2 config loading](https://github.com/anomalyco/opencode/pull/42178) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(session): set finish status on halted assistant message](https://github.com/anomalyco/opencode/pull/42176) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(cli): dispose all instances on command exit](https://github.com/anomalyco/opencode/pull/42177) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): isolate workspace config state](https://github.com/anomalyco/opencode/pull/41945) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): refresh task resume permissions](https://github.com/anomalyco/opencode/pull/41683) — 1 comments, 0 reactions
-- [anthropics/claude-code: WebSearch always returns HTTP 400 when session effort is xhigh/max on Opus 5 (regression from v2.1.219 default flip)](https://github.com/anthropics/claude-code/issues/83364) — 2 comments, 4 reactions
-- [anomalyco/opencode: fix(core): conservative shell permission fallback when tree-sitter assets cannot load](https://github.com/anomalyco/opencode/pull/42173) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Fenced code blocks wrap on desktop but not on remote control — same message readable on one surface, not the other](https://github.com/anthropics/claude-code/issues/84965) — 1 comments, 0 reactions
-- [openai/codex: Expose safe project and thread ordering APIs for Codex Desktop](https://github.com/openai/codex/issues/38273) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Official Claude Desktop build for Linux (Ubuntu LTS / Debian)](https://github.com/anthropics/claude-code/issues/65697) — 52 comments, 655 reactions
-- [anomalyco/opencode: \[FEATURE\]: Protect .env files in grep/glob results, not just direct read](https://github.com/anomalyco/opencode/issues/17073) — 6 comments, 5 reactions
-- [anomalyco/opencode: \[BUG\] MCP tools connected but not exposed to agent](https://github.com/anomalyco/opencode/issues/33027) — 7 comments, 3 reactions
-- [anthropics/claude-code: \[BUG\] Receiving session is interrupted when a cross-session message arrives, and afterwards has no knowledge of the message](https://github.com/anthropics/claude-code/issues/86059) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Desktop sidebar: nested sub-groups within a project group](https://github.com/anthropics/claude-code/issues/86232) — 0 comments, 0 reactions
-- [anomalyco/opencode: opencode not responding](https://github.com/anomalyco/opencode/issues/42146) — 3 comments, 0 reactions
-- [anthropics/claude-code: Update nag never clears on Homebrew-cask installs when npm release is ahead of the cask](https://github.com/anthropics/claude-code/issues/86231) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Kitty keyboard protocol gated on terminal-name allow-list instead of CSI ? u capability — capable terminals (Alacritty) denied](https://github.com/anthropics/claude-code/issues/71700) — 7 comments, 2 reactions
-- [openai/codex: Codex Desktop: composer submit times out after stale conversation state accumulates; restart clears it](https://github.com/openai/codex/issues/23644) — 4 comments, 0 reactions
-- [openai/codex: cybersecutiy false positive](https://github.com/openai/codex/issues/38262) — 2 comments, 0 reactions
-- [openai/codex: Stamp conversation history items with creation times](https://github.com/openai/codex/pull/38272) — 0 comments, 0 reactions
-- [openai/codex: Computer Use screenshot capture fails on Windows 10 Boot Camp with SetIsBorderRequired E_NOINTERFACE (0x80004002)](https://github.com/openai/codex/issues/38271) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] VS-Code: Execution stops when moving the Claude Code tab around](https://github.com/anthropics/claude-code/issues/86230) — 0 comments, 0 reactions
-- [openai/codex: Add per-thread usage queries to the backend client](https://github.com/openai/codex/pull/38270) — 0 comments, 1 reactions
-- [anomalyco/opencode: \[Catalog feedback\] Session picker](https://github.com/anomalyco/opencode/issues/42172) — 0 comments, 0 reactions
-- [openai/codex: Automatic compaction drops unchanged additionalContext](https://github.com/openai/codex/issues/38269) — 0 comments, 0 reactions
-- [openai/codex: Expose executor skill roots from `skills.read`](https://github.com/openai/codex/pull/38268) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Grep and Glob tools not registered in Claude Code 2.1.154+](https://github.com/anthropics/claude-code/issues/86229) — 0 comments, 0 reactions
-- [anthropics/claude-code: Queued composer text is silently discarded on mobile](https://github.com/anthropics/claude-code/issues/85924) — 1 comments, 0 reactions
-- [anomalyco/opencode: Desktop fails to load sessions: no such column: project_id](https://github.com/anomalyco/opencode/issues/42170) — 2 comments, 0 reactions
-- [openai/codex: failed to handle OAuth callback (cloudfare-api)](https://github.com/openai/codex/issues/37300) — 1 comments, 0 reactions
-- [openai/codex: Remote-created Codex Desktop threads on connected host do not receive automation_update/load_workspace_dependencies](https://github.com/openai/codex/issues/24280) — 5 comments, 6 reactions
-- [anomalyco/opencode: he pagado suscripcion y no continua proyecto](https://github.com/anomalyco/opencode/issues/42140) — 2 comments, 0 reactions
-- [anomalyco/opencode: I cant open a new session for some weird reason](https://github.com/anomalyco/opencode/issues/42145) — 2 comments, 0 reactions
-- [openai/codex: Windows Computer Use screenshot fails on Windows 10 22H2 when SetIsBorderRequired is called](https://github.com/openai/codex/issues/25178) — 25 comments, 13 reactions
-- [anomalyco/opencode: Models like Nemotron 3 Ultra are very slow](https://github.com/anomalyco/opencode/issues/42168) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Safety classifier false-positive on defensive security audit tool discussions](https://github.com/anthropics/claude-code/issues/86207) — 0 comments, 0 reactions
-- [openai/codex: Support for Background Compaction](https://github.com/openai/codex/issues/38267) — 0 comments, 0 reactions
-- [anthropics/claude-code: Claude Code published a user's personal information to a public GitHub issue, unprompted and unchecked](https://github.com/anthropics/claude-code/issues/86225) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(opencode): local LAN provider discovery + auto-discover models](https://github.com/anomalyco/opencode/pull/27554) — 6 comments, 10 reactions
-- [anthropics/claude-code: \[FEATURE\] Honour MCP Annotations.Audience on tool-result content blocks](https://github.com/anthropics/claude-code/issues/72239) — 3 comments, 1 reactions
-- [openai/codex: feat(core): integrate experimental credential broker](https://github.com/openai/codex/pull/29752) — 1 comments, 0 reactions
-- [openai/codex: Codex TUI scrollback rows can disappear after inline viewport height changes](https://github.com/openai/codex/issues/30745) — 5 comments, 3 reactions
-- [anomalyco/opencode: \[FEATURE\]: Mermaid rendering in chat](https://github.com/anomalyco/opencode/issues/3366) — 10 comments, 29 reactions
-- [openai/codex: Use bounded fallback ports for Windows managed proxies](https://github.com/openai/codex/pull/38265) — 1 comments, 0 reactions
-- [openai/codex: Windows Computer Use runtime blocked by EPERM, then helper fails EnumWindows](https://github.com/openai/codex/issues/37743) — 3 comments, 0 reactions
-- [anomalyco/opencode: \[Desktop\] Starts to cancel tasks with "Not Found"](https://github.com/anomalyco/opencode/issues/42163) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): select Kimi prompt by provider](https://github.com/anomalyco/opencode/pull/42161) — 0 comments, 0 reactions
-- [anomalyco/opencode: Kimi prompt not applied to kimi-for-coding models k3 / k3-256k (falls back to default)](https://github.com/anomalyco/opencode/issues/42059) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\] OpenCode Go subscription not recognized after purchase / Deepseek v4 Flash locked](https://github.com/anomalyco/opencode/issues/42167) — 1 comments, 0 reactions
-- [openai/codex: Codex iOS SSH disconnects before authentication with exe.dev RSA host certificate](https://github.com/openai/codex/issues/38264) — 1 comments, 0 reactions
-- [openai/codex: \[app\] Document manual project ordering and add project-folder sort controls](https://github.com/openai/codex/issues/38259) — 1 comments, 0 reactions
-- [anomalyco/opencode: Estoy pagando la versión de OpenCode Go y me sale deepseek v4 Flash con limites](https://github.com/anomalyco/opencode/issues/42154) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop "Add marketplace" GUI fails with generic "Failed to add marketplace" (MARKETPLACE_ERROR:UNKNOWN) — git clone stalls in non-interactive SSH, killed at ~60s timeout](https://github.com/anthropics/claude-code/issues/77927) — 1 comments, 0 reactions
-- [anthropics/claude-code: plugin marketplace update fetches new version but doesn't update installed_plugins.json](https://github.com/anthropics/claude-code/issues/76882) — 3 comments, 1 reactions
-- [openai/codex: excessive full screenscreen shots -](https://github.com/openai/codex/issues/38263) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Max plan: Opus 4.8 only shows 256k context, 1M option missing in model picker](https://github.com/anthropics/claude-code/issues/68287) — 7 comments, 1 reactions
-- [anthropics/claude-code: \[FEATURE\] Opus 4.8 (1M context) model option disappeared from the model picker](https://github.com/anthropics/claude-code/issues/69109) — 6 comments, 3 reactions
-- [anomalyco/opencode: fix(groq): pass through reasoning effort](https://github.com/anomalyco/opencode/pull/42166) — 0 comments, 0 reactions
-- [anthropics/claude-code: Claude-in-Chrome: Server-side domain blocking breaks legitimate business automation](https://github.com/anthropics/claude-code/issues/40173) — 12 comments, 7 reactions
-- [anthropics/claude-code: Feature request: show per-message timestamps in the terminal conversation UI](https://github.com/anthropics/claude-code/issues/71720) — 1 comments, 3 reactions
-- [anthropics/claude-code: \[BUG\] Cannot copy text correctly from Code tab (Remote Control session) on mobile app](https://github.com/anthropics/claude-code/issues/71718) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] SPB_DATA installation failure due to Cadence HOME environment variable](https://github.com/anthropics/claude-code/issues/71719) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] RemoteTrigger create/update returns HTTP 400 with circular error: "event_type is required" / "unknown field event_type"](https://github.com/anthropics/claude-code/issues/63055) — 2 comments, 1 reactions
-- [anthropics/claude-code: claude.ai managed connector (claudeai-proxy) can't be re-attached from CLI — claudeAiOauth never re-minted, no recovery path](https://github.com/anthropics/claude-code/issues/71649) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Display exact allowlist command format when requesting tool permission](https://github.com/anthropics/claude-code/issues/71707) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Silent default model upgrade to Opus 4.7 caused $506 in unexpected charges over 6 days](https://github.com/anthropics/claude-code/issues/71481) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting During Normal Usage](https://github.com/anthropics/claude-code/issues/71705) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting on Valid Requests](https://github.com/anthropics/claude-code/issues/71704) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(mistral): pass through reasoning effort](https://github.com/anomalyco/opencode/pull/42164) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting (Request Throttling)](https://github.com/anthropics/claude-code/issues/71706) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting (temporary request throttling)](https://github.com/anthropics/claude-code/issues/71703) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Cowork — account enrolled in two A/B variants (`testfoo` + `0526`) causing skill misfires + connector failure; `ENABLE_TOOL_SEARCH` mismatch](https://github.com/anthropics/claude-code/issues/63754) — 7 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting on Requests](https://github.com/anthropics/claude-code/issues/71702) — 1 comments, 0 reactions
-- [anthropics/claude-code: CLAUDE.md rules aren't reliably followed; PreToolUse hooks are a partial, hand-rolled stopgap](https://github.com/anthropics/claude-code/issues/70420) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Claude Code uses legacy XTMODKEYS even when terminal advertises the kitty keyboard protocol](https://github.com/anthropics/claude-code/issues/62423) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `/plugin` enable/disable docs do not address name mismatch between `plugin.json` and marketplace entry (fixed in v2.1.195)](https://github.com/anthropics/claude-code/issues/71696) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] /usage text unselectable after Edit tool diff block; prior diff component breaks mouse selection](https://github.com/anthropics/claude-code/issues/71698) — 1 comments, 2 reactions
-- [anthropics/claude-code: \[DOCS\] Agent view docs do not describe control-socket startup failure keeping the supervisor unreachable (fixed in v2.1.195)](https://github.com/anthropics/claude-code/issues/71693) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Claude Code on the web docs do not document the in-progress provisioning checklist shown while a cloud session container starts (v2.1.195)](https://github.com/anthropics/claude-code/issues/71695) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Voice dictation troubleshooting omits macOS default input device change in long sessions](https://github.com/anthropics/claude-code/issues/71689) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `claude agents` background-session docs do not cover data loss when read by an older Claude Code version (v2.1.195 fix)](https://github.com/anthropics/claude-code/issues/71692) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Voice dictation auto-submit does not document behavior for languages without word spaces (added fix in v2.1.195)](https://github.com/anthropics/claude-code/issues/71690) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Voice dictation Linux troubleshooting does not distinguish "no microphone" from "SoX not installed" (added in v2.1.195)](https://github.com/anthropics/claude-code/issues/71694) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Plugin install consent docs do not explain project-settings-only plugins no longer re-prompt consent on every loader (v2.1.195)](https://github.com/anthropics/claude-code/issues/71691) — 1 comments, 0 reactions
-- [anthropics/claude-code: Windows: path-scoped Write/Edit permission rules never match — Write tool absolutizes file_path pre-check and absolute Windows paths match no documented pattern form](https://github.com/anthropics/claude-code/issues/67849) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Hooks reference does not document that hyphenated MCP server names exact-match in v2.1.195](https://github.com/anthropics/claude-code/issues/71688) — 1 comments, 0 reactions
-- [anthropics/claude-code: Remote Control (iOS): closing a fullscreen code block exits the whole conversation instead of just the code view](https://github.com/anthropics/claude-code/issues/71685) — 1 comments, 0 reactions
-- [anthropics/claude-code: EPERM error after update to 2.1.193](https://github.com/anthropics/claude-code/issues/71655) — 2 comments, 2 reactions
-- [anthropics/claude-code: \[FEATURE\] Allow naming/labeling sessions so they're identifiable in /resume](https://github.com/anthropics/claude-code/issues/71684) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Excessive token consumption in session - 42% usage in 40 minutes for standard PR review workflow](https://github.com/anthropics/claude-code/issues/71589) — 5 comments, 1 reactions
-- [anthropics/claude-code: /insights output leaks literal <message> tags into rendered response](https://github.com/anthropics/claude-code/issues/71682) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\]  Allow editing proposed diffs in the approval prompt before accepting](https://github.com/anthropics/claude-code/issues/71679) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): use catalog small model for session titles](https://github.com/anomalyco/opencode/pull/36563) — 1 comments, 0 reactions
-- [anthropics/claude-code: Remote Control silently fails when HTTPS-scanning AV (e.g. Norton 360) intercepts TLS - Node rejects MITM cert chain](https://github.com/anthropics/claude-code/issues/63470) — 4 comments, 0 reactions
-- [anthropics/claude-code: Tool calls intermittently fail with "malformed and could not be parsed"; markup rendered as chat text](https://github.com/anthropics/claude-code/issues/66400) — 5 comments, 4 reactions
-- [anomalyco/opencode: \[FEATURE\]:Grok 4.3 reasoning levels](https://github.com/anomalyco/opencode/issues/32459) — 1 comments, 1 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting requests](https://github.com/anthropics/claude-code/issues/71669) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting During Normal Usage](https://github.com/anthropics/claude-code/issues/71672) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server temporarily limiting requests (rate limit)](https://github.com/anthropics/claude-code/issues/71668) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server Rate Limiting on Valid Requests](https://github.com/anthropics/claude-code/issues/71670) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(xai): pass through reasoning effort](https://github.com/anomalyco/opencode/pull/42160) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limit exceeded](https://github.com/anthropics/claude-code/issues/71665) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting on requests](https://github.com/anthropics/claude-code/issues/71667) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Per-worktree Python venv isolation](https://github.com/anthropics/claude-code/issues/71657) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] OSC 8 hyperlinks to local HTML files open Finder instead of web browser](https://github.com/anthropics/claude-code/issues/71658) — 1 comments, 0 reactions
-- [anthropics/claude-code: vm_bundles grows to 9.3GB+ on initial download after v1.15962.0 update (June 25 2026) — freezes Intel Mac on Cowork open](https://github.com/anthropics/claude-code/issues/71557) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Claude Code fails to apply language corrections despite multiple iterations](https://github.com/anthropics/claude-code/issues/71592) — 3 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] CCR routines: 3 structural observability gaps — RemoteTrigger.run HTTP 400 + unmerged claude/* fire artifacts + MCP-permission-prompt deadlocks](https://github.com/anthropics/claude-code/issues/64397) — 6 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Cowork fails with HYPERVISOR_VIRT_DISABLED on Windows 11 Pro ARM64 in Parallels 26 on M3 Pro](https://github.com/anthropics/claude-code/issues/71650) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): add SIGKILL fallback to Process.stop()](https://github.com/anomalyco/opencode/pull/36559) — 2 comments, 0 reactions
-- [anthropics/claude-code: VS Code extension triggers Windows Firewall "allow public/private networks" prompt on every extension-host load (managed machine)](https://github.com/anthropics/claude-code/issues/71653) — 1 comments, 0 reactions
-- [anthropics/claude-code: Remote Control: built-in slash commands (/clear, /context) not intercepted — delivered to the model as plain text](https://github.com/anthropics/claude-code/issues/68102) — 4 comments, 7 reactions
-- [anthropics/claude-code: \[Bug\] Claude Code fails to follow explicit prompts and context for language tasks](https://github.com/anthropics/claude-code/issues/71590) — 2 comments, 0 reactions
-- [anthropics/claude-code: ...](https://github.com/anthropics/claude-code/issues/67616) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Plugin-namespaced agent body not injected for teammates (frontmatter IS applied; markdown body dropped)](https://github.com/anthropics/claude-code/issues/71648) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Escape interrupt contaminates Claude's reasoning on all subsequent turns](https://github.com/anthropics/claude-code/issues/71638) — 2 comments, 0 reactions
-- [anthropics/claude-code: Setting to show permission prompt explanations by default (without pressing Ctrl+E)](https://github.com/anthropics/claude-code/issues/71645) — 2 comments, 0 reactions
-- [anthropics/claude-code: Confirm-exit or Ctrl+C debounce to prevent accidental session loss](https://github.com/anthropics/claude-code/issues/64975) — 2 comments, 1 reactions
-- [anthropics/claude-code: Attached/pasted images are visible to the model but not written to disk — blocks image-processing tools (sips/ImageMagick)](https://github.com/anthropics/claude-code/issues/71643) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] The Claude desktop app is sending `x-apple.systempreferences://...` — a **macOS-only URI** — on your Windows machine](https://github.com/anthropics/claude-code/issues/51701) — 8 comments, 6 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limiting during requests](https://github.com/anthropics/claude-code/issues/71636) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] skill.name tag in claude_code.cost.usage should reflect actual skill name for marketplace plugin skills](https://github.com/anthropics/claude-code/issues/71639) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app remote SSH install fails on Ubuntu 24.04 — "installed cli ... is not runnable"](https://github.com/anthropics/claude-code/issues/70620) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Anthropic API Error: Server rate limit exceeded (temporary)](https://github.com/anthropics/claude-code/issues/71634) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): preserve shell output tail](https://github.com/anomalyco/opencode/pull/36554) — 1 comments, 0 reactions
-- [anthropics/claude-code: Claude ignores CLAUDE.md instruction to never git commit/push without explicit user approval](https://github.com/anthropics/claude-code/issues/71577) — 4 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Code on the web: Trusted egress allowlist is systematically out of sync with where tooling connects](https://github.com/anthropics/claude-code/issues/71629) — 1 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] The GitHub Actions integration on this repo closes threads as "stale" without warning](https://github.com/anthropics/claude-code/issues/68077) — 3 comments, 0 reactions
-- [anthropics/claude-code: Tool-call markup leaks into assistant text — missing namespace + spurious "court" token (Opus 4.8)](https://github.com/anthropics/claude-code/issues/69529) — 5 comments, 1 reactions
-- [anthropics/claude-code: Scrollbar up/down arrow buttons no longer scroll output (regression) - Windows desktop](https://github.com/anthropics/claude-code/issues/71498) — 2 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Mode is not sync on remote-control session between CLI in server and in Claude Desktop or Claude Mobile](https://github.com/anthropics/claude-code/issues/70572) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Simplified Chinese kanji glyphs appearing in Japanese responses](https://github.com/anthropics/claude-code/issues/71507) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(catalog): serve app shell at lab route](https://github.com/anomalyco/opencode/pull/42159) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): resolve keyboard deadlock in question mode](https://github.com/anomalyco/opencode/pull/36550) — 1 comments, 0 reactions
-- [anomalyco/opencode: docs: add Orshot to the MCP server examples](https://github.com/anomalyco/opencode/pull/42155) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(agent): add hiddenFromCycle config option to hide agents from tab rotation](https://github.com/anomalyco/opencode/pull/36549) — 1 comments, 0 reactions
-- [anomalyco/opencode: TUI freezes when switching themes repeatedly via theme menu (desktop app)](https://github.com/anomalyco/opencode/issues/42165) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(i18n): complete Portuguese (Brazil) translation for UI and app](https://github.com/anomalyco/opencode/pull/36548) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): undo recent prompt with double escape](https://github.com/anomalyco/opencode/pull/36538) — 1 comments, 0 reactions
-- [anthropics/claude-code: Cross-session messages are delivered but never trigger the recipient's turn (desktop app, Windows)](https://github.com/anthropics/claude-code/issues/86212) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(provider): do not place Bedrock cachePoint after reasoning blocks](https://github.com/anomalyco/opencode/pull/36532) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[DOCS\] `/mcp` server list screen-reader focus tracking is fixed in v2.1.200 but never described in MCP docs](https://github.com/anthropics/claude-code/issues/73993) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `claude agents --plugin-dir <dir>` is documented but never warns about flag placement after `agents`](https://github.com/anthropics/claude-code/issues/73991) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `disabledMcpServers` and `enabledMcpServers` settings docs do not explain the non-array crash fixed in v2.1.200](https://github.com/anthropics/claude-code/issues/73988) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `sub-agents.md` API-error section only covers subagents cut off after producing output; v2.1.200 added the "before any text" case](https://github.com/anthropics/claude-code/issues/73990) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] `AskUserQuestion` tool docs still describe v2.1.198 auto-continue as the default; v2.1.200 made it opt-in via `/config`](https://github.com/anthropics/claude-code/issues/73986) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] New `manual` permission mode value accepted by `--permission-mode` and `defaultMode` is not documented in `permission-modes.md`, `cli-reference.md`, or `settings.md`](https://github.com/anthropics/claude-code/issues/73987) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[DOCS\] Background-agent daemon handover rule now uses the version's embedded build timestamp, but `agent-view.md` and `cli-reference.md` still describe the old version comparison](https://github.com/anthropics/claude-code/issues/73989) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] SSH option not available in Claude Code Desktop when using external API provider](https://github.com/anthropics/claude-code/issues/73985) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): define OPENCODE_VERSION in the node server build](https://github.com/anomalyco/opencode/pull/36528) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Make feedback commands more explicit to avoid accidental activation](https://github.com/anthropics/claude-code/issues/73983) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Desktop app: Code view sidebar stays in English despite ja-JP locale (web is fully translated)](https://github.com/anthropics/claude-code/issues/73984) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] VS Code extension: a long slash-command prompt renders as a full-panel expanded card that covers the conversation](https://github.com/anthropics/claude-code/issues/69771) — 1 comments, 0 reactions
-- [anthropics/claude-code: Fable 5 autonomous session destroyed user's main app via unverified assumption, verified its own breakage as green, burned ~75% weekly quota — 150 itemized failures](https://github.com/anthropics/claude-code/issues/73953) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Fable 5 → Opus 4.8 fallback misfires on hobby-OS kernel](https://github.com/anthropics/claude-code/issues/73981) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Cross-machine session sidebar sync when .claude is on a shared drive](https://github.com/anthropics/claude-code/issues/73980) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Conversation Context Not Recognized - Hallucinations Generated](https://github.com/anthropics/claude-code/issues/72024) — 3 comments, 0 reactions
-- [anthropics/claude-code: Claude fabricates task requirements when tool execution fails silently](https://github.com/anthropics/claude-code/issues/72750) — 3 comments, 1 reactions
-- [anthropics/claude-code: \[MODEL\] Opus 4.8: fresh subagent's first turn opened with a self-fabricated "System:" prompt-injection payload, then refused it in the same completion](https://github.com/anthropics/claude-code/issues/73727) — 2 comments, 0 reactions
-- [anthropics/claude-code: Background subagents recursively re-delegate their brief to new background subagents (3-level cascade, duplicate work, misleading completion reports)](https://github.com/anthropics/claude-code/issues/73958) — 2 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Fable safeguards triggered on routine coding work](https://github.com/anthropics/claude-code/issues/73978) — 0 comments, 0 reactions
-- [anthropics/claude-code: MCP server "supabase" sendo removido/adicionado repetidamente com comando malformado (openssl rand -hex 32 não interpolado)](https://github.com/anthropics/claude-code/issues/73976) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Tool result hallucination in long agentic sessions with batched tool calls](https://github.com/anthropics/claude-code/issues/64187) — 1 comments, 2 reactions
-- [anthropics/claude-code: Live output tail in the /tasks (background shells) panel — inline + pop-out window](https://github.com/anthropics/claude-code/issues/73977) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Marketplace plugin re-materialization mid-session cleans the pinned hook installPath, silently killing hooks in every running session](https://github.com/anthropics/claude-code/issues/73952) — 1 comments, 0 reactions
-- [anthropics/claude-code: \[Bug\] Git reference resolves to local main instead of origin/main after fetch](https://github.com/anthropics/claude-code/issues/73974) — 0 comments, 0 reactions
-- [anthropics/claude-code: Desktop app: assistant text blocks between tool calls intermittently not rendered (answer body missing, only short lines shown)](https://github.com/anthropics/claude-code/issues/73969) — 0 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] SessionStart (and other command-type) hooks fail to execute on Windows — shell resolution drops \bash.exe from Git path](https://github.com/anthropics/claude-code/issues/73971) — 0 comments, 0 reactions
-- [anthropics/claude-code: MCP server 'supabase' sendo removido/adicionado repetidamente com comando malformado (openssl rand -hex 32 não interpolado)](https://github.com/anthropics/claude-code/issues/73967) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Windows: plugin lspServers bare command (e.g. pwsh, pyright-langserver) refused pre-spawn with 'not found or is in an unsafe location (current directory)' -- breaks official pyright-lsp plugin](https://github.com/anthropics/claude-code/issues/73961) — 0 comments, 2 reactions
-- [anthropics/claude-code: Task list sidebar panel for session task visibility](https://github.com/anthropics/claude-code/issues/73963) — 0 comments, 0 reactions
-- [anthropics/claude-code: Cowork (Windows): UserPromptSubmit hooks now execute, but stdout/additionalContext is discarded — wire hook output into context at parity with Claude Code](https://github.com/anthropics/claude-code/issues/73960) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[Feature Request\] Add option to hide or consolidate context/token usage indicator in UI](https://github.com/anthropics/claude-code/issues/73956) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[BUG\] Cowork sandbox bash tool caps timeout_ms at 45000, no way to run longer commands](https://github.com/anthropics/claude-code/issues/73957) — 0 comments, 1 reactions
-- [anthropics/claude-code: Allow starting a fresh plan file mid-session instead of merging new plans into the existing auto-named file](https://github.com/anthropics/claude-code/issues/73954) — 0 comments, 1 reactions
-- [anthropics/claude-code: \[BUG\] Cowork/MCP tool calls fail with -32001 after ~60s even when the server completes and the result arrives](https://github.com/anthropics/claude-code/issues/73955) — 0 comments, 1 reactions
-- [anthropics/claude-code: Write tool result for new files renders without added-line (green) highlighting, unlike Edit](https://github.com/anthropics/claude-code/issues/73951) — 0 comments, 0 reactions
-- [anthropics/claude-code: API 400 error al pegar capturas tomadas con Alt+Impr Pant (Windows)](https://github.com/anthropics/claude-code/issues/73949) — 0 comments, 0 reactions
-- [anthropics/claude-code: Bash tool drops all stdout on Windows/Git Bash intermittently](https://github.com/anthropics/claude-code/issues/73950) — 0 comments, 0 reactions
-- [anthropics/claude-code: \[FEATURE\] Terminal client for Remote Control sessions — `claude connect <session>` to attach from the CLI like the mobile/desktop apps do](https://github.com/anthropics/claude-code/issues/73948) — 0 comments, 1 reactions
-- [anomalyco/opencode: feat(tui): add interactive session search](https://github.com/anomalyco/opencode/pull/36526) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(web): pagefind.js missing on docs site](https://github.com/anomalyco/opencode/pull/36497) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(session-ui): escape direction:rtl bidi issue in message-part-directory via LRE/PDF wraps](https://github.com/anomalyco/opencode/pull/36488) — 3 comments, 0 reactions
-- [anomalyco/opencode: OpenCode Go](https://github.com/anomalyco/opencode/issues/42132) — 4 comments, 0 reactions
-- [anomalyco/opencode: fix(cli): preserve server startup failure cause](https://github.com/anomalyco/opencode/pull/36478) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): paste clipboard on right click](https://github.com/anomalyco/opencode/pull/36471) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): respect sidebar width threshold](https://github.com/anomalyco/opencode/pull/36469) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): preserve valid empty JSON config](https://github.com/anomalyco/opencode/pull/36468) — 3 comments, 0 reactions
-- [openai/codex: Resolve skill package aliases in `skills.read`](https://github.com/openai/codex/pull/38261) — 0 comments, 0 reactions
-- [openai/codex: Project Workspaces with Shared Context Across Related Chats](https://github.com/openai/codex/issues/38260) — 1 comments, 0 reactions
-- [openai/codex: Unify external authentication provider handling](https://github.com/openai/codex/pull/38258) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): select Kimi prompt by provider](https://github.com/anomalyco/opencode/pull/42156) — 1 comments, 0 reactions
-- [openai/codex: Reconnect gRPC code-mode sessions after host restarts](https://github.com/openai/codex/pull/38257) — 0 comments, 0 reactions
-- [openai/codex: /fork leaves parent thread with active writer, preventing resume in another terminal](https://github.com/openai/codex/issues/38144) — 3 comments, 1 reactions
-- [anomalyco/opencode: \[BUG\]: close-prs workflow failures are silent in the run log — no ::warning:: annotation](https://github.com/anomalyco/opencode/issues/42157) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat: adopt drive and TUI catalog](https://github.com/anomalyco/opencode/pull/42133) — 0 comments, 0 reactions
-- [anomalyco/opencode: refactor(core): replace project copies with worktrees](https://github.com/anomalyco/opencode/pull/42149) — 0 comments, 0 reactions
-- [anomalyco/opencode: MiniMax models fall through to the Claude-oriented default prompt](https://github.com/anomalyco/opencode/issues/41031) — 2 comments, 0 reactions
-- [openai/codex: \[app\] “Sort chats by” options do not reorder project groups in the sidebar](https://github.com/openai/codex/issues/38255) — 1 comments, 0 reactions
-- [openai/codex: Report the latest rejection from multiple network reviews](https://github.com/openai/codex/pull/38256) — 0 comments, 0 reactions
-- [anomalyco/opencode: ci(close-prs): bun script failures are silent in the run log](https://github.com/anomalyco/opencode/issues/42153) — 2 comments, 0 reactions
-- [openai/codex: ChatGPT for Windows cannot complete setup or enter limited-access mode](https://github.com/openai/codex/issues/33967) — 12 comments, 0 reactions
-- [openai/codex: request setting to disable autoscroll](https://github.com/openai/codex/issues/23517) — 5 comments, 10 reactions
-- [anomalyco/opencode: fix(opencode): make text/reasoning delta accumulation O(N) instead of O(N²)](https://github.com/anomalyco/opencode/pull/42150) — 1 comments, 0 reactions
-- [openai/codex: App update leaves the previous app-server daemon running](https://github.com/openai/codex/issues/32983) — 2 comments, 0 reactions
-- [openai/codex: \[Linux\] Desktop app fails to launch when stale Codex SingletonLock points to a dead PID](https://github.com/openai/codex/issues/38254) — 1 comments, 0 reactions
-- [openai/codex: Intel macOS: Computer Use startup fails after 26.803.61601 (250 ms native-pipe timeout; managed helper absent)](https://github.com/openai/codex/issues/38003) — 1 comments, 1 reactions
-- [openai/codex: VS Code IDE context auto-disables and selected text is not attached in WSL2](https://github.com/openai/codex/issues/35419) — 6 comments, 11 reactions
-- [openai/codex: ide context not work for codex on cursor](https://github.com/openai/codex/issues/37023) — 1 comments, 0 reactions
-- [openai/codex: Collect plugin metrics from unified exec commands](https://github.com/openai/codex/pull/38253) — 0 comments, 0 reactions
-- [openai/codex: VS Code /ide shows IDE context enabled but sends no active file or selection](https://github.com/openai/codex/issues/35333) — 3 comments, 3 reactions
-- [openai/codex: Codex VS Code extension stopped auto-including IDE context after update](https://github.com/openai/codex/issues/31553) — 17 comments, 12 reactions
-- [openai/codex: Collect metrics from plugin shell commands](https://github.com/openai/codex/pull/38252) — 0 comments, 0 reactions
-- [openai/codex: IDE Context fails in Codex extension 26.715.x with RPC serialization error](https://github.com/openai/codex/issues/34920) — 10 comments, 5 reactions
-- [openai/codex: \[Windows regression\] Selected task with multiple active subagents freezes the app](https://github.com/openai/codex/issues/37018) — 2 comments, 0 reactions
-- [openai/codex: IDE Context silently disables because workspaceRoot is missing in recent VS Code extension builds](https://github.com/openai/codex/issues/34696) — 4 comments, 6 reactions
-- [anomalyco/opencode: \[FEATURE\]: Allow per-MCP-server trust configuration](https://github.com/anomalyco/opencode/issues/40111) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(opencode): Allow per-MCP-server trust configuration](https://github.com/anomalyco/opencode/pull/40125) — 1 comments, 0 reactions
-- [openai/codex: Read model ETags from WebSocket metadata events](https://github.com/openai/codex/pull/38251) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop: opening any unloaded local chat waits ~5 seconds on owner discovery timeout](https://github.com/openai/codex/issues/37398) — 14 comments, 9 reactions
-- [anomalyco/opencode: Insufficient balance. Manage your billing here: https://opencode.ai/workspace/wrk_01KZPYWCQQZEKXB8EBS6G76TET/billing](https://github.com/anomalyco/opencode/issues/42114) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix: handle error where OPENCODE_CONFIG is pointing to a directory](https://github.com/anomalyco/opencode/pull/42118) — 2 comments, 0 reactions
-- [openai/codex: Desktop: thread.archived silently reset to 0 on next app cycle for any thread whose sessions/<rollout>.jsonl exists](https://github.com/openai/codex/issues/23851) — 2 comments, 0 reactions
-- [openai/codex: GitHub connector: inconsistent repository parameter name causes misleading schema error](https://github.com/openai/codex/issues/38249) — 0 comments, 0 reactions
-- [anomalyco/opencode: deps: update OpenTUI to 0.5.2](https://github.com/anomalyco/opencode/pull/42148) — 0 comments, 0 reactions
-- [openai/codex: \[Linux Desktop 0.147.0\] Completed v2 subagents retain full stdio MCP runtimes](https://github.com/openai/codex/issues/38247) — 1 comments, 0 reactions
-- [openai/codex: close_agent is missing from the VS Code multi-agent tool schema](https://github.com/openai/codex/issues/36211) — 4 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Make local file paths clickable in terminal output](https://github.com/anomalyco/opencode/issues/19005) — 7 comments, 5 reactions
-- [openai/codex: Accessibility: desktop app does not announce response status updates to screen readers](https://github.com/openai/codex/issues/38246) — 0 comments, 0 reactions
-- [anomalyco/opencode: Instance bootstrap hangs forever (Linux): spawned git child exits but is never reaped — TUI renders, but Enter can never start a session](https://github.com/anomalyco/opencode/issues/41806) — 3 comments, 0 reactions
-- [anomalyco/opencode: LLM retry has no max attempts: stream errors cause infinite retry loop, UI stuck on Thinking](https://github.com/anomalyco/opencode/issues/41848) — 3 comments, 0 reactions
-- [anthropics/claude-code: v2.1.229](https://github.com/anthropics/claude-code/releases/tag/v2.1.229)
-- [openai/codex: macOS desktop app ≥26.730 crash-loops on launch on 16 GB Apple Silicon Mac (V8 crash ~6–15 s after launch); same builds fine on 48 GB machine](https://github.com/openai/codex/issues/37493) — 3 comments, 0 reactions
-- [anomalyco/opencode: Free Usage Limit Exceeded on First Request (DeepSeek V4 Flash Free / OpenCode Zen)](https://github.com/anomalyco/opencode/issues/42128) — 7 comments, 5 reactions
-- [anomalyco/opencode: tui: plugins no longer load after cli.json config migration (nightly next channel)](https://github.com/anomalyco/opencode/issues/42051) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): adopt pre-project sessions on directory resolution](https://github.com/anomalyco/opencode/pull/42100) — 0 comments, 0 reactions
-- [openai/codex: Windows Computer Use fails with spawn EPERM; elevated sandbox setup fails on WindowsApps ACL](https://github.com/openai/codex/issues/37415) — 13 comments, 4 reactions
-- [anomalyco/opencode: feat(sdk): configure external workspace providers](https://github.com/anomalyco/opencode/pull/42142) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): replace tab from session picker](https://github.com/anomalyco/opencode/pull/42139) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): refine session tab activity indicators](https://github.com/anomalyco/opencode/pull/42144) — 0 comments, 0 reactions
-- [openai/codex: Random Chinese text occasionally appears in scheduled heartbeat messages](https://github.com/openai/codex/issues/34114) — 3 comments, 0 reactions
-- [openai/codex: Add dynamic HTTP header helpers for MCP servers](https://github.com/openai/codex/pull/38245) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(core): defer active session moves](https://github.com/anomalyco/opencode/pull/42025) — 0 comments, 0 reactions
-- [openai/codex: Resolve paginated thread history by rollout ID](https://github.com/openai/codex/pull/38244) — 0 comments, 0 reactions
-- [openai/codex: Codex app: Allow both queueing and interrupting (i.e. steering) in desktop app](https://github.com/openai/codex/issues/10469) — 2 comments, 5 reactions
-- [openai/codex: Codex App frequently freezes/stutters on Windows 11 Pro despite sufficient system resources](https://github.com/openai/codex/issues/20214) — 97 comments, 82 reactions
-- [anomalyco/opencode: fix(tui): improve selected spinner contrast](https://github.com/anomalyco/opencode/pull/42141) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): continue sessions after location move](https://github.com/anomalyco/opencode/pull/42138) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[bug\] Free usage exceeded. Add creddits (when using Zen free models)](https://github.com/anomalyco/opencode/issues/14273) — 40 comments, 1 reactions
-- [anomalyco/opencode: v1.18.17](https://github.com/anomalyco/opencode/releases/tag/v1.18.17)
-- [anomalyco/opencode: fix(tui): navigate filtered plugins](https://github.com/anomalyco/opencode/pull/42127) — 0 comments, 0 reactions
-- [anomalyco/opencode: chore(drive): transfer npm ownership and trusted publishing](https://github.com/anomalyco/opencode/issues/42137) — 0 comments, 0 reactions
-- [anomalyco/opencode: refactor(simulation): canonicalize the Drive wire protocol](https://github.com/anomalyco/opencode/issues/42136) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\] Zen balance does not remove free usage cap; paid users still hit 200-request/free usage limit](https://github.com/anomalyco/opencode/issues/33495) — 6 comments, 0 reactions
-- [openai/codex: Track client-authored developer messages in rollout history](https://github.com/openai/codex/pull/38243) — 0 comments, 0 reactions
-- [openai/codex: Codex CLI: add persistent self-healing monitor workflows for long-running jobs](https://github.com/openai/codex/issues/32993) — 3 comments, 2 reactions
-- [openai/codex: MCP tool calls crash with aws-lc-rs jitter-entropy panic ("Transport closed") once they run past ~90 seconds — not specific to fan-out calls](https://github.com/openai/codex/issues/38230) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): continue pending work after interrupt](https://github.com/anomalyco/opencode/pull/42131) — 0 comments, 0 reactions
-- [openai/codex: \[macOS/iOS Remote\] Persisted mobile turns are omitted from the next Desktop model context in the same thread](https://github.com/openai/codex/issues/37620) — 4 comments, 0 reactions
-- [openai/codex: Expose active model and reasoning effort to Codex voice/mobile sessions](https://github.com/openai/codex/issues/36640) — 3 comments, 0 reactions
-- [openai/codex: Codex App: expose reasoning summaries or progress traces when configured](https://github.com/openai/codex/issues/27197) — 2 comments, 9 reactions
-- [openai/codex: session renders properly in codex cli but improperly in chatgpt remote (android)](https://github.com/openai/codex/issues/37598) — 3 comments, 1 reactions
-- [openai/codex: Cache stable active-cell layout measurements](https://github.com/openai/codex/pull/38242) — 0 comments, 1 reactions
-- [anomalyco/opencode: refactor(codemode): route transpilation through a #transpile conditional import](https://github.com/anomalyco/opencode/pull/42121) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): resolve watcher binding require lazily](https://github.com/anomalyco/opencode/pull/42122) — 0 comments, 0 reactions
-- [openai/codex: Include Node REPL policy in turn metadata](https://github.com/openai/codex/pull/38241) — 1 comments, 0 reactions
-- [anomalyco/opencode: cli: generated Zsh completions fail with doubled argument definition](https://github.com/anomalyco/opencode/issues/41966) — 3 comments, 0 reactions
-- [anomalyco/opencode: deepseek and mimo models ratelimit problem](https://github.com/anomalyco/opencode/issues/42129) — 1 comments, 0 reactions
-- [anomalyco/opencode: /compact 命令上下文丢失问题](https://github.com/anomalyco/opencode/issues/41268) — 2 comments, 2 reactions
-- [anomalyco/opencode: Manual /compact with DeepSeek V4 Flash degenerates into thousands of repeated lines](https://github.com/anomalyco/opencode/issues/41801) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(compaction): adjust instructions and structure to be more clear to smaller models like dsv4 flash](https://github.com/anomalyco/opencode/pull/42045) — 0 comments, 0 reactions
-- [openai/codex: \[codex\]\[device-stable-id\]\[16/n\] Send source stable ID with managed auth requests](https://github.com/openai/codex/pull/28815) — 18 comments, 1 reactions
-- [openai/codex: \[App\] Add user-confirmed model and reasoning routing for persistent task creation](https://github.com/openai/codex/issues/36790) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): show token throughput](https://github.com/anomalyco/opencode/pull/42112) — 0 comments, 0 reactions
-- [anomalyco/opencode: Is OpenCursor Really free?](https://github.com/anomalyco/opencode/issues/42119) — 2 comments, 0 reactions
-- [anomalyco/opencode: chore: adopt opencode-drive and terminal catalog as packages/drive and packages/lab/catalog](https://github.com/anomalyco/opencode/issues/42126) — 0 comments, 0 reactions
-- [anomalyco/opencode: Remote MCP OAuth: access token is not refreshed despite refresh token being present](https://github.com/anomalyco/opencode/issues/34582) — 4 comments, 2 reactions
-- [anomalyco/opencode: feat(server): typed no-execution-plane environment for workerd profile](https://github.com/anomalyco/opencode/pull/42113) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(core): add generic session inbox](https://github.com/anomalyco/opencode/pull/42109) — 0 comments, 0 reactions
-- [anomalyco/opencode: agents: current agent identity is not provided in model context](https://github.com/anomalyco/opencode/issues/42125) — 0 comments, 0 reactions
-- [anomalyco/opencode: error: Free usage exceeded, subscribe to Go](https://github.com/anomalyco/opencode/issues/42013) — 8 comments, 4 reactions
-- [openai/codex: Add bounded plugin measurement analytics](https://github.com/openai/codex/pull/38239) — 0 comments, 1 reactions
-- [anomalyco/opencode: fix(provider): recover stalled model streams](https://github.com/anomalyco/opencode/pull/40010) — 2 comments, 0 reactions
-- [openai/codex: Add manifest-defined metrics for trusted plugin scripts](https://github.com/openai/codex/pull/38238) — 0 comments, 1 reactions
-- [anomalyco/opencode: fix(core): validate tool definitions on registration](https://github.com/anomalyco/opencode/pull/42117) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): harden Mermaid rendering limits](https://github.com/anomalyco/opencode/pull/42123) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop main thread can stay stuck thinking when a sub-agent remains active](https://github.com/openai/codex/issues/23292) — 4 comments, 2 reactions
-- [anomalyco/opencode: fix(core): preserve Copilot fallback provider](https://github.com/anomalyco/opencode/pull/42099) — 0 comments, 0 reactions
-- [anomalyco/opencode: core: bound server-side interrupt settlement latency](https://github.com/anomalyco/opencode/issues/42120) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(session): show interrupt progress immediately](https://github.com/anomalyco/opencode/pull/42115) — 1 comments, 0 reactions
-- [openai/codex: Codex Desktop does not enforce subagent cap or delegation depth, then root-scoped controls cannot clean up the full tree](https://github.com/openai/codex/issues/38237) — 1 comments, 0 reactions
-- [anomalyco/opencode: Misconfigured OPENCODE_CONFIG / OPENCODE_CONFIG_DIR crash with errors](https://github.com/anomalyco/opencode/issues/42116) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(app): add VS Code Insiders and Antigravity to Open in options](https://github.com/anomalyco/opencode/pull/40872) — 1 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\]: Active chat session stuck in "Free usage exceeded" retry loop after subscribing to Go](https://github.com/anomalyco/opencode/issues/42110) — 4 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\] Sessions silently deleted after cross-session API access](https://github.com/anomalyco/opencode/issues/41972) — 4 comments, 0 reactions
-- [openai/codex: Codex App branch switch uses a different worktree than the task terminal](https://github.com/openai/codex/issues/37591) — 3 comments, 0 reactions
-- [anomalyco/opencode: docs: add @oyadotai/opencode-plugin to ecosystem plugins](https://github.com/anomalyco/opencode/pull/42080) — 2 comments, 0 reactions
-- [anomalyco/opencode: Todo state never flows back to the model: agents forget todowrite maintenance (proposal: inject via SessionReminders)](https://github.com/anomalyco/opencode/issues/42082) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): restore tab marquee hover](https://github.com/anomalyco/opencode/pull/42093) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): show worktree names in session list](https://github.com/anomalyco/opencode/pull/42108) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop: MCP connector is permanently disabled with no re-authenticate affordance after a failed OAuth token refresh](https://github.com/openai/codex/issues/38198) — 0 comments, 0 reactions
-- [anomalyco/opencode: Multiple system prompts break Qwen3.5-* models](https://github.com/anomalyco/opencode/issues/15059) — 15 comments, 0 reactions
-- [anomalyco/opencode: Exa main](https://github.com/anomalyco/opencode/pull/42111) — 3 comments, 0 reactions
-- [openai/codex: Windows Desktop 26.803: config.toml is atomically truncated and existing project tasks disappear from the sidebar](https://github.com/openai/codex/issues/37768) — 2 comments, 0 reactions
-- [openai/codex: \[TUI\] /model in Plan mode updates Default globally and changes Medium to High](https://github.com/openai/codex/issues/38236) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): keep interrupt confirmation visible](https://github.com/anomalyco/opencode/pull/42096) — 0 comments, 0 reactions
-- [anomalyco/opencode: chore: add neriousy to team members](https://github.com/anomalyco/opencode/pull/42106) — 0 comments, 0 reactions
-- [anomalyco/opencode: chore: add neriousy to team members](https://github.com/anomalyco/opencode/pull/42107) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): render Mermaid rich labels compactly](https://github.com/anomalyco/opencode/pull/42103) — 0 comments, 0 reactions
-- [openai/codex: Windows Codex app continuously writes high-volume TRACE websocket logs to ~/.codex/logs_2.sqlite despite RUST_LOG=warn](https://github.com/openai/codex/issues/29463) — 11 comments, 2 reactions
-- [openai/codex: Dropped app-server events corrupt resumed Codex sessions](https://github.com/openai/codex/issues/38234) — 1 comments, 0 reactions
-- [anomalyco/opencode: if i type something open code does not answer](https://github.com/anomalyco/opencode/issues/42069) — 2 comments, 0 reactions
-- [anomalyco/opencode: MON OPEN CODE DESKTOP BUG](https://github.com/anomalyco/opencode/issues/42071) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): limit default GPT verbosity](https://github.com/anomalyco/opencode/pull/42075) — 4 comments, 0 reactions
-- [anomalyco/opencode: docs: fix grammar in sdk and models pages](https://github.com/anomalyco/opencode/pull/42078) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(opencode): bridge question tool to ACP elicitation](https://github.com/anomalyco/opencode/pull/42104) — 2 comments, 0 reactions
-- [anomalyco/opencode: Network issue](https://github.com/anomalyco/opencode/issues/42105) — 0 comments, 0 reactions
-- [openai/codex: Track root turns across delegated Codex requests](https://github.com/openai/codex/pull/38232) — 0 comments, 0 reactions
-- [openai/codex: This task is active elsewhere. Close it there, then retry here.](https://github.com/openai/codex/issues/38231) — 1 comments, 0 reactions
-- [openai/codex: \[Windows\] Computer Use fails with `spawn EPERM` after Codex update](https://github.com/openai/codex/issues/37272) — 3 comments, 0 reactions
-- [anomalyco/opencode: "Subscription quota exceeded" error persists after 2+ days of inactivity (OpenCode Go)](https://github.com/anomalyco/opencode/issues/24473) — 5 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): move debug overlay into developer tools](https://github.com/anomalyco/opencode/pull/42098) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat(server): workerd runtime profile and SDK workerd entrypoint](https://github.com/anomalyco/opencode/pull/41918) — 0 comments, 0 reactions
-- [openai/codex: Detect implicit skill invocations from PowerShell reads](https://github.com/openai/codex/pull/38228) — 1 comments, 0 reactions
-- [openai/codex: TUI should emit OSC 7 when its working directory changes](https://github.com/openai/codex/issues/38229) — 0 comments, 0 reactions
-- [openai/codex: Browser Use Node REPL fails in Windows Desktop app with WSL workspace due to unmapped sandboxCwd](https://github.com/openai/codex/issues/29639) — 15 comments, 3 reactions
-- [anomalyco/opencode: fix(llm): preserve nested OpenAI stream errors](https://github.com/anomalyco/opencode/pull/42102) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(console): add cors to zen responses](https://github.com/anomalyco/opencode/pull/42101) — 1 comments, 0 reactions
-- [openai/codex: Codex Desktop: updating a shared Business workspace plugin fails because upload-url returns 404](https://github.com/openai/codex/issues/36929) — 1 comments, 1 reactions
-- [openai/codex: \[macOS\] Chrome sessions become unavailable after Codex uses Chrome and Chrome is relaunched](https://github.com/openai/codex/issues/33287) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(desktop): stop sidecar before quitting](https://github.com/anomalyco/opencode/pull/42095) — 2 comments, 0 reactions
-- [openai/codex: Support configurable Git providers and credentials for self-hosted Git servers](https://github.com/openai/codex/issues/30038) — 2 comments, 5 reactions
-- [anomalyco/opencode: Desktop NodeService aborts on Linux when closing app](https://github.com/anomalyco/opencode/issues/42097) — 0 comments, 0 reactions
-- [openai/codex: Add a flag to retain client developer messages](https://github.com/openai/codex/pull/38227) — 0 comments, 1 reactions
-- [anomalyco/opencode: Billing Issue: OpenCode Go Paid $5 Promo, Account Stuck on Free Tier (Invoice NFGKFBRU-0001)](https://github.com/anomalyco/opencode/issues/42053) — 2 comments, 0 reactions
-- [anomalyco/opencode: payment](https://github.com/anomalyco/opencode/issues/42054) — 2 comments, 0 reactions
-- [anomalyco/opencode: TUI SIGILL (ud2) in OpenTUI drawTextBuffer when compositor scale jumps to 4](https://github.com/anomalyco/opencode/issues/42094) — 0 comments, 0 reactions
-- [anomalyco/opencode: TUI crashes at startup (Bun SIGILL in drainMicrotasks, libopentui) when the terminal answers the capability handshake only partially](https://github.com/anomalyco/opencode/issues/41483) — 1 comments, 0 reactions
-- [openai/codex: \[Regression\] In-app Browser and Chrome extension still wait ~30s on ab.chatgpt.com Statsig timeouts in VPN TUN mode](https://github.com/openai/codex/issues/33713) — 4 comments, 0 reactions
-- [openai/codex: Computer Use / node_repl: nodeRepl.write and nodeRepl.emitImage execute but MCP content\[\] (screenshots) not surfaced to model](https://github.com/openai/codex/issues/38225) — 1 comments, 0 reactions
-- [openai/codex: Chat status incorrectly showed an old branch (already merged) & merge conflicts message](https://github.com/openai/codex/issues/38226) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(tool): skip plugin tools without descriptions](https://github.com/anomalyco/opencode/pull/42092) — 2 comments, 0 reactions
-- [openai/codex: Codex App (Windows): an unresolvable git root causes an unbounded, no-backoff retry loop that saturates the entire machine — 142/168 git calls hit the 60s timeout](https://github.com/openai/codex/issues/34473) — 4 comments, 0 reactions
-- [anomalyco/opencode: feat(acp): emit plan session updates from todowrite tool calls](https://github.com/anomalyco/opencode/pull/31834) — 2 comments, 2 reactions
-- [openai/codex: /MCP command returns raw results in CLI](https://github.com/openai/codex/issues/38224) — 0 comments, 0 reactions
-- [openai/codex: \[Windows Desktop\] Existing local project threads show “No chats” but remain intact and resumable by thread ID](https://github.com/openai/codex/issues/38223) — 1 comments, 0 reactions
-- [openai/codex: Allow Linux users to redeem banked Codex rate-limit resets from the web or CLI](https://github.com/openai/codex/issues/27934) — 2 comments, 1 reactions
-- [openai/codex: Feature request: first-class Computer Use support from the Codex CLI](https://github.com/openai/codex/issues/20851) — 14 comments, 25 reactions
-- [anomalyco/opencode: fix(tui): consolidate developer tools controls](https://github.com/anomalyco/opencode/pull/42088) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(session): make retry cap and backoffDelay configurable per provider](https://github.com/anomalyco/opencode/pull/41699) — 3 comments, 0 reactions
-- [anomalyco/opencode: 403](https://github.com/anomalyco/opencode/issues/42046) — 2 comments, 0 reactions
-- [anomalyco/opencode: Not working](https://github.com/anomalyco/opencode/issues/42050) — 3 comments, 0 reactions
-- [openai/codex: \[App Server\] stale watched_status overrides completed subagent state during thread enrichment](https://github.com/openai/codex/issues/37916) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): stabilize repeated open menu](https://github.com/anomalyco/opencode/pull/42086) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(console): emit complete Responses-API SSE lifecycle for converted streams](https://github.com/anomalyco/opencode/pull/40210) — 5 comments, 12 reactions
-- [anomalyco/opencode: refactor(core): spawn stdio MCP servers through the location environment](https://github.com/anomalyco/opencode/pull/42076) — 0 comments, 0 reactions
-- [openai/codex: Windows sandbox: restricted token cannot enumerate or execute under the user profile, so pwsh/python/gh silently "do not exist"](https://github.com/openai/codex/issues/38222) — 1 comments, 0 reactions
-- [openai/codex: Windows sandbox inconsistently fails to start PowerShell with CreateProcessAsUserW error 5](https://github.com/openai/codex/issues/37592) — 3 comments, 0 reactions
-- [openai/codex: PageUp/PageDown in focused composer horizontally shifts and breaks VS Code chat webview layout](https://github.com/openai/codex/issues/21930) — 1 comments, 0 reactions
-- [openai/codex: Allow async Stop to start a same-session continuation (KV cache)](https://github.com/openai/codex/issues/38221) — 0 comments, 0 reactions
-- [openai/codex: Codex desktop viewport jumps and composer overlays text while user is reading scrolled history](https://github.com/openai/codex/issues/38220) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(desktop): restrict application launches](https://github.com/anomalyco/opencode/pull/42087) — 0 comments, 0 reactions
-- [openai/codex: \[Regression\]\[Remote\] VS Code and iOS threads no longer sync bidirectionally after VS Code restart](https://github.com/openai/codex/issues/38219) — 1 comments, 0 reactions
-- [openai/codex: Add search and filtering to the Projects list in Codex Desktop](https://github.com/openai/codex/issues/38218) — 0 comments, 0 reactions
-- [openai/codex: Deep Scan Windows path bug](https://github.com/openai/codex/issues/38216) — 1 comments, 0 reactions
-- [anomalyco/opencode: GitHub Copilot provider shows zero models: all models return `model_picker_enabled: false`](https://github.com/anomalyco/opencode/issues/42083) — 3 comments, 1 reactions
-- [anomalyco/opencode: \[FEATURE\]: Search mesages history tool.](https://github.com/anomalyco/opencode/issues/11819) — 5 comments, 7 reactions
-- [anomalyco/opencode: docs(go): clarify DeepSeek ZDR coverage](https://github.com/anomalyco/opencode/pull/42085) — 0 comments, 0 reactions
-- [openai/codex: Start required cached MCP servers lazily for subagents](https://github.com/openai/codex/pull/38217) — 0 comments, 0 reactions
-- [openai/codex: \[Windows\]\[Codex Security 0.1.18\] Deep Scan fails because in-scope inventory preserves .\ paths](https://github.com/openai/codex/issues/37502) — 1 comments, 0 reactions
-- [anomalyco/opencode: limit](https://github.com/anomalyco/opencode/issues/42033) — 2 comments, 0 reactions
-- [anomalyco/opencode: Problem after purchase](https://github.com/anomalyco/opencode/issues/42039) — 2 comments, 0 reactions
-- [anomalyco/opencode: multimodal-looker 调用的一直是gpt-5.6-sol](https://github.com/anomalyco/opencode/issues/42041) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(app): settings dialog handler locks up after scope cleanup](https://github.com/anomalyco/opencode/issues/42042) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): add session tab context menu](https://github.com/anomalyco/opencode/pull/42068) — 0 comments, 0 reactions
-- [anomalyco/opencode: test: stabilize Windows integration coverage](https://github.com/anomalyco/opencode/pull/42079) — 0 comments, 0 reactions
-- [anomalyco/opencode: ai: mid-stream HTTP resets are reported as invalid provider output (v2)](https://github.com/anomalyco/opencode/issues/39326) — 1 comments, 1 reactions
-- [anomalyco/opencode: fix: preserve trailing blank line in apply_patch](https://github.com/anomalyco/opencode/pull/42084) — 0 comments, 0 reactions
-- [openai/codex: Codex CLI cannot tag / explicitly invoke configured subagents like the Codex app](https://github.com/openai/codex/issues/38215) — 0 comments, 0 reactions
-- [openai/codex: Avoid allocations when sanitizing TUI user text](https://github.com/openai/codex/pull/38214) — 0 comments, 1 reactions
-- [anomalyco/opencode: Opencode bot compaction error](https://github.com/anomalyco/opencode/issues/42077) — 1 comments, 0 reactions
-- [openai/codex: App-server does not dispatch Stop hook after turn/completed](https://github.com/openai/codex/issues/38213) — 0 comments, 0 reactions
-- [openai/codex: stream disconnected before completion: error sending request for url (https://chatgpt.com/backend-api/codex/responses)](https://github.com/openai/codex/issues/38212) — 1 comments, 0 reactions
-- [anomalyco/opencode: deepseek-v4-flash-free (zen) 429 FreeUsageLimitError on EVERY request from 3 distinct IPs, with and without official client headers](https://github.com/anomalyco/opencode/issues/42074) — 1 comments, 0 reactions
-- [openai/codex: Git push --dry-run fails with Bad owner or permissions on /etc/ssh/ssh_config.d/... (SSH config owned by nobody inside sandbox)](https://github.com/openai/codex/issues/9286) — 5 comments, 1 reactions
-- [openai/codex: Codex Desktop: opening a large thread causes sustained 100%+ CPU until app restart](https://github.com/openai/codex/issues/25251) — 6 comments, 1 reactions
-- [anomalyco/opencode: apply_patch deletes the final blank line of files that end with one](https://github.com/anomalyco/opencode/issues/42081) — 0 comments, 1 reactions
-- [openai/codex: \[Windows Desktop\] Local PDF file citation link repeatedly disappears from assistant messages](https://github.com/openai/codex/issues/38211) — 1 comments, 0 reactions
-- [anomalyco/opencode: open code response](https://github.com/anomalyco/opencode/issues/42028) — 2 comments, 0 reactions
-- [anomalyco/opencode: Error: 429: {"type":"FreeUsageLimitError","message":"Error from provider (Console): Rate limit exceeded. Please try again later."}](https://github.com/anomalyco/opencode/issues/42029) — 4 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): keep exact-fit tab titles stationary](https://github.com/anomalyco/opencode/pull/42073) — 0 comments, 0 reactions
-- [openai/codex: TUI: quick-cancelled optimistic prompt remains selectable but has no persisted UserMessage](https://github.com/openai/codex/issues/38210) — 0 comments, 0 reactions
-- [openai/codex: Codex Desktop on Windows does not support multi-monitor different DPI setup](https://github.com/openai/codex/issues/38209) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(session): route nested blockers to ancestor clients](https://github.com/anomalyco/opencode/pull/30639) — 3 comments, 3 reactions
-- [anomalyco/opencode: fix(session): retry transient transport failures](https://github.com/anomalyco/opencode/pull/38683) — 1 comments, 3 reactions
-- [anomalyco/opencode: fix(opencode): speed up long session forks](https://github.com/anomalyco/opencode/pull/41701) — 0 comments, 0 reactions
-- [anomalyco/opencode: Plugin slash commands pass through as raw text in OpenCode Desktop v1.18.15 (regression)](https://github.com/anomalyco/opencode/issues/41339) — 4 comments, 2 reactions
-- [anomalyco/opencode: fix(storage): index session list queries](https://github.com/anomalyco/opencode/pull/38684) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(core): generate session titles before model execution](https://github.com/anomalyco/opencode/pull/42067) — 0 comments, 0 reactions
-- [openai/codex: Support latex math rendering in iOS app](https://github.com/openai/codex/issues/22921) — 1 comments, 3 reactions
-- [anomalyco/opencode: fix(compaction): place summary instruction after conversation history](https://github.com/anomalyco/opencode/pull/42012) — 4 comments, 0 reactions
-- [openai/codex: Codex desktop app default thread list does not include remote-ssh-codex-managed host after restart](https://github.com/openai/codex/issues/34560) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(client): support service version ranges](https://github.com/anomalyco/opencode/pull/42023) — 1 comments, 0 reactions
-- [anomalyco/opencode: docs: add opencode-stream-rules to ecosystem](https://github.com/anomalyco/opencode/pull/42072) — 1 comments, 0 reactions
-- [openai/codex: macOS Computer Use permission setup is too complex and should have guided onboarding](https://github.com/openai/codex/issues/38208) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): restore navigation keybind defaults](https://github.com/anomalyco/opencode/pull/42066) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[BUG ISSUE\]: Agent remains stuck in compaction after usage limit resets](https://github.com/anomalyco/opencode/issues/42070) — 0 comments, 2 reactions
-- [anomalyco/opencode: \[FEATURE\]: Remove leftover Mintlify starter template from packages/docs](https://github.com/anomalyco/opencode/issues/42038) — 2 comments, 0 reactions
-- [openai/codex: Long ChatGPT Desktop responses jump upward while scrolling](https://github.com/openai/codex/issues/37849) — 3 comments, 0 reactions
-- [openai/codex: Received usage restriction during Kaggle AI security competition – please lift](https://github.com/openai/codex/issues/35939) — 1 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): jump between open menu sections](https://github.com/anomalyco/opencode/pull/42061) — 0 comments, 0 reactions
-- [anomalyco/opencode: TUI: image attachment preview renders as a blank thumbnail](https://github.com/anomalyco/opencode/issues/41691) — 1 comments, 1 reactions
-- [anomalyco/opencode: fix(tui): fill image message background](https://github.com/anomalyco/opencode/pull/42062) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): preserve transcript image height](https://github.com/anomalyco/opencode/pull/42065) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(opencode): reject empty compaction summaries](https://github.com/anomalyco/opencode/pull/42063) — 2 comments, 1 reactions
-- [anomalyco/opencode: fix(tui): smooth session tab marquees](https://github.com/anomalyco/opencode/pull/42055) — 0 comments, 0 reactions
-- [openai/codex: Login failed — token exchange failed: error sending request to URL (https://auth.openai.com/oauth/token)](https://github.com/openai/codex/issues/26764) — 20 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: let opencode run ignore an unused inherited stdin pipe](https://github.com/anomalyco/opencode/issues/42064) — 0 comments, 1 reactions
-- [anomalyco/opencode: \[FEATURE\]: Include ripgrep in binary builds (windows, win-x64) for offline environments](https://github.com/anomalyco/opencode/issues/31734) — 4 comments, 5 reactions
-- [anomalyco/opencode: \[FEATURE\]: allow `--single` to accept an optional platform target](https://github.com/anomalyco/opencode/issues/32091) — 3 comments, 0 reactions
-- [openai/codex: Curated plugin startup sync leaks ~/.codex/.tmp/plugins-clone-* directories on failure](https://github.com/openai/codex/issues/16004) — 7 comments, 1 reactions
-- [openai/codex: Codex Desktop shows “Conversation not found” during new-session startup with SessionStart hooks](https://github.com/openai/codex/issues/38206) — 0 comments, 0 reactions
-- [openai/codex: Codex/ChatGPT update deleted all the conversations](https://github.com/openai/codex/issues/33286) — 3 comments, 3 reactions
-- [openai/codex: Enforce non-interactive approval policy for Codex delegates](https://github.com/openai/codex/pull/38205) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: TUI /session picker: option to show all sessions across all projects](https://github.com/anomalyco/opencode/issues/35581) — 5 comments, 2 reactions
-- [anomalyco/opencode: Session picker gives no indication that the list is scoped to a directory](https://github.com/anomalyco/opencode/issues/42058) — 2 comments, 1 reactions
-- [anomalyco/opencode: docs: fix "ProviderDisplay Name" and "personal access tokens" typos](https://github.com/anomalyco/opencode/issues/42032) — 0 comments, 0 reactions
-- [anomalyco/opencode: docs: fix provider display name and PAT typos](https://github.com/anomalyco/opencode/pull/42034) — 0 comments, 0 reactions
-- [anomalyco/opencode: TUI: session directory filter keybind is inactive inside the session picker](https://github.com/anomalyco/opencode/issues/42060) — 1 comments, 0 reactions
-- [anomalyco/opencode: docs: fix broken DigitalOcean and Daytona links](https://github.com/anomalyco/opencode/pull/42048) — 1 comments, 0 reactions
-- [anomalyco/opencode: Merge  Gateway reasoning effort variants are not selectable](https://github.com/anomalyco/opencode/issues/41868) — 0 comments, 0 reactions
-- [anomalyco/opencode: fix(provider): add Merge Gateway reasoning variants](https://github.com/anomalyco/opencode/pull/41867) — 3 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): keep session directory filter toggle usable in the picker](https://github.com/anomalyco/opencode/pull/42056) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(tui): make permission mode keybind configurable](https://github.com/anomalyco/opencode/pull/40334) — 1 comments, 1 reactions
-- [anomalyco/opencode: feat(tui): allow binding a key to permission.mode](https://github.com/anomalyco/opencode/pull/42057) — 3 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: Support Agent-Authored PRs in Permission Checks](https://github.com/anomalyco/opencode/issues/7103) — 4 comments, 12 reactions
-- [anomalyco/opencode: grok-4.5 on opencode go not working since 2 Aug](https://github.com/anomalyco/opencode/issues/40206) — 5 comments, 1 reactions
-- [anomalyco/opencode: Truncated model response for OpenCode Go models](https://github.com/anomalyco/opencode/issues/41582) — 3 comments, 2 reactions
-- [openai/codex: \[ChatGPT Chronicle\] System Skill Creator is deleted from shared system Skills](https://github.com/openai/codex/issues/37783) — 2 comments, 0 reactions
-- [openai/codex: Fuse recent and lexical skills in shadow selection](https://github.com/openai/codex/pull/38204) — 0 comments, 1 reactions
-- [anomalyco/opencode: feat(tui): display chained shell commands across multiple lines](https://github.com/anomalyco/opencode/pull/42052) — 0 comments, 0 reactions
-- [openai/codex: \[Windows Desktop 26.803.10989.0\] codex-code-mode-host 0xc0000409 crash leaves concurrent exec calls stuck until restart](https://github.com/openai/codex/issues/38203) — 0 comments, 0 reactions
-- [openai/codex: Add Model/Speed/Subagent count to activity view sidebar](https://github.com/openai/codex/issues/37540) — 1 comments, 0 reactions
-- [openai/codex: \[Windows app regression\] Subagent threads lose direct visibility/control and Spark is missing from spawn overrides](https://github.com/openai/codex/issues/38029) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): hide background badge on interrupted shells](https://github.com/anomalyco/opencode/pull/42049) — 0 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: make OAUTH_CALLBACK_HOST configurable](https://github.com/anomalyco/opencode/issues/33966) — 5 comments, 0 reactions
-- [anomalyco/opencode: fix(app): prevent settings dialog handler from locking up on cleanup](https://github.com/anomalyco/opencode/pull/42037) — 2 comments, 0 reactions
-- [openai/codex: TUI: support Markdown math rendering for inline and block LaTeX](https://github.com/openai/codex/issues/18906) — 13 comments, 22 reactions
-- [anomalyco/opencode: \[RFC\] Cost Tracking Architecture: Subagent Aggregation + Multi-Model Correctness](https://github.com/anomalyco/opencode/issues/12377) — 9 comments, 0 reactions
-- [openai/codex: Pro weekly usage drained 26% for 75.25M mostly cached tokens immediately after Aug 1 global reset](https://github.com/openai/codex/issues/36488) — 3 comments, 0 reactions
-- [openai/codex: Codex Desktop voice transcription failures can discard unrecoverable audio](https://github.com/openai/codex/issues/24535) — 3 comments, 2 reactions
-- [openai/codex: ChatGPT Desktop startup rewrites bundled computer-use MCP to enabled=false while plugin stays enabled](https://github.com/openai/codex/issues/34807) — 3 comments, 2 reactions
-- [anomalyco/opencode: feat(tui): surface plugin failures](https://github.com/anomalyco/opencode/pull/41940) — 0 comments, 0 reactions
-- [anomalyco/opencode: prompt issue](https://github.com/anomalyco/opencode/issues/42016) — 2 comments, 0 reactions
-- [anomalyco/opencode: 我订阅了opencodego怎么又用不了了](https://github.com/anomalyco/opencode/issues/42018) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(web/desktop): restore agent mode selector and Linux old-layout eligibility](https://github.com/anomalyco/opencode/pull/42021) — 3 comments, 0 reactions
-- [openai/codex: Windows: hook commands with embedded quotes never execute (cmd /C outer-quote wrap in command_runner.rs) but hooks report Completed](https://github.com/openai/codex/issues/38168) — 1 comments, 0 reactions
-- [openai/codex: Regression in v0.147.0 with LiteLLM provider — streaming requests consistently fail](https://github.com/openai/codex/issues/37425) — 5 comments, 7 reactions
-- [openai/codex: \[App\] Allow custom presets in the model picker power slider](https://github.com/openai/codex/issues/32665) — 3 comments, 5 reactions
-- [anomalyco/opencode: \[Bug\] Gradle build success but session keep going forever](https://github.com/anomalyco/opencode/issues/42044) — 1 comments, 0 reactions
-- [openai/codex: Windows Codex Desktop repeatedly shows main-process error "Error: write EOF" after update](https://github.com/openai/codex/issues/38202) — 1 comments, 0 reactions
-- [openai/codex: Codex replies to earlier messages instead of latest one in conversations](https://github.com/openai/codex/issues/8648) — 83 comments, 58 reactions
-- [openai/codex: yeet skill is over opinionated](https://github.com/openai/codex/issues/16127) — 15 comments, 36 reactions
-- [anomalyco/opencode: fix(core): route Muse models to Meta prompt](https://github.com/anomalyco/opencode/pull/42036) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat: voice input](https://github.com/anomalyco/opencode/pull/42005) — 4 comments, 0 reactions
-- [anomalyco/opencode: Free usage exceeded, subscribe to Go](https://github.com/anomalyco/opencode/issues/42008) — 2 comments, 0 reactions
-- [anomalyco/opencode: test](https://github.com/anomalyco/opencode/issues/42011) — 2 comments, 0 reactions
-- [anomalyco/opencode: \[BUG\]: Zen and Go expose identically-named models; picking the Zen one tells Go subscribers to "subscribe to Go" — and if it happens during compaction the session wedges permanently](https://github.com/anomalyco/opencode/issues/42035) — 1 comments, 2 reactions
-- [anomalyco/opencode: Go subscription active but still "Free usage exceeded" — paid, no access](https://github.com/anomalyco/opencode/issues/36265) — 4 comments, 0 reactions
-- [openai/codex: ChatGPT desktop conversations not syncing to web or iOS](https://github.com/openai/codex/issues/38200) — 1 comments, 0 reactions
-- [openai/codex: Allow users to configure how many conversations appear in Recents](https://github.com/openai/codex/issues/38201) — 0 comments, 0 reactions
-- [openai/codex: GPT-5.3-Codex-Spark quota available on Pro account but model missing from Codex App selector](https://github.com/openai/codex/issues/38199) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(core): return content-only Code Mode results](https://github.com/anomalyco/opencode/pull/41954) — 0 comments, 0 reactions
-- [anomalyco/opencode: Desktop: new session page has no file tree (button absent) with New layout designs enabled](https://github.com/anomalyco/opencode/issues/42031) — 0 comments, 0 reactions
-- [anomalyco/opencode: Context compression loses initial user question and reasoning chain, model responds with hallucinated content](https://github.com/anomalyco/opencode/issues/41682) — 2 comments, 0 reactions
-- [openai/codex: Add an LRU baseline to skill shadow selection](https://github.com/openai/codex/pull/38197) — 0 comments, 0 reactions
-- [openai/codex: Support headless remote Linux hosts for Codex mobile without requiring the desktop app to stay online](https://github.com/openai/codex/issues/23200) — 17 comments, 48 reactions
-- [openai/codex: Voice dictation input is discarded when Codex asks a clarification question](https://github.com/openai/codex/issues/38195) — 2 comments, 0 reactions
-- [openai/codex: migrate-rollouts silently drops >16 MiB JSONL records while reporting migration successful](https://github.com/openai/codex/issues/37673) — 2 comments, 0 reactions
-- [anomalyco/opencode: Free Usage Exceeded on 1st use after signup](https://github.com/anomalyco/opencode/issues/39310) — 3 comments, 0 reactions
-- [openai/codex: Show authenticated ChatGPT workspace name in /status](https://github.com/openai/codex/issues/38196) — 0 comments, 0 reactions
-- [openai/codex: Hatch Pet v2 look-direction generation progressively shrinks later poses despite fixed-slot geometry and hard source validation](https://github.com/openai/codex/issues/38194) — 0 comments, 0 reactions
-- [openai/codex: Use a separate config overlay for the desktop app](https://github.com/openai/codex/issues/38193) — 1 comments, 1 reactions
-- [openai/codex: Codex Desktop rewrites user notify hook through SkyComputerUseClient --previous-notify](https://github.com/openai/codex/issues/28404) — 5 comments, 1 reactions
-- [anomalyco/opencode: Desktop: theme switch does not apply text color in chat panel — text always stays white](https://github.com/anomalyco/opencode/issues/42030) — 0 comments, 0 reactions
-- [openai/codex: \[WSL2\] apply_patch hangs; Esc + two Ctrl+C required to exit session](https://github.com/openai/codex/issues/7109) — 10 comments, 0 reactions
-- [openai/codex: Resume replay can surface a stale assistant final message after restart from archived/removed subagent history](https://github.com/openai/codex/issues/17487) — 3 comments, 0 reactions
-- [openai/codex: /agent thread switching emits stale completion notifications during replay](https://github.com/openai/codex/issues/38192) — 0 comments, 0 reactions
-- [openai/codex: Codex app accumulates stale subagents in cache/UI and they cannot be closed reliably](https://github.com/openai/codex/issues/25179) — 20 comments, 1 reactions
-- [openai/codex: macOS Codex desktop app: window controls are overlapped at 100% zoom](https://github.com/openai/codex/issues/31018) — 2 comments, 0 reactions
-- [anomalyco/opencode: \[FEATURE\]: skills (paths/urls) are overridden instead of merged across layered `opencode.json` configurations](https://github.com/anomalyco/opencode/issues/33053) — 1 comments, 1 reactions
-- [anomalyco/opencode: opentui: fatal: A.replace is not a function. (In 'A.replace(/\n$/,"")', 'A.replace' is undefinedr](https://github.com/anomalyco/opencode/issues/42027) — 1 comments, 0 reactions
-- [openai/codex: \[Desktop\]\[macOS\] 7-day usage remaining jumped from 48% to 23% after context/memory feature change](https://github.com/openai/codex/issues/38191) — 1 comments, 0 reactions
-- [anomalyco/opencode: Added recursive AGENTS.md loading from child dirs](https://github.com/anomalyco/opencode/pull/952) — 0 comments, 2 reactions
-- [openai/codex: Windows Desktop 26.803.10989.0: apply_patch hangs indefinitely while shell I/O works](https://github.com/openai/codex/issues/38190) — 0 comments, 0 reactions
-- [openai/codex: Run plugin app-server tests in automatic environments](https://github.com/openai/codex/pull/38189) — 0 comments, 1 reactions
-- [anomalyco/opencode: Todo-list panel stays stuck at "0 tasks / 7 done" after interrupting a session](https://github.com/anomalyco/opencode/issues/42024) — 1 comments, 0 reactions
-- [anomalyco/opencode: fix(mcp): retry failed MCP connections to handle parallel spawn race condition](https://github.com/anomalyco/opencode/issues/41996) — 3 comments, 0 reactions
-- [anomalyco/opencode: feat(config): add mcp_inherit flag to control global MCP inheritance](https://github.com/anomalyco/opencode/issues/41997) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(memory): add agent_memory table and memory-tools plugin](https://github.com/anomalyco/opencode/issues/41998) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(app): add confirmation dialog before archiving session](https://github.com/anomalyco/opencode/issues/41999) — 2 comments, 0 reactions
-- [anomalyco/opencode: fix(tui): expose local attachment path to the model](https://github.com/anomalyco/opencode/pull/42000) — 2 comments, 0 reactions
-- [anomalyco/opencode: feat(core): add MiniMax image generation tool](https://github.com/anomalyco/opencode/pull/42001) — 2 comments, 0 reactions
-- [openai/codex: Integrate workload identity with Codex authentication](https://github.com/openai/codex/pull/38188) — 0 comments, 0 reactions
-- [openai/codex: Codex.app GUI: MCP child processes not reaped after task completion — 1300+ zombies, 37GB memory leak](https://github.com/openai/codex/issues/12491) — 38 comments, 5 reactions
-- [openai/codex: Stop overriding environments in the skills user-turn test](https://github.com/openai/codex/pull/38186) — 0 comments, 1 reactions
-- [openai/codex: Selected model is at capacity. Please try a different model.](https://github.com/openai/codex/issues/28507) — 33 comments, 33 reactions
-- [anomalyco/opencode: fix(opencode): validate upgrade requests](https://github.com/anomalyco/opencode/pull/42022) — 0 comments, 0 reactions
-- [anomalyco/opencode: always stuck at  “Preparing write...”](https://github.com/anomalyco/opencode/issues/11112) — 77 comments, 46 reactions
-- [openai/codex: New ChatGPT App - Scrolling Issues](https://github.com/openai/codex/issues/37884) — 3 comments, 0 reactions
-- [anomalyco/opencode: feat(desktop): close to tray instead of exiting](https://github.com/anomalyco/opencode/pull/41520) — 2 comments, 0 reactions
-- [openai/codex: recommended_plugins injection has no working opt-out (feature flag removed / disable-plugins is all-or-nothing)](https://github.com/openai/codex/issues/38185) — 1 comments, 0 reactions
-- [openai/codex: Run search tool integration tests on Windows](https://github.com/openai/codex/pull/38184) — 0 comments, 1 reactions
-- [openai/codex: Windows Desktop: new threads/handoffs persist as on-request/workspaceWrite instead of inheriting visible Full Access state](https://github.com/openai/codex/issues/25810) — 11 comments, 4 reactions
-- [openai/codex: \[FEATURE\] Keyboard shortcut to switch thinking effort level while composing prompt](https://github.com/openai/codex/issues/9807) — 14 comments, 34 reactions
-- [openai/codex: Make request_user_input tool available in code mode](https://github.com/openai/codex/issues/10384) — 28 comments, 132 reactions
-- [openai/codex: Add conservative restriction helpers for tool policies](https://github.com/openai/codex/pull/38183) — 0 comments, 1 reactions
-- [openai/codex: \[Windows\]\[26.803.10989.0\]\[SSH Remote\] Send stalls with a 5–6 GB memory spike and delayed queued/Steer delivery; ~100 KB attachments can crash](https://github.com/openai/codex/issues/38055) — 2 comments, 0 reactions
-- [openai/codex: Allow PRs with binary files](https://github.com/openai/codex/issues/4867) — 29 comments, 61 reactions
-- [openai/codex: unified-exec exec_command: Bash PreToolUse tool_input drops the honored per-call workdir, so hooks cannot attribute the execution root](https://github.com/openai/codex/issues/33986) — 2 comments, 0 reactions
-- [anomalyco/opencode: refactor(tui): use command IDs for v2 keybinds](https://github.com/anomalyco/opencode/pull/37174) — 1 comments, 0 reactions
-- [anomalyco/opencode: refactor(tui): use command IDs for v2 keybinds](https://github.com/anomalyco/opencode/pull/41882) — 0 comments, 0 reactions
-- [openai/codex: \[macOS\] “More details” Quick Chat turns white when sending a large text input](https://github.com/openai/codex/issues/38182) — 0 comments, 0 reactions
-- [anomalyco/opencode: feat: LLM command-approval classifier (auto mode)](https://github.com/anomalyco/opencode/pull/33586) — 4 comments, 0 reactions
-- [openai/codex: Windows: adding a second root folder to a project crashes the app UI ("process is not defined")](https://github.com/openai/codex/issues/38181) — 0 comments, 0 reactions
-- [openai/codex: \[Windows Desktop\] Restore inline comments on Plan mode plans](https://github.com/openai/codex/issues/35918) — 1 comments, 0 reactions
-- [openai/codex: How to downgrade?](https://github.com/openai/codex/issues/1490) — 3 comments, 0 reactions
-- [openai/codex: high-frequency code-mode polling, amplified by a very large resumed context](https://github.com/openai/codex/issues/32309) — 8 comments, 4 reactions
-- [openai/codex: codex-cli stalls for exactly 300s between tool result and next model request (stream disconnected)](https://github.com/openai/codex/issues/23807) — 5 comments, 1 reactions
-- [openai/codex: Document rollout JSONL and correct session-search extraction](https://github.com/openai/codex/issues/38180) — 0 comments, 0 reactions
+### [Codex App frequently freezes/stutters on Windows 11 Pro despite sufficient system resources](https://github.com/openai/codex/issues/20214)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex Desktop for macOS repeatedly triggers `syspolicyd` / `trustd` CPU and memory runaway](https://github.com/openai/codex/issues/25719)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Add setting to disable the auto-resolve in 60 seconds for questions](https://github.com/openai/codex/issues/28969)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Reset failed, did not apply and 1 reset is wasted](https://github.com/openai/codex/issues/31606)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex replies to earlier messages instead of latest one in conversations](https://github.com/openai/codex/issues/8648)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Renamed session works on first resume but the name disappears after the second exit](https://github.com/anthropics/claude-code/issues/25090)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Conversation history is lost in VSCode extension](https://github.com/anthropics/claude-code/issues/29017)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Repeated  "Image  couldn't  be  processed"  API  errors  consuming  usage  limit  in  Claude  Code](https://github.com/anthropics/claude-code/issues/62466)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Windows Codex app missing “\control other devices"” tab in Settings > Connections](https://github.com/openai/codex/issues/28919)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Scrollback duplication on terminal resize persists in 2.1.116 (VS Code integrated terminal, macOS)](https://github.com/anthropics/claude-code/issues/51828)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Windows Desktop: unbounded taskkill.exe/conhost.exe cleanup storm exhausts WMI](https://github.com/openai/codex/issues/34260)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [# Codex extension fails to start: "The extension couldn't load its resources"](https://github.com/openai/codex/issues/37458)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [LSP integration (auto-detect + auto-install) for Codex CLI](https://github.com/openai/codex/issues/8745)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex uses bundled pnpm instead of host toolchain](https://github.com/openai/codex/issues/30440)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[FEATURE\] Sync conversation history between CLI and Claude Code desktop app](https://github.com/anthropics/claude-code/issues/28791)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Windows Computer Use screenshot fails on Windows 10 22H2 when SetIsBorderRequired is called](https://github.com/openai/codex/issues/25178)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [High CPU Usage Triggered by Windows Defender & WMI When Launching Codex Desktop on Windows 10](https://github.com/openai/codex/issues/33875)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [CRITICAL: Conversations disappear when closing VSCode or navigating away](https://github.com/anthropics/claude-code/issues/24172)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Claude Code silently deletes conversation transcripts after 30 days by  default](https://github.com/anthropics/claude-code/issues/62476)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [yeet skill is over opinionated](https://github.com/openai/codex/issues/16127)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex App 26.715.9868.0 / CLI 0.145.0: spawn_agent rejects gpt-5.6-luna with multi_agent_v2 enabled](https://github.com/openai/codex/issues/34700)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Installation failed  Failed to fetch version from stable: AxiosError: timeout of 30000ms exceeded](https://github.com/anthropics/claude-code/issues/13498)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[FEATURE\] AWS Bedrock authentication support for Chrome extension](https://github.com/anthropics/claude-code/issues/16128)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Support multiple Gmail accounts in MCP integration](https://github.com/anthropics/claude-code/issues/36024)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[MODEL\] Claude verbose code comments by default — ignores instructions to stop.](https://github.com/anthropics/claude-code/issues/65961)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Mouse click to refocus terminal triggers permission prompt unintentionally](https://github.com/anthropics/claude-code/issues/71539)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [When exactly will Codex fix the recent slowdown and quality degradation?](https://github.com/openai/codex/issues/24649)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex VS Code extension stopped auto-including IDE context after update](https://github.com/openai/codex/issues/31553)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Bug: Claude Code current session limit reaches 100% despite low visible local session usage](https://github.com/anthropics/claude-code/issues/54750)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Possible Claude Max usage bug: session limit consumed without using](https://github.com/anthropics/claude-code/issues/82506)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Support headless remote Linux hosts for Codex mobile without requiring the desktop app to stay online](https://github.com/openai/codex/issues/23200)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex asks for permission despite full access and approval prompts disabled](https://github.com/openai/codex/issues/29235)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [MCP server processes leak: per-thread processes never cleaned up (9+ GB RSS)](https://github.com/openai/codex/issues/30408)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[Feature Request\] Add ability to disable individual Claude plugin skills](https://github.com/anthropics/claude-code/issues/14920)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [TUI: support Markdown math rendering for inline and block LaTeX](https://github.com/openai/codex/issues/18906)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Feature request: first-class Computer Use support from the Codex CLI](https://github.com/openai/codex/issues/20851)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[macOS\]\[regression\] Desktop cannot resume Remote Control / CLI thread: `already has an active writer` after latest update](https://github.com/openai/codex/issues/37403)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[FEATURE\] Add settings to hide token counter and version display in status line](https://github.com/anthropics/claude-code/issues/21867)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [RTL (Right-to-Left) text direction support](https://github.com/anthropics/claude-code/issues/37183)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[FEATURE\] Let users remove stale/dead Remote Control environments from the claude.ai/code environment list](https://github.com/anthropics/claude-code/issues/50884)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[FEATURE\] Stable, documented schema for ~/.claude/projects/<encoded-cwd>/<uuid>.jsonl line types](https://github.com/anthropics/claude-code/issues/53516)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Documentation-related issue with no assignee listed
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Ctrl+C and Ctrl+Shift+C silently clear prompt input with no confirmation or recovery](https://github.com/anthropics/claude-code/issues/59408)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Windows Codex Desktop spawns powershell.exe every second for full process polling, causing high CPU usage](https://github.com/openai/codex/issues/25453)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Built-in image generation repeatedly fails with network error after July 9 desktop update](https://github.com/openai/codex/issues/32297)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [VS Code IDE context auto-disables and selected text is not attached in WSL2](https://github.com/openai/codex/issues/35419)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex Desktop: opening any unloaded local chat waits ~5 seconds on owner discovery timeout](https://github.com/openai/codex/issues/37398)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Background subprocesses/subagents do not wake the calling agent on completion](https://github.com/openai/codex/issues/15723)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Feature request: Cross-device sync for Codex Projects and Chats](https://github.com/openai/codex/issues/21803)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Cannot create a local Work chat inside a ChatGPT Project (Windows Desktop App)](https://github.com/openai/codex/issues/34499)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] autoMemoryEnabled=false does not suppress the ~11-16k memory preamble (re: closed #44829)](https://github.com/anthropics/claude-code/issues/63903)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex IDE extension freezes code-server sidebar on desktop Chromium browsers](https://github.com/openai/codex/issues/28726)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex Desktop repeatedly re-enters the model during wait/status polling, consuming substantial credits](https://github.com/openai/codex/issues/35259)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Worktree sessions reuse an existing worktree directory from a previous session instead of creating a fresh one](https://github.com/anthropics/claude-code/issues/79366)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex app subagent cards can remain stuck/visible after close while close/readback reports no live agent](https://github.com/openai/codex/issues/23930)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [MCP stdio servers leak pipe fds + orphan child processes → cumulative EMFILE ("Too many open files", os error 24)](https://github.com/openai/codex/issues/26984)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[Windows 10\] DWM Composition handles accumulate after Codex tasks with tool calls](https://github.com/openai/codex/issues/33192)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Prompt cache fully re-created after turns with many parallel tool calls (cache_read collapses to system+tools floor) — ~74% of cache writes wasted on Opus 4.8 / v2.1.15x](https://github.com/anthropics/claude-code/issues/63930)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex Desktop dictation fails in API-key auth mode because /backend-api/transcribe rejects API keys](https://github.com/openai/codex/issues/20668)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Desktop compaction repeatedly embeds full image base64 in compacted checkpoints](https://github.com/openai/codex/issues/23257)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [🩹 Restore archived chats access from the main Codex UI](https://github.com/openai/codex/issues/27207)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Local compaction v2 retains unbounded input_image payloads, causing repeated auto-compaction](https://github.com/openai/codex/issues/33493)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Regression in v0.147.0 with LiteLLM provider — streaming requests consistently fail](https://github.com/openai/codex/issues/37425)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Bundled ugrep OOMs the host: -E with two bounded {0,N} intervals explodes DFA construction to multiple GB](https://github.com/anthropics/claude-code/issues/67021)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] 'claude-api' is consuming entire context](https://github.com/anthropics/claude-code/issues/70062)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Cowork: new projects lost "Choose a folder" — Context menu replaced with Chat-style upload-only knowledge menu after Chat/Cowork merge](https://github.com/anthropics/claude-code/issues/76694)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Claude Desktop MSIX: CIG (MicrosoftSignedOnly) + vendor-signed vk_swiftshader.dll kills GPU process on every browser preview (0x060C201E)](https://github.com/anthropics/claude-code/issues/81341)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\]  Apps gateway serves Claude Desktop an `otlpEndpoint` pointing at its own bearer-gated OTLP ingest but no `otlpHeaders`, so every Desktop telemetry flush is rejected with `missing_token`](https://github.com/anthropics/claude-code/issues/82092)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Switching global provider hides previous sessions from the sidebar](https://github.com/openai/codex/issues/17316)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [request setting to disable autoscroll](https://github.com/openai/codex/issues/23517)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Windows app stuck on "Finish Windows setup" — sandbox setup never triggers a real UAC prompt, "Retry" fails instantly](https://github.com/openai/codex/issues/32492)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Multi-agent V2 full-history forks duplicate historical compaction snapshots and inline images, causing >100 GiB session storage growth](https://github.com/openai/codex/issues/34268)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [IDE Context silently disables because workspaceRoot is missing in recent VS Code extension builds](https://github.com/openai/codex/issues/34696)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [IDE Context fails in Codex extension 26.715.x with RPC serialization error](https://github.com/openai/codex/issues/34920)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Windows Computer Use fails with spawn EPERM; elevated sandbox setup fails on WindowsApps ACL](https://github.com/openai/codex/issues/37415)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Claude Desktop falls back to Safari for SSO login when default browser is Arc](https://github.com/anthropics/claude-code/issues/70881)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Claude Max 20 subscription is being fully consumed without any usage](https://github.com/anthropics/claude-code/issues/81684)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[DOCS\] `claude --cloud` bundles local repo state even when GitHub can serve the branch — documented clone behavior and "push first" guidance do not match observed behavior](https://github.com/anthropics/claude-code/issues/86268)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Documentation-related issue with no assignee listed
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex app accumulates stale subagents in cache/UI and they cannot be closed reliably](https://github.com/openai/codex/issues/25179)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Browser Use Node REPL fails in Windows Desktop app with WSL workspace due to unmapped sandboxCwd](https://github.com/openai/codex/issues/29639)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex TUI freezes after Zellij detach/reattach; suspending before detach avoids it](https://github.com/openai/codex/issues/36338)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Research: Codex Plan mode behavior and prompt architecture](https://github.com/openai/codex/issues/38305)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Documentation-related issue with no assignee listed
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\] Cowork: Scheduled reserved-path overlap blocks mounting ~/Documents/Claude and every parent folder — no scheduled tasks ever created](https://github.com/anthropics/claude-code/issues/71307)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[BUG\]Claude Desktop repeatedly crashes and requires “Advanced Options → Repair” on Windows](https://github.com/anthropics/claude-code/issues/85199)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Cross-session messages leave the recipient's query completely unresponsive (hadFirstResponse=false, reason=no_response) until Desktop's own idle-timeout force-kills it 15-20 min later](https://github.com/anthropics/claude-code/issues/86012)
+
+- Project: `anthropics/claude-code`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Login failed — token exchange failed: error sending request to URL (https://auth.openai.com/oauth/token)](https://github.com/openai/codex/issues/26764)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex App: expose reasoning summaries or progress traces when configured](https://github.com/openai/codex/issues/27197)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Messages sent during active work can be dropped instead of steering or queuing](https://github.com/openai/codex/issues/34599)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[Windows\]\[26.730.7989.0\] Computer Use fails before app selection with EPERM lstat on Codex runtime](https://github.com/openai/codex/issues/37029)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [Codex CLI 0.147.0 Sends Empty Tool Description to Azure Responses API](https://github.com/openai/codex/issues/37487)
+
+- Project: `openai/codex`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+## Important Updates
+
+### [Claude Code](https://github.com/anthropics/claude-code)
+
+- **Issue** [\[BUG\] Environment Contributions warning continuously reappears](https://github.com/anthropics/claude-code/issues/3301) — 45 comments · 83 reactions · open
+- **Issue** [\[FEATURE\] Official Claude Desktop build for Linux (Ubuntu LTS / Debian)](https://github.com/anthropics/claude-code/issues/65697) — 52 comments · 655 reactions · closed
+- **Issue** [GitHub connector links repositories successfully but Claude cannot access content for ANY repository (account-wide, public and private alike) — recent regression](https://github.com/anthropics/claude-code/issues/71542) — 56 comments · 51 reactions · open
+- **Issue** [\[BUG\] Renamed session works on first resume but the name disappears after the second exit](https://github.com/anthropics/claude-code/issues/25090) — 33 comments · 29 reactions · open
+- **Issue** [\[FEATURE\] Sync conversation history between CLI and Claude Code desktop app](https://github.com/anthropics/claude-code/issues/28791) — 33 comments · 146 reactions · open
+- **Issue** [\[BUG\] Repeated  "Image  couldn't  be  processed"  API  errors  consuming  usage  limit  in  Claude  Code](https://github.com/anthropics/claude-code/issues/62466) — 31 comments · 21 reactions · open
+- **Issue** [\[BUG\] Conversation history is lost in VSCode extension](https://github.com/anthropics/claude-code/issues/29017) — 29 comments · 23 reactions · open
+- **Issue** [\[BUG\] /plugin update does not invalidate plugin cache](https://github.com/anthropics/claude-code/issues/14061) — 25 comments · 32 reactions · open
+- **Issue** [\[BUG\] Scrollback duplication on terminal resize persists in 2.1.116 (VS Code integrated terminal, macOS)](https://github.com/anthropics/claude-code/issues/51828) — 25 comments · 33 reactions · open
+- **Issue** [\[FEATURE\] AWS Bedrock authentication support for Chrome extension](https://github.com/anthropics/claude-code/issues/16128) — 27 comments · 113 reactions · open
+- **Issue** [Support multiple Gmail accounts in MCP integration](https://github.com/anthropics/claude-code/issues/36024) — 27 comments · 77 reactions · open
+- **Issue** [\[FEATURE\] Auto-continue after subscription rate limit resets](https://github.com/anthropics/claude-code/issues/35744) — 17 comments · 90 reactions · open
+- **Issue** [\[Feature Request\] Add ability to disable individual Claude plugin skills](https://github.com/anthropics/claude-code/issues/14920) — 15 comments · 86 reactions · open
+- **Issue** [CRITICAL: Conversations disappear when closing VSCode or navigating away](https://github.com/anthropics/claude-code/issues/24172) — 13 comments · 25 reactions · open
+- **Issue** [\[FEATURE\] Add settings to hide token counter and version display in status line](https://github.com/anthropics/claude-code/issues/21867) — 10 comments · 31 reactions · open
+- **Issue** [\[MODEL\] Claude verbose code comments by default — ignores instructions to stop.](https://github.com/anthropics/claude-code/issues/65961) — 10 comments · 105 reactions · open
+- **Issue** [\[BUG\] Mouse click to refocus terminal triggers permission prompt unintentionally](https://github.com/anthropics/claude-code/issues/71539) — 11 comments · 23 reactions · open
+- **Issue** [Left arrow accidentally navigates to agents screen (not rebindable) and breaks main session view on return](https://github.com/anthropics/claude-code/issues/75899) — 15 comments · 19 reactions · open
+- **Issue** [RTL (Right-to-Left) text direction support](https://github.com/anthropics/claude-code/issues/37183) — 9 comments · 34 reactions · open
+- **Issue** [\[BUG\] Claude Code silently deletes conversation transcripts after 30 days by  default](https://github.com/anthropics/claude-code/issues/62476) — 13 comments · 19 reactions · open
+- **Issue** [\[BUG\] CVP-approved Claude.ai organization still receives cyber safeguard blocks in Claude Code](https://github.com/anthropics/claude-code/issues/84352) — 91 comments · 12 reactions · open
+- **Issue** [\[FEATURE\] Let users remove stale/dead Remote Control environments from the claude.ai/code environment list](https://github.com/anthropics/claude-code/issues/50884) — 8 comments · 28 reactions · open
+- **Issue** [\[FEATURE\] Let me mark an agent session as completed / dismiss it from the agents view](https://github.com/anthropics/claude-code/issues/66202) — 4 comments · 20 reactions · open
+- **Issue** [\[BUG\] Installation failed  Failed to fetch version from stable: AxiosError: timeout of 30000ms exceeded](https://github.com/anthropics/claude-code/issues/13498) — 13 comments · 14 reactions · open
+- **Issue** [Bug: Claude Code current session limit reaches 100% despite low visible local session usage](https://github.com/anthropics/claude-code/issues/54750) — 17 comments · 11 reactions · open
+- **Issue** [\[BUG\] Calling advisor tool crash or stop the claude code with following API error Unsupported content type: server_tool_use](https://github.com/anthropics/claude-code/issues/64158) — 8 comments · 13 reactions · open
+- **Issue** [\[BUG\] Possible Claude Max usage bug: session limit consumed without using](https://github.com/anthropics/claude-code/issues/82506) — 29 comments · 8 reactions · open
+- **Issue** [\[BUG\] Ctrl+C and Ctrl+Shift+C silently clear prompt input with no confirmation or recovery](https://github.com/anthropics/claude-code/issues/59408) — 15 comments · 10 reactions · open
+- **Release** [v2.1.229](https://github.com/anthropics/claude-code/releases/tag/v2.1.229) — 
+- **Release** [v2.1.231](https://github.com/anthropics/claude-code/releases/tag/v2.1.231) — 
+
+### [Codex](https://github.com/openai/codex)
+
+- **Issue** [Codex App frequently freezes/stutters on Windows 11 Pro despite sufficient system resources](https://github.com/openai/codex/issues/20214) — 97 comments · 82 reactions · open
+- **Issue** [Codex Desktop for macOS repeatedly triggers `syspolicyd` / `trustd` CPU and memory runaway](https://github.com/openai/codex/issues/25719) — 84 comments · 445 reactions · open
+- **Issue** [Error running remote compact task](https://github.com/openai/codex/issues/14860) — 106 comments · 93 reactions · closed
+- **Issue** [Add setting to disable the auto-resolve in 60 seconds for questions](https://github.com/openai/codex/issues/28969) — 72 comments · 198 reactions · open
+- **Issue** [Reset failed, did not apply and 1 reset is wasted](https://github.com/openai/codex/issues/31606) — 56 comments · 69 reactions · open
+- **Issue** [Codex replies to earlier messages instead of latest one in conversations](https://github.com/openai/codex/issues/8648) — 83 comments · 58 reactions · open
+- **Issue** [LSP integration (auto-detect + auto-install) for Codex CLI](https://github.com/openai/codex/issues/8745) — 61 comments · 542 reactions · open
+- **Issue** [High CPU Usage Triggered by Windows Defender & WMI When Launching Codex Desktop on Windows 10](https://github.com/openai/codex/issues/33875) — 17 comments · 19 reactions · open
+- **Issue** [Windows Codex app missing “\control other devices"” tab in Settings > Connections](https://github.com/openai/codex/issues/28919) — 31 comments · 33 reactions · open
+- **Issue** [Windows Desktop: unbounded taskkill.exe/conhost.exe cleanup storm exhausts WMI](https://github.com/openai/codex/issues/34260) — 34 comments · 13 reactions · open
+- **Issue** [Codex uses bundled pnpm instead of host toolchain](https://github.com/openai/codex/issues/30440) — 21 comments · 28 reactions · open
+- **Issue** [Support headless remote Linux hosts for Codex mobile without requiring the desktop app to stay online](https://github.com/openai/codex/issues/23200) — 17 comments · 48 reactions · open
+- **Issue** [When exactly will Codex fix the recent slowdown and quality degradation?](https://github.com/openai/codex/issues/24649) — 9 comments · 16 reactions · open
+- **Issue** [yeet skill is over opinionated](https://github.com/openai/codex/issues/16127) — 15 comments · 36 reactions · open
+- **Issue** [TUI: support Markdown math rendering for inline and block LaTeX](https://github.com/openai/codex/issues/18906) — 14 comments · 22 reactions · open
+- **Issue** [Feature request: first-class Computer Use support from the Codex CLI](https://github.com/openai/codex/issues/20851) — 14 comments · 25 reactions · open
+- **Issue** [Codex App 26.715.9868.0 / CLI 0.145.0: spawn_agent rejects gpt-5.6-luna with multi_agent_v2 enabled](https://github.com/openai/codex/issues/34700) — 14 comments · 36 reactions · open
+- **Issue** [CLI 0.147.0: Esc-Esc backtrack cannot find selected prompt in persisted thread](https://github.com/openai/codex/issues/37421) — 6 comments · 35 reactions · closed
+- **Issue** [MCP server processes leak: per-thread processes never cleaned up (9+ GB RSS)](https://github.com/openai/codex/issues/30408) — 29 comments · 8 reactions · open
+- **Issue** [# Codex extension fails to start: "The extension couldn't load its resources"](https://github.com/openai/codex/issues/37458) — 52 comments · 11 reactions · open
+- **Issue** [Feature request: Cross-device sync for Codex Projects and Chats](https://github.com/openai/codex/issues/21803) — 3 comments · 30 reactions · open
+- **Issue** [Windows Computer Use screenshot fails on Windows 10 22H2 when SetIsBorderRequired is called](https://github.com/openai/codex/issues/25178) — 25 comments · 13 reactions · open
+- **Issue** [Windows Codex Desktop spawns powershell.exe every second for full process polling, causing high CPU usage](https://github.com/openai/codex/issues/25453) — 25 comments · 7 reactions · open
+- **Issue** [Codex Desktop: opening any unloaded local chat waits ~5 seconds on owner discovery timeout](https://github.com/openai/codex/issues/37398) — 15 comments · 9 reactions · open
+- **Issue** [Codex asks for permission despite full access and approval prompts disabled](https://github.com/openai/codex/issues/29235) — 3 comments · 17 reactions · open
+- **Issue** [Codex IDE extension freezes code-server sidebar on desktop Chromium browsers](https://github.com/openai/codex/issues/28726) — 22 comments · 5 reactions · open
+- **Issue** [Codex VS Code extension stopped auto-including IDE context after update](https://github.com/openai/codex/issues/31553) — 17 comments · 12 reactions · open
+- **Issue** [\[Windows 10\] DWM Composition handles accumulate after Codex tasks with tool calls](https://github.com/openai/codex/issues/33192) — 8 comments · 7 reactions · open
+- **Issue** [apply_patch fails on Windows because Codex cannot spawn codex.exe from WindowsApps (CreateProcessAsUserW failed: 5)](https://github.com/openai/codex/issues/13965) — 14 comments · 11 reactions · closed
+- **Issue** [Desktop compaction repeatedly embeds full image base64 in compacted checkpoints](https://github.com/openai/codex/issues/23257) — 12 comments · 5 reactions · open
+
+### [OpenCode](https://github.com/anomalyco/opencode)
+
+- **Issue** [Memory Megathread](https://github.com/anomalyco/opencode/issues/20695) — 129 comments · 152 reactions · open
+- **Pull Request** [feat(opencode): add Kiro provider](https://github.com/anomalyco/opencode/pull/20491) — 54 comments · 48 reactions · open
+- **Issue** [\[FEATURE\]: Native Model Fallback / Failover Support](https://github.com/anomalyco/opencode/issues/7602) — 30 comments · 107 reactions · open
+- **Issue** [DeepSeek V4 Flash on suddenly requires "Enable models hosted in China" for OpenCode Go subscription](https://github.com/anomalyco/opencode/issues/39845) — 22 comments · 31 reactions · open
+- **Issue** [\[FEATURE\]: Add ability to unqueue messages](https://github.com/anomalyco/opencode/issues/4821) — 23 comments · 98 reactions · open
+- **Issue** [\[FEATURE\]:Pay Go with crypto](https://github.com/anomalyco/opencode/issues/23153) — 18 comments · 60 reactions · open
+- **Issue** [\[FEATURE\]: Mermaid rendering in chat](https://github.com/anomalyco/opencode/issues/3366) — 10 comments · 29 reactions · closed
+- **Issue** [\[BUG\]: Gemini 3 Pro function calling fails - missing `thoughtSignature` support](https://github.com/anomalyco/opencode/issues/4832) — 35 comments · 14 reactions · closed
+- **Issue** [Why does Opencode require me to subscribe when your official website states it's 100% free?](https://github.com/anomalyco/opencode/issues/42143) — 9 comments · 24 reactions · open
+- **Issue** [\[FEATURE\]: Add command palette action to reload configuration without restart](https://github.com/anomalyco/opencode/issues/6815) — 8 comments · 92 reactions · closed
+- **Issue** [\[FEATURE\]: Support inline skill invocation using $skill-name](https://github.com/anomalyco/opencode/issues/15617) — 8 comments · 18 reactions · open
+- **Issue** [\[FEATURE\]: Support Multiple Skills in a Single Prompt — Critical for Multi-Framework Workflows](https://github.com/anomalyco/opencode/issues/25570) — 7 comments · 18 reactions · open
+- **Issue** [Windows ARM64 native: OpenTUI fails to initialize with bun:ffi dlopen TinyCC error](https://github.com/anomalyco/opencode/issues/19130) — 17 comments · 12 reactions · open
+- **Issue** [Feature request: Start and continue a session with opencode run -s (modify flag behavior)](https://github.com/anomalyco/opencode/issues/3434) — 8 comments · 14 reactions · closed
+- **Issue** [permission required cannot select](https://github.com/anomalyco/opencode/issues/27436) — 18 comments · 11 reactions · closed
+- **Issue** [Web UI not showing my sessions](https://github.com/anomalyco/opencode/issues/10519) — 8 comments · 12 reactions · closed
+- **Issue** [\[FEATURE\]: Support Agent-Authored PRs in Permission Checks](https://github.com/anomalyco/opencode/issues/7103) — 4 comments · 12 reactions · open
+- **Release** [v1.18.17](https://github.com/anomalyco/opencode/releases/tag/v1.18.17) — 
+- **Release** [v1.18.18](https://github.com/anomalyco/opencode/releases/tag/v1.18.18) — 
+- **Issue** [\[FEATURE\]: Zen dashboard - usage totals, per-model breakdown, and invoices](https://github.com/anomalyco/opencode/issues/13497) — 6 comments · 10 reactions · open
+- **Issue** [\[FEATURE\]: Add native TUI support to configure OpenRouter Fusion presets for openrouter/fusion](https://github.com/anomalyco/opencode/issues/32219) — 2 comments · 11 reactions · closed
+- **Issue** [\[bug\] Free usage exceeded. Add creddits (when using Zen free models)](https://github.com/anomalyco/opencode/issues/14273) — 40 comments · 1 reactions · closed
+- **Pull Request** [fix(console): emit complete Responses-API SSE lifecycle for converted streams](https://github.com/anomalyco/opencode/pull/40210) — 5 comments · 12 reactions · open
+- **Issue** [\[Zen\] AuthError: "Request blocked by upstream provider" — all Zen models broken, account recreated](https://github.com/anomalyco/opencode/issues/39827) — 10 comments · 7 reactions · open
+- **Pull Request** [feat(opencode): local LAN provider discovery + auto-discover models](https://github.com/anomalyco/opencode/pull/27554) — 6 comments · 10 reactions · open
+- **Issue** [Unbounded growth of the `event` table: opencode.db reaches 13GB+, mostly `message.updated.1` snapshots (no retention/compaction)](https://github.com/anomalyco/opencode/issues/33356) — 17 comments · 5 reactions · open
+- **Issue** [Feature: opencode CLI uses fixed input + scrollable output pane, breaks Neovim-style scrolling](https://github.com/anomalyco/opencode/issues/8600) — 4 comments · 8 reactions · closed
+- **Pull Request** [fix (core): Multiple clones of same repo are different projects](https://github.com/anomalyco/opencode/pull/35311) — 16 comments · 7 reactions · open
+- **Issue** [\[FEATURE\]: add Ads integration](https://github.com/anomalyco/opencode/issues/32106) — 6 comments · 7 reactions · closed
+- **Issue** [\[FEATURE\]: Search mesages history tool.](https://github.com/anomalyco/opencode/issues/11819) — 5 comments · 7 reactions · closed
+
+### [Hermes Agent](https://github.com/NousResearch/hermes-agent)
+
+- **Issue** [\[Feature\]: Auto-discover project-local skills from working directory](https://github.com/NousResearch/hermes-agent/issues/4667) — 4 comments · 13 reactions · open
+- **Pull Request** [feat(optional-mcps): add Apple macOS MCP servers (mail, notes, numbers, photos)](https://github.com/NousResearch/hermes-agent/pull/51466) — 16 comments · 0 reactions · open
+- **Issue** [.](https://github.com/NousResearch/hermes-agent/issues/84744) — 0 comments · 0 reactions · closed
+- **Issue** [Feature Request: Cross-platform session context sharing (CLI ↔ Telegram)](https://github.com/NousResearch/hermes-agent/issues/4335) — 14 comments · 3 reactions · open
+- **Issue** [chore(plugins): lifecycle-event catalog, hook taxonomy, and batch disposition of pending hook PRs](https://github.com/NousResearch/hermes-agent/issues/64231) — 26 comments · 0 reactions · open
+- **Pull Request** [fix(security): prevent multiplex dotenv credential leakage](https://github.com/NousResearch/hermes-agent/pull/77592) — 6 comments · 0 reactions · open
+- **Pull Request** [fix(tools): stop browser_cdp frame_id routing from skipping private-page SSRF guard](https://github.com/NousResearch/hermes-agent/pull/80847) — 5 comments · 0 reactions · open
+- **Issue** [Auxiliary title_generation fails on DeepSeek: HTTP 400 "This response_format type is unavailable now"](https://github.com/NousResearch/hermes-agent/issues/83390) — 5 comments · 2 reactions · open
+- **Issue** [Desktop restart reaps the live gateway but never relaunches it (WeChat/QQ go silent) — regression](https://github.com/NousResearch/hermes-agent/issues/83683) — 16 comments · 0 reactions · open
+- **Pull Request** [fix(webhook): bind signatures to explicit provider schemes (Webhook Revolution)](https://github.com/NousResearch/hermes-agent/pull/85318) — 0 comments · 0 reactions · open
+- **Issue** [Webhook Revolution — graph-gated repair campaign (meta-issue)](https://github.com/NousResearch/hermes-agent/issues/84834) — 15 comments · 0 reactions · open
+- **Issue** [\[Bug\]: Playwright Chromium installation hangs indefinitely at "extracting archive" on Node 26 (Playwright 1.58.2, CachyOS)](https://github.com/NousResearch/hermes-agent/issues/76312) — 5 comments · 2 reactions · open
+- **Issue** [feat(approval): session-scoped allowlist mode (deny-by-default terminal) for unattended/untrusted agents](https://github.com/NousResearch/hermes-agent/issues/53021) — 2 comments · 1 reactions · open
+- **Issue** [Bug: sanitize_api_messages dedup pass writes tool_calls: \[\] — HTTP 400 on DeepSeek/OpenAI](https://github.com/NousResearch/hermes-agent/issues/64335) — 5 comments · 0 reactions · open
+- **Pull Request** [feat(signal): add policy-aware read receipts](https://github.com/NousResearch/hermes-agent/pull/67495) — 9 comments · 0 reactions · open
+- **Issue** [Desktop sidebar: 'Load more' (⋯) never appears when pinned sessions occupy the recency window — older sessions unreachable](https://github.com/NousResearch/hermes-agent/issues/81484) — 2 comments · 0 reactions · open
+- **Issue** [\[Bug\]: Desktop — switching into an actively-streaming session lands the transcript on old history (scroll jitter + sticky-bottom disengage)](https://github.com/NousResearch/hermes-agent/issues/84997) — 2 comments · 0 reactions · open
+- **Issue** [\[Bug\]: Cron jobs pin to a dead model and ignore fallback_providers — jobs fail with HTTP 402 for days](https://github.com/NousResearch/hermes-agent/issues/85215) — 2 comments · 0 reactions · open
+- **Issue** [Desktop: composer caret lost when a tool call starts streaming (silent focus/remount, no exception)](https://github.com/NousResearch/hermes-agent/issues/84058) — 1 comments · 0 reactions · open
+- **Issue** [\[Design\] Tool-aware relevance filtering for tool output before context injection](https://github.com/NousResearch/hermes-agent/issues/85288) — 1 comments · 0 reactions · open
+- **Issue** [\[Bug\]: Desktop cross-profile prompt leak: one profile backend resumes and writes another profile's session](https://github.com/NousResearch/hermes-agent/issues/85294) — 1 comments · 0 reactions · open
+- **Issue** [\[Bug\]: -  ×  X  "workspace" failed to render  Maximum call stack size exceeded  G Retry  C Running 7: 11  13%  32.8k/1M 22255  Session 1:17  # v0.20.0 (+31 7060ac7](https://github.com/NousResearch/hermes-agent/issues/85295) — 0 comments · 0 reactions · open
+- **Issue** [\[Bug\]: install.sh prints "Installation Complete!" and exits 0 after install_node_deps fails, leaving no node_modules](https://github.com/NousResearch/hermes-agent/issues/85297) — 1 comments · 0 reactions · open
+- **Issue** [Bug: MCP servers page ignores the active profile — shows default profile's servers in any profile](https://github.com/NousResearch/hermes-agent/issues/85301) — 1 comments · 0 reactions · open
+- **Issue** [bug(desktop): agent-created sessions don't paint as live in the sidebar](https://github.com/NousResearch/hermes-agent/issues/85302) — 0 comments · 0 reactions · open
+- **Issue** [bug(desktop): resuming a finalized session re-lights liveness without any new activity](https://github.com/NousResearch/hermes-agent/issues/85303) — 0 comments · 0 reactions · open
+- **Issue** [feat(sessions): heal orphan non-chat session rows after 24h idle](https://github.com/NousResearch/hermes-agent/issues/85304) — 0 comments · 0 reactions · open
+- **Issue** [feat(desktop): mark a session as unread with a persisted watermark](https://github.com/NousResearch/hermes-agent/issues/85305) — 0 comments · 0 reactions · open
+- **Issue** [bug(desktop): spaced currency amounts (US$ 5M) parsed as inline math](https://github.com/NousResearch/hermes-agent/issues/85306) — 0 comments · 0 reactions · open
+- **Issue** [bug(agent): empty title completions stall the title ladder](https://github.com/NousResearch/hermes-agent/issues/85307) — 0 comments · 0 reactions · open

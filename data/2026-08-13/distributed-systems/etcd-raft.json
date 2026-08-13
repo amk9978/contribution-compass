@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "date": "2026-08-13",
   "group": {
     "id": "distributed-systems",
@@ -10,13 +10,38 @@
     "repo": "etcd-io/raft",
     "name": "etcd Raft"
   },
+  "context": {
+    "repository": "etcd-io/raft",
+    "url": "https://github.com/etcd-io/raft",
+    "description": "Raft library for maintaining a replicated state machine",
+    "language": "Go",
+    "topics": [
+      "consensus",
+      "distributed-systems",
+      "raft"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 1088,
+    "forks": 269,
+    "openIssues": 85,
+    "archived": false,
+    "collectedAt": "2026-08-13T13:48:01.474796+00:00"
+  },
   "runs": [
     {
       "collectedAt": "2026-08-13T12:26:38.318Z",
       "since": "2026-08-12T12:26:38.318Z",
       "observedCount": 0,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-13T13:48:00.446149Z",
+      "since": "2026-08-12T13:48:00.446149Z",
+      "observedCount": 0,
+      "changedCount": 0
     }
   ],
-  "signals": []
+  "signals": [],
+  "events": []
 }
