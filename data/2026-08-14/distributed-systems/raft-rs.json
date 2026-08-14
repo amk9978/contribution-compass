@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "date": "2026-08-14",
   "group": {
     "id": "distributed-systems",
@@ -26,15 +26,15 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "master",
-    "stars": 3377,
+    "stars": 3376,
     "forks": 465,
     "openIssues": 78,
     "archived": false,
-    "collectedAt": "2026-08-14T03:31:27.419693+00:00"
+    "collectedAt": "2026-08-14T18:55:57.895474+00:00"
   },
   "news": {
     "repository": "tikv/raft-rs",
-    "collectedAt": "2026-08-14T03:31:27.419693+00:00",
+    "collectedAt": "2026-08-14T18:55:57.895474+00:00",
     "latestRelease": {
       "repository": "tikv/raft-rs",
       "tag": "v0.7.0",
@@ -57,6 +57,12 @@
     {
       "collectedAt": "2026-08-14T03:31:25.964050Z",
       "since": "2026-08-13T03:31:25.964050Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-14T18:55:56.646052Z",
+      "since": "2026-08-13T18:55:56.646052Z",
       "observedCount": 0,
       "changedCount": 0
     }

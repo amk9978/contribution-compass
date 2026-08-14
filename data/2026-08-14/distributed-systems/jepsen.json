@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "date": "2026-08-14",
   "group": {
     "id": "distributed-systems",
@@ -24,11 +24,11 @@
     "forks": 754,
     "openIssues": 66,
     "archived": false,
-    "collectedAt": "2026-08-14T03:31:28.405744+00:00"
+    "collectedAt": "2026-08-14T18:55:58.759160+00:00"
   },
   "news": {
     "repository": "jepsen-io/jepsen",
-    "collectedAt": "2026-08-14T03:31:28.405744+00:00",
+    "collectedAt": "2026-08-14T18:55:58.759160+00:00",
     "latestRelease": {
       "repository": "jepsen-io/jepsen",
       "tag": "v0.3.13",
@@ -53,6 +53,12 @@
     {
       "collectedAt": "2026-08-14T03:31:25.964050Z",
       "since": "2026-08-13T03:31:25.964050Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-14T18:55:56.646052Z",
+      "since": "2026-08-13T18:55:56.646052Z",
       "observedCount": 0,
       "changedCount": 0
     }

@@ -17,9 +17,9 @@ Repository: [openai/codex](https://github.com/openai/codex)
 
 ## Publicly indicated upcoming work
 
+- **Prerelease** [0.148.0-alpha.16](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.16)
 - **Prerelease** [0.148.0-alpha.15](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.15)
 - **Prerelease** [0.148.0-alpha.14](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.14)
-- **Prerelease** [0.148.0-alpha.13](https://github.com/openai/codex/releases/tag/rust-v0.148.0-alpha.13)
 
 ## Hacker News discussions
 

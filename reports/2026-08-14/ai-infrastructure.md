@@ -8,24 +8,45 @@
 
 - Project: `sgl-project/sglang`
 - Tier: `maintainer-invited`
-- Evidence: Maintainers marked this as a good first issue; No assignee is listed
+- Evidence: Maintainer invitation label: good first issue; No assignee is listed
 - Caveat: Confirm scope and availability with the maintainers before starting work.
 
-### [\[Feature\] Add KV cache usage prometheus metrics](https://github.com/sgl-project/sglang/issues/5979)
+### [\[RFC\]: Support ViT Full CUDA Graph (Tracker)](https://github.com/vllm-project/vllm/issues/38175)
 
-- Project: `sgl-project/sglang`
+- Project: `vllm-project/vllm`
 - Tier: `maintainer-invited`
-- Evidence: Maintainers marked this as a good first issue; No assignee is listed
+- Evidence: Maintainer invitation label: help wanted; No assignee is listed
 - Caveat: Confirm scope and availability with the maintainers before starting work.
 
-### [\[Bug\]: vllm/vllm-openai:latest fails to start Gemma4 with Transformers 5.15.0](https://github.com/vllm-project/vllm/issues/51744)
+### [LiteLLM Stability Sprint Roadmap](https://github.com/BerriAI/litellm/issues/30484)
+
+- Project: `BerriAI/litellm`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[Feature\]: support model discovery with custom provider](https://github.com/BerriAI/litellm/issues/20064)
+
+- Project: `BerriAI/litellm`
+- Tier: `triage-lead`
+- Evidence: Unassigned enhancement with community reactions
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[Bug\]: KV block corruption in base scheduler, Non-deterministic output at temperature=0 without prefix caching](https://github.com/vllm-project/vllm/issues/39146)
 
 - Project: `vllm-project/vllm`
 - Tier: `triage-lead`
 - Evidence: Unassigned bug with visible community engagement
 - Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
 
-### [\[Bug\]: Decode Context Parallelism (`--decode-context-parallel-size`) output drift and gibberish in v0.21.0 and latest nightly](https://github.com/vllm-project/vllm/issues/41623)
+### [\[Bug\]: Garbled Output in DeepSeek-V4 with CUDA Graph Enabled Under Concurrent Identical Input Requests](https://github.com/vllm-project/vllm/issues/41331)
+
+- Project: `vllm-project/vllm`
+- Tier: `triage-lead`
+- Evidence: Unassigned bug with visible community engagement
+- Caveat: No explicit contribution invitation was found; ask maintainers whether a contribution is wanted.
+
+### [\[Bug\] DeepSeekV4-Flash produces incorrect output with inline system messages after PR #46025 when `preserved in-place`](https://github.com/vllm-project/vllm/issues/46710)
 
 - Project: `vllm-project/vllm`
 - Tier: `triage-lead`
@@ -36,136 +57,137 @@
 
 ### [LiteLLM](https://github.com/BerriAI/litellm)
 
-- **Issue** [\[Feature\]: Dark Mode](https://github.com/BerriAI/litellm/issues/10177) — 63 comments · 84 reactions · open
-- **Issue** [LiteLLM Proxy fails to start on Python 3.14 due to uvloop incompatibility](https://github.com/BerriAI/litellm/issues/20933) — 5 comments · 13 reactions · closed
-- **Issue** [\[Feature\]: Support Anthropic-native response format for /v1/models endpoint (Claude Code gateway discovery)](https://github.com/BerriAI/litellm/issues/27180) — 5 comments · 8 reactions · closed
-- **Pull Request** [feat: pre-adoption shadow eval for the auto-router (backend)](https://github.com/BerriAI/litellm/pull/36571) — 41 comments · 1 reactions · closed
-- **Pull Request** [feat(ui): shadow eval section on the auto-router usage tab](https://github.com/BerriAI/litellm/pull/36572) — 50 comments · 1 reactions · closed
-- **Pull Request** [feat(ui): shadow evals tab beside auto-router usage](https://github.com/BerriAI/litellm/pull/36588) — 46 comments · 1 reactions · closed
-- **Pull Request** [fix(proxy): make /cursor/chat/completions work with Cursor agent mode](https://github.com/BerriAI/litellm/pull/34029) — 36 comments · 1 reactions · closed
-- **Issue** [\[Bug\]: /metrics endpoint not allowing for unauthenticated access](https://github.com/BerriAI/litellm/issues/27926) — 3 comments · 7 reactions · open
+- **Issue** [LiteLLM Stability Sprint Roadmap](https://github.com/BerriAI/litellm/issues/30484) — 25 comments · 9 reactions · open
+- **Issue** [\[Feature\]: support model discovery with custom provider](https://github.com/BerriAI/litellm/issues/20064) — 9 comments · 10 reactions · open
+- **Issue** [\[Feature\]: Auto-populate max_input_tokens/max_output_tokens for hosted vLLM/OpenAI-like models](https://github.com/BerriAI/litellm/issues/27830) — 2 comments · 6 reactions · open
+- **Issue** [\[Bug\]: Function tools fail with reasoning_effort error for OpenAI gpt-5.6 family models (gpt-5.6-sol/luna/terra) on /chat/completions](https://github.com/BerriAI/litellm/issues/33221) — 10 comments · 3 reactions · closed
 - **Pull Request** [feat(cost): support time-based off-peak pricing in cost calculation](https://github.com/BerriAI/litellm/pull/31725) — 18 comments · 2 reactions · open
-- **Pull Request** [fix(mcp): expose client HTTP headers to logging callbacks and hooks](https://github.com/BerriAI/litellm/pull/36724) — 23 comments · 1 reactions · closed
-- **Issue** [\[Bug\]: Function tools fail with reasoning_effort error for OpenAI gpt-5.6 family models (gpt-5.6-sol/luna/terra) on /chat/completions](https://github.com/BerriAI/litellm/issues/33221) — 9 comments · 3 reactions · closed
-- **Pull Request** [feat(proxy): proactive model deprecation alerts and `/model/deprecations` endpoint](https://github.com/BerriAI/litellm/pull/26900) — 18 comments · 1 reactions · open
-- **Pull Request** [fix(openai): bridge gpt-5.6+ tools to /v1/responses without reasoning_effort](https://github.com/BerriAI/litellm/pull/34043) — 10 comments · 4 reactions · closed
-- **Pull Request** [feat: pre-adoption shadow eval for the auto-router (blind pairwise judge, derived state)](https://github.com/BerriAI/litellm/pull/36587) — 19 comments · 1 reactions · closed
-- **Pull Request** [perf(spend-logs): bound retention cleanup so one run cannot saturate the database](https://github.com/BerriAI/litellm/pull/36594) — 16 comments · 1 reactions · closed
-- **Pull Request** [fix(ui): show indirectly granted and name-keyed MCP servers in the tool matrix](https://github.com/BerriAI/litellm/pull/35154) — 18 comments · 1 reactions · open
-- **Pull Request** [feat(proxy): serve Anthropic-native /v1/models for Claude Code gateway discovery](https://github.com/BerriAI/litellm/pull/35455) — 6 comments · 3 reactions · open
-- **Pull Request** [feat(realtime): support latest OpenAI audio models](https://github.com/BerriAI/litellm/pull/35600) — 10 comments · 2 reactions · open
-- **Pull Request** [feat(complexity_router): calibrate the classifier rubric with worked examples, selectable per router](https://github.com/BerriAI/litellm/pull/36578) — 15 comments · 1 reactions · closed
-- **Issue** [\[Bug\]: Xiaomi MiMo models: 'output_config' parameter causes AsyncCompletions.create() to fail with Claude Code](https://github.com/BerriAI/litellm/issues/24549) — 8 comments · 0 reactions · open
-- **Issue** [\[Feature\]: Support time-based / peak-offpeak pricing for model cost calculation](https://github.com/BerriAI/litellm/issues/31606) — 1 comments · 2 reactions · open
-- **Pull Request** [fix(s3_v2): URL-encode object keys to prevent SigV4 signature mismatch](https://github.com/BerriAI/litellm/pull/24585) — 8 comments · 3 reactions · open
-- **Pull Request** [feat(azure-ai): add Grok 4.3 model metadata](https://github.com/BerriAI/litellm/pull/27932) — 8 comments · 2 reactions · closed
-- **Pull Request** [fix(proxy/batches): stop forwarding custom_llm_provider twice in list and cancel](https://github.com/BerriAI/litellm/pull/32813) — 12 comments · 1 reactions · closed
-- **Pull Request** [fix(ui): keep MCP tool allowlists for team servers granted indirectly](https://github.com/BerriAI/litellm/pull/35153) — 17 comments · 1 reactions · open
-- **Pull Request** [feat(skills): self-service skill submission with admin review](https://github.com/BerriAI/litellm/pull/36677) — 12 comments · 1 reactions · open
-- **Pull Request** [feat: shadow eval samples /v1/messages and /v1/responses traffic](https://github.com/BerriAI/litellm/pull/36830) — 17 comments · 1 reactions · open
-- **Issue** [\[Bug\]: Vertex AI: Custom api_base credential skip logic missing in vertex_llm_base.py](https://github.com/BerriAI/litellm/issues/19138) — 11 comments · 0 reactions · open
-- **Pull Request** [fix(anthropic): default thinking.display="summarized" on Claude Opus 4.7](https://github.com/BerriAI/litellm/pull/25967) — 14 comments · 1 reactions · closed
-- **Pull Request** [feat(vertex): add Lyria model support](https://github.com/BerriAI/litellm/pull/30856) — 10 comments · 1 reactions · open
+- **Pull Request** [feat(rate-limiting): tag-scoped token/request/dollar/concurrency rate limits](https://github.com/BerriAI/litellm/pull/36541) — 27 comments · 1 reactions · open
+- **Pull Request** [feat(proxy): serve Anthropic-native /v1/models for Claude Code gateway discovery](https://github.com/BerriAI/litellm/pull/35455) — 7 comments · 4 reactions · closed
+- **Pull Request** [feat(ui): manage admin-owned logging destinations](https://github.com/BerriAI/litellm/pull/35517) — 18 comments · 1 reactions · open
+- **Issue** [\[Feature\]: Support Azure AI Foundry Agents v2 (Responses API with agent_reference)](https://github.com/BerriAI/litellm/issues/25372) — 4 comments · 3 reactions · open
+- **Pull Request** [feat(guardrails): add Lakera v2 skip-message honoring and advisory (inject_system_message) mode](https://github.com/BerriAI/litellm/pull/34940) — 21 comments · 1 reactions · open
+- **Pull Request** [feat(proxy): add project-level ITPM and OTPM quotas](https://github.com/BerriAI/litellm/pull/35110) — 21 comments · 1 reactions · open
+- **Issue** [\[Bug\]: 400: \[ERROR: Bad Request\] when using image generation from OpenWeb UI](https://github.com/BerriAI/litellm/issues/30300) — 2 comments · 2 reactions · open
+- **Pull Request** [fix: replace Redis+in-memory temp MCP server caching with DB-backed draft servers](https://github.com/BerriAI/litellm/pull/32260) — 10 comments · 1 reactions · open
+- **Pull Request** [feat(logging): add async_post_call_failure_deployment_hook](https://github.com/BerriAI/litellm/pull/36657) — 10 comments · 1 reactions · open
+- **Pull Request** [fix(otel): route Phoenix traces to per-key/team projects under otel v2](https://github.com/BerriAI/litellm/pull/36706) — 10 comments · 1 reactions · open
+- **Pull Request** [fix(langfuse): source the emitted metadata blob from StandardLoggingPayload](https://github.com/BerriAI/litellm/pull/36744) — 10 comments · 1 reactions · closed
+- **Pull Request** [fix(access groups): sync assigned_team_ids from the team write paths](https://github.com/BerriAI/litellm/pull/36825) — 11 comments · 1 reactions · closed
+- **Pull Request** [feat(mcp): clear and reauthorize a server's stored MCP OAuth tokens](https://github.com/BerriAI/litellm/pull/36831) — 10 comments · 1 reactions · open
+- **Issue** [\[Feature\]: Add support for Fireworks AI models in Azure Foundry](https://github.com/BerriAI/litellm/issues/26618) — 4 comments · 0 reactions · closed
+- **Pull Request** [VLLM: Prevent side-channel attacks via cache salting (CVE-2025-46570)](https://github.com/BerriAI/litellm/pull/27925) — 9 comments · 1 reactions · open
+- **Pull Request** [fix(mcp): include server_name and alias in /v1/mcp/server/health response](https://github.com/BerriAI/litellm/pull/32476) — 8 comments · 1 reactions · open
+- **Pull Request** [fix(datadog_llm_obs): map tool_calls to DD Message schema and cache tokens to span metrics](https://github.com/BerriAI/litellm/pull/35946) — 8 comments · 1 reactions · open
+- **Pull Request** [feat(parallel_ai): add chat + responses LLM provider and full search param support](https://github.com/BerriAI/litellm/pull/36704) — 8 comments · 1 reactions · open
+- **Pull Request** [feat(langfuse): migrate the sdk callback to langfuse v4](https://github.com/BerriAI/litellm/pull/36741) — 9 comments · 1 reactions · open
+- **Pull Request** [fix(azure): rename max_tokens to max_completion_tokens for gpt-5-chat deployments](https://github.com/BerriAI/litellm/pull/36857) — 8 comments · 1 reactions · open
+- **Pull Request** [fix(langfuse): restrict trace steering keys to real langfuse trace fields](https://github.com/BerriAI/litellm/pull/36862) — 8 comments · 1 reactions · open
+- **Pull Request** [fix(gemini): map Gemini 3.7 Flash minimal thinking to low](https://github.com/BerriAI/litellm/pull/36874) — 4 comments · 2 reactions · open
+- **Issue** [\[Bug\]: Prisma query engine crashes immediately on first query on Windows (pip install) - LiteLLM 1.82.x / 1.83.0](https://github.com/BerriAI/litellm/issues/25260) — 7 comments · 0 reactions · open
+- **Issue** [Mid-conversation system-role hoist invalidates the entire prompt-cache prefix (AnthropicMessagesConfig)](https://github.com/BerriAI/litellm/issues/36559) — 3 comments · 0 reactions · open
+- **Pull Request** [fix: drop effort parameter for Haiku with azure_ai provider](https://github.com/BerriAI/litellm/pull/31188) — 6 comments · 1 reactions · open
 
 ### [vLLM](https://github.com/vllm-project/vllm)
 
-- **Pull Request** [\[MoE\]\[Offload\] Run MoE models exceeding VRAM via expert CPU offloading with GPU cache (--moe-expert-cache-size)](https://github.com/vllm-project/vllm/pull/37190) — 56 comments · 15 reactions · open
-- **Pull Request** [Add Muse Glimmer model support](https://github.com/vllm-project/vllm/pull/51655) — 37 comments · 16 reactions · open
-- **Issue** [\[Performance\]: Deepseek-V4 Support and Optimization on ROCm Backend](https://github.com/vllm-project/vllm/issues/41820) — 15 comments · 7 reactions · open
-- **Pull Request** [\[Core\] Extensible (growable) KV cache](https://github.com/vllm-project/vllm/pull/50779) — 20 comments · 5 reactions · open
-- **Pull Request** [refactor(envs): migrate vllm/envs.py to pydantic-settings](https://github.com/vllm-project/vllm/pull/42136) — 28 comments · 3 reactions · open
-- **Pull Request** [\[Core\]\[V1\] Support trace_decode_token_ids for deterministic decode replay](https://github.com/vllm-project/vllm/pull/46701) — 20 comments · 3 reactions · open
-- **Pull Request** [\[Model\] Apertus 1.5](https://github.com/vllm-project/vllm/pull/50496) — 15 comments · 8 reactions · open
-- **Pull Request** [\[Kimi-K3\] Add GEMM-RS for sequence parallelism](https://github.com/vllm-project/vllm/pull/52079) — 8 comments · 3 reactions · closed
-- **Pull Request** [\[Perf\] Integrate flash-maxsim Triton kernels for late-interaction scoring](https://github.com/vllm-project/vllm/pull/40337) — 30 comments · 3 reactions · open
-- **Pull Request** [\[Bugfix\] Correct prompt lengths for timed_traces benchmark](https://github.com/vllm-project/vllm/pull/45423) — 5 comments · 3 reactions · closed
-- **Pull Request** [\[Model\]\[Spec Decode\] Tap the pre-norm AttnRes mixture as the Kimi K3 DFlash aux state](https://github.com/vllm-project/vllm/pull/50487) — 28 comments · 3 reactions · open
-- **Pull Request** [\[MoE\] Generalize masked activation for padded layouts](https://github.com/vllm-project/vllm/pull/51217) — 13 comments · 2 reactions · open
-- **Pull Request** [\[Core\]\[WIP\] Check for GPU<->CPU sync during CI](https://github.com/vllm-project/vllm/pull/43107) — 25 comments · 3 reactions · open
-- **Pull Request** [\[5/N\]\[KV-Cache Layout Refactor\] Backend-published KV packing via customize_spec](https://github.com/vllm-project/vllm/pull/51704) — 28 comments · 2 reactions · open
-- **Pull Request** [\[ROCm\] Defer `tilelang` import through its import `from vllm.tilelang_utils import tilelang` and relaxed `has_tilelang`](https://github.com/vllm-project/vllm/pull/51159) — 26 comments · 2 reactions · closed
+- **Pull Request** [\[MoE\]\[Offload\] Run MoE models exceeding VRAM via expert CPU offloading with GPU cache (--moe-expert-cache-size)](https://github.com/vllm-project/vllm/pull/37190) — 57 comments · 15 reactions · open
+- **Pull Request** [Add Muse Glimmer model support](https://github.com/vllm-project/vllm/pull/51655) — 37 comments · 16 reactions · closed
+- **Issue** [\[Performance\]: Deepseek-V4 Support and Optimization on ROCm Backend](https://github.com/vllm-project/vllm/issues/41820) — 17 comments · 7 reactions · open
+- **Pull Request** [\[Core\] Extensible (growable) KV cache](https://github.com/vllm-project/vllm/pull/50779) — 22 comments · 5 reactions · open
+- **Pull Request** [refactor(envs): migrate vllm/envs.py to pydantic-settings](https://github.com/vllm-project/vllm/pull/42136) — 29 comments · 3 reactions · open
+- **Pull Request** [Fused BMM+FP8 quant Triton kernel for MLA _v_up_proj (forward_mqa path)](https://github.com/vllm-project/vllm/pull/36297) — 36 comments · 1 reactions · open
+- **Pull Request** [\[Core\]\[V1\] Support trace_decode_token_ids for deterministic decode replay](https://github.com/vllm-project/vllm/pull/46701) — 22 comments · 3 reactions · open
+- **Pull Request** [\[Attention\]\[MLA\] FlashMLA sparse: DCP on the fp8_ds_mla mixed-batch path + MTP](https://github.com/vllm-project/vllm/pull/46514) — 50 comments · 3 reactions · open
+- **Pull Request** [\[Spec Decode\]\[CUDA Graphs\] Enables Eagle drafter support for FULL CUDA Graph mode](https://github.com/vllm-project/vllm/pull/34880) — 49 comments · 2 reactions · closed
+- **Pull Request** [\[Core\]\[WIP\] Check for GPU<->CPU sync during CI](https://github.com/vllm-project/vllm/pull/43107) — 29 comments · 3 reactions · open
+- **Pull Request** [\[Model\]\[Spec Decode\] Tap the pre-norm AttnRes mixture as the Kimi K3 DFlash aux state](https://github.com/vllm-project/vllm/pull/50487) — 29 comments · 3 reactions · closed
+- **Issue** [\[RFC\]: Support ViT Full CUDA Graph (Tracker)](https://github.com/vllm-project/vllm/issues/38175) — 27 comments · 1 reactions · open
+- **Pull Request** [\[WIP\]\[Feature\] A new 2-bit KV cache quantisation backend that cuts 5x memory than FP16 (Oscar-2)](https://github.com/vllm-project/vllm/pull/46774) — 23 comments · 5 reactions · open
+- **Pull Request** [\[Attention\] TRITON_MLA_SPARSE backend for SM80/SM121 sparse MLA (rebase & takeover of #38476)](https://github.com/vllm-project/vllm/pull/47629) — 22 comments · 5 reactions · open
+- **Pull Request** [\[Bugfix\]\[CI\] Retry cached HF tokenizer load after transport failures](https://github.com/vllm-project/vllm/pull/44820) — 8 comments · 2 reactions · open
+- **Pull Request** [\[Perf\]\[Kernel\] Fused DSA indexer Top-k kernel (LiteTopk)](https://github.com/vllm-project/vllm/pull/48726) — 8 comments · 2 reactions · open
+- **Pull Request** [\[ROCm\] DeepSeek-V4-Pro PD Disaggregation through MORI IO KV Connector on AMD GPUs](https://github.com/vllm-project/vllm/pull/48989) — 8 comments · 2 reactions · open
+- **Pull Request** [\[5/N\]\[KV-Cache Layout Refactor\] Backend-published KV packing via customize_spec](https://github.com/vllm-project/vllm/pull/51704) — 29 comments · 2 reactions · closed
+- **Issue** [\[Bug\]: KV block corruption in base scheduler, Non-deterministic output at temperature=0 without prefix caching](https://github.com/vllm-project/vllm/issues/39146) — 2 comments · 7 reactions · open
+- **Pull Request** [\[ROCm\]\[CI\] Gating more ROCm tests](https://github.com/vllm-project/vllm/pull/44969) — 26 comments · 2 reactions · open
+- **Pull Request** [\[ModelRunner v2\] Enable MRV2 for pooling models by default](https://github.com/vllm-project/vllm/pull/48290) — 23 comments · 3 reactions · open
 - **Pull Request** [\[K3\] support recoverssm for K3](https://github.com/vllm-project/vllm/pull/51855) — 3 comments · 2 reactions · open
-- **Pull Request** [Add `pydocstyle` to the `ruff` rules](https://github.com/vllm-project/vllm/pull/52136) — 3 comments · 2 reactions · open
-- **Pull Request** [\[Kernel\] ReplaySSM: cache SSM inputs for faster Gated DeltaNet standard decode](https://github.com/vllm-project/vllm/pull/48792) — 5 comments · 2 reactions · open
-- **Pull Request** [Add SM90 FA4 Dense and MLA](https://github.com/vllm-project/vllm/pull/51416) — 5 comments · 2 reactions · open
-- **Pull Request** [\[6/N\]\[KV-Cache Layout Refactor\] Standardize KV cache layout](https://github.com/vllm-project/vllm/pull/51718) — 6 comments · 0 reactions · open
-- **Pull Request** [\[ROCm\]\[CI\] Gating more ROCm tests](https://github.com/vllm-project/vllm/pull/44969) — 20 comments · 2 reactions · open
-- **Pull Request** [\[KV-offload\]\[FS\]: Batching for read/write threads](https://github.com/vllm-project/vllm/pull/49225) — 20 comments · 2 reactions · open
-- **Pull Request** [\[ModelOpt\] Redesign the LinearMethod classes using the generic QuantKey-driven method](https://github.com/vllm-project/vllm/pull/49381) — 21 comments · 2 reactions · open
-- **Pull Request** [\[ROCm\]Remove special-case SiTU support model-specific gating](https://github.com/vllm-project/vllm/pull/50597) — 21 comments · 2 reactions · open
-- **Pull Request** [buffer size insuffient Dspark sd for FlashInfer MNNVL allreduce](https://github.com/vllm-project/vllm/pull/50932) — 21 comments · 2 reactions · open
-- **Pull Request** [\[Bugfix\] Make DSV4 sparse MLA work end-to-end for plain decode, MTP, and DSpark](https://github.com/vllm-project/vllm/pull/51538) — 20 comments · 2 reactions · open
-- **Pull Request** [fix(v1): decouple async Mamba align D2H counts from InputBatch row shifts (#51571)](https://github.com/vllm-project/vllm/pull/51599) — 20 comments · 2 reactions · open
-- **Pull Request** [\[Feature\]\[KVConnector\] Add optional get_eviction_order hook for policy-driven free-queue ordering](https://github.com/vllm-project/vllm/pull/42799) — 3 comments · 1 reactions · open
-- **Issue** [\[ROCm\]\[AMD\] Kimi-K3 Gap and Roadmap Tracking](https://github.com/vllm-project/vllm/issues/50682) — 16 comments · 0 reactions · open
-- **Pull Request** [\[EPD\] Add ECMooncakeConnector for encoder cache over Mooncake TransferEngine](https://github.com/vllm-project/vllm/pull/41567) — 4 comments · 5 reactions · open
+- **Issue** [\[Bug\]: Garbled Output in DeepSeek-V4 with CUDA Graph Enabled Under Concurrent Identical Input Requests](https://github.com/vllm-project/vllm/issues/41331) — 5 comments · 6 reactions · open
+- **Pull Request** [Feat/spec decode under pipeline parallel](https://github.com/vllm-project/vllm/pull/50514) — 24 comments · 2 reactions · open
+- **Pull Request** [\[Bugfix\] Fix MiniMax M3 prompt reasoning initialization](https://github.com/vllm-project/vllm/pull/50594) — 25 comments · 2 reactions · open
+- **Pull Request** [feat: add optional torchembed RoPE backend](https://github.com/vllm-project/vllm/pull/44810) — 2 comments · 2 reactions · open
+- **Pull Request** [\[ModelOpt\] Redesign the LinearMethod classes using the generic QuantKey-driven method](https://github.com/vllm-project/vllm/pull/49381) — 22 comments · 2 reactions · open
+- **Pull Request** [\[Model\]\[Perf\] Overlap mixed GDN decode and prefill recurrent kernels](https://github.com/vllm-project/vllm/pull/50233) — 3 comments · 2 reactions · open
+- **Pull Request** [\[Bugfix\] Fix speculative decoding for short_conv (LFM2) models](https://github.com/vllm-project/vllm/pull/50272) — 18 comments · 4 reactions · open
+- **Pull Request** [\[ROCm\]Remove special-case SiTU support model-specific gating](https://github.com/vllm-project/vllm/pull/50597) — 22 comments · 2 reactions · closed
 
 ### [SGLang](https://github.com/sgl-project/sglang)
 
-- **Issue** [\[Feature\] Kimi K3 Roadmap](https://github.com/sgl-project/sglang/issues/32607) — 8 comments · 22 reactions · open
-- **Pull Request** [\[Feature\] Support Efficient Sparse HiP Attention (InfiniteHiP) with Long-Context Generalization and KV Offloading Capabilties](https://github.com/sgl-project/sglang/pull/3930) — 34 comments · 8 reactions · closed
+- **Issue** [\[Roadmap\] sglang auto tuner](https://github.com/sgl-project/sglang/issues/13363) — 14 comments · 29 reactions · open
 - **Issue** [\[Tracking\] CI Test Failures and Fixes](https://github.com/sgl-project/sglang/issues/17050) — 13 comments · 10 reactions · open
-- **Pull Request** [\[P/D disagg\] Decode-side radix cache for SWA hybrid models (unified radix tree)](https://github.com/sgl-project/sglang/pull/27770) — 38 comments · 3 reactions · open
-- **Issue** [\[Feature\] Improve Unit Test Coverage](https://github.com/sgl-project/sglang/issues/20865) — 83 comments · 0 reactions · open
+- **Pull Request** [\[P/D disagg\] Decode-side radix cache for SWA hybrid models (unified radix tree)](https://github.com/sgl-project/sglang/pull/27770) — 40 comments · 3 reactions · open
+- **Pull Request** [\[HiCache\] Support packed and sidecar draft caches for MTP/EAGLE/DSpark](https://github.com/sgl-project/sglang/pull/30393) — 27 comments · 7 reactions · closed
 - **Pull Request** [\[HiCache\] Fix PP inconsistency with HiCache L3 (#22607)](https://github.com/sgl-project/sglang/pull/27010) — 36 comments · 3 reactions · open
-- **Pull Request** [\[FlashInfer v0.6.16\] Support FlashInfer CuTe DSL NVFP4 MoE quantization](https://github.com/sgl-project/sglang/pull/28354) — 42 comments · 0 reactions · closed
-- **Pull Request** [\[DSv4\] Integrate TRT-LLM DSv4 Attention for SM100/103](https://github.com/sgl-project/sglang/pull/30805) — 43 comments · 0 reactions · open
-- **Issue** [\[NVIDIA\] DeepSeek V4 Perf Tracking](https://github.com/sgl-project/sglang/issues/33636) — 8 comments · 5 reactions · open
-- **Issue** [\[Roadmap\] Integrate NCCL 2.30 Features into SGLang](https://github.com/sgl-project/sglang/issues/32774) — 1 comments · 7 reactions · open
-- **Pull Request** [\[AMD\] Fuse shared_expert_gate GEMV into the MoE append kernel (HIP/aiter)](https://github.com/sgl-project/sglang/pull/28666) — 26 comments · 1 reactions · open
-- **Pull Request** [\[AMD\]\[Quantization\] Online MXFP4 quantization 4/N - NVFP4 to MXFP4 Online Requantization on AMD GPUs](https://github.com/sgl-project/sglang/pull/29328) — 22 comments · 1 reactions · open
-- **Pull Request** [\[AMD\] sgl-kernel: enable gfx1151 (RDNA3.5 / Strix Halo) for single-GPU](https://github.com/sgl-project/sglang/pull/31137) — 9 comments · 5 reactions · open
-- **Pull Request** [support qwen 3.8](https://github.com/sgl-project/sglang/pull/34585) — 0 comments · 6 reactions · open
-- **Pull Request** [\[MoE Refactor\] Migrate SM100 trtllm-gen mxfp4 MoE onto MoeRunner](https://github.com/sgl-project/sglang/pull/32405) — 19 comments · 1 reactions · open
-- **Pull Request** [feat: add "balance" option and implement for "--ep-dispatch-algorithm"](https://github.com/sgl-project/sglang/pull/6739) — 13 comments · 3 reactions · closed
-- **Pull Request** [\[AMD\] \[GLM5\] Enable dense-MHA short-context prefill fallback on gfx950](https://github.com/sgl-project/sglang/pull/30808) — 19 comments · 0 reactions · open
+- **Pull Request** [\[Model\] Support Ling-3.0-flash (BailingMoeV3)](https://github.com/sgl-project/sglang/pull/33561) — 10 comments · 9 reactions · open
+- **Pull Request** [\[HiCache\] Dedup MLA KV cache in host memory across TP ranks](https://github.com/sgl-project/sglang/pull/26691) — 13 comments · 7 reactions · open
+- **Pull Request** [\[PP&Spec\] enable speculative decoding (eagle_worker_v2) under PP](https://github.com/sgl-project/sglang/pull/31139) — 22 comments · 4 reactions · open
+- **Pull Request** [\[AMD\] Fuse shared_expert_gate GEMV into the MoE append kernel (HIP/aiter)](https://github.com/sgl-project/sglang/pull/28666) — 26 comments · 1 reactions · closed
+- **Pull Request** [\[AMD\]\[Quantization\] Online MXFP4 quantization 4/N - NVFP4 to MXFP4 Online Requantization on AMD GPUs](https://github.com/sgl-project/sglang/pull/29328) — 24 comments · 1 reactions · open
+- **Pull Request** [\[HiCache\]: Optimize hybrid/DSA L3 prefetch result sync and usable-prefix clamping](https://github.com/sgl-project/sglang/pull/31443) — 22 comments · 1 reactions · closed
+- **Issue** [\[AITER-Upgrade\] PR readiness](https://github.com/sgl-project/sglang/issues/21302) — 20 comments · 0 reactions · open
+- **Pull Request** [\[MoE Refactor\] Migrate SM100 trtllm-gen mxfp4 MoE onto MoeRunner](https://github.com/sgl-project/sglang/pull/32405) — 20 comments · 1 reactions · open
+- **Pull Request** [\[AMD\] Add fused all-reduce RMSNorm per-token FP8/MXFP4 quant](https://github.com/sgl-project/sglang/pull/29723) — 15 comments · 2 reactions · open
+- **Pull Request** [\[NVIDIA\]\[comm\] Merge EP+MoE-TP post-experts all-reduces into one _TP reduction](https://github.com/sgl-project/sglang/pull/32963) — 22 comments · 0 reactions · open
 - **Pull Request** [Graceful shutdown with SIGTERM for child processes](https://github.com/sgl-project/sglang/pull/16484) — 17 comments · 1 reactions · open
-- **Pull Request** [\[AMD\] \[GLM5\] Skip DSA decode indexer when kv_len <= index_topk (dense k-only fast path)](https://github.com/sgl-project/sglang/pull/31324) — 13 comments · 1 reactions · open
-- **Pull Request** [\[AMD\] Enable gfx1250 Support](https://github.com/sgl-project/sglang/pull/32754) — 13 comments · 1 reactions · open
+- **Pull Request** [perf(jit_kernel/deepseek_v4): optimize paged_mqa_metadata](https://github.com/sgl-project/sglang/pull/25855) — 20 comments · 0 reactions · closed
+- **Pull Request** [\[AMD\] \[GLM5\] Skip DSA decode indexer when kv_len <= index_topk (dense k-only fast path)](https://github.com/sgl-project/sglang/pull/31324) — 15 comments · 1 reactions · open
+- **Pull Request** [\[HiCache\] Fix sidecar pool life-time issue](https://github.com/sgl-project/sglang/pull/31668) — 7 comments · 4 reactions · open
+- **Pull Request** [\[AMD\] Enable gfx1250 Support](https://github.com/sgl-project/sglang/pull/32754) — 15 comments · 1 reactions · open
+- **Pull Request** [fix(ci): refresh nightly precision baseline from remote](https://github.com/sgl-project/sglang/pull/34668) — 18 comments · 0 reactions · open
+- **Pull Request** [\[AMD\] GDN linear out-proj fusion](https://github.com/sgl-project/sglang/pull/28655) — 13 comments · 1 reactions · open
+- **Pull Request** [\[XPU\]\[Diffusion\] Enable MiniMax H3 on XPU platforms](https://github.com/sgl-project/sglang/pull/33366) — 17 comments · 0 reactions · open
+- **Pull Request** [TP/PP Consensus checker](https://github.com/sgl-project/sglang/pull/34406) — 1 comments · 4 reactions · open
 - **Pull Request** [Profiling Enhancements \[2/3\]: detailed execution step annotations](https://github.com/sgl-project/sglang/pull/24911) — 10 comments · 1 reactions · open
-- **Pull Request** [\[NPU\] Add Ascend NPU support for DeepSeek-V4](https://github.com/sgl-project/sglang/pull/25144) — 18 comments · 0 reactions · closed
-- **Pull Request** [perf(jit_kernel/deepseek_v4): optimize paged_mqa_metadata](https://github.com/sgl-project/sglang/pull/25855) — 19 comments · 0 reactions · closed
-- **Pull Request** [\[GDN\] perf: Fuse the linear-attention prefill prologue for Flashinfer prefill attn](https://github.com/sgl-project/sglang/pull/30797) — 14 comments · 0 reactions · open
+- **Pull Request** [\[NPU\] Add mxfp4-w4a8 MOE Quantization Support for NPU](https://github.com/sgl-project/sglang/pull/30318) — 14 comments · 0 reactions · open
+- **Pull Request** [\[GDN\] perf: Fuse the linear-attention prefill prologue for Flashinfer prefill attn](https://github.com/sgl-project/sglang/pull/30797) — 15 comments · 0 reactions · open
 - **Pull Request** [\[AMD\] \[Docker\] Upgrade Python 3.12 + torch 2.11 + triton 3.7 in ROCm 7.2.4](https://github.com/sgl-project/sglang/pull/30984) — 15 comments · 0 reactions · open
+- **Pull Request** [\[EPD\] Batch embedding cache host-device range copies](https://github.com/sgl-project/sglang/pull/31574) — 6 comments · 2 reactions · closed
 - **Pull Request** [\[Spec\] Windowed draft-decode attention for built-in EAGLE / MTP drafts](https://github.com/sgl-project/sglang/pull/32673) — 11 comments · 1 reactions · open
-- **Pull Request** [\[XPU\]\[Diffusion\] Enable MiniMax H3 on XPU platforms](https://github.com/sgl-project/sglang/pull/33366) — 15 comments · 0 reactions · open
-- **Pull Request** [fix(ci): refresh nightly precision baseline from remote](https://github.com/sgl-project/sglang/pull/34668) — 14 comments · 0 reactions · open
-- **Pull Request** [XPU: Enable GLM5.1 (GlmMoeDsaForCausalLM) DSA Attention](https://github.com/sgl-project/sglang/pull/24959) — 8 comments · 1 reactions · open
-- **Pull Request** [\[NPU\] Add mxfp4-w4a8 MOE Quantization Support for NPU](https://github.com/sgl-project/sglang/pull/30318) — 12 comments · 0 reactions · open
 
 ### [Ray](https://github.com/ray-project/ray)
 
-- **Issue** [RDT: ray.put(list, _tensor_transport=...): batch-put a list of objects and get back a list of refs](https://github.com/ray-project/ray/issues/64715) — 3 comments · 0 reactions · closed
-- **Issue** [RDT: Support different destination memory from source memory](https://github.com/ray-project/ray/issues/64711) — 1 comments · 0 reactions · closed
-- **Issue** [\[data\] Fanout into independently schedulable one-row blocks has very high overhead](https://github.com/ray-project/ray/issues/65473) — 0 comments · 0 reactions · open
-- **Issue** [\[core\]\[rdt\] Reduce O(N) overheads in RDT NIXL backend](https://github.com/ray-project/ray/issues/65475) — 0 comments · 0 reactions · open
 - **Issue** [\[serve\]\[llm\] s3:// model_source is dropped on Ray 2.57.0: engine config gets model_id instead of the staged local path](https://github.com/ray-project/ray/issues/65477) — 0 comments · 0 reactions · open
-- **Pull Request** [\[Core\] Mobilint Accelerator Support](https://github.com/ray-project/ray/pull/61898) — 7 comments · 3 reactions · closed
-- **Pull Request** [\[docs\] vendor the KubeRay CRD API reference into the Ray docs](https://github.com/ray-project/ray/pull/65428) — 7 comments · 1 reactions · open
-- **Pull Request** [\[Data\]\[1/N\] add external shuffle runtime library](https://github.com/ray-project/ray/pull/64828) — 4 comments · 1 reactions · open
-- **Pull Request** [\[docs\] Add Kubernetes and KubeRay conventions to the style guide](https://github.com/ray-project/ray/pull/65239) — 4 comments · 1 reactions · open
-- **Pull Request** [fix(jobs): return structured 503 when job logs are unavailable](https://github.com/ray-project/ray/pull/65405) — 4 comments · 1 reactions · open
-- **Pull Request** [\[train\] Share PlacementGroupCleaner across Train runs](https://github.com/ray-project/ray/pull/65447) — 0 comments · 2 reactions · open
-- **Pull Request** [\[Serve\]\[LLM\] Pass remote URI as model for streaming load formats](https://github.com/ray-project/ray/pull/64996) — 3 comments · 2 reactions · open
-- **Pull Request** [\[core\] feat(rdt): enable driver-side ray.put with NIXL tensor transport](https://github.com/ray-project/ray/pull/65072) — 2 comments · 1 reactions · open
-- **Pull Request** [\[Data\] Throttle OutputBackpressureGuard releases with a per-op interval](https://github.com/ray-project/ray/pull/65202) — 3 comments · 1 reactions · open
-- **Issue** [\[core\]\[rdt\] Receiver side pre-registered memory pool](https://github.com/ray-project/ray/issues/60443) — 1 comments · 0 reactions · closed
-- **Issue** [\[Data\] Replace ray_remote_args with named options on Dataset transformations](https://github.com/ray-project/ray/issues/65227) — 0 comments · 0 reactions · closed
 - **Issue** [\[Data\] Fused map functions are serialized with every shuffle-map task](https://github.com/ray-project/ray/issues/65479) — 0 comments · 0 reactions · open
-- **Pull Request** [\[Data\] Add DataIterator.count() to get dataset/shard size](https://github.com/ray-project/ray/pull/64869) — 4 comments · 1 reactions · open
+- **Issue** [\[Data\] Extend StreamingRepartition non-strict fusion to Filter/MapRows/FlatMap](https://github.com/ray-project/ray/issues/63624) — 1 comments · 0 reactions · open
+- **Pull Request** [\[serve\] Columnar zero-copy autoscaling-metrics ingest](https://github.com/ray-project/ray/pull/64281) — 2 comments · 1 reactions · open
+- **Pull Request** [\[data\]\[llm\] Add vLLM engine metrics and request-latency overhead to single-node batch benchmark](https://github.com/ray-project/ray/pull/63912) — 14 comments · 1 reactions · open
+- **Issue** [\[Ray serve\] Add Native Anthropic Messages API (/v1/messages) Support to Ray Serve LLM](https://github.com/ray-project/ray/issues/64965) — 3 comments · 1 reactions · open
+- **Pull Request** [\[data\] Add orc datasource for V2](https://github.com/ray-project/ray/pull/64540) — 7 comments · 1 reactions · open
+- **Pull Request** [\[docs\] vendor the KubeRay CRD API reference into the Ray docs](https://github.com/ray-project/ray/pull/65428) — 7 comments · 1 reactions · closed
 - **Pull Request** [\[core\] Free local objects batching](https://github.com/ray-project/ray/pull/65000) — 1 comments · 2 reactions · open
-- **Pull Request** [\[Data\] Deprecate `ray_remote_args` for Dataset transformations](https://github.com/ray-project/ray/pull/65228) — 1 comments · 1 reactions · closed
-- **Pull Request** [\[CI\] Make the Vale pre-commit hook run, and upgrade Vale to 3.17.1](https://github.com/ray-project/ray/pull/65375) — 0 comments · 1 reactions · open
-- **Pull Request** [\[Data\] OpTask._cancel never passes force=True](https://github.com/ray-project/ray/pull/65389) — 0 comments · 1 reactions · open
-- **Pull Request** [\[core\]\[rdt\] nixl: allow pool to serve tensors on a different device](https://github.com/ray-project/ray/pull/65418) — 0 comments · 1 reactions · open
-- **Pull Request** [\[serve\] Deflake test_cli by adding explicit wait timeouts and stopping tracing config leak](https://github.com/ray-project/ray/pull/65432) — 0 comments · 1 reactions · closed
-- **Pull Request** [refactor(setup): modernize string formatting and ensure explicit file encoding](https://github.com/ray-project/ray/pull/65439) — 1 comments · 1 reactions · open
-- **Pull Request** [\[TPU\] Rename dispatch to run_on_slice](https://github.com/ray-project/ray/pull/65442) — 0 comments · 1 reactions · open
-- **Pull Request** [\[doc\] Render the Jobs API spec with sphinxcontrib-openapi instead of ReDoc](https://github.com/ray-project/ray/pull/65460) — 0 comments · 1 reactions · open
-- **Pull Request** [\[doc\] llms.txt: tell agents the page links also serve Markdown](https://github.com/ray-project/ray/pull/65461) — 0 comments · 1 reactions · open
-- **Pull Request** [\[docs\] Sync the vendored KubeRay CRD API reference](https://github.com/ray-project/ray/pull/65462) — 1 comments · 1 reactions · closed
-- **Pull Request** [core: release runtime env per-job loggers](https://github.com/ray-project/ray/pull/65463) — 0 comments · 1 reactions · open
+- **Pull Request** [\[docs\] Add Kubernetes and KubeRay conventions to the style guide](https://github.com/ray-project/ray/pull/65239) — 4 comments · 1 reactions · closed
+- **Pull Request** [\[jobs\]: return structured 503 when job logs are unavailable](https://github.com/ray-project/ray/pull/65405) — 4 comments · 1 reactions · open
+- **Pull Request** [\[train\] Share PlacementGroupCleaner across Train runs](https://github.com/ray-project/ray/pull/65447) — 0 comments · 2 reactions · open
+- **Pull Request** [\[Data\] Fix ResourceBudget backpressure causing pipeline stall](https://github.com/ray-project/ray/pull/64601) — 3 comments · 1 reactions · open
+- **Pull Request** [\[Train\] Add NCCL RAS health callback](https://github.com/ray-project/ray/pull/64928) — 2 comments · 1 reactions · open
+- **Pull Request** [\[core\] feat(rdt): enable driver-side ray.put with NIXL tensor transport](https://github.com/ray-project/ray/pull/65072) — 3 comments · 1 reactions · open
+- **Pull Request** [\[TPU\] Add PyTorch TPU environment variable and runtime_env APIs to Slice and Subslice placement groups](https://github.com/ray-project/ray/pull/65221) — 3 comments · 1 reactions · open
+- **Pull Request** [\[Data\]\[LLM\] Add multi-host TPU batch inference for Ray Data LLM](https://github.com/ray-project/ray/pull/65422) — 3 comments · 1 reactions · open
+- **Pull Request** [\[docs\] Convert the nine highest-traffic landing pages from RST to MyST](https://github.com/ray-project/ray/pull/65467) — 2 comments · 1 reactions · closed
+- **Pull Request** [\[doc\] Conversion tooling: render diff, card-grid mapping, and a soft-wrap skill](https://github.com/ray-project/ray/pull/65469) — 2 comments · 1 reactions · closed
+- **Pull Request** [\[docs\] Convert the seven card-grid library front doors from RST to MyST](https://github.com/ray-project/ray/pull/65470) — 2 comments · 1 reactions · open
+- **Issue** [\[Serve\] remove deprecated APIs, CLI flags, and schema fields](https://github.com/ray-project/ray/issues/62733) — 1 comments · 0 reactions · closed
+- **Issue** [\[Data\] `test_tensor` flakes at the Bazel short-test timeout](https://github.com/ray-project/ray/issues/65481) — 0 comments · 0 reactions · closed
+- **Pull Request** [Introducing Hostname Resolution for Nodes](https://github.com/ray-project/ray/pull/64350) — 1 comments · 2 reactions · open
+- **Pull Request** [\[ci\] Add credential-free redirect-validation premerge check](https://github.com/ray-project/ray/pull/64413) — 1 comments · 1 reactions · closed
+- **Pull Request** [\[Data\] Support appending a subset of columns to a Lance dataset.](https://github.com/ray-project/ray/pull/64474) — 4 comments · 1 reactions · open
+- **Pull Request** [\[docs\] Add a scheduling overview with defaults to the Ray Core scheduling page](https://github.com/ray-project/ray/pull/65264) — 1 comments · 1 reactions · open
+- **Pull Request** [\[Data\] \[5/11\] Add the Parquet FooterReader actor pool](https://github.com/ray-project/ray/pull/65273) — 1 comments · 1 reactions · open
+- **Pull Request** [\[ci\] Count the Vale configuration and the API-consistency checker as documentation content in the docs-go scope guard](https://github.com/ray-project/ray/pull/65342) — 0 comments · 1 reactions · closed
+- **Pull Request** [\[ci\] Remove the banned-words lint check in favor of Vale](https://github.com/ray-project/ray/pull/65368) — 0 comments · 1 reactions · closed
+- **Pull Request** [\[ci\] Record why the Serve request-router API exemptions exist](https://github.com/ray-project/ray/pull/65369) — 0 comments · 1 reactions · closed
 
 ### [BentoML](https://github.com/bentoml/BentoML)
 
-No new or materially changed signals.
+- **Pull Request** [feat: agent skills for deploying BentoML services to Kubernetes, EC2, and SageMaker](https://github.com/bentoml/BentoML/pull/5683) — 0 comments · 0 reactions · open
+- **Pull Request** [fix: Windows tar symlink extraction and fastai CI dependency resolution](https://github.com/bentoml/BentoML/pull/5689) — 0 comments · 0 reactions · open

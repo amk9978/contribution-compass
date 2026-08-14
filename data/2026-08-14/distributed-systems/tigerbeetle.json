@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "date": "2026-08-14",
   "group": {
     "id": "distributed-systems",
@@ -22,15 +22,15 @@
     "topics": [],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 16784,
+    "stars": 16788,
     "forks": 885,
-    "openIssues": 120,
+    "openIssues": 122,
     "archived": false,
-    "collectedAt": "2026-08-14T03:31:27.954533+00:00"
+    "collectedAt": "2026-08-14T18:55:58.419487+00:00"
   },
   "news": {
     "repository": "tigerbeetle/tigerbeetle",
-    "collectedAt": "2026-08-14T03:31:27.954533+00:00",
+    "collectedAt": "2026-08-14T18:55:58.419487+00:00",
     "latestRelease": {
       "repository": "tigerbeetle/tigerbeetle",
       "tag": "0.17.9",
@@ -57,8 +57,322 @@
       "since": "2026-08-13T03:31:25.964050Z",
       "observedCount": 0,
       "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-14T18:55:56.646052Z",
+      "since": "2026-08-13T18:55:56.646052Z",
+      "observedCount": 6,
+      "changedCount": 6
     }
   ],
-  "signals": [],
-  "events": []
+  "signals": [
+    {
+      "id": "github:tigerbeetle/tigerbeetle:pull_request:3787",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "tigerbeetle/tigerbeetle",
+      "kind": "pull_request",
+      "title": "Add Ruby publishing",
+      "text": "This PR adds publishing for the Ruby client. I'll leave more comments as inline PR reviews so they can be read in context.",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3787",
+      "createdAt": "2026-06-10T07:23:26Z",
+      "updatedAt": "2026-08-14T05:06:39Z",
+      "timestamp": "2026-08-14T05:06:39Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "citizen428",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:tigerbeetle/tigerbeetle:pull_request:3795",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "tigerbeetle/tigerbeetle",
+      "kind": "pull_request",
+      "title": "stdx: Add to_case helper",
+      "text": "While researching my current project, I looked for an existing case-conversion function in the codebase. Turns out there's more than one. I don't mean to step on any toes, but I think it could make sense to unify (most of) them in `stdx`. This PR unifies the following functions: - `kebab_case` in `src/cdc/amqp` - `to_uppercase` in `src/clients/c/tb_client_header_test.zig` - `to_uppercase` in `src/clients/c/tb_client_header.zig` - `to_case` in `src/clients/dotnet/dotnet_bindings.zig` - `to_case` in `src/clients/java/java_bindings.zig` - `to_uppercase` in `src/clients/python/python_bindings.zig` - `to_upper_snake` in `src/clients/ruby/ruby_bindings.zig` - `to_uppercase` in `src/clients/rust/rust_bindings.zig` The following functions have not been replaced: - `to_pascal_case` in `src/clients/go/go_bindings.zig` because it has special handling for Go initialisms - `to_snake_case` in `src/clients/ruby/ruby_bindings.zig` because it converts type names, not identifier names I ran all generators locally. They didn't generate any diffs.",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3795",
+      "createdAt": "2026-06-17T08:32:24Z",
+      "updatedAt": "2026-08-14T05:06:28Z",
+      "timestamp": "2026-08-14T05:06:28Z",
+      "metrics": {
+        "reactions": 5,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "citizen428",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:tigerbeetle/tigerbeetle:pull_request:3811",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "tigerbeetle/tigerbeetle",
+      "kind": "pull_request",
+      "title": "clients/ruby: Validate u128 bounds",
+      "text": "As discussed last Friday, this PR addresses potential `u128` overflow for Ruby, similar to #3762. In the process, I also noticed two things: 1. I took a bit of a shortcut in `ruby_bindings.zig` when it came to handling flags and code. Instead of a wider conversion function and casts we're now using narrower conversion functions. 2. The used macro names like `NUM2UINT` etc., are soft-deprecated and `RB_` prefixed versions are preferred now. So I updated that too.",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3811",
+      "createdAt": "2026-06-22T04:04:32Z",
+      "updatedAt": "2026-08-14T05:06:23Z",
+      "timestamp": "2026-08-14T05:06:23Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "citizen428",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:tigerbeetle/tigerbeetle:pull_request:3830",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "tigerbeetle/tigerbeetle",
+      "kind": "pull_request",
+      "title": "clients/ruby: Add `status_name`",
+      "text": "@matklad Based on our discussion yesterday I did two things: 1. Add a new `status_name` attribute that returns the status as a Ruby symbol. `status` still contains the integer to match the wire format. [1] 2. Add a simple `to_s` method to `CreateAccountResult` and `CreateTransferResult` that shows them like this: ``` #<TigerBeetle::CreateAccountResult timestamp=123... status_name=created> ``` This was an entirely mechanical change via the generator, and it improves the user experience a bit. [1] If we ever feel like a breaking change, I think having the symbol as `status` and the actual integer value as `status_code` would feel slightly more idiomatic, but it's also not a big deal leaving it like this.",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3830",
+      "createdAt": "2026-06-25T10:03:32Z",
+      "updatedAt": "2026-08-14T05:06:26Z",
+      "timestamp": "2026-08-14T05:06:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "citizen428",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:tigerbeetle/tigerbeetle:pull_request:3911",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "tigerbeetle/tigerbeetle",
+      "kind": "pull_request",
+      "title": "clients/ruby: Allow symbol arrays for flags",
+      "text": "@matklad We had originally discussed this [here](https://github.com/tigerbeetle/tigerbeetle/pull/3787#discussion_r3386328944). I have no strong opinion either way, but I've had this branch sit around for ~2 months now and think we should just make a call either way and move on. Due to Ruby not having real numeric enums, a lot of code defaults to using symbol arrays in situations like this. As pointed out in the updated migration guide, the named constants are actually nicer because editors can autocomplete them, but the symbol arrays are what most Ruby developers would expect. It's your call really: it makes the code more complex (bad), for a solution that feels more idiomatic (good), but on aggregate is probably slightly inferior (tooling-wise) and deviates from other clients. 🤷‍♂️",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3911",
+      "createdAt": "2026-08-14T07:35:01Z",
+      "updatedAt": "2026-08-14T07:35:23Z",
+      "timestamp": "2026-08-14T07:35:23Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "citizen428",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:tigerbeetle/tigerbeetle:pull_request:3912",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "tigerbeetle/tigerbeetle",
+      "kind": "pull_request",
+      "title": "stdx: Add `safe_response` to `HttpOptions`",
+      "text": "This one may need a bit of backstory. So far, I only mentioned it to @matklad on a call. When working on adding trusted publishing for Ruby (see #3787), I tested the custom Zig code on one of my own Ruby gems first. At that point, the HTTP client in `stdx` was hardcoded to only accept `200 OK` responses. For any other response code, it would log an error message: ```zig log.err(\"response: {s}\", .{response_body}); ``` Unfortunately, the Rubygems.org API returns the new token with a `201 Created` response code, so even though the request was technically successful, it ended up dumping a short-lived auth token into my CI logs, which is less than ideal from a supply-chain security perspective. This is what led me to add the `expected_response_code` option to `HttpOptions` in the above-mentioned PR. However, it always felt like a partial solution because the [RubyGems API docs](https://guides.rubygems.org/rubygems-org-api/#misc-methods) do not specify HTTP status codes for their responses. So if the `POST /api/v1/oidc/trusted_publisher/exchange_token` endpoint ever gets changed to another success code — unlikely as that may be — we'd run the risk of exposing the token. And the same may be true for other requests we're making. So it may not always be safe to assume that the expected error code does not change and that such a change would not potentially expose something we'd rather not expose.",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3912",
+      "createdAt": "2026-08-14T07:57:48Z",
+      "updatedAt": "2026-08-14T08:01:27Z",
+      "timestamp": "2026-08-14T08:01:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "citizen428",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:acce9b889d0995e82dc8",
+      "signalId": "github:tigerbeetle/tigerbeetle:pull_request:3912",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:tigerbeetle/tigerbeetle:pull_request:3912",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "tigerbeetle/tigerbeetle",
+        "kind": "pull_request",
+        "title": "stdx: Add `safe_response` to `HttpOptions`",
+        "text": "This one may need a bit of backstory. So far, I only mentioned it to @matklad on a call. When working on adding trusted publishing for Ruby (see #3787), I tested the custom Zig code on one of my own Ruby gems first. At that point, the HTTP client in `stdx` was hardcoded to only accept `200 OK` responses. For any other response code, it would log an error message: ```zig log.err(\"response: {s}\", .{response_body}); ``` Unfortunately, the Rubygems.org API returns the new token with a `201 Created` response code, so even though the request was technically successful, it ended up dumping a short-lived auth token into my CI logs, which is less than ideal from a supply-chain security perspective. This is what led me to add the `expected_response_code` option to `HttpOptions` in the above-mentioned PR. However, it always felt like a partial solution because the [RubyGems API docs](https://guides.rubygems.org/rubygems-org-api/#misc-methods) do not specify HTTP status codes for their responses. So if the `POST /api/v1/oidc/trusted_publisher/exchange_token` endpoint ever gets changed to another success code — unlikely as that may be — we'd run the risk of exposing the token. And the same may be true for other requests we're making. So it may not always be safe to assume that the expected error code does not change and that such a change would not potentially expose something we'd rather not expose.",
+        "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3912",
+        "createdAt": "2026-08-14T07:57:48Z",
+        "updatedAt": "2026-08-14T08:01:27Z",
+        "timestamp": "2026-08-14T08:01:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "citizen428",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0bc83ab8e260a4f440f7",
+      "signalId": "github:tigerbeetle/tigerbeetle:pull_request:3911",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:tigerbeetle/tigerbeetle:pull_request:3911",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "tigerbeetle/tigerbeetle",
+        "kind": "pull_request",
+        "title": "clients/ruby: Allow symbol arrays for flags",
+        "text": "@matklad We had originally discussed this [here](https://github.com/tigerbeetle/tigerbeetle/pull/3787#discussion_r3386328944). I have no strong opinion either way, but I've had this branch sit around for ~2 months now and think we should just make a call either way and move on. Due to Ruby not having real numeric enums, a lot of code defaults to using symbol arrays in situations like this. As pointed out in the updated migration guide, the named constants are actually nicer because editors can autocomplete them, but the symbol arrays are what most Ruby developers would expect. It's your call really: it makes the code more complex (bad), for a solution that feels more idiomatic (good), but on aggregate is probably slightly inferior (tooling-wise) and deviates from other clients. 🤷‍♂️",
+        "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3911",
+        "createdAt": "2026-08-14T07:35:01Z",
+        "updatedAt": "2026-08-14T07:35:23Z",
+        "timestamp": "2026-08-14T07:35:23Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "citizen428",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:6a603de3326029d60dee",
+      "signalId": "github:tigerbeetle/tigerbeetle:pull_request:3787",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:tigerbeetle/tigerbeetle:pull_request:3787",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "tigerbeetle/tigerbeetle",
+        "kind": "pull_request",
+        "title": "Add Ruby publishing",
+        "text": "This PR adds publishing for the Ruby client. I'll leave more comments as inline PR reviews so they can be read in context.",
+        "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3787",
+        "createdAt": "2026-06-10T07:23:26Z",
+        "updatedAt": "2026-08-14T05:06:39Z",
+        "timestamp": "2026-08-14T05:06:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "citizen428",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:65655e28aa841a5c461f",
+      "signalId": "github:tigerbeetle/tigerbeetle:pull_request:3795",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:tigerbeetle/tigerbeetle:pull_request:3795",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "tigerbeetle/tigerbeetle",
+        "kind": "pull_request",
+        "title": "stdx: Add to_case helper",
+        "text": "While researching my current project, I looked for an existing case-conversion function in the codebase. Turns out there's more than one. I don't mean to step on any toes, but I think it could make sense to unify (most of) them in `stdx`. This PR unifies the following functions: - `kebab_case` in `src/cdc/amqp` - `to_uppercase` in `src/clients/c/tb_client_header_test.zig` - `to_uppercase` in `src/clients/c/tb_client_header.zig` - `to_case` in `src/clients/dotnet/dotnet_bindings.zig` - `to_case` in `src/clients/java/java_bindings.zig` - `to_uppercase` in `src/clients/python/python_bindings.zig` - `to_upper_snake` in `src/clients/ruby/ruby_bindings.zig` - `to_uppercase` in `src/clients/rust/rust_bindings.zig` The following functions have not been replaced: - `to_pascal_case` in `src/clients/go/go_bindings.zig` because it has special handling for Go initialisms - `to_snake_case` in `src/clients/ruby/ruby_bindings.zig` because it converts type names, not identifier names I ran all generators locally. They didn't generate any diffs.",
+        "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3795",
+        "createdAt": "2026-06-17T08:32:24Z",
+        "updatedAt": "2026-08-14T05:06:28Z",
+        "timestamp": "2026-08-14T05:06:28Z",
+        "metrics": {
+          "reactions": 5,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "citizen428",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ce9c8acc8088f2cb09cd",
+      "signalId": "github:tigerbeetle/tigerbeetle:pull_request:3830",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:tigerbeetle/tigerbeetle:pull_request:3830",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "tigerbeetle/tigerbeetle",
+        "kind": "pull_request",
+        "title": "clients/ruby: Add `status_name`",
+        "text": "@matklad Based on our discussion yesterday I did two things: 1. Add a new `status_name` attribute that returns the status as a Ruby symbol. `status` still contains the integer to match the wire format. [1] 2. Add a simple `to_s` method to `CreateAccountResult` and `CreateTransferResult` that shows them like this: ``` #<TigerBeetle::CreateAccountResult timestamp=123... status_name=created> ``` This was an entirely mechanical change via the generator, and it improves the user experience a bit. [1] If we ever feel like a breaking change, I think having the symbol as `status` and the actual integer value as `status_code` would feel slightly more idiomatic, but it's also not a big deal leaving it like this.",
+        "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3830",
+        "createdAt": "2026-06-25T10:03:32Z",
+        "updatedAt": "2026-08-14T05:06:26Z",
+        "timestamp": "2026-08-14T05:06:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "citizen428",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:164b7452ea08aff7d335",
+      "signalId": "github:tigerbeetle/tigerbeetle:pull_request:3811",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:tigerbeetle/tigerbeetle:pull_request:3811",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "tigerbeetle/tigerbeetle",
+        "kind": "pull_request",
+        "title": "clients/ruby: Validate u128 bounds",
+        "text": "As discussed last Friday, this PR addresses potential `u128` overflow for Ruby, similar to #3762. In the process, I also noticed two things: 1. I took a bit of a shortcut in `ruby_bindings.zig` when it came to handling flags and code. Instead of a wider conversion function and casts we're now using narrower conversion functions. 2. The used macro names like `NUM2UINT` etc., are soft-deprecated and `RB_` prefixed versions are preferred now. So I updated that too.",
+        "url": "https://github.com/tigerbeetle/tigerbeetle/pull/3811",
+        "createdAt": "2026-06-22T04:04:32Z",
+        "updatedAt": "2026-08-14T05:06:23Z",
+        "timestamp": "2026-08-14T05:06:23Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "citizen428",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
 }

@@ -23,4 +23,7 @@ Repository: [anthropics/claude-code](https://github.com/anthropics/claude-code)
 
 ## Hacker News discussions
 
-No matching current Hacker News discussion was found.
+- [Maximizing the value of your Claude Code sessions](https://claude.com/blog/maximizing-the-value-of-your-claude-code-sessions) — [59 points · 28 comments](https://news.ycombinator.com/item?id=49300800)
+- [Show HN: Graft – Claude Code hooks that cut grep tokens by 42%](https://github.com/NanoNets/Graft) — [35 points · 36 comments](https://news.ycombinator.com/item?id=49299985)
+
+Community discussion; not maintainer evidence.

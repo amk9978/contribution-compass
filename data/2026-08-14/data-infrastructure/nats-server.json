@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "date": "2026-08-14",
   "group": {
     "id": "data-infrastructure",
@@ -39,15 +39,15 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 20495,
-    "forks": 1904,
-    "openIssues": 541,
+    "stars": 20509,
+    "forks": 1906,
+    "openIssues": 539,
     "archived": false,
-    "collectedAt": "2026-08-14T03:31:34.878785+00:00"
+    "collectedAt": "2026-08-14T18:56:05.066241+00:00"
   },
   "news": {
     "repository": "nats-io/nats-server",
-    "collectedAt": "2026-08-14T03:31:34.878785+00:00",
+    "collectedAt": "2026-08-14T18:56:05.066241+00:00",
     "latestRelease": {
       "repository": "nats-io/nats-server",
       "tag": "v2.14.5",
@@ -74,6 +74,12 @@
       "since": "2026-08-13T03:31:25.964050Z",
       "observedCount": 13,
       "changedCount": 4
+    },
+    {
+      "collectedAt": "2026-08-14T18:55:56.646052Z",
+      "since": "2026-08-13T18:55:56.646052Z",
+      "observedCount": 14,
+      "changedCount": 14
     }
   ],
   "signals": [
@@ -129,6 +135,31 @@
       ]
     },
     {
+      "id": "github:nats-io/nats-server:issue:6307",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "Pod Memory Leak with Gradual Increase on K8S",
+      "text": "### Observed behavior One of the cluster pods exhibits a memory leak, with its memory usage gradually increasing over time, even when there is no abnormal activity. In some cases, the memory usage continues to grow despite having no active streams or consumers. ### Expected behavior The pod's memory usage should remain stable and consistent under normal conditions, without unexpected growth when there are no active streams or consumers. ### Server and client version server version: 2.10.21 ### Host environment Here are some profiles and logs collected from the pod exhibiting this behavior [profiles.zip](https://github.com/user-attachments/files/18270291/profiles.zip) [js-nats-production-2.log](https://github.com/user-attachments/files/18270301/js-nats-production-2.log) <img width=\"1502\" alt=\"image\" src=\"https://github.com/user-attachments/assets/0b69c354-6dc4-4e1c-956d-dacb731b8c77\" /> ### Steps to reproduce _No response_",
+      "url": "https://github.com/nats-io/nats-server/issues/6307",
+      "createdAt": "2024-12-29T16:49:11Z",
+      "updatedAt": "2026-08-14T09:59:33Z",
+      "timestamp": "2026-08-14T09:59:33Z",
+      "metrics": {
+        "reactions": 8,
+        "comments": 20
+      },
+      "labels": [
+        "stale",
+        "defect"
+      ],
+      "author": "sinamna",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:nats-io/nats-server:issue:8346",
       "source": "github",
       "group": "data-infrastructure",
@@ -173,6 +204,28 @@
       "assignees": []
     },
     {
+      "id": "github:nats-io/nats-server:pull_request:8337",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [ADDED] JetStream system-wide asset limits",
+      "text": "Adds two new settings to limit the system-wide number of streams and consumers: `max_streams_total` and `max_consumers_total`. In 2.15 these will get a default value, to protect future users from apps that create runaway consumers into the many millions. This is already partially mitigated by the use of async meta snapshots, but we still need a limit here. Optionally, we could backport the fields before 2.15, but there are two `TODO`s that can only be resolved in 2.15 since all `ForwardProposal` calls will need to be removed to turn the linear scan into just using `js.totalStreams` and `js.totalConsumers` that standalone servers already use.",
+      "url": "https://github.com/nats-io/nats-server/pull/8337",
+      "createdAt": "2026-06-26T15:52:53Z",
+      "updatedAt": "2026-08-14T12:42:22Z",
+      "timestamp": "2026-08-14T12:42:22Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:nats-io/nats-server:pull_request:8384",
       "source": "github",
       "group": "data-infrastructure",
@@ -203,16 +256,17 @@
       "text": "This PR adds initial support for desired state reconciliation of stream and consumer updates that change the peer set. These, and follow-up, changes intend to fix loads of related issues surrounding peer set management of assets. For example, including but not limited to: a scale down not being guaranteed to select the right leader or servers with all data to prevent data loss, peers re-appearing in the stream/consumer Raft group after peer-removing a node, moving and scaling a stream concurrently may brick it such that it's stuck halfway into a move or is reverted back to the previous cluster with the stream config still referencing where it was meant to move to, and a consumer reverting to stale state after a consumer move. This initial PR tries to do the minimal amount of work to have passing CI, while transitioning to a desired state design that allows for guaranteed and safe scaling and moving of assets. Importantly: - The meta leader MUST never overwrite a stream/consumer peer set in-place as it does today. The meta leader may dictate where a stream/consumer needs to move, but the stream/consumer is responsible for making those changes be guaranteed safe. - The meta leader always dictates the peer set, unless the stream/consumer is scaled down, since only the group itself knows which servers would be best to be preserved (i.e. the leader and most up-to-date servers), to guarantee no data loss. Previously the meta leader did a `sysRequest` stream/consumer info to figure out the leader (and for consumer moves the consumer state). Both could result in a stale leader/state being picked. And worse, if the leader doesn't respond in time (or at all), the meta leader would randomly pick a leader (or lose consumer state). This PR allows the removal of `sysRequest` entirely. - Peer additions and removals are managed by the group's leader, no automatic additions of peers are allowed (like for the meta group). Before the group's leader is allowed to make any change, it first needs to communicate with the meta leader to assert that it's up-to-date with the meta state (linearizable and no stale local assignment), and the leader's Raft `term` is also wired through, so the meta leader also knows to ignore requests from stale leaders. This PR allows removing `ProposeKnownPeers` and `UpdateKnownPeers` from `raft.go`, as well as the calls to them in `js.createRaftGroup`, since those were unsafe and could result in removed peers re-appearing, desyncing the peer set in the meta assignment with that of the group. - The stream/consumer `ClusterInfo` now returns the desired state information. Allowing tooling (like the CLI) to inspect the state as it changes. This PR is split in 3 commits, to ease reviewing but also ease backporting to 2.14. Put simply: the first commit adds the models, the second commit adds meta layer reconciliation awareness, and the last commit actually starts populating the desired state and triggering the stream/consumer migration paths. Likely 2.14 will require a compatibility commit to ease downgrading, and upgrading/downgrading as a whole should be tackled in a follow-up PR. However, the design of the desired state always guarantees: the stream/consumer config is always what the user asked it to be, the group's peer set is always the one that equals the underlying Raft group (or if the Raft group contains less peers, they get automatically added under the old behavior). So, worst-case given a downgrade to an incompatible version, the desired state configuration in the JSON will \"fall off\" and the assignment will remain \"stuck\" on which peers it was at that time. That does not violate correctness or safety when it comes to preserving data, it does however prevent the stream/consumer from moving to the desired config. Having passing CI and the mentioned upgrade/downgrade focus isn't enough, and at least these follow-ups will be required in separate PRs: - The system \"move\" and \"move cancel\" APIs should be made more reliable. A \"move\" can simply trigger a peer set change through desired state, and a \"move cancel\" can look at the desired state's origin to see where the stream needs to be moved back to. Both just need time to be wired appropriately. - Server and asset-level peer-remove should be made desired state aware. Additionally, an \"evacuate\" endpoint should be added to enable the user to more easily move streams and consumers off a server while it's still online. Not only easing the decommissioning of a node, but also enabling to move data of R1 assets without losing data when a peer-remove of the node would've been used instead and without requiring to move all R1 assets in all accounts manually. - Add stream move/scale guards. This PR removes the (admittedly brittle) guards to prevent concurrent move and scale of a stream, which allows to scale and move an R1 stream from cluster A to a R3 stream in cluster B in one go and safely. However, this technically opens up being able to constantly cycle moves between clusters until the stream/consumer peer set contain the total number of peers. This should likely get an upper bound, for example 10 peers maximum (since replication is capped at 5), to ensure such moves are still allowed from the API, but the system prevents the peers from growing semi-unbounded. - Optimizations in how and when peers are added, ensuring a group doesn't go out of quorum when nodes are offline. - An additional optimization can be made when moving a stream between clusters, to first scale up one stream replica in the new cluster, making it the leader and then doing local catchup for the other replicas in that cluster. This would allow both faster and less expensive (bandwidth-wise) moves of assets. But, although this is enabled by the desired state approach as well, it might need to be done after 2.15.0 lands considering timing and the other required follow-ups (this isn't a required optimization). These follow-ups are also roughly marked with `FIXME` comments that need to be addressed prior to releasing 2.15.",
       "url": "https://github.com/nats-io/nats-server/pull/8432",
       "createdAt": "2026-07-29T13:15:47Z",
-      "updatedAt": "2026-08-13T09:30:59Z",
-      "timestamp": "2026-08-13T09:30:59Z",
+      "updatedAt": "2026-08-14T09:15:02Z",
+      "timestamp": "2026-08-14T09:15:02Z",
       "metrics": {
         "reactions": 0,
         "comments": 6
       },
       "labels": [],
       "author": "MauriceVanVeen",
-      "state": "open",
-      "assignees": []
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8437",
@@ -224,16 +278,17 @@
       "text": "The move and cancel move endpoints are now wired fully through desired state. The cancel move endpoint can now be reliably used; the first move (either through stream updates or the move endpoint) initialize the \"origin\" which is the peer set and config (replicas, placement and retention) at that time, multiple moves or scales could technically be run even before the full desired state change completes, a cancel will then always roll back to the origin. However, concurrent stream move or scale requests are rejected to keep the peer set bounded, as otherwise cycling moves between clusters or cycling between replication counts could result in all peers being admitted larger than `2*replicas`. This restriction does not apply to consumers, they can be freely scaled within the stream's peer set. This PR additionally fixes the JS lock being released and re-acquired before calling `jsa.configUpdateCheck`, and ensures legacy moves are translated to desired state properly and can be rolled back through the improved cancel move endpoint as well. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8437",
       "createdAt": "2026-07-30T18:47:50Z",
-      "updatedAt": "2026-08-13T09:48:16Z",
-      "timestamp": "2026-08-13T09:48:16Z",
+      "updatedAt": "2026-08-14T09:15:02Z",
+      "timestamp": "2026-08-14T09:15:02Z",
       "metrics": {
         "reactions": 0,
         "comments": 5
       },
       "labels": [],
       "author": "MauriceVanVeen",
-      "state": "open",
-      "assignees": []
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8439",
@@ -245,16 +300,17 @@
       "text": "The retention and placement from the stream's config must always return the latest state the user requested, and the desired state contains the 'origin' if needed. Before this PR the stream would already keep running under Limits if it was updated to Interest retention, since this allows the consumers to be scaled up to have parity with the stream's replication first, and only after safely switch the retention to Interest. But this would also result in the stream config in stream info and update responses as well as JSZ showing up as the 'origin' retention and placement instead of the latest values. This PR fixes that by always returning the latest state, and only the desired origin contains the previous value as expected. Additionally, it ensures the desired origin is always set, even when it's registered through a retention change, such that it can be canceled through the 'cancel move' endpoint. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8439",
       "createdAt": "2026-07-31T11:37:26Z",
-      "updatedAt": "2026-08-13T09:52:28Z",
-      "timestamp": "2026-08-13T09:52:28Z",
+      "updatedAt": "2026-08-14T09:15:03Z",
+      "timestamp": "2026-08-14T09:15:03Z",
       "metrics": {
         "reactions": 1,
         "comments": 5
       },
       "labels": [],
       "author": "MauriceVanVeen",
-      "state": "open",
-      "assignees": []
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8443",
@@ -266,17 +322,61 @@
       "text": "This PR wires peer removals and additions into desired state. - `reconcilePeerAssignments` runs on a meta leader change, so proposals that were missed or only partially applied can be retried by the next leader. - Peer additions through `processAddPeer` now also obey the rules of `cc.selectPeerGroup`, which requires waiting for STATSZ info if it isn't yet available for the newly added node. - A new set of \"peer evacuate\" endpoints (`$JS.API.STREAM.PEER.EVACUATE.<stream>` and, for the system account, `$JS.API.SERVER.EVACUATE`) offers the same semantics as peer-remove while not immediately removing the peer, so it can cooperate in catching up the new peer. This also allows evacuating all R1 streams of a server that is to be decommissioned ahead of time, whereas a peer-remove of a server hosting an R1 stream does get a new server assigned but would otherwise lose all data. `reconcilePeerAssignments` scans every stream and consumer assignment on each meta leader change and peer add, benchmarked locally at ~100-290 ms for 100k streams/500k consumers, under `js.mu`. That is purely a no-op scan; actually reconciling is significantly more expensive, since each affected assignment's proposal needs to be retried. A large contributor is `selectPeerGroup`, which loops over all stream assignments per call to determine HA asset counts. This is not addressed in this PR, but noted for clarity, and `selectPeerGroup` can only be made faster once all `meta.ForwardProposal` calls are gone since we can then purely rely on atomics. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8443",
       "createdAt": "2026-08-07T18:06:36Z",
-      "updatedAt": "2026-08-13T19:24:01Z",
-      "timestamp": "2026-08-13T19:24:01Z",
+      "updatedAt": "2026-08-14T09:15:03Z",
+      "timestamp": "2026-08-14T09:15:03Z",
       "metrics": {
         "reactions": 1,
         "comments": 5
       },
       "labels": [],
       "author": "MauriceVanVeen",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8445",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) Raft proposal fast path",
+      "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+      "url": "https://github.com/nats-io/nats-server/pull/8445",
+      "createdAt": "2026-08-10T09:01:52Z",
+      "updatedAt": "2026-08-14T16:04:55Z",
+      "timestamp": "2026-08-14T16:04:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8447",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+      "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+      "url": "https://github.com/nats-io/nats-server/pull/8447",
+      "createdAt": "2026-08-10T10:58:45Z",
+      "updatedAt": "2026-08-14T16:11:18Z",
+      "timestamp": "2026-08-14T16:11:18Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     },
     {
       "id": "github:nats-io/nats-server:pull_request:8452",
@@ -288,15 +388,15 @@
       "text": "If a stream/consumer Raft group was below quorum, it wasn't possible to safely peer-remove nodes to get into quorum again. This PR fixes that by allowing nodes to be evicted when below quorum, but only those nodes that were explicitly peer-removed. Given a R3 stream without quorum due to 2 nodes being offline, it's now possible to peer-remove those two offline nodes and the stream will become operational again, albeit it at R1. If new peers were assigned to the stream, the stream would automatically scale up to R3, but on the new peers. The desired state gets a new `rg.Desired.Removed` field that contains the set of explicitly peer-removed nodes, which are eligible for eviction if below quorum. Eviction is only allowed if this node thinks the stream/consumer Raft group is leaderless, it is not leaderless on the meta layer, it has desired state that specifies removed peers, and the node itself is still part of the group's peer set. A safety check also prevents eviction if the remaining peers could form a disjoint majority. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8452",
       "createdAt": "2026-08-11T14:10:44Z",
-      "updatedAt": "2026-08-13T19:51:21Z",
-      "timestamp": "2026-08-13T19:51:21Z",
+      "updatedAt": "2026-08-14T09:15:04Z",
+      "timestamp": "2026-08-14T09:15:04Z",
       "metrics": {
         "reactions": 1,
         "comments": 5
       },
       "labels": [],
       "author": "MauriceVanVeen",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -310,15 +410,15 @@
       "text": "This PR fixes two remaining issues, and removes the final two FIXMEs: - Migrations would add peers as fast as possible, without checking whether the peer being added was even online. Adding an offline peer grows the quorum size, which could drop the group out of quorum until enough nodes came online. `selectPeerToAdd` now prefers the candidate we've heard from most recently, and only adds an unheard peer if the live members still reach quorum in the grown group. - Migrations also didn't wait for upper-layer stream catchup to complete before removing old peers. An old peer is now only removed if the group left after the removal retains a store-current majority, based on `Current`/`Lag` and the stream's active `catchupPeers`. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
       "url": "https://github.com/nats-io/nats-server/pull/8460",
       "createdAt": "2026-08-12T16:02:04Z",
-      "updatedAt": "2026-08-13T19:51:23Z",
-      "timestamp": "2026-08-13T19:51:23Z",
+      "updatedAt": "2026-08-14T09:15:04Z",
+      "timestamp": "2026-08-14T09:15:04Z",
       "metrics": {
         "reactions": 1,
         "comments": 5
       },
       "labels": [],
       "author": "MauriceVanVeen",
-      "state": "open",
+      "state": "closed",
       "assignees": [],
       "change": "updated"
     },
@@ -362,6 +462,93 @@
       "author": "sciascid",
       "state": "closed",
       "assignees": []
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8463",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "Make reverse response map removal constant time",
+      "text": "Relates to #6307. ## Problem A client may reuse a single reply subject across many concurrent service import requests. Nothing forbids this, and `nats.go`'s legacy pull subscription `Fetch` does exactly that — `newFetchInbox` returns the subscription's inbox unchanged for a non-wildcard subject, so every pull request on that subscription shares one reply subject. Every outstanding response for a reply subject is appended to one slice in `Account.imports.rrMap`, and `_checkForReverseEntry` removes an entry by scanning that slice for a matching response subject: ```go for i, sre := range sres { if sre.msub == si.from { sres = append(sres[:i], sres[i+1:]...) break } } ``` When entries share a reply subject the slice length tracks the number of outstanding responses, so each removal is O(n) and clearing them all is O(n²). That matters because `checkExpiredResponses` walks every outstanding response on each pass and re-arms its timer only once the pass has finished. Past a certain backlog a pass no longer completes within the response threshold, so the reaper falls permanently behind: the backlog grows, the next pass gets slower, and the account's memory grows without bound. We hit this on a production cluster where one `$SYS` response map reached ~1.5M entries with ~1.18M of them under a single reply subject, on a server pinned at ~1100–1400% CPU. Restarting the server is currently the only way out. This is, I believe, the mechanism behind #6307, which we opened in Dec 2024 and where we posted heap profiles and `accountz` captures in May: the in-use heap on the affected pods is dominated by `addRespServiceImport` / `addReverseRespMapEntry` / `setupResponseServiceImport`, the entries sit on the system account's `exports.responses`, and the source is the auto-injected `$JS.API.>` import that `enableAllJetStreamServiceImportsAndMappings` creates for every JetStream-enabled account. What we could not explain at the time was why the entries were not simply expiring at the 2 minute response threshold. The answer is that they are, but the reaper cannot keep up once removal has gone quadratic, so it falls behind and never catches back up. That also explains an observation from that thread which puzzled us: the bloated pod was sometimes an API hot-spot and sometimes held zero stream leaders, because what matters is not how much JetStream work the node does, but whether a client on that node reuses one reply subject. `$JS.API.CONSUMER.MSG.NEXT` is already special-cased in `processServiceImport` for what looks like this reason, but every other JS API call and every user-defined service export still take this path. ## Change Keep the slice — that is what the common case wants, since reply subjects are normally unique per request and the list holds a single entry — but build an index once a reply subject accumulates more than `rrIndexThreshold` (16) outstanding responses. Removal then swaps with the last entry instead of shifting, and finds its target through the index. This also makes the removal path key off `reply` consistently. It previously looked the entry up under `reply` but wrote the remainder back under `si.to`, which differ whenever the import maps the subject. ## Numbers Cleaning up n responses that share one reply subject: | n | before | after | per entry before | per entry after | |---|---|---|---|---| | 5000 | 19ms | 1ms | 3.8µs | 0.1µs | | 10000 | 65ms | 1ms | 6.5µs | 0.1µs | | 20000 | 219ms | 3ms | 10.9µs | 0.1µs | | 40000 | 895ms | 5ms | 22.4µs | 0.1µs | Before, per-entry cost doubles as n doubles. After, it is flat. For the common case of unique reply subjects, where the index is never allocated, there is no meaningful change: **380.6 vs 370.2 bytes** per outstanding request, measured over 50k requests each with its own reply subject. An earlier version of this patch replaced the slice with a plain `map[string]*serviceRespEntry` and cost 590.1 bytes per request, which is why the threshold exists. ## Testing `TestServiceImportReverseEntriesSharedReplySubject` covers both the unindexed and indexed paths, and asserts the index stays in sync with the list as entries are removed one at a time. Note the previous behaviour was correct, only slow, so this test guards the invariant this change introduces rather than reproducing a wrong result. I ran `go test ./server -run 'Service|Import|Export|Response|Account|Latency'` on this branch and on `main` for comparison. `main` passed; this branch passed on a second run but on the first run hit `TestLeafNodeWithWeightedDQRequestsToSuperClusterWithSeparateAccounts` failing its final `require_True(t, r2.Load() > r1.Load())`. That test drains subscribers based on `rand.Intn(6) > 4` and then asserts a distribution, and it passes 12/12 in isolation on both this branch and `main`, so I believe it is unrelated flakiness — but I am flagging it rather than hiding it, in case you read it differently. I have not run the full suite, only that subset plus the JetStream tests touching accounts. Happy to run more, or to rework the approach if you would rather solve this a different way — for instance by bounding the reaper's work per pass instead, which the `TODO(dlc)` in `processServiceImport` hints at.",
+      "url": "https://github.com/nats-io/nats-server/pull/8463",
+      "createdAt": "2026-08-14T07:52:00Z",
+      "updatedAt": "2026-08-14T09:59:07Z",
+      "timestamp": "2026-08-14T09:59:07Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "1995parham",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8464",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Reject stream update to replicas > 1 in non-clustered mode",
+      "url": "https://github.com/nats-io/nats-server/pull/8464",
+      "createdAt": "2026-08-14T10:07:56Z",
+      "updatedAt": "2026-08-14T10:39:16Z",
+      "timestamp": "2026-08-14T10:39:16Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8465",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Missing stream snapshot on shutdown, plus test de-flakes",
+      "text": "Two problems prevented a stream from snapshotting on shutdown: - `doSnapshot` suppressed the snapshot when an async checkpoint was still in progress (`errSnapInProgress`) or when `failedSnapshots > 0`. On shutdown we now bypass both and force-install directly, which aborts any in-flight checkpoint. `TestNRGForcedInstallSnapshotAbortsInProgressCheckpoint` covers that the aborted checkpoint can no longer load or install, and that its late `Abort()` doesn't cancel the freshly installed snapshot. (This was already the case before this PR, but now has test coverage) - `monitorQuitC` recreated `mset.mqch` when it was nil, so a monitor goroutine starting after `stopMonitoring` had already signaled would wait on a channel that would never close, and `stopMonitoring` would block on `monitorWg` forever. It now returns a pre-closed channel instead; `startMonitorWg` creates the quit channel and skips it when the stream is closed or closing. `stream.stop` now waits for the monitor routine when shutting down (and not deleting), so the shutdown snapshot actually completes before teardown continues. Also de-flakes `TestJetStreamClusterAsyncFlushBasics` and `TestJetStreamClusterCreateR3StreamWithOfflineNodes`, and fixes a data race on `Group.node` in the health check test helpers. Various tests also started flaking with `JetStream system temporarily unavailable` due to consistently changing to `lostQuorumInterval` in https://github.com/nats-io/nats-server/pull/8452, the test-only 2s is bumped to 5s.",
+      "url": "https://github.com/nats-io/nats-server/pull/8465",
+      "createdAt": "2026-08-14T11:53:36Z",
+      "updatedAt": "2026-08-14T18:55:04Z",
+      "timestamp": "2026-08-14T18:55:04Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8466",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [IMPROVED] Meta consumer assignment APIs & counter-based asset limits",
+      "text": "This PR addresses the TODOs marked in https://github.com/nats-io/nats-server/pull/8337: - Replace the `meta.ForwardProposal` calls that add or remove consumers with meta leader APIs. A forwarded proposal is appended verbatim without the meta leader's upper layer ever seeing it, so it skips validation and inflight tracking. - With those gone, the system-wide asset totals can be tracked reliably in the meta apply path, since every assignment change now goes through the leader. - Enforces the cluster-wide limits from those totals plus the inflight pending delta, replacing the linear scan over all assignments. Follow-up of https://github.com/nats-io/nats-server/pull/8337",
+      "url": "https://github.com/nats-io/nats-server/pull/8466",
+      "createdAt": "2026-08-14T15:01:05Z",
+      "updatedAt": "2026-08-14T15:15:47Z",
+      "timestamp": "2026-08-14T15:15:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
     }
   ],
   "events": [
@@ -491,6 +678,432 @@
         ],
         "author": "SomeshDaga",
         "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d06d8b527d73af57f70f",
+      "signalId": "github:nats-io/nats-server:pull_request:8465",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8465",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Missing stream snapshot on shutdown, plus test de-flakes",
+        "text": "Two problems prevented a stream from snapshotting on shutdown: - `doSnapshot` suppressed the snapshot when an async checkpoint was still in progress (`errSnapInProgress`) or when `failedSnapshots > 0`. On shutdown we now bypass both and force-install directly, which aborts any in-flight checkpoint. `TestNRGForcedInstallSnapshotAbortsInProgressCheckpoint` covers that the aborted checkpoint can no longer load or install, and that its late `Abort()` doesn't cancel the freshly installed snapshot. (This was already the case before this PR, but now has test coverage) - `monitorQuitC` recreated `mset.mqch` when it was nil, so a monitor goroutine starting after `stopMonitoring` had already signaled would wait on a channel that would never close, and `stopMonitoring` would block on `monitorWg` forever. It now returns a pre-closed channel instead; `startMonitorWg` creates the quit channel and skips it when the stream is closed or closing. `stream.stop` now waits for the monitor routine when shutting down (and not deleting), so the shutdown snapshot actually completes before teardown continues. Also de-flakes `TestJetStreamClusterAsyncFlushBasics` and `TestJetStreamClusterCreateR3StreamWithOfflineNodes`, and fixes a data race on `Group.node` in the health check test helpers. Various tests also started flaking with `JetStream system temporarily unavailable` due to consistently changing to `lostQuorumInterval` in https://github.com/nats-io/nats-server/pull/8452, the test-only 2s is bumped to 5s.",
+        "url": "https://github.com/nats-io/nats-server/pull/8465",
+        "createdAt": "2026-08-14T11:53:36Z",
+        "updatedAt": "2026-08-14T18:55:04Z",
+        "timestamp": "2026-08-14T18:55:04Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:09d974f31132a6b13eae",
+      "signalId": "github:nats-io/nats-server:pull_request:8447",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8447",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+        "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+        "url": "https://github.com/nats-io/nats-server/pull/8447",
+        "createdAt": "2026-08-10T10:58:45Z",
+        "updatedAt": "2026-08-14T16:11:18Z",
+        "timestamp": "2026-08-14T16:11:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5523047af9a56c97be1a",
+      "signalId": "github:nats-io/nats-server:pull_request:8445",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8445",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) Raft proposal fast path",
+        "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+        "url": "https://github.com/nats-io/nats-server/pull/8445",
+        "createdAt": "2026-08-10T09:01:52Z",
+        "updatedAt": "2026-08-14T16:04:55Z",
+        "timestamp": "2026-08-14T16:04:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:987e1ceb126aa0163297",
+      "signalId": "github:nats-io/nats-server:pull_request:8466",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8466",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [IMPROVED] Meta consumer assignment APIs & counter-based asset limits",
+        "text": "This PR addresses the TODOs marked in https://github.com/nats-io/nats-server/pull/8337: - Replace the `meta.ForwardProposal` calls that add or remove consumers with meta leader APIs. A forwarded proposal is appended verbatim without the meta leader's upper layer ever seeing it, so it skips validation and inflight tracking. - With those gone, the system-wide asset totals can be tracked reliably in the meta apply path, since every assignment change now goes through the leader. - Enforces the cluster-wide limits from those totals plus the inflight pending delta, replacing the linear scan over all assignments. Follow-up of https://github.com/nats-io/nats-server/pull/8337",
+        "url": "https://github.com/nats-io/nats-server/pull/8466",
+        "createdAt": "2026-08-14T15:01:05Z",
+        "updatedAt": "2026-08-14T15:15:47Z",
+        "timestamp": "2026-08-14T15:15:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f379e6d3fd6126713058",
+      "signalId": "github:nats-io/nats-server:pull_request:8337",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8337",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [ADDED] JetStream system-wide asset limits",
+        "text": "Adds two new settings to limit the system-wide number of streams and consumers: `max_streams_total` and `max_consumers_total`. In 2.15 these will get a default value, to protect future users from apps that create runaway consumers into the many millions. This is already partially mitigated by the use of async meta snapshots, but we still need a limit here. Optionally, we could backport the fields before 2.15, but there are two `TODO`s that can only be resolved in 2.15 since all `ForwardProposal` calls will need to be removed to turn the linear scan into just using `js.totalStreams` and `js.totalConsumers` that standalone servers already use.",
+        "url": "https://github.com/nats-io/nats-server/pull/8337",
+        "createdAt": "2026-06-26T15:52:53Z",
+        "updatedAt": "2026-08-14T12:42:22Z",
+        "timestamp": "2026-08-14T12:42:22Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:adec3541509eda5fc4d8",
+      "signalId": "github:nats-io/nats-server:pull_request:8464",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8464",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Reject stream update to replicas > 1 in non-clustered mode",
+        "url": "https://github.com/nats-io/nats-server/pull/8464",
+        "createdAt": "2026-08-14T10:07:56Z",
+        "updatedAt": "2026-08-14T10:39:16Z",
+        "timestamp": "2026-08-14T10:39:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9859735d292edda50052",
+      "signalId": "github:nats-io/nats-server:issue:6307",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:6307",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "Pod Memory Leak with Gradual Increase on K8S",
+        "text": "### Observed behavior One of the cluster pods exhibits a memory leak, with its memory usage gradually increasing over time, even when there is no abnormal activity. In some cases, the memory usage continues to grow despite having no active streams or consumers. ### Expected behavior The pod's memory usage should remain stable and consistent under normal conditions, without unexpected growth when there are no active streams or consumers. ### Server and client version server version: 2.10.21 ### Host environment Here are some profiles and logs collected from the pod exhibiting this behavior [profiles.zip](https://github.com/user-attachments/files/18270291/profiles.zip) [js-nats-production-2.log](https://github.com/user-attachments/files/18270301/js-nats-production-2.log) <img width=\"1502\" alt=\"image\" src=\"https://github.com/user-attachments/assets/0b69c354-6dc4-4e1c-956d-dacb731b8c77\" /> ### Steps to reproduce _No response_",
+        "url": "https://github.com/nats-io/nats-server/issues/6307",
+        "createdAt": "2024-12-29T16:49:11Z",
+        "updatedAt": "2026-08-14T09:59:33Z",
+        "timestamp": "2026-08-14T09:59:33Z",
+        "metrics": {
+          "reactions": 8,
+          "comments": 20
+        },
+        "labels": [
+          "stale",
+          "defect"
+        ],
+        "author": "sinamna",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f224b5c6b5e019a22984",
+      "signalId": "github:nats-io/nats-server:pull_request:8463",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8463",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "Make reverse response map removal constant time",
+        "text": "Relates to #6307. ## Problem A client may reuse a single reply subject across many concurrent service import requests. Nothing forbids this, and `nats.go`'s legacy pull subscription `Fetch` does exactly that — `newFetchInbox` returns the subscription's inbox unchanged for a non-wildcard subject, so every pull request on that subscription shares one reply subject. Every outstanding response for a reply subject is appended to one slice in `Account.imports.rrMap`, and `_checkForReverseEntry` removes an entry by scanning that slice for a matching response subject: ```go for i, sre := range sres { if sre.msub == si.from { sres = append(sres[:i], sres[i+1:]...) break } } ``` When entries share a reply subject the slice length tracks the number of outstanding responses, so each removal is O(n) and clearing them all is O(n²). That matters because `checkExpiredResponses` walks every outstanding response on each pass and re-arms its timer only once the pass has finished. Past a certain backlog a pass no longer completes within the response threshold, so the reaper falls permanently behind: the backlog grows, the next pass gets slower, and the account's memory grows without bound. We hit this on a production cluster where one `$SYS` response map reached ~1.5M entries with ~1.18M of them under a single reply subject, on a server pinned at ~1100–1400% CPU. Restarting the server is currently the only way out. This is, I believe, the mechanism behind #6307, which we opened in Dec 2024 and where we posted heap profiles and `accountz` captures in May: the in-use heap on the affected pods is dominated by `addRespServiceImport` / `addReverseRespMapEntry` / `setupResponseServiceImport`, the entries sit on the system account's `exports.responses`, and the source is the auto-injected `$JS.API.>` import that `enableAllJetStreamServiceImportsAndMappings` creates for every JetStream-enabled account. What we could not explain at the time was why the entries were not simply expiring at the 2 minute response threshold. The answer is that they are, but the reaper cannot keep up once removal has gone quadratic, so it falls behind and never catches back up. That also explains an observation from that thread which puzzled us: the bloated pod was sometimes an API hot-spot and sometimes held zero stream leaders, because what matters is not how much JetStream work the node does, but whether a client on that node reuses one reply subject. `$JS.API.CONSUMER.MSG.NEXT` is already special-cased in `processServiceImport` for what looks like this reason, but every other JS API call and every user-defined service export still take this path. ## Change Keep the slice — that is what the common case wants, since reply subjects are normally unique per request and the list holds a single entry — but build an index once a reply subject accumulates more than `rrIndexThreshold` (16) outstanding responses. Removal then swaps with the last entry instead of shifting, and finds its target through the index. This also makes the removal path key off `reply` consistently. It previously looked the entry up under `reply` but wrote the remainder back under `si.to`, which differ whenever the import maps the subject. ## Numbers Cleaning up n responses that share one reply subject: | n | before | after | per entry before | per entry after | |---|---|---|---|---| | 5000 | 19ms | 1ms | 3.8µs | 0.1µs | | 10000 | 65ms | 1ms | 6.5µs | 0.1µs | | 20000 | 219ms | 3ms | 10.9µs | 0.1µs | | 40000 | 895ms | 5ms | 22.4µs | 0.1µs | Before, per-entry cost doubles as n doubles. After, it is flat. For the common case of unique reply subjects, where the index is never allocated, there is no meaningful change: **380.6 vs 370.2 bytes** per outstanding request, measured over 50k requests each with its own reply subject. An earlier version of this patch replaced the slice with a plain `map[string]*serviceRespEntry` and cost 590.1 bytes per request, which is why the threshold exists. ## Testing `TestServiceImportReverseEntriesSharedReplySubject` covers both the unindexed and indexed paths, and asserts the index stays in sync with the list as entries are removed one at a time. Note the previous behaviour was correct, only slow, so this test guards the invariant this change introduces rather than reproducing a wrong result. I ran `go test ./server -run 'Service|Import|Export|Response|Account|Latency'` on this branch and on `main` for comparison. `main` passed; this branch passed on a second run but on the first run hit `TestLeafNodeWithWeightedDQRequestsToSuperClusterWithSeparateAccounts` failing its final `require_True(t, r2.Load() > r1.Load())`. That test drains subscribers based on `rand.Intn(6) > 4` and then asserts a distribution, and it passes 12/12 in isolation on both this branch and `main`, so I believe it is unrelated flakiness — but I am flagging it rather than hiding it, in case you read it differently. I have not run the full suite, only that subset plus the JetStream tests touching accounts. Happy to run more, or to rework the approach if you would rather solve this a different way — for instance by bounding the reaper's work per pass instead, which the `TODO(dlc)` in `processServiceImport` hints at.",
+        "url": "https://github.com/nats-io/nats-server/pull/8463",
+        "createdAt": "2026-08-14T07:52:00Z",
+        "updatedAt": "2026-08-14T09:59:07Z",
+        "timestamp": "2026-08-14T09:59:07Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "1995parham",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f08524bfef6c6290f8a8",
+      "signalId": "github:nats-io/nats-server:pull_request:8460",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8460",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] Migration added offline peers & removed peers before catchup",
+        "text": "This PR fixes two remaining issues, and removes the final two FIXMEs: - Migrations would add peers as fast as possible, without checking whether the peer being added was even online. Adding an offline peer grows the quorum size, which could drop the group out of quorum until enough nodes came online. `selectPeerToAdd` now prefers the candidate we've heard from most recently, and only adds an unheard peer if the live members still reach quorum in the grown group. - Migrations also didn't wait for upper-layer stream catchup to complete before removing old peers. An old peer is now only removed if the group left after the removal retains a store-current majority, based on `Current`/`Lag` and the stream's active `catchupPeers`. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8460",
+        "createdAt": "2026-08-12T16:02:04Z",
+        "updatedAt": "2026-08-14T09:15:04Z",
+        "timestamp": "2026-08-14T09:15:04Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e3cb798d55982a9d6856",
+      "signalId": "github:nats-io/nats-server:pull_request:8452",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8452",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] Evict peer-removed peers for group below quorum",
+        "text": "If a stream/consumer Raft group was below quorum, it wasn't possible to safely peer-remove nodes to get into quorum again. This PR fixes that by allowing nodes to be evicted when below quorum, but only those nodes that were explicitly peer-removed. Given a R3 stream without quorum due to 2 nodes being offline, it's now possible to peer-remove those two offline nodes and the stream will become operational again, albeit it at R1. If new peers were assigned to the stream, the stream would automatically scale up to R3, but on the new peers. The desired state gets a new `rg.Desired.Removed` field that contains the set of explicitly peer-removed nodes, which are eligible for eviction if below quorum. Eviction is only allowed if this node thinks the stream/consumer Raft group is leaderless, it is not leaderless on the meta layer, it has desired state that specifies removed peers, and the node itself is still part of the group's peer set. A safety check also prevents eviction if the remaining peers could form a disjoint majority. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8452",
+        "createdAt": "2026-08-11T14:10:44Z",
+        "updatedAt": "2026-08-14T09:15:04Z",
+        "timestamp": "2026-08-14T09:15:04Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:cf250bdb08c160ff5ede",
+      "signalId": "github:nats-io/nats-server:pull_request:8443",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8443",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [ADDED] Peer evacuation and reconciliation of assignments",
+        "text": "This PR wires peer removals and additions into desired state. - `reconcilePeerAssignments` runs on a meta leader change, so proposals that were missed or only partially applied can be retried by the next leader. - Peer additions through `processAddPeer` now also obey the rules of `cc.selectPeerGroup`, which requires waiting for STATSZ info if it isn't yet available for the newly added node. - A new set of \"peer evacuate\" endpoints (`$JS.API.STREAM.PEER.EVACUATE.<stream>` and, for the system account, `$JS.API.SERVER.EVACUATE`) offers the same semantics as peer-remove while not immediately removing the peer, so it can cooperate in catching up the new peer. This also allows evacuating all R1 streams of a server that is to be decommissioned ahead of time, whereas a peer-remove of a server hosting an R1 stream does get a new server assigned but would otherwise lose all data. `reconcilePeerAssignments` scans every stream and consumer assignment on each meta leader change and peer add, benchmarked locally at ~100-290 ms for 100k streams/500k consumers, under `js.mu`. That is purely a no-op scan; actually reconciling is significantly more expensive, since each affected assignment's proposal needs to be retried. A large contributor is `selectPeerGroup`, which loops over all stream assignments per call to determine HA asset counts. This is not addressed in this PR, but noted for clarity, and `selectPeerGroup` can only be made faster once all `meta.ForwardProposal` calls are gone since we can then purely rely on atomics. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8443",
+        "createdAt": "2026-08-07T18:06:36Z",
+        "updatedAt": "2026-08-14T09:15:03Z",
+        "timestamp": "2026-08-14T09:15:03Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:26a45eb97036d578dcca",
+      "signalId": "github:nats-io/nats-server:pull_request:8439",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8439",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [ADDED] Report requested stream config while running at desired origin",
+        "text": "The retention and placement from the stream's config must always return the latest state the user requested, and the desired state contains the 'origin' if needed. Before this PR the stream would already keep running under Limits if it was updated to Interest retention, since this allows the consumers to be scaled up to have parity with the stream's replication first, and only after safely switch the retention to Interest. But this would also result in the stream config in stream info and update responses as well as JSZ showing up as the 'origin' retention and placement instead of the latest values. This PR fixes that by always returning the latest state, and only the desired origin contains the previous value as expected. Additionally, it ensures the desired origin is always set, even when it's registered through a retention change, such that it can be canceled through the 'cancel move' endpoint. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8439",
+        "createdAt": "2026-07-31T11:37:26Z",
+        "updatedAt": "2026-08-14T09:15:03Z",
+        "timestamp": "2026-08-14T09:15:03Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:55e7944d65f14e7be457",
+      "signalId": "github:nats-io/nats-server:pull_request:8437",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8437",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [ADDED] Drive stream move and cancel move via desired state",
+        "text": "The move and cancel move endpoints are now wired fully through desired state. The cancel move endpoint can now be reliably used; the first move (either through stream updates or the move endpoint) initialize the \"origin\" which is the peer set and config (replicas, placement and retention) at that time, multiple moves or scales could technically be run even before the full desired state change completes, a cancel will then always roll back to the origin. However, concurrent stream move or scale requests are rejected to keep the peer set bounded, as otherwise cycling moves between clusters or cycling between replication counts could result in all peers being admitted larger than `2*replicas`. This restriction does not apply to consumers, they can be freely scaled within the stream's peer set. This PR additionally fixes the JS lock being released and re-acquired before calling `jsa.configUpdateCheck`, and ensures legacy moves are translated to desired state properly and can be rolled back through the improved cancel move endpoint as well. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8437",
+        "createdAt": "2026-07-30T18:47:50Z",
+        "updatedAt": "2026-08-14T09:15:02Z",
+        "timestamp": "2026-08-14T09:15:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:15c0e16183c7caa64955",
+      "signalId": "github:nats-io/nats-server:pull_request:8432",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8432",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [ADDED] Desired state reconcilitation for scaling and moves",
+        "text": "This PR adds initial support for desired state reconciliation of stream and consumer updates that change the peer set. These, and follow-up, changes intend to fix loads of related issues surrounding peer set management of assets. For example, including but not limited to: a scale down not being guaranteed to select the right leader or servers with all data to prevent data loss, peers re-appearing in the stream/consumer Raft group after peer-removing a node, moving and scaling a stream concurrently may brick it such that it's stuck halfway into a move or is reverted back to the previous cluster with the stream config still referencing where it was meant to move to, and a consumer reverting to stale state after a consumer move. This initial PR tries to do the minimal amount of work to have passing CI, while transitioning to a desired state design that allows for guaranteed and safe scaling and moving of assets. Importantly: - The meta leader MUST never overwrite a stream/consumer peer set in-place as it does today. The meta leader may dictate where a stream/consumer needs to move, but the stream/consumer is responsible for making those changes be guaranteed safe. - The meta leader always dictates the peer set, unless the stream/consumer is scaled down, since only the group itself knows which servers would be best to be preserved (i.e. the leader and most up-to-date servers), to guarantee no data loss. Previously the meta leader did a `sysRequest` stream/consumer info to figure out the leader (and for consumer moves the consumer state). Both could result in a stale leader/state being picked. And worse, if the leader doesn't respond in time (or at all), the meta leader would randomly pick a leader (or lose consumer state). This PR allows the removal of `sysRequest` entirely. - Peer additions and removals are managed by the group's leader, no automatic additions of peers are allowed (like for the meta group). Before the group's leader is allowed to make any change, it first needs to communicate with the meta leader to assert that it's up-to-date with the meta state (linearizable and no stale local assignment), and the leader's Raft `term` is also wired through, so the meta leader also knows to ignore requests from stale leaders. This PR allows removing `ProposeKnownPeers` and `UpdateKnownPeers` from `raft.go`, as well as the calls to them in `js.createRaftGroup`, since those were unsafe and could result in removed peers re-appearing, desyncing the peer set in the meta assignment with that of the group. - The stream/consumer `ClusterInfo` now returns the desired state information. Allowing tooling (like the CLI) to inspect the state as it changes. This PR is split in 3 commits, to ease reviewing but also ease backporting to 2.14. Put simply: the first commit adds the models, the second commit adds meta layer reconciliation awareness, and the last commit actually starts populating the desired state and triggering the stream/consumer migration paths. Likely 2.14 will require a compatibility commit to ease downgrading, and upgrading/downgrading as a whole should be tackled in a follow-up PR. However, the design of the desired state always guarantees: the stream/consumer config is always what the user asked it to be, the group's peer set is always the one that equals the underlying Raft group (or if the Raft group contains less peers, they get automatically added under the old behavior). So, worst-case given a downgrade to an incompatible version, the desired state configuration in the JSON will \"fall off\" and the assignment will remain \"stuck\" on which peers it was at that time. That does not violate correctness or safety when it comes to preserving data, it does however prevent the stream/consumer from moving to the desired config. Having passing CI and the mentioned upgrade/downgrade focus isn't enough, and at least these follow-ups will be required in separate PRs: - The system \"move\" and \"move cancel\" APIs should be made more reliable. A \"move\" can simply trigger a peer set change through desired state, and a \"move cancel\" can look at the desired state's origin to see where the stream needs to be moved back to. Both just need time to be wired appropriately. - Server and asset-level peer-remove should be made desired state aware. Additionally, an \"evacuate\" endpoint should be added to enable the user to more easily move streams and consumers off a server while it's still online. Not only easing the decommissioning of a node, but also enabling to move data of R1 assets without losing data when a peer-remove of the node would've been used instead and without requiring to move all R1 assets in all accounts manually. - Add stream move/scale guards. This PR removes the (admittedly brittle) guards to prevent concurrent move and scale of a stream, which allows to scale and move an R1 stream from cluster A to a R3 stream in cluster B in one go and safely. However, this technically opens up being able to constantly cycle moves between clusters until the stream/consumer peer set contain the total number of peers. This should likely get an upper bound, for example 10 peers maximum (since replication is capped at 5), to ensure such moves are still allowed from the API, but the system prevents the peers from growing semi-unbounded. - Optimizations in how and when peers are added, ensuring a group doesn't go out of quorum when nodes are offline. - An additional optimization can be made when moving a stream between clusters, to first scale up one stream replica in the new cluster, making it the leader and then doing local catchup for the other replicas in that cluster. This would allow both faster and less expensive (bandwidth-wise) moves of assets. But, although this is enabled by the desired state approach as well, it might need to be done after 2.15.0 lands considering timing and the other required follow-ups (this isn't a required optimization). These follow-ups are also roughly marked with `FIXME` comments that need to be addressed prior to releasing 2.15.",
+        "url": "https://github.com/nats-io/nats-server/pull/8432",
+        "createdAt": "2026-07-29T13:15:47Z",
+        "updatedAt": "2026-08-14T09:15:02Z",
+        "timestamp": "2026-08-14T09:15:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
         "assignees": [],
         "change": "updated"
       }

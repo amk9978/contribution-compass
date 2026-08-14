@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "date": "2026-08-14",
   "group": {
     "id": "platform-infrastructure",
@@ -31,15 +31,15 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 21115,
-    "forks": 4059,
-    "openIssues": 482,
+    "stars": 21118,
+    "forks": 4058,
+    "openIssues": 484,
     "archived": false,
-    "collectedAt": "2026-08-14T03:31:31.526337+00:00"
+    "collectedAt": "2026-08-14T18:56:02.215503+00:00"
   },
   "news": {
     "repository": "containerd/containerd",
-    "collectedAt": "2026-08-14T03:31:31.526337+00:00",
+    "collectedAt": "2026-08-14T18:56:02.215503+00:00",
     "latestRelease": {
       "repository": "containerd/containerd",
       "tag": "v2.3.4",
@@ -87,6 +87,12 @@
       "since": "2026-08-13T03:31:25.964050Z",
       "observedCount": 29,
       "changedCount": 20
+    },
+    {
+      "collectedAt": "2026-08-14T18:55:56.646052Z",
+      "since": "2026-08-13T18:55:56.646052Z",
+      "observedCount": 28,
+      "changedCount": 13
     }
   ],
   "signals": [
@@ -113,8 +119,7 @@
       ],
       "author": "uvatbc",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12280",
@@ -164,8 +169,7 @@
       ],
       "author": "rutigs",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12794",
@@ -191,8 +195,7 @@
       ],
       "author": "ningmingxiao",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:12991",
@@ -217,8 +220,7 @@
       ],
       "author": "AutuSnow",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:13020",
@@ -241,8 +243,7 @@
       ],
       "author": "gounthar",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:issue:13129",
@@ -317,6 +318,32 @@
       "assignees": []
     },
     {
+      "id": "github:containerd/containerd:issue:8197",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Empty cache files causes \"KillPodSandbox\" errors when deleting pods",
+      "text": "### Description I originally reported this issue at https://github.com/aws/amazon-vpc-cni-k8s/issues/2283, but I was asked to post the issue here instead. I'm running into a problem where a node will occasionally have a bunch of pods stuck in the `Terminating` state because the pod's sandbox can't be deleted: Pod event: ``` Warning FailedKillPod 43s (x229 over 49m) kubelet error killing pod: failed to \"KillPodSandbox\" for \"a7ea2280-7361-4329-8566-89975485b20e\" with KillPodSandboxError: \"rpc error: code = Unknown desc = failed to destroy network for sandbox \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\": failed to get network \\\"aws-cni\\\" cached result: decoding version from network config: unexpected end of JSON input\" ``` On the `containerd` side, I see similar logs. First, the reason given is `cni plugin not initialized`: ``` time=\"2023-03-01T20:08:10.167194705Z\" level=info msg=\"StopPodSandbox for \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\"\" time=\"2023-03-01T20:08:10.167346791Z\" level=error msg=\"StopPodSandbox for \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\" failed\" error=\"failed to destroy network for sandbox \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\": cni plugin not initialized\" ``` This repeats a few times, then the error message changes to `unexpected end of JSON input` ``` time=\"2023-03-01T20:08:34.067124024Z\" level=error msg=\"StopPodSandbox for \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\" failed\" error=\"failed to destroy network for sandbox \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\": failed to get network \\\"aws-cni\\\" cached result: decoding version from network config: unexpected end of JSON input\" ``` On the host itself, I noticed that the `/var/lib/cni/results` directory contains a cache file for the container with the ID `4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399` that's completely empty (zero bytes): ``` bash-5.1# ls -alh /var/lib/cni/results | grep 4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399 -rw-------. 1 root root 0 Mar 1 06:31 aws-cni-4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399-eth0 ``` Meanwhile, the other `aws-cni-*-eth0` files are not empty, and contain valid JSON. So I believe the `unexpected end of JSON input` error message is caused by `containerd` attempting to `json.Unmarshal` an empty file, which I believe is happening here: https://github.com/containerd/containerd/blob/a217b5ac8f66cfdbffd730f16b63f13e313013b8/vendor/github.com/containernetworking/cni/pkg/types/create/create.go#L31-L34 I am able to temporarily resolve the issue by deleting the empty cache file. The stuck pods are instantly able to be deleted as soon as I do that. Another note: it looks like most of the caching logic is actually handled in https://github.com/containernetworking/cni, so perhaps this particular issue needs to be raised upstream. I'm not too sure. --- My theory is that some other issue is causing the AWS VPC CNI plugin to crash or experience some issues, and `containerd` is mistakenly writing an empty cache file to `/var/lib/cni/results` while this is happening. Then, when the AWS VPC CNI plugin starts working again, this empty cache file is read, causing the error I'm seeing. ### Steps to reproduce the issue I wish I was able to reliably reproduce the underlying issue. The best I've been able to do is to delete the contents of one of the cache files within `/var/lib/cni/results`, which will reproduce the `unexpected end of JSON input` error message. However, I have been unable to reproduce the issue that causes the empty cache file to exist in the first place. ### Describe the results you received and expected I would expect for an empty cache file to never be written to `/var/lib/cni/results`. Or, if this does happen, perhaps `containerd` could catch this and remove the bad cache file before attempting to read from it. ### What version of containerd are you using? ``` ctr github.com/containerd/containerd 1.6.15+bottlerocket ``` ### Any other relevant information ``` bash-5.1# runc --version runc version 1.1.4+bottlerocket commit: 5fd4c4d144137e991c4acebb2146ab1483a97925 spec: 1.0.2-dev go: go1.19.4 libseccomp: 2.5.4 bash-5.1# uname -a Linux ip-10-0-143-2.us-west-2.compute.internal 5.15.79 #1 SMP Wed Jan 25 03:35:23 UTC 2023 aarch64 GNU/Linux bash-5.1# cat /etc/os-release NAME=Bottlerocket ID=bottlerocket VERSION=\"1.12.0 (aws-k8s-1.24)\" PRETTY_NAME=\"Bottlerocket OS 1.12.0 (aws-k8s-1.24)\" VARIANT_ID=aws-k8s-1.24 VERSION_ID=1.12.0 BUILD_ID=6ef1139f HOME_URL=\"https://github.com/bottlerocket-os/bottlerocket\" SUPPORT_URL=\"https://github.com/bottlerocket-os/bottlerocket/discussions\" BUG_REPORT_URL=\"https://github.com/bottlerocket-os/bottlerocket/issues\" ``` CNI Plugin is https://github.com/aws/amazon-vpc-cni-k8s `v1.12.0` Kubernetes version: ``` Client Version: version.Info{Major:\"1\", Minor:\"25\", GitVersion:\"v1.25.4\", GitCommit:\"872a965c6c6526caa949f0c6ac028ef7aff3fb78\", GitTreeState:\"clean\", BuildDate:\"2022-11-09T13:36:36Z\", GoVersion:\"go1.19.3\", Compiler:\"gc\", Platform:\"darwin/arm64\"} Kustomize Version: v4.5.7 Server Version: version.Info{Major:\"1\", Minor:\"24+\", GitVersion:\"v1.24.10-eks-48e63af\", GitCommit:\"9176fb99b52f8d5ff73d67fea27f3a638f679f8a\", GitTreeState:\"clean\", BuildDate:\"2023-01-24T19:17:48Z\", GoVersion:\"go1.19.5\", Compiler:\"gc\", Platform:\"linux/amd64\"} ``` ### Show configuration if it is related to CRI plugin. ```toml version = 2 root = \"/var/lib/containerd\" state = \"/run/containerd\" disabled_plugins = [ \"io.containerd.internal.v1.opt\", \"io.containerd.snapshotter.v1.aufs\", \"io.containerd.snapshotter.v1.devmapper\", \"io.containerd.snapshotter.v1.native\", \"io.containerd.snapshotter.v1.zfs\", ] [grpc] address = \"/run/containerd/containerd.sock\" [plugins.\"io.containerd.grpc.v1.cri\"] enable_selinux = true # Pause container image is specified here, shares the same image as kubelet's pod-infra-container-image sandbox_image = \"602401143452.dkr.ecr.us-west-2.amazonaws.com/eks/pause:3.1-eksbuild.1\" [plugins.\"io.containerd.grpc.v1.cri\".containerd] default_runtime_name = \"shimpei\" [plugins.\"io.containerd.grpc.v1.cri\".containerd.runtimes.shimpei] runtime_type = \"io.containerd.runc.v2\" base_runtime_spec = \"/etc/containerd/cri-base.json\" [plugins.\"io.containerd.grpc.v1.cri\".containerd.runtimes.shimpei.options] SystemdCgroup = true BinaryName = \"shimpei\" [plugins.\"io.containerd.grpc.v1.cri\".cni] bin_dir = \"/opt/cni/bin\" conf_dir = \"/etc/cni/net.d\" [plugins.\"io.containerd.grpc.v1.cri\".registry.mirrors.\"docker.io\"] endpoint = [\"https://docker-registry.redacted.com\"] ```",
+      "url": "https://github.com/containerd/containerd/issues/8197",
+      "createdAt": "2023-03-02T16:54:53Z",
+      "updatedAt": "2026-08-14T16:07:46Z",
+      "timestamp": "2026-08-14T16:07:46Z",
+      "metrics": {
+        "reactions": 11,
+        "comments": 17
+      },
+      "labels": [
+        "kind/bug",
+        "area/cri",
+        "Stale"
+      ],
+      "author": "mrparkers",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:containerd/containerd:issue:8893",
       "source": "github",
       "group": "platform-infrastructure",
@@ -338,8 +365,7 @@
       "assignees": [
         "lengrongfu",
         "fuweid"
-      ],
-      "change": "updated"
+      ]
     },
     {
       "id": "github:containerd/containerd:pull_request:11587",
@@ -365,8 +391,7 @@
       ],
       "author": "laurazard",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:11601",
@@ -393,6 +418,31 @@
       ],
       "author": "ChengyuZhu6",
       "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:12887",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "apparmor: add signal and ptrace rules for stacked profiles",
+      "text": "On kernel 6.17 with AppArmor profile stacking enabled (`/sys/kernel/security/apparmor/features/domain/stack` = `yes`), processes created via CRI ExecSync (`kubectl exec`, exec-based probes) run under a stacked profile `cri-containerd.apparmor.d//&unconfined`: ``` $ kubectl exec <pod> -- cat /proc/1/attr/apparmor/current cri-containerd.apparmor.d (enforce) $ kubectl exec <pod> -- cat /proc/self/attr/apparmor/current cri-containerd.apparmor.d//&unconfined (enforce) ``` The existing signal and ptrace rules use `peer={{.Name}}`, which expands to `cri-containerd.apparmor.d` and does not match the stacked peer name `cri-containerd.apparmor.d//&unconfined`. This causes AppArmor DENIED audit events when exec'd Go processes send SIGURG for goroutine preemption: ``` audit: type=1400 apparmor=\"DENIED\" operation=\"signal\" profile=\"cri-containerd.apparmor.d\" comm=\"bao\" requested_mask=\"send\" denied_mask=\"send\" signal=urg peer=\"cri-containerd.apparmor.d//&unconfined\" ``` This change adds rules with `peer={{.Name}}//&*` to match stacked profile peers for both signal and ptrace operations. The `//&*` glob matches any stacked profile suffix (e.g., `//&unconfined`). Tested on Ubuntu 25.10 (questing) aarch64 with kernel 6.17.0-1007-raspi, AppArmor parser 5.0.0~alpha1, containerd v2.1.5-k3s1. The modified profile was loaded via `apparmor_parser --replace`. After loading, zero new DENIED entries over 56+ seconds (11+ probe cycles at 5s interval), whereas before the fix there were continuous denials every cycle. Note: the `abi <abi/3.0>` pin from #12864 is already on main and does not resolve this issue. Fixes: #12886 ### Why the rule is shaped this way A flat `peer=<profile>` rule does not match a stacked peer label. The kernel matches the peer label as a single string: `label_compound_match()` walks the components and inserts the literal `//&` between them, so a rule whose text is `cri-containerd.apparmor.d` never matches `cri-containerd.apparmor.d//&unconfined`. The component fallback in `label_components_match()` does not rescue it either. It intersects permissions across components (`accum->allow &= addend->allow & ~addend->deny`), so `Name` contributes `send,receive`, `unconfined` contributes `receive`, and the intersection drops `send`. That is the SIGURG symptom in the report. `**` rather than `*`, because `signal.cc` and `ptrace.cc` compile the peer label through `convert_aaregex_to_pcre(peer_label, 0, glob_default, ...)`, where `*` becomes `[^/\\x00]*` and `**` becomes `[^\\x00]*`. A single `*` stops at `/`. That leaves out path-named profiles and any stack deeper than two components, since the tail then contains a `/`. Three positions, because the components of a stacked label are sorted lexically rather than by stacking order (`profile_cmp()` in `security/apparmor/label.c`). This profile can end up at the head, at the tail, or in the middle. The rules do not widen privileges. A stacked label is an intersection of confinements: a task labelled `A//&B` is confined by both A and B, so its permissions are a subset of what A alone allows. A peer carrying this profile as a component is already inside the set that the existing `peer={{.Name}}` rule grants in full. The literal `//&` in the pattern also keeps hat profiles (`parent//child`, no `&`) out of the match. Checked on a live kernel, Ubuntu 24.04, kernel 6.8, `domain/stack=yes`, AppArmor 4.0.1, entering the stacked label with `aa-exec` and running `kill -9` on an own child. `<profile>` below is the generated profile name, `cri-containerd.apparmor.d` by default: | peer label | rules in the profile | result | | --- | --- | --- | | `<profile>//&unconfined` | flat `peer={{.Name}}` only | denied | | `<profile>//&unconfined` | flat plus `//&*` | allowed | | `<profile>//&other/sub//&unconfined` | flat plus `//&*` | denied | | `<profile>//&other/sub//&unconfined` | flat plus `//&**` | allowed | | `<profile>//&zzz-peer` | head-anchored `//&**` only | allowed | | `aaa-peer//&<profile>` | head-anchored `//&**` only | denied | | `<profile>//&zzz-peer` | all three positions | allowed | | `aaa-peer//&<profile>` | all three positions | allowed | The last two rows ran against the profile this template generates, not a hand-written stand-in. The reported case looked like it needed only one rule because `c` sorts before `u`, so `cri-containerd.apparmor.d` happens to precede `unconfined` in the label. A profile named with a path always sorts first, `/` being `0x2f`, and would not have been covered. There is a narrower one-line alternative, relaxing `signal (receive) peer=unconfined` to `(send,receive)` so the component fallback covers the stack. That works, but it grants against every peer named `unconfined`, host processes included. The stacked-label form stays inside this profile's own stack. The generated profile compiles on `apparmor_parser` 2.12, 2.13.3, 2.13.6, 3.0.4 and 4.0.1 when given a current kernel feature set, with the new rules present in the compiled policy rather than dropped. I checked that by compiling with and without them and comparing the cache, using removal of an ordinary file rule as a control to confirm the comparison detects a change at all. `&` is not an AARE metacharacter, so older parsers treat `//&` as a literal and need no awareness of stacking. One caveat if you reproduce this: without a feature set, in a container with no AppArmor, 3.0.4 and 4.0.1 print `signal rules not enforced`, drop those rules, and still exit 0, so a bare parse check in that setup proves less than it appears to.",
+      "url": "https://github.com/containerd/containerd/pull/12887",
+      "createdAt": "2026-02-10T23:41:37Z",
+      "updatedAt": "2026-08-14T11:41:55Z",
+      "timestamp": "2026-08-14T11:41:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "kind/bug",
+        "area/runtime",
+        "size/M"
+      ],
+      "author": "lexfrei",
+      "state": "open",
       "assignees": [],
       "change": "new"
     },
@@ -422,8 +472,7 @@
       ],
       "author": "dmcgowan",
       "state": "closed",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13294",
@@ -449,6 +498,30 @@
       "assignees": []
     },
     {
+      "id": "github:containerd/containerd:pull_request:13542",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "cri: enable mount manager for image mounts",
+      "text": "Fix #13534 ~Depends on #13656~",
+      "url": "https://github.com/containerd/containerd/pull/13542",
+      "createdAt": "2026-06-08T04:07:49Z",
+      "updatedAt": "2026-08-14T15:33:43Z",
+      "timestamp": "2026-08-14T15:33:43Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 12
+      },
+      "labels": [
+        "size/S"
+      ],
+      "author": "hsiangkao",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
       "id": "github:containerd/containerd:pull_request:13587",
       "source": "github",
       "group": "platform-infrastructure",
@@ -468,6 +541,30 @@
         "size/M"
       ],
       "author": "chansuke",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13657",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "Use toolchain directive to declare preferred Go version",
+      "text": "Use the go directive to define the minimum supported Go version, and the toolchain directive to select the preferred Go version. This makes it nicer for downstream consumers, so they can still build containerd with older Go patch releases, and can upgrade their toolchains at their own pace.",
+      "url": "https://github.com/containerd/containerd/pull/13657",
+      "createdAt": "2026-06-23T13:28:29Z",
+      "updatedAt": "2026-08-14T04:30:17Z",
+      "timestamp": "2026-08-14T04:30:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "needs-rebase",
+        "size/XS"
+      ],
+      "author": "twz123",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -495,8 +592,7 @@
       ],
       "author": "dependabot[bot]",
       "state": "open",
-      "assignees": [],
-      "change": "new"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13799",
@@ -508,19 +604,19 @@
       "text": "Fixes #13798 **Problem** During snapshot GC, `cleanupSnapshotter` calls the snapshotter's `Remove` while holding the metadata store write lock, with no deadline (it even strips the caller's cancellation). If the snapshotter never answers, the lock is held forever. Every snapshot operation on the node queues behind it, including CRI `RunPodSandbox`, so no new container can start. Nothing on the readiness path takes this lock, so the node keeps reporting Ready the whole time. ```mermaid flowchart TD K[kubelet] -->|Ready probe| S[\"CRI Status()\"] K -->|RunPodSandbox| P[snapshot Prepare] S --> OK[\"returns OK - never takes the lock\"] P --> L{{metadata store write lock}} GC[snapshot GC] -->|holds| L GC -->|\"Remove() - no deadline\"| SOCI[soci snapshotter<br/>out of fds, never answers] L -.->|blocked behind GC| P ``` We hit this in production: our soci snapshotter ran out of file descriptors and stopped answering, the GC's `Remove` parked in `waitOnHeader`, and the node could not start a single pod for 4.5 hours while showing Ready. Goroutine dumps are in the issue. The fd leak was a soci bug (fixed upstream in awslabs/soci-snapshotter#2043), but any proxy snapshotter that stalls reproduces this: one stuck RPC should not brick the node. **Fix** Bound each GC-path `Remove` with a `pkg/timeout` key (`io.containerd.timeout.snapshot.remove`, default 5m), the same pattern as shim cleanup and bolt open timeouts. On the first timed-out `Remove` the rest of the pass is abandoned, so a wedged snapshotter costs one timeout per GC cycle instead of one per orphan. Skipped snapshots stay orphaned and are retried next pass. The deferred `Cleanup` call is skipped in that case too, since it is an unbounded RPC to the same snapshotter that just failed to answer. **Not in this PR** `Walk` runs under the same lock and is also unbounded. Left out to keep this change small; can follow up.",
       "url": "https://github.com/containerd/containerd/pull/13799",
       "createdAt": "2026-07-15T16:37:00Z",
-      "updatedAt": "2026-08-13T08:15:08Z",
-      "timestamp": "2026-08-13T08:15:08Z",
+      "updatedAt": "2026-08-14T16:18:05Z",
+      "timestamp": "2026-08-14T16:18:05Z",
       "metrics": {
         "reactions": 0,
-        "comments": 3
+        "comments": 4
       },
       "labels": [
-        "size/L",
-        "do-not-merge/contains-merge-commits"
+        "size/L"
       ],
       "author": "NahumLitvin",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:containerd/containerd:pull_request:13852",
@@ -543,6 +639,29 @@
       ],
       "author": "HarshalPatel1972",
       "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13905",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "contrib/apparmor: allow signals/ptrace for stacked-label exec processes",
+      "text": "On kernels with AppArmor label stacking enabled by default (>= 6.17), processes entered through the runtime exec API carry the stacked label `<profile>//&unconfined`, while the container's init tree keeps the plain `<profile>` label. The profile's peer rules only match the plain label, so every signal sent by an exec-spawned process is denied, including root killing its own child and a process signalling itself. This breaks `timeout(1)`, exec-based debugging, and any exec'd client that signals its own children (observed: Slurm's `srun` wedging at exit). The `abi <abi/3.0>` pin from #12864 doesn't help: signal mediation is part of the 3.0 ABI, and the pin changes mediation semantics, not the task's label. This PR adds symmetric signal and ptrace peer rules for the stacked label. Related: #12726, k3s-io/k3s#13625, moby/moby#47720. Repro (containerd 2.1.4 / kernel 7.0; passes on 1.7.2 / kernel 6.5): ``` $ kubectl exec <pod> -- bash -c 'sleep 30 & kill -9 $!' bash: kill: Permission denied ``` Verified on Ubuntu 25.10 (kernel 6.17.0-40) by driving the labels directly with `aa-exec`: unpatched rules deny kill-own-child and self-signal from the stacked label; patched rules restore both, plain-label behavior is unchanged, and stacked tasks still cannot signal unconfined (host) processes. **Security considerations:** the new peer string matches only tasks whose entire label is `<profile>//&unconfined`, i.e. the runtime-exec sessions themselves. Host processes (plain `unconfined`) do not match and gain nothing new; the scope mirrors the existing `peer=<profile>` rule, and ptrace remains gated by Yama and capability checks. Happy to switch to the glob form (`peer=\"<profile>//**\"`) if preferred; the explicit stack is the minimal grant matching what the kernel emits today. A cherry-pick to `release/2.1` would be appreciated (affected fleet runs 2.1.4).",
+      "url": "https://github.com/containerd/containerd/pull/13905",
+      "createdAt": "2026-08-04T23:48:20Z",
+      "updatedAt": "2026-08-14T11:41:56Z",
+      "timestamp": "2026-08-14T11:41:56Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS"
+      ],
+      "author": "partiallymaxi",
+      "state": "open",
       "assignees": [],
       "change": "new"
     },
@@ -556,14 +675,14 @@
       "text": "- replace / close: https://github.com/containerd/containerd/pull/13764 - address / close: https://github.com/containerd/containerd/issues/13763 A pre-2.3 containerd daemon can start a newly installed shim through the deprecated CLI, environment, and stdin API. The shim currently accepts that request but returns a protobuf bootstrap result, which the old daemon cannot parse. It treats the protobuf bytes as a socket address and fails later with a cryptic error: ``` failed to create TTRPC connection: unsupported protocol: \\b\\x03\\x12Yunix ``` This patch makes the shim reject the deprecated startup request before starting and tell the user that the containerd daemon may need to be restarted. The 2.2 daemon includes the shim's stderr in its start error, so this message reaches the user directly. This explicitly removes input-side support for the deprecated startup API, but it does not break a working standard containerd pairing. Pre-2.3 daemons already cannot consume the response from the new shim. After a package upgrade, a restarted daemon uses the new bootstrap API. Custom callers that send the deprecated request format while supporting the new protobuf response will now also be rejected.",
       "url": "https://github.com/containerd/containerd/pull/13910",
       "createdAt": "2026-08-06T19:31:15Z",
-      "updatedAt": "2026-08-13T22:44:31Z",
-      "timestamp": "2026-08-13T22:44:31Z",
+      "updatedAt": "2026-08-14T17:48:43Z",
+      "timestamp": "2026-08-14T17:48:43Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
       },
       "labels": [
-        "size/M",
+        "size/L",
         "cherry-pick/2.3.x"
       ],
       "author": "vvoland",
@@ -583,8 +702,8 @@
       "text": "Fixes #13909. ### Description When the CRI plugin pulls an image through the transfer service, the image pull can be canceled by `image_pull_progress_timeout` even when all blob downloads have finished and the remaining unpack is progressing. This happens because the transfer service's polling period is 300ms, and extraction can start within a few milliseconds after download completes. The job transitions directly to `jobExtracting` and sends `\"extracting\"`/`\"extracted\"` events instead of `\"complete\"`. Since the CRI `transferProgressReporter.handleProgress` only handled `\"complete\"`, the active request counter was never decremented, causing the watchdog to eventually time out the pull due to lack of download progress. This patch fixes the issue by allowing the CRI reporter to treat `\"extracting\"`, `\"extracted\"`, and `\"already exists\"` events as completion of the download phase, properly decrementing the active request counter and avoiding the timeout.",
       "url": "https://github.com/containerd/containerd/pull/13924",
       "createdAt": "2026-08-08T23:17:38Z",
-      "updatedAt": "2026-08-13T18:15:30Z",
-      "timestamp": "2026-08-13T18:15:30Z",
+      "updatedAt": "2026-08-14T09:09:11Z",
+      "timestamp": "2026-08-14T09:09:11Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -633,8 +752,8 @@
       "text": "This adds two properties to the CRI plugin export. This adds back similar functionality which was previously present in Containerd 1.7 but was removed from the CRI config output. Instead of adding the properties back to the CRI config output as tried in #13709 this change instead adds the needed properties to the export of the plugin. This solution feels more natural and does not require exporting all fields from the config. Fixes #10780",
       "url": "https://github.com/containerd/containerd/pull/13940",
       "createdAt": "2026-08-11T15:00:05Z",
-      "updatedAt": "2026-08-13T23:27:43Z",
-      "timestamp": "2026-08-13T23:27:43Z",
+      "updatedAt": "2026-08-14T07:17:39Z",
+      "timestamp": "2026-08-14T07:17:39Z",
       "metrics": {
         "reactions": 0,
         "comments": 0
@@ -645,7 +764,7 @@
       "author": "phillebaba",
       "state": "open",
       "assignees": [],
-      "change": "new"
+      "change": "updated"
     },
     {
       "id": "github:containerd/containerd:pull_request:13941",
@@ -714,8 +833,7 @@
       ],
       "author": "olyazavr",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13954",
@@ -738,8 +856,7 @@
       ],
       "author": "austinvazquez",
       "state": "open",
-      "assignees": [],
-      "change": "updated"
+      "assignees": []
     },
     {
       "id": "github:containerd/containerd:pull_request:13955",
@@ -751,8 +868,8 @@
       "text": "This change adds fallback image entries for Fedora's canonical dl.fedoraproject.org.",
       "url": "https://github.com/containerd/containerd/pull/13955",
       "createdAt": "2026-08-13T01:08:22Z",
-      "updatedAt": "2026-08-13T17:05:15Z",
-      "timestamp": "2026-08-13T17:05:15Z",
+      "updatedAt": "2026-08-14T15:26:56Z",
+      "timestamp": "2026-08-14T15:26:56Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
@@ -762,7 +879,8 @@
       ],
       "author": "austinvazquez",
       "state": "open",
-      "assignees": []
+      "assignees": [],
+      "change": "updated"
     },
     {
       "id": "github:containerd/containerd:pull_request:13957",
@@ -787,8 +905,7 @@
       "state": "closed",
       "assignees": [
         "vvoland"
-      ],
-      "change": "new"
+      ]
     },
     {
       "id": "github:containerd/containerd:pull_request:13958",
@@ -800,16 +917,65 @@
       "text": "TaskService.Shutdown may be invoked multiple times. A grouped shim itself does not terminate while it still has active tasks. It terminates only after receiving a Shutdown request when no active tasks remain. The shim manager should invoke TaskService.Shutdown after deleting every task, regardless of whether the task represents sandbox or not. This ensures that the shim receives Shutdown when the last active task is deleted. In CRI, the pause container uses oom_score_adj=-998, making it unlikely to be OOM-killed. However, it may still exit or be killed before the other containers in the sandbox. SandboxService.Shutdown and TaskService.Shutdown are independent APIs. Sandbox service should make sure there is no active containers before shutdown. So, for the task service, we should invoke Shutdown for each task. Removing the supportSandboxAPIVersion check does not change behavior for shims using task API versions below v3. Those shims were already forced down the non-sandboxed path and received Shutdown after every task deletion. The behavior change applies only to sandboxed tasks using task API v3, which now receive Shutdown after deletion as well. Part of https://github.com/containerd/containerd/issues/8981 REF: https://github.com/containerd/containerd/pull/6703",
       "url": "https://github.com/containerd/containerd/pull/13958",
       "createdAt": "2026-08-14T02:03:53Z",
-      "updatedAt": "2026-08-14T02:21:55Z",
-      "timestamp": "2026-08-14T02:21:55Z",
+      "updatedAt": "2026-08-14T15:19:15Z",
+      "timestamp": "2026-08-14T15:19:15Z",
       "metrics": {
         "reactions": 0,
         "comments": 1
       },
       "labels": [
-        "size/M"
+        "size/L"
       ],
       "author": "fuweid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13959",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "cri: trace image pull result attributes",
+      "text": "This adds success-result attributes to the existing CRI image pull span: - `image.id` records the resolved image identifier returned by CRI. - `image.size.bytes` records the image size when the existing best-effort size lookup succeeds. The change uses the existing tracing API and does not add new tracing configuration or alter image-pull behavior. It is intentionally limited to one file as a small follow-up to #12226. Validation: - `go test ./internal/cri/server/images` - `go vet ./internal/cri/server/images` - `git diff --check`",
+      "url": "https://github.com/containerd/containerd/pull/13959",
+      "createdAt": "2026-08-14T05:42:19Z",
+      "updatedAt": "2026-08-14T05:44:34Z",
+      "timestamp": "2026-08-14T05:44:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS"
+      ],
+      "author": "Cindia-blue",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13960",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "nri(wip): record resolved image name and digest in container metadata",
+      "text": "The following fields are being added to NRI in [containerd/nri#302](https://github.com/containerd/nri/pull/302) based on a proposal discussed in [containerd/nri#303](https://github.com/containerd/nri/issues/303) - `name`: The image reference (ex. `registry.k8s.io/pause:3.10`) - `digest`: Digest the image reference resolves to. Based on the image reference, it is one of: - image index (`application/vnd.oci.image.index.v1+json`) digest - manifest (`application/vnd.oci.image.manifest.v1+json`) digest - `config_digest`: The image configuration (`application/vnd.oci.image.config.v1+json`) digest This PR records the resolved image reference and the image's target descriptor digest in the container metadata at creation, alongside the existing image config digest. This allows us to populate the new fields in the NRI plugin.",
+      "url": "https://github.com/containerd/containerd/pull/13960",
+      "createdAt": "2026-08-14T16:12:27Z",
+      "updatedAt": "2026-08-14T16:55:34Z",
+      "timestamp": "2026-08-14T16:55:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "size/S",
+        "do-not-merge/work-in-progress"
+      ],
+      "author": "eshaanm25",
       "state": "open",
       "assignees": [],
       "change": "new"
@@ -1480,6 +1646,436 @@
         "state": "open",
         "assignees": [],
         "change": "updated"
+      }
+    },
+    {
+      "id": "event:68c91f3a7cd9ea0a4976",
+      "signalId": "github:containerd/containerd:pull_request:13910",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13910",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "pkg/shim: Report bootstrap API mismatch on startup",
+        "text": "- replace / close: https://github.com/containerd/containerd/pull/13764 - address / close: https://github.com/containerd/containerd/issues/13763 A pre-2.3 containerd daemon can start a newly installed shim through the deprecated CLI, environment, and stdin API. The shim currently accepts that request but returns a protobuf bootstrap result, which the old daemon cannot parse. It treats the protobuf bytes as a socket address and fails later with a cryptic error: ``` failed to create TTRPC connection: unsupported protocol: \\b\\x03\\x12Yunix ``` This patch makes the shim reject the deprecated startup request before starting and tell the user that the containerd daemon may need to be restarted. The 2.2 daemon includes the shim's stderr in its start error, so this message reaches the user directly. This explicitly removes input-side support for the deprecated startup API, but it does not break a working standard containerd pairing. Pre-2.3 daemons already cannot consume the response from the new shim. After a package upgrade, a restarted daemon uses the new bootstrap API. Custom callers that send the deprecated request format while supporting the new protobuf response will now also be rejected.",
+        "url": "https://github.com/containerd/containerd/pull/13910",
+        "createdAt": "2026-08-06T19:31:15Z",
+        "updatedAt": "2026-08-14T17:48:43Z",
+        "timestamp": "2026-08-14T17:48:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/L",
+          "cherry-pick/2.3.x"
+        ],
+        "author": "vvoland",
+        "state": "open",
+        "assignees": [
+          "vvoland"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a961379c6fa738a59c83",
+      "signalId": "github:containerd/containerd:pull_request:13960",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13960",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "nri(wip): record resolved image name and digest in container metadata",
+        "text": "The following fields are being added to NRI in [containerd/nri#302](https://github.com/containerd/nri/pull/302) based on a proposal discussed in [containerd/nri#303](https://github.com/containerd/nri/issues/303) - `name`: The image reference (ex. `registry.k8s.io/pause:3.10`) - `digest`: Digest the image reference resolves to. Based on the image reference, it is one of: - image index (`application/vnd.oci.image.index.v1+json`) digest - manifest (`application/vnd.oci.image.manifest.v1+json`) digest - `config_digest`: The image configuration (`application/vnd.oci.image.config.v1+json`) digest This PR records the resolved image reference and the image's target descriptor digest in the container metadata at creation, alongside the existing image config digest. This allows us to populate the new fields in the NRI plugin.",
+        "url": "https://github.com/containerd/containerd/pull/13960",
+        "createdAt": "2026-08-14T16:12:27Z",
+        "updatedAt": "2026-08-14T16:55:34Z",
+        "timestamp": "2026-08-14T16:55:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/S",
+          "do-not-merge/work-in-progress"
+        ],
+        "author": "eshaanm25",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:4ac4170d5ccbeb40efff",
+      "signalId": "github:containerd/containerd:pull_request:13799",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13799",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "metadata: bound snapshotter Remove during garbage collection",
+        "text": "Fixes #13798 **Problem** During snapshot GC, `cleanupSnapshotter` calls the snapshotter's `Remove` while holding the metadata store write lock, with no deadline (it even strips the caller's cancellation). If the snapshotter never answers, the lock is held forever. Every snapshot operation on the node queues behind it, including CRI `RunPodSandbox`, so no new container can start. Nothing on the readiness path takes this lock, so the node keeps reporting Ready the whole time. ```mermaid flowchart TD K[kubelet] -->|Ready probe| S[\"CRI Status()\"] K -->|RunPodSandbox| P[snapshot Prepare] S --> OK[\"returns OK - never takes the lock\"] P --> L{{metadata store write lock}} GC[snapshot GC] -->|holds| L GC -->|\"Remove() - no deadline\"| SOCI[soci snapshotter<br/>out of fds, never answers] L -.->|blocked behind GC| P ``` We hit this in production: our soci snapshotter ran out of file descriptors and stopped answering, the GC's `Remove` parked in `waitOnHeader`, and the node could not start a single pod for 4.5 hours while showing Ready. Goroutine dumps are in the issue. The fd leak was a soci bug (fixed upstream in awslabs/soci-snapshotter#2043), but any proxy snapshotter that stalls reproduces this: one stuck RPC should not brick the node. **Fix** Bound each GC-path `Remove` with a `pkg/timeout` key (`io.containerd.timeout.snapshot.remove`, default 5m), the same pattern as shim cleanup and bolt open timeouts. On the first timed-out `Remove` the rest of the pass is abandoned, so a wedged snapshotter costs one timeout per GC cycle instead of one per orphan. Skipped snapshots stay orphaned and are retried next pass. The deferred `Cleanup` call is skipped in that case too, since it is an unbounded RPC to the same snapshotter that just failed to answer. **Not in this PR** `Walk` runs under the same lock and is also unbounded. Left out to keep this change small; can follow up.",
+        "url": "https://github.com/containerd/containerd/pull/13799",
+        "createdAt": "2026-07-15T16:37:00Z",
+        "updatedAt": "2026-08-14T16:18:05Z",
+        "timestamp": "2026-08-14T16:18:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "size/L"
+        ],
+        "author": "NahumLitvin",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:08ed3d7fcdd92cd543fa",
+      "signalId": "github:containerd/containerd:issue:8197",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:8197",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Empty cache files causes \"KillPodSandbox\" errors when deleting pods",
+        "text": "### Description I originally reported this issue at https://github.com/aws/amazon-vpc-cni-k8s/issues/2283, but I was asked to post the issue here instead. I'm running into a problem where a node will occasionally have a bunch of pods stuck in the `Terminating` state because the pod's sandbox can't be deleted: Pod event: ``` Warning FailedKillPod 43s (x229 over 49m) kubelet error killing pod: failed to \"KillPodSandbox\" for \"a7ea2280-7361-4329-8566-89975485b20e\" with KillPodSandboxError: \"rpc error: code = Unknown desc = failed to destroy network for sandbox \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\": failed to get network \\\"aws-cni\\\" cached result: decoding version from network config: unexpected end of JSON input\" ``` On the `containerd` side, I see similar logs. First, the reason given is `cni plugin not initialized`: ``` time=\"2023-03-01T20:08:10.167194705Z\" level=info msg=\"StopPodSandbox for \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\"\" time=\"2023-03-01T20:08:10.167346791Z\" level=error msg=\"StopPodSandbox for \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\" failed\" error=\"failed to destroy network for sandbox \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\": cni plugin not initialized\" ``` This repeats a few times, then the error message changes to `unexpected end of JSON input` ``` time=\"2023-03-01T20:08:34.067124024Z\" level=error msg=\"StopPodSandbox for \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\" failed\" error=\"failed to destroy network for sandbox \\\"4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399\\\": failed to get network \\\"aws-cni\\\" cached result: decoding version from network config: unexpected end of JSON input\" ``` On the host itself, I noticed that the `/var/lib/cni/results` directory contains a cache file for the container with the ID `4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399` that's completely empty (zero bytes): ``` bash-5.1# ls -alh /var/lib/cni/results | grep 4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399 -rw-------. 1 root root 0 Mar 1 06:31 aws-cni-4285ab7ef1b33097068f6e2dfbf2a71c96129f45d0d6655d47d3dc80db5f0399-eth0 ``` Meanwhile, the other `aws-cni-*-eth0` files are not empty, and contain valid JSON. So I believe the `unexpected end of JSON input` error message is caused by `containerd` attempting to `json.Unmarshal` an empty file, which I believe is happening here: https://github.com/containerd/containerd/blob/a217b5ac8f66cfdbffd730f16b63f13e313013b8/vendor/github.com/containernetworking/cni/pkg/types/create/create.go#L31-L34 I am able to temporarily resolve the issue by deleting the empty cache file. The stuck pods are instantly able to be deleted as soon as I do that. Another note: it looks like most of the caching logic is actually handled in https://github.com/containernetworking/cni, so perhaps this particular issue needs to be raised upstream. I'm not too sure. --- My theory is that some other issue is causing the AWS VPC CNI plugin to crash or experience some issues, and `containerd` is mistakenly writing an empty cache file to `/var/lib/cni/results` while this is happening. Then, when the AWS VPC CNI plugin starts working again, this empty cache file is read, causing the error I'm seeing. ### Steps to reproduce the issue I wish I was able to reliably reproduce the underlying issue. The best I've been able to do is to delete the contents of one of the cache files within `/var/lib/cni/results`, which will reproduce the `unexpected end of JSON input` error message. However, I have been unable to reproduce the issue that causes the empty cache file to exist in the first place. ### Describe the results you received and expected I would expect for an empty cache file to never be written to `/var/lib/cni/results`. Or, if this does happen, perhaps `containerd` could catch this and remove the bad cache file before attempting to read from it. ### What version of containerd are you using? ``` ctr github.com/containerd/containerd 1.6.15+bottlerocket ``` ### Any other relevant information ``` bash-5.1# runc --version runc version 1.1.4+bottlerocket commit: 5fd4c4d144137e991c4acebb2146ab1483a97925 spec: 1.0.2-dev go: go1.19.4 libseccomp: 2.5.4 bash-5.1# uname -a Linux ip-10-0-143-2.us-west-2.compute.internal 5.15.79 #1 SMP Wed Jan 25 03:35:23 UTC 2023 aarch64 GNU/Linux bash-5.1# cat /etc/os-release NAME=Bottlerocket ID=bottlerocket VERSION=\"1.12.0 (aws-k8s-1.24)\" PRETTY_NAME=\"Bottlerocket OS 1.12.0 (aws-k8s-1.24)\" VARIANT_ID=aws-k8s-1.24 VERSION_ID=1.12.0 BUILD_ID=6ef1139f HOME_URL=\"https://github.com/bottlerocket-os/bottlerocket\" SUPPORT_URL=\"https://github.com/bottlerocket-os/bottlerocket/discussions\" BUG_REPORT_URL=\"https://github.com/bottlerocket-os/bottlerocket/issues\" ``` CNI Plugin is https://github.com/aws/amazon-vpc-cni-k8s `v1.12.0` Kubernetes version: ``` Client Version: version.Info{Major:\"1\", Minor:\"25\", GitVersion:\"v1.25.4\", GitCommit:\"872a965c6c6526caa949f0c6ac028ef7aff3fb78\", GitTreeState:\"clean\", BuildDate:\"2022-11-09T13:36:36Z\", GoVersion:\"go1.19.3\", Compiler:\"gc\", Platform:\"darwin/arm64\"} Kustomize Version: v4.5.7 Server Version: version.Info{Major:\"1\", Minor:\"24+\", GitVersion:\"v1.24.10-eks-48e63af\", GitCommit:\"9176fb99b52f8d5ff73d67fea27f3a638f679f8a\", GitTreeState:\"clean\", BuildDate:\"2023-01-24T19:17:48Z\", GoVersion:\"go1.19.5\", Compiler:\"gc\", Platform:\"linux/amd64\"} ``` ### Show configuration if it is related to CRI plugin. ```toml version = 2 root = \"/var/lib/containerd\" state = \"/run/containerd\" disabled_plugins = [ \"io.containerd.internal.v1.opt\", \"io.containerd.snapshotter.v1.aufs\", \"io.containerd.snapshotter.v1.devmapper\", \"io.containerd.snapshotter.v1.native\", \"io.containerd.snapshotter.v1.zfs\", ] [grpc] address = \"/run/containerd/containerd.sock\" [plugins.\"io.containerd.grpc.v1.cri\"] enable_selinux = true # Pause container image is specified here, shares the same image as kubelet's pod-infra-container-image sandbox_image = \"602401143452.dkr.ecr.us-west-2.amazonaws.com/eks/pause:3.1-eksbuild.1\" [plugins.\"io.containerd.grpc.v1.cri\".containerd] default_runtime_name = \"shimpei\" [plugins.\"io.containerd.grpc.v1.cri\".containerd.runtimes.shimpei] runtime_type = \"io.containerd.runc.v2\" base_runtime_spec = \"/etc/containerd/cri-base.json\" [plugins.\"io.containerd.grpc.v1.cri\".containerd.runtimes.shimpei.options] SystemdCgroup = true BinaryName = \"shimpei\" [plugins.\"io.containerd.grpc.v1.cri\".cni] bin_dir = \"/opt/cni/bin\" conf_dir = \"/etc/cni/net.d\" [plugins.\"io.containerd.grpc.v1.cri\".registry.mirrors.\"docker.io\"] endpoint = [\"https://docker-registry.redacted.com\"] ```",
+        "url": "https://github.com/containerd/containerd/issues/8197",
+        "createdAt": "2023-03-02T16:54:53Z",
+        "updatedAt": "2026-08-14T16:07:46Z",
+        "timestamp": "2026-08-14T16:07:46Z",
+        "metrics": {
+          "reactions": 11,
+          "comments": 17
+        },
+        "labels": [
+          "kind/bug",
+          "area/cri",
+          "Stale"
+        ],
+        "author": "mrparkers",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:21451ab6f09fcb4b866b",
+      "signalId": "github:containerd/containerd:pull_request:13542",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13542",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "cri: enable mount manager for image mounts",
+        "text": "Fix #13534 ~Depends on #13656~",
+        "url": "https://github.com/containerd/containerd/pull/13542",
+        "createdAt": "2026-06-08T04:07:49Z",
+        "updatedAt": "2026-08-14T15:33:43Z",
+        "timestamp": "2026-08-14T15:33:43Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 12
+        },
+        "labels": [
+          "size/S"
+        ],
+        "author": "hsiangkao",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:04ccf55cb82bcd994c07",
+      "signalId": "github:containerd/containerd:pull_request:13955",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13955",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "ci: add lima image list for fedora images",
+        "text": "This change adds fallback image entries for Fedora's canonical dl.fedoraproject.org.",
+        "url": "https://github.com/containerd/containerd/pull/13955",
+        "createdAt": "2026-08-13T01:08:22Z",
+        "updatedAt": "2026-08-14T15:26:56Z",
+        "timestamp": "2026-08-14T15:26:56Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/S"
+        ],
+        "author": "austinvazquez",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d75cb7571af8dfa68772",
+      "signalId": "github:containerd/containerd:pull_request:13958",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13958",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "runtime: invoke Shutdown after every task deletion",
+        "text": "TaskService.Shutdown may be invoked multiple times. A grouped shim itself does not terminate while it still has active tasks. It terminates only after receiving a Shutdown request when no active tasks remain. The shim manager should invoke TaskService.Shutdown after deleting every task, regardless of whether the task represents sandbox or not. This ensures that the shim receives Shutdown when the last active task is deleted. In CRI, the pause container uses oom_score_adj=-998, making it unlikely to be OOM-killed. However, it may still exit or be killed before the other containers in the sandbox. SandboxService.Shutdown and TaskService.Shutdown are independent APIs. Sandbox service should make sure there is no active containers before shutdown. So, for the task service, we should invoke Shutdown for each task. Removing the supportSandboxAPIVersion check does not change behavior for shims using task API versions below v3. Those shims were already forced down the non-sandboxed path and received Shutdown after every task deletion. The behavior change applies only to sandboxed tasks using task API v3, which now receive Shutdown after deletion as well. Part of https://github.com/containerd/containerd/issues/8981 REF: https://github.com/containerd/containerd/pull/6703",
+        "url": "https://github.com/containerd/containerd/pull/13958",
+        "createdAt": "2026-08-14T02:03:53Z",
+        "updatedAt": "2026-08-14T15:19:15Z",
+        "timestamp": "2026-08-14T15:19:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/L"
+        ],
+        "author": "fuweid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1c6207a09bf547f21ea6",
+      "signalId": "github:containerd/containerd:pull_request:13905",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13905",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "contrib/apparmor: allow signals/ptrace for stacked-label exec processes",
+        "text": "On kernels with AppArmor label stacking enabled by default (>= 6.17), processes entered through the runtime exec API carry the stacked label `<profile>//&unconfined`, while the container's init tree keeps the plain `<profile>` label. The profile's peer rules only match the plain label, so every signal sent by an exec-spawned process is denied, including root killing its own child and a process signalling itself. This breaks `timeout(1)`, exec-based debugging, and any exec'd client that signals its own children (observed: Slurm's `srun` wedging at exit). The `abi <abi/3.0>` pin from #12864 doesn't help: signal mediation is part of the 3.0 ABI, and the pin changes mediation semantics, not the task's label. This PR adds symmetric signal and ptrace peer rules for the stacked label. Related: #12726, k3s-io/k3s#13625, moby/moby#47720. Repro (containerd 2.1.4 / kernel 7.0; passes on 1.7.2 / kernel 6.5): ``` $ kubectl exec <pod> -- bash -c 'sleep 30 & kill -9 $!' bash: kill: Permission denied ``` Verified on Ubuntu 25.10 (kernel 6.17.0-40) by driving the labels directly with `aa-exec`: unpatched rules deny kill-own-child and self-signal from the stacked label; patched rules restore both, plain-label behavior is unchanged, and stacked tasks still cannot signal unconfined (host) processes. **Security considerations:** the new peer string matches only tasks whose entire label is `<profile>//&unconfined`, i.e. the runtime-exec sessions themselves. Host processes (plain `unconfined`) do not match and gain nothing new; the scope mirrors the existing `peer=<profile>` rule, and ptrace remains gated by Yama and capability checks. Happy to switch to the glob form (`peer=\"<profile>//**\"`) if preferred; the explicit stack is the minimal grant matching what the kernel emits today. A cherry-pick to `release/2.1` would be appreciated (affected fleet runs 2.1.4).",
+        "url": "https://github.com/containerd/containerd/pull/13905",
+        "createdAt": "2026-08-04T23:48:20Z",
+        "updatedAt": "2026-08-14T11:41:56Z",
+        "timestamp": "2026-08-14T11:41:56Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/XS"
+        ],
+        "author": "partiallymaxi",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:bbdd46cb70a2595c8649",
+      "signalId": "github:containerd/containerd:pull_request:12887",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:12887",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "apparmor: add signal and ptrace rules for stacked profiles",
+        "text": "On kernel 6.17 with AppArmor profile stacking enabled (`/sys/kernel/security/apparmor/features/domain/stack` = `yes`), processes created via CRI ExecSync (`kubectl exec`, exec-based probes) run under a stacked profile `cri-containerd.apparmor.d//&unconfined`: ``` $ kubectl exec <pod> -- cat /proc/1/attr/apparmor/current cri-containerd.apparmor.d (enforce) $ kubectl exec <pod> -- cat /proc/self/attr/apparmor/current cri-containerd.apparmor.d//&unconfined (enforce) ``` The existing signal and ptrace rules use `peer={{.Name}}`, which expands to `cri-containerd.apparmor.d` and does not match the stacked peer name `cri-containerd.apparmor.d//&unconfined`. This causes AppArmor DENIED audit events when exec'd Go processes send SIGURG for goroutine preemption: ``` audit: type=1400 apparmor=\"DENIED\" operation=\"signal\" profile=\"cri-containerd.apparmor.d\" comm=\"bao\" requested_mask=\"send\" denied_mask=\"send\" signal=urg peer=\"cri-containerd.apparmor.d//&unconfined\" ``` This change adds rules with `peer={{.Name}}//&*` to match stacked profile peers for both signal and ptrace operations. The `//&*` glob matches any stacked profile suffix (e.g., `//&unconfined`). Tested on Ubuntu 25.10 (questing) aarch64 with kernel 6.17.0-1007-raspi, AppArmor parser 5.0.0~alpha1, containerd v2.1.5-k3s1. The modified profile was loaded via `apparmor_parser --replace`. After loading, zero new DENIED entries over 56+ seconds (11+ probe cycles at 5s interval), whereas before the fix there were continuous denials every cycle. Note: the `abi <abi/3.0>` pin from #12864 is already on main and does not resolve this issue. Fixes: #12886 ### Why the rule is shaped this way A flat `peer=<profile>` rule does not match a stacked peer label. The kernel matches the peer label as a single string: `label_compound_match()` walks the components and inserts the literal `//&` between them, so a rule whose text is `cri-containerd.apparmor.d` never matches `cri-containerd.apparmor.d//&unconfined`. The component fallback in `label_components_match()` does not rescue it either. It intersects permissions across components (`accum->allow &= addend->allow & ~addend->deny`), so `Name` contributes `send,receive`, `unconfined` contributes `receive`, and the intersection drops `send`. That is the SIGURG symptom in the report. `**` rather than `*`, because `signal.cc` and `ptrace.cc` compile the peer label through `convert_aaregex_to_pcre(peer_label, 0, glob_default, ...)`, where `*` becomes `[^/\\x00]*` and `**` becomes `[^\\x00]*`. A single `*` stops at `/`. That leaves out path-named profiles and any stack deeper than two components, since the tail then contains a `/`. Three positions, because the components of a stacked label are sorted lexically rather than by stacking order (`profile_cmp()` in `security/apparmor/label.c`). This profile can end up at the head, at the tail, or in the middle. The rules do not widen privileges. A stacked label is an intersection of confinements: a task labelled `A//&B` is confined by both A and B, so its permissions are a subset of what A alone allows. A peer carrying this profile as a component is already inside the set that the existing `peer={{.Name}}` rule grants in full. The literal `//&` in the pattern also keeps hat profiles (`parent//child`, no `&`) out of the match. Checked on a live kernel, Ubuntu 24.04, kernel 6.8, `domain/stack=yes`, AppArmor 4.0.1, entering the stacked label with `aa-exec` and running `kill -9` on an own child. `<profile>` below is the generated profile name, `cri-containerd.apparmor.d` by default: | peer label | rules in the profile | result | | --- | --- | --- | | `<profile>//&unconfined` | flat `peer={{.Name}}` only | denied | | `<profile>//&unconfined` | flat plus `//&*` | allowed | | `<profile>//&other/sub//&unconfined` | flat plus `//&*` | denied | | `<profile>//&other/sub//&unconfined` | flat plus `//&**` | allowed | | `<profile>//&zzz-peer` | head-anchored `//&**` only | allowed | | `aaa-peer//&<profile>` | head-anchored `//&**` only | denied | | `<profile>//&zzz-peer` | all three positions | allowed | | `aaa-peer//&<profile>` | all three positions | allowed | The last two rows ran against the profile this template generates, not a hand-written stand-in. The reported case looked like it needed only one rule because `c` sorts before `u`, so `cri-containerd.apparmor.d` happens to precede `unconfined` in the label. A profile named with a path always sorts first, `/` being `0x2f`, and would not have been covered. There is a narrower one-line alternative, relaxing `signal (receive) peer=unconfined` to `(send,receive)` so the component fallback covers the stack. That works, but it grants against every peer named `unconfined`, host processes included. The stacked-label form stays inside this profile's own stack. The generated profile compiles on `apparmor_parser` 2.12, 2.13.3, 2.13.6, 3.0.4 and 4.0.1 when given a current kernel feature set, with the new rules present in the compiled policy rather than dropped. I checked that by compiling with and without them and comparing the cache, using removal of an ordinary file rule as a control to confirm the comparison detects a change at all. `&` is not an AARE metacharacter, so older parsers treat `//&` as a literal and need no awareness of stacking. One caveat if you reproduce this: without a feature set, in a container with no AppArmor, 3.0.4 and 4.0.1 print `signal rules not enforced`, drop those rules, and still exit 0, so a bare parse check in that setup proves less than it appears to.",
+        "url": "https://github.com/containerd/containerd/pull/12887",
+        "createdAt": "2026-02-10T23:41:37Z",
+        "updatedAt": "2026-08-14T11:41:55Z",
+        "timestamp": "2026-08-14T11:41:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "kind/bug",
+          "area/runtime",
+          "size/M"
+        ],
+        "author": "lexfrei",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:7ed7f459b234505db1d1",
+      "signalId": "github:containerd/containerd:pull_request:13924",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13924",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "fix(cri): CRI image pull is sometimes canceled by image_pull_progress…",
+        "text": "Fixes #13909. ### Description When the CRI plugin pulls an image through the transfer service, the image pull can be canceled by `image_pull_progress_timeout` even when all blob downloads have finished and the remaining unpack is progressing. This happens because the transfer service's polling period is 300ms, and extraction can start within a few milliseconds after download completes. The job transitions directly to `jobExtracting` and sends `\"extracting\"`/`\"extracted\"` events instead of `\"complete\"`. Since the CRI `transferProgressReporter.handleProgress` only handled `\"complete\"`, the active request counter was never decremented, causing the watchdog to eventually time out the pull due to lack of download progress. This patch fixes the issue by allowing the CRI reporter to treat `\"extracting\"`, `\"extracted\"`, and `\"already exists\"` events as completion of the download phase, properly decrementing the active request counter and avoiding the timeout.",
+        "url": "https://github.com/containerd/containerd/pull/13924",
+        "createdAt": "2026-08-08T23:17:38Z",
+        "updatedAt": "2026-08-14T09:09:11Z",
+        "timestamp": "2026-08-14T09:09:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/M",
+          "cherry-pick/2.2.x",
+          "cherry-pick/2.3.x"
+        ],
+        "author": "RohithPariki",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:eceb28b89b55df0aa808",
+      "signalId": "github:containerd/containerd:pull_request:13940",
+      "event": "changed",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13940",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "Export config in CRI plugin",
+        "text": "This adds two properties to the CRI plugin export. This adds back similar functionality which was previously present in Containerd 1.7 but was removed from the CRI config output. Instead of adding the properties back to the CRI config output as tried in #13709 this change instead adds the needed properties to the export of the plugin. This solution feels more natural and does not require exporting all fields from the config. Fixes #10780",
+        "url": "https://github.com/containerd/containerd/pull/13940",
+        "createdAt": "2026-08-11T15:00:05Z",
+        "updatedAt": "2026-08-14T07:17:39Z",
+        "timestamp": "2026-08-14T07:17:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/XS"
+        ],
+        "author": "phillebaba",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8789b0881878225d94ac",
+      "signalId": "github:containerd/containerd:pull_request:13959",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13959",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "cri: trace image pull result attributes",
+        "text": "This adds success-result attributes to the existing CRI image pull span: - `image.id` records the resolved image identifier returned by CRI. - `image.size.bytes` records the image size when the existing best-effort size lookup succeeds. The change uses the existing tracing API and does not add new tracing configuration or alter image-pull behavior. It is intentionally limited to one file as a small follow-up to #12226. Validation: - `go test ./internal/cri/server/images` - `go vet ./internal/cri/server/images` - `git diff --check`",
+        "url": "https://github.com/containerd/containerd/pull/13959",
+        "createdAt": "2026-08-14T05:42:19Z",
+        "updatedAt": "2026-08-14T05:44:34Z",
+        "timestamp": "2026-08-14T05:44:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/XS"
+        ],
+        "author": "Cindia-blue",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:52c4dcf08e7bc52c6969",
+      "signalId": "github:containerd/containerd:pull_request:13657",
+      "event": "discovered",
+      "observedAt": "2026-08-14T18:55:56.646052Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13657",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "Use toolchain directive to declare preferred Go version",
+        "text": "Use the go directive to define the minimum supported Go version, and the toolchain directive to select the preferred Go version. This makes it nicer for downstream consumers, so they can still build containerd with older Go patch releases, and can upgrade their toolchains at their own pace.",
+        "url": "https://github.com/containerd/containerd/pull/13657",
+        "createdAt": "2026-06-23T13:28:29Z",
+        "updatedAt": "2026-08-14T04:30:17Z",
+        "timestamp": "2026-08-14T04:30:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "needs-rebase",
+          "size/XS"
+        ],
+        "author": "twz123",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
       }
     }
   ]

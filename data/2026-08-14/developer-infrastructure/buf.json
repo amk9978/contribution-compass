@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "date": "2026-08-14",
   "group": {
     "id": "developer-infrastructure",
@@ -30,15 +30,15 @@
     ],
     "license": "Apache-2.0",
     "defaultBranch": "main",
-    "stars": 11333,
+    "stars": 11335,
     "forks": 366,
     "openIssues": 58,
     "archived": false,
-    "collectedAt": "2026-08-14T03:31:41.315699+00:00"
+    "collectedAt": "2026-08-14T18:56:11.536303+00:00"
   },
   "news": {
     "repository": "bufbuild/buf",
-    "collectedAt": "2026-08-14T03:31:41.315699+00:00",
+    "collectedAt": "2026-08-14T18:56:11.536303+00:00",
     "latestRelease": {
       "repository": "bufbuild/buf",
       "tag": "v1.72.0",
@@ -60,6 +60,12 @@
     {
       "collectedAt": "2026-08-14T03:31:25.964050Z",
       "since": "2026-08-13T03:31:25.964050Z",
+      "observedCount": 0,
+      "changedCount": 0
+    },
+    {
+      "collectedAt": "2026-08-14T18:55:56.646052Z",
+      "since": "2026-08-13T18:55:56.646052Z",
       "observedCount": 0,
       "changedCount": 0
     }
