@@ -3,12 +3,18 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from typing import Any, Literal, Self, cast
 
+from contribution_compass.domain.policies import (
+    DEFAULT_CONTRIBUTION_POLICY,
+    ContributionPolicy,
+)
+
 SignalKind = Literal["issue", "pull_request", "release"]
 SignalState = Literal["open", "closed"]
 ChangeKind = Literal["new", "updated"]
 EventKind = Literal["discovered", "changed"]
 LeadTier = Literal["maintainer-invited", "triage-lead"]
 UpcomingKind = Literal["prerelease", "milestone"]
+ProvenanceKind = Literal["local", "overlay"]
 
 
 def _without_none(value: Any) -> Any:
@@ -37,11 +43,20 @@ class RepoGroup:
 
 
 @dataclass(frozen=True, slots=True)
+class CatalogOverlayConfig:
+    id: str
+    url: str
+    max_age_hours: int = 48
+
+
+@dataclass(frozen=True, slots=True)
 class CompassConfig:
     repo_groups: tuple[RepoGroup, ...]
     lookback_hours: int = 24
     hackernews_enabled: bool = False
     hackernews_story_limit: int = 200
+    contribution_policy: ContributionPolicy = DEFAULT_CONTRIBUTION_POLICY
+    catalog_overlays: tuple[CatalogOverlayConfig, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -410,17 +425,38 @@ class ObservationEvent:
 
 
 @dataclass(frozen=True, slots=True)
+class ContributionMeasure:
+    id: str
+    label: str
+    points: int
+    evidence: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "label": self.label,
+            "points": self.points,
+            "evidence": self.evidence,
+        }
+
+
+@dataclass(frozen=True, slots=True)
 class ContributionLead:
     signal: Signal
     tier: LeadTier
     score: int
     reasons: tuple[str, ...]
     caveat: str
+    measures: tuple[ContributionMeasure, ...] = ()
+    policy_version: int = 1
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "tier": self.tier,
             "rankScore": self.score,
+            "scoreFormula": "sum(measures[].points)",
+            "policyVersion": self.policy_version,
+            "measures": [measure.to_dict() for measure in self.measures],
             "reasons": list(self.reasons),
             "caveat": self.caveat,
             "signal": self.signal.to_dict(),
@@ -464,6 +500,39 @@ class CrawlRun:
         }
 
 
+@dataclass(frozen=True, slots=True)
+class CatalogProvenance:
+    kind: ProvenanceKind
+    source_date: str
+    catalog_id: str | None = None
+    catalog_url: str | None = None
+    catalog_generated_at: str | None = None
+
+    @classmethod
+    def from_dict(cls, value: dict[str, Any]) -> Self:
+        return cls(
+            kind=value["kind"],
+            source_date=str(value["sourceDate"]),
+            catalog_id=value.get("catalogId"),
+            catalog_url=value.get("catalogUrl"),
+            catalog_generated_at=value.get("catalogGeneratedAt"),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return cast(
+            dict[str, Any],
+            _without_none(
+                {
+                    "kind": self.kind,
+                    "sourceDate": self.source_date,
+                    "catalogId": self.catalog_id,
+                    "catalogUrl": self.catalog_url,
+                    "catalogGeneratedAt": self.catalog_generated_at,
+                }
+            ),
+        )
+
+
 @dataclass(slots=True)
 class RepositoryDataset:
     date: str
@@ -478,6 +547,7 @@ class RepositoryDataset:
     events: list[ObservationEvent] = field(default_factory=list)
     context: ProjectContext | None = None
     news: ProjectNewsSnapshot | None = None
+    provenance: CatalogProvenance | None = None
 
     @classmethod
     def from_dict(cls, value: dict[str, Any]) -> Self:
@@ -510,6 +580,11 @@ class RepositoryDataset:
                 if isinstance(value.get("news"), dict)
                 else None
             ),
+            provenance=(
+                CatalogProvenance.from_dict(value["provenance"])
+                if isinstance(value.get("provenance"), dict)
+                else None
+            ),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -517,7 +592,7 @@ class RepositoryDataset:
             dict[str, Any],
             _without_none(
                 {
-                    "version": 3,
+                    "version": 4,
                     "date": self.date,
                     "group": {"id": self.group_id, "name": self.group_name},
                     "repository": {
@@ -528,6 +603,7 @@ class RepositoryDataset:
                     },
                     "context": self.context.to_dict() if self.context else None,
                     "news": self.news.to_dict() if self.news else None,
+                    "provenance": self.provenance.to_dict() if self.provenance else None,
                     "runs": [run.to_dict() for run in self.runs],
                     "signals": [signal.to_dict() for signal in self.signals],
                     "events": [event.to_dict() for event in self.events],

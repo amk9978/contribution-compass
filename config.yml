@@ -4,6 +4,57 @@ hackernews:
   enabled: true
   story_limit: 200
 
+# Deterministic contribution ranking. Every resulting point is exposed in JSON and HTML.
+# Empty label arrays remain empty; set a weight to 0 to disable its scoring effect.
+contributions:
+  invitation_labels:
+    - good first issue
+    - help wanted
+    - up for grabs
+    - first timers only
+    - beginner friendly
+    - contributions welcome
+  beginner_labels:
+    - good first issue
+    - first timers only
+    - beginner friendly
+  excluded_labels:
+    - blocked
+    - duplicate
+    - invalid
+    - needs info
+    - needs repro
+    - question
+    - stale
+    - waiting for author
+    - waiting for response
+    - wontfix
+    - "won't fix"
+  weights:
+    maintainer_invitation: 60
+    beginner_friendly: 15
+    documentation: 24
+    engaged_bug: 18
+    reacted_enhancement: 14
+    reaction: 1
+    comment_block: 1
+    recent_activity: 5
+  thresholds:
+    bug_engagement: 4
+    enhancement_reactions: 3
+    comments_per_point: 4
+    max_reaction_count: 15
+    max_comment_blocks: 10
+    recent_days: 14
+
+# Optional shared catalogs. A fork reuses fresh matching Project Sensors and collects only its delta.
+# Local data always wins; stale or unavailable overlays fall back to direct collection.
+catalog_overlays: []
+# catalog_overlays:
+#   - id: community
+#     url: https://amk9978.github.io/contribution-compass
+#     max_age_hours: 48
+
 repo_groups:
   distributed-systems:
     name: Distributed Systems & Correctness

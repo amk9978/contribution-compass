@@ -8,7 +8,7 @@ official Python MCP SDK. The MCP adapter performs no inference and never writes 
 | Tool | Purpose |
 |---|---|
 | `search_project_updates` | Search and rank factual issues, pull requests, and releases |
-| `find_contribution_opportunities` | Find open, unassigned leads with reasons and caveats |
+| `find_contribution_opportunities` | Find open, unassigned leads with additive Measures, reasons, and caveats |
 | `get_project_news` | Read releases, public upcoming work, and separately labeled HN discussions |
 | `get_project_context` | Read repository metadata, Signals, and Observation Events |
 | `get_signal_timeline` | Reconstruct the discovered/changed trail for a stable Signal ID |
@@ -20,6 +20,11 @@ discussion links, and per-project context under `compass://...` URIs.
 Configured project `keywords` are persisted as project metadata, returned by project-list/context
 tools, and included when searching updates, contribution leads, or project news.
 
+Every contribution result includes `rankScore`, `scoreFormula`, `policyVersion`, and `measures`.
+Consumers can reproduce the score exactly, inspect the evidence for each Measure, or apply their own
+ranking. Repository snapshots may also include `provenance`; an `overlay` value identifies reused
+catalog data and its source date instead of presenting it as locally collected.
+
 ## Choose a data adapter
 
 By default, the server reads the clone's local `data/` directory. To use the continuously updated
@@ -29,7 +34,9 @@ GitHub Pages catalog instead, set:
 COMPASS_DATA_URL=https://amk9978.github.io/contribution-compass
 ```
 
-The local and hosted adapters implement the same catalog interface.
+The local and hosted adapters implement the same catalog interface. When `COMPASS_DATA_URL` is not
+set, optional `catalog_overlays` from `config.yml` are composed with local data using the same rules
+as the website: configured projects only, newer snapshot first, and local precedence on equal dates.
 
 ## Verify with MCP Inspector
 

@@ -49,6 +49,42 @@ def test_hackernews_collection_and_keywords_are_explicit_and_empty_stays_empty()
     assert config.repo_groups[0].repos[0].keywords == ()
 
 
+def test_contribution_policy_is_configurable_and_empty_labels_stay_empty() -> None:
+    config = parse_config(
+        {
+            "contributions": {
+                "invitation_labels": [],
+                "beginner_labels": [],
+                "excluded_labels": ["do not touch"],
+                "weights": {"maintainer_invitation": 41, "recent_activity": 0},
+                "thresholds": {"recent_days": 30},
+            },
+            "repo_groups": {},
+        }
+    )
+    policy = config.contribution_policy
+    assert policy.invitation_labels == ()
+    assert policy.beginner_labels == ()
+    assert policy.excluded_labels == ("do not touch",)
+    assert policy.weights.maintainer_invitation == 41
+    assert policy.weights.reaction == 1
+    assert policy.thresholds.recent_days == 30
+
+
+def test_catalog_overlays_are_explicit_and_empty_stays_empty() -> None:
+    assert parse_config({"catalog_overlays": [], "repo_groups": {}}).catalog_overlays == ()
+    config = parse_config(
+        {
+            "catalog_overlays": [
+                {"id": "shared", "url": "https://example.test/compass", "max_age_hours": 12}
+            ],
+            "repo_groups": {},
+        }
+    )
+    assert config.catalog_overlays[0].id == "shared"
+    assert config.catalog_overlays[0].max_age_hours == 12
+
+
 def test_legacy_hackernews_keyword_name_loads_as_project_keywords() -> None:
     config = parse_config(
         {
@@ -109,6 +145,27 @@ def test_legacy_hackernews_keyword_name_loads_as_project_keywords() -> None:
                 }
             },
             "do not specify both keyword fields",
+        ),
+        (
+            {
+                "contributions": {"weights": {"mystery": 10}},
+                "repo_groups": {},
+            },
+            "unknown field",
+        ),
+        (
+            {
+                "contributions": {"thresholds": {"comments_per_point": 0}},
+                "repo_groups": {},
+            },
+            "greater than or equal to 1",
+        ),
+        (
+            {
+                "catalog_overlays": [{"id": "bad", "url": "file:///tmp/catalog"}],
+                "repo_groups": {},
+            },
+            "absolute HTTP",
         ),
     ],
 )

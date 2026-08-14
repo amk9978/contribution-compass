@@ -513,6 +513,16 @@ input {
   font-size: clamp(38px, 6vw, 64px);
 }
 
+.repo-hero .catalog-provenance {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.catalog-provenance a {
+  color: var(--blue);
+}
+
 .compact-metrics {
   grid-template-columns: repeat(4, 1fr);
 }

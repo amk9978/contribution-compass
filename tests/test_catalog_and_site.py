@@ -62,6 +62,7 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
     home = (output / "index.html").read_text()
     contribution = (output / "contribute/index.html").read_text()
     news_page = (output / "news/index.html").read_text()
+    personalized = (output / "personalize/index.html").read_text()
     repository = (output / "updates/2026-08-13/runtime-tools/widget.html").read_text()
     api = json.loads((output / "api/v1/index.json").read_text())
     opportunities = json.loads((output / "api/v1/opportunities.json").read_text())
@@ -71,18 +72,28 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
         ).read_text()
     )
 
-    assert build.pages == 6
+    assert build.pages == 7
     assert "Follow important projects" in home
     assert "Maintainer invited" in contribution
     assert "Widget 2.0" in news_page
     assert "Widget 2.1" in news_page
     assert "Hacker News discussions" in news_page
     assert "https://news.ycombinator.com/item?id=123" in news_page
+    assert "Your contribution table" in personalized
+    assert 'data-project="acme/widget"' in personalized
+    assert "personalize.js" in personalized
+    assert (output / "assets/personalize.js").exists()
     assert "Observation trail" in repository
     assert "keyword: resource lifecycle" in repository
     assert "https://github.com/acme/widget/issues/42" in repository
-    assert api["schemaVersion"] == 3
+    assert api["schemaVersion"] == 4
+    assert api["links"]["personalizedView"].endswith("/personalize/")
     assert opportunities["leads"][0]["evidenceUrl"].endswith("/issues/42")
+    assert opportunities["leads"][0]["rankScore"] == sum(
+        measure["points"] for measure in opportunities["leads"][0]["measures"]
+    )
+    assert opportunities["methodology"]["scoreFormula"] == "sum(lead.measures[].points)"
+    assert "Why this score" in contribution
     assert repository_api["dataset"]["events"][0]["event"] == "discovered"
     assert repository_api["dataset"]["repository"]["keywords"] == [
         "resource lifecycle",
@@ -115,6 +126,7 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
     assert "+0000" in (output / "feed.xml").read_text()
     assert "widget.html" in (output / "sitemap.xml").read_text()
     assert "/news/" in (output / "sitemap.xml").read_text()
+    assert "/personalize/" in (output / "sitemap.xml").read_text()
     assert "Observation Events" in (output / "llms.txt").read_text()
 
 

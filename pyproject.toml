@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "contribution-compass"
-version = "0.2.0"
+version = "0.3.0"
 description = "Evidence-first open-source updates and contribution discovery"
 readme = "README.md"
 requires-python = ">=3.12"

@@ -65,7 +65,7 @@ def test_dataset_persists_context_events_and_folder_separation(tmp_path: Path) -
 
     path = root / "data/2026-08-13/runtime-tools/widget.json"
     raw = json.loads(path.read_text())
-    assert raw["version"] == 3
+    assert raw["version"] == 4
     assert raw["context"]["stars"] == 10
     assert raw["repository"]["keywords"] == ["resource lifecycle", "async runtime"]
     assert raw["events"][0]["signalId"] == signal.id

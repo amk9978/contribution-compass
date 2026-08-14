@@ -1,14 +1,24 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from typing import Annotated, Literal
 
 from mcp.server import MCPServer
 from pydantic import Field
 
-from contribution_compass.adapters.catalog import LocalJsonCatalog, RemoteJsonCatalog
+from contribution_compass.adapters.catalog import (
+    LocalJsonCatalog,
+    RemoteJsonCatalog,
+    assemble_catalog,
+)
 from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.news import NewsQueries
+from contribution_compass.config import load_config
+from contribution_compass.domain.policies import (
+    DEFAULT_CONTRIBUTION_POLICY,
+    ContributionPolicy,
+)
 from contribution_compass.ports import Catalog
 
 
@@ -58,11 +68,25 @@ def catalog_from_environment() -> Catalog:
     remote = os.getenv("COMPASS_DATA_URL")
     if remote:
         return RemoteJsonCatalog(remote)
+    config_path = Path(os.getenv("COMPASS_CONFIG", "config.yml"))
+    if config_path.exists():
+        return assemble_catalog(
+            load_config(config_path),
+            local_root=os.getenv("COMPASS_DATA_ROOT", "data"),
+        ).catalog
     return LocalJsonCatalog(os.getenv("COMPASS_DATA_ROOT", "data"))
 
 
-def create_server(catalog: Catalog) -> MCPServer:
-    queries = CatalogQueries(catalog)
+def contribution_policy_from_environment() -> ContributionPolicy:
+    path = Path(os.getenv("COMPASS_CONFIG", "config.yml"))
+    return load_config(path).contribution_policy if path.exists() else DEFAULT_CONTRIBUTION_POLICY
+
+
+def create_server(
+    catalog: Catalog,
+    contribution_policy: ContributionPolicy = DEFAULT_CONTRIBUTION_POLICY,
+) -> MCPServer:
+    queries = CatalogQueries(catalog, contribution_policy)
     news_queries = NewsQueries(catalog)
     server = MCPServer(
         "Contribution Compass",
@@ -210,7 +234,7 @@ def create_server(catalog: Catalog) -> MCPServer:
     return server
 
 
-mcp = create_server(catalog_from_environment())
+mcp = create_server(catalog_from_environment(), contribution_policy_from_environment())
 
 
 def main() -> None:

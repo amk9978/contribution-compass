@@ -85,7 +85,13 @@ class CollectUpdates:
         changes = self._observations.detect_changes(batch.signals, now)
         # Contribution availability is a property of the current observation window, not whether
         # an issue happened to change since the previous run.
-        leads = tuple(rank_contributions(batch.signals))
+        leads = tuple(
+            rank_contributions(
+                batch.signals,
+                policy=config.contribution_policy,
+                as_of=now,
+            )
+        )
         data_directory = self._datasets.persist(
             date=date,
             collected_at=now,
