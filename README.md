@@ -7,8 +7,21 @@ It is a data gatherer first. GitHub evidence, separately labeled Hacker News dis
 repository context, and observation history stay separate from interpretation. No OpenAI,
 Anthropic, or other model credential is required.
 
-[Use this repository as a template](https://github.com/new?template_name=contribution-compass&template_owner=amk9978),
-or use the hosted catalog immediately without creating a repository.
+## Quick start
+
+**Explore immediately — no install, account, or fork:**
+[open My Compass](https://amk9978.github.io/contribution-compass/personalize/), choose your projects,
+and bookmark the page.
+
+**Run your own compass:**
+
+1. [Create a repository from the template](https://github.com/new?template_name=contribution-compass&template_owner=amk9978).
+2. Edit `config.yml` with the projects and keywords you care about.
+3. Enable GitHub Actions and select **GitHub Actions** as the Pages source.
+4. Run the **Contribution Compass** workflow once from the Actions tab.
+
+That is all. GitHub collects updates on schedule and publishes the website, JSON, RSS, and MCP
+catalog. **No OpenAI or Anthropic API key is needed.**
 
 ```text
 config.yml Project Sensors
@@ -127,13 +140,9 @@ render application results but do not classify opportunities.
 
 See [CONTEXT.md](CONTEXT.md) for domain language and [docs/adr](docs/adr) for architectural decisions.
 
-## Fast personalization
+## Generate `config.yml`
 
-To use the public catalog, open [My Compass](https://amk9978.github.io/contribution-compass/personalize/),
-select projects, and bookmark the resulting URL. That is the zero-install path.
-
-To own the collection, create a repository from the template and generate a configuration from one
-or more sources:
+Instead of editing YAML manually, generate a configuration from one or more sources:
 
 ```bash
 uv sync --all-extras
