@@ -66,6 +66,19 @@ evidence was found, not that the project has no private roadmap.
 An open, unassigned issue surfaced by transparent deterministic rules. A Lead always contains its
 evidence, reasons, and caveat.
 
+### Contribution Measure
+
+A named, factual scoring input attached to a Contribution Lead. It contains its point contribution
+and the collected evidence that activated it. A Lead's score is exactly the sum of its Measures;
+zero-point eligibility Measures may be retained for explanation. Avoid “quality score” or
+“recommended task.”
+
+### Contribution Policy
+
+Curator-controlled label sets, weights, and thresholds used to qualify and rank Contribution Leads.
+It is configuration, not collected evidence. Empty configured label sets stay empty, and a zero
+weight disables that Measure's scoring effect.
+
 ### Maintainer-Invited Lead
 
 A Contribution Lead with an explicit invitation label such as `good first issue` or `help wanted`.
@@ -82,6 +95,24 @@ An optional consumer of Signals, Observation Events, Project Context, and Contri
 produce hypotheses, but its output remains separate from collected evidence and must cite the
 evidence it used.
 
+### Personal Profile
+
+A browser-local selection of Project Sensors used to filter the public catalog into a contributor's
+own table. It is stored in `localStorage` or a shareable URL and never sent to a Contribution Compass
+backend.
+
+### Catalog Overlay
+
+An optional, versioned Contribution Compass catalog reused by another installation. Only Project
+Sensors already named in the consumer's `config.yml` may flow through an Overlay. Equally current
+local data wins; stale or unavailable Overlays fall back to direct collection.
+
+### Catalog Provenance
+
+Metadata recording whether a repository snapshot came from local collection or a Catalog Overlay,
+including the source snapshot date and, for an Overlay, its configured identity, URL, and generation
+time.
+
 ## Invariants
 
 - Every Signal and Contribution Lead retains a primary evidence URL.
@@ -91,5 +122,9 @@ evidence it used.
 - Observation Events are append-only; newer observations do not erase their trail.
 - Empty configured groups stay empty and no hidden Project Sensors appear.
 - Empty configured keyword lists stay empty and stored Keywords mirror `config.yml`.
+- Empty Contribution Policy label sets and empty Catalog Overlay lists stay empty.
+- A Contribution Lead score equals the sum of its named Contribution Measures.
+- Catalog Overlays cannot introduce Project Sensors absent from the consumer's `config.yml`.
+- Reused repository snapshots expose Catalog Provenance.
 - MCP, CLI, static HTML, and JSON are adapters over the same application interface.
 - Inference output, when added, is distinguishable from direct evidence.

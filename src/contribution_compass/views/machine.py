@@ -12,6 +12,10 @@ from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.news import NewsQueries, ProjectNewsEntry
 from contribution_compass.domain.importance import importance_score
 from contribution_compass.domain.models import ContributionLead, RepositoryDataset, Signal
+from contribution_compass.domain.policies import (
+    DEFAULT_CONTRIBUTION_POLICY,
+    ContributionPolicy,
+)
 from contribution_compass.ports import Catalog
 
 
@@ -45,9 +49,14 @@ def signal_page_url(signal: Signal, dataset: RepositoryDataset, context: SiteCon
 class MachineView:
     """Render stable machine interfaces without HTML knowledge."""
 
-    def __init__(self, catalog: Catalog, context: SiteContext) -> None:
+    def __init__(
+        self,
+        catalog: Catalog,
+        context: SiteContext,
+        contribution_policy: ContributionPolicy = DEFAULT_CONTRIBUTION_POLICY,
+    ) -> None:
         self.catalog = catalog
-        self.queries = CatalogQueries(catalog)
+        self.queries = CatalogQueries(catalog, contribution_policy)
         self.news_queries = NewsQueries(catalog)
         self.context = context
         self.generated_at = datetime.now(UTC).isoformat().replace("+00:00", "Z")
@@ -56,7 +65,7 @@ class MachineView:
         dates = self.catalog.dates()
         return json_text(
             {
-                "schemaVersion": 3,
+                "schemaVersion": 4,
                 "name": "Contribution Compass",
                 "generatedAt": self.generated_at,
                 "description": (
@@ -67,6 +76,7 @@ class MachineView:
                 "latestDate": dates[0] if dates else None,
                 "links": {
                     "website": f"{self.context.site_url}/",
+                    "personalizedView": f"{self.context.site_url}/personalize/",
                     "contributionLeads": f"{self.context.site_url}/api/v1/opportunities.json",
                     "projectNews": f"{self.context.site_url}/api/v1/news.json",
                     "newsJsonFeed": f"{self.context.site_url}/news/feed.json",
@@ -103,7 +113,7 @@ class MachineView:
                 "type": "object",
                 "required": ["schemaVersion", "dataset"],
                 "properties": {
-                    "schemaVersion": {"const": 3},
+                    "schemaVersion": {"const": 4},
                     "dataset": {
                         "type": "object",
                         "required": [
@@ -127,6 +137,7 @@ class MachineView:
                             },
                             "context": {"type": ["object", "null"]},
                             "news": {"type": ["object", "null"]},
+                            "provenance": {"type": ["object", "null"]},
                             "signals": {"type": "array", "items": {"type": "object"}},
                             "events": {"type": "array", "items": {"type": "object"}},
                         },
@@ -159,7 +170,7 @@ class MachineView:
             group["pageUrl"] = f"{self.context.site_url}/updates/{date}/{group['id']}/"
         return json_text(
             {
-                "schemaVersion": 3,
+                "schemaVersion": 4,
                 "date": date,
                 "signalCount": sum(len(dataset.signals) for dataset in datasets),
                 "eventCount": sum(len(dataset.events) for dataset in datasets),
@@ -173,7 +184,7 @@ class MachineView:
         ]
         return json_text(
             {
-                "schemaVersion": 3,
+                "schemaVersion": 4,
                 "date": date,
                 "group": {
                     "id": group_id,
@@ -187,6 +198,9 @@ class MachineView:
                         "keywords": list(dataset.keywords),
                         "signalCount": len(dataset.signals),
                         "eventCount": len(dataset.events),
+                        "provenance": (
+                            dataset.provenance.to_dict() if dataset.provenance else None
+                        ),
                         "apiUrl": (
                             f"{self.context.site_url}/api/v1/dates/{date}/groups/{group_id}/"
                             f"repositories/{dataset.repository_id}.json"
@@ -203,13 +217,13 @@ class MachineView:
 
     @staticmethod
     def repository(dataset: RepositoryDataset) -> str:
-        return json_text({"schemaVersion": 3, "dataset": dataset.to_dict()})
+        return json_text({"schemaVersion": 4, "dataset": dataset.to_dict()})
 
     def news(self) -> str:
         entries = self.news_queries.list(limit=100)
         return json_text(
             {
-                "schemaVersion": 3,
+                "schemaVersion": 4,
                 "generatedAt": self.generated_at,
                 "description": (
                     "Latest stable releases and publicly indicated upcoming work. Prereleases and "
@@ -233,14 +247,16 @@ class MachineView:
         date = next(iter(self.catalog.dates()), None)
         datasets = self.catalog.repositories(date)
         dataset_by_repo = {dataset.repository: dataset for dataset in datasets}
-        leads = self.queries.contribution_leads(limit=100)
+        leads = self.queries.contribution_leads(limit=1000)
         return json_text(
             {
-                "schemaVersion": 3,
+                "schemaVersion": 4,
                 "generatedAt": self.generated_at,
                 "date": date,
                 "description": "Evidence-backed leads from open, unassigned issues.",
                 "methodology": {
+                    "policy": self.queries.contribution_policy.to_dict(),
+                    "scoreFormula": "sum(lead.measures[].points)",
                     "maintainerInvited": (
                         "Explicit invitation labels such as good first issue or help wanted."
                     ),
@@ -464,6 +480,7 @@ class MachineView:
 ## Start here
 
 - [Contribution leads]({self.context.site_url}/api/v1/opportunities.json)
+- [Personalized human view]({self.context.site_url}/personalize/)
 - [Project news]({self.context.site_url}/api/v1/news.json)
 - [Project news JSON Feed]({self.context.site_url}/news/feed.json)
 - [Project news RSS]({self.context.site_url}/news/feed.xml)
@@ -481,6 +498,8 @@ class MachineView:
 - Hacker News entries are community discussions, not maintainer evidence or endorsement.
 - Maintainer-Invited Leads have explicit invitation labels.
 - Triage Leads are lower-confidence and are not maintainer-approved work.
+- Lead rankScore is exactly the sum of its named Contribution Measures.
+- Repository provenance identifies locally collected and reused Catalog Overlay snapshots.
 - Re-check the live issue for state, assignment, scope, and contribution policy.
 - Never invent maintainer intent, project importance, or contribution acceptance.
 """

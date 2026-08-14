@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 
 from contribution_compass.domain.contributions import rank_contributions
 from contribution_compass.domain.importance import importance_score, rank_updates
@@ -9,6 +10,10 @@ from contribution_compass.domain.models import (
     ObservationEvent,
     RepositoryDataset,
     Signal,
+)
+from contribution_compass.domain.policies import (
+    DEFAULT_CONTRIBUTION_POLICY,
+    ContributionPolicy,
 )
 from contribution_compass.ports import Catalog
 
@@ -23,6 +28,7 @@ class ProjectSummary:
     signal_count: int
     event_count: int
     context: dict[str, object] | None
+    provenance: dict[str, object] | None
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -34,14 +40,30 @@ class ProjectSummary:
             "signalCount": self.signal_count,
             "eventCount": self.event_count,
             "context": self.context,
+            "provenance": self.provenance,
         }
 
 
 class CatalogQueries:
     """Deep read interface used identically by CLI views, MCP tools, and tests."""
 
-    def __init__(self, catalog: Catalog) -> None:
+    def __init__(
+        self,
+        catalog: Catalog,
+        contribution_policy: ContributionPolicy = DEFAULT_CONTRIBUTION_POLICY,
+    ) -> None:
         self._catalog = catalog
+        self.contribution_policy = contribution_policy
+
+    @staticmethod
+    def _as_of(datasets: list[RepositoryDataset]) -> datetime | None:
+        values = [run.collected_at for dataset in datasets for run in dataset.runs]
+        if not values:
+            return None
+        try:
+            return max(datetime.fromisoformat(value.replace("Z", "+00:00")) for value in values)
+        except ValueError:
+            return None
 
     def dates(self) -> list[str]:
         return self._catalog.dates()
@@ -62,6 +84,7 @@ class CatalogQueries:
                 signal_count=len(dataset.signals),
                 event_count=len(dataset.events),
                 context=dataset.context.to_dict() if dataset.context else None,
+                provenance=dataset.provenance.to_dict() if dataset.provenance else None,
             )
             for dataset in datasets
         ]
@@ -96,6 +119,7 @@ class CatalogQueries:
                 "group": {"id": dataset.group_id, "name": dataset.group_name},
             },
             "context": dataset.context.to_dict() if dataset.context else None,
+            "provenance": dataset.provenance.to_dict() if dataset.provenance else None,
             "news": dataset.news.to_dict() if dataset.news else None,
             "runCount": len(dataset.runs),
             "signalCount": len(dataset.signals),
@@ -152,10 +176,14 @@ class CatalogQueries:
         limit: int = 20,
     ) -> list[ContributionLead]:
         needle = query.casefold().strip()
-        project_keywords = {
-            dataset.repository: dataset.keywords for dataset in self._catalog.repositories(date)
-        }
-        leads = rank_contributions(self._catalog.signals(date), 1000)
+        datasets = self._catalog.repositories(date)
+        project_keywords = {dataset.repository: dataset.keywords for dataset in datasets}
+        leads = rank_contributions(
+            [signal for dataset in datasets for signal in dataset.signals],
+            1000,
+            policy=self.contribution_policy,
+            as_of=self._as_of(datasets),
+        )
         return [
             lead
             for lead in leads

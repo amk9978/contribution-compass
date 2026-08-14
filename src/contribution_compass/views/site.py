@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import json
 import os
 import shutil
 from collections.abc import Callable
@@ -15,6 +16,10 @@ from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.news import NewsQueries, ProjectNewsEntry
 from contribution_compass.domain.importance import importance_score, rank_updates
 from contribution_compass.domain.models import ContributionLead, RepositoryDataset, Signal
+from contribution_compass.domain.policies import (
+    DEFAULT_CONTRIBUTION_POLICY,
+    ContributionPolicy,
+)
 from contribution_compass.ports import Catalog
 from contribution_compass.views.machine import MachineView, SiteContext, signal_anchor
 
@@ -57,9 +62,14 @@ class SiteBuild:
 class HtmlView:
     """Human presentation only; domain decisions arrive through CatalogQueries."""
 
-    def __init__(self, catalog: Catalog, context: SiteContext) -> None:
+    def __init__(
+        self,
+        catalog: Catalog,
+        context: SiteContext,
+        contribution_policy: ContributionPolicy = DEFAULT_CONTRIBUTION_POLICY,
+    ) -> None:
         self.catalog = catalog
-        self.queries = CatalogQueries(catalog)
+        self.queries = CatalogQueries(catalog, contribution_policy)
         self.news_queries = NewsQueries(catalog)
         self.context = context
         self._signal_page_cache: dict[tuple[str, str], dict[str, int]] = {}
@@ -112,7 +122,19 @@ class HtmlView:
             }
         return self._signal_page_cache[key].get(signal.id, 1)
 
-    def page(self, title: str, description: str, content: str, *, api_url: str) -> str:
+    def page(
+        self,
+        title: str,
+        description: str,
+        content: str,
+        *,
+        api_url: str,
+        scripts: tuple[str, ...] = (),
+    ) -> str:
+        extra_scripts = "".join(
+            f'<script src="{self.context.site_url}/assets/{h(script)}" defer></script>'
+            for script in scripts
+        )
         return f"""<!doctype html>
 <html lang="en" data-theme="dark">
 <head>
@@ -127,15 +149,17 @@ class HtmlView:
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{self.context.site_url}/feed.xml">
   <link rel="stylesheet" href="{self.context.site_url}/assets/styles.css">
   <link rel="stylesheet" href="{self.context.site_url}/assets/contributions.css">
+  <link rel="stylesheet" href="{self.context.site_url}/assets/personalize.css">
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="{self.context.site_url}/"><span class="brand-mark">⌖</span><span>contribution/<strong>compass</strong></span></a>
-    <nav class="topnav"><a href="{self.context.site_url}/contribute/">Contribute</a><a href="{self.context.site_url}/news/">News</a><a href="{self.context.site_url}/api/v1/index.json">Data</a><a class="secondary-nav" href="{self.context.site_url}/feed.xml">RSS</a><a class="secondary-nav" href="{self.context.repository_url}">GitHub</a><button class="theme-toggle" type="button" aria-label="Toggle color theme">◐</button></nav>
+    <nav class="topnav"><a href="{self.context.site_url}/contribute/">Contribute</a><a href="{self.context.site_url}/news/">News</a><a href="{self.context.site_url}/personalize/">My Compass</a><a href="{self.context.site_url}/api/v1/index.json">Data</a><a class="secondary-nav" href="{self.context.site_url}/feed.xml">RSS</a><a class="secondary-nav" href="{self.context.repository_url}">GitHub</a><button class="theme-toggle" type="button" aria-label="Toggle color theme">◐</button></nav>
   </header>
   {content}
   <footer class="footer"><span>Direct GitHub and Hacker News evidence · No generated analysis</span><span><a href="{self.context.site_url}/llms.txt">LLM guide</a> · <a href="{self.context.repository_url}/blob/main/docs/MCP.md">MCP</a></span></footer>
   <script src="{self.context.site_url}/assets/app.js" defer></script>
+  {extra_scripts}
 </body>
 </html>"""
 
@@ -169,11 +193,18 @@ class HtmlView:
         search = " ".join(
             (lead.signal.title, lead.signal.project or "", *lead.signal.labels)
         ).casefold()
+        measures = "".join(
+            f"<li><strong>{'+' if measure.points > 0 else ''}{measure.points}</strong> "
+            f"<span>{h(measure.label)}</span><small>{h(measure.evidence)}</small></li>"
+            for measure in lead.measures
+            if measure.points
+        )
         return f"""<article class="contribution-card" data-tier="{lead.tier}" data-contribution-search="{h(search)}">
-  <div class="contribution-head"><span class="lead-tier {lead.tier}">{"Maintainer invited" if lead.tier == "maintainer-invited" else "Triage lead"}</span><span>{h(lead.signal.project or "")}</span></div>
+  <div class="contribution-head"><span class="lead-tier {lead.tier}">{"Maintainer invited" if lead.tier == "maintainer-invited" else "Triage lead"}</span><span class="lead-project">{h(lead.signal.project or "")}</span><span class="lead-score">Score {lead.score}</span></div>
   <h3><a href="{safe_url(lead.signal.url)}">{h(lead.signal.title)}</a></h3>
   <div class="lead-reasons">{"".join(f"<span>{h(reason)}</span>" for reason in lead.reasons)}</div>
   <div class="signal-meta"><span>{lead.signal.metrics.comments if lead.signal.metrics else 0} comments</span><span>{lead.signal.metrics.reactions if lead.signal.metrics else 0} reactions</span>{labels}</div>
+  <details class="measure-breakdown"><summary>Why this score</summary><ul>{measures}</ul></details>
   <p class="lead-caveat">{h(lead.caveat)}</p>
   <div class="lead-actions"><a href="{safe_url(lead.signal.url)}">Check live issue ↗</a><a href="{collected_url}">Collected context →</a></div>
 </article>"""
@@ -250,6 +281,7 @@ class HtmlView:
         content = f"""<main>
 <section class="hero shell"><div><span class="eyebrow">LATEST COLLECTION · {date}</span><h1>Follow important projects.<br><em>Find where to help.</em></h1><p>Factual updates, project context, and evidence-backed contribution leads from {len(datasets)} curated open-source projects.</p></div><a class="date-chip" href="{self.context.site_url}/updates/{date}/"><span>Browse snapshot</span><strong>{date}</strong></a></section>
 <section class="metrics shell">{self._metric("Signals", metrics["signals"], "new or changed")}{self._metric("Contribution leads", len(leads), "evidence-qualified")}{self._metric("Maintainer invited", len(invited), "explicitly labeled")}{self._metric("Projects", metrics["repositories"], "with activity")}{self._metric("Trail events", metrics["events"], "append-only")}</section>
+<section class="personalize-cta shell"><div><span class="eyebrow">NO FORK REQUIRED</span><h2>Turn this catalog into your start page.</h2><p>Choose the projects you care about and keep a personal contribution/news table in this browser.</p></div><a class="primary-button" href="{self.context.site_url}/personalize/">Build My Compass →</a></section>
 <section class="section shell"><div class="section-heading"><div><span class="eyebrow">PROJECT MAP</span><h2>Curated communities</h2></div><span>{len(groups)} groups</span></div><div class="group-grid">{group_cards}</div></section>
 <section class="section shell"><div class="section-heading"><div><span class="eyebrow">CONTRIBUTION COMPASS</span><h2>Evidence-backed places to help</h2></div><a href="{self.context.site_url}/contribute/">View all →</a></div><p class="section-intro">Explicit invitations are separated from lower-confidence triage leads. Check the live issue before starting.</p><div class="contribution-grid">{lead_cards or '<div class="no-leads">The next collection will populate leads after state and assignee metadata is available.</div>'}</div></section>
 <section class="section shell"><div class="section-heading"><div><span class="eyebrow">PROJECT NEWS</span><h2>What shipped—and what may be next</h2></div><a href="{self.context.site_url}/news/">All project news →</a></div><p class="section-intro">Maintainer release and roadmap evidence, plus relevant Hacker News discussions kept clearly separate.</p><div class="news-grid">{news_cards or '<div class="no-leads">Project news will appear after the next collection.</div>'}</div></section>
@@ -292,6 +324,38 @@ class HtmlView:
             "Evidence-backed open-source contribution leads",
             content,
             api_url=f"{self.context.site_url}/api/v1/opportunities.json",
+        )
+
+    def personalize(self) -> str:
+        date = next(iter(self.catalog.dates()), "none")
+        datasets = self.catalog.repositories(None)
+        groups: dict[str, list[RepositoryDataset]] = {}
+        for dataset in datasets:
+            groups.setdefault(dataset.group_id, []).append(dataset)
+        selectors = "".join(
+            f"""<fieldset class="profile-group" data-profile-group="{h(group_id)}"><legend><span>{
+                h(items[0].group_name)
+            }</span><button type="button" data-select-group="{
+                h(group_id)
+            }">Select group</button></legend><div class="profile-projects">{
+                "".join(
+                    f'<label data-project-option data-project-search="{h(" ".join((item.repository, item.repository_name, *item.keywords)).casefold())}" data-project-aliases="{h(json.dumps([item.repository, item.repository_name, *item.keywords]))}"><input type="checkbox" value="{h(item.repository)}" data-project="{h(item.repository)}"><span><strong>{h(item.repository_name)}</strong><small>{h(item.repository)}</small></span></label>'
+                    for item in items
+                )
+            }</div></fieldset>"""
+            for group_id, items in groups.items()
+        )
+        content = f"""<main class="shell detail-page" id="personal-compass" data-opportunities-url="{self.context.site_url}/api/v1/opportunities.json" data-news-url="{self.context.site_url}/api/v1/news.json"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>My Compass</span></nav>
+<section class="detail-hero personal-hero"><span class="eyebrow">LOCAL PROFILE · {date}</span><h1>Your projects.<br>Your contribution table.</h1><p>Select from this curator's Project Sensors. Your choices stay in this browser; no account or backend is involved. Bookmark this page as a lightweight developer start page.</p></section>
+<section class="profile-layout"><aside class="profile-controls"><div class="profile-control-head"><div><span class="eyebrow">PROJECT FILTER</span><h2>Choose your radar</h2></div><strong id="profile-selected-count">0 selected</strong></div><label class="profile-search"><span>Find a project</span><input id="profile-project-search" type="search" placeholder="Name, repository, or keyword…"></label><div class="profile-actions"><button type="button" id="profile-select-all">Select all</button><button type="button" id="profile-clear">Clear</button><button type="button" id="profile-share">Copy share link</button></div><details class="profile-import"><summary>Paste a dependency file or repository list</summary><p>Matches GitHub slugs, project names, and configured keywords already covered by this catalog.</p><textarea id="profile-import-text" rows="7" placeholder="Paste package.json, requirements.txt, go.mod, GitHub URLs, or owner/repository lines…"></textarea><button type="button" id="profile-match-import">Match covered projects</button><span id="profile-import-result" role="status"></span></details><div class="profile-selector-list">{selectors or "<p>No Project Sensors are available.</p>"}</div></aside>
+<section class="profile-results" aria-live="polite"><div class="profile-result-head"><div><span class="eyebrow">PERSONAL VIEW</span><h2>Contribution sweet spots</h2></div><span id="profile-lead-count">Choose projects to begin</span></div><div class="profile-table-wrap"><table class="profile-table"><thead><tr><th>Project</th><th>Opportunity</th><th>Why it surfaced</th><th>Score</th></tr></thead><tbody id="profile-leads"><tr><td colspan="4">Your selected projects will appear here.</td></tr></tbody></table></div><nav class="profile-pagination" id="profile-lead-pages" aria-label="Contribution result pages"></nav>
+<div class="profile-result-head profile-news-head"><div><span class="eyebrow">PROJECT NEWS</span><h2>Release and roadmap context</h2></div><span id="profile-news-count"></span></div><div class="profile-table-wrap"><table class="profile-table"><thead><tr><th>Project</th><th>Latest stable</th><th>Publicly indicated next</th><th>Discussion</th></tr></thead><tbody id="profile-news"><tr><td colspan="4">News for selected projects will appear here.</td></tr></tbody></table></div><nav class="profile-pagination" id="profile-news-pages" aria-label="News result pages"></nav></section></section><noscript><p class="news-explainer">My Compass needs JavaScript for local-only filtering. The regular contribution, news, and JSON pages remain fully usable without it.</p></noscript></main>"""
+        return self.page(
+            "My Compass — personalized contribution table",
+            "A local, personalized view of covered open-source projects and contribution leads",
+            content,
+            api_url=f"{self.context.site_url}/api/v1/opportunities.json",
+            scripts=("personalize.js",),
         )
 
     def news(self, page: int = 1, page_size: int = 10) -> str:
@@ -395,7 +459,10 @@ class HtmlView:
             if news_entry
             else '<section class="project-context"><p>Project news will be collected on the next run.</p></section>'
         )
-        content = f"""<main class="shell detail-page"><section class="repo-hero"><div><span class="eyebrow">{h(dataset.repository)}</span><h1>{h(dataset.repository_name)}</h1><p>{len(dataset.signals)} signals · {len(dataset.events)} observation events</p></div><a class="primary-button" href="https://github.com/{h(dataset.repository)}">Open repository ↗</a></section>{context_html}{news_html}<section class="timeline"><h2>Observation trail</h2><ol>{trail or "<li>Trail events begin with the next collection.</li>"}</ol></section><section class="filter-bar"><input id="signal-search" type="search" placeholder="Search this page…"><div class="filter-buttons"><button class="active" data-filter="all">All</button><button data-filter="issue">Issues</button><button data-filter="pull_request">PRs</button><button data-filter="release">Releases</button></div><span id="filter-count">{len(visible)} shown</span></section><section class="signal-list">{signals or '<div class="no-signals">No changed signals.</div>'}</section>{pagination}</main>"""
+        provenance = ""
+        if dataset.provenance and dataset.provenance.kind == "overlay":
+            provenance = f'<p class="catalog-provenance">Reused from <a href="{safe_url(dataset.provenance.catalog_url or "")}">{h(dataset.provenance.catalog_id or "shared catalog")}</a> · source snapshot {h(dataset.provenance.source_date)}</p>'
+        content = f"""<main class="shell detail-page"><section class="repo-hero"><div><span class="eyebrow">{h(dataset.repository)}</span><h1>{h(dataset.repository_name)}</h1><p>{len(dataset.signals)} signals · {len(dataset.events)} observation events</p>{provenance}</div><a class="primary-button" href="https://github.com/{h(dataset.repository)}">Open repository ↗</a></section>{context_html}{news_html}<section class="timeline"><h2>Observation trail</h2><ol>{trail or "<li>Trail events begin with the next collection.</li>"}</ol></section><section class="filter-bar"><input id="signal-search" type="search" placeholder="Search this page…"><div class="filter-buttons"><button class="active" data-filter="all">All</button><button data-filter="issue">Issues</button><button data-filter="pull_request">PRs</button><button data-filter="release">Releases</button></div><span id="filter-count">{len(visible)} shown</span></section><section class="signal-list">{signals or '<div class="no-signals">No changed signals.</div>'}</section>{pagination}</main>"""
         return self.page(
             f"{dataset.repository_name} — page {page}",
             f"Context and observation trail for {dataset.repository}",
@@ -416,11 +483,13 @@ class StaticSitePublisher:
         site_url: str,
         repository_url: str,
         assets_root: str | Path = "web/assets",
+        contribution_policy: ContributionPolicy = DEFAULT_CONTRIBUTION_POLICY,
     ) -> None:
         self.catalog = catalog
         self.output_root = Path(output_root).resolve()
         self.context = SiteContext(site_url.rstrip("/"), repository_url.rstrip("/"))
         self.assets_root = Path(assets_root)
+        self.contribution_policy = contribution_policy
 
     def _write(self, relative: str, content: str) -> None:
         destination = self.output_root / relative
@@ -433,11 +502,12 @@ class StaticSitePublisher:
         shutil.rmtree(self.output_root, ignore_errors=True)
         self.output_root.mkdir(parents=True)
         shutil.copytree(self.assets_root, self.output_root / "assets")
-        html_view = HtmlView(self.catalog, self.context)
-        machine = MachineView(self.catalog, self.context)
+        html_view = HtmlView(self.catalog, self.context, self.contribution_policy)
+        machine = MachineView(self.catalog, self.context, self.contribution_policy)
         self._write("index.html", html_view.home())
         self._write("contribute/index.html", html_view.contributions())
         self._write("news/index.html", html_view.news())
+        self._write("personalize/index.html", html_view.personalize())
         self._write("api/v1/index.json", machine.index())
         self._write("api/v1/schema.json", machine.schema())
         self._write("api/v1/opportunities.json", machine.opportunities())
@@ -452,8 +522,9 @@ class StaticSitePublisher:
             f"{self.context.site_url}/",
             f"{self.context.site_url}/contribute/",
             f"{self.context.site_url}/news/",
+            f"{self.context.site_url}/personalize/",
         ]
-        pages = 3
+        pages = 4
         machine_files = 7
         contribution_pages = page_count(len(html_view.queries.contribution_leads(limit=1000)), 20)
         for page in range(2, contribution_pages + 1):

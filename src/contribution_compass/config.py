@@ -3,10 +3,22 @@ from __future__ import annotations
 import re
 from pathlib import Path
 from typing import Any, NoReturn
+from urllib.parse import urlparse
 
 import yaml
 
-from contribution_compass.domain.models import CompassConfig, RepoConfig, RepoGroup
+from contribution_compass.domain.models import (
+    CatalogOverlayConfig,
+    CompassConfig,
+    RepoConfig,
+    RepoGroup,
+)
+from contribution_compass.domain.policies import (
+    DEFAULT_CONTRIBUTION_POLICY,
+    ContributionPolicy,
+    ContributionThresholds,
+    ContributionWeights,
+)
 
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 REPO_SLUG = re.compile(r"^[^/\s]+/[^/\s]+$")
@@ -43,6 +55,142 @@ def _project_keywords(record: dict[str, Any], path: str) -> tuple[str, ...]:
         _fail(path, 'use "keywords" only; do not specify both keyword fields')
     key = "keywords" if "keywords" in record else "hackernews_keywords"
     return _string_array(record, key, path)
+
+
+def _configured_strings(
+    record: dict[str, Any], key: str, path: str, default: tuple[str, ...]
+) -> tuple[str, ...]:
+    return _string_array(record, key, path) if key in record else default
+
+
+def _integer(record: dict[str, Any], key: str, path: str, default: int, *, minimum: int = 0) -> int:
+    value = record.get(key, default)
+    if not isinstance(value, int) or isinstance(value, bool) or value < minimum:
+        _fail(f"{path}.{key}", f"expected an integer greater than or equal to {minimum}")
+    return value
+
+
+def _known_keys(record: dict[str, Any], allowed: set[str], path: str) -> None:
+    unknown = sorted(set(record) - allowed)
+    if unknown:
+        _fail(path, f"unknown field(s): {', '.join(unknown)}")
+
+
+def _contribution_policy(root: dict[str, Any]) -> ContributionPolicy:
+    value = root.get("contributions")
+    if value is None:
+        return DEFAULT_CONTRIBUTION_POLICY
+    policy = _record(value, "contributions")
+    _known_keys(
+        policy,
+        {"invitation_labels", "beginner_labels", "excluded_labels", "weights", "thresholds"},
+        "contributions",
+    )
+    raw_weights = _record(policy.get("weights", {}), "contributions.weights")
+    weight_fields = set(ContributionWeights.__dataclass_fields__)
+    _known_keys(raw_weights, weight_fields, "contributions.weights")
+    defaults = DEFAULT_CONTRIBUTION_POLICY.weights
+    weights = ContributionWeights(
+        **{
+            key: _integer(
+                raw_weights,
+                key,
+                "contributions.weights",
+                getattr(defaults, key),
+            )
+            for key in weight_fields
+        }
+    )
+    raw_thresholds = _record(policy.get("thresholds", {}), "contributions.thresholds")
+    threshold_fields = set(ContributionThresholds.__dataclass_fields__)
+    _known_keys(raw_thresholds, threshold_fields, "contributions.thresholds")
+    threshold_defaults = DEFAULT_CONTRIBUTION_POLICY.thresholds
+    thresholds = ContributionThresholds(
+        bug_engagement=_integer(
+            raw_thresholds,
+            "bug_engagement",
+            "contributions.thresholds",
+            threshold_defaults.bug_engagement,
+        ),
+        enhancement_reactions=_integer(
+            raw_thresholds,
+            "enhancement_reactions",
+            "contributions.thresholds",
+            threshold_defaults.enhancement_reactions,
+        ),
+        comments_per_point=_integer(
+            raw_thresholds,
+            "comments_per_point",
+            "contributions.thresholds",
+            threshold_defaults.comments_per_point,
+            minimum=1,
+        ),
+        max_reaction_count=_integer(
+            raw_thresholds,
+            "max_reaction_count",
+            "contributions.thresholds",
+            threshold_defaults.max_reaction_count,
+        ),
+        max_comment_blocks=_integer(
+            raw_thresholds,
+            "max_comment_blocks",
+            "contributions.thresholds",
+            threshold_defaults.max_comment_blocks,
+        ),
+        recent_days=_integer(
+            raw_thresholds,
+            "recent_days",
+            "contributions.thresholds",
+            threshold_defaults.recent_days,
+        ),
+    )
+    return ContributionPolicy(
+        invitation_labels=_configured_strings(
+            policy,
+            "invitation_labels",
+            "contributions",
+            DEFAULT_CONTRIBUTION_POLICY.invitation_labels,
+        ),
+        beginner_labels=_configured_strings(
+            policy,
+            "beginner_labels",
+            "contributions",
+            DEFAULT_CONTRIBUTION_POLICY.beginner_labels,
+        ),
+        excluded_labels=_configured_strings(
+            policy,
+            "excluded_labels",
+            "contributions",
+            DEFAULT_CONTRIBUTION_POLICY.excluded_labels,
+        ),
+        weights=weights,
+        thresholds=thresholds,
+    )
+
+
+def _catalog_overlays(root: dict[str, Any]) -> tuple[CatalogOverlayConfig, ...]:
+    value = root.get("catalog_overlays", [])
+    if not isinstance(value, list):
+        _fail("root.catalog_overlays", "expected an array")
+    overlays: list[CatalogOverlayConfig] = []
+    seen: set[str] = set()
+    for index, raw in enumerate(value):
+        path = f"catalog_overlays[{index}]"
+        record = _record(raw, path)
+        _known_keys(record, {"id", "url", "max_age_hours"}, path)
+        overlay_id = _text(record, "id", path)
+        if not SAFE_ID.fullmatch(overlay_id):
+            _fail(f"{path}.id", "expected a filesystem-safe identifier")
+        if overlay_id in seen:
+            _fail("root.catalog_overlays", f'duplicate catalog overlay id "{overlay_id}"')
+        url = _text(record, "url", path).rstrip("/")
+        parsed = urlparse(url)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            _fail(f"{path}.url", "expected an absolute HTTP(S) URL")
+        max_age = _integer(record, "max_age_hours", path, 48, minimum=1)
+        seen.add(overlay_id)
+        overlays.append(CatalogOverlayConfig(overlay_id, url, max_age))
+    return tuple(overlays)
 
 
 def parse_config(value: Any) -> CompassConfig:
@@ -117,6 +265,8 @@ def parse_config(value: Any) -> CompassConfig:
         lookback_hours=lookback,
         hackernews_enabled=hackernews_enabled,
         hackernews_story_limit=story_limit,
+        contribution_policy=_contribution_policy(root),
+        catalog_overlays=_catalog_overlays(root),
     )
 
 

@@ -7,6 +7,9 @@ It is a data gatherer first. GitHub evidence, separately labeled Hacker News dis
 repository context, and observation history stay separate from interpretation. No OpenAI,
 Anthropic, or other model credential is required.
 
+[Use this repository as a template](https://github.com/new?template_name=contribution-compass&template_owner=amk9978),
+or use the hosted catalog immediately without creating a repository.
+
 ```text
 config.yml Project Sensors
         ↓
@@ -46,6 +49,11 @@ Closed, assigned, stale, duplicate, invalid, blocked, question, needs-info, and 
 issues are excluded. A lead is not a guarantee of difficulty or acceptance; check the live issue and
 talk to maintainers before substantial work.
 
+Every Lead also contains an additive score breakdown. Named Contribution Measures show exactly
+which label, activity, engagement, or eligibility fact contributed each point. The label sets,
+weights, thresholds, and recency window form a Contribution Policy in `config.yml`; they are
+curator-controlled heuristics, not generated judgments.
+
 ## Evidence and history
 
 Each repository dataset contains:
@@ -78,6 +86,7 @@ loader never inserts hidden defaults.
 ## Human and machine access
 
 - Website: <https://amk9978.github.io/contribution-compass/>
+- My Compass browser profile: <https://amk9978.github.io/contribution-compass/personalize/>
 - Contribution view: <https://amk9978.github.io/contribution-compass/contribute/>
 - Project news: <https://amk9978.github.io/contribution-compass/news/>
 - Machine catalog: <https://amk9978.github.io/contribution-compass/api/v1/index.json>
@@ -92,6 +101,11 @@ loader never inserts hidden defaults.
 
 LLM-backed tools should use MCP or the versioned JSON catalog instead of scraping visual HTML.
 
+`My Compass` lets a visitor choose projects, paste a dependency file or repository list, and view a
+paginated personal contribution/news table. Its selection is stored only in `localStorage` and the
+page URL. It can be bookmarked or used as a browser start page; no fork, account, or server is
+required.
+
 ## Architecture
 
 The Python core uses explicit module seams while avoiding pass-through abstraction:
@@ -99,9 +113,9 @@ The Python core uses explicit module seams while avoiding pass-through abstracti
 ```text
 src/contribution_compass/
   domain/          models, invariants, importance, contribution rules
-  application/     collection and catalog use cases
+  application/     collection, catalog-query, and setup use cases
   ports.py         small interfaces implemented by real adapters
-  adapters/        GitHub, local JSON, hosted JSON, state, persistence
+  adapters/        GitHub, local/hosted/overlay catalogs, state, persistence
   controllers/     CLI and MCP transports
   views/           Markdown, HTML, JSON, RSS, and LLM navigation
 web/assets/        progressive browser CSS/JavaScript only
@@ -113,6 +127,34 @@ render application results but do not classify opportunities.
 
 See [CONTEXT.md](CONTEXT.md) for domain language and [docs/adr](docs/adr) for architectural decisions.
 
+## Fast personalization
+
+To use the public catalog, open [My Compass](https://amk9978.github.io/contribution-compass/personalize/),
+select projects, and bookmark the resulting URL. That is the zero-install path.
+
+To own the collection, create a repository from the template and generate a configuration from one
+or more sources:
+
+```bash
+uv sync --all-extras
+
+# Explicit repositories
+uv run contribution-compass init --repo apple/foundationdb --repo temporalio/temporal --force
+
+# Repositories behind direct dependencies in a supported manifest
+uv run contribution-compass init --from-file go.mod --force
+uv run contribution-compass init --from-file package.json --force
+uv run contribution-compass init --from-file requirements.txt --force
+
+# Your GitHub stars (requires GITHUB_TOKEN)
+export GITHUB_TOKEN="$(gh auth token)"
+uv run contribution-compass init --from-starred --starred-limit 100 --force
+```
+
+`init` resolves npm and PyPI packages through public registry metadata, recognizes GitHub-backed Go
+modules and direct Git dependencies, and reports anything it cannot map unambiguously. It never
+guesses a repository silently. Review the generated YAML before the first collection.
+
 ## Configure a fork
 
 Edit `config.yml` with arbitrary project groups:
@@ -123,6 +165,18 @@ lookback_hours: 24
 hackernews:
   enabled: true
   story_limit: 200
+
+contributions:
+  invitation_labels: [good first issue, help wanted]
+  beginner_labels: [good first issue]
+  excluded_labels: [blocked, duplicate, stale]
+  weights:
+    maintainer_invitation: 60
+    recent_activity: 5
+  thresholds:
+    recent_days: 14
+
+catalog_overlays: []
 
 repo_groups:
   compilers:
@@ -141,6 +195,27 @@ also matched against Hacker News story titles, so choose specific phrases to avo
 references to the configured GitHub repository are matched independently. Set
 `hackernews.enabled: false` to disable that source while retaining keyword search metadata.
 
+The checked-in `config.yml` shows the complete default Contribution Policy. Empty label arrays stay
+empty, and setting a weight to zero disables that scoring effect. The generated JSON includes every
+activated Contribution Measure and defines `rankScore` as their sum.
+
+### Reuse the public catalog
+
+A fork can avoid recollecting overlapping repositories:
+
+```yaml
+catalog_overlays:
+  - id: community
+    url: https://amk9978.github.io/contribution-compass
+    max_age_hours: 48
+```
+
+The consumer's `repo_groups` remain authoritative: an overlay cannot introduce unconfigured
+projects. Fresh matching snapshots are reused, and only the remaining repository delta is collected.
+Equally current local data wins. Stale, incompatible, or unavailable overlays fall back to direct
+GitHub collection. JSON and MCP expose Catalog Provenance; checked-in Markdown reports cover the
+locally collected delta.
+
 Human pages use static pagination: 20 contribution leads, 10 project-news cards, or 50 project
 Signals per page. JSON, RSS, MCP, and direct GitHub/HN links remain available for deeper reading.
 
@@ -153,6 +228,7 @@ uv sync --all-extras
 export GITHUB_TOKEN="$(gh auth token)"
 uv run contribution-compass collect
 uv run contribution-compass site
+uv run contribution-compass doctor --repository owner/repository
 ```
 
 Query without MCP:
@@ -176,19 +252,25 @@ uv run contribution-compass site
 
 Tests use fixtures and mocks; they make no live GitHub requests.
 
-## GitHub Actions
+## GitHub Actions and template setup
 
 The scheduled `Contribution Compass` workflow uses GitHub's built-in `GITHUB_TOKEN`, collects data
 from GitHub and the keyless official Hacker News interface, and commits `data/`, `reports/`, and
 `.state/`. The Pages workflow publishes all human and machine
 views after a successful collection. No extra secret is required.
 
-For a fork:
+After creating a repository from the template:
 
-1. Enable **Read and write permissions** in Settings → Actions → General.
+1. Open Settings → Actions → General and ensure Actions are enabled. Read/write default permission
+   is convenient; the collection workflow also requests `contents: write` explicitly.
 2. Select **GitHub Actions** as the Pages source in Settings → Pages.
-3. Edit `config.yml`.
-4. Run the `Contribution Compass` workflow manually once.
+3. Generate or edit `config.yml`.
+4. Run `uv run contribution-compass doctor --repository owner/repository`.
+5. Run the `Contribution Compass` workflow manually once.
+
+GitHub templates copy files and branches, not every repository setting, so the first two checks
+cannot be safely assumed. `doctor` verifies local workflow contents and, when the token has suitable
+read permissions, inspects the live Actions and Pages settings without changing them.
 
 URLs derive from the fork owner and repository name. Set the optional `SITE_URL` Actions variable
 only for a custom domain.

@@ -8,6 +8,7 @@ on:
       - "data/**"
       - "src/contribution_compass/**"
       - "web/**"
+      - "config.yml"
       - "pyproject.toml"
       - "uv.lock"
       - ".github/workflows/pages.yml"
