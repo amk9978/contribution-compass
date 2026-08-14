@@ -1,0 +1,67 @@
+name: Bug report
+description: Report reproducible incorrect collection, state, CLI, MCP, or rendering behavior.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve Contribution Compass. Remove tokens and private data before submitting.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues for the same behavior.
+          required: true
+        - label: I removed credentials and private repository data.
+          required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Collection
+        - Configuration or init
+        - State and observation history
+        - Static website or feeds
+        - CLI
+        - MCP
+        - GitHub Actions
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Include the actual and expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide commands, sanitized configuration, and the smallest repeatable example.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.3.0 or a commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: OS, Python version, local or GitHub Actions
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or evidence
+      description: Paste relevant logs or links. Do not include secrets.
+      render: text

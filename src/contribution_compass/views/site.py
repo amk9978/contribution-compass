@@ -129,8 +129,11 @@ class HtmlView:
         content: str,
         *,
         api_url: str,
+        canonical_url: str,
         scripts: tuple[str, ...] = (),
     ) -> str:
+        full_title = f"{title} · Contribution Compass"
+        social_image = f"{self.context.site_url}/assets/social-preview.png"
         extra_scripts = "".join(
             f'<script src="{self.context.site_url}/assets/{h(script)}" defer></script>'
             for script in scripts
@@ -141,8 +144,21 @@ class HtmlView:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{h(description)}">
+  <meta name="robots" content="index,follow">
   <meta name="color-scheme" content="dark light">
-  <title>{h(title)} · Contribution Compass</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Contribution Compass">
+  <meta property="og:title" content="{h(full_title)}">
+  <meta property="og:description" content="{h(description)}">
+  <meta property="og:url" content="{h(canonical_url)}">
+  <meta property="og:image" content="{social_image}">
+  <meta property="og:image:alt" content="Contribution Compass — follow important projects and find where to help">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{h(full_title)}">
+  <meta name="twitter:description" content="{h(description)}">
+  <meta name="twitter:image" content="{social_image}">
+  <title>{h(full_title)}</title>
+  <link rel="canonical" href="{h(canonical_url)}">
   <link rel="icon" href="{self.context.site_url}/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/json" title="Machine data" href="{api_url}">
   <link rel="alternate" type="application/feed+json" title="JSON Feed" href="{self.context.site_url}/feed.json">
@@ -257,6 +273,7 @@ class HtmlView:
                 "Contribution Compass is waiting for data",
                 content,
                 api_url=f"{self.context.site_url}/api/v1/index.json",
+                canonical_url=f"{self.context.site_url}/",
             )
         date = dates[0]
         datasets = self.catalog.repositories(date)
@@ -292,6 +309,7 @@ class HtmlView:
             "Important open-source project updates and evidence-backed contribution leads",
             content,
             api_url=f"{self.context.site_url}/api/v1/index.json",
+            canonical_url=f"{self.context.site_url}/",
         )
 
     def contributions(self, page: int = 1, page_size: int = 20) -> str:
@@ -324,6 +342,7 @@ class HtmlView:
             "Evidence-backed open-source contribution leads",
             content,
             api_url=f"{self.context.site_url}/api/v1/opportunities.json",
+            canonical_url=self._section_page_url("contribute", page),
         )
 
     def personalize(self) -> str:
@@ -355,6 +374,7 @@ class HtmlView:
             "A local, personalized view of covered open-source projects and contribution leads",
             content,
             api_url=f"{self.context.site_url}/api/v1/opportunities.json",
+            canonical_url=f"{self.context.site_url}/personalize/",
             scripts=("personalize.js",),
         )
 
@@ -384,6 +404,7 @@ class HtmlView:
             "Latest releases and publicly indicated upcoming work across monitored projects",
             content,
             api_url=f"{self.context.site_url}/api/v1/news.json",
+            canonical_url=self._section_page_url("news", page),
         )
 
     def date(self, date: str, datasets: list[RepositoryDataset]) -> str:
@@ -400,6 +421,7 @@ class HtmlView:
             f"Contribution Compass collection for {date}",
             content,
             api_url=f"{self.context.site_url}/api/v1/dates/{date}/index.json",
+            canonical_url=f"{self.context.site_url}/updates/{date}/",
         )
 
     def group(self, date: str, group_id: str, datasets: list[RepositoryDataset]) -> str:
@@ -414,6 +436,7 @@ class HtmlView:
             f"{name} project updates",
             content,
             api_url=f"{self.context.site_url}/api/v1/dates/{date}/groups/{group_id}/index.json",
+            canonical_url=f"{self.context.site_url}/updates/{date}/{group_id}/",
         )
 
     def repository(self, dataset: RepositoryDataset, page: int = 1, page_size: int = 50) -> str:
@@ -471,6 +494,7 @@ class HtmlView:
                 f"{self.context.site_url}/api/v1/dates/{dataset.date}/groups/{dataset.group_id}/"
                 f"repositories/{dataset.repository_id}.json"
             ),
+            canonical_url=self._repository_page_url(dataset, page),
         )
 
 

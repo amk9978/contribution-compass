@@ -1,0 +1,45 @@
+name: Source request
+description: Propose a new factual source or additional evidence from an existing source.
+title: "[Source]: "
+labels:
+  - source-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Sources must serve the contributor mission, retain primary evidence links, and be collectable without an LLM.
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      placeholder: API, feed, or public data URL
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Contributor value
+      description: What useful project context or contribution evidence would this add?
+    validations:
+      required: true
+  - type: textarea
+    id: fields
+    attributes:
+      label: Evidence and fields
+      description: List the stable identifiers, timestamps, URLs, and metrics available.
+    validations:
+      required: true
+  - type: textarea
+    id: access
+    attributes:
+      label: Access constraints
+      description: Document authentication, rate limits, pagination, licensing, and reliability.
+    validations:
+      required: true
+  - type: textarea
+    id: noise
+    attributes:
+      label: Noise boundaries
+      description: What should be collected, and what should deliberately be discarded?
+    validations:
+      required: true

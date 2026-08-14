@@ -1,0 +1,21 @@
+changelog:
+  exclude:
+    labels:
+      - skip-changelog
+  categories:
+    - title: Features
+      labels:
+        - enhancement
+    - title: Source and catalog improvements
+      labels:
+        - source-request
+        - source
+    - title: Fixes
+      labels:
+        - bug
+    - title: Documentation and community
+      labels:
+        - documentation
+    - title: Other changes
+      labels:
+        - "*"

@@ -1,0 +1,41 @@
+name: Feature request
+description: Propose a focused improvement that serves open-source contributors.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and discussions for this proposal.
+          required: true
+        - label: This can preserve direct links to original evidence.
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Contributor problem
+      description: What concrete difficulty does an open-source contributor face today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: Describe the smallest useful implementation, not a broad product wishlist.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or examples
+      description: Link to relevant repositories, issues, feeds, formats, or workflows.
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Scope and tradeoffs
+      description: What should remain out of scope? Consider noise, maintenance, and configurability.
