@@ -1,0 +1,931 @@
+{
+  "version": 3,
+  "date": "2026-08-14",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "dagger",
+    "repo": "dagger/dagger",
+    "name": "Dagger",
+    "keywords": [
+      "Dagger CI"
+    ]
+  },
+  "context": {
+    "repository": "dagger/dagger",
+    "url": "https://github.com/dagger/dagger",
+    "description": "Automation engine to build, test and ship any codebase. Runs locally, in CI, or directly in the cloud",
+    "homepage": "https://dagger.io",
+    "language": "Go",
+    "topics": [
+      "agents",
+      "caching",
+      "ci-cd",
+      "containers",
+      "continuous-deployment",
+      "continuous-integration",
+      "devops",
+      "docker",
+      "graphql",
+      "workflows"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16157,
+    "forks": 910,
+    "openIssues": 139,
+    "archived": false,
+    "collectedAt": "2026-08-14T03:31:39.492466+00:00"
+  },
+  "news": {
+    "repository": "dagger/dagger",
+    "collectedAt": "2026-08-14T03:31:39.492466+00:00",
+    "latestRelease": {
+      "repository": "dagger/dagger",
+      "tag": "v0.21.8",
+      "title": "v0.21.8",
+      "url": "https://github.com/dagger/dagger/releases/tag/v0.21.8",
+      "publishedAt": "2026-07-29T17:07:24Z",
+      "notes": "## v0.21.8 - 2026-07-29\n\n### Changed\n\n- Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in\n  https://github.com/dagger/dagger/pull/13615\n\n### Fixed\n\n- Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: `COPY`-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content\n  actually changes. by @marcosnils in https://github.com/dagger/dagger/pull/13765\n- The `--x-release` CLI re-exec so `_EXPERIMENTAL_DAGGER_RUNNER_HOST` is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by\n  @tiborvass in https://github.com/dagger/dagger/pull/13752\n- Silent SDK sessions no longer retain frontend telemetry in memory while Cloud and OTLP export remain enabled. `DAGGER_SILENT` is now honored as the equivalent of `--silent`. by @sipsma in\n  https://github.com/dagger/dagger/pull/13762\n\n### What to do next?\n\n- Read the [documentation](https://docs.dagger.io)\n- Join our [Discord server](https://discord.gg/dagger-io)\n- Follow us on [Twitter](https://twitter.com/dagger_io)\n\n",
+      "highlights": [
+        "v0.21.8 - 2026-07-29",
+        "Changed",
+        "Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in",
+        "Fixed",
+        "Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: COPY-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content",
+        "The --x-release CLI re-exec so EXPERIMENTALDAGGERRUNNERHOST is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "vsometime",
+        "url": "https://github.com/dagger/dagger/milestone/37",
+        "description": "High-priority issues that should be released soon, but are not strict blockers for the immediate next release.",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 36
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.1",
+        "url": "https://github.com/dagger/dagger/milestone/130",
+        "progress": 0,
+        "openIssues": 1,
+        "closedIssues": 0
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.0-beta.8",
+        "url": "https://github.com/dagger/dagger/milestone/131",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 9
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v0.21.9",
+        "url": "https://github.com/dagger/dagger/milestone/132",
+        "description": "",
+        "progress": 75,
+        "openIssues": 1,
+        "closedIssues": 3
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-14T03:31:25.964050Z",
+      "since": "2026-08-13T03:31:25.964050Z",
+      "observedCount": 19,
+      "changedCount": 13
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:dagger/dagger:issue:13883",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "issue",
+      "title": "v0.x modules are given a v1.0 view",
+      "text": "Related to, but not a duplicate of https://github.com/dagger/dagger/issues/13654 When a module is being developed for the 1.0.0-beta but still specifies an engineVersion of v0.x, there are two breaking error paths described below. The module can get into this broken state without the module author being aware because when using the module directly on 1.0.0-beta, a v0.x module is also served new APIs with the 1.0.0-0 view rather than the correct pre-1.0 view, so if the module uses a new 1.0.0-0 API, it will work on 1.0.0-beta despite the declared engineVersion. ## Users on v0.2x Users of a module described above running a v0.2x engine will fail to load the module because it references APIs that do not exist in v0.2x. The error will complain about the APIs not existing, which likely means nothing to the user. As far as they can tell, it should work on their engine because the declared engineVersion is compatible with theirs. This case has come up with users installing `github.com/dagger/go` on `v0.21.6`. The error was `convert arg ws: node field not found in environment`. This module should have been updated to `engineVersion: 1.0.0-0` when it started using the new APIs ## Users on 1.0.0-beta with dependencies Users of the beta with modules that depend on a module like the one described above will be stuck too. Codegen for the broken module will complete because it is given the 1.0.0-0 view, however when loaded as a dependency of their module it is now on a v0.2x view and the new APIs are no longer available. This case came up with `github.com/dagger/dagger/.dagger/modules/go` used as a dependency throughout the dagger/dagger repo. Its declared engineVersion was v0.21.7 but it uses Workspace.Git",
+      "url": "https://github.com/dagger/dagger/issues/13883",
+      "createdAt": "2026-08-12T21:03:31Z",
+      "updatedAt": "2026-08-14T00:58:40Z",
+      "timestamp": "2026-08-14T00:58:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "kpenfound",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:issue:13889",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "issue",
+      "title": "🐞 dagger module init fails \"outside changeset root\" when dagger.toml is in a subdirectory (monorepo layout)",
+      "text": "### What is the issue? `dagger module init <sdk> <name>` fails when the selected `dagger.toml` lives in a **subdirectory** of the git repo rather than at the git root: ``` Error: sdk module init: failed to call sdk module initModule: workspace path .dagger/modules/hello is outside changeset root common ``` This breaks the common monorepo layout where several project workspaces live in subdirectories under a single git root (e.g. `project-1/dagger.toml`, `common/dagger.toml`). Running `dagger module init` from any of those subdirectories fails. ### Reproduction ```bash mkdir repo && cd repo git init mkdir common touch common/dagger.toml cd common dagger sdk install go dagger module init go hello -y ``` The last command fails with the error above. (Reproduced deterministically on `v1.0.0-beta.9`.) ### Actual vs. expected - **Actual:** `withInitModule` errors with `... is outside changeset root common`; no module is created. - **Expected:** a `hello` module scaffolded under `common/` (e.g. `common/.dagger/modules/hello/`), the same way it works when the config is at the git root. ### Root cause A cwd-vs-root mismatch across the engine ↔ SDK boundary: - The workspace **root** is the git root — `core/workspace/detect.go` walks up to `.git`; a `dagger.toml` does **not** define the root. So with `common/dagger.toml`, root = git root and **cwd = `common`**. - The engine computes the default module path **workspace-root-relative**: `.dagger/modules/<name>`, independent of cwd (`core/schema/workspace_module_init.go`, `relPath = filepath.Join(\".dagger\", \"modules\", args.Name)`), and passes it to the SDK's `initModule(path:)`. - The Go SDK's `initModule` stages files through `polyfill.workspace(ws).fork.withDirectory(path, ...)`. The polyfill (`github.com/dagger/polyfill`, `workspace-fork.dang` → `clientPath`) is **cwd-scoped**: it converts a root-relative path into cwd-local coordinates and **raises when the path is not under cwd**: ``` let relative = workspacePath.trimPrefix(cwd + \"/\") if (relative == workspacePath) { raise \"workspace path \" + workspacePath + \" is outside changeset root \" + cwd } ``` `.dagger/modules/hello` does not start with `common/`, so it raises. When the config is at the git root, `cwd == \".\"` and `clientPath` passes paths through unchanged — which is why it only fails from a subdirectory. Trace (plain progress) showing the boundary: ``` Workspace.withInitModule(name: \"hello\", sdk: \"go\") ├─ Workspace.cwd → \"common\" ├─ GoSdk.initModule(path: \".dagger/modules/hello\") │ └─ PolyfillWorkspaceFork.withDirectory(path: \".dagger/modules/hello\") ERROR │ ! workspace path .dagger/modules/hello is outside changeset root common ``` ### Workarounds (all tested on v1.0.0-beta.9) | Approach | Result | | --- | --- | | `dagger.toml` at the git root, run from root | ✅ works | | Give the subdir its own `.git` (subdir becomes the workspace root) | ✅ works | | `--path common/hello` (path under cwd) | ⚠️ **no error but silently corrupts**: engine config lands at `common/hello/dagger-module.toml` while the SDK's `main.go` lands at `hello/main.go` — a split, non-loadable module | | `-W common` from the git root | ❌ same error (root stays at the git root) | | `--here` | ❌ not a valid flag for `module init` | The `--path`-under-cwd case is arguably the more serious half: it avoids the error but silently produces a broken module, because the engine's config changeset is applied workspace-root-relative while the SDK's source changeset has the cwd prefix stripped. ### Suggested fix Reconcile the two path conventions: the engine emits workspace-root-relative module paths, while the polyfill fork applies caller-cwd-relative ones. Either the engine derives the default path relative to a location the cwd-scoped fork can reach, or engine-driven `initModule` changesets are applied workspace-root-relative. The polyfill notes it is coding around \"today's clients apply returned changesets relative to the caller cwd\", so the reconciliation likely belongs on the engine side. ### Dagger version ``` dagger v1.0.0-beta.9 engine v1.0.0-beta.9+1c6e07b1 go-sdk: github.com/dagger/go-sdk polyfill: github.com/dagger/polyfill@ec3ea84a2351b4beb06ecece951f2e5ef66509ff ```",
+      "url": "https://github.com/dagger/dagger/issues/13889",
+      "createdAt": "2026-08-13T08:52:40Z",
+      "updatedAt": "2026-08-13T08:52:40Z",
+      "timestamp": "2026-08-13T08:52:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13711",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix: handle function arg name collision with inherited persistent flags",
+      "text": "When a function argument name (e.g., 'workspace') matches a persistent flag inherited from a parent command, the CLI crashes with 'flag already exists: workspace'. This change introduces a FlagExistsError type and handles it in addFlagsForFunction, skipping the flag gracefully (matching the existing behavior in addConstructorLocalFlags). Fixes #13352",
+      "url": "https://github.com/dagger/dagger/pull/13711",
+      "createdAt": "2026-07-22T02:50:16Z",
+      "updatedAt": "2026-08-14T02:16:09Z",
+      "timestamp": "2026-08-14T02:16:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "hitesh0106",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13713",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "Fix/13605 go sdk codegen bootstrap",
+      "url": "https://github.com/dagger/dagger/pull/13713",
+      "createdAt": "2026-07-22T04:39:32Z",
+      "updatedAt": "2026-08-14T02:16:07Z",
+      "timestamp": "2026-08-14T02:16:07Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "hitesh0106",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13761",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "feat: docker api compatibility",
+      "text": "Add support for `experimentalDockerCompatibility: true` on `Container.withExec()` and `Container.terminal()`, which prompts the Dagger engine to bind a Docker-compatible API on a random available port during the lifetime of the exec/terminal and point Docker clients to it via the `DOCKER_HOST` environment variable. This is very similar to the way that Dagger-in-Dagger via `experimentalPrivilegedNesting: true` works. Only a subset of the Docker API is supported as of writing (the API calls behind `docker run` and `docker run -d -p`). Support is provided by mapping Docker API requests to equivalent Dagger functionality, largely provided by `github.com/dagger/dagger/engine/engineutil.Client` Aiming to resolve https://github.com/dagger/dagger/discussions/11710",
+      "url": "https://github.com/dagger/dagger/pull/13761",
+      "createdAt": "2026-07-29T02:24:41Z",
+      "updatedAt": "2026-08-14T02:16:04Z",
+      "timestamp": "2026-08-14T02:16:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "frantjc",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13838",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "dagger agent dev env: in-repo agent modules",
+      "text": "The dogfooding layer: the in-repo agent modules that `dagger agent --env dev` composes, plus the wiring that makes them reachable. No engine changes. | module | what it does | | --- | --- | | `editor` | a sandboxed coding agent — read, write, edit, find, grep, todoWrite — plus a commit tool built on the workspace's staged commits. Vendored from `github.com/vito/editor` so it can be iterated on in-tree. | | `review` | the `git status` / `git diff` an agent with no Bash tool can't otherwise get, via `Workspace.git.uncommitted`'s diffstats and patch | | `history` | the `git log` half of the same, over `Workspace.git.stagedCommits` | | `delegate` | hands a noisy, context-heavy subtask to a fresh sub-agent that runs it in its own conversation and returns one distilled report | | `engine-lab` | `./hack/dev` + `./hack/with-dev` as agent tools: build from the workspace, hold the engine as a Service, exec against it, poke its debug endpoints | | `contributor` | the same idea aimed at somebody else's repo — fetch it as a Workspace, compose editor's tools onto it, work the task, open the PR | | `tui-qa` | drives nested agent TUI sessions; now inherits the session's LLM config and gets a real git repo as its fixture | Supporting changes: `EngineDev.GoContainer` is a Wolfi Go base with the from-source `dagger` on `$PATH`, so Go commands (and the integration tests, which shell out to `dagger`) find the CLI without paying for a full engine build — it's what the `golang` toolchain is based on in the dev env. `dagger.toml` gains the `env.dev` module set, with contributor's GitHub token resolving through `cmd://gh auth token` rather than being stored. And catwalk moves to v0.51.11 for its refreshed model catalog. Each module commit is self-contained, and the `dagger.toml` wiring is last, so any intermediate state is a module directory with no install entry — inert rather than broken.",
+      "url": "https://github.com/dagger/dagger/pull/13838",
+      "createdAt": "2026-08-04T23:43:30Z",
+      "updatedAt": "2026-08-14T02:02:23Z",
+      "timestamp": "2026-08-14T02:02:23Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "vito",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13854",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "workspace: add native polyfill replacements",
+      "text": "`dagger/polyfill` currently fills a few gaps that now belong in the engine. This is the additive half of removing it. Tooling modules such as Pytest and Ruff need to find ordinary project roots on disk. `Workspace.findRoots` expresses that policy directly: find roots below the current directory, plus the nearest root above it. `glob` remains available when callers only need file matching. SDKs have a different source of truth. Their managed modules are already registered in `dagger.toml`, so `currentModule.asSDK(workspace: ws).modules` returns the registered modules relevant to the workspace cwd without scanning config files. This also adds `ModuleSource.generate(workspace)`, fixes config edits so they preserve a literal `engineVersion: \"latest\"`, and adds regression coverage for the existing `Workspace.moduleSource` local-dependency fix. The final follow-up keeps that generation API safe for both host and value workspaces: filtered SDK output cannot delete unrelated files, and a module with no local dependencies does not require SDK registration metadata. #### Review The API boundary is the important part: `findRoots` discovers projects from marker files; `asSDK.modules` reads installed SDK registrations; `ModuleSource.generate` composes generated files on a workspace. #### Test ```console go test ./core/schema dagger call engine-dev test --run 'TestWorkspaceFindRoots|TestModuleSourceGenerateWorkspace' ``` The changeset boundary and cwd path behavior are in [#13855](https://github.com/dagger/dagger/pull/13855).",
+      "url": "https://github.com/dagger/dagger/pull/13854",
+      "createdAt": "2026-08-07T07:45:38Z",
+      "updatedAt": "2026-08-14T02:27:21Z",
+      "timestamp": "2026-08-14T02:27:21Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "grouville",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13855",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "workspace: compare changes from an explicit baseline",
+      "text": "This completes the engine side of removing `dagger/polyfill`. The important change is that a workspace no longer carries a hidden change boundary. The caller keeps the workspace it received, makes edits, then compares the result with that exact value: ```text before = disk + init scaffold after = ModuleSource.generate(before) # disk + scaffold + generated files after.changes(from: before) # generated files only ``` `ModuleSource.generate(workspace)` returns another `Workspace`, so modules can keep composing edits with the existing workspace APIs. `Workspace.withChanges` remains the way to apply a changeset. When a `Changeset` is finally needed, `Workspace.changes(from:)` performs the comparison and returns paths relative to the receiving workspace's cwd. This avoids both problems discussed in the API review: there is no extra `WorkspaceDiff` type in the agent lifecycle, and there is no `fork()` call that a generator can forget. The baseline is an ordinary immutable workspace value already available to the caller. `ModuleSource.generateLocalDependencies` stays temporarily for compatibility with existing SDK releases. New SDK code does not call it; it can be removed after the official SDK migrations have shipped. This PR is stacked on [#13854](https://github.com/dagger/dagger/pull/13854), which adds `findRoots`, `currentModule.asSDK(workspace).modules`, and `ModuleSource.generate(workspace)`. #### Test ```console dagger call engine-dev test --run 'TestWorkspaceChangesFrom|TestWorkspaceChangesetRooting|TestModuleInitGeneratesForNewModuleOnly|TestGenerateLocalDependenciesTerminatesOnRootDep' dagger call engine-dev test --run TestGeneratorsInstalledInWorkspace ``` The baseline, cwd, module-init, and local-dependency cases passed [here](https://dagger.cloud/dagger/traces/7d17ce9cdd12bbfde937a76161aff6c7). The installed Dang, Go, Python, and TypeScript SDK generator matrix passed [here](https://dagger.cloud/dagger/traces/360c656c2727b4a908a45da55eadb5cd).",
+      "url": "https://github.com/dagger/dagger/pull/13855",
+      "createdAt": "2026-08-07T08:22:49Z",
+      "updatedAt": "2026-08-14T03:12:09Z",
+      "timestamp": "2026-08-14T03:12:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "grouville",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13865",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "[backport-0.21] fix(engine): decouple active-clients API from session lifecycle locks",
+      "text": "## Summary Backport #13542 to the v0.21 maintenance line for v0.21.9. The Cloud keeper polls `engine { clients }` as part of its composite heartbeat. On v0.21, that enumeration can block behind one session lifecycle lock held across initialization or teardown. Because the keeper does not publish until the query returns, one slow session can suppress all keeper heartbeats, make a live engine unschedulable, and eventually cause suspension. This backport decouples active-client observers from session lifecycle work while preserving the complete synchronization redesign from the source fix. ## Source - Source PR: https://github.com/dagger/dagger/pull/13542 - Source commit: https://github.com/dagger/dagger/commit/0e21927e46c97a7ccb80670d6353d603e95c2885 - Applied with `cherry-pick -x` onto `origin/backport-0.21` at `9f68624bf69c23c01861e298651656ecac780285` - The v0.21 concurrency prerequisite from #13474 is already present as `cd9c80b9da99c0a90126b4a999400543f110c322` ## v0.21 adaptation The main-only `wcprofEnabled` field from #13393 does not exist on v0.21 and is not a dependency, so the conflict-only field and assignment were omitted. This is not a reduced `Clients` unlock. It retains the full semantic unit: - immutable session identity before registry publication - atomic lifecycle state - lifecycle-only mutex - lock-free `Clients`, `activeClientIDs`, and `clientFromIDs` observers - client publication only after successful initialization - removed tombstones and pointer-conditional registry deletion - client DB opening outside `clientMu` - graceful-stop session snapshot - all source liveness/race regressions adapted to v0.21 ## Validation Passed: - `gofmt -w engine/server/server.go engine/server/session.go engine/server/session_test.go` - `go test ./engine/server -run \"^(TestClientsDoesNotBlockWhileSessionLifecycleLocked|TestActiveClientIDsDoesNotBlockWhileSessionLifecycleLocked|TestGetOrInitClientReturnsFastForRemovedTombstone|TestClientFromIDsStateGating|TestSessionLifecycleObserverConcurrency)$\" -count=1` - `go test ./engine/server` - `go test -race ./engine/server` - `git diff --check origin/backport-0.21...HEAD` ## Release note Adds `.changes/unreleased/Fixed-20260810-150651.yaml` for v0.21.9, attributed to source PR #13542. Cloud-side per-operation deadlines remain separate follow-up work and are not changed by this backport.",
+      "url": "https://github.com/dagger/dagger/pull/13865",
+      "createdAt": "2026-08-10T15:10:20Z",
+      "updatedAt": "2026-08-13T12:53:36Z",
+      "timestamp": "2026-08-13T12:53:36Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "matipan",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13879",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "sdk(improvement): support nullable object returns",
+      "text": "#### What This adds native nullable GraphQL object results across the SDKs. The motivating API is `GitRepository.latestVersion`. A repository may have no stable semantic-version tag, so callers need to handle a missing result and choose a fallback: ```go version, err := repo.LatestVersion(ctx) if err != nil { return err } if version == nil { version = repo.Head() } ``` To make that `nil` check meaningful, the SDK must run the nullable object query before the method returns. The generated method queries the object's ID, returns the language's native missing value when no ID exists, and rebuilds the object client from the ID when it does. This gives each SDK its usual result type: `nil` in Go, `null` in TypeScript/PHP/.NET, `None` or `Option` in Python/Rust, `Optional` in Java, and `{:ok, value | nil}` in Elixir. #### Compatibility This behavior is selected when the client is generated. Each SDK generator passes the schema version into its templates or renderer and chooses the matching method shape: - Before `v1.0.0-beta.10`, generated clients keep the existing lazy, chainable object methods. - From `v1.0.0-beta.10`, nullable object methods execute and return native nullable results. This keeps modules pinned to older engine versions compatible when their clients are regenerated. It does not add a runtime compatibility layer. Non-null object fields remain lazy. Scalar and list methods are unchanged. #### Validation - Every SDK generator tests both sides of the beta.10 boundary. - Generated clients were refreshed and their direct callers updated. - Focused SDK checks pass for Go, TypeScript, Python, Rust, Java, .NET, PHP, and Elixir. - Go integration coverage checks both present and missing nullable results. - Older pinned SDK runtimes still load with their previous method shapes. The main review question is whether executing nullable object methods is the right v1 API boundary. The narrower alternative is for APIs such as `latestVersion` to return a nullable scalar while object methods remain lazy.",
+      "url": "https://github.com/dagger/dagger/pull/13879",
+      "createdAt": "2026-08-11T21:14:04Z",
+      "updatedAt": "2026-08-14T01:42:04Z",
+      "timestamp": "2026-08-14T01:42:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "grouville",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13887",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "engine: support manual metadata pruning",
+      "text": "## Summary - add absolute `maxEstimatedBytes` and `targetEstimatedBytes` controls to `Engine.localCache.prune`, including generated CLI and SDK surfaces - run configured structural-memory pruning inline with manual `useDefaultPolicy` requests when automatic GC is enabled, and allow explicit structural pruning when automatic GC is disabled - preserve legacy no-option and disk-only behavior while ensuring metadata-only requests do not run the implicit all-eligible disk-policy stage - add bounded cancellation checks throughout structural snapshotting and planning, including high-fanout dependency and candidate ordering - document the destructive disk fallback, structural disk-reclamation effects, partial-pair validation, and GC-disabled behavior accurately ## Motivation DagQL structural-memory limits previously applied only through automatic or lifecycle GC. A manual local-cache prune applied disk policy immediately but left structural pruning to a later, unrelated background event. Operators also had no explicit structural-memory action when automatic GC was disabled. This change makes a manual request cohesive: combined requests run disk pruning first and structural pruning second under the existing GC serialization lock. Explicit structural controls remain operator actions independent of automatic scheduling. ## Compatibility and user impact - no-option manual prune retains the existing all-releasable disk behavior - disk-only options continue to run only disk pruning - metadata-only options skip the disk-policy stage, though released roots and snapshot GC may still reclaim disk - `useDefaultPolicy` applies configured disk and structural policies only when automatic GC is enabled; with GC disabled it does not resurrect structural policy and retains the existing disk fallback - omitted structural values inherit resolved configured/default limits; explicit values must be positive and the target must be lower than the resolved maximum - structural options are absolute byte integers only - new API arguments and corrected argument documentation are version-gated so the historical base schema remains unchanged A release note, user documentation, GraphQL schema, SDK bindings, and reference artifacts are included. ## Validation - `go test -count=1 ./dagql ./engine/server ./core/schema` - `go test -race -count=1 ./dagql ./engine/server` - `dagger api call engine-dev test --pkg ./core/integration --run='^TestLocalCache/TestLocalCacheManualMetadataPruneCLI$'` - deterministic cancellation, mode-selection, validation-before-mutation, and manual-prune tests repeated up to 100 times - `dagger check golang:lint-all markdown-lint:lint docs:check python-client:lint typescript-client:lint-typescript java-client:lint helm:lint` - `dagger check --generate`: all 24 checks passed on this exact candidate during review; the post-rebase no-op recheck passed 23 checks and the Elixir check aborted in `mix local.hex` with the known VM error `OS monotonic time stepped backwards`",
+      "url": "https://github.com/dagger/dagger/pull/13887",
+      "createdAt": "2026-08-13T01:43:44Z",
+      "updatedAt": "2026-08-13T20:20:07Z",
+      "timestamp": "2026-08-13T20:20:07Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sipsma",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13888",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "dagql: reduce e-graph result-removal contention",
+      "text": "## Motivation Removing a result from a wide output equivalence class repeatedly scanned the class's digests and result postings while holding `egraphMu`. Release and metadata-prune work therefore grew superlinearly as the class widened, increasing lock contention for unrelated cache operations. ## Design This change adds three cache-owned derived indexes: - an inverse output-equivalence-class-to-results index; - an exact per-result digest-posting index; and - an exact/broad posting classification for result cleanup. Newly published results record their exact digest postings. Imported results remain conservatively broad because the persistence schema does not contain exact result/term memberships. Broad imported cleanup therefore retains the safe class-posting scan; this change does not claim to remove that scan. The inverse output-class index replaces the separate deterministic class-wide survivor scan with an expiry-aware lookup over associated results. ## Correctness and compatibility Forward and inverse output-class associations are maintained as a pair across publication, merge, compaction, import, expiry, reset, and rollback. Merge and compaction canonicalize roots and rebuild the paired indexes together. Posting insertion and removal use a centralized exact/broad classification, and the survivor predicate preserves expiry behavior. Ownership counts, release cascades and callback order, lookup candidate membership, release/prune visibility, tracing and mutation order, prune cadence, and the `egraphMu` lock domain remain unchanged. Reset clears all three indexes with the e-graph. There is no persistence schema, version, migration, API, or user-visible semantic change. Import reconstructs result/output-equivalence-class associations and marks imported postings broad. Exact result/term associations remain unavailable after import, so the existing conservative class-scan fallback is preserved. No changie entry is included because this is internal derived bookkeeping with no user-facing API or semantic change. ## Scope and history The final merge diff is nine files: three production files, four focused correctness-test files, and two existing architecture documents. It contains the production optimization and its regression coverage, without benchmark infrastructure or a PR-only implementation plan. The eleven-commit branch history retains the reviewed empirical and planning work for provenance. The final `dagql: remove e-graph benchmark scaffolding` commit removes every benchmark-only test, fixture, observer, artifact helper, runner script, and benchmark/plan document from the merge tree. The two implementation commits remain separate conceptual review and rollback boundaries. ## Validation The final rebased head `085cdda50c` passed: - `go test ./dagql -count=1` — 1.865s - `go test -race ./dagql -count=1` — 4.307s - the focused imported-broad and persisted-fresh derived-index cleanup tests — 0.022s - `dagger check golang:lint-all` - `dagger check markdown-lint:lint` - `dagger generate golang:generate-all --no-apply` — no changes - `dagger generate markdown-lint:fix --no-apply` — no changes - `gofmt` and `git diff --check` All eleven commits carry one matching DCO signoff. The rebased implementation commits retain the stable patch IDs of the reviewed originals, and the final production/docs patch is identical after removing benchmark-only instrumentation. The merge diff contains no generated/schema change. ## Paired benchmark evidence The measurements were collected with the reviewed development harness that is intentionally removed by the final cleanup commit. The measured production implementation is unchanged in the final merge diff; the evidence binds to that production behavior, not to final-tree or rebuilt-binary identity. - Transient wide release: R256 improved from 46.318 ms to 2.356 ms and R512 from 181.319 ms to 5.379 ms. The timing slope changed from 3.91x to 2.28x, while allocation scaling per doubling changed from 3.94x to 1.99x. - Persisted-fresh prune: R256 improved from 20.256 ms to 5.540 ms and R512 from 156.145 ms to 12.378 ms. The 12.6x R512 ratio and 7.709x baseline timing slope are host-specific, not expected production factors. The stronger structural result is allocation scaling per doubling changing from 3.86x to 1.98x. - Imported release R256 improved from 86.020 ms to 19.765 ms while retaining all 263,683 broad postings. Broad posting cleanup remains; the gain comes from removing the separate class-wide survivor scan. Allocations changed from 1,769,611 to 1,031. - The independent 50,000-result control produced candidate 317.357 ms, baseline 277.558 ms, and the one bounded candidate repeat 270.377 ms. No control regression was demonstrated at this measurement precision; none was excluded. Identical allocations/bytes, within-2% RSS, and matching fixture/posting/lock counters support treating the first candidate point as noise rather than claiming a speedup. Every process exited successfully, ran one exact sample, reported zero dropped observations, and preserved fixture, prune, and lock-counter populations. Only the allowed noisy control arm was repeated once. The same-host paired comparison was explicitly authorized because the original Linux VM was unstable. Host-specific timing factors are not production guarantees; the near-linear allocation scaling is the stronger evidence that the quadratic removal term is gone. Raw outputs and SHA-256 manifests are retained internally. ## Rollback and non-goals The two implementation commits are conceptual rollback boundaries: first the output-class inverse index, then exact posting tracking and cleanup. This slice does not add lock sharding, tombstones, asynchronous cleanup, persistence-schema changes, exact imported association persistence, ownership-semantic changes, imported read-path redesign, or broader e-graph optimization.",
+      "url": "https://github.com/dagger/dagger/pull/13888",
+      "createdAt": "2026-08-13T08:17:53Z",
+      "updatedAt": "2026-08-13T21:25:42Z",
+      "timestamp": "2026-08-13T21:25:42Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sipsma",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13890",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix: make `dagger module init` work from a subdirectory workspace",
+      "text": "# fix: make `dagger module init` work from a subdirectory workspace Fixes #13889. ## The bug With a `dagger.toml` in a subdirectory of the git repo — the monorepo layout, several projects under one root — `dagger module init` fails outright: ```console $ mkdir repo && cd repo && git init && mkdir common && touch common/dagger.toml $ cd common && dagger sdk install go $ dagger module init go hello -y Error: sdk module init: failed to call sdk module initModule: workspace path .dagger/modules/hello is outside changeset root common ``` And the workaround that avoids the error is worse: `--path common/hello` writes the engine's `dagger-module.toml` to `common/hello/` while the SDK's `main.go` lands in `hello/` — a split, non-loadable module, with no error at all. ## Root cause Two path conventions disagree once the caller is not standing at the workspace root, which a subdirectory `dagger.toml` guarantees: workspace root detection walks up to `.git` and a `dagger.toml` does not define the root, so selecting `common/dagger.toml` always means root = git root and `Workspace.cwd = common`. 1. **The engine resolves init paths workspace-root-relative and applies the changeset at the workspace root.** `Workspace.export` writes to `ExportHostPath()`, which is the workspace root. Self-consistent. 2. **An SDK's `initModule` stages files relative to `Workspace.cwd`.** The polyfill's workspace fork (`github.com/dagger/polyfill`, `workspace-fork.dang` → `clientPath`) rebases a root-relative path onto the cwd and raises when the path is not under it, because a changeset returned from an ordinary function call *is* applied at the caller's cwd (`changeset.Export(ctx, \".\")` resolves against the client's OS cwd). The polyfill is right for the second apply base and wrong for the first, and the engine is the layer that both chooses the workspace it shows the SDK and calls `Workspace.export` at the root. So the reconciliation belongs here. This is a founding assumption rather than a regression: the cwd rebasing arrived with the polyfill's root commit (`dagger/sdk-sdk` `732835f`, \"Add SDK development polyfill module\", 2026-05-18, later spun out to `github.com/dagger/polyfill`); the later \"read cwd from Workspace.cwd\" only changed where the cwd came from, not the semantics. Monorepo layouts are simply the first thing to exercise a non-root cwd through init. ## The fix (engine only — no SDK or polyfill change) **Hand the SDK a root-anchored workspace during init.** New `rootAnchoredWorkspace` in `core/schema/workspace_sdk_init.go` returns the workspace with `cwd = \".\"` (built through the `withWorkdir` field so the result stays an attached dagql result, the same way `scopedStagedWorkspace` does it for generators). `initModuleChanges` and `initClientChanges` pass that to the SDK instead of the caller's workspace, so the cwd the SDK sees matches where the changeset actually lands, and the polyfill's rebasing becomes the no-op it already is at the root. Nothing about the generic `changeset.Export(\".\")` path — `dagger generate` included — changes. **Anchor the default module path at the `dagger.toml` being edited.** `.dagger/modules/<name>` was joined against the workspace root. Since `[modules.<name>].source` is resolved against the config directory, a root-anchored default under `common/dagger.toml` would have recorded an entry pointing outside its own project. The default is now `<config dir>/.dagger/modules/<name>` and the recorded source is made config-dir-relative with `filepath.Rel`, the same conversion `dagger install` already performs for a local ref. At the workspace root — every existing workspace — both are unchanged. `--path` keeps its documented workspace-root-relative meaning; only the split it used to produce is fixed. The CLI help and the Go SDK page now say so explicitly — `--path ci` from a subdirectory means `<workspace root>/ci`, not `./ci` — and the generated CLI reference is updated to match. ## Verification New engine integration test `TestGenerators/TestInitFromSubdirectoryWorkspace`, against a fixture SDK whose `initModule`/`initClient` mirror the polyfill's cwd rebasing (so the test reproduces the real failure, not a synthetic one): - `dagger module init` from `common/` puts `dagger-module.toml`, the SDK scaffold and the generator output together under `common/.dagger/modules/newmod/`, records `source = \".dagger/modules/newmod\"` and `path = \"common/.dagger/modules/newmod\"`, and writes nothing at the git root. - `--path common/hello` from `common/` puts both files under `common/hello/` and nothing at `hello/`. - `--path tools/hello` from `common/` — a path *outside* the caller's cwd — puts both files under `tools/`, which is what separates root-anchoring from a cwd-scoped reroot. - `dagger api client init` from `common/` scaffolds at the requested path. Confirmed the test fails on the unfixed engine with the reported `outside changeset root` error, and passes with the fix. The existing root-workspace init tests (`TestModuleInitGeneratesForNewModuleOnly`, `TestAPIClientInitGeneratesForNewClientOnly`) still pass unchanged. ## Noted, not fixed Two adjacent inconsistencies found while tracing this, both out of scope here: - `dagger api client init` cannot take a workspace-root-relative module ref that contains a `.` segment (e.g. `common/.dagger/init-fixture`): `workspace.IsLocalRef` classifies it as remote. Unrelated to cwd; the test fixture sidesteps it by living at a dot-free path. - `workspace.AddMigratedModuleSDK` (used by `dagger setup`) writes `as-sdk.modules[].path` relative to the owning config directory, while every consumer — `sdkOwnersByModulePath`, `removeSDKManagedModuleReference`, and the Go SDK's `modules(ws)` — reads it workspace-root-relative. Identical only when the config is at the root.",
+      "url": "https://github.com/dagger/dagger/pull/13890",
+      "createdAt": "2026-08-13T14:55:18Z",
+      "updatedAt": "2026-08-13T16:14:53Z",
+      "timestamp": "2026-08-13T16:14:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13891",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "ci: unpin helm from the retired wolfi helm 3.x package",
+      "text": "> [!NOTE] > This unblocks CI repo-wide. `main` and every open PR are currently red. Chainguard moved the wolfi `helm` apk package to the 4.x line, so every `helm~3.18.4` constraint fails to resolve: ``` ERROR: unable to select packages: helm-4-4.2.3-r1: breaks: world[helm~3.18.4] ``` That breaks `ci:bootstrap`, `golang:test-all` (via `e2e/helm`), `helm:lint` and `helm:assert-template`. No repo code is at fault — reproduced with a bare `apk add`. Available wolfi packages are now `helm-4.0.1-r0` (bare `helm`), `helm-3-3.19.2-r2`, `helm-4-4.2.3-r1`. ## Fix - The paths that **package/ship** our chart move to the versioned package so they stay on Helm 3: `helm~3.18.4` → `helm-3~3.19.2` in `.dagger/modules/release/helm.go` and `e2e/helm/helm_test.go`. - `helm:lint` / `helm:assert-template` don't come from those pins — they come from the external `github.com/dagger/helm` module, which hardcodes `apk add \"helm~\" + version`, so 3.x is unselectable there without an upstream change. Its `[modules.helm.settings] version` is set to `4.0.1` (verified it lints/templates our chart fine). Follow-up (not this PR): teach `github.com/dagger/helm` to select the `helm-3` package so the checker can go back to 3.x. ## Verified locally (dev engine) - `helm lint` and `helm assert-template` → PASS (were ERROR). - `e2e/helm`: `TestCustomProbes`, `TestPackageDryRun`, `TestInstallK3S` (all 4 subtests: default/port daemonset, default/port statefulset) → PASS. - `helm-3~3.19.2` install → `helm version` v3.19.2; `helm package .` → `dagger-helm-1.0.0-beta.10.tgz` OK. `docs/versioned_docs/version-0.21.7/modules/helm.mdx` still references `3.18.4` and is left untouched — versioned docs are frozen snapshots.",
+      "url": "https://github.com/dagger/dagger/pull/13891",
+      "createdAt": "2026-08-13T15:35:09Z",
+      "updatedAt": "2026-08-13T16:11:27Z",
+      "timestamp": "2026-08-13T16:11:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13892",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix(setup): anchor migrated as-sdk module paths at the workspace root",
+      "text": "## What `dagger.toml` carries two path conventions that only coincide when the config file sits at the workspace root: - `[modules.<name>].source` resolves against the **config directory** (`ResolveModuleEntrySource`). - `[[modules.<sdk>.as-sdk.modules]].path` is **workspace-root-relative**, everywhere it is read: module→SDK ownership (`sdkOwnersByModulePathFromConfig`), uninstall (`removeSDKManagedModuleReference`), the workspace SDK listing (`workspaceSDKFromEntry`), and `currentModule.asSDK.modules`, which the SDKs themselves consume (including the out-of-repo `dagger/go-sdk`). The migration writer disagreed. `workspaceMigrationInstallDiscoveredModuleSDKs` recorded a discovered local module with `filepath.Rel(owner, projectRoot)` — relative to the config that owns it, not to the workspace root. This patch anchors it at the workspace root via the existing `workspaceMigrationProjectRootRelPath` helper, and states the anchor on the config types (plus the regenerated public JSON schema). ## Is anything broken today? No — and the change is deliberately framed as hardening rather than a user-visible fix. Migration plans every workspace config at `ws.HostPath()`: `PlanMigration` sets `plan.ProjectRoot` to the workspace root when hoisted, and otherwise the project root *is* the workspace root; synthesized parent plans land at the workspace root too. So `owner` always equals the workspace root and the two anchors produce the same string. The mismatch only bites the day migration can plan a config below the workspace root — which the `FIXME(workspace-migrate)` about scanning for legacy child `dagger.json` files points straight at. Fixing the writer rather than the readers is the small, safe side of the mismatch: the readers' contract is depended on by SDKs living in other repos. ## Tests - `core/schema` unit test pinning the anchor for a config planned below the workspace root. It is the only test that fails against the old writer; its comment is explicit that the shape is not reachable through `dagger setup` today. - `core/integration` assertions on the existing subdirectory-toolchains migration: the discovered toolchain is recorded by a workspace-root-relative path, and `dagger uninstall` resolves that path back to its as-sdk entry — end-to-end coverage of the contract in the monorepo layout.",
+      "url": "https://github.com/dagger/dagger/pull/13892",
+      "createdAt": "2026-08-13T15:44:40Z",
+      "updatedAt": "2026-08-13T16:22:51Z",
+      "timestamp": "2026-08-13T16:22:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13893",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix: classify dotted workspace-relative module refs as local",
+      "text": "# fix: classify dotted workspace-relative module refs as local ## Problem `dagger api client init <sdk> <client-path> <module-ref>` fails when the module ref is a workspace-root-relative path whose dot segment is not the first one: ```console $ dagger api client init go clients/api common/.dagger/mymod load module source: local path \"common/.dagger/mymod\" does not exist ``` This is the everyday shape in a monorepo: a module that is `.dagger/mymod` from the workspace root is `common/.dagger/mymod` from a subdirectory, and module refs are recorded relative to the workspace root. Prefixing `./` does not help — `resolveWorkspaceClientModuleRef` hands the *cleaned* form to the loader, so the `./` is gone before the ref is classified again. ## Cause `core/workspace.IsLocalRef` recognised a local ref by a leading `.` or `/`, and otherwise by the *absence* of a dot anywhere in the string — a proxy for \"this looks like a hostname\". `common/.dagger/mymod` has neither, so it was classified as a git ref and `resolveClientTargetModule` routed it to the git loader instead of resolving it against the workspace rootfs. The heuristic is shared well beyond client init (config parsing, install, uninstall, SDK init, migration), so it is fixed once, in place. ## Fix `IsLocalRef` moves to its own file and delegates to `core/gitref.FastKindCheck`, which already handles pins, leading `.`/`/`/`..`, and the `http`/`https`/`ssh` schemes, and returns \"unknown\" for the ambiguous dotted case. That case is now resolved by looking for a host only ahead of the first slash — the Go module path convention, where only the first element can be a domain. Two markers keep dot-free hosts remote: a colon (scp-like `git@internal:org/repo.git`, or a `host:port`) and a `/_git/` segment (Azure DevOps Server on-prem, per the matcher in `engine/vcs`). Nothing that was correctly classified local becomes remote: the refs that change are those with a dot-free, colon-free, `_git`-free host and a dot further down the path, which become local. One shape goes the other way, and is a fix too — a scheme-prefixed dot-free host (`ssh://internal/org/repo`) used to read as local because the string had no dot at all; `FastKindCheck` now calls it git, which is what it is. ## Converging the copies The heuristic had been written out four times, and the copies had drifted: | Implementation | Ambiguous-case rule | | | --- | --- | --- | | `core/gitref.FastKindCheck` | returns \"unknown\" by design | the primitive, kept | | `core/workspace.IsLocalRef` | whole-string dot | **fixed here** | | `core/schema.isLocalLegacyModuleRef` | whole-string dot (verbatim copy) | **deleted** | | `daggercmd.workspaceAddressLooksRemote` | whole-string dot | **same bug, fixed here** | | `daggercmd.isObviouslyRemoteWorkspaceRef` | first-segment dot | already correct | `isLocalLegacyModuleRef` drove `dagger update` for legacy `dagger.json` toolchains and blueprints. `workspaceAddressLooksRemote` drove `-W` workspace addresses, where it had the identical bug: a workspace at `services/api.v2` or `common/.dagger/mymod` read as a git ref. `isObviouslyRemoteWorkspaceRef` is worth calling out — it already looked for the dot in the first path segment only, which is exactly the rule `IsLocalRef` now adopts. The convention was already in the tree; this PR just makes it the only one. All four now route through `IsLocalRef`, each keeping only what is genuinely its own: `file://` stripping for a workspace address, and the host stat plus a \"needs a slash\" conservatism for an obviously-remote ref. Untouched on purpose: `auth/registry.go` classifies OCI registry domains under Docker's rules (`localhost`, `:port`), and `engine/vcs` validates hosts inside the VCS matcher. Different questions, deliberately separate. ### Known limitation (pre-existing, unchanged) A local module directory whose *own first path segment* carries the dot — `./mymod.v2` at the workspace root — is still classified as a git ref. The `./` is cleaned away before the ref is classified, and the cleaned form is what gets persisted as `as-sdk.clients.module`, so by the time a client is loaded again the evidence of local-ness is gone. Fixing it means persisting the disambiguating `./` rather than plumbing a kind hint — both `init` and every later load already share the same resolution seam. That is a config-format change, so it is left as a follow-up. Keep such a module under a dot-free first segment, or spell dot-free remote hosts with an explicit `ssh://`/`https://` scheme. Windows-style local paths are equally unchanged: `C:/src/mymod.git` still reads as remote, because the drive letter's colon is indistinguishable from scp-like syntax. It read as remote before this change too, for the dot. ## Tests - `core/workspace/localref_test.go` — table-driven matrix over the classifier: dotted-but-local paths, dot-free-but-remote-looking refs, leading `./`/`../`, absolute paths, `github.com/...` with and without `@version`, scp-style refs (dotted and dot-free hosts), `host:port`, both Azure DevOps shapes, and pins. The dotted-below-first-segment cases fail against the old implementation. - `TestGenerators/TestAPIClientInitDottedModulePath` — `dagger api client init` run from a workspace subdirectory against a module at `common/.dagger/target`, for both the bare and `./`-prefixed ref, asserting the scaffold, the generated client and the recorded config ref. Without the fix both subtests fail with the exact error above. - `internal/cmd/dagger` — `TestWorkspaceAddressLooksRemote` gains the dotted workspace-address cases, and `TestIsObviouslyRemoteWorkspaceRef` is new, pinning the \"needs a slash\" conservatism that keeps a lone `my.dir` local.",
+      "url": "https://github.com/dagger/dagger/pull/13893",
+      "createdAt": "2026-08-13T16:22:02Z",
+      "updatedAt": "2026-08-13T16:48:12Z",
+      "timestamp": "2026-08-13T16:48:12Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13894",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "Add missing view gates",
+      "text": "Fixes https://github.com/dagger/dagger/issues/13883 1. Ground truth: ran real released engines (v0.19.11, v0.20.8, and every v0.21.x patch, via DAGGER_X_RELEASE) and captured their schemas with a raw introspection query — importantly with includeDeprecated: true on args, since deprecated compat args like keepGitDir are hidden by default and initially looked like false leaks. 2. Branch side: rendered this branch's schema at each of those versions' views using the existing test plumbing (NewCoreSchemaBase + Fork(view) + getSchemaJSON), run in a linux container via a throwaway test. 3. Diffed the two per version at the type/field/arg/enum level. Anything visible in the branch's \"vX view\" that the real vX engine never served is a leak. The earliest real release that does contain the item gives the correct gate version — e.g. withVolatileVariable first appears in real v0.21.4 → AfterVersion(\"v0.21.4\"); inheritOwner and hasPending appear in no v0.2x release at all → AfterVersion(\"v1.0.0-0\"). 4. Validated by re-rendering after the edits: every view from v0.21.1–v0.21.8 now diffs clean against its real engine. (v0.19/v0.20 views still have pre-existing leaks I left alone — pinning those needs per-patch captures of the older series, and some need dagql changes.)",
+      "url": "https://github.com/dagger/dagger/pull/13894",
+      "createdAt": "2026-08-13T19:24:51Z",
+      "updatedAt": "2026-08-14T00:58:39Z",
+      "timestamp": "2026-08-14T00:58:39Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "kpenfound",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13895",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "docs: clarify engine memory pruning configuration",
+      "text": "## Summary Clarifies and reorganizes the memory pruning documentation that already landed with the feature in #13887. No behavior changes. On the engine configuration page, the metadata limit now follows the disk policies instead of splitting them apart. It states the `gc.dagqlCache` field names, the 4 GiB and 3 GiB defaults, the absolute byte units, the validation rules, and when pruning runs. On the cache page, the manual pruning section states what each prune flag does, when metadata is pruned, and how the metadata prune relates to the disk prune. Only `docs/current_docs` is updated. The released version snapshots under `docs/versioned_docs` do not support these controls, so they are left alone. ## Test plan `dagger check docs:check` passes. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "url": "https://github.com/dagger/dagger/pull/13895",
+      "createdAt": "2026-08-13T21:18:49Z",
+      "updatedAt": "2026-08-13T21:18:50Z",
+      "timestamp": "2026-08-13T21:18:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sipsma",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13896",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "fix: drop ReadHeaderTimeout on HTTP/2 servers",
+      "text": "Any dagger session that outlives 30 seconds currently dies with: ``` Error: Post \"http://dagger/query\": unexpected EOF ``` Reproduces on anything slow enough — no module or agent involved: ```console $ dagger core container from --address=alpine with-exec --args=sh,-c,'sleep 45; echo ok' stdout Error: Post \"http://dagger/query\": unexpected EOF # at 31.2s, deterministically ``` The engine logs nothing useful. From its side the client simply vanishes: three `client went away` lines for the telemetry streams, then session teardown. No panic, no crash, no restart. ## Cause `net/http` in **Go 1.26.6** now arms a connection-level read deadline from `ReadHeaderTimeout` *before* handing an unencrypted HTTP/2 connection off to the HTTP/2 server: ```go + if d := c.server.readHeaderTimeout(); d > 0 { + c.rwc.SetReadDeadline(time.Now().Add(d)) + } protos := c.server.protocols() if c.tlsState == nil && protos.UnencryptedHTTP2() { if c.maybeServeUnencryptedHTTP2(ctx) { ``` The HTTP/2 server only disarms that deadline when `ReadTimeout > 0` (`h2_bundle.go`, `processHeaders`). None of our servers set `ReadTimeout`, so `ReadHeaderTimeout` silently became a hard cap on **connection lifetime**, independent of how active the connection is. A client multiplexes its GraphQL queries *and* its `/v1/traces|logs|metrics` streams over a single HTTP/2 connection, so when the deadline fires every stream dies at once — which is why one slow query takes down the whole session, and why the failure looks like an unexplained disconnect rather than a timeout. Reduced to a standalone program (h2c server + `http2.Transport`, handler sleeps 6s): | Go | `ReadHeaderTimeout` | result | | --- | --- | --- | | 1.26.6 | 3s | `unexpected EOF` at 3.0s | | 1.26.6 | 0 | ok at 6.0s | | 1.26.5 | 3s | ok at 6.0s | Confirmed by bisecting engines with one unchanged CLI binary: `dagger-engine-v1.0.0-beta.9` (built with go1.26.5) passes a 46s query; an engine built today (go1.26.6) fails at 30s. ## Why now Nothing in the repo changed. `engine/distconsts/consts.go` pins `GolangVersion = \"1.26\"` → `golang:1.26-alpine`, a floating minor tag, and `go.mod` has no `toolchain` directive. go1.26.6 was released 2026-08-11, so the first engine rebuild whose image cache missed after that date picked it up. That const used to carry a full patch pin (`1.25.5` → `1.25.6` → `1.25.7`, each an explicit CVE bump); #11843 dropped the patch component. Because the trigger is a cache miss on a floating tag, this lands at a different moment for each developer and CI runner, with no commit to blame. ## Fix Drop `ReadHeaderTimeout` from the three servers that enable unencrypted HTTP/2: - `cmd/engine/main.go` (30s) — the engine's client API - `engine/engineutil/executor_spec.go` (10s) — the nested-client API that module functions dial, so **any module function call outliving 10s** lost its engine connection - `internal/cmd/dagger/listen.go` (10s) — `dagger listen` sessions The latter two are latent versions of the same bug rather than what I was chasing, but they fail identically. ## Notes for review This forfeits the gosec **G112** slowloris guard on these three servers; the comments say so, and all three listen on local or otherwise trusted endpoints. Restoring the guard properly would mean implementing it as a listener wrapper that arms a timer on accept and cancels it on the first read, rather than as a connection deadline the HTTP/2 server never clears — happy to do that here instead if preferred. Re-pinning `GolangVersion` to a patch version is worth doing separately for reproducibility, but note it would neither have prevented this nor fix it; the change here is what fixes it, on any toolchain. ## Verification Rebuilt the dev engine with this patch: - a 60s query returns `ok` at 63.2s (was: `unexpected EOF` at 31.2s) - `dagger --env dev agent` reaches the prompt and stays healthy well past 30s, driven under a real pty",
+      "url": "https://github.com/dagger/dagger/pull/13896",
+      "createdAt": "2026-08-14T02:53:00Z",
+      "updatedAt": "2026-08-14T02:53:00Z",
+      "timestamp": "2026-08-14T02:53:00Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "vito",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:3388faf89dba30db25ad",
+      "signalId": "github:dagger/dagger:pull_request:13855",
+      "event": "changed",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13855",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "workspace: compare changes from an explicit baseline",
+        "text": "This completes the engine side of removing `dagger/polyfill`. The important change is that a workspace no longer carries a hidden change boundary. The caller keeps the workspace it received, makes edits, then compares the result with that exact value: ```text before = disk + init scaffold after = ModuleSource.generate(before) # disk + scaffold + generated files after.changes(from: before) # generated files only ``` `ModuleSource.generate(workspace)` returns another `Workspace`, so modules can keep composing edits with the existing workspace APIs. `Workspace.withChanges` remains the way to apply a changeset. When a `Changeset` is finally needed, `Workspace.changes(from:)` performs the comparison and returns paths relative to the receiving workspace's cwd. This avoids both problems discussed in the API review: there is no extra `WorkspaceDiff` type in the agent lifecycle, and there is no `fork()` call that a generator can forget. The baseline is an ordinary immutable workspace value already available to the caller. `ModuleSource.generateLocalDependencies` stays temporarily for compatibility with existing SDK releases. New SDK code does not call it; it can be removed after the official SDK migrations have shipped. This PR is stacked on [#13854](https://github.com/dagger/dagger/pull/13854), which adds `findRoots`, `currentModule.asSDK(workspace).modules`, and `ModuleSource.generate(workspace)`. #### Test ```console dagger call engine-dev test --run 'TestWorkspaceChangesFrom|TestWorkspaceChangesetRooting|TestModuleInitGeneratesForNewModuleOnly|TestGenerateLocalDependenciesTerminatesOnRootDep' dagger call engine-dev test --run TestGeneratorsInstalledInWorkspace ``` The baseline, cwd, module-init, and local-dependency cases passed [here](https://dagger.cloud/dagger/traces/7d17ce9cdd12bbfde937a76161aff6c7). The installed Dang, Go, Python, and TypeScript SDK generator matrix passed [here](https://dagger.cloud/dagger/traces/360c656c2727b4a908a45da55eadb5cd).",
+        "url": "https://github.com/dagger/dagger/pull/13855",
+        "createdAt": "2026-08-07T08:22:49Z",
+        "updatedAt": "2026-08-14T03:12:09Z",
+        "timestamp": "2026-08-14T03:12:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "grouville",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:198835a5ed7b62bd8bd0",
+      "signalId": "github:dagger/dagger:pull_request:13896",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13896",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "fix: drop ReadHeaderTimeout on HTTP/2 servers",
+        "text": "Any dagger session that outlives 30 seconds currently dies with: ``` Error: Post \"http://dagger/query\": unexpected EOF ``` Reproduces on anything slow enough — no module or agent involved: ```console $ dagger core container from --address=alpine with-exec --args=sh,-c,'sleep 45; echo ok' stdout Error: Post \"http://dagger/query\": unexpected EOF # at 31.2s, deterministically ``` The engine logs nothing useful. From its side the client simply vanishes: three `client went away` lines for the telemetry streams, then session teardown. No panic, no crash, no restart. ## Cause `net/http` in **Go 1.26.6** now arms a connection-level read deadline from `ReadHeaderTimeout` *before* handing an unencrypted HTTP/2 connection off to the HTTP/2 server: ```go + if d := c.server.readHeaderTimeout(); d > 0 { + c.rwc.SetReadDeadline(time.Now().Add(d)) + } protos := c.server.protocols() if c.tlsState == nil && protos.UnencryptedHTTP2() { if c.maybeServeUnencryptedHTTP2(ctx) { ``` The HTTP/2 server only disarms that deadline when `ReadTimeout > 0` (`h2_bundle.go`, `processHeaders`). None of our servers set `ReadTimeout`, so `ReadHeaderTimeout` silently became a hard cap on **connection lifetime**, independent of how active the connection is. A client multiplexes its GraphQL queries *and* its `/v1/traces|logs|metrics` streams over a single HTTP/2 connection, so when the deadline fires every stream dies at once — which is why one slow query takes down the whole session, and why the failure looks like an unexplained disconnect rather than a timeout. Reduced to a standalone program (h2c server + `http2.Transport`, handler sleeps 6s): | Go | `ReadHeaderTimeout` | result | | --- | --- | --- | | 1.26.6 | 3s | `unexpected EOF` at 3.0s | | 1.26.6 | 0 | ok at 6.0s | | 1.26.5 | 3s | ok at 6.0s | Confirmed by bisecting engines with one unchanged CLI binary: `dagger-engine-v1.0.0-beta.9` (built with go1.26.5) passes a 46s query; an engine built today (go1.26.6) fails at 30s. ## Why now Nothing in the repo changed. `engine/distconsts/consts.go` pins `GolangVersion = \"1.26\"` → `golang:1.26-alpine`, a floating minor tag, and `go.mod` has no `toolchain` directive. go1.26.6 was released 2026-08-11, so the first engine rebuild whose image cache missed after that date picked it up. That const used to carry a full patch pin (`1.25.5` → `1.25.6` → `1.25.7`, each an explicit CVE bump); #11843 dropped the patch component. Because the trigger is a cache miss on a floating tag, this lands at a different moment for each developer and CI runner, with no commit to blame. ## Fix Drop `ReadHeaderTimeout` from the three servers that enable unencrypted HTTP/2: - `cmd/engine/main.go` (30s) — the engine's client API - `engine/engineutil/executor_spec.go` (10s) — the nested-client API that module functions dial, so **any module function call outliving 10s** lost its engine connection - `internal/cmd/dagger/listen.go` (10s) — `dagger listen` sessions The latter two are latent versions of the same bug rather than what I was chasing, but they fail identically. ## Notes for review This forfeits the gosec **G112** slowloris guard on these three servers; the comments say so, and all three listen on local or otherwise trusted endpoints. Restoring the guard properly would mean implementing it as a listener wrapper that arms a timer on accept and cancels it on the first read, rather than as a connection deadline the HTTP/2 server never clears — happy to do that here instead if preferred. Re-pinning `GolangVersion` to a patch version is worth doing separately for reproducibility, but note it would neither have prevented this nor fix it; the change here is what fixes it, on any toolchain. ## Verification Rebuilt the dev engine with this patch: - a 60s query returns `ok` at 63.2s (was: `unexpected EOF` at 31.2s) - `dagger --env dev agent` reaches the prompt and stays healthy well past 30s, driven under a real pty",
+        "url": "https://github.com/dagger/dagger/pull/13896",
+        "createdAt": "2026-08-14T02:53:00Z",
+        "updatedAt": "2026-08-14T02:53:00Z",
+        "timestamp": "2026-08-14T02:53:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "vito",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:7a3f27fb8d3361d8c4c7",
+      "signalId": "github:dagger/dagger:pull_request:13854",
+      "event": "changed",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13854",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "workspace: add native polyfill replacements",
+        "text": "`dagger/polyfill` currently fills a few gaps that now belong in the engine. This is the additive half of removing it. Tooling modules such as Pytest and Ruff need to find ordinary project roots on disk. `Workspace.findRoots` expresses that policy directly: find roots below the current directory, plus the nearest root above it. `glob` remains available when callers only need file matching. SDKs have a different source of truth. Their managed modules are already registered in `dagger.toml`, so `currentModule.asSDK(workspace: ws).modules` returns the registered modules relevant to the workspace cwd without scanning config files. This also adds `ModuleSource.generate(workspace)`, fixes config edits so they preserve a literal `engineVersion: \"latest\"`, and adds regression coverage for the existing `Workspace.moduleSource` local-dependency fix. The final follow-up keeps that generation API safe for both host and value workspaces: filtered SDK output cannot delete unrelated files, and a module with no local dependencies does not require SDK registration metadata. #### Review The API boundary is the important part: `findRoots` discovers projects from marker files; `asSDK.modules` reads installed SDK registrations; `ModuleSource.generate` composes generated files on a workspace. #### Test ```console go test ./core/schema dagger call engine-dev test --run 'TestWorkspaceFindRoots|TestModuleSourceGenerateWorkspace' ``` The changeset boundary and cwd path behavior are in [#13855](https://github.com/dagger/dagger/pull/13855).",
+        "url": "https://github.com/dagger/dagger/pull/13854",
+        "createdAt": "2026-08-07T07:45:38Z",
+        "updatedAt": "2026-08-14T02:27:21Z",
+        "timestamp": "2026-08-14T02:27:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "grouville",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:719d4418fdf38ee266ed",
+      "signalId": "github:dagger/dagger:pull_request:13711",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13711",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "fix: handle function arg name collision with inherited persistent flags",
+        "text": "When a function argument name (e.g., 'workspace') matches a persistent flag inherited from a parent command, the CLI crashes with 'flag already exists: workspace'. This change introduces a FlagExistsError type and handles it in addFlagsForFunction, skipping the flag gracefully (matching the existing behavior in addConstructorLocalFlags). Fixes #13352",
+        "url": "https://github.com/dagger/dagger/pull/13711",
+        "createdAt": "2026-07-22T02:50:16Z",
+        "updatedAt": "2026-08-14T02:16:09Z",
+        "timestamp": "2026-08-14T02:16:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "hitesh0106",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a25610b345bf4b8a800c",
+      "signalId": "github:dagger/dagger:pull_request:13713",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13713",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "Fix/13605 go sdk codegen bootstrap",
+        "url": "https://github.com/dagger/dagger/pull/13713",
+        "createdAt": "2026-07-22T04:39:32Z",
+        "updatedAt": "2026-08-14T02:16:07Z",
+        "timestamp": "2026-08-14T02:16:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "hitesh0106",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8baa4fd1ae72c0fc0145",
+      "signalId": "github:dagger/dagger:pull_request:13761",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13761",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "feat: docker api compatibility",
+        "text": "Add support for `experimentalDockerCompatibility: true` on `Container.withExec()` and `Container.terminal()`, which prompts the Dagger engine to bind a Docker-compatible API on a random available port during the lifetime of the exec/terminal and point Docker clients to it via the `DOCKER_HOST` environment variable. This is very similar to the way that Dagger-in-Dagger via `experimentalPrivilegedNesting: true` works. Only a subset of the Docker API is supported as of writing (the API calls behind `docker run` and `docker run -d -p`). Support is provided by mapping Docker API requests to equivalent Dagger functionality, largely provided by `github.com/dagger/dagger/engine/engineutil.Client` Aiming to resolve https://github.com/dagger/dagger/discussions/11710",
+        "url": "https://github.com/dagger/dagger/pull/13761",
+        "createdAt": "2026-07-29T02:24:41Z",
+        "updatedAt": "2026-08-14T02:16:04Z",
+        "timestamp": "2026-08-14T02:16:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "frantjc",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0868116900a4fb25e27d",
+      "signalId": "github:dagger/dagger:pull_request:13838",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13838",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "dagger agent dev env: in-repo agent modules",
+        "text": "The dogfooding layer: the in-repo agent modules that `dagger agent --env dev` composes, plus the wiring that makes them reachable. No engine changes. | module | what it does | | --- | --- | | `editor` | a sandboxed coding agent — read, write, edit, find, grep, todoWrite — plus a commit tool built on the workspace's staged commits. Vendored from `github.com/vito/editor` so it can be iterated on in-tree. | | `review` | the `git status` / `git diff` an agent with no Bash tool can't otherwise get, via `Workspace.git.uncommitted`'s diffstats and patch | | `history` | the `git log` half of the same, over `Workspace.git.stagedCommits` | | `delegate` | hands a noisy, context-heavy subtask to a fresh sub-agent that runs it in its own conversation and returns one distilled report | | `engine-lab` | `./hack/dev` + `./hack/with-dev` as agent tools: build from the workspace, hold the engine as a Service, exec against it, poke its debug endpoints | | `contributor` | the same idea aimed at somebody else's repo — fetch it as a Workspace, compose editor's tools onto it, work the task, open the PR | | `tui-qa` | drives nested agent TUI sessions; now inherits the session's LLM config and gets a real git repo as its fixture | Supporting changes: `EngineDev.GoContainer` is a Wolfi Go base with the from-source `dagger` on `$PATH`, so Go commands (and the integration tests, which shell out to `dagger`) find the CLI without paying for a full engine build — it's what the `golang` toolchain is based on in the dev env. `dagger.toml` gains the `env.dev` module set, with contributor's GitHub token resolving through `cmd://gh auth token` rather than being stored. And catwalk moves to v0.51.11 for its refreshed model catalog. Each module commit is self-contained, and the `dagger.toml` wiring is last, so any intermediate state is a module directory with no install entry — inert rather than broken.",
+        "url": "https://github.com/dagger/dagger/pull/13838",
+        "createdAt": "2026-08-04T23:43:30Z",
+        "updatedAt": "2026-08-14T02:02:23Z",
+        "timestamp": "2026-08-14T02:02:23Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "vito",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:131d4d2f88baa627943b",
+      "signalId": "github:dagger/dagger:pull_request:13879",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13879",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "sdk(improvement): support nullable object returns",
+        "text": "#### What This adds native nullable GraphQL object results across the SDKs. The motivating API is `GitRepository.latestVersion`. A repository may have no stable semantic-version tag, so callers need to handle a missing result and choose a fallback: ```go version, err := repo.LatestVersion(ctx) if err != nil { return err } if version == nil { version = repo.Head() } ``` To make that `nil` check meaningful, the SDK must run the nullable object query before the method returns. The generated method queries the object's ID, returns the language's native missing value when no ID exists, and rebuilds the object client from the ID when it does. This gives each SDK its usual result type: `nil` in Go, `null` in TypeScript/PHP/.NET, `None` or `Option` in Python/Rust, `Optional` in Java, and `{:ok, value | nil}` in Elixir. #### Compatibility This behavior is selected when the client is generated. Each SDK generator passes the schema version into its templates or renderer and chooses the matching method shape: - Before `v1.0.0-beta.10`, generated clients keep the existing lazy, chainable object methods. - From `v1.0.0-beta.10`, nullable object methods execute and return native nullable results. This keeps modules pinned to older engine versions compatible when their clients are regenerated. It does not add a runtime compatibility layer. Non-null object fields remain lazy. Scalar and list methods are unchanged. #### Validation - Every SDK generator tests both sides of the beta.10 boundary. - Generated clients were refreshed and their direct callers updated. - Focused SDK checks pass for Go, TypeScript, Python, Rust, Java, .NET, PHP, and Elixir. - Go integration coverage checks both present and missing nullable results. - Older pinned SDK runtimes still load with their previous method shapes. The main review question is whether executing nullable object methods is the right v1 API boundary. The narrower alternative is for APIs such as `latestVersion` to return a nullable scalar while object methods remain lazy.",
+        "url": "https://github.com/dagger/dagger/pull/13879",
+        "createdAt": "2026-08-11T21:14:04Z",
+        "updatedAt": "2026-08-14T01:42:04Z",
+        "timestamp": "2026-08-14T01:42:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "grouville",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a7e56890674dfb00fd99",
+      "signalId": "github:dagger/dagger:issue:13883",
+      "event": "changed",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:issue:13883",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "issue",
+        "title": "v0.x modules are given a v1.0 view",
+        "text": "Related to, but not a duplicate of https://github.com/dagger/dagger/issues/13654 When a module is being developed for the 1.0.0-beta but still specifies an engineVersion of v0.x, there are two breaking error paths described below. The module can get into this broken state without the module author being aware because when using the module directly on 1.0.0-beta, a v0.x module is also served new APIs with the 1.0.0-0 view rather than the correct pre-1.0 view, so if the module uses a new 1.0.0-0 API, it will work on 1.0.0-beta despite the declared engineVersion. ## Users on v0.2x Users of a module described above running a v0.2x engine will fail to load the module because it references APIs that do not exist in v0.2x. The error will complain about the APIs not existing, which likely means nothing to the user. As far as they can tell, it should work on their engine because the declared engineVersion is compatible with theirs. This case has come up with users installing `github.com/dagger/go` on `v0.21.6`. The error was `convert arg ws: node field not found in environment`. This module should have been updated to `engineVersion: 1.0.0-0` when it started using the new APIs ## Users on 1.0.0-beta with dependencies Users of the beta with modules that depend on a module like the one described above will be stuck too. Codegen for the broken module will complete because it is given the 1.0.0-0 view, however when loaded as a dependency of their module it is now on a v0.2x view and the new APIs are no longer available. This case came up with `github.com/dagger/dagger/.dagger/modules/go` used as a dependency throughout the dagger/dagger repo. Its declared engineVersion was v0.21.7 but it uses Workspace.Git",
+        "url": "https://github.com/dagger/dagger/issues/13883",
+        "createdAt": "2026-08-12T21:03:31Z",
+        "updatedAt": "2026-08-14T00:58:40Z",
+        "timestamp": "2026-08-14T00:58:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "kpenfound",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:529b0f7f197d5810aec0",
+      "signalId": "github:dagger/dagger:pull_request:13894",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13894",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "Add missing view gates",
+        "text": "Fixes https://github.com/dagger/dagger/issues/13883 1. Ground truth: ran real released engines (v0.19.11, v0.20.8, and every v0.21.x patch, via DAGGER_X_RELEASE) and captured their schemas with a raw introspection query — importantly with includeDeprecated: true on args, since deprecated compat args like keepGitDir are hidden by default and initially looked like false leaks. 2. Branch side: rendered this branch's schema at each of those versions' views using the existing test plumbing (NewCoreSchemaBase + Fork(view) + getSchemaJSON), run in a linux container via a throwaway test. 3. Diffed the two per version at the type/field/arg/enum level. Anything visible in the branch's \"vX view\" that the real vX engine never served is a leak. The earliest real release that does contain the item gives the correct gate version — e.g. withVolatileVariable first appears in real v0.21.4 → AfterVersion(\"v0.21.4\"); inheritOwner and hasPending appear in no v0.2x release at all → AfterVersion(\"v1.0.0-0\"). 4. Validated by re-rendering after the edits: every view from v0.21.1–v0.21.8 now diffs clean against its real engine. (v0.19/v0.20 views still have pre-existing leaks I left alone — pinning those needs per-patch captures of the older series, and some need dagql changes.)",
+        "url": "https://github.com/dagger/dagger/pull/13894",
+        "createdAt": "2026-08-13T19:24:51Z",
+        "updatedAt": "2026-08-14T00:58:39Z",
+        "timestamp": "2026-08-14T00:58:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "kpenfound",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:94540558e3f44e21d298",
+      "signalId": "github:dagger/dagger:pull_request:13888",
+      "event": "changed",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13888",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "dagql: reduce e-graph result-removal contention",
+        "text": "## Motivation Removing a result from a wide output equivalence class repeatedly scanned the class's digests and result postings while holding `egraphMu`. Release and metadata-prune work therefore grew superlinearly as the class widened, increasing lock contention for unrelated cache operations. ## Design This change adds three cache-owned derived indexes: - an inverse output-equivalence-class-to-results index; - an exact per-result digest-posting index; and - an exact/broad posting classification for result cleanup. Newly published results record their exact digest postings. Imported results remain conservatively broad because the persistence schema does not contain exact result/term memberships. Broad imported cleanup therefore retains the safe class-posting scan; this change does not claim to remove that scan. The inverse output-class index replaces the separate deterministic class-wide survivor scan with an expiry-aware lookup over associated results. ## Correctness and compatibility Forward and inverse output-class associations are maintained as a pair across publication, merge, compaction, import, expiry, reset, and rollback. Merge and compaction canonicalize roots and rebuild the paired indexes together. Posting insertion and removal use a centralized exact/broad classification, and the survivor predicate preserves expiry behavior. Ownership counts, release cascades and callback order, lookup candidate membership, release/prune visibility, tracing and mutation order, prune cadence, and the `egraphMu` lock domain remain unchanged. Reset clears all three indexes with the e-graph. There is no persistence schema, version, migration, API, or user-visible semantic change. Import reconstructs result/output-equivalence-class associations and marks imported postings broad. Exact result/term associations remain unavailable after import, so the existing conservative class-scan fallback is preserved. No changie entry is included because this is internal derived bookkeeping with no user-facing API or semantic change. ## Scope and history The final merge diff is nine files: three production files, four focused correctness-test files, and two existing architecture documents. It contains the production optimization and its regression coverage, without benchmark infrastructure or a PR-only implementation plan. The eleven-commit branch history retains the reviewed empirical and planning work for provenance. The final `dagql: remove e-graph benchmark scaffolding` commit removes every benchmark-only test, fixture, observer, artifact helper, runner script, and benchmark/plan document from the merge tree. The two implementation commits remain separate conceptual review and rollback boundaries. ## Validation The final rebased head `085cdda50c` passed: - `go test ./dagql -count=1` — 1.865s - `go test -race ./dagql -count=1` — 4.307s - the focused imported-broad and persisted-fresh derived-index cleanup tests — 0.022s - `dagger check golang:lint-all` - `dagger check markdown-lint:lint` - `dagger generate golang:generate-all --no-apply` — no changes - `dagger generate markdown-lint:fix --no-apply` — no changes - `gofmt` and `git diff --check` All eleven commits carry one matching DCO signoff. The rebased implementation commits retain the stable patch IDs of the reviewed originals, and the final production/docs patch is identical after removing benchmark-only instrumentation. The merge diff contains no generated/schema change. ## Paired benchmark evidence The measurements were collected with the reviewed development harness that is intentionally removed by the final cleanup commit. The measured production implementation is unchanged in the final merge diff; the evidence binds to that production behavior, not to final-tree or rebuilt-binary identity. - Transient wide release: R256 improved from 46.318 ms to 2.356 ms and R512 from 181.319 ms to 5.379 ms. The timing slope changed from 3.91x to 2.28x, while allocation scaling per doubling changed from 3.94x to 1.99x. - Persisted-fresh prune: R256 improved from 20.256 ms to 5.540 ms and R512 from 156.145 ms to 12.378 ms. The 12.6x R512 ratio and 7.709x baseline timing slope are host-specific, not expected production factors. The stronger structural result is allocation scaling per doubling changing from 3.86x to 1.98x. - Imported release R256 improved from 86.020 ms to 19.765 ms while retaining all 263,683 broad postings. Broad posting cleanup remains; the gain comes from removing the separate class-wide survivor scan. Allocations changed from 1,769,611 to 1,031. - The independent 50,000-result control produced candidate 317.357 ms, baseline 277.558 ms, and the one bounded candidate repeat 270.377 ms. No control regression was demonstrated at this measurement precision; none was excluded. Identical allocations/bytes, within-2% RSS, and matching fixture/posting/lock counters support treating the first candidate point as noise rather than claiming a speedup. Every process exited successfully, ran one exact sample, reported zero dropped observations, and preserved fixture, prune, and lock-counter populations. Only the allowed noisy control arm was repeated once. The same-host paired comparison was explicitly authorized because the original Linux VM was unstable. Host-specific timing factors are not production guarantees; the near-linear allocation scaling is the stronger evidence that the quadratic removal term is gone. Raw outputs and SHA-256 manifests are retained internally. ## Rollback and non-goals The two implementation commits are conceptual rollback boundaries: first the output-class inverse index, then exact posting tracking and cleanup. This slice does not add lock sharding, tombstones, asynchronous cleanup, persistence-schema changes, exact imported association persistence, ownership-semantic changes, imported read-path redesign, or broader e-graph optimization.",
+        "url": "https://github.com/dagger/dagger/pull/13888",
+        "createdAt": "2026-08-13T08:17:53Z",
+        "updatedAt": "2026-08-13T21:25:42Z",
+        "timestamp": "2026-08-13T21:25:42Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sipsma",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3359c54f1654eb028e98",
+      "signalId": "github:dagger/dagger:pull_request:13895",
+      "event": "discovered",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13895",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "docs: clarify engine memory pruning configuration",
+        "text": "## Summary Clarifies and reorganizes the memory pruning documentation that already landed with the feature in #13887. No behavior changes. On the engine configuration page, the metadata limit now follows the disk policies instead of splitting them apart. It states the `gc.dagqlCache` field names, the 4 GiB and 3 GiB defaults, the absolute byte units, the validation rules, and when pruning runs. On the cache page, the manual pruning section states what each prune flag does, when metadata is pruned, and how the metadata prune relates to the disk prune. Only `docs/current_docs` is updated. The released version snapshots under `docs/versioned_docs` do not support these controls, so they are left alone. ## Test plan `dagger check docs:check` passes. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+        "url": "https://github.com/dagger/dagger/pull/13895",
+        "createdAt": "2026-08-13T21:18:49Z",
+        "updatedAt": "2026-08-13T21:18:50Z",
+        "timestamp": "2026-08-13T21:18:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sipsma",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ef60f84ce1fe9e97ac18",
+      "signalId": "github:dagger/dagger:pull_request:13887",
+      "event": "changed",
+      "observedAt": "2026-08-14T03:31:25.964050Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13887",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "engine: support manual metadata pruning",
+        "text": "## Summary - add absolute `maxEstimatedBytes` and `targetEstimatedBytes` controls to `Engine.localCache.prune`, including generated CLI and SDK surfaces - run configured structural-memory pruning inline with manual `useDefaultPolicy` requests when automatic GC is enabled, and allow explicit structural pruning when automatic GC is disabled - preserve legacy no-option and disk-only behavior while ensuring metadata-only requests do not run the implicit all-eligible disk-policy stage - add bounded cancellation checks throughout structural snapshotting and planning, including high-fanout dependency and candidate ordering - document the destructive disk fallback, structural disk-reclamation effects, partial-pair validation, and GC-disabled behavior accurately ## Motivation DagQL structural-memory limits previously applied only through automatic or lifecycle GC. A manual local-cache prune applied disk policy immediately but left structural pruning to a later, unrelated background event. Operators also had no explicit structural-memory action when automatic GC was disabled. This change makes a manual request cohesive: combined requests run disk pruning first and structural pruning second under the existing GC serialization lock. Explicit structural controls remain operator actions independent of automatic scheduling. ## Compatibility and user impact - no-option manual prune retains the existing all-releasable disk behavior - disk-only options continue to run only disk pruning - metadata-only options skip the disk-policy stage, though released roots and snapshot GC may still reclaim disk - `useDefaultPolicy` applies configured disk and structural policies only when automatic GC is enabled; with GC disabled it does not resurrect structural policy and retains the existing disk fallback - omitted structural values inherit resolved configured/default limits; explicit values must be positive and the target must be lower than the resolved maximum - structural options are absolute byte integers only - new API arguments and corrected argument documentation are version-gated so the historical base schema remains unchanged A release note, user documentation, GraphQL schema, SDK bindings, and reference artifacts are included. ## Validation - `go test -count=1 ./dagql ./engine/server ./core/schema` - `go test -race -count=1 ./dagql ./engine/server` - `dagger api call engine-dev test --pkg ./core/integration --run='^TestLocalCache/TestLocalCacheManualMetadataPruneCLI$'` - deterministic cancellation, mode-selection, validation-before-mutation, and manual-prune tests repeated up to 100 times - `dagger check golang:lint-all markdown-lint:lint docs:check python-client:lint typescript-client:lint-typescript java-client:lint helm:lint` - `dagger check --generate`: all 24 checks passed on this exact candidate during review; the post-rebase no-op recheck passed 23 checks and the Elixir check aborted in `mix local.hex` with the known VM error `OS monotonic time stepped backwards`",
+        "url": "https://github.com/dagger/dagger/pull/13887",
+        "createdAt": "2026-08-13T01:43:44Z",
+        "updatedAt": "2026-08-13T20:20:07Z",
+        "timestamp": "2026-08-13T20:20:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sipsma",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}
