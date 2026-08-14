@@ -1,7 +1,13 @@
-# Contribution Compass
+# Contribution Compass — OSS updates and contribution opportunities
 
-Contribution Compass keeps developers current on important activity in curated open-source projects
-and finds evidence-backed sweet spots where a contribution may be useful.
+[![CI](https://github.com/amk9978/contribution-compass/actions/workflows/ci.yml/badge.svg)](https://github.com/amk9978/contribution-compass/actions/workflows/ci.yml)
+[![Pages](https://github.com/amk9978/contribution-compass/actions/workflows/pages.yml/badge.svg)](https://amk9978.github.io/contribution-compass/)
+[![Release](https://img.shields.io/github/v/release/amk9978/contribution-compass)](https://github.com/amk9978/contribution-compass/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-4c9aff.svg)](LICENSE)
+
+Contribution Compass is a GitHub Actions-powered open-source project monitor and contribution
+finder. It tracks important issues, pull requests, releases, roadmaps, and Hacker News discussions,
+then publishes static human pages, JSON, RSS, and MCP access.
 
 It is a data gatherer first. GitHub evidence, separately labeled Hacker News discussions,
 repository context, and observation history stay separate from interpretation. No OpenAI,
@@ -22,6 +28,13 @@ and bookmark the page.
 
 That is all. GitHub collects updates on schedule and publishes the website, JSON, RSS, and MCP
 catalog. **No OpenAI or Anthropic API key is needed.**
+
+### See it in action
+
+[![My Compass showing a personalized contribution table](docs/assets/my-compass.png)](https://amk9978.github.io/contribution-compass/personalize/)
+
+_Choose projects, inspect evidence-backed contribution leads, and bookmark the result as a local
+developer start page._
 
 ```text
 config.yml Project Sensors
@@ -283,6 +296,14 @@ read permissions, inspects the live Actions and Pages settings without changing 
 
 URLs derive from the fork owner and repository name. Set the optional `SITE_URL` Actions variable
 only for a custom domain.
+
+## Contributing
+
+Contributions are welcome. Start with [`good first issue`](https://github.com/amk9978/contribution-compass/labels/good%20first%20issue)
+or [`help wanted`](https://github.com/amk9978/contribution-compass/labels/help%20wanted), then read
+[CONTRIBUTING.md](CONTRIBUTING.md). Usage questions belong in
+[Discussions](https://github.com/amk9978/contribution-compass/discussions); vulnerabilities should
+follow [SECURITY.md](SECURITY.md).
 
 ## Optional inference extensions
 

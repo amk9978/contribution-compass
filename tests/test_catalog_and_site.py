@@ -74,6 +74,9 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
 
     assert build.pages == 7
     assert "Follow important projects" in home
+    assert '<link rel="canonical" href="https://example.github.io/contribution-compass/">' in home
+    assert 'property="og:image"' in home
+    assert 'name="twitter:card" content="summary_large_image"' in home
     assert "Maintainer invited" in contribution
     assert "Widget 2.0" in news_page
     assert "Widget 2.1" in news_page
@@ -83,6 +86,7 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
     assert 'data-project="acme/widget"' in personalized
     assert "personalize.js" in personalized
     assert (output / "assets/personalize.js").exists()
+    assert (output / "assets/social-preview.png").exists()
     assert "Observation trail" in repository
     assert "keyword: resource lifecycle" in repository
     assert "https://github.com/acme/widget/issues/42" in repository
