@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import html
-import json
 import os
 import shutil
 from collections.abc import Callable
@@ -9,12 +7,13 @@ from dataclasses import dataclass
 from math import ceil
 from pathlib import Path
 from typing import TypeVar
-from urllib.parse import urlparse
 from xml.sax.saxutils import escape as xml_escape
+
+from jinja2 import Environment
 
 from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.news import NewsQueries, ProjectNewsEntry
-from contribution_compass.domain.importance import importance_score, rank_updates
+from contribution_compass.domain.importance import rank_updates
 from contribution_compass.domain.models import ContributionLead, RepositoryDataset, Signal
 from contribution_compass.domain.policies import (
     DEFAULT_CONTRIBUTION_POLICY,
@@ -22,29 +21,9 @@ from contribution_compass.domain.policies import (
 )
 from contribution_compass.ports import Catalog
 from contribution_compass.views.machine import MachineView, SiteContext, signal_anchor
+from contribution_compass.views.templating import create_environment
 
 T = TypeVar("T")
-
-
-def h(value: object) -> str:
-    return html.escape(str(value), quote=True)
-
-
-def safe_url(value: str) -> str:
-    parsed = urlparse(value)
-    return h(value) if parsed.scheme in {"http", "https"} else "#"
-
-
-def compact(value: int) -> str:
-    if value >= 1_000_000:
-        return f"{value / 1_000_000:.1f}M"
-    if value >= 1_000:
-        return f"{value / 1_000:.1f}K"
-    return str(value)
-
-
-def short_date(value: str | None) -> str:
-    return value[:10] if value else "date unavailable"
 
 
 def page_count(total: int, page_size: int) -> int:
@@ -59,19 +38,65 @@ class SiteBuild:
     machine_files: int
 
 
+@dataclass(frozen=True, slots=True)
+class PageMetadata:
+    title: str
+    description: str
+    api_url: str
+    canonical_url: str
+    scripts: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class Pagination:
+    current: int
+    total: int
+    item_total: int
+    previous_url: str | None
+    next_url: str | None
+
+
+@dataclass(frozen=True, slots=True)
+class LeadCard:
+    lead: ContributionLead
+    collected_url: str
+    search: str
+    comments: int
+    reactions: int
+
+
+@dataclass(frozen=True, slots=True)
+class NewsCard:
+    entry: ProjectNewsEntry
+    project_url: str
+
+
+@dataclass(frozen=True, slots=True)
+class GroupSummary:
+    id: str
+    name: str
+    signal_count: int
+    project_count: int
+    lead_count: int
+    activity_percent: int
+
+
 class HtmlView:
-    """Human presentation only; domain decisions arrive through CatalogQueries."""
+    """Render crawlable HTML from application projections through Jinja templates."""
 
     def __init__(
         self,
         catalog: Catalog,
         context: SiteContext,
         contribution_policy: ContributionPolicy = DEFAULT_CONTRIBUTION_POLICY,
+        *,
+        templates: Environment | None = None,
     ) -> None:
         self.catalog = catalog
         self.queries = CatalogQueries(catalog, contribution_policy)
         self.news_queries = NewsQueries(catalog)
         self.context = context
+        self.templates = templates or create_environment()
         self._signal_page_cache: dict[tuple[str, str], dict[str, int]] = {}
 
     @staticmethod
@@ -79,28 +104,30 @@ class HtmlView:
         start = (page - 1) * page_size
         return values[start : start + page_size]
 
+    def _render(self, template: str, page: PageMetadata, **values: object) -> str:
+        return self.templates.get_template(template).render(
+            site=self.context,
+            page=page,
+            **values,
+        )
+
+    @staticmethod
     def _pagination(
-        self,
         current: int,
         total: int,
         url_for_page: Callable[[int], str],
         *,
         item_total: int,
-    ) -> str:
+    ) -> Pagination | None:
         if total <= 1:
-            return ""
-        url = url_for_page
-        previous = (
-            f'<a rel="prev" href="{h(url(current - 1))}">← Previous</a>'
-            if current > 1
-            else '<span class="disabled">← Previous</span>'
+            return None
+        return Pagination(
+            current=current,
+            total=total,
+            item_total=item_total,
+            previous_url=url_for_page(current - 1) if current > 1 else None,
+            next_url=url_for_page(current + 1) if current < total else None,
         )
-        following = (
-            f'<a rel="next" href="{h(url(current + 1))}">Next →</a>'
-            if current < total
-            else '<span class="disabled">Next →</span>'
-        )
-        return f'<nav class="pagination" aria-label="Pagination">{previous}<span>Page {current} of {total} · {item_total} items</span>{following}</nav>'
 
     def _section_page_url(self, section: str, page: int) -> str:
         if page == 1:
@@ -122,62 +149,32 @@ class HtmlView:
             }
         return self._signal_page_cache[key].get(signal.id, 1)
 
-    def page(
-        self,
-        title: str,
-        description: str,
-        content: str,
-        *,
-        api_url: str,
-        canonical_url: str,
-        scripts: tuple[str, ...] = (),
-    ) -> str:
-        full_title = f"{title} · Contribution Compass"
-        social_image = f"{self.context.site_url}/assets/social-preview.png"
-        extra_scripts = "".join(
-            f'<script src="{self.context.site_url}/assets/{h(script)}" defer></script>'
-            for script in scripts
+    def _lead_card(self, lead: ContributionLead, dataset: RepositoryDataset | None) -> LeadCard:
+        collected_url = "#"
+        if dataset:
+            collected_url = (
+                f"{self._repository_page_url(dataset, self._signal_page(dataset, lead.signal))}"
+                f"#{signal_anchor(lead.signal)}"
+            )
+        metrics = lead.signal.metrics
+        return LeadCard(
+            lead=lead,
+            collected_url=collected_url,
+            search=" ".join(
+                (lead.signal.title, lead.signal.project or "", *lead.signal.labels)
+            ).casefold(),
+            comments=metrics.comments if metrics else 0,
+            reactions=metrics.reactions if metrics else 0,
         )
-        return f"""<!doctype html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{h(description)}">
-  <meta name="robots" content="index,follow">
-  <meta name="color-scheme" content="dark light">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Contribution Compass">
-  <meta property="og:title" content="{h(full_title)}">
-  <meta property="og:description" content="{h(description)}">
-  <meta property="og:url" content="{h(canonical_url)}">
-  <meta property="og:image" content="{social_image}">
-  <meta property="og:image:alt" content="Contribution Compass — follow important projects and find where to help">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{h(full_title)}">
-  <meta name="twitter:description" content="{h(description)}">
-  <meta name="twitter:image" content="{social_image}">
-  <title>{h(full_title)}</title>
-  <link rel="canonical" href="{h(canonical_url)}">
-  <link rel="icon" href="{self.context.site_url}/assets/favicon.svg" type="image/svg+xml">
-  <link rel="alternate" type="application/json" title="Machine data" href="{api_url}">
-  <link rel="alternate" type="application/feed+json" title="JSON Feed" href="{self.context.site_url}/feed.json">
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{self.context.site_url}/feed.xml">
-  <link rel="stylesheet" href="{self.context.site_url}/assets/styles.css">
-  <link rel="stylesheet" href="{self.context.site_url}/assets/contributions.css">
-  <link rel="stylesheet" href="{self.context.site_url}/assets/personalize.css">
-</head>
-<body>
-  <header class="topbar">
-    <a class="brand" href="{self.context.site_url}/"><span class="brand-mark">⌖</span><span>contribution/<strong>compass</strong></span></a>
-    <nav class="topnav"><a href="{self.context.site_url}/projects/">Projects</a><a href="{self.context.site_url}/contribute/">Contribute</a><a href="{self.context.site_url}/news/">News</a><a href="{self.context.site_url}/personalize/">My Compass</a><a class="secondary-nav" href="{self.context.site_url}/api/v1/index.json">Data</a><a class="secondary-nav" href="{self.context.site_url}/feed.xml">RSS</a><a class="secondary-nav" href="{self.context.repository_url}">GitHub</a><button class="theme-toggle" type="button" aria-label="Toggle color theme">◐</button></nav>
-  </header>
-  {content}
-  <footer class="footer"><span>Direct GitHub and Hacker News evidence · No generated analysis</span><span><a href="{self.context.site_url}/llms.txt">LLM guide</a> · <a href="{self.context.repository_url}/blob/main/docs/MCP.md">MCP</a></span></footer>
-  <script src="{self.context.site_url}/assets/app.js" defer></script>
-  {extra_scripts}
-</body>
-</html>"""
+
+    def _news_card(self, entry: ProjectNewsEntry) -> NewsCard:
+        return NewsCard(
+            entry=entry,
+            project_url=(
+                f"{self.context.site_url}/updates/{entry.date}/{entry.group_id}/"
+                f"{entry.project_id}.html"
+            ),
+        )
 
     @staticmethod
     def _metrics(datasets: list[RepositoryDataset]) -> dict[str, int]:
@@ -185,131 +182,52 @@ class HtmlView:
         return {
             "signals": len(signals),
             "repositories": sum(bool(dataset.signals) for dataset in datasets),
-            "issues": sum(signal.kind == "issue" for signal in signals),
-            "pulls": sum(signal.kind == "pull_request" for signal in signals),
-            "releases": sum(signal.kind == "release" for signal in signals),
             "events": sum(len(dataset.events) for dataset in datasets),
         }
 
-    @staticmethod
-    def _metric(label: str, value: str | int, detail: str) -> str:
-        rendered = compact(value) if isinstance(value, int) else value
-        return f'<div class="metric"><span>{h(label)}</span><strong>{h(rendered)}</strong><small>{h(detail)}</small></div>'
-
-    def _lead_card(self, lead: ContributionLead, dataset: RepositoryDataset | None) -> str:
-        labels = "".join(
-            f'<span class="label">{h(label)}</span>' for label in lead.signal.labels[:5]
-        )
-        collected_url = "#"
-        if dataset:
-            signal_page = self._signal_page(dataset, lead.signal)
-            collected_url = (
-                f"{self._repository_page_url(dataset, signal_page)}#{signal_anchor(lead.signal)}"
-            )
-        search = " ".join(
-            (lead.signal.title, lead.signal.project or "", *lead.signal.labels)
-        ).casefold()
-        measures = "".join(
-            f"<li><strong>{'+' if measure.points > 0 else ''}{measure.points}</strong> "
-            f"<span>{h(measure.label)}</span><small>{h(measure.evidence)}</small></li>"
-            for measure in lead.measures
-            if measure.points
-        )
-        return f"""<article class="contribution-card" data-tier="{lead.tier}" data-contribution-search="{h(search)}">
-  <div class="contribution-head"><span class="lead-tier {lead.tier}">{"Maintainer invited" if lead.tier == "maintainer-invited" else "Triage lead"}</span><span class="lead-project">{h(lead.signal.project or "")}</span><span class="lead-score">Score {lead.score}</span></div>
-  <h3><a href="{safe_url(lead.signal.url)}">{h(lead.signal.title)}</a></h3>
-  <div class="lead-reasons">{"".join(f"<span>{h(reason)}</span>" for reason in lead.reasons)}</div>
-  <div class="signal-meta"><span>{lead.signal.metrics.comments if lead.signal.metrics else 0} comments</span><span>{lead.signal.metrics.reactions if lead.signal.metrics else 0} reactions</span>{labels}</div>
-  <details class="measure-breakdown"><summary>Why this score</summary><ul>{measures}</ul></details>
-  <p class="lead-caveat">{h(lead.caveat)}</p>
-  <div class="lead-actions"><a href="{safe_url(lead.signal.url)}">Check live issue ↗</a><a href="{collected_url}">Collected context →</a></div>
-</article>"""
-
-    def _signal_card(self, signal: Signal) -> str:
-        body = (signal.text or "")[:360]
-        search = " ".join((signal.title, signal.text or "", *signal.labels)).casefold()[:1000]
-        labels = "".join(f'<span class="label">{h(label)}</span>' for label in signal.labels[:5])
-        return f"""<article class="signal-card" id="{signal_anchor(signal)}" data-kind="{signal.kind}" data-search="{h(search)}">
-  <div class="signal-head"><span class="kind {signal.kind}">{h(signal.kind.replace("_", " "))}</span><time>{h(signal.timestamp or "unknown")}</time></div>
-  <h3><a href="{safe_url(signal.url)}">{h(signal.title)}</a></h3>
-  {f"<p>{h(body)}</p>" if body else ""}
-  <div class="signal-meta"><span>importance {importance_score(signal)}</span>{f"<span>@{h(signal.author)}</span>" if signal.author else ""}{f"<span>{h(signal.state)}</span>" if signal.state else ""}{labels}<a class="evidence" href="{safe_url(signal.url)}">Original evidence ↗</a></div>
-</article>"""
-
-    def _news_card(self, entry: ProjectNewsEntry) -> str:
-        release = entry.news.latest_release
-        highlights = (
-            "".join(f"<li>{h(item)}</li>" for item in release.highlights[:5]) if release else ""
-        )
-        release_html = (
-            f"""<div class="release-bulletin"><div class="news-meta"><span class="news-kind stable">Latest stable</span><time>{h(short_date(release.published_at))}</time></div><h3><a href="{safe_url(release.url)}">{h(release.title)}</a></h3><code>{h(release.tag)}</code>{f"<ul>{highlights}</ul>" if highlights else "<p>Open the original release notes for details.</p>"}<a class="evidence" href="{safe_url(release.url)}">Original release notes ↗</a></div>"""
-            if release
-            else '<div class="release-bulletin unavailable"><p>No published stable GitHub release was found.</p></div>'
-        )
-        upcoming = "".join(
-            f"""<li><span class="news-kind {item.kind}">{h(item.kind)}</span><div><a href="{safe_url(item.url)}">{h(item.title)}</a><small>{h(f"Due {short_date(item.due_at)}" if item.due_at else f"Published {short_date(item.published_at)}" if item.published_at else "Publicly indicated")}</small>{f'<span class="progress-label">{item.progress}% complete · {item.open_issues} open</span>' if item.progress is not None else ""}</div></li>"""
-            for item in entry.news.upcoming[:5]
-        )
-        discussions = "".join(
-            f'<li><div><a href="{safe_url(item.url)}">{h(item.title)}</a><small>{item.score} points · {item.comments} comments · {h(short_date(item.published_at))}</small></div><a class="hn-link" href="{safe_url(item.discussion_url)}">HN discussion ↗</a></li>'
-            for item in entry.news.community_discussions[:4]
-        )
-        community_html = (
-            f'<div class="community-news"><h3>Hacker News discussions</h3><ul>{discussions}</ul><p class="news-caveat">Community discussion, matched to this configured project; not maintainer evidence.</p></div>'
-            if discussions
-            else ""
-        )
-        project_url = (
-            f"{self.context.site_url}/updates/{entry.date}/{entry.group_id}/{entry.project_id}.html"
-        )
-        return f"""<article class="news-card"><header><div><span class="repo-slug">{h(entry.repository)}</span><h2><a href="{project_url}">{h(entry.project_name)}</a></h2></div><span>{h(entry.group_name)}</span></header>{release_html}<div class="upcoming-news"><h3>Publicly indicated next</h3><ul>{upcoming or '<li class="unavailable">No public prerelease or open milestone found.</li>'}</ul><p class="news-caveat">Prereleases and milestones indicate public plans; they are not delivery commitments.</p></div>{community_html}</article>"""
-
     def home(self) -> str:
+        metadata = PageMetadata(
+            "Project updates and contribution leads",
+            "Important open-source project updates and evidence-backed contribution leads",
+            f"{self.context.site_url}/api/v1/index.json",
+            f"{self.context.site_url}/",
+        )
         dates = self.catalog.dates()
         if not dates:
-            content = '<main class="empty-state"><h1>Waiting for the first collection</h1></main>'
-            return self.page(
-                "Project updates and contribution leads",
-                "Contribution Compass is waiting for data",
-                content,
-                api_url=f"{self.context.site_url}/api/v1/index.json",
-                canonical_url=f"{self.context.site_url}/",
-            )
+            return self._render("pages/empty.html", metadata)
         date = dates[0]
         datasets = self.catalog.repositories(date)
         signals = [signal for dataset in datasets for signal in dataset.signals]
         leads = self.queries.contribution_leads(limit=1000)
-        news = self.news_queries.list(limit=6)
-        invited = [lead for lead in leads if lead.tier == "maintainer-invited"]
         by_repo = {dataset.repository: dataset for dataset in datasets}
-        metrics = self._metrics(datasets)
-        groups: dict[str, list[RepositoryDataset]] = {}
+        grouped: dict[str, list[RepositoryDataset]] = {}
         for dataset in datasets:
-            groups.setdefault(dataset.group_id, []).append(dataset)
-        group_cards = "".join(
-            f"""<a class="group-card" href="{self.context.site_url}/updates/{date}/{group_id}/"><div class="group-title"><h3>{h(items[0].group_name)}</h3><strong>{compact(sum(len(item.signals) for item in items))}</strong></div><div class="activity-bar"><span style="width:{max(1, min(100, sum(len(item.signals) for item in items) // 10))}%"></span></div><div class="group-meta"><span>{len(items)} projects</span><span>{sum(lead.signal.group == group_id for lead in leads)} contribution leads</span></div></a>"""
-            for group_id, items in groups.items()
-        )
-        lead_cards = "".join(
-            self._lead_card(lead, by_repo.get(lead.signal.project or "")) for lead in leads[:6]
-        )
-        updates = "".join(self._signal_card(signal) for signal in rank_updates(signals, 12))
-        news_cards = "".join(self._news_card(entry) for entry in news)
-        content = f"""<main>
-<section class="hero shell"><div><span class="eyebrow">LATEST COLLECTION · {date}</span><h1>Follow important projects.<br><em>Find where to help.</em></h1><p>Factual updates, project context, and evidence-backed contribution leads from {len(datasets)} curated open-source projects.</p></div><a class="date-chip" href="{self.context.site_url}/updates/{date}/"><span>Browse snapshot</span><strong>{date}</strong></a></section>
-<section class="metrics shell">{self._metric("Signals", metrics["signals"], "new or changed")}{self._metric("Contribution leads", len(leads), "evidence-qualified")}{self._metric("Maintainer invited", len(invited), "explicitly labeled")}{self._metric("Projects", metrics["repositories"], "with activity")}{self._metric("Trail events", metrics["events"], "append-only")}</section>
-<section class="personalize-cta shell"><div><span class="eyebrow">NO FORK REQUIRED</span><h2>Turn this catalog into your start page.</h2><p>Choose the projects you care about and keep a personal contribution/news table in this browser.</p></div><a class="primary-button" href="{self.context.site_url}/personalize/">Build My Compass →</a></section>
-<section class="section shell"><div class="section-heading"><div><span class="eyebrow">PROJECT MAP</span><h2>Curated communities</h2></div><span>{len(groups)} groups</span></div><div class="group-grid">{group_cards}</div></section>
-<section class="section shell"><div class="section-heading"><div><span class="eyebrow">CONTRIBUTION COMPASS</span><h2>Evidence-backed places to help</h2></div><a href="{self.context.site_url}/contribute/">View all →</a></div><p class="section-intro">Explicit invitations are separated from lower-confidence triage leads. Check the live issue before starting.</p><div class="contribution-grid">{lead_cards or '<div class="no-leads">The next collection will populate leads after state and assignee metadata is available.</div>'}</div></section>
-<section class="section shell"><div class="section-heading"><div><span class="eyebrow">PROJECT NEWS</span><h2>What shipped—and what may be next</h2></div><a href="{self.context.site_url}/news/">All project news →</a></div><p class="section-intro">Maintainer release and roadmap evidence, plus relevant Hacker News discussions kept clearly separate.</p><div class="news-grid">{news_cards or '<div class="no-leads">Project news will appear after the next collection.</div>'}</div></section>
-<section class="section shell archive"><div class="section-heading"><div><span class="eyebrow">IMPORTANT UPDATES</span><h2>What deserves attention</h2></div><a href="{self.context.site_url}/feed.json">JSON Feed →</a></div><div class="signal-list compact-list">{updates}</div></section>
-</main>"""
-        return self.page(
-            "Project updates and contribution leads",
-            "Important open-source project updates and evidence-backed contribution leads",
-            content,
-            api_url=f"{self.context.site_url}/api/v1/index.json",
-            canonical_url=f"{self.context.site_url}/",
+            grouped.setdefault(dataset.group_id, []).append(dataset)
+        groups = [
+            GroupSummary(
+                id=group_id,
+                name=items[0].group_name,
+                signal_count=sum(len(item.signals) for item in items),
+                project_count=len(items),
+                lead_count=sum(lead.signal.group == group_id for lead in leads),
+                activity_percent=max(1, min(100, sum(len(item.signals) for item in items) // 10)),
+            )
+            for group_id, items in grouped.items()
+        ]
+        return self._render(
+            "pages/home.html",
+            metadata,
+            date=date,
+            dataset_count=len(datasets),
+            metrics=self._metrics(datasets),
+            lead_count=len(leads),
+            invited_count=sum(lead.tier == "maintainer-invited" for lead in leads),
+            groups=groups,
+            lead_cards=[
+                self._lead_card(lead, by_repo.get(lead.signal.project or "")) for lead in leads[:6]
+            ],
+            news_cards=[self._news_card(entry) for entry in self.news_queries.list(limit=6)],
+            updates=rank_updates(signals, 12),
         )
 
     def contributions(self, page: int = 1, page_size: int = 20) -> str:
@@ -321,46 +239,31 @@ class HtmlView:
         page = min(max(page, 1), pages)
         visible = self._window(list(leads), page, page_size)
         invited = sum(lead.tier == "maintainer-invited" for lead in leads)
-        cards = "".join(
-            self._lead_card(lead, by_repo.get(lead.signal.project or "")) for lead in visible
-        )
-        pagination = self._pagination(
-            page,
-            pages,
-            lambda value: self._section_page_url("contribute", value),
-            item_total=len(leads),
-        )
-        content = f"""<main class="shell detail-page"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>Contribute</span></nav>
-<section class="detail-hero"><span class="eyebrow">CONTRIBUTION COMPASS · {date}</span><h1>Find a concrete place<br>to contribute.</h1><p>Discovery leads—not generated project ideas—with the evidence and caveat behind every result.</p></section>
-<section class="lead-method"><div><strong>{invited}</strong><span>Maintainer-invited</span><p>Explicit contribution labels.</p></div><div><strong>{len(leads) - invited}</strong><span>Triage leads</span><p>Worth asking about; not pre-approved.</p></div><div><strong>Live check</strong><span>Required</span><p>Confirm state, assignment, and scope.</p></div></section>
-<section class="filter-bar contribution-filter"><input id="contribution-search" type="search" placeholder="Search this page…"><div class="filter-buttons"><button class="active" data-contribution-filter="all">All</button><button data-contribution-filter="maintainer-invited">Maintainer invited</button><button data-contribution-filter="triage-lead">Triage leads</button></div><span id="contribution-count">{len(visible)} shown</span></section>
-<section class="contribution-grid">{cards or '<div class="no-leads">No evidence-qualified leads are available in this snapshot.</div>'}</section>
-{pagination}
-</main>"""
-        return self.page(
-            f"Contribution opportunities — page {page}",
-            "Evidence-backed open-source contribution leads",
-            content,
-            api_url=f"{self.context.site_url}/api/v1/opportunities.json",
-            canonical_url=self._section_page_url("contribute", page),
+        return self._render(
+            "pages/contributions.html",
+            PageMetadata(
+                f"Contribution opportunities — page {page}",
+                "Evidence-backed open-source contribution leads",
+                f"{self.context.site_url}/api/v1/opportunities.json",
+                self._section_page_url("contribute", page),
+            ),
+            date=date,
+            invited=invited,
+            triage=len(leads) - invited,
+            visible_count=len(visible),
+            cards=[
+                self._lead_card(lead, by_repo.get(lead.signal.project or "")) for lead in visible
+            ],
+            pagination=self._pagination(
+                page,
+                pages,
+                lambda value: self._section_page_url("contribute", value),
+                item_total=len(leads),
+            ),
         )
 
     def projects(self) -> str:
         rows = self.queries.compare_projects()
-        date = rows[0].snapshot_date if rows else "none"
-        table_rows = "".join(
-            f"""<tr>
-  <td data-sort-value="{h(row.name.casefold())}"><a class="comparison-project" href="{safe_url(row.repository_url)}"><strong>{h(row.name)}</strong><small>{h(row.repository)}</small></a></td>
-  <td data-sort-value="{h(row.group_name.casefold())}">{h(row.group_name)}</td>
-  <td data-sort-value="{h((row.language or "").casefold())}">{h(row.language or "Unknown")}</td>
-  <td data-sort-value="{h((row.license or "").casefold())}">{h(row.license or "Unknown")}</td>
-  <td data-sort-value="{row.stars if row.stars is not None else ""}">{compact(row.stars) if row.stars is not None else "Unknown"}</td>
-  <td data-sort-value="{row.forks if row.forks is not None else ""}">{compact(row.forks) if row.forks is not None else "Unknown"}</td>
-  <td data-sort-value="{h(row.latest_release["publishedAt"] if row.latest_release else "")}">{f'<a href="{safe_url(row.latest_release["url"])}"><time>{h(short_date(row.latest_release["publishedAt"]))}</time><small>{h(row.latest_release["tag"])}</small></a>' if row.latest_release else '<span class="comparison-unknown">No stable release found</span>'}</td>
-  <td data-sort-value="{row.recent_leads_observed}"><strong class="comparison-lead-count">{row.recent_leads_observed}</strong><small>{row.recent_maintainer_invited_observed} invited · {row.recent_triage_leads_observed} triage</small></td>
-</tr>"""
-            for row in rows
-        )
         headers = (
             ("Project", "project", "text"),
             ("Group", "group", "text"),
@@ -371,57 +274,36 @@ class HtmlView:
             ("Latest stable", "release", "date"),
             ("Recent Leads observed", "leads", "number"),
         )
-        heading_cells = "".join(
-            f'<th aria-sort="none"><button type="button" data-sort-key="{key}" '
-            f'data-sort-index="{index}" data-sort-type="{kind}">{h(label)} <span>↕</span></button></th>'
-            for index, (label, key, kind) in enumerate(headers)
-        )
-        content = f"""<main class="shell detail-page"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>Projects</span></nav>
-<section class="detail-hero comparison-hero"><span class="eyebrow">PROJECT COMPARISON · {h(date)}</span><h1>Compare projects.<br>Choose with facts.</h1><p>Side-by-side collected context without a composite score or generated recommendation.</p></section>
-<section class="comparison-scope"><strong>Snapshot scope</strong><p>Recent Lead counts are derived from Signals in the latest collection snapshot. They are not the repository's complete open backlog. Unknown facts remain unknown.</p><a href="{self.context.site_url}/api/v1/projects.json">Open the same rows as JSON →</a></section>
-<p id="comparison-sort-status" class="comparison-sort-status" aria-live="polite">Sorted by group and project.</p>
-<div class="comparison-table-wrap"><table id="project-comparison" class="comparison-table"><thead><tr>{heading_cells}</tr></thead><tbody>{table_rows or '<tr><td colspan="8">No Project Sensors are available.</td></tr>'}</tbody></table></div>
-</main>"""
-        return self.page(
-            "Compare projects",
-            "Compare factual project context and recently observed contribution leads",
-            content,
-            api_url=f"{self.context.site_url}/api/v1/projects.json",
-            canonical_url=f"{self.context.site_url}/projects/",
-            scripts=("comparison.js",),
+        return self._render(
+            "pages/projects.html",
+            PageMetadata(
+                "Compare projects",
+                "Compare factual project context and recently observed contribution leads",
+                f"{self.context.site_url}/api/v1/projects.json",
+                f"{self.context.site_url}/projects/",
+                ("comparison.js",),
+            ),
+            rows=rows,
+            headers=headers,
+            date=rows[0].snapshot_date if rows else "none",
         )
 
     def personalize(self) -> str:
         date = next(iter(self.catalog.dates()), "none")
-        datasets = self.catalog.repositories(None)
         groups: dict[str, list[RepositoryDataset]] = {}
-        for dataset in datasets:
+        for dataset in self.catalog.repositories(None):
             groups.setdefault(dataset.group_id, []).append(dataset)
-        selectors = "".join(
-            f"""<fieldset class="profile-group" data-profile-group="{h(group_id)}"><legend><span>{
-                h(items[0].group_name)
-            }</span><button type="button" data-select-group="{
-                h(group_id)
-            }">Select group</button></legend><div class="profile-projects">{
-                "".join(
-                    f'<label data-project-option data-project-search="{h(" ".join((item.repository, item.repository_name, *item.keywords)).casefold())}" data-project-aliases="{h(json.dumps([item.repository, item.repository_name, *item.keywords]))}"><input type="checkbox" value="{h(item.repository)}" data-project="{h(item.repository)}"><span><strong>{h(item.repository_name)}</strong><small>{h(item.repository)}</small></span></label>'
-                    for item in items
-                )
-            }</div></fieldset>"""
-            for group_id, items in groups.items()
-        )
-        content = f"""<main class="shell detail-page" id="personal-compass" data-opportunities-url="{self.context.site_url}/api/v1/opportunities.json" data-news-url="{self.context.site_url}/api/v1/news.json"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>My Compass</span></nav>
-<section class="detail-hero personal-hero"><span class="eyebrow">LOCAL PROFILE · {date}</span><h1>Your projects.<br>Your contribution table.</h1><p>Select from this curator's Project Sensors. Your choices stay in this browser; no account or backend is involved. Bookmark this page as a lightweight developer start page.</p></section>
-<section class="profile-layout"><aside class="profile-controls"><div class="profile-control-head"><div><span class="eyebrow">PROJECT FILTER</span><h2>Choose your radar</h2></div><strong id="profile-selected-count">0 selected</strong></div><label class="profile-search"><span>Find a project</span><input id="profile-project-search" type="search" placeholder="Name, repository, or keyword…"></label><div class="profile-actions"><button type="button" id="profile-select-all">Select all</button><button type="button" id="profile-clear">Clear</button><button type="button" id="profile-share">Copy share link</button></div><details class="profile-import"><summary>Paste a dependency file or repository list</summary><p>Matches GitHub slugs, project names, and configured keywords already covered by this catalog.</p><textarea id="profile-import-text" rows="7" placeholder="Paste package.json, requirements.txt, go.mod, GitHub URLs, or owner/repository lines…"></textarea><button type="button" id="profile-match-import">Match covered projects</button><span id="profile-import-result" role="status"></span></details><div class="profile-selector-list">{selectors or "<p>No Project Sensors are available.</p>"}</div></aside>
-<section class="profile-results" aria-live="polite"><div class="profile-result-head"><div><span class="eyebrow">PERSONAL VIEW</span><h2>Contribution sweet spots</h2></div><span id="profile-lead-count">Choose projects to begin</span></div><div class="profile-table-wrap"><table class="profile-table"><thead><tr><th>Project</th><th>Opportunity</th><th>Why it surfaced</th><th>Score</th></tr></thead><tbody id="profile-leads"><tr><td colspan="4">Your selected projects will appear here.</td></tr></tbody></table></div><nav class="profile-pagination" id="profile-lead-pages" aria-label="Contribution result pages"></nav>
-<div class="profile-result-head profile-news-head"><div><span class="eyebrow">PROJECT NEWS</span><h2>Release and roadmap context</h2></div><span id="profile-news-count"></span></div><div class="profile-table-wrap"><table class="profile-table"><thead><tr><th>Project</th><th>Latest stable</th><th>Publicly indicated next</th><th>Discussion</th></tr></thead><tbody id="profile-news"><tr><td colspan="4">News for selected projects will appear here.</td></tr></tbody></table></div><nav class="profile-pagination" id="profile-news-pages" aria-label="News result pages"></nav></section></section><noscript><p class="news-explainer">My Compass needs JavaScript for local-only filtering. The regular contribution, news, and JSON pages remain fully usable without it.</p></noscript></main>"""
-        return self.page(
-            "My Compass — personalized contribution table",
-            "A local, personalized view of covered open-source projects and contribution leads",
-            content,
-            api_url=f"{self.context.site_url}/api/v1/opportunities.json",
-            canonical_url=f"{self.context.site_url}/personalize/",
-            scripts=("personalize.js",),
+        return self._render(
+            "pages/personalize.html",
+            PageMetadata(
+                "My Compass — personalized contribution table",
+                "A local, personalized view of covered open-source projects and contribution leads",
+                f"{self.context.site_url}/api/v1/opportunities.json",
+                f"{self.context.site_url}/personalize/",
+                ("personalize.js",),
+            ),
+            date=date,
+            groups=groups,
         )
 
     def news(self, page: int = 1, page_size: int = 10) -> str:
@@ -430,86 +312,75 @@ class HtmlView:
         pages = page_count(len(entries), page_size)
         page = min(max(page, 1), pages)
         visible = self._window(list(entries), page, page_size)
-        with_upcoming = sum(bool(entry.news.upcoming) for entry in entries)
-        with_release = sum(entry.news.latest_release is not None for entry in entries)
-        discussions = sum(len(entry.news.community_discussions) for entry in entries)
-        cards = "".join(self._news_card(entry) for entry in visible)
-        pagination = self._pagination(
-            page,
-            pages,
-            lambda value: self._section_page_url("news", value),
-            item_total=len(entries),
-        )
-        content = f"""<main class="shell detail-page"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>News</span></nav>
-<section class="detail-hero"><span class="eyebrow">PROJECT NEWS · {date}</span><h1>See what shipped.<br>Follow where people are talking.</h1><p>Release developments, public roadmap evidence, and relevant Hacker News discussions for configured projects.</p></section>
-<section class="lead-method"><div><strong>{with_release}</strong><span>Latest releases</span><p>Stable release notes from GitHub.</p></div><div><strong>{with_upcoming}</strong><span>Public roadmaps</span><p>Prereleases or open milestones.</p></div><div><strong>{discussions}</strong><span>HN discussions</span><p>Current community conversations.</p></div></section>
-<section class="news-explainer"><strong>How to read this</strong><p>GitHub releases and roadmaps are maintainer evidence. Hacker News is community discussion and is labeled separately. No generated summaries are used. <a href="{self.context.site_url}/news/feed.xml">Subscribe to project-news RSS →</a></p></section>
-<section class="news-grid news-grid-full">{cards or '<div class="no-leads">No project news has been collected yet.</div>'}</section>{pagination}</main>"""
-        return self.page(
-            f"Project news — page {page}",
-            "Latest releases and publicly indicated upcoming work across monitored projects",
-            content,
-            api_url=f"{self.context.site_url}/api/v1/news.json",
-            canonical_url=self._section_page_url("news", page),
+        return self._render(
+            "pages/news.html",
+            PageMetadata(
+                f"Project news — page {page}",
+                "Latest releases and publicly indicated upcoming work across monitored projects",
+                f"{self.context.site_url}/api/v1/news.json",
+                self._section_page_url("news", page),
+            ),
+            date=date,
+            with_upcoming=sum(bool(entry.news.upcoming) for entry in entries),
+            with_release=sum(entry.news.latest_release is not None for entry in entries),
+            discussion_count=sum(len(entry.news.community_discussions) for entry in entries),
+            cards=[self._news_card(entry) for entry in visible],
+            pagination=self._pagination(
+                page,
+                pages,
+                lambda value: self._section_page_url("news", value),
+                item_total=len(entries),
+            ),
         )
 
     def date(self, date: str, datasets: list[RepositoryDataset]) -> str:
         groups: dict[str, list[RepositoryDataset]] = {}
         for dataset in datasets:
             groups.setdefault(dataset.group_id, []).append(dataset)
-        cards = "".join(
-            f'<a class="group-card" href="{self.context.site_url}/updates/{date}/{group}/"><div class="group-title"><h3>{h(items[0].group_name)}</h3><strong>{sum(len(item.signals) for item in items)}</strong></div><div class="group-meta"><span>{len(items)} projects</span><span>Explore →</span></div></a>'
-            for group, items in groups.items()
-        )
-        content = f'<main class="shell detail-page"><section class="detail-hero"><span class="eyebrow">COLLECTION SNAPSHOT</span><h1>{date}</h1><p>Browse factual updates by project group.</p></section><div class="group-grid">{cards}</div></main>'
-        return self.page(
-            date,
-            f"Contribution Compass collection for {date}",
-            content,
-            api_url=f"{self.context.site_url}/api/v1/dates/{date}/index.json",
-            canonical_url=f"{self.context.site_url}/updates/{date}/",
+        summaries = [
+            GroupSummary(
+                id=group_id,
+                name=items[0].group_name,
+                signal_count=sum(len(item.signals) for item in items),
+                project_count=len(items),
+                lead_count=0,
+                activity_percent=0,
+            )
+            for group_id, items in groups.items()
+        ]
+        return self._render(
+            "pages/date.html",
+            PageMetadata(
+                date,
+                f"Contribution Compass collection for {date}",
+                f"{self.context.site_url}/api/v1/dates/{date}/index.json",
+                f"{self.context.site_url}/updates/{date}/",
+            ),
+            date=date,
+            groups=summaries,
         )
 
     def group(self, date: str, group_id: str, datasets: list[RepositoryDataset]) -> str:
-        cards = "".join(
-            f'<a class="repository-card" href="{self.context.site_url}/updates/{date}/{group_id}/{dataset.repository_id}.html"><div><span class="repo-slug">{h(dataset.repository)}</span><h2>{h(dataset.repository_name)}</h2></div><strong>{len(dataset.signals)}</strong><span class="repo-link">{len(dataset.events)} trail events · View →</span></a>'
-            for dataset in datasets
-        )
         name = datasets[0].group_name if datasets else group_id
-        content = f'<main class="shell detail-page"><section class="detail-hero"><span class="eyebrow">{date}</span><h1>{h(name)}</h1><p>{len(datasets)} curated projects.</p></section><section class="repository-grid">{cards}</section></main>'
-        return self.page(
-            name,
-            f"{name} project updates",
-            content,
-            api_url=f"{self.context.site_url}/api/v1/dates/{date}/groups/{group_id}/index.json",
-            canonical_url=f"{self.context.site_url}/updates/{date}/{group_id}/",
+        return self._render(
+            "pages/group.html",
+            PageMetadata(
+                name,
+                f"{name} project updates",
+                f"{self.context.site_url}/api/v1/dates/{date}/groups/{group_id}/index.json",
+                f"{self.context.site_url}/updates/{date}/{group_id}/",
+            ),
+            date=date,
+            group_id=group_id,
+            name=name,
+            datasets=datasets,
         )
 
     def repository(self, dataset: RepositoryDataset, page: int = 1, page_size: int = 50) -> str:
-        context = dataset.context
-        configured_keywords = "".join(
-            f'<span class="label">keyword: {h(keyword)}</span>' for keyword in dataset.keywords
-        )
-        context_html = (
-            f'<section class="project-context"><p>{h(context.description or "No repository description.")}</p><div class="signal-meta"><span>{compact(context.stars)} stars</span><span>{compact(context.forks)} forks</span><span>{h(context.language or "language unknown")}</span><span>{h(context.license or "license unknown")}</span>{"".join(f'<span class="label">{h(topic)}</span>' for topic in context.topics[:8])}{configured_keywords}</div></section>'
-            if context
-            else '<section class="project-context"><p>Project context will be collected on the next run.</p></section>'
-        )
         ranked = rank_updates(dataset.signals, len(dataset.signals))
         pages = page_count(len(ranked), page_size)
         page = min(max(page, 1), pages)
         visible = self._window(list(ranked), page, page_size)
-        signals = "".join(self._signal_card(signal) for signal in visible)
-        pagination = self._pagination(
-            page,
-            pages,
-            lambda value: self._repository_page_url(dataset, value),
-            item_total=len(ranked),
-        )
-        trail = "".join(
-            f"<li><time>{h(event.observed_at)}</time><strong>{h(event.event)}</strong><span>{h(', '.join(event.changed_fields) or 'initial snapshot')}</span></li>"
-            for event in reversed(dataset.events[-30:])
-        )
         news_entry = (
             ProjectNewsEntry(
                 dataset.date,
@@ -523,24 +394,27 @@ class HtmlView:
             if dataset.news
             else None
         )
-        news_html = (
-            f'<section class="project-news"><div class="section-heading"><div><span class="eyebrow">PROJECT NEWS</span><h2>Release, roadmap, and discussion</h2></div><a href="{self.context.site_url}/news/">All news →</a></div>{self._news_card(news_entry)}</section>'
-            if news_entry
-            else '<section class="project-context"><p>Project news will be collected on the next run.</p></section>'
-        )
-        provenance = ""
-        if dataset.provenance and dataset.provenance.kind == "overlay":
-            provenance = f'<p class="catalog-provenance">Reused from <a href="{safe_url(dataset.provenance.catalog_url or "")}">{h(dataset.provenance.catalog_id or "shared catalog")}</a> · source snapshot {h(dataset.provenance.source_date)}</p>'
-        content = f"""<main class="shell detail-page"><section class="repo-hero"><div><span class="eyebrow">{h(dataset.repository)}</span><h1>{h(dataset.repository_name)}</h1><p>{len(dataset.signals)} signals · {len(dataset.events)} observation events</p>{provenance}</div><a class="primary-button" href="https://github.com/{h(dataset.repository)}">Open repository ↗</a></section>{context_html}{news_html}<section class="timeline"><h2>Observation trail</h2><ol>{trail or "<li>Trail events begin with the next collection.</li>"}</ol></section><section class="filter-bar"><input id="signal-search" type="search" placeholder="Search this page…"><div class="filter-buttons"><button class="active" data-filter="all">All</button><button data-filter="issue">Issues</button><button data-filter="pull_request">PRs</button><button data-filter="release">Releases</button></div><span id="filter-count">{len(visible)} shown</span></section><section class="signal-list">{signals or '<div class="no-signals">No changed signals.</div>'}</section>{pagination}</main>"""
-        return self.page(
-            f"{dataset.repository_name} — page {page}",
-            f"Context and observation trail for {dataset.repository}",
-            content,
-            api_url=(
-                f"{self.context.site_url}/api/v1/dates/{dataset.date}/groups/{dataset.group_id}/"
-                f"repositories/{dataset.repository_id}.json"
+        return self._render(
+            "pages/repository.html",
+            PageMetadata(
+                f"{dataset.repository_name} — page {page}",
+                f"Context and observation trail for {dataset.repository}",
+                (
+                    f"{self.context.site_url}/api/v1/dates/{dataset.date}/groups/"
+                    f"{dataset.group_id}/repositories/{dataset.repository_id}.json"
+                ),
+                self._repository_page_url(dataset, page),
             ),
-            canonical_url=self._repository_page_url(dataset, page),
+            dataset=dataset,
+            visible=visible,
+            news_card=self._news_card(news_entry) if news_entry else None,
+            trail=list(reversed(dataset.events[-30:])),
+            pagination=self._pagination(
+                page,
+                pages,
+                lambda value: self._repository_page_url(dataset, value),
+                item_total=len(ranked),
+            ),
         )
 
 

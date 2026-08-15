@@ -9,14 +9,15 @@ from conftest import make_dataset
 from contribution_compass.adapters.catalog import LocalJsonCatalog
 from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.news import NewsQueries
+from contribution_compass.domain.models import RepositoryDataset
 from contribution_compass.views.site import StaticSitePublisher
 
 
-def write_catalog(root: Path) -> LocalJsonCatalog:
-    dataset = make_dataset()
+def write_catalog(root: Path, dataset: RepositoryDataset | None = None) -> LocalJsonCatalog:
+    selected = dataset or make_dataset()
     directory = root / "2026-08-13/runtime-tools"
     directory.mkdir(parents=True)
-    (directory / "widget.json").write_text(json.dumps(dataset.to_dict()), encoding="utf-8")
+    (directory / "widget.json").write_text(json.dumps(selected.to_dict()), encoding="utf-8")
     (root / "2026-08-13/manifest.json").write_text(
         json.dumps(
             {
@@ -28,6 +29,32 @@ def write_catalog(root: Path) -> LocalJsonCatalog:
         encoding="utf-8",
     )
     return LocalJsonCatalog(root)
+
+
+def test_html_templates_autoescape_collected_text_and_reject_unsafe_urls(tmp_path: Path) -> None:
+    signal = replace(
+        make_dataset().signals[0],
+        title='<script>alert("signal")</script>',
+        url="javascript:alert(1)",
+    )
+    dataset = make_dataset(signal)
+    dataset.repository_name = '<img src=x onerror="alert(1)">'
+    catalog = write_catalog(tmp_path / "data", dataset)
+    output = tmp_path / "site"
+
+    StaticSitePublisher(
+        catalog,
+        output_root=output,
+        site_url="https://example.test/compass",
+        repository_url="https://github.com/example/compass",
+    ).build()
+
+    repository = (output / "updates/2026-08-13/runtime-tools/widget.html").read_text()
+    assert "<script>alert" not in repository
+    assert "&lt;script&gt;alert" in repository
+    assert "<img src=x" not in repository
+    assert "&lt;img src=x" in repository
+    assert 'href="#"' in repository
 
 
 def test_catalog_queries_preserve_context_evidence_and_timeline(tmp_path: Path) -> None:

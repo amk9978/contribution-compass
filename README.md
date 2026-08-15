@@ -146,13 +146,16 @@ src/contribution_compass/
   ports.py         small interfaces implemented by real adapters
   adapters/        GitHub, local/hosted/overlay catalogs, state, persistence
   controllers/     CLI and MCP transports
-  views/           Markdown, HTML, JSON, RSS, and LLM navigation
+  views/           Markdown, JSON, RSS, and strict Jinja2 HTML rendering
+    templates/     autoescaped page layouts and reusable presentation partials
 web/assets/        progressive browser CSS/JavaScript only
 ```
 
 Domain modules know nothing about GitHub HTTP, files, HTML, or MCP. Controllers configure adapters
 and invoke application modules. Local and hosted catalogs implement the same read interface. Views
-render application results but do not classify opportunities.
+render application results but do not classify opportunities. Python prepares presentation data,
+packaged Jinja2 templates render crawlable static HTML, and browser JavaScript progressively reads
+the same versioned JSON interfaces for personalization and other interactive behavior.
 
 See [CONTEXT.md](CONTEXT.md) for domain language and [docs/adr](docs/adr) for architectural decisions.
 
