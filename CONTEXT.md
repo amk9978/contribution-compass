@@ -36,6 +36,13 @@ reconstruct a factual trail.
 Collected repository metadata that helps a developer or model interpret Signals: description,
 topics, primary language, license, default branch, activity counts, and repository URL.
 
+### Project Comparison
+
+A side-by-side projection of Project Context, latest stable release evidence, and Contribution Leads
+observed in one collection snapshot. It has no composite score or generated recommendation. Lead
+counts describe the collected snapshot, not a repository's complete open backlog, and unavailable
+facts remain unknown.
+
 ### Project News Snapshot
 
 Factual public release and roadmap information plus separately labeled Community Discussions for a

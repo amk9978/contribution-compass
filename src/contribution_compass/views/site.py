@@ -170,7 +170,7 @@ class HtmlView:
 <body>
   <header class="topbar">
     <a class="brand" href="{self.context.site_url}/"><span class="brand-mark">⌖</span><span>contribution/<strong>compass</strong></span></a>
-    <nav class="topnav"><a href="{self.context.site_url}/contribute/">Contribute</a><a href="{self.context.site_url}/news/">News</a><a href="{self.context.site_url}/personalize/">My Compass</a><a href="{self.context.site_url}/api/v1/index.json">Data</a><a class="secondary-nav" href="{self.context.site_url}/feed.xml">RSS</a><a class="secondary-nav" href="{self.context.repository_url}">GitHub</a><button class="theme-toggle" type="button" aria-label="Toggle color theme">◐</button></nav>
+    <nav class="topnav"><a href="{self.context.site_url}/projects/">Projects</a><a href="{self.context.site_url}/contribute/">Contribute</a><a href="{self.context.site_url}/news/">News</a><a href="{self.context.site_url}/personalize/">My Compass</a><a class="secondary-nav" href="{self.context.site_url}/api/v1/index.json">Data</a><a class="secondary-nav" href="{self.context.site_url}/feed.xml">RSS</a><a class="secondary-nav" href="{self.context.repository_url}">GitHub</a><button class="theme-toggle" type="button" aria-label="Toggle color theme">◐</button></nav>
   </header>
   {content}
   <footer class="footer"><span>Direct GitHub and Hacker News evidence · No generated analysis</span><span><a href="{self.context.site_url}/llms.txt">LLM guide</a> · <a href="{self.context.repository_url}/blob/main/docs/MCP.md">MCP</a></span></footer>
@@ -343,6 +343,52 @@ class HtmlView:
             content,
             api_url=f"{self.context.site_url}/api/v1/opportunities.json",
             canonical_url=self._section_page_url("contribute", page),
+        )
+
+    def projects(self) -> str:
+        rows = self.queries.compare_projects()
+        date = rows[0].snapshot_date if rows else "none"
+        table_rows = "".join(
+            f"""<tr>
+  <td data-sort-value="{h(row.name.casefold())}"><a class="comparison-project" href="{safe_url(row.repository_url)}"><strong>{h(row.name)}</strong><small>{h(row.repository)}</small></a></td>
+  <td data-sort-value="{h(row.group_name.casefold())}">{h(row.group_name)}</td>
+  <td data-sort-value="{h((row.language or "").casefold())}">{h(row.language or "Unknown")}</td>
+  <td data-sort-value="{h((row.license or "").casefold())}">{h(row.license or "Unknown")}</td>
+  <td data-sort-value="{row.stars if row.stars is not None else ""}">{compact(row.stars) if row.stars is not None else "Unknown"}</td>
+  <td data-sort-value="{row.forks if row.forks is not None else ""}">{compact(row.forks) if row.forks is not None else "Unknown"}</td>
+  <td data-sort-value="{h(row.latest_release["publishedAt"] if row.latest_release else "")}">{f'<a href="{safe_url(row.latest_release["url"])}"><time>{h(short_date(row.latest_release["publishedAt"]))}</time><small>{h(row.latest_release["tag"])}</small></a>' if row.latest_release else '<span class="comparison-unknown">No stable release found</span>'}</td>
+  <td data-sort-value="{row.recent_leads_observed}"><strong class="comparison-lead-count">{row.recent_leads_observed}</strong><small>{row.recent_maintainer_invited_observed} invited · {row.recent_triage_leads_observed} triage</small></td>
+</tr>"""
+            for row in rows
+        )
+        headers = (
+            ("Project", "project", "text"),
+            ("Group", "group", "text"),
+            ("Language", "language", "text"),
+            ("License", "license", "text"),
+            ("Stars", "stars", "number"),
+            ("Forks", "forks", "number"),
+            ("Latest stable", "release", "date"),
+            ("Recent Leads observed", "leads", "number"),
+        )
+        heading_cells = "".join(
+            f'<th aria-sort="none"><button type="button" data-sort-key="{key}" '
+            f'data-sort-index="{index}" data-sort-type="{kind}">{h(label)} <span>↕</span></button></th>'
+            for index, (label, key, kind) in enumerate(headers)
+        )
+        content = f"""<main class="shell detail-page"><nav class="breadcrumbs"><a href="{self.context.site_url}/">Compass</a><span>/</span><span>Projects</span></nav>
+<section class="detail-hero comparison-hero"><span class="eyebrow">PROJECT COMPARISON · {h(date)}</span><h1>Compare projects.<br>Choose with facts.</h1><p>Side-by-side collected context without a composite score or generated recommendation.</p></section>
+<section class="comparison-scope"><strong>Snapshot scope</strong><p>Recent Lead counts are derived from Signals in the latest collection snapshot. They are not the repository's complete open backlog. Unknown facts remain unknown.</p><a href="{self.context.site_url}/api/v1/projects.json">Open the same rows as JSON →</a></section>
+<p id="comparison-sort-status" class="comparison-sort-status" aria-live="polite">Sorted by group and project.</p>
+<div class="comparison-table-wrap"><table id="project-comparison" class="comparison-table"><thead><tr>{heading_cells}</tr></thead><tbody>{table_rows or '<tr><td colspan="8">No Project Sensors are available.</td></tr>'}</tbody></table></div>
+</main>"""
+        return self.page(
+            "Compare projects",
+            "Compare factual project context and recently observed contribution leads",
+            content,
+            api_url=f"{self.context.site_url}/api/v1/projects.json",
+            canonical_url=f"{self.context.site_url}/projects/",
+            scripts=("comparison.js",),
         )
 
     def personalize(self) -> str:
@@ -529,6 +575,7 @@ class StaticSitePublisher:
         html_view = HtmlView(self.catalog, self.context, self.contribution_policy)
         machine = MachineView(self.catalog, self.context, self.contribution_policy)
         self._write("index.html", html_view.home())
+        self._write("projects/index.html", html_view.projects())
         self._write("contribute/index.html", html_view.contributions())
         self._write("news/index.html", html_view.news())
         self._write("personalize/index.html", html_view.personalize())
@@ -536,6 +583,7 @@ class StaticSitePublisher:
         self._write("api/v1/schema.json", machine.schema())
         self._write("api/v1/opportunities.json", machine.opportunities())
         self._write("api/v1/news.json", machine.news())
+        self._write("api/v1/projects.json", machine.project_comparison())
         self._write("feed.json", machine.json_feed())
         self._write("feed.xml", machine.rss())
         self._write("news/feed.json", machine.news_json_feed())
@@ -544,12 +592,13 @@ class StaticSitePublisher:
         self._write(".nojekyll", "")
         page_urls = [
             f"{self.context.site_url}/",
+            f"{self.context.site_url}/projects/",
             f"{self.context.site_url}/contribute/",
             f"{self.context.site_url}/news/",
             f"{self.context.site_url}/personalize/",
         ]
-        pages = 4
-        machine_files = 7
+        pages = 5
+        machine_files = 8
         contribution_pages = page_count(len(html_view.queries.contribution_leads(limit=1000)), 20)
         for page in range(2, contribution_pages + 1):
             self._write(f"contribute/page/{page}/index.html", html_view.contributions(page))

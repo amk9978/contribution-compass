@@ -13,6 +13,7 @@ official Python MCP SDK. The MCP adapter performs no inference and never writes 
 | `get_project_context` | Read repository metadata, Signals, and Observation Events |
 | `get_signal_timeline` | Reconstruct the discovered/changed trail for a stable Signal ID |
 | `list_monitored_projects` | List Project Sensors and available context |
+| `compare_projects` | Compare language, license, popularity, latest release, and recently observed Leads without a composite score |
 
 Resources provide the catalog, latest contribution leads, latest project news, Hacker News
 discussion links, and per-project context under `compass://...` URIs.
@@ -24,6 +25,10 @@ Every contribution result includes `rankScore`, `scoreFormula`, `policyVersion`,
 Consumers can reproduce the score exactly, inspect the evidence for each Measure, or apply their own
 ranking. Repository snapshots may also include `provenance`; an `overlay` value identifies reused
 catalog data and its source date instead of presenting it as locally collected.
+
+`compare_projects` returns the same factual rows published on the website and in
+`api/v1/projects.json`. Its Lead counts cover the latest collection snapshot, not each repository's
+complete open backlog. Missing facts are returned as `null` rather than inferred.
 
 ## Choose a data adapter
 

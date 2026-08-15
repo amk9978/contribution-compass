@@ -62,6 +62,7 @@ A list of repository activity is not enough. Contribution Compass helps answer:
 - Which issues explicitly invite community help?
 - Which unassigned issues may be worth discussing with maintainers?
 - What context surrounds the project and issue?
+- How do curated projects compare on collected facts without a composite score?
 - When was a Signal discovered, and what changed afterward?
 
 Contribution Leads are conservative and transparent:
@@ -112,6 +113,8 @@ loader never inserts hidden defaults.
 ## Human and machine access
 
 - Website: <https://amk9978.github.io/contribution-compass/>
+- Project comparison: <https://amk9978.github.io/contribution-compass/projects/>
+- Project comparison API: <https://amk9978.github.io/contribution-compass/api/v1/projects.json>
 - My Compass browser profile: <https://amk9978.github.io/contribution-compass/personalize/>
 - Contribution view: <https://amk9978.github.io/contribution-compass/contribute/>
 - Project news: <https://amk9978.github.io/contribution-compass/news/>

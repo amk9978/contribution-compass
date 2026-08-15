@@ -44,6 +44,51 @@ class ProjectSummary:
         }
 
 
+@dataclass(frozen=True, slots=True)
+class ProjectComparison:
+    """Factual row for comparing Project Sensors without a composite score."""
+
+    id: str
+    repository: str
+    name: str
+    repository_url: str
+    group_id: str
+    group_name: str
+    language: str | None
+    license: str | None
+    stars: int | None
+    forks: int | None
+    latest_release: dict[str, str] | None
+    recent_leads_observed: int
+    recent_maintainer_invited_observed: int
+    recent_triage_leads_observed: int
+    snapshot_date: str
+    collected_at: str | None
+    since: str | None
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "id": self.id,
+            "repository": self.repository,
+            "name": self.name,
+            "url": self.repository_url,
+            "group": {"id": self.group_id, "name": self.group_name},
+            "language": self.language,
+            "license": self.license,
+            "stars": self.stars,
+            "forks": self.forks,
+            "latestRelease": self.latest_release,
+            "recentLeadsObserved": self.recent_leads_observed,
+            "recentMaintainerInvitedObserved": self.recent_maintainer_invited_observed,
+            "recentTriageLeadsObserved": self.recent_triage_leads_observed,
+            "snapshot": {
+                "date": self.snapshot_date,
+                "collectedAt": self.collected_at,
+                "since": self.since,
+            },
+        }
+
+
 class CatalogQueries:
     """Deep read interface used identically by CLI views, MCP tools, and tests."""
 
@@ -91,6 +136,76 @@ class CatalogQueries:
 
     def project_context(self, repository: str, date: str | None = None) -> RepositoryDataset | None:
         return self._catalog.project(repository, date)
+
+    def compare_projects(
+        self, *, group: str | None = None, date: str | None = None
+    ) -> list[ProjectComparison]:
+        """Compare Project Sensors using only facts in one collected snapshot."""
+        datasets = self._catalog.repositories(date)
+        if group:
+            datasets = [dataset for dataset in datasets if dataset.group_id == group]
+        signals = [signal for dataset in datasets for signal in dataset.signals]
+        leads = rank_contributions(
+            signals,
+            limit=max(1, len(signals)),
+            policy=self.contribution_policy,
+            as_of=self._as_of(datasets),
+        )
+        lead_counts: dict[str, dict[str, int]] = {}
+        for lead in leads:
+            if not lead.signal.project:
+                continue
+            counts = lead_counts.setdefault(
+                lead.signal.project,
+                {"total": 0, "maintainer-invited": 0, "triage-lead": 0},
+            )
+            counts["total"] += 1
+            counts[lead.tier] += 1
+
+        rows: list[ProjectComparison] = []
+        for dataset in datasets:
+            context = dataset.context
+            release = dataset.news.latest_release if dataset.news else None
+            latest_run = (
+                max(dataset.runs, key=lambda run: run.collected_at) if dataset.runs else None
+            )
+            counts = lead_counts.get(
+                dataset.repository,
+                {"total": 0, "maintainer-invited": 0, "triage-lead": 0},
+            )
+            rows.append(
+                ProjectComparison(
+                    id=dataset.repository_id,
+                    repository=dataset.repository,
+                    name=dataset.repository_name,
+                    repository_url=(
+                        context.url if context else f"https://github.com/{dataset.repository}"
+                    ),
+                    group_id=dataset.group_id,
+                    group_name=dataset.group_name,
+                    language=context.language if context else None,
+                    license=context.license if context else None,
+                    stars=context.stars if context else None,
+                    forks=context.forks if context else None,
+                    latest_release=(
+                        {
+                            "tag": release.tag,
+                            "title": release.title,
+                            "publishedAt": release.published_at,
+                            "url": release.url,
+                        }
+                        if release
+                        else None
+                    ),
+                    recent_leads_observed=counts["total"],
+                    recent_maintainer_invited_observed=counts["maintainer-invited"],
+                    recent_triage_leads_observed=counts["triage-lead"],
+                    snapshot_date=dataset.date,
+                    collected_at=latest_run.collected_at if latest_run else None,
+                    since=latest_run.since if latest_run else None,
+                )
+            )
+        return sorted(rows, key=lambda row: (row.group_name.casefold(), row.name.casefold()))
 
     def project_snapshot(
         self,
