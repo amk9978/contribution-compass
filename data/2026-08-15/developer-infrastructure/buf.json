@@ -1,0 +1,69 @@
+{
+  "version": 4,
+  "date": "2026-08-15",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "buf",
+    "repo": "bufbuild/buf",
+    "name": "Buf",
+    "keywords": [
+      "Buf protobuf",
+      "Buf Schema Registry"
+    ]
+  },
+  "context": {
+    "repository": "bufbuild/buf",
+    "url": "https://github.com/bufbuild/buf",
+    "description": "The best way of working with Protocol Buffers.",
+    "homepage": "https://buf.build",
+    "language": "Go",
+    "topics": [
+      "buf-cli",
+      "buf-schema-registry",
+      "grpc",
+      "protobuf",
+      "protoc",
+      "protocol-buffers"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 11336,
+    "forks": 366,
+    "openIssues": 58,
+    "archived": false,
+    "collectedAt": "2026-08-15T02:28:06.875733+00:00"
+  },
+  "news": {
+    "repository": "bufbuild/buf",
+    "collectedAt": "2026-08-15T02:28:06.875733+00:00",
+    "latestRelease": {
+      "repository": "bufbuild/buf",
+      "tag": "v1.72.0",
+      "title": "v1.72.0",
+      "url": "https://github.com/bufbuild/buf/releases/tag/v1.72.0",
+      "publishedAt": "2026-07-17T20:15:07Z",
+      "notes": "- Fix `buf beta registry webhook create` and `buf beta registry webhook list` to emit proto JSON output.\r\n- Fix HTTPS Basic authentication for remote inputs to use `BUF_INPUT_HTTPS_USERNAME` for the username.\r\n- Fix `IMPORT_USED` lint rule silently reporting no unused imports when `google/protobuf/descriptor.proto` is in the transitive dependency graph.",
+      "highlights": [
+        "Fix buf beta registry webhook create and buf beta registry webhook list to emit proto JSON output.",
+        "Fix HTTPS Basic authentication for remote inputs to use BUFINPUTHTTPSUSERNAME for the username.",
+        "Fix IMPORTUSED lint rule silently reporting no unused imports when google/protobuf/descriptor.proto is in the transitive dependency graph."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-15T02:27:51.268670Z",
+      "since": "2026-08-14T02:27:51.268670Z",
+      "observedCount": 0,
+      "changedCount": 0
+    }
+  ],
+  "signals": [],
+  "events": []
+}

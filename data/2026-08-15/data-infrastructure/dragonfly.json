@@ -1,0 +1,576 @@
+{
+  "version": 4,
+  "date": "2026-08-15",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "dragonfly",
+    "repo": "dragonflydb/dragonfly",
+    "name": "Dragonfly",
+    "keywords": [
+      "DragonflyDB"
+    ]
+  },
+  "context": {
+    "repository": "dragonflydb/dragonfly",
+    "url": "https://github.com/dragonflydb/dragonfly",
+    "description": "A modern replacement for Redis and Memcached",
+    "homepage": "https://www.dragonflydb.io/",
+    "language": "C++",
+    "topics": [
+      "cache",
+      "cpp",
+      "database",
+      "fibers",
+      "in-memory",
+      "in-memory-database",
+      "key-value",
+      "keydb",
+      "memcached",
+      "message-broker",
+      "multi-threading",
+      "nosql",
+      "redis",
+      "valkey",
+      "vector-search"
+    ],
+    "license": "NOASSERTION",
+    "defaultBranch": "main",
+    "stars": 30996,
+    "forks": 1226,
+    "openIssues": 303,
+    "archived": false,
+    "collectedAt": "2026-08-15T02:28:00.439888+00:00"
+  },
+  "news": {
+    "repository": "dragonflydb/dragonfly",
+    "collectedAt": "2026-08-15T02:28:00.439888+00:00",
+    "latestRelease": {
+      "repository": "dragonflydb/dragonfly",
+      "tag": "v1.40.1",
+      "title": "v1.40.1",
+      "url": "https://github.com/dragonflydb/dragonfly/releases/tag/v1.40.1",
+      "publishedAt": "2026-08-06T06:54:05Z",
+      "notes": "## This is a patch release.\r\n\r\n### What's Changed\r\n\r\n- Fixed connection-state handling in squashed pipelines. Commands following `AUTH`, `SELECT`, `HELLO`, `CLIENT`, or `RESET` now observe the updated connection state instead of stale authentication, database, or RESP protocol state ([#8016](https://github.com/dragonflydb/dragonfly/pull/8016)).\r\n- Fixed compressed QList node memory accounting and defragmentation ([#8011](https://github.com/dragonflydb/dragonfly/pull/8011), [#8014](https://github.com/dragonflydb/dragonfly/pull/8014)).\r\n\r\nFull Changelog: [v1.40.0...v1.40.1](https://github.com/dragonflydb/dragonfly/compare/v1.40.0...v1.40.1)",
+      "highlights": [
+        "This is a patch release.",
+        "What's Changed",
+        "Fixed connection-state handling in squashed pipelines. Commands following AUTH, SELECT, HELLO, CLIENT, or RESET now observe the updated connection state instead of stale authentication, database, or RESP protocol state (#8016).",
+        "Fixed compressed QList node memory accounting and defragmentation (#8011, #8014)."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "Cluster Search",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/19",
+        "description": "",
+        "dueAt": "2025-12-31T00:00:00Z",
+        "progress": 60,
+        "openIssues": 2,
+        "closedIssues": 3
+      },
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "v1.41",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/24",
+        "description": "",
+        "dueAt": "2026-09-10T00:00:00Z",
+        "progress": 12,
+        "openIssues": 7,
+        "closedIssues": 1
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-15T02:27:51.268670Z",
+      "since": "2026-08-14T02:27:51.268670Z",
+      "observedCount": 19,
+      "changedCount": 1
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:dragonflydb/dragonfly:issue:7932",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_replication_info",
+      "text": "https://github.com/dragonflydb/dragonfly/actions/runs/30093308371/job/89481318266#step:7:1445 ``` async def assert_lag_condition(inst, client, condition): \"\"\" Since lag is a bit random, and we want stable tests, we check 10 times in quick succession and validate that the condition is satisfied at least once. We check both `INFO REPLICATION` redis protocol and the `/metrics` prometheus endpoint. \"\"\" for _ in range(10): lag = await get_metric_value(inst, \"dragonfly_connected_replica_lag_records\") if condition(lag): break print(\"current prometheus lag =\", lag) await asyncio.sleep(0.05) else: > assert False, \"Lag from prometheus metrics has never satisfied condition!\" E AssertionError: Lag from prometheus metrics has never satisfied condition! E assert False ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/7932",
+      "createdAt": "2026-07-24T16:06:38Z",
+      "updatedAt": "2026-08-14T14:29:47Z",
+      "timestamp": "2026-08-14T14:29:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "bug",
+        "failing-test",
+        "iouring"
+      ],
+      "author": "kostasrim",
+      "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8009",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_pubsub_pipeline_starvation",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_pubsub_pipeline_starvation[df_factory1]` - Backend: iouring - Commit: 5afb7d20de9d584b35bcf1f0118507ca81c4382a - Run: https://github.com/dragonflydb/dragonfly/actions/runs/30963408714 - Marker: run/30963408714/attempt/1 ``` Reason: AssertionError: Starvation detected! Pipeline queued behind 1350 messages. _________________ test_pubsub_pipeline_starvation[df_factory1] _________________ df_server = :36995 @dfly_multi_test_args( {\"proactor_threads\": 2, \"async_dispatch_quota\": 50, \"enable_resp_io_loop_v2\": \"false\"}, {\"proactor_threads\": 2, \"async_dispatch_quota\": 50, \"enable_resp_io_loop_v2\": \"true\"}, ) async def test_pubsub_pipeline_starvation(df_server: DflyInstance): reader, writer = await asyncio.open_connection(\"127.0.0.1\", df_server.port) # Send subscribe and consume the standard 6-line RESP array reply # to completely clean the socket buffer before the flood begins. writer.write(b\"SUBSCRIBE starvation_chan\\r\\n\") await writer.drain() for _ in range(6): await reader.readline() # Continuous Flood Task with batches of 500 commands (publisher) keep_flooding = True async def flood(): pub = aioredis.Redis(port=df_server.port) while keep_flooding: pipe = pub.pipeline(transaction=False) for _ in range(500): pipe.publish(\"starvation_chan\", \"hello\") await pipe.execute() # short sleep to yield the event loop but maintain constant pressure await asyncio.sleep(0.001) await pub.aclose() flood_task = asyncio.create_task(flood()) try: # Wait just 10ms for the first wave to hit the server's queue await asyncio.sleep(0.01) # Inject UNSUBSCRIBE + PING into the active flood. # This triggers our quota logic, forcing the server to yield and read the commands from the TCP buffer, preventing input starvation. writer.write(b\"UNSUBSCRIBE starvation_chan\\r\\nPING starvation_survived\\r\\n\") await writer.drain() # Count the PubSub messages that arrive before the PING pubsub_messages_before_ping = 0 ping_found = False async with async_timeout.timeout(2.0): while True: line = await reader.readline() if not line: break if b\"starvation_survived\" in line: ping_found = True break if b\"message\" in line: pubsub_messages_before_ping += 1 # Assert 1: The PING must arrive before the flood is fully drained. assert ping_found, \"PING was starved and timed out!\" # Assert 2: the quota logic prioritized the pipeline. # If it was truly starving, this would timeout or hit tens of thousands. > assert ( pubsub_messages_before_ping <= 1000 ), f\"Starvation detected! Pipeline queued behind {pubsub_messages_before_ping} messages.\" E AssertionError: Starvation detected! Pipeline queued behind 1350 messages. E assert 1350 <= 1000 _ = 5 df_server = :36995 flood = <function test_pubsub_pipeline_starvation.<locals>.flood at 0x7fd60915e0c0> flood_task = <Task finished name='Task-38917' coro=<test_pubsub_pipeline_starvation.<locals>.flood() done, defined at /__w/dragonfly/dragonfly/tests/dragonfly/connection_test.py:3013> result=None> keep_flooding = False line = b'starvation_survived\\r\\n' ping_found = True pubsub_messages_before_ping = 1350 reader = <StreamReader eof transport=<_SelectorSocketTransport closed fd=15>> writer = <StreamWriter transport=<_SelectorSocketTransport closed fd=15> reader=<StreamReader eof transport=<_SelectorSocketTransport closed fd=15>>> dragonfly/connection_test.py:3056: AssertionError ---------------------------- Captured stderr setup ----------------------------- [2026-08-05 00:36:52,245: INFO/MainProcess] Starting /__w/dragonfly/dragonfly/build/dragonfly --proactor_threads=2 --async_dispatch_quota=50 --ena ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8009",
+      "createdAt": "2026-08-05T06:09:11Z",
+      "updatedAt": "2026-08-14T09:46:40Z",
+      "timestamp": "2026-08-14T09:46:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "failing-test",
+        "iouring"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "open",
+      "assignees": [
+        "glevkovich"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8028",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "Disabled python tests in tests/dragonfly",
+      "text": "## Unconditional skips (broken / flaky / WIP) - [ ] `tests/dragonfly/shutdown_test.py:15` — class `TestDflyAutoLoadSnapshot` (covers `test_gracefull_shutdown`) — \"Currently we can not guarantee that on shutdown if command is executed and value is written we response before breaking the connection\" @vyavdoshenko -> check if the invariants/what's written is true and if we can change somehow the test semantics to assert that we get a reply before we shutdown --- - [ ] `tests/dragonfly/memory_test.py:327` — `test_throttle_on_commands_squashing_replies_bytes` — \"Disabling test until improvements in squashing.\" @mkaruza --- - [x] `tests/dragonfly/snapshot_test.py:222` — `test_cron_snapshot_failed_saving` — \"Fails and also causes all TLS tests to fail\" @BorysTheDev --- - [ ] `tests/dragonfly/snapshot_test.py:961` — `test_tiered_entries_throttle` — no reason given (also `@large`/`@opt_only`) @dranikpg --- - [ ] `tests/dragonfly/acl_family_test.py:271` — `test_acl_del_user_while_running_lua_script` — \"Flaky on CI, needs investigation\" @kostasrim --- - [ ] `tests/dragonfly/acl_family_test.py:297` — `test_acl_with_long_running_script` — \"Check TODO in the body below\" @kostasrim --- - [ ] `tests/dragonfly/connection_test.py:2483` — `test_pipeline_cache_size` — \"Flaky\" @abhijat --- - [ ] `tests/dragonfly/replication_specific_test.py:508` — `test_big_huge_streaming_restart` — \"fails, investigating\" @kostasrim --- - [x] `tests/dragonfly/replication_specific_test.py:730` — `test_replication_onmove_flow` — \"Fails constantly on CI\" Dead test https://github.com/dragonflydb/dragonfly/pull/7096 and https://github.com/dragonflydb/dragonfly/pull/7068/changes @kostasrim will remove it in a sec",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8028",
+      "createdAt": "2026-08-07T09:05:39Z",
+      "updatedAt": "2026-08-14T12:44:34Z",
+      "timestamp": "2026-08-14T12:44:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "bug",
+        "failing-test"
+      ],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "abhijat",
+        "mkaruza",
+        "kostasrim",
+        "dranikpg",
+        "vyavdoshenko"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8063",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_replicate_old_master",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/replication_config_test.py::test_replicate_old_master[df_factory0--localhost-7000]` - Backend: iouring - Commit: f4019d7fec0ddcd1e6484dd6eeade7d52b146af6 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/31641685740 - Marker: run/31641685740/attempt/1 ``` Reason: requests.exceptions.RetryError: HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /dragonflydb/dragonfly/releases/download/v1.19.2/dragonfly-x86_64.tar.gz (Caused by ResponseError('too many 503 error responses')) ____________ test_replicate_old_master[df_factory0--localhost-7000] ____________ urllib3.exceptions.ResponseError: too many 503 error responses The above exception was the direct cause of the following exception: self = <requests.adapters.HTTPAdapter object at 0x7fdbe0bd0b30> request = <PreparedRequest [GET]>, stream = True, timeout = None, verify = True cert = None, proxies = OrderedDict() def send( self, request: PreparedRequest, stream: bool = False, timeout: _t.TimeoutType = None, verify: _t.VerifyType = True, cert: _t.CertType = None, proxies: dict[str, str] | None = None, ) -> Response: \"\"\"Sends PreparedRequest object. Returns Response object. :param request: The :class:`PreparedRequest <PreparedRequest>` being sent. :param stream: (optional) Whether to stream the request content. :param timeout: (optional) How long to wait for the server to send data before giving up, as a float, or a :ref:`(connect timeout, read timeout) <timeouts>` tuple. :type timeout: float or tuple or urllib3 Timeout object :param verify: (optional) Either a boolean, in which case it controls whether we verify the server's TLS certificate, or a string, in which case it must be a path to a CA bundle to use :param cert: (optional) Any user-provided SSL certificate to be trusted. :param proxies: (optional) The proxies dictionary to apply to the request. :rtype: requests.Response \"\"\" assert _is_prepared(request) try: conn = self.get_connection_with_tls_context( request, verify, proxies=proxies, cert=cert ) except LocationValueError as e: raise InvalidURL(e, request=request) self.cert_verify(conn, request.url, verify, cert) url = self.request_url(request, proxies) self.add_headers( request, stream=stream, timeout=timeout, verify=verify, cert=cert, proxies=proxies, ) chunked = not (request.body is None or \"Content-Length\" in request.headers) if isinstance(timeout, tuple): try: connect, read = timeout resolved_timeout = TimeoutSauce(connect=connect, read=read) except ValueError: raise ValueError( f\"Invalid timeout {timeout}. Pass a (connect, read) timeout tuple, \" f\"or a single float to set both timeouts to the same value.\" ) elif isinstance(timeout, TimeoutSauce): resolved_timeout = timeout else: resolved_timeout = TimeoutSauce(connect=timeout, read=timeout) try: > resp = conn.urlopen( method=request.method, url=url, body=request.body, # type: ignore[arg-type] # urllib3 stubs don't accept Iterable[bytes | str] headers=request.headers, # type: ignore[arg-type] # urllib3#3072 redirect=False, assert_same_host=False, preload_content=False, decode_content=False, retries=self.max_retries, timeout=resolved_timeout, chunked=chunked, ) cert = None chunked = False conn = <urllib3.connectionpool.HTTPSConnectionPool object at 0x7fdbe8249880> proxies = OrderedDict() request = <PreparedRequest [GET]> resolved_timeout = Timeout(connect=None, read=None, total=None) self = <requests.adapters.HTTPAdapter object at 0x7fdbe0bd0b30> stream = True timeout = None url = '/dragonflydb/dragonfly/releases/download/v1.19.2/dragonfly-x86_64.tar.gz' verify = True /usr/local/lib/python3.12/dist-packages/requests/adapters.py:696: _ _ _ _ _ _ _ _ _ _ ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8063",
+      "createdAt": "2026-08-12T21:51:47Z",
+      "updatedAt": "2026-08-14T09:44:43Z",
+      "timestamp": "2026-08-14T09:44:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "failing-test",
+        "iouring"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "closed",
+      "assignees": [
+        "kostasrim"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8079",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_client_pause_v2_inflight_async_write_gap",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_client_pause_v2_inflight_async_write_gap[df_factory0]` - Backend: iouring - Commit: 5f8de13f7d330c2a997a4bd2080be5008986e839 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/31767696825 - Marker: run/31767696825/attempt/1 ``` Reason: redis.exceptions.ResponseError: Failed to pause all running clients __________ test_client_pause_v2_inflight_async_write_gap[df_factory0] __________ df_server = :46593 @pytest.mark.opt_only # run against release/optimized build only @pytest.mark.exclude_epoll @dfly_args( { \"proactor_threads\": 4, \"enable_resp_io_loop_v2\": \"true\", # Tiered storage keeps a command in-flight on a thread-idle disk read, so CLIENT # PAUSE's fiber rendezvous can't implicitly wait for it and mask the bug. \"tiered_prefix\": \"/tmp/tiered/pause_v2_backing\", \"tiered_offload_threshold\": \"1.0\", \"tiered_experimental_cooling\": \"false\", \"maxmemory\": \"2G\", } ) async def test_client_pause_v2_inflight_async_write_gap(df_server: DflyInstance): \"\"\"Regression: an in-flight async command on the V2 loop must keep CLIENT PAUSE waiting. A tiered APPEND parks the shard fiber on a disk read, so the command stays in-flight while returning a tiny reply. CLIENT PAUSE WRITE must not return until it completes. Tuning parameter: VALUE_BYTES (make the disk read long enough to stay in-flight). \"\"\" # Skip for V1 even if workflow injected --df enable_resp_io_loop_v2=false, which overrides the @dfly_args default above. if not is_resp_io_loop_v2(df_server): pytest.skip(\"targets the V2 io loop deferred-checkpoint path\") VALUE_BYTES = 256 * 1024 * 1024 # 256MB populator = df_server.client() writer = df_server.client() pauser = df_server.client() await populator.execute_command(\"DEBUG\", \"POPULATE\", 1, \"huge\", VALUE_BYTES, \"RAND\") keys = await populator.keys(\"huge*\") assert len(keys) == 1 big_key = keys[0] # Wait until the value is offloaded to disk (else APPEND reads from memory instantly). async with async_timeout.timeout(60): while int((await populator.info(\"TIERED\")).get(\"tiered_entries\", 0)) < 1: await asyncio.sleep(0.2) # Async write that must fetch the whole value from disk. Its fiber parks on the read. inflight = asyncio.create_task(writer.execute_command(\"APPEND\", big_key, \"x\")) await asyncio.sleep(0.02) assert not inflight.done(), \"APPEND completed too fast to test; increase VALUE_BYTES\" # PAUSE must not return before the in-flight APPEND finishes. Race them: a correct server writes # the APPEND reply before releasing the pause checkpoint, so APPEND wins. If PAUSE wins, the # write slipped past CLIENT PAUSE - the bug. (A sleep+snapshot check masks it or is racy.) pause_task = asyncio.create_task(pauser.execute_command(\"CLIENT\", \"PAUSE\", \"5000\", \"WRITE\")) done, _ = await asyncio.wait({pause_task, inflight}, return_when=asyncio.FIRST_COMPLETED) pause_beat_inflight = pause_task in done and inflight not in done # Let both finish so the pauser/writer connections are idle before teardown. > assert await asyncio.wait_for(pause_task, timeout=60) == \"OK\" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ VALUE_BYTES = 268435456 _ = {<Task pending name='Task-32212' coro=<Redis.execute_command() running at /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782> wait_for=<Future pending cb=[Task.task_wakeup()]>>} big_key = 'huge:0' df_server = :46593 done = {<Task finished name='Task-32213' coro=<Redis.execute_command() done, defined at /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:760> exception=server:ResponseError>} inflight = <Task pending name='Task-32212' coro=<Redis.execute_command() running at /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782> wait_for=<Future pending cb=[Task.task_wakeup()]>> keys = ['huge:0'] pause_beat_inflight = True pause_task = <Task finished name='Task-32213' coro=<Redis.execute_command() done, defined at /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:760> exception=server:ResponseError> pauser = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=46593,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> populator = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool( ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8079",
+      "createdAt": "2026-08-14T04:18:50Z",
+      "updatedAt": "2026-08-14T09:40:14Z",
+      "timestamp": "2026-08-14T09:40:14Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "failing-test",
+        "iouring"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "open",
+      "assignees": [
+        "glevkovich"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8087",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "ZMPOP RESP2 reply is incompatibile with Redis",
+      "text": "# `ZMPOP` returns the wrong RESP2 null type when no member can be popped **NOTE**: I found this issue when adding `dragonfly` to PhpRedis' CI (https://github.com/phpredis/phpredis/pull/2907). This surfaced about half a dozen reply shape incompatibilities with Redis. If perfect compatibility isn't a goal of dragonfly just let me know and I can instead update our tests **Describe the bug** When no member can be popped, Dragonfly returns a RESP2 null bulk string (`$-1\\r\\n`) instead of the null array (`*-1\\r\\n`) returned by Redis. RESP2 null bulk strings and null arrays are distinct wire types even though some clients map both to the same language-level value. PhpRedis parses `ZMPOP` with its multi-bulk response parser. Dragonfly's null bulk string does not match the expected aggregate response type, so PhpRedis rejects the response and returns `false` instead of the expected empty result or `null`. **To Reproduce** 1. Connect using RESP2 to databases where `zs` does not exist or is empty. 2. Run `ZMPOP 1 zs MIN` against Redis and Dragonfly. 3. Compare the wire responses. In the example below, port 6379 is Redis and port 9999 is Dragonfly. ```console $ printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 6379 *-1 $ printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 9999 $-1 ``` **Expected behavior** Like Redis, Dragonfly should return a RESP2 null array: ```text *-1\\r\\n ``` `ZMPOP` otherwise returns an aggregate containing the selected key and popped members, so its nil result should retain the aggregate response type. **Screenshots** Not applicable; the raw protocol responses are included above. **Environment (please complete the following information):** - OS: Not recorded - Kernel: Not recorded - Containerized?: Not recorded - Dragonfly Version: `df-v1.39.0` Redis control version: `8.9.241` Protocol: RESP2 **Reproducible Code Snippet** ```sh printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 9999 ``` **Additional context** With `Redis::OPT_NULL_MULTIBULK_AS_NULL` enabled, PhpRedis recognizes a null array as an empty `ZMPOP` result and returns it to PHP as `null`. This mismatch causes `Redis_Test::testZmpop` to fail: ```text Assertion failed: testZmpop - (false) !== (null) ``` Dragonfly's `ZMPopGeneric` empty-result path calls `SendNull()`: - [ZMPOP implementation](https://github.com/dragonflydb/dragonfly/blob/main/src/server/zset_family.cc) - [RESP reply builder](https://github.com/dragonflydb/dragonfly/blob/main/src/facade/reply_builder.cc) For RESP2, `SendNull()` emits `$-1\\r\\n`. The reply builder has a distinct `SendNullArray()` method which emits `*-1\\r\\n`. Dragonfly also returns `$-1\\r\\n` for an empty or timed-out `BZMPOP`. The current PhpRedis `testBZmpop` only asserts the default `false` result, so it does not expose the type mismatch through `OPT_NULL_MULTIBULK_AS_NULL`.",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8087",
+      "createdAt": "2026-08-14T16:30:52Z",
+      "updatedAt": "2026-08-14T16:30:52Z",
+      "timestamp": "2026-08-14T16:30:52Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "michael-grunder",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:7915",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): emit expired keyspace events when the new expiration is already in the past",
+      "text": "Deleting a key because its newly-set expiration is already in the past emitted no `__keyevent@<db>__:expired` notification, so subscribers waited forever (found via the upstream Valkey pubsub TCL suite: \"expired event (Expiration time is already expired)\" hangs). There are exactly two silent-delete paths: `SET` with a past `EXAT/PXAT` (incl. memcached SET/ADD/REPLACE) and `DbSlice::UpdateExpire` (EXPIRE family, GETEX, GAT). Both now emit the event after journaling (mutation -> journal -> publish). Fixing this surfaced several adjacent bugs in the same paths and in the config plumbing that gates the events - all fixed here to keep the fix correct. Changes: **Core fix** - New `DbSlice::SendExpiredKeyEvent()`, called by all past-expiry delete paths after their journal record; `UpdateExpire` delete branch also counts `expired_keys` stats. **Correctness bugs exposed in the same paths** - `SET` with a past expiry short-circuited parsing: NX/XX/GET were ignored (`SET k v NX PXAT <past>` deleted the key and replied OK), trailing garbage was accepted, `PXAT == now` made the key persistent, and mc REPLACE-on-missing reported STORED. The early-return is gone; conditions go through the regular SetCmd machinery; the delete reuses `UpdateExpire`. - `SET` is NO_AUTOJOURNAL and the past-expiry delete was not journaled -> replicas kept the key forever. It now journals `DEL` (same for GETEX, which journaled a past `PEXPIREAT`). - Pre-existing: memcached `GAT 0` persists the key on master but journaled `PEXPIREAT key 0`, so replicas deleted it. It now journals `PERSIST`. **Config plumbing (gates the events, `notify_keyspace_events`)** - `ConfigRegistry::Set` rolls back the flag value when the validation callback rejects it; previously the rejected value stayed visible via CONFIG GET and raw flag reads. - New DbSlices inherit a validated process-global default instead of re-reading the raw flag, closing a race where a namespace created during CONFIG SET could read an unvalidated value and kill the process (the ctor also demanded exact \"Ex\" while the validator accepts \"EX\"). - `CONFIG SET notify_keyspace_events` now updates every namespace, not only the default one (new `Namespaces::ForEachDbSliceOnShard`). - Startup validation moved to dfly_main before the pidfile/listeners exist; an invalid flag previously exited mid-init with code 0, leaving a stale pidfile and unix socket. **TLS (follow-ups from the registry rollback making callback side effects observable)** - The `tls` callback builds the SSL_CTX once before touching listeners (new infallible `Listener::ApplyTlsCtx`), so a bad cert can no longer leave listeners split between old and new TLS state. - TLS memory accounting is now a global atomic: contexts are allocated on one thread and freed on another, so the summed per-thread counters wrapped `tls_bytes` to ~UINT64_MAX after reload. Tests: - Unit: expired events for EXPIRE/SET/GETEX/GAT/mc SET/REPLACE; SET past-expiry condition semantics; config rollback, all-namespaces propagation, hermetic restores of prior config. - Pytest: `GAT 0` persist replication, past-expiry SET DEL replication, `tls_bytes` regression with main+admin listeners; TLS suite passes end-to-end.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/7915",
+      "createdAt": "2026-07-22T21:09:10Z",
+      "updatedAt": "2026-08-14T08:22:43Z",
+      "timestamp": "2026-08-14T08:22:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:7984",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(geo): add GEOSEARCHSTORE command",
+      "text": "<!-- **Commits Must Be Signed and Your PR title must conform to the conventional commit spec** * See: https://github.com/dragonflydb/dragonfly/blob/main/CONTRIBUTING.md * Please follow the section on `pre-commit hooks`, a linter will validate before you push Example PR Title: <type>(<scope>)!: <description> * `type` = bug, chore, feat, fix, docs, build, style, refactor, perf, test * `!` = OPTIONAL: signals a breaking change * `scope` = Optional when `type` is \"chore\" or \"docs\" * `description` = short description of the change Examples: * chore(examples): Clarify `docker` usage #120 * docs(readme): Fix Example Links #121 * feat(ingest)!: Add new ingest #122 * fix(ingest): Refactor for loop to list comprehension #123 --> Adds GEOSEARCHSTORE (dest + src keys, same search options as GEOSEARCH, optional STOREDIST). Most of the work was already in GeoSearchStoreGeneric() via GEORADIUS ... STORE — this wires up the dedicated command and parser. Closes #3883. Also fixed a couple of Redis mismatches in the shared store/search path: - STORE when the source key is missing now returns 0 and clears the dest key (was an empty array) - COUNT without ASC/DESC now defaults to ASC, same as Redis Tests in geo_family_test.cc. Ran geo_family_test locally + manual redis-cli checks.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/7984",
+      "createdAt": "2026-08-03T03:51:25Z",
+      "updatedAt": "2026-08-14T05:11:06Z",
+      "timestamp": "2026-08-14T05:11:06Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [],
+      "author": "rounaknandanwar",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:7997",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "chore: add docs/replication.md",
+      "text": "* add docs on replication state machine and the internal functionally at each phase",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/7997",
+      "createdAt": "2026-08-04T10:07:57Z",
+      "updatedAt": "2026-08-14T09:43:11Z",
+      "timestamp": "2026-08-14T09:43:11Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8002",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "docs: add design doc for replication fanout (NOT FOR MERGE)",
+      "text": "This is a design doc for #7993.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8002",
+      "createdAt": "2026-08-04T12:45:27Z",
+      "updatedAt": "2026-08-14T10:53:20Z",
+      "timestamp": "2026-08-14T10:53:20Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "BorysTheDev",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8065",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): emit expired keyspace events for already-past expirations",
+      "text": "Deleting a key because its newly set expiration is already in the past emitted no `__keyevent@<db>__:expired` notification, so a subscriber waiting for the event was blocked forever (found via the upstream Valkey pubsub TCL suite: \"expired event (Expiration time is already expired)\" hangs). This covers the `DbSlice::UpdateExpire` funnel: EXPIRE/PEXPIRE/(P)EXPIREAT, GETEX, and memcached GAT/GATS.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8065",
+      "createdAt": "2026-08-13T06:51:10Z",
+      "updatedAt": "2026-08-14T07:21:20Z",
+      "timestamp": "2026-08-14T07:21:20Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8080",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): lower table growth margin default",
+      "text": "## Summary - Lower the default `table_growth_margin` from `0.4` to `0.15`. - Reduce the conservative free-capacity estimate before allowing table growth. ## Test plan - `git diff --check` passed. - `ninja -C build-dbg dragonfly` reached and compiled `src/server/db_slice.cc`; the full build was blocked by the host filesystem running out of space.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8080",
+      "createdAt": "2026-08-14T05:28:30Z",
+      "updatedAt": "2026-08-14T20:31:19Z",
+      "timestamp": "2026-08-14T20:31:19Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "romange",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8081",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(tiering): tight small bin fragmentation cutoff",
+      "text": "For small bins, the smallest possible utilization for flushing a page is ~49% (because value + constant size header). We don't want this page to be considered for defragmentation (as it will livelock) so we pick a cutoff that is slightly lower (see the math on the PR). Also StashInfo.bytes `undercounted` because it never `included` the bytes wasted by each entry's header. Fix it by including the header entry overhead per value. Addresses properly both #8029 and #8024 and #8012",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8081",
+      "createdAt": "2026-08-14T07:59:28Z",
+      "updatedAt": "2026-08-14T09:26:43Z",
+      "timestamp": "2026-08-14T09:26:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8082",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: SET with a past expiration honors NX/XX/GET and journals the delete",
+      "text": "`SET k v [NX|XX|GET] EXAT/PXAT <past>` short-circuited parsing and unconditionally deleted the key replying OK: NX/XX/GET were ignored, trailing options were accepted unparsed, an expiration equal to now made the key persistent, and the delete was not journaled at all (SET is NO_AUTOJOURNAL), permanently desyncing replicas. Memcached SET/ADD/REPLACE with a past absolute exptime shared all of it. Changes: - The parser only marks `SetParams::expire_in_past` (now also for `== now`) and keeps parsing; `SetCmd::Set` evaluates NX/XX/GET through the regular condition machinery before applying delete-instead-of-store, matching upstream semantics. - The delete reuses `UpdateExpire` (same stats), journals an explicit `DEL`, and emits the expired keyspace event after the journal record.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8082",
+      "createdAt": "2026-08-14T08:08:15Z",
+      "updatedAt": "2026-08-14T10:43:05Z",
+      "timestamp": "2026-08-14T10:43:05Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8083",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: test_cron_snapshot_failed_saving",
+      "text": "Summary: Re-enables the cron snapshot failure integration test using an isolated output directory. Changes: - Creates deterministic DFS temporary-path sentinels to force local snapshot writes to fail. - Starts a one-shard Dragonfly instance and enables the cron schedule only after capturing metric baselines. - Waits for both attempted-backup and failed-backup metrics, then verifies cleanup of temporary paths. - Uses a guarded explicit SHUTDOWN NOSAVE flow to prevent teardown from creating an unwanted snapshot. Technical Notes: The test avoids permission-based failures, making it safe when the test process runs as root and preventing shared temporary-directory contamination.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8083",
+      "createdAt": "2026-08-14T08:15:27Z",
+      "updatedAt": "2026-08-14T10:50:46Z",
+      "timestamp": "2026-08-14T10:50:46Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "BorysTheDev",
+      "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8084",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(tests): Sample lag continuously in test_replication_info",
+      "text": "test_replication_info relied on a fixed number of sampling attempts to catch lag exceeding 30 during a write burst, which could miss the actual peak and fail. Instead, sample lag continuously for the duration of the fill and check the max lag observed. target_ops is also increased to prolong the burst. assert_lag_condition now polls until the condition is met or a timeout is reached, rather than a fixed number of attempts. Fixes #7932 <!-- **Commits Must Be Signed and Your PR title must conform to the conventional commit spec** * See: https://github.com/dragonflydb/dragonfly/blob/main/CONTRIBUTING.md * Please follow the section on `pre-commit hooks`, a linter will validate before you push Example PR Title: <type>(<scope>)!: <description> * `type` = bug, chore, feat, fix, docs, build, style, refactor, perf, test * `!` = OPTIONAL: signals a breaking change * `scope` = Optional when `type` is \"chore\" or \"docs\" * `description` = short description of the change Examples: * chore(examples): Clarify `docker` usage #120 * docs(readme): Fix Example Links #121 * feat(ingest)!: Add new ingest #122 * fix(ingest): Refactor for loop to list comprehension #123 -->",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8084",
+      "createdAt": "2026-08-14T09:12:04Z",
+      "updatedAt": "2026-08-14T14:29:51Z",
+      "timestamp": "2026-08-14T14:29:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "mkaruza",
+      "state": "closed",
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8085",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(facade): Handle RESP3 null array response",
+      "text": "RESP3 expects \"_\\r\\n\" for a null array, but SendNullArray() always sent RESP2's \"*-1\\r\\n\" regardless of protocol. This fixed null replies under RESP3 for XREAD, XREADGROUP, BLPOP, BRPOP, BZPOPMIN, and BZPOPMAX. Closes #8076 <!-- **Commits Must Be Signed and Your PR title must conform to the conventional commit spec** * See: https://github.com/dragonflydb/dragonfly/blob/main/CONTRIBUTING.md * Please follow the section on `pre-commit hooks`, a linter will validate before you push Example PR Title: <type>(<scope>)!: <description> * `type` = bug, chore, feat, fix, docs, build, style, refactor, perf, test * `!` = OPTIONAL: signals a breaking change * `scope` = Optional when `type` is \"chore\" or \"docs\" * `description` = short description of the change Examples: * chore(examples): Clarify `docker` usage #120 * docs(readme): Fix Example Links #121 * feat(ingest)!: Add new ingest #122 * fix(ingest): Refactor for loop to list comprehension #123 -->",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8085",
+      "createdAt": "2026-08-14T09:40:13Z",
+      "updatedAt": "2026-08-14T09:42:12Z",
+      "timestamp": "2026-08-14T09:42:12Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "mkaruza",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8086",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "test: un-skip graceful shutdown test by asserting the guaranteed durability contract",
+      "text": "`test_gracefull_shutdown` (skipped since #1530) asserted strict equality between the last acknowledged INCR value and the snapshot content - a reply-before-close guarantee the server does not provide: shutdown drains in-flight commands for at most 10ms (best effort) and, at the TCP level, closing with unread request bytes triggers RST, so reply delivery cannot be guaranteed to a busy client at all. The invariant that *does* hold (snapshot is saved strictly after all connection fibers exit) is one-directional: every acknowledged write is in the snapshot, and at most one unacknowledged in-flight command per connection may exceed it. The test now asserts exactly that contract, deterministically. Changes: - Un-skip and rename to `TestGracefulShutdown::test_shutdown_snapshot_contains_acknowledged_writes` - Assert `acknowledged <= restored <= acknowledged + 1` per key, plus an explicit missing-key check - Dedicated control connection for SHUTDOWN; one pinned connection per worker with client retries disabled (the client library retries by default, and a silent re-send after a lost reply would corrupt acknowledgment accounting) - All SETs acknowledged before the increment loops start, so every key must exist after restart - `df_server.wait()` before restarting (snapshot fully written, no port race) and `wait_available_async()` after (avoid the loading phase) - Dynamic port instead of hardcoded 1111 Addresses the `test_gracefull_shutdown` item in #8028.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8086",
+      "createdAt": "2026-08-14T15:41:47Z",
+      "updatedAt": "2026-08-14T16:28:42Z",
+      "timestamp": "2026-08-14T16:28:42Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "open",
+      "assignees": [
+        "vyavdoshenko"
+      ]
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8088",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): probe heterogeneous blocking waiters instead of aborting…",
+      "text": "## Summary `BlockingController` keeps one FIFO queue per `(db, key)` shared by *all* blocking commands watching that key. `NotifyWatchQueue()` only checked the front waiter: when its checker returned `kKeyNotFound` (e.g. `BLPOP`/`BZPOP*`/`BLMPOP` on a missing key), the scan aborted entirely and the one-shot wake event was cleared, so any *later* waiter in the same queue, from a different command family, was never checked at all. Concretely: a client blocked on `XREADGROUP` queued behind an earlier `BLPOP` waiter on the same key would never receive its `NOGROUP` error when the key was deleted. It stayed blocked indefinitely, only released later by an unrelated mutation of the key. ## Fix `NotifyWatchQueue` no longer aborts the whole scan on `kKeyNotFound`. It now tracks the checker (command family) that reported the key missing, and only fast-skips *later* waiters sharing that exact checker, this preserves the O (1)-per-item short-circuit from #7225 for the common homogeneous case (many `BLPOP` waiters on one absent key). Waiters from a different command family (e.g. `XREADGROUP` sharing a queue with `BLPOP`) are still probed individually, so they get the correct, immediate result instead of being hidden behind an unrelated waiter's outcome. ## Test plan - [x] New regression test `BlockingControllerTest.NotifyWatchQueueHeterogeneousCheckers`- two waiters with different checker types on one key's queue; the first reports `kKeyNotFound`, and the test asserts the second is still probed. - [x] Existing `BlockingControllerTest.NotifyWatchQueueFastPathOnAbsentKey` (the #7225 perf regression test) still passes unmodified, same-checker-type fast path is preserved. - [x] `blocking_controller_test`, `stream_family_test`, `list_family_test`, `zset_family_test` all passes. - [x] `pre-commit` (clang-format et al.) clean. Fixes #8067",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8088",
+      "createdAt": "2026-08-14T16:38:32Z",
+      "updatedAt": "2026-08-14T17:01:14Z",
+      "timestamp": "2026-08-14T17:01:14Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "Shikha-code36",
+      "state": "open",
+      "assignees": []
+    }
+  ],
+  "events": [
+    {
+      "id": "event:96e9b1ed894fa129c3a6",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8080",
+      "event": "changed",
+      "observedAt": "2026-08-15T02:27:51.268670Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8080",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(server): lower table growth margin default",
+        "text": "## Summary - Lower the default `table_growth_margin` from `0.4` to `0.15`. - Reduce the conservative free-capacity estimate before allowing table growth. ## Test plan - `git diff --check` passed. - `ninja -C build-dbg dragonfly` reached and compiled `src/server/db_slice.cc`; the full build was blocked by the host filesystem running out of space.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8080",
+        "createdAt": "2026-08-14T05:28:30Z",
+        "updatedAt": "2026-08-14T20:31:19Z",
+        "timestamp": "2026-08-14T20:31:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "romange",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}
