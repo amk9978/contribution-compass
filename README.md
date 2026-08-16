@@ -64,7 +64,8 @@ into generated prose. Judgement is meant to live above this line, not inside it.
 - Where are Hacker News readers discussing these projects?
 - Which issues explicitly invite community help?
 - Which unassigned issues may be worth discussing with maintainers?
-- What context surrounds the project and the issue?
+- What context surrounds the project and issue?
+- How do curated projects compare on collected facts without a composite score?
 - When was a Signal discovered, and what changed afterward?
 
 ## Contribution leads
@@ -118,24 +119,52 @@ data/
 Data stays separated by date, group, and repository. Empty configuration groups stay empty; the
 loader never inserts hidden defaults.
 
-## Access
+## Human and machine access
 
-| | |
-|---|---|
-| Website | <https://amk9978.github.io/contribution-compass/> |
-| My Compass | <https://amk9978.github.io/contribution-compass/personalize/> |
-| Contribute | <https://amk9978.github.io/contribution-compass/contribute/> |
-| Project news | <https://amk9978.github.io/contribution-compass/news/> |
-| MCP | [docs/MCP.md](docs/MCP.md) |
-| LLM guide | <https://amk9978.github.io/contribution-compass/llms.txt> |
-| Catalog | <https://amk9978.github.io/contribution-compass/api/v1/index.json> |
-| Contribution leads | <https://amk9978.github.io/contribution-compass/api/v1/opportunities.json> |
-| Project news API | <https://amk9978.github.io/contribution-compass/api/v1/news.json> |
-| RSS · JSON Feed | [feed.xml](https://amk9978.github.io/contribution-compass/feed.xml) · [feed.json](https://amk9978.github.io/contribution-compass/feed.json) |
-| News RSS · JSON Feed | [news/feed.xml](https://amk9978.github.io/contribution-compass/news/feed.xml) · [news/feed.json](https://amk9978.github.io/contribution-compass/news/feed.json) |
+- Website: <https://amk9978.github.io/contribution-compass/>
+- Project comparison: <https://amk9978.github.io/contribution-compass/projects/>
+- Project comparison API: <https://amk9978.github.io/contribution-compass/api/v1/projects.json>
+- My Compass browser profile: <https://amk9978.github.io/contribution-compass/personalize/>
+- Contribution view: <https://amk9978.github.io/contribution-compass/contribute/>
+- Project news: <https://amk9978.github.io/contribution-compass/news/>
+- Machine catalog: <https://amk9978.github.io/contribution-compass/api/v1/index.json>
+- Project news API: <https://amk9978.github.io/contribution-compass/api/v1/news.json>
+- Project news JSON Feed: <https://amk9978.github.io/contribution-compass/news/feed.json>
+- Project news RSS: <https://amk9978.github.io/contribution-compass/news/feed.xml>
+- Contribution leads: <https://amk9978.github.io/contribution-compass/api/v1/opportunities.json>
+- JSON Feed: <https://amk9978.github.io/contribution-compass/feed.json>
+- RSS: <https://amk9978.github.io/contribution-compass/feed.xml>
+- LLM guide: <https://amk9978.github.io/contribution-compass/llms.txt>
+- MCP setup: [docs/MCP.md](docs/MCP.md)
 
-Human pages use static pagination: 20 contribution leads, 10 project-news cards, or 50 project
-Signals per page. JSON, RSS, MCP, and direct GitHub/HN links remain available for deeper reading.
+LLM-backed tools should use MCP or the versioned JSON catalog instead of scraping visual HTML.
+
+`My Compass` lets a visitor choose projects, paste a dependency file or repository list, and view a
+paginated personal contribution/news table. Its selection is stored only in `localStorage` and the
+page URL. It can be bookmarked or used as a browser start page; no fork, account, or server is
+required.
+
+## Architecture
+
+The Python core uses explicit module seams while avoiding pass-through abstraction:
+
+```text
+src/contribution_compass/
+  domain/          models, invariants, importance, contribution rules
+  application/     collection, catalog-query, and setup use cases
+  ports.py         small interfaces implemented by real adapters
+  adapters/        GitHub, local/hosted/overlay catalogs, state, persistence
+  controllers/     CLI and MCP transports
+  views/           Markdown, JSON, RSS, and strict Jinja2 HTML rendering
+    templates/     autoescaped page layouts and reusable presentation partials
+web/assets/        progressive browser CSS/JavaScript only
+```
+
+Domain modules know nothing about GitHub HTTP, files, HTML, or MCP. Controllers configure adapters
+and invoke application modules. Local and hosted catalogs implement the same read interface. Views
+render application results but do not classify opportunities. Python prepares presentation data,
+packaged Jinja2 templates render crawlable static HTML, and browser JavaScript progressively reads
+the same versioned JSON interfaces for personalization and other interactive behavior.
 
 ## Configure
 

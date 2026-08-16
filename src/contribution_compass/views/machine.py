@@ -77,6 +77,8 @@ class MachineView:
                 "links": {
                     "website": f"{self.context.site_url}/",
                     "personalizedView": f"{self.context.site_url}/personalize/",
+                    "projectComparison": f"{self.context.site_url}/api/v1/projects.json",
+                    "projectComparisonPage": f"{self.context.site_url}/projects/",
                     "contributionLeads": f"{self.context.site_url}/api/v1/opportunities.json",
                     "projectNews": f"{self.context.site_url}/api/v1/news.json",
                     "newsJsonFeed": f"{self.context.site_url}/news/feed.json",
@@ -282,6 +284,30 @@ class MachineView:
             "pageUrl": signal_page_url(lead.signal, dataset, self.context) if dataset else None,
         }
 
+    def project_comparison(self) -> str:
+        rows = self.queries.compare_projects()
+        date = rows[0].snapshot_date if rows else next(iter(self.catalog.dates()), None)
+        return json_text(
+            {
+                "schemaVersion": 4,
+                "generatedAt": self.generated_at,
+                "date": date,
+                "description": (
+                    "Side-by-side factual Project Sensor context without a composite score or "
+                    "generated recommendation."
+                ),
+                "scope": {
+                    "leadCounts": (
+                        "Contribution Leads derived from Signals in the latest collection snapshot; "
+                        "not the repository's complete open backlog."
+                    ),
+                    "missingValues": "Unavailable collected facts are null, never guessed.",
+                },
+                "count": len(rows),
+                "projects": [row.to_dict() for row in rows],
+            }
+        )
+
     def json_feed(self) -> str:
         datasets = [
             dataset for date in self.catalog.dates() for dataset in self.catalog.repositories(date)
@@ -479,6 +505,7 @@ class MachineView:
 
 ## Start here
 
+- [Project comparison]({self.context.site_url}/api/v1/projects.json)
 - [Contribution leads]({self.context.site_url}/api/v1/opportunities.json)
 - [Personalized human view]({self.context.site_url}/personalize/)
 - [Project news]({self.context.site_url}/api/v1/news.json)

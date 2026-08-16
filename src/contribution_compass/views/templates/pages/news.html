@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% from "partials/cards.html" import news_card, pagination_nav %}
+{% block content %}
+<main class="shell detail-page"><nav class="breadcrumbs"><a href="{{ site.site_url }}/">Compass</a><span>/</span><span>News</span></nav>
+<section class="detail-hero"><span class="eyebrow">PROJECT NEWS · {{ date }}</span><h1>See what shipped.<br>Follow where people are talking.</h1><p>Release developments, public roadmap evidence, and relevant Hacker News discussions for configured projects.</p></section>
+<section class="lead-method"><div><strong>{{ with_release }}</strong><span>Latest releases</span><p>Stable release notes from GitHub.</p></div><div><strong>{{ with_upcoming }}</strong><span>Public roadmaps</span><p>Prereleases or open milestones.</p></div><div><strong>{{ discussion_count }}</strong><span>HN discussions</span><p>Current community conversations.</p></div></section>
+<section class="news-explainer"><strong>How to read this</strong><p>GitHub releases and roadmaps are maintainer evidence. Hacker News is community discussion and is labeled separately. No generated summaries are used. <a href="{{ site.site_url }}/news/feed.xml">Subscribe to project-news RSS →</a></p></section>
+<section class="news-grid news-grid-full">{% for card in cards %}{{ news_card(card) }}{% else %}<div class="no-leads">No project news has been collected yet.</div>{% endfor %}</section>{{ pagination_nav(pagination) }}</main>
+{% endblock %}

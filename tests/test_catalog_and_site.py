@@ -9,14 +9,15 @@ from conftest import make_dataset
 from contribution_compass.adapters.catalog import LocalJsonCatalog
 from contribution_compass.application.catalog import CatalogQueries
 from contribution_compass.application.news import NewsQueries
+from contribution_compass.domain.models import RepositoryDataset
 from contribution_compass.views.site import StaticSitePublisher
 
 
-def write_catalog(root: Path) -> LocalJsonCatalog:
-    dataset = make_dataset()
+def write_catalog(root: Path, dataset: RepositoryDataset | None = None) -> LocalJsonCatalog:
+    selected = dataset or make_dataset()
     directory = root / "2026-08-13/runtime-tools"
     directory.mkdir(parents=True)
-    (directory / "widget.json").write_text(json.dumps(dataset.to_dict()), encoding="utf-8")
+    (directory / "widget.json").write_text(json.dumps(selected.to_dict()), encoding="utf-8")
     (root / "2026-08-13/manifest.json").write_text(
         json.dumps(
             {
@@ -28,6 +29,32 @@ def write_catalog(root: Path) -> LocalJsonCatalog:
         encoding="utf-8",
     )
     return LocalJsonCatalog(root)
+
+
+def test_html_templates_autoescape_collected_text_and_reject_unsafe_urls(tmp_path: Path) -> None:
+    signal = replace(
+        make_dataset().signals[0],
+        title='<script>alert("signal")</script>',
+        url="javascript:alert(1)",
+    )
+    dataset = make_dataset(signal)
+    dataset.repository_name = '<img src=x onerror="alert(1)">'
+    catalog = write_catalog(tmp_path / "data", dataset)
+    output = tmp_path / "site"
+
+    StaticSitePublisher(
+        catalog,
+        output_root=output,
+        site_url="https://example.test/compass",
+        repository_url="https://github.com/example/compass",
+    ).build()
+
+    repository = (output / "updates/2026-08-13/runtime-tools/widget.html").read_text()
+    assert "<script>alert" not in repository
+    assert "&lt;script&gt;alert" in repository
+    assert "<img src=x" not in repository
+    assert "&lt;img src=x" in repository
+    assert 'href="#"' in repository
 
 
 def test_catalog_queries_preserve_context_evidence_and_timeline(tmp_path: Path) -> None:
@@ -47,6 +74,32 @@ def test_catalog_queries_preserve_context_evidence_and_timeline(tmp_path: Path) 
         .repository
         == "acme/widget"
     )
+    comparison = queries.compare_projects()[0]
+    assert comparison.to_dict() == {
+        "id": "widget",
+        "repository": "acme/widget",
+        "name": "Widget",
+        "url": "https://github.com/acme/widget",
+        "group": {"id": "runtime-tools", "name": "Runtime Tools"},
+        "language": "Python",
+        "license": "MIT",
+        "stars": 120,
+        "forks": 12,
+        "latestRelease": {
+            "tag": "v2.0.0",
+            "title": "Widget 2.0",
+            "publishedAt": "2026-08-10T10:00:00Z",
+            "url": "https://github.com/acme/widget/releases/tag/v2.0.0",
+        },
+        "recentLeadsObserved": 1,
+        "recentMaintainerInvitedObserved": 1,
+        "recentTriageLeadsObserved": 0,
+        "snapshot": {
+            "date": "2026-08-13",
+            "collectedAt": "2026-08-13T10:00:00Z",
+            "since": "2026-08-12T10:00:00Z",
+        },
+    }
 
 
 def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
@@ -61,18 +114,20 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
 
     home = (output / "index.html").read_text()
     contribution = (output / "contribute/index.html").read_text()
+    comparison = (output / "projects/index.html").read_text()
     news_page = (output / "news/index.html").read_text()
     personalized = (output / "personalize/index.html").read_text()
     repository = (output / "updates/2026-08-13/runtime-tools/widget.html").read_text()
     api = json.loads((output / "api/v1/index.json").read_text())
     opportunities = json.loads((output / "api/v1/opportunities.json").read_text())
+    comparison_api = json.loads((output / "api/v1/projects.json").read_text())
     repository_api = json.loads(
         (
             output / "api/v1/dates/2026-08-13/groups/runtime-tools/repositories/widget.json"
         ).read_text()
     )
 
-    assert build.pages == 7
+    assert build.pages == 8
     assert "Follow important projects" in home
     assert '<link rel="canonical" href="https://example.github.io/contribution-compass/">' in home
     assert 'property="og:image"' in home
@@ -98,6 +153,20 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
     )
     assert opportunities["methodology"]["scoreFormula"] == "sum(lead.measures[].points)"
     assert "Why this score" in contribution
+    assert "Compare projects" in comparison
+    assert "Recent Leads observed" in comparison
+    assert "latest collection snapshot" in comparison
+    assert 'data-sort-key="stars"' in comparison
+    assert "2026-08-10" in comparison
+    assert "comparison.js" in comparison
+    assert (output / "assets/comparison.js").exists()
+    assert api["links"]["projectComparison"].endswith("/api/v1/projects.json")
+    assert comparison_api["scope"]["leadCounts"] == (
+        "Contribution Leads derived from Signals in the latest collection snapshot; "
+        "not the repository's complete open backlog."
+    )
+    assert comparison_api["projects"][0]["recentLeadsObserved"] == 1
+    assert comparison_api["projects"][0]["latestRelease"]["publishedAt"] == ("2026-08-10T10:00:00Z")
     assert repository_api["dataset"]["events"][0]["event"] == "discovered"
     assert repository_api["dataset"]["repository"]["keywords"] == [
         "resource lifecycle",
@@ -131,7 +200,9 @@ def test_site_builds_human_and_machine_views(tmp_path: Path) -> None:
     assert "widget.html" in (output / "sitemap.xml").read_text()
     assert "/news/" in (output / "sitemap.xml").read_text()
     assert "/personalize/" in (output / "sitemap.xml").read_text()
+    assert "/projects/" in (output / "sitemap.xml").read_text()
     assert "Observation Events" in (output / "llms.txt").read_text()
+    assert "Project comparison" in (output / "llms.txt").read_text()
 
 
 def test_large_human_lists_are_split_into_static_pages(tmp_path: Path) -> None:

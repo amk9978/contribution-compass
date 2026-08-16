@@ -37,6 +37,7 @@ def test_mcp_exposes_typed_tools_and_resources_in_memory() -> None:
             assert "find_contribution_opportunities" in names
             assert "get_project_news" in names
             assert "get_signal_timeline" in names
+            assert "compare_projects" in names
             result = await client.call_tool(
                 "find_contribution_opportunities", {"project": "acme/widget"}
             )
@@ -62,6 +63,11 @@ def test_mcp_exposes_typed_tools_and_resources_in_memory() -> None:
             assert news.structured_content["result"][0]["news"]["latestRelease"]["tag"] == (
                 "v2.0.0"
             )
+            comparison = await client.call_tool("compare_projects", {})
+            assert comparison.structured_content is not None
+            assert comparison.structured_content["result"][0]["language"] == "Python"
+            assert comparison.structured_content["result"][0]["recentLeadsObserved"] == 1
+            assert comparison.structured_content["result"][0]["snapshot"]["date"] == ("2026-08-13")
             resource = await client.read_resource("compass://opportunities/latest")
             assert "good first issue" in resource.contents[0].text
 

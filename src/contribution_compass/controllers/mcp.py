@@ -201,6 +201,13 @@ def create_server(
         """List configured projects with context and collected evidence counts."""
         return [project.to_dict() for project in queries.list_projects(group)]
 
+    @server.tool()
+    def compare_projects(
+        group: Annotated[str | None, Field(description="Exact configured project-group id")] = None,
+    ) -> list[dict[str, object]]:
+        """Compare factual project context and Leads observed in the latest snapshot."""
+        return [project.to_dict() for project in queries.compare_projects(group=group)]
+
     @server.resource("compass://catalog", mime_type="application/json")
     def catalog_index() -> dict[str, object]:
         """Latest dates and monitored projects available to this server."""
