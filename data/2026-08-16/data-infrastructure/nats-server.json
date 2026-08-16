@@ -1,0 +1,295 @@
+{
+  "version": 4,
+  "date": "2026-08-16",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "nats-server",
+    "repo": "nats-io/nats-server",
+    "name": "NATS Server",
+    "keywords": [
+      "NATS server",
+      "NATS.io"
+    ]
+  },
+  "context": {
+    "repository": "nats-io/nats-server",
+    "url": "https://github.com/nats-io/nats-server",
+    "description": "High-Performance server for NATS.io, the cloud and edge native messaging system.",
+    "homepage": "https://nats.io",
+    "language": "Go",
+    "topics": [
+      "cloud",
+      "cloud-computing",
+      "cloud-native",
+      "connected-vehicle",
+      "distributed-systems",
+      "edge",
+      "edge-ai",
+      "edge-computing",
+      "go",
+      "golang",
+      "message-bus",
+      "message-queue",
+      "messaging",
+      "microservices-architecture",
+      "nats-server"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 20516,
+    "forks": 1906,
+    "openIssues": 541,
+    "archived": false,
+    "collectedAt": "2026-08-16T02:35:39.473421+00:00"
+  },
+  "news": {
+    "repository": "nats-io/nats-server",
+    "collectedAt": "2026-08-16T02:35:39.473421+00:00",
+    "latestRelease": {
+      "repository": "nats-io/nats-server",
+      "tag": "v2.14.5",
+      "title": "Release v2.14.5",
+      "url": "https://github.com/nats-io/nats-server/releases/tag/v2.14.5",
+      "publishedAt": "2026-08-12T15:31:27Z",
+      "notes": "## Changelog\r\n\r\nRefer to the [2.14 Upgrade Guide](https://docs.nats.io/release-notes/whats_new/whats_new_214) for backwards compatibility notes with 2.12.x. Please note that the 2.13.x version was skipped.\r\n\r\n### Go Version\r\n\r\n- 1.26.5\r\n\r\n### Dependencies\r\n\r\n- github.com/klauspost/compress v1.19.2 (#8459)\r\n- golang.org/x/crypto v0.55.0 (#8459)\r\n\r\n### Added\r\n\r\nLeafnodes\r\n\r\n- New `dial_timeout` option can be specified in the `leafnode` config block or for specific remotes in the configuration, allowing it to be increased above the default 1 second for high-latency links (#8427)\r\n\r\n### Fixed\r\n\r\nGeneral\r\n\r\n- Fixed a deadlock that could occur in the logger when a close error occurs (#8430)\r\n\r\nJetStream\r\n\r\n- Fix a bug that could result in potential data loss when handling idempotent stream creates when an offline node catches up from a metalayer snapshot, caused by an incorrect update to the create time in the stream assignment (#8449)\r\n\r\n### Complete Changes\r\n \r\nhttps://github.com/nats-io/nats-server/compare/v2.14.4...v2.14.5",
+      "highlights": [
+        "Changelog",
+        "Go Version",
+        "1.26.5",
+        "Dependencies",
+        "github.com/klauspost/compress v1.19.2 (#8459)",
+        "golang.org/x/crypto v0.55.0 (#8459)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-16T02:35:31.986278Z",
+      "since": "2026-08-15T02:35:31.986278Z",
+      "observedCount": 4,
+      "changedCount": 4
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:nats-io/nats-server:issue:8469",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "Apply clustered expected-last-subject-sequence checks during replicated apply",
+      "text": "### Proposed change Make `Nats-Expected-Last-Subject-Sequence` an authoritative replicated condition for clustered streams. Today clustered publishing validates the condition before proposing the message. The condition itself is not authoritative during replicated apply: expected-subject in-flight state is leader-local, is cleared during a leader transition, and the clustered apply path deliberately skips the general consistency checks. The proposed implementation would preserve the existing pre-proposal check for fast feedback, while marking conditionally admitted replicated entries so every supporting replica rechecks the expected subject sequence against its applied stream state immediately before storage. A mismatch would deterministically reject the committed entry and advance failed-sequence accounting without storing or delivering the message. Atomic batches would reproduce the existing staged-batch restrictions and preflight all marked conditions under the stream lock before storing any batch member, preserving all-or-nothing behavior. For rolling-upgrade safety, the suggested rollout is: - all supporting binaries always understand and honor the replicated marker, regardless of their local proposal-side flag - proposal-side emission is initially behind a default-off feature flag - every possible stream peer must first run a supporting binary, then the flag must be enabled on every server that can lead the stream - effective support and enablement are verified per server through the existing startup log and `Varz.feature_flags` surface (absent = unsupported, `false` = supported but disabled, `true` = enabled) - unmarked historical entries retain their current behavior This proposal is intentionally limited to `Nats-Expected-Last-Subject-Sequence`. It does not propose changing message headers, the public error model, sources/mirrors, other consistency headers, or adding a new client capability API. Before implementation I would appreciate confirmation that: 1. the replicated-marker/default-off rollout and existing operational verification surface are acceptable 2. applied per-subject store state is the intended deterministic basis for this check across supported retention modes 3. an apply-time mismatch should consume clustered failed-sequence accounting in the same way as another rejected committed stream entry 4. a marked entry with a missing or invalid predicate should fail closed as a malformed replicated command ### Use case `Nats-Expected-Last-Subject-Sequence` is used as subject-level optimistic concurrency control. A caller reads subject state at sequence S and publishes an update conditional on S still being current. For clustered streams, correctness currently depends on the leader's pre-proposal state and surrounding leadership/readiness mechanisms. The captured-term proposal fence prevents an old-term proposal, but it does not make the conditional predicate part of the replicated state-machine command. Current main has refused every transition route measured, and this proposal does not claim a reproduced production data-loss incident. The objective is to make the existing optimistic-concurrency condition authoritative at the state-machine boundary, so a committed entry whose predicate is stale cannot become valid merely because it crossed a leader transition or was replayed under different in-memory admission state. A deterministic regression can commit a current-term stale conditional entry after a newer value, proving that apply rejects it without relying on leader timing. Removing only the apply-time check then makes the stale value survive, which directly discriminates the proposed mechanism. ### Contribution Yes. I intend to contribute the implementation, including: - backward-compatible replicated encoding - default-off rollout flag and operational verification - normal, fast-batch, and atomic-batch handling - file- and memory-store tests - transform, explicit-subject, compression, restart, replay, catch-up, and sequence-accounting tests - source/mirror and feature-off compatibility tests - a deterministic apply-boundary regression and discriminating mutations",
+      "url": "https://github.com/nats-io/nats-server/issues/8469",
+      "createdAt": "2026-08-15T17:59:55Z",
+      "updatedAt": "2026-08-15T20:23:57Z",
+      "timestamp": "2026-08-15T20:23:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "proposal"
+      ],
+      "author": "nberlee",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8445",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) Raft proposal fast path",
+      "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+      "url": "https://github.com/nats-io/nats-server/pull/8445",
+      "createdAt": "2026-08-10T09:01:52Z",
+      "updatedAt": "2026-08-15T10:40:08Z",
+      "timestamp": "2026-08-15T10:40:08Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8446",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Route TLS: preserve saved hostname on HostnameError when URL is an IP",
+      "text": "Resolves #8309. ### Problem When a route TLS connection uses a saved `tlsName` (e.g. `routeTLSName`) as the ServerName fallback — because the URL hostname is an IP (typical for gossip-discovered routes) — and the handshake fails with `x509.HostnameError`, the saved `tlsName` was cleared. This caused all subsequent reconnection attempts via gossip to use the IP as `ServerName`, which permanently fails against certificates that only have DNS SANs (no IP SANs). ### Change Add a backup field `routeTLSLastName` that stores the hostname from configured route URLs alongside `routeTLSName`. When `routeTLSName` is cleared on `HostnameError` for an IP-based route URL, restore it from the backup instead of clearing outright. The backup is consumed so that on a subsequent failure, `routeTLSName` is cleared and the IP is tried, handling both: - **DNS-only SAN certificates** (#8309): The hostname gets one retry before falling back to IP - **Mixed DNS/IP SAN environments** (#1256): After the hostname retry fails, the IP is tried on the next attempt Additionally, when a TLS handshake fails with an IP URL and `routeTLSName` is already empty but `routeTLSLastName` is available, restore `routeTLSName` from the backup for the next reconnection attempt. ### Files changed - `server/server.go`: Add `routeTLSLastName` field to `Server` struct - `server/route.go`: Save backup hostname in `saveRouteTLSName`; restore from backup on `HostnameError` for IP-based route URLs; also restore when handshake fails with empty `routeTLSName` and available backup - `server/routes_test.go`: Rewrite `TestRouteTLSNameBackupRestoreOnHostnameError` to exercise the backup restore path end-to-end, verifying `routeTLSName` is restored from `routeTLSLastName` after a simulated `HostnameError` - `server/client.go`: No changes (reverted from v1) ### Review notes - The one-extra-failure regression for IP-SAN-only peers (from the #1256 scenario) is acknowledged: the backup gives the DNS hostname one retry before falling back to IP. This adds one reconnection cycle in mixed environments but prevents permanent failure in DNS-only SAN setups. - A config reload between two `HostnameError` failures repopulates `routeTLSLastName` from `saveRouteTLSName`, restarting the one-shot backup. This is documented in the code comment. Signed-off-by: Manideep Rayala <manideep3969@gmail.com>",
+      "url": "https://github.com/nats-io/nats-server/pull/8446",
+      "createdAt": "2026-08-10T10:08:09Z",
+      "updatedAt": "2026-08-15T08:18:07Z",
+      "timestamp": "2026-08-15T08:18:07Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "Manideep3969",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8447",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+      "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+      "url": "https://github.com/nats-io/nats-server/pull/8447",
+      "createdAt": "2026-08-10T10:58:45Z",
+      "updatedAt": "2026-08-15T07:39:47Z",
+      "timestamp": "2026-08-15T07:39:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:4053ee5e40f342ea3dd7",
+      "signalId": "github:nats-io/nats-server:issue:8469",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:8469",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "Apply clustered expected-last-subject-sequence checks during replicated apply",
+        "text": "### Proposed change Make `Nats-Expected-Last-Subject-Sequence` an authoritative replicated condition for clustered streams. Today clustered publishing validates the condition before proposing the message. The condition itself is not authoritative during replicated apply: expected-subject in-flight state is leader-local, is cleared during a leader transition, and the clustered apply path deliberately skips the general consistency checks. The proposed implementation would preserve the existing pre-proposal check for fast feedback, while marking conditionally admitted replicated entries so every supporting replica rechecks the expected subject sequence against its applied stream state immediately before storage. A mismatch would deterministically reject the committed entry and advance failed-sequence accounting without storing or delivering the message. Atomic batches would reproduce the existing staged-batch restrictions and preflight all marked conditions under the stream lock before storing any batch member, preserving all-or-nothing behavior. For rolling-upgrade safety, the suggested rollout is: - all supporting binaries always understand and honor the replicated marker, regardless of their local proposal-side flag - proposal-side emission is initially behind a default-off feature flag - every possible stream peer must first run a supporting binary, then the flag must be enabled on every server that can lead the stream - effective support and enablement are verified per server through the existing startup log and `Varz.feature_flags` surface (absent = unsupported, `false` = supported but disabled, `true` = enabled) - unmarked historical entries retain their current behavior This proposal is intentionally limited to `Nats-Expected-Last-Subject-Sequence`. It does not propose changing message headers, the public error model, sources/mirrors, other consistency headers, or adding a new client capability API. Before implementation I would appreciate confirmation that: 1. the replicated-marker/default-off rollout and existing operational verification surface are acceptable 2. applied per-subject store state is the intended deterministic basis for this check across supported retention modes 3. an apply-time mismatch should consume clustered failed-sequence accounting in the same way as another rejected committed stream entry 4. a marked entry with a missing or invalid predicate should fail closed as a malformed replicated command ### Use case `Nats-Expected-Last-Subject-Sequence` is used as subject-level optimistic concurrency control. A caller reads subject state at sequence S and publishes an update conditional on S still being current. For clustered streams, correctness currently depends on the leader's pre-proposal state and surrounding leadership/readiness mechanisms. The captured-term proposal fence prevents an old-term proposal, but it does not make the conditional predicate part of the replicated state-machine command. Current main has refused every transition route measured, and this proposal does not claim a reproduced production data-loss incident. The objective is to make the existing optimistic-concurrency condition authoritative at the state-machine boundary, so a committed entry whose predicate is stale cannot become valid merely because it crossed a leader transition or was replayed under different in-memory admission state. A deterministic regression can commit a current-term stale conditional entry after a newer value, proving that apply rejects it without relying on leader timing. Removing only the apply-time check then makes the stale value survive, which directly discriminates the proposed mechanism. ### Contribution Yes. I intend to contribute the implementation, including: - backward-compatible replicated encoding - default-off rollout flag and operational verification - normal, fast-batch, and atomic-batch handling - file- and memory-store tests - transform, explicit-subject, compression, restart, replay, catch-up, and sequence-accounting tests - source/mirror and feature-off compatibility tests - a deterministic apply-boundary regression and discriminating mutations",
+        "url": "https://github.com/nats-io/nats-server/issues/8469",
+        "createdAt": "2026-08-15T17:59:55Z",
+        "updatedAt": "2026-08-15T20:23:57Z",
+        "timestamp": "2026-08-15T20:23:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "proposal"
+        ],
+        "author": "nberlee",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:86a60c2bd5c286ab5049",
+      "signalId": "github:nats-io/nats-server:pull_request:8445",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8445",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) Raft proposal fast path",
+        "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+        "url": "https://github.com/nats-io/nats-server/pull/8445",
+        "createdAt": "2026-08-10T09:01:52Z",
+        "updatedAt": "2026-08-15T10:40:08Z",
+        "timestamp": "2026-08-15T10:40:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0117a94ddeb987b5ff50",
+      "signalId": "github:nats-io/nats-server:pull_request:8446",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8446",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Route TLS: preserve saved hostname on HostnameError when URL is an IP",
+        "text": "Resolves #8309. ### Problem When a route TLS connection uses a saved `tlsName` (e.g. `routeTLSName`) as the ServerName fallback — because the URL hostname is an IP (typical for gossip-discovered routes) — and the handshake fails with `x509.HostnameError`, the saved `tlsName` was cleared. This caused all subsequent reconnection attempts via gossip to use the IP as `ServerName`, which permanently fails against certificates that only have DNS SANs (no IP SANs). ### Change Add a backup field `routeTLSLastName` that stores the hostname from configured route URLs alongside `routeTLSName`. When `routeTLSName` is cleared on `HostnameError` for an IP-based route URL, restore it from the backup instead of clearing outright. The backup is consumed so that on a subsequent failure, `routeTLSName` is cleared and the IP is tried, handling both: - **DNS-only SAN certificates** (#8309): The hostname gets one retry before falling back to IP - **Mixed DNS/IP SAN environments** (#1256): After the hostname retry fails, the IP is tried on the next attempt Additionally, when a TLS handshake fails with an IP URL and `routeTLSName` is already empty but `routeTLSLastName` is available, restore `routeTLSName` from the backup for the next reconnection attempt. ### Files changed - `server/server.go`: Add `routeTLSLastName` field to `Server` struct - `server/route.go`: Save backup hostname in `saveRouteTLSName`; restore from backup on `HostnameError` for IP-based route URLs; also restore when handshake fails with empty `routeTLSName` and available backup - `server/routes_test.go`: Rewrite `TestRouteTLSNameBackupRestoreOnHostnameError` to exercise the backup restore path end-to-end, verifying `routeTLSName` is restored from `routeTLSLastName` after a simulated `HostnameError` - `server/client.go`: No changes (reverted from v1) ### Review notes - The one-extra-failure regression for IP-SAN-only peers (from the #1256 scenario) is acknowledged: the backup gives the DNS hostname one retry before falling back to IP. This adds one reconnection cycle in mixed environments but prevents permanent failure in DNS-only SAN setups. - A config reload between two `HostnameError` failures repopulates `routeTLSLastName` from `saveRouteTLSName`, restarting the one-shot backup. This is documented in the code comment. Signed-off-by: Manideep Rayala <manideep3969@gmail.com>",
+        "url": "https://github.com/nats-io/nats-server/pull/8446",
+        "createdAt": "2026-08-10T10:08:09Z",
+        "updatedAt": "2026-08-15T08:18:07Z",
+        "timestamp": "2026-08-15T08:18:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "Manideep3969",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:bef76b58325cea06c3e7",
+      "signalId": "github:nats-io/nats-server:pull_request:8447",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8447",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+        "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+        "url": "https://github.com/nats-io/nats-server/pull/8447",
+        "createdAt": "2026-08-10T10:58:45Z",
+        "updatedAt": "2026-08-15T07:39:47Z",
+        "timestamp": "2026-08-15T07:39:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "version": 4,
+  "date": "2026-08-15",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "etcd-raft",
+    "repo": "etcd-io/raft",
+    "name": "etcd Raft",
+    "keywords": [
+      "etcd raft"
+    ]
+  },
+  "context": {
+    "repository": "etcd-io/raft",
+    "url": "https://github.com/etcd-io/raft",
+    "description": "Raft library for maintaining a replicated state machine",
+    "language": "Go",
+    "topics": [
+      "consensus",
+      "distributed-systems",
+      "raft"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 1089,
+    "forks": 269,
+    "openIssues": 88,
+    "archived": false,
+    "collectedAt": "2026-08-15T02:27:52.542722+00:00"
+  },
+  "news": {
+    "repository": "etcd-io/raft",
+    "collectedAt": "2026-08-15T02:27:52.542722+00:00",
+    "latestRelease": {
+      "repository": "etcd-io/raft",
+      "tag": "v3.7.0",
+      "title": "v3.7.0",
+      "url": "https://github.com/etcd-io/raft/releases/tag/v3.7.0",
+      "publishedAt": "2026-06-23T13:40:04Z",
+      "notes": "See the [CHANGELOG/v3.7.0](https://github.com/etcd-io/raft/blob/main/CHANGELOG/CHANGELOG-3.7.md#v3702026-06-21) for more details.",
+      "highlights": [],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "etcd-io/raft",
+        "kind": "milestone",
+        "title": "v4.0.0",
+        "url": "https://github.com/etcd-io/raft/milestone/2",
+        "description": "",
+        "progress": 0,
+        "openIssues": 4,
+        "closedIssues": 0
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-15T02:27:51.268670Z",
+      "since": "2026-08-14T02:27:51.268670Z",
+      "observedCount": 3,
+      "changedCount": 0
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:etcd-io/raft:pull_request:492",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "etcd-io/raft",
+      "kind": "pull_request",
+      "title": "bump go 1.26.6",
+      "text": "Part of https://github.com/etcd-io/etcd/issues/22283",
+      "url": "https://github.com/etcd-io/raft/pull/492",
+      "createdAt": "2026-08-14T08:04:25Z",
+      "updatedAt": "2026-08-14T08:04:41Z",
+      "timestamp": "2026-08-14T08:04:41Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS"
+      ],
+      "author": "pjsharath28",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:etcd-io/raft:pull_request:493",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "etcd-io/raft",
+      "kind": "pull_request",
+      "title": "[release-3.7] bump go 1.26.6",
+      "text": "Part of https://github.com/etcd-io/etcd/issues/22283",
+      "url": "https://github.com/etcd-io/raft/pull/493",
+      "createdAt": "2026-08-14T08:08:02Z",
+      "updatedAt": "2026-08-14T08:11:22Z",
+      "timestamp": "2026-08-14T08:11:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS"
+      ],
+      "author": "pjsharath28",
+      "state": "open",
+      "assignees": []
+    },
+    {
+      "id": "github:etcd-io/raft:pull_request:494",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "etcd-io/raft",
+      "kind": "pull_request",
+      "title": "[release-3.6] bump go 1.25.13",
+      "text": "Part of https://github.com/etcd-io/etcd/issues/22283",
+      "url": "https://github.com/etcd-io/raft/pull/494",
+      "createdAt": "2026-08-14T08:11:53Z",
+      "updatedAt": "2026-08-14T08:12:09Z",
+      "timestamp": "2026-08-14T08:12:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS"
+      ],
+      "author": "pjsharath28",
+      "state": "open",
+      "assignees": []
+    }
+  ],
+  "events": []
+}

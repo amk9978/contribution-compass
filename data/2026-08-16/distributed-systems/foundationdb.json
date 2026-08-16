@@ -1,0 +1,997 @@
+{
+  "version": 4,
+  "date": "2026-08-16",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "foundationdb",
+    "repo": "apple/foundationdb",
+    "name": "FoundationDB",
+    "keywords": [
+      "FoundationDB"
+    ]
+  },
+  "context": {
+    "repository": "apple/foundationdb",
+    "url": "https://github.com/apple/foundationdb",
+    "description": "FoundationDB - the open source, distributed, transactional key-value store",
+    "homepage": "https://apple.github.io/foundationdb/",
+    "language": "C++",
+    "topics": [
+      "acid",
+      "distributed-database",
+      "foundationdb",
+      "key-value-store",
+      "transactional"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16605,
+    "forks": 1547,
+    "openIssues": 769,
+    "archived": false,
+    "collectedAt": "2026-08-16T02:35:34.759980+00:00"
+  },
+  "news": {
+    "repository": "apple/foundationdb",
+    "collectedAt": "2026-08-16T02:35:34.759980+00:00",
+    "latestRelease": {
+      "repository": "apple/foundationdb",
+      "tag": "7.3.77",
+      "title": "Release 7.3.77",
+      "url": "https://github.com/apple/foundationdb/releases/tag/7.3.77",
+      "publishedAt": "2026-04-16T19:24:36Z",
+      "notes": "Same code as 7.3.76 but with avx enabled.",
+      "highlights": [],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.79",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.79",
+        "description": "Same code as 7.3.78 but with avx enabled.",
+        "tag": "7.3.79",
+        "publishedAt": "2026-07-15T20:13:35Z"
+      },
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.78",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.78",
+        "description": "This release is compiled without avx instructions.",
+        "tag": "7.3.78",
+        "publishedAt": "2026-07-15T20:13:34Z"
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-16T02:35:31.986278Z",
+      "since": "2026-08-15T02:35:31.986278Z",
+      "observedCount": 17,
+      "changedCount": 17
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:apple/foundationdb:pull_request:13180",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Move TSS load balancing logic out of `fdbrpc`",
+      "text": "This PR has a similar goal to https://github.com/apple/foundationdb/pull/13080, to move FDB-specific logic out of the `fdbrpc` library. Previously `loadBalance` was tightly coupled with storage servers, and specifically the testing storage server feature. In this PR, a `LoadBalanceRequestHooks` struct is added to `LoadBalance.actor.h`, specialized in a new `StorageServerLoadBalance.actor.h` file, which lives in `fdbclient` and now contains the storage-server-specific load balancing logic. Validated with 10k correctness tests.",
+      "url": "https://github.com/apple/foundationdb/pull/13180",
+      "createdAt": "2026-05-09T02:37:34Z",
+      "updatedAt": "2026-08-15T04:27:15Z",
+      "timestamp": "2026-08-15T04:27:15Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 49
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13731",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Fix stateless process recruitment in small configurations",
+      "text": "## Summary - Admit all eligible workers with the same role fitness during cluster-controller recruitment while preserving existing fitness and usage ordering. - Recruit the requested commit proxies, GRV proxies, and resolvers from distinct stateless processes even when those processes share one machine. - Remove the simulator-only automatic stateless-machine reservation; retain explicit stateless assignment to real machines and correct storage-candidate accounting. - Add a full-dispatch cluster-controller regression with three stateless processes on one machine and independently placed TLogs. ## Validation - `fdbserver_clustercontroller_test -f /fdbserver/clustercontroller/recruitStatelessProcessesOnOneMachine` - `fdbserver_clustercontroller_test` (32 tests passed) - `fdbserver -r simulation -f tests/fast/ReportConflictingKeys.toml` - `fdbserver -r simulation -f tests/fast/AtomicOpsApiCorrectness.toml` - `clang-format` 19 and `git diff --check`",
+      "url": "https://github.com/apple/foundationdb/pull/13731",
+      "createdAt": "2026-07-18T03:26:27Z",
+      "updatedAt": "2026-08-15T17:47:14Z",
+      "timestamp": "2026-08-15T17:47:14Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 60
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13782",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Backport to 7.4: add retry limit to startMoveKeys to prevent infinite loops (#13176)",
+      "text": "Add START_MOVE_KEYS_MAX_RETRIES knob (default 50, BUGGIFY=10) and throw start_move_keys_too_many_retries when exceeded. Wire the new error into DDRelocationQueue (same light-weight re-queue handler as finish_move_keys_too_many_retries and move_to_removed_server) and normalDDQueueErrors so DD does not restart. Also propagate actor_cancelled before the retry limit check in startMoveKeys. ` 20260724-003619-stack-backport-7.4-eac563f902694355 compressed=True data_size=41563174 duration=3238562 ended=100000 fail=5 fail_fast=10 max_runs=100000 pass=99995 priority=100 remaining=0 runtime=0:31:27 sanity=False started=100000 stopped=20260724-010746 submitted=20260724-003619 timeout=5400 username=stack-backport-7.4` The 5 failures are all 'RandomSeed=\"1520625388\" SourceVersion=\"ac41ec01f6c2b74a6c1432bb75f874a9c3ab2dd2\" Time=\"1784853672\" BuggifyEnabled=\"0\" DeterminismCheck=\"0\" FaultInjectionEnabled=\"1\" TestFile=\"tests/fast/MinimumThroughput.toml\"'. I'll fix in a different PR. The failures are not related to here. (They are fixed over in #13783)",
+      "url": "https://github.com/apple/foundationdb/pull/13782",
+      "createdAt": "2026-07-24T01:12:20Z",
+      "updatedAt": "2026-08-15T05:24:36Z",
+      "timestamp": "2026-08-15T05:24:36Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 44
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13803",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Restart backup workers after disk I/O timeouts",
+      "text": "## Summary - Recover backup-worker I/O timeouts without bypassing storage-server restart safety. - Re-recruit failed old-generation classic and range-partitioned backup workers after acknowledged owner shutdown; ambiguous failures safely fall back to transaction-system recovery. - Publish backup start versions transactionally with old-log retirement, and add focused classic and range-partitioned lifecycle, ownership, and retention regressions. ## Rollout - Full protection against the pending-backup retirement race requires both backup agents and server processes to run the updated code. ## Validation - `fdbclient_test` - `fdbserver_backupworker_test` - `fdbserver_clustercontroller_test` - `fdbserver_logsystem_test` - `fdbserver_worker_test` - `tests/slow/BackupAndRestore.toml` - `tests/slow/BackupCorrectnessPartitioned.toml` All simulation configurations were run with fault injection and buggification enabled.",
+      "url": "https://github.com/apple/foundationdb/pull/13803",
+      "createdAt": "2026-07-29T19:45:26Z",
+      "updatedAt": "2026-08-15T18:09:36Z",
+      "timestamp": "2026-08-15T18:09:36Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 23
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13812",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Address Round 6 review feedback from PR 13344",
+      "text": "Followups from Round 6 review on PR#13344. - Bug (tracker bookkeeping can terminate the server): Added a nest-safe gInMemTrackerAlloc context (distinct from gInMemTracker, which Arena sets around real user allocations) so the tracker's own metadata/reporter allocations throw bad_alloc straight to its fail-open catch instead of tripping the fatal OOM handler after the caller's real allocation already succeeded. (As discussed in PR#13344 we think the impact of this is likely negligible, but why not fix it while we're here.) - Bug (sanitizer/gperftools/Valgrind bypass FastAllocator tracking): Added memTrackerOnAlloc/memTrackerOnFree to the USE_GPERFTOOLS/ADDRESS_SANITIZER/precise-Valgrind early-return paths in FastAllocator::allocate/release, so those builds still attribute every FastAllocator size class and the small Arena blocks backed by it. - Omission (no test forces a real tracker-owned allocation failure): Rewrote failOpenOnMetadataAllocFailure to force an actual map allocation to fail through mallocWithNewHandler and assert the installed new_handler is never invoked — and in doing so found and fixed a P0593 heap-elision bug that had made the original test pass without allocating anything. - Omission (no coverage under ASan/gperftools/Valgrind): Documented that the un-guarded fastAlloc32Accounting/arenaSmallAccounting tests now exercise the new sanitizer-path hooks under those builds (verified by the clean 100k Joshua run rather than a dedicated sanitizer CI job). Ran 1000 iterations of new tests and also: 20260803-184807-gglass-39545f72cc3ffaa1 compressed=True data_size=38391356 duration=3971129 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:46:56 sanity=False started=100000 stopped=20260803-193503 submitted=20260803-184807 timeout=5400 username=gglass",
+      "url": "https://github.com/apple/foundationdb/pull/13812",
+      "createdAt": "2026-08-03T22:11:42Z",
+      "updatedAt": "2026-08-15T17:19:37Z",
+      "timestamp": "2026-08-15T17:19:37Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 39
+      },
+      "labels": [],
+      "author": "gxglass",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13866",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Add AuditType::RangeDigest: a storage-server-side content fingerprint",
+      "text": "# Add AuditType::RangeDigest: a storage-server-side content fingerprint ## Summary Adds `AuditType::RangeDigest`, a 256-bit **content fingerprint** of the key-value multiset computed in parallel by the storage servers that already hold the data. A root taken before a backup equals the root taken after a restore **iff** the restored data is identical as a set — regardless of how the two clusters shard the keyspace. This gives backup/restore validation a check that is both rigorous (every key-value, no sampling) and affordable at multi-terabyte scale: only 32-byte digests cross the network, never user data, so throughput scales with the number of storage servers rather than one client's bandwidth. Design doc: `design/range-digest.md` (included in this PR). ## Motivation A backup of a multi-terabyte database is only trustworthy if the restore can be confirmed to reproduce it. The obvious check — a client reads the whole keyspace and hashes it — was built first as an external prototype (`fdbfingerprint`) and produced matching roots at 1B and 3B. It was abandoned as the mechanism on **measured** cost: the 3B dataset took **9h11m at ~79 MB/s aggregate**, with all of that read load landing on the very path under validation, and a before/after comparison needs two such runs. Two qualifications, since the numbers invite an overclaim. That 79 MB/s was **not a hard client ceiling** — it was ~4 MB/s across 20 disks that sat ~98% idle, i.e. an under-parallelized prototype (8 pods, each a single-network-thread client unable to hide cold-read latency); a tuned client would be considerably faster. And while the server-side digest measures ~2770 MB/s at 10B, that is against the untuned client, so the ~35× gap is **not** like-for-like. The architectural argument stands without the ratio: an external fingerprint scales with whatever bandwidth one client pool is given and spends read capacity production traffic needs, while hashing on the servers that already hold the data scales with storage-server count and moves only 32-byte digests. The check must also be **partition-independent**: a restore lands the same logical data under completely different shard boundaries, so any fingerprint that depends on the physical partition (Merkle tree over a shard list, per-shard hash comparison) cannot be compared across a restore at all. Hence an additive multiset hash. ## Design ``` leaf = SHA-256( u32be len(key) | key | u32be len(value) | value ) digest = ( Σ leaf ) mod 2^256 # 256-bit big-endian accumulator, 0 = empty set root = combine of every storage server's per-range digest ``` Addition mod 2²⁵⁶ is associative and commutative, so the root is independent of grouping, ordering and shard layout — the partition-independence requirement — and per-range digests combine upward with no boundary replay. 256 bits matches the SHA-256 leaf (no truncation) and leaves a ~2¹²⁸ accidental-collision margin against datasets of ~2³³ keys, for 32 bytes per range on the wire. The leaf encoding is byte-for-byte identical to the Phase-0 `fdbfingerprint` tool, which is retained as an independent cross-check. **Explicit non-goal:** collision resistance against an adversary who *chooses* inputs. Additive multiset hashes are vulnerable to subset-sum/lattice attacks; the threat model here is accidental corruption of FDB's own data on a trusted cluster, so a keyed MAC's key management and cost buy nothing in scope. This is stated in the design doc rather than left implicit. ## Precondition: quiescence The digest must be taken over a quiescent cluster (writes stopped, `moving_data → 0`). Two independent invariants require it: 1. **Single version** — each server folds its own key-values at *its own* current read version; there is no cluster-wide pinned version, so concurrent writes would hash at inconsistent versions and the root would correspond to no single snapshot. 2. **Exactly-once** — the additive combine assumes each key-value is folded exactly once cluster-wide. Under in-flight shard movement a key can be folded by both the losing and gaining server, or by neither at the instant it is read. This is not theoretical: at 100M scale, digesting during data-distribution churn produced a root mismatch, with both sides counting ~104.8M key-values against a true ~100M. Callers must settle first — natural for backup/restore, where both sides are settled datasets. `RangeDigest.h` carries a TODO for the generalization: folding every server against a single pinned cluster read version, with an ownership snapshot consistent with that version, would restore both invariants online. Unnecessary for backup/restore, and it would not change the leaf encoding or the root of a quiesced dataset, so fingerprints taken today stay comparable. ## What's in the PR | area | change | |---|---| | `fdbclient/RangeDigest.{h,cpp}` | new: leaf encoding, 256-bit accumulator, `addKeyValue`/`combine` | | `fdbserver/storageserver/storageserver.cpp` | `auditRangeDigestQ`, dispatched from `serveAuditStorageRequests`; batched and rate-limited | | `fdbserver/datadistributor/DataDistribution.cpp` | dispatch, per-range persistence, combine to a cluster root on Complete | | `fdbclient/AuditUtils.cpp`, `Audit.h`, `AuditUtils.h` | `AuditType::RangeDigest = 7`; digest/kvCount/byteCount on the audit record; range-digest summary read | | `fdbcli/AuditStorageCommand.cpp`, `GetAuditStatusCommand.cpp` | `range_digest` audit type; new `get_audit_status range_digest root <id>` | | `fdbserver/workloads/RangeDigestValidation.cpp`, `tests/fast/RangeDigestValidation.toml` | simulation workload + test registration | | `design/range-digest.md` | design doc | Rate limiting and batching reuse the existing audit controls (`AUDIT_STORAGE_RATE_PER_SERVER_MAX` via `SpeedLimit`, `AUDIT_RESTORE_BATCH_KEY_LIMIT`, `REPLY_BYTE_LIMIT`) rather than introducing new knobs. CLI surface: ``` audit_storage range_digest \"\" \\xff # start; prints the audit ID get_audit_status range_digest id <id> # phase, plus KVCount/Bytes/Digest for this type get_audit_status range_digest progress <id> # per-range detail (while Running) get_audit_status range_digest root <id> # combined cluster root (Complete only) ``` `root` deliberately refuses to print unless the audit is `Complete`: per-range progress is cleared at completion, so a root read earlier could be computed over partial coverage. Relatedly, the combine is guarded — if the persisted per-range digests do not tile the whole audit range, the audit retries rather than publishing a root that silently omits keys. ## Compatibility `AuditStorageState::serialize` gains three **appended** fields (`digest`, `kvCount`, `byteCount`). With flatbuffers + `IncludeVersion`, old readers ignore trailing fields and new readers default-initialize them for records written by older versions; existing field order is untouched. The fields are empty/zero for every other audit type. Otherwise additive and opt-in: a new `AuditType` invoked on demand, no on-disk format change to user data, no effect on a cluster that never requests it. Rollback is simply not issuing the audit. ## Testing - **Simulation** (`tests/fast/RangeDigestValidation.toml`): the workload writes a known key-value set, then (a) cross-checks the audit's combined root against an **independent client-side computation** of the same additive digest — scanning every key-value and applying the canonical leaf encoding, which validates the storage-server fold *and* the combine — and (b) runs a **second** audit and asserts the root is identical, which demonstrates partition-independence since data distribution may have moved shards in between. It waits for quiescence before each digest. The backup → clear → restore → recompute cycle is covered by the Kubernetes test, not in simulation. - **Multi-shard combine** exercised on seeds 12345 / 777 / 424242 / 9001 (4–9 shards, up to 18 SS digest tasks): 0 `SevError`, all roots matching the independent computation. - **Scale validation** via the companion Kubernetes test (`test_backup_restore_rangedigest`): `root_after == root_before` verified end-to-end at 100M, 1B, 3B and ~4.3B key-values. - **It found a real data-loss bug at 10B.** A 9.26 TB run's roots disagreed by 935,560 key-values (0.0095%) while the restore reported success. The shortfall was 0.99x exactly one bulkload task; trace events named the task, and the range was empty on the restored cluster. Root cause and fix are #13873. A discrepancy that small is precisely what sampling or row counts would miss. - **Measured throughput at 10B:** 9,257,887,466,305 bytes over 9,808,347,148 key-values digested in **53m07s — ~2770 MB/s aggregate** — on a 30-machine cluster with 4 storage disks per machine. The external Phase-0 client did the smaller 3B dataset in 9h11m at ~79 MB/s, but from an under-parallelized client, so treat that as context rather than a tuned comparison. - **Reproducibility:** that same 10B dataset re-digested to a byte-identical root on a later run against the same cluster, with no restore involved — so a matching root is not an artifact of digesting twice in quick succession. ### Reviewer notes — known gaps, stated rather than glossed - **A skipped run is also green.** If an audit cannot complete under harness churn, the workload logs `RangeDigestValidationInconclusive` and returns without asserting. The content assertions sit deliberately *outside* that `try`, so a genuine mismatch is never swallowed — but it does mean a green result should be confirmed by the presence of `RangeDigestValidationSuccess` rather than the absence of errors. Worth deciding whether inconclusive runs should be made noisier. - The committed `.toml` uses a modest dataset (`nodeCount=10000`) so it stays cheap across the Joshua matrix; **some seeds will keep the data in a single shard**, in which case that seed does not exercise the cross-server combine. The multi-shard evidence above comes from a larger dedicated run with `strictShardCheck=true`. Worth deciding whether a strict variant should gate here. - The clean 100k-run Joshua result for this work was obtained on an **earlier revision** of the branch; a fresh Joshua run should gate the merge rather than being assumed from that one. - The digest is read-heavy, so its throughput is sensitive to the block-cache-to-data ratio; a low-memory configuration makes it disk-bound. An observability note, not a defect. ## Companion PR The Kubernetes scale test that drives this (`test_backup_restore_rangedigest` in `FoundationDB/fdb-kubernetes-tests`) is a separate PR and cannot run until this lands and is imaged.",
+      "url": "https://github.com/apple/foundationdb/pull/13866",
+      "createdAt": "2026-08-14T05:11:36Z",
+      "updatedAt": "2026-08-15T22:32:12Z",
+      "timestamp": "2026-08-15T22:32:12Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 31
+      },
+      "labels": [
+        "testing",
+        "Backup_v3"
+      ],
+      "author": "saintstack",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13867",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Document why bulkload needs DD pipeline headroom",
+      "text": "DD_MAX_PIPELINE_MOVES caps the relocations DD tracks (queued + in-flight), and its default of 1000 is below what a large bulkload job generates. Bulkload is the workload most exposed to that cap, because of three properties that ordinary data movement does not share: - Bulkload moves consume no source work factor. They read from blob storage rather than from source storage servers, so canLaunchSrc() admits them unconditionally. Every other relocation is self-limiting through the per-server busyness ledger, which can leave the pipeline cap as the only thing gating bulkload. - They run at PRIORITY_TEAM_HEALTHY (140) against splits at PRIORITY_SPLIT_SHARD (950), but unlike background rebalance a bulkload job has a caller waiting on it. - A restore into a previously empty contiguous range makes DD split that range, so the job manufactures the higher-priority relocations that then precede it. pipelineGateActor is priority-blind, so a cap sized near real demand turns admission into arrival-order FIFO, and bulkload moves cannot be reordered ahead of the splits they caused. The note records the measurement behind this (1B restore: no bulkload movement for 1h54m at cap 1000, 7.15s with headroom, in-flight unchanged at 107 -> 114, so the capacity was present throughout; 3B restore: 6041-6815 queued relocations in the same phase) and the distinction that matters when tuning, namely that raising the cap adds no concurrency. It also gives a sizing rule, because the knob has a ceiling as well as a floor: DD resident memory is roughly 4 GB + 0.11 GB per 1000 tracked relocations and in-flight converges on the cap while movement is storming, so 100000 needs ~15 GB and can OOM an 8 GB or 12 GB distributor before the cap engages, while 20000 costs ~6.2 GB and clears the demand measured above. Raising the default is therefore not the fix; the guidance is per-job. Adds the operator-facing symptom to the bulkload troubleshooting page as well: DDPipelineFull events during a load with InQueue plus InFlight sitting at the cap. Applies to 7.3, 7.4 and main alike, whose default is 1000.",
+      "url": "https://github.com/apple/foundationdb/pull/13867",
+      "createdAt": "2026-08-14T05:39:32Z",
+      "updatedAt": "2026-08-15T03:12:05Z",
+      "timestamp": "2026-08-15T03:12:05Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13869",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "[release-7.4] Fix an old exclude failed bug",
+      "text": "Port apple/foundationdb#13645 to release-7.4. Problem: In removeKeysFromFailedServer, the writes that unassign a dropped shard from the dest servers (serverKeysFalse) and the writes that reassign it to the new team as an empty range were pushed into a single actors vector and awaited together. krmSetRangeCoalescing performs a read-modify-write on the serverKeys map, so when a server appears in both the dest set and the new team, running the two batches concurrently lets the coalescing reads observe stale state and produce an incorrect serverKeys assignment. Solution: await the unassign batch first, then run the empty-range assignment in a separate batch, ensuring the serverKey map assignment is correct. Same fix already backported to release-7.3 in apple/foundationdb#13662. release-7.4 still used the wait()/actor-compiler style rather than main's co_await, and shardId needed to become state since it now crosses the new wait() boundary -- same conflict resolution as the 7.3 backport. 100K: 20260813-171407-praza-port-7.4-pr13645-817f-e3951c728b485de6 pass=100000 fail=0 ended=100000 max_runs=100000",
+      "url": "https://github.com/apple/foundationdb/pull/13869",
+      "createdAt": "2026-08-14T17:03:20Z",
+      "updatedAt": "2026-08-15T22:59:14Z",
+      "timestamp": "2026-08-15T22:59:14Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 26
+      },
+      "labels": [],
+      "author": "spraza",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13870",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Convert Data Distribution monitoring actors to coroutines",
+      "text": "## Summary - Convert `storageServerFailureTracker`, `monitorStorageServerRecruitment`, and `waitServerListChange` from Flow actors to standard C++ coroutines. - Preserve failure-monitor race ordering, recruitment state transitions, server-removal stream handling, and the remaining actor-compiled code and tests. - Avoid starting a data-removal transaction when the higher-priority health-change branch is already ready. ## Validation - `clang-format --dry-run --Werror fdbserver/datadistributor/DDTeamCollection.actor.cpp` (clang-format 19.1.0) - `fdbserver_datadistributor_test --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242 --simulation` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242 --simulation`",
+      "url": "https://github.com/apple/foundationdb/pull/13870",
+      "createdAt": "2026-08-14T17:22:37Z",
+      "updatedAt": "2026-08-15T18:25:42Z",
+      "timestamp": "2026-08-15T18:25:42Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 31
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13872",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Lower backup role failure severity for IO error",
+      "text": "Problem: One off IO error when doing backup in the backup-worker when using backup-v2/partitioned logs is causing the process to report for the next 24 hours an SevError that could lead to pagable alert depending on once configuration. Solution: Make this issue a non SevError for the backup-worker due to the nature of the medium used for backup ie. blobstore or networked filesystem it can happen and will be retried by the process. Testing: Passed 10K testing in joshua",
+      "url": "https://github.com/apple/foundationdb/pull/13872",
+      "createdAt": "2026-08-14T17:34:52Z",
+      "updatedAt": "2026-08-15T03:10:02Z",
+      "timestamp": "2026-08-15T03:10:02Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "mpatou-openai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13873",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Do not lose a bulkload task when its data move loses the destination team",
+      "text": "## Summary A bulkload restore could lose a task's data and still report success. This fixes that, and adds simulation coverage for the path that produced it. Found by a 10B backup/restore validation using the RangeDigest content fingerprint (#13866). The fingerprint taken before the backup and after the restore disagreed by 935,560 key-values / 889 MB — 0.99× exactly one bulkload task — while the restore reported `103786/103786` complete. Trace events named the single task and its error, and reading that key range on the restored cluster returned nothing while the range immediately below it returned keys. ## The two problems **A recoverable data move failure was treated as permanent.** When a bulkload data move's destination team became unhealthy, the relocator acked the task `unretryableError`, which marks it `Error` and abandons it. For an ordinary data move that is harmless — the shard stays put and data distribution decides again later — but a bulkload task's key-values exist only in the dump until an attempt ingests them, so abandoning the task removes that range from the database with no other copy. An unhealthy destination team is a scheduling condition, not a property of the data. It is now acked retryable, and the task is re-dispatched through the path an abandoned or timed-out task already takes. Two details matter: - The task must be unpublished first. `publishTask` deliberately refuses a task whose `taskId` is already published, so without erasing the entry every later dispatch fails as `bulkload_task_outdated` and the task spins between the scheduler and `publishTask` without moving data. Measured before that was added: 7102 dispatch attempts, 3548 outdated, zero tasks completed, a simulation running 9124 seconds where the same seed completes in 23. - Re-dispatch is bounded by `BulkLoadTaskState::restartCount`, which is already persisted with the task and reported as `RestartCount` for stalled tasks. The bound is a constant in the function, matching the backstop timeout beside it; the existing retry knobs cover other layers (dump file downloads, retries inside one move-keys call, rebalance), so reusing one would mislead whoever tuned it next. **The restore reported success regardless.** `monitorBulkLoadJobCompletionWithProgress` returned true as soon as the job was no longer running — but a job whose range has been fully walked clears its live metadata even when a task ended in `Error`, archiving it to history with an `Error` phase in the same transaction. So \"no longer running\" meant \"finished walking\", not \"every task succeeded\". It now reads the archived phase and fails with `restore_bulkload_failed`. The two halves are load-bearing for each other: giving up on a task after exhausting retries is only safe because a job ending in `Error` now fails its restore rather than reporting completion. ## Second finding: three existing tests were restoring incomplete data and passing With the check in place, `BackupS3BlobBulkLoadRestore.toml` and its MultiRange and WithChaos variants began failing — 10 runs, every seed. The cause was not this change: ``` DDBulkLoadEngineTaskGetTeamFailedToFindValidTeam ×50 TeamSize=10 ValidTeamSize=0 DuplicatedCount=10 DDBulkLoadTaskUnretriableError ×4 → job Error → restore aborted BulkLoadRestoreTaskComplete 0 (the restore correctly refused to claim success) ``` Every candidate team shared a server with the source, so team *selection* failed at dispatch and tasks genuinely could not load. `tests/fast/BulkLoading.toml` documents that stall and guards against it with `extraStorageMachineCountPerDC`; these three set only `extraMachineCountDC`, which adds ordinary machines and supplies no storage-class capacity. **Before this PR those runs restored incomplete data and passed.** The last commit adds the missing capacity, per DC so the multi-region variants keep their coverage. ## Tests `tests/fast/BulkLoadingDestTeamFailure.toml` and `…Exhausted.toml` drive `BulkLoadingWorkload`, which compares every restored key-value against what it wrote, while `BULKLOAD_SIM_INJECT_DEST_TEAM_FAILURES` injects a set number of destination-team failures. The knob is 0 everywhere else. A count rather than a probability: a per-poll probability either never fires on short moves or keeps firing until the task gives up, and neither exercises recovery. The budget is spent on one task, because the give-up path bounds a single task's `restartCount`. The first test keeps injections under the budget so retries win; the second exceeds it so a task gives up. Neither needed a workload change — `BulkLoadingWorkload` already excludes ranges whose task ended in `Error` before comparing, so the assertion is that the load terminates and surviving ranges are correct. Code probes confirm the injection, re-dispatch and give-up paths are all covered. ## Verification - **Joshua: 100,000 runs, 0 failures** on this tree. - Both new tests pass; the injection and give-up paths are probe-verified, not assumed. - All three `BackupS3Blob*` variants pass at the seeds that previously failed (493071098, 3780838088, 3134547887), each with zero `GetTeamFailedToFindValidTeam` and the restore completing. ## Note for review When the archived job phase cannot be read, the restore proceeds and logs `SevWarnAlways BulkLoadRestoreJobOutcomeUnknown` rather than failing. Every task reported done by that point, so failing a good restore because the outcome could not be re-read seemed worse — but it does weaken the check exactly when it cannot be evaluated, and a reviewer may prefer failing closed.",
+      "url": "https://github.com/apple/foundationdb/pull/13873",
+      "createdAt": "2026-08-15T03:01:59Z",
+      "updatedAt": "2026-08-15T17:20:29Z",
+      "timestamp": "2026-08-15T17:20:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [
+        "bulk-loading"
+      ],
+      "author": "saintstack",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13874",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Use auto for Flow makeReference declarations",
+      "text": "## Summary - Replace four redundant `Reference<AsyncVar<bool>>` declarations with `auto` in Flow coroutine tests. - Preserve the same inferred `Reference<AsyncVar<bool>>` types from `makeReference<AsyncVar<bool>>()`. ## Testing - `flow_test -f /flow/genericactors`: 16 passed. - AST-grep rule and snapshot tests: 11 passed.",
+      "url": "https://github.com/apple/foundationdb/pull/13874",
+      "createdAt": "2026-08-15T04:20:12Z",
+      "updatedAt": "2026-08-15T18:25:20Z",
+      "timestamp": "2026-08-15T18:25:20Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13875",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Test unsupported mapped-range read options",
+      "text": "## Summary - Extend the existing `GetMappedRange` simulation workload to reject mapped reads with snapshot isolation. - Assert that mapped reads also reject transactions with `READ_YOUR_WRITES_DISABLE`. - Cover both existing `unsupported_operation` paths without changing production behavior. ## Testing - `clang-format --dry-run --Werror fdbserver/workloads/GetMappedRange.cpp` - `fdbserver -r simulation -f tests/fast/GetMappedRange.toml`",
+      "url": "https://github.com/apple/foundationdb/pull/13875",
+      "createdAt": "2026-08-15T17:07:38Z",
+      "updatedAt": "2026-08-15T20:15:52Z",
+      "timestamp": "2026-08-15T20:15:52Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13876",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Enable focused REST utility simulation tests",
+      "text": "## Summary - Include the existing focused REST utility simulation in the normal correctness suite. - Run the existing malformed-protocol and missing-host parser checks without relying on randomized unit-test sampling. - Keep the suite limited to its current six no-database REST utility tests; previously included key-management suites have already been removed. ## Validation - Focused REST utility unit tests. - Focused REST utility simulation.",
+      "url": "https://github.com/apple/foundationdb/pull/13876",
+      "createdAt": "2026-08-15T17:14:46Z",
+      "updatedAt": "2026-08-15T20:48:42Z",
+      "timestamp": "2026-08-15T20:48:42Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13877",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Exercise streaming range selector boundary cases",
+      "text": "## Summary - Extend the existing `StreamingRangeRead` workload to exercise exclusive begin and end key selectors. - Compare streamed selector results with ordinary range reads, including the exact expected keys. - Verify that an inverted streaming range immediately terminates with `end_of_stream`. ## Test Plan - `clang-format --dry-run --Werror fdbserver/workloads/StreamingRangeRead.cpp` - Built `fdbserver_workloads` and `fdbserver` with Clang. - `fdbserver -r simulation -f tests/fast/StreamingRangeRead.toml -s 41237 -b off`: passed, including all seven workload clients and the consistency check. - Confirmed that the exclusive begin, exclusive end, and inverted-range code probes were all covered.",
+      "url": "https://github.com/apple/foundationdb/pull/13877",
+      "createdAt": "2026-08-15T17:16:38Z",
+      "updatedAt": "2026-08-15T23:42:34Z",
+      "timestamp": "2026-08-15T23:42:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 14
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13878",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Exercise AppendIfFits value-size boundaries in simulation",
+      "text": "## Summary - Add a deterministic AppendIfFits boundary case to the existing atomic API correctness workload. - Verify an append that reaches the value-size limit succeeds and an additional append preserves the committed value. - Verify the same overflow behavior through the read-your-writes layer while preserving the existing random-operation coverage. ## Validation - Focused AppendIfFits unit test. - Focused atomic API correctness simulation.",
+      "url": "https://github.com/apple/foundationdb/pull/13878",
+      "createdAt": "2026-08-15T17:17:06Z",
+      "updatedAt": "2026-08-15T21:29:58Z",
+      "timestamp": "2026-08-15T21:29:58Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13879",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Exercise duplicate snapshot requests on the current binary",
+      "text": "## Summary - Add a registered fast simulation that exercises duplicate snapshot requests on the current binary. - Verify an in-progress duplicate replaces the original request and a completed duplicate reuses the recorded result. - Preserve existing snapshot workload behavior unless the new deterministic duplicate-checking options are enabled. ## Validation - `clang-format --dry-run --Werror fdbserver/workloads/SnapTest.cpp` - `fdbserver -r simulation -f tests/fast/SnapshotDuplicateRequests.toml`",
+      "url": "https://github.com/apple/foundationdb/pull/13879",
+      "createdAt": "2026-08-15T17:26:14Z",
+      "updatedAt": "2026-08-15T20:43:50Z",
+      "timestamp": "2026-08-15T20:43:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:aa854a505b7e8a5a9583",
+      "signalId": "github:apple/foundationdb:pull_request:13877",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13877",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Exercise streaming range selector boundary cases",
+        "text": "## Summary - Extend the existing `StreamingRangeRead` workload to exercise exclusive begin and end key selectors. - Compare streamed selector results with ordinary range reads, including the exact expected keys. - Verify that an inverted streaming range immediately terminates with `end_of_stream`. ## Test Plan - `clang-format --dry-run --Werror fdbserver/workloads/StreamingRangeRead.cpp` - Built `fdbserver_workloads` and `fdbserver` with Clang. - `fdbserver -r simulation -f tests/fast/StreamingRangeRead.toml -s 41237 -b off`: passed, including all seven workload clients and the consistency check. - Confirmed that the exclusive begin, exclusive end, and inverted-range code probes were all covered.",
+        "url": "https://github.com/apple/foundationdb/pull/13877",
+        "createdAt": "2026-08-15T17:16:38Z",
+        "updatedAt": "2026-08-15T23:42:34Z",
+        "timestamp": "2026-08-15T23:42:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 14
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:28bcfc6ef4eda993248a",
+      "signalId": "github:apple/foundationdb:pull_request:13869",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13869",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "[release-7.4] Fix an old exclude failed bug",
+        "text": "Port apple/foundationdb#13645 to release-7.4. Problem: In removeKeysFromFailedServer, the writes that unassign a dropped shard from the dest servers (serverKeysFalse) and the writes that reassign it to the new team as an empty range were pushed into a single actors vector and awaited together. krmSetRangeCoalescing performs a read-modify-write on the serverKeys map, so when a server appears in both the dest set and the new team, running the two batches concurrently lets the coalescing reads observe stale state and produce an incorrect serverKeys assignment. Solution: await the unassign batch first, then run the empty-range assignment in a separate batch, ensuring the serverKey map assignment is correct. Same fix already backported to release-7.3 in apple/foundationdb#13662. release-7.4 still used the wait()/actor-compiler style rather than main's co_await, and shardId needed to become state since it now crosses the new wait() boundary -- same conflict resolution as the 7.3 backport. 100K: 20260813-171407-praza-port-7.4-pr13645-817f-e3951c728b485de6 pass=100000 fail=0 ended=100000 max_runs=100000",
+        "url": "https://github.com/apple/foundationdb/pull/13869",
+        "createdAt": "2026-08-14T17:03:20Z",
+        "updatedAt": "2026-08-15T22:59:14Z",
+        "timestamp": "2026-08-15T22:59:14Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 26
+        },
+        "labels": [],
+        "author": "spraza",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:07e88f9b894157acc732",
+      "signalId": "github:apple/foundationdb:pull_request:13866",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13866",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Add AuditType::RangeDigest: a storage-server-side content fingerprint",
+        "text": "# Add AuditType::RangeDigest: a storage-server-side content fingerprint ## Summary Adds `AuditType::RangeDigest`, a 256-bit **content fingerprint** of the key-value multiset computed in parallel by the storage servers that already hold the data. A root taken before a backup equals the root taken after a restore **iff** the restored data is identical as a set — regardless of how the two clusters shard the keyspace. This gives backup/restore validation a check that is both rigorous (every key-value, no sampling) and affordable at multi-terabyte scale: only 32-byte digests cross the network, never user data, so throughput scales with the number of storage servers rather than one client's bandwidth. Design doc: `design/range-digest.md` (included in this PR). ## Motivation A backup of a multi-terabyte database is only trustworthy if the restore can be confirmed to reproduce it. The obvious check — a client reads the whole keyspace and hashes it — was built first as an external prototype (`fdbfingerprint`) and produced matching roots at 1B and 3B. It was abandoned as the mechanism on **measured** cost: the 3B dataset took **9h11m at ~79 MB/s aggregate**, with all of that read load landing on the very path under validation, and a before/after comparison needs two such runs. Two qualifications, since the numbers invite an overclaim. That 79 MB/s was **not a hard client ceiling** — it was ~4 MB/s across 20 disks that sat ~98% idle, i.e. an under-parallelized prototype (8 pods, each a single-network-thread client unable to hide cold-read latency); a tuned client would be considerably faster. And while the server-side digest measures ~2770 MB/s at 10B, that is against the untuned client, so the ~35× gap is **not** like-for-like. The architectural argument stands without the ratio: an external fingerprint scales with whatever bandwidth one client pool is given and spends read capacity production traffic needs, while hashing on the servers that already hold the data scales with storage-server count and moves only 32-byte digests. The check must also be **partition-independent**: a restore lands the same logical data under completely different shard boundaries, so any fingerprint that depends on the physical partition (Merkle tree over a shard list, per-shard hash comparison) cannot be compared across a restore at all. Hence an additive multiset hash. ## Design ``` leaf = SHA-256( u32be len(key) | key | u32be len(value) | value ) digest = ( Σ leaf ) mod 2^256 # 256-bit big-endian accumulator, 0 = empty set root = combine of every storage server's per-range digest ``` Addition mod 2²⁵⁶ is associative and commutative, so the root is independent of grouping, ordering and shard layout — the partition-independence requirement — and per-range digests combine upward with no boundary replay. 256 bits matches the SHA-256 leaf (no truncation) and leaves a ~2¹²⁸ accidental-collision margin against datasets of ~2³³ keys, for 32 bytes per range on the wire. The leaf encoding is byte-for-byte identical to the Phase-0 `fdbfingerprint` tool, which is retained as an independent cross-check. **Explicit non-goal:** collision resistance against an adversary who *chooses* inputs. Additive multiset hashes are vulnerable to subset-sum/lattice attacks; the threat model here is accidental corruption of FDB's own data on a trusted cluster, so a keyed MAC's key management and cost buy nothing in scope. This is stated in the design doc rather than left implicit. ## Precondition: quiescence The digest must be taken over a quiescent cluster (writes stopped, `moving_data → 0`). Two independent invariants require it: 1. **Single version** — each server folds its own key-values at *its own* current read version; there is no cluster-wide pinned version, so concurrent writes would hash at inconsistent versions and the root would correspond to no single snapshot. 2. **Exactly-once** — the additive combine assumes each key-value is folded exactly once cluster-wide. Under in-flight shard movement a key can be folded by both the losing and gaining server, or by neither at the instant it is read. This is not theoretical: at 100M scale, digesting during data-distribution churn produced a root mismatch, with both sides counting ~104.8M key-values against a true ~100M. Callers must settle first — natural for backup/restore, where both sides are settled datasets. `RangeDigest.h` carries a TODO for the generalization: folding every server against a single pinned cluster read version, with an ownership snapshot consistent with that version, would restore both invariants online. Unnecessary for backup/restore, and it would not change the leaf encoding or the root of a quiesced dataset, so fingerprints taken today stay comparable. ## What's in the PR | area | change | |---|---| | `fdbclient/RangeDigest.{h,cpp}` | new: leaf encoding, 256-bit accumulator, `addKeyValue`/`combine` | | `fdbserver/storageserver/storageserver.cpp` | `auditRangeDigestQ`, dispatched from `serveAuditStorageRequests`; batched and rate-limited | | `fdbserver/datadistributor/DataDistribution.cpp` | dispatch, per-range persistence, combine to a cluster root on Complete | | `fdbclient/AuditUtils.cpp`, `Audit.h`, `AuditUtils.h` | `AuditType::RangeDigest = 7`; digest/kvCount/byteCount on the audit record; range-digest summary read | | `fdbcli/AuditStorageCommand.cpp`, `GetAuditStatusCommand.cpp` | `range_digest` audit type; new `get_audit_status range_digest root <id>` | | `fdbserver/workloads/RangeDigestValidation.cpp`, `tests/fast/RangeDigestValidation.toml` | simulation workload + test registration | | `design/range-digest.md` | design doc | Rate limiting and batching reuse the existing audit controls (`AUDIT_STORAGE_RATE_PER_SERVER_MAX` via `SpeedLimit`, `AUDIT_RESTORE_BATCH_KEY_LIMIT`, `REPLY_BYTE_LIMIT`) rather than introducing new knobs. CLI surface: ``` audit_storage range_digest \"\" \\xff # start; prints the audit ID get_audit_status range_digest id <id> # phase, plus KVCount/Bytes/Digest for this type get_audit_status range_digest progress <id> # per-range detail (while Running) get_audit_status range_digest root <id> # combined cluster root (Complete only) ``` `root` deliberately refuses to print unless the audit is `Complete`: per-range progress is cleared at completion, so a root read earlier could be computed over partial coverage. Relatedly, the combine is guarded — if the persisted per-range digests do not tile the whole audit range, the audit retries rather than publishing a root that silently omits keys. ## Compatibility `AuditStorageState::serialize` gains three **appended** fields (`digest`, `kvCount`, `byteCount`). With flatbuffers + `IncludeVersion`, old readers ignore trailing fields and new readers default-initialize them for records written by older versions; existing field order is untouched. The fields are empty/zero for every other audit type. Otherwise additive and opt-in: a new `AuditType` invoked on demand, no on-disk format change to user data, no effect on a cluster that never requests it. Rollback is simply not issuing the audit. ## Testing - **Simulation** (`tests/fast/RangeDigestValidation.toml`): the workload writes a known key-value set, then (a) cross-checks the audit's combined root against an **independent client-side computation** of the same additive digest — scanning every key-value and applying the canonical leaf encoding, which validates the storage-server fold *and* the combine — and (b) runs a **second** audit and asserts the root is identical, which demonstrates partition-independence since data distribution may have moved shards in between. It waits for quiescence before each digest. The backup → clear → restore → recompute cycle is covered by the Kubernetes test, not in simulation. - **Multi-shard combine** exercised on seeds 12345 / 777 / 424242 / 9001 (4–9 shards, up to 18 SS digest tasks): 0 `SevError`, all roots matching the independent computation. - **Scale validation** via the companion Kubernetes test (`test_backup_restore_rangedigest`): `root_after == root_before` verified end-to-end at 100M, 1B, 3B and ~4.3B key-values. - **It found a real data-loss bug at 10B.** A 9.26 TB run's roots disagreed by 935,560 key-values (0.0095%) while the restore reported success. The shortfall was 0.99x exactly one bulkload task; trace events named the task, and the range was empty on the restored cluster. Root cause and fix are #13873. A discrepancy that small is precisely what sampling or row counts would miss. - **Measured throughput at 10B:** 9,257,887,466,305 bytes over 9,808,347,148 key-values digested in **53m07s — ~2770 MB/s aggregate** — on a 30-machine cluster with 4 storage disks per machine. The external Phase-0 client did the smaller 3B dataset in 9h11m at ~79 MB/s, but from an under-parallelized client, so treat that as context rather than a tuned comparison. - **Reproducibility:** that same 10B dataset re-digested to a byte-identical root on a later run against the same cluster, with no restore involved — so a matching root is not an artifact of digesting twice in quick succession. ### Reviewer notes — known gaps, stated rather than glossed - **A skipped run is also green.** If an audit cannot complete under harness churn, the workload logs `RangeDigestValidationInconclusive` and returns without asserting. The content assertions sit deliberately *outside* that `try`, so a genuine mismatch is never swallowed — but it does mean a green result should be confirmed by the presence of `RangeDigestValidationSuccess` rather than the absence of errors. Worth deciding whether inconclusive runs should be made noisier. - The committed `.toml` uses a modest dataset (`nodeCount=10000`) so it stays cheap across the Joshua matrix; **some seeds will keep the data in a single shard**, in which case that seed does not exercise the cross-server combine. The multi-shard evidence above comes from a larger dedicated run with `strictShardCheck=true`. Worth deciding whether a strict variant should gate here. - The clean 100k-run Joshua result for this work was obtained on an **earlier revision** of the branch; a fresh Joshua run should gate the merge rather than being assumed from that one. - The digest is read-heavy, so its throughput is sensitive to the block-cache-to-data ratio; a low-memory configuration makes it disk-bound. An observability note, not a defect. ## Companion PR The Kubernetes scale test that drives this (`test_backup_restore_rangedigest` in `FoundationDB/fdb-kubernetes-tests`) is a separate PR and cannot run until this lands and is imaged.",
+        "url": "https://github.com/apple/foundationdb/pull/13866",
+        "createdAt": "2026-08-14T05:11:36Z",
+        "updatedAt": "2026-08-15T22:32:12Z",
+        "timestamp": "2026-08-15T22:32:12Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 31
+        },
+        "labels": [
+          "testing",
+          "Backup_v3"
+        ],
+        "author": "saintstack",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:511155e9de977a548573",
+      "signalId": "github:apple/foundationdb:pull_request:13878",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13878",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Exercise AppendIfFits value-size boundaries in simulation",
+        "text": "## Summary - Add a deterministic AppendIfFits boundary case to the existing atomic API correctness workload. - Verify an append that reaches the value-size limit succeeds and an additional append preserves the committed value. - Verify the same overflow behavior through the read-your-writes layer while preserving the existing random-operation coverage. ## Validation - Focused AppendIfFits unit test. - Focused atomic API correctness simulation.",
+        "url": "https://github.com/apple/foundationdb/pull/13878",
+        "createdAt": "2026-08-15T17:17:06Z",
+        "updatedAt": "2026-08-15T21:29:58Z",
+        "timestamp": "2026-08-15T21:29:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:bb03e492636d645f04a0",
+      "signalId": "github:apple/foundationdb:pull_request:13876",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13876",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Enable focused REST utility simulation tests",
+        "text": "## Summary - Include the existing focused REST utility simulation in the normal correctness suite. - Run the existing malformed-protocol and missing-host parser checks without relying on randomized unit-test sampling. - Keep the suite limited to its current six no-database REST utility tests; previously included key-management suites have already been removed. ## Validation - Focused REST utility unit tests. - Focused REST utility simulation.",
+        "url": "https://github.com/apple/foundationdb/pull/13876",
+        "createdAt": "2026-08-15T17:14:46Z",
+        "updatedAt": "2026-08-15T20:48:42Z",
+        "timestamp": "2026-08-15T20:48:42Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:1ac6cb0f704fb01e3856",
+      "signalId": "github:apple/foundationdb:pull_request:13879",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13879",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Exercise duplicate snapshot requests on the current binary",
+        "text": "## Summary - Add a registered fast simulation that exercises duplicate snapshot requests on the current binary. - Verify an in-progress duplicate replaces the original request and a completed duplicate reuses the recorded result. - Preserve existing snapshot workload behavior unless the new deterministic duplicate-checking options are enabled. ## Validation - `clang-format --dry-run --Werror fdbserver/workloads/SnapTest.cpp` - `fdbserver -r simulation -f tests/fast/SnapshotDuplicateRequests.toml`",
+        "url": "https://github.com/apple/foundationdb/pull/13879",
+        "createdAt": "2026-08-15T17:26:14Z",
+        "updatedAt": "2026-08-15T20:43:50Z",
+        "timestamp": "2026-08-15T20:43:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ba8b1de19ec537314cf7",
+      "signalId": "github:apple/foundationdb:pull_request:13875",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13875",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Test unsupported mapped-range read options",
+        "text": "## Summary - Extend the existing `GetMappedRange` simulation workload to reject mapped reads with snapshot isolation. - Assert that mapped reads also reject transactions with `READ_YOUR_WRITES_DISABLE`. - Cover both existing `unsupported_operation` paths without changing production behavior. ## Testing - `clang-format --dry-run --Werror fdbserver/workloads/GetMappedRange.cpp` - `fdbserver -r simulation -f tests/fast/GetMappedRange.toml`",
+        "url": "https://github.com/apple/foundationdb/pull/13875",
+        "createdAt": "2026-08-15T17:07:38Z",
+        "updatedAt": "2026-08-15T20:15:52Z",
+        "timestamp": "2026-08-15T20:15:52Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b2393d803845e9ed5c97",
+      "signalId": "github:apple/foundationdb:pull_request:13870",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13870",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert Data Distribution monitoring actors to coroutines",
+        "text": "## Summary - Convert `storageServerFailureTracker`, `monitorStorageServerRecruitment`, and `waitServerListChange` from Flow actors to standard C++ coroutines. - Preserve failure-monitor race ordering, recruitment state transitions, server-removal stream handling, and the remaining actor-compiled code and tests. - Avoid starting a data-removal transaction when the higher-priority health-change branch is already ready. ## Validation - `clang-format --dry-run --Werror fdbserver/datadistributor/DDTeamCollection.actor.cpp` (clang-format 19.1.0) - `fdbserver_datadistributor_test --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242 --simulation` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242 --simulation`",
+        "url": "https://github.com/apple/foundationdb/pull/13870",
+        "createdAt": "2026-08-14T17:22:37Z",
+        "updatedAt": "2026-08-15T18:25:42Z",
+        "timestamp": "2026-08-15T18:25:42Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 31
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fde920c86dbcbe15fef6",
+      "signalId": "github:apple/foundationdb:pull_request:13874",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13874",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Use auto for Flow makeReference declarations",
+        "text": "## Summary - Replace four redundant `Reference<AsyncVar<bool>>` declarations with `auto` in Flow coroutine tests. - Preserve the same inferred `Reference<AsyncVar<bool>>` types from `makeReference<AsyncVar<bool>>()`. ## Testing - `flow_test -f /flow/genericactors`: 16 passed. - AST-grep rule and snapshot tests: 11 passed.",
+        "url": "https://github.com/apple/foundationdb/pull/13874",
+        "createdAt": "2026-08-15T04:20:12Z",
+        "updatedAt": "2026-08-15T18:25:20Z",
+        "timestamp": "2026-08-15T18:25:20Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5ac3a3be8cdbe8e3d693",
+      "signalId": "github:apple/foundationdb:pull_request:13803",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13803",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Restart backup workers after disk I/O timeouts",
+        "text": "## Summary - Recover backup-worker I/O timeouts without bypassing storage-server restart safety. - Re-recruit failed old-generation classic and range-partitioned backup workers after acknowledged owner shutdown; ambiguous failures safely fall back to transaction-system recovery. - Publish backup start versions transactionally with old-log retirement, and add focused classic and range-partitioned lifecycle, ownership, and retention regressions. ## Rollout - Full protection against the pending-backup retirement race requires both backup agents and server processes to run the updated code. ## Validation - `fdbclient_test` - `fdbserver_backupworker_test` - `fdbserver_clustercontroller_test` - `fdbserver_logsystem_test` - `fdbserver_worker_test` - `tests/slow/BackupAndRestore.toml` - `tests/slow/BackupCorrectnessPartitioned.toml` All simulation configurations were run with fault injection and buggification enabled.",
+        "url": "https://github.com/apple/foundationdb/pull/13803",
+        "createdAt": "2026-07-29T19:45:26Z",
+        "updatedAt": "2026-08-15T18:09:36Z",
+        "timestamp": "2026-08-15T18:09:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 23
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:30505d90ca35ee87ff5b",
+      "signalId": "github:apple/foundationdb:pull_request:13731",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13731",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Fix stateless process recruitment in small configurations",
+        "text": "## Summary - Admit all eligible workers with the same role fitness during cluster-controller recruitment while preserving existing fitness and usage ordering. - Recruit the requested commit proxies, GRV proxies, and resolvers from distinct stateless processes even when those processes share one machine. - Remove the simulator-only automatic stateless-machine reservation; retain explicit stateless assignment to real machines and correct storage-candidate accounting. - Add a full-dispatch cluster-controller regression with three stateless processes on one machine and independently placed TLogs. ## Validation - `fdbserver_clustercontroller_test -f /fdbserver/clustercontroller/recruitStatelessProcessesOnOneMachine` - `fdbserver_clustercontroller_test` (32 tests passed) - `fdbserver -r simulation -f tests/fast/ReportConflictingKeys.toml` - `fdbserver -r simulation -f tests/fast/AtomicOpsApiCorrectness.toml` - `clang-format` 19 and `git diff --check`",
+        "url": "https://github.com/apple/foundationdb/pull/13731",
+        "createdAt": "2026-07-18T03:26:27Z",
+        "updatedAt": "2026-08-15T17:47:14Z",
+        "timestamp": "2026-08-15T17:47:14Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 60
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0555e016e0f8c2e43f83",
+      "signalId": "github:apple/foundationdb:pull_request:13873",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13873",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Do not lose a bulkload task when its data move loses the destination team",
+        "text": "## Summary A bulkload restore could lose a task's data and still report success. This fixes that, and adds simulation coverage for the path that produced it. Found by a 10B backup/restore validation using the RangeDigest content fingerprint (#13866). The fingerprint taken before the backup and after the restore disagreed by 935,560 key-values / 889 MB — 0.99× exactly one bulkload task — while the restore reported `103786/103786` complete. Trace events named the single task and its error, and reading that key range on the restored cluster returned nothing while the range immediately below it returned keys. ## The two problems **A recoverable data move failure was treated as permanent.** When a bulkload data move's destination team became unhealthy, the relocator acked the task `unretryableError`, which marks it `Error` and abandons it. For an ordinary data move that is harmless — the shard stays put and data distribution decides again later — but a bulkload task's key-values exist only in the dump until an attempt ingests them, so abandoning the task removes that range from the database with no other copy. An unhealthy destination team is a scheduling condition, not a property of the data. It is now acked retryable, and the task is re-dispatched through the path an abandoned or timed-out task already takes. Two details matter: - The task must be unpublished first. `publishTask` deliberately refuses a task whose `taskId` is already published, so without erasing the entry every later dispatch fails as `bulkload_task_outdated` and the task spins between the scheduler and `publishTask` without moving data. Measured before that was added: 7102 dispatch attempts, 3548 outdated, zero tasks completed, a simulation running 9124 seconds where the same seed completes in 23. - Re-dispatch is bounded by `BulkLoadTaskState::restartCount`, which is already persisted with the task and reported as `RestartCount` for stalled tasks. The bound is a constant in the function, matching the backstop timeout beside it; the existing retry knobs cover other layers (dump file downloads, retries inside one move-keys call, rebalance), so reusing one would mislead whoever tuned it next. **The restore reported success regardless.** `monitorBulkLoadJobCompletionWithProgress` returned true as soon as the job was no longer running — but a job whose range has been fully walked clears its live metadata even when a task ended in `Error`, archiving it to history with an `Error` phase in the same transaction. So \"no longer running\" meant \"finished walking\", not \"every task succeeded\". It now reads the archived phase and fails with `restore_bulkload_failed`. The two halves are load-bearing for each other: giving up on a task after exhausting retries is only safe because a job ending in `Error` now fails its restore rather than reporting completion. ## Second finding: three existing tests were restoring incomplete data and passing With the check in place, `BackupS3BlobBulkLoadRestore.toml` and its MultiRange and WithChaos variants began failing — 10 runs, every seed. The cause was not this change: ``` DDBulkLoadEngineTaskGetTeamFailedToFindValidTeam ×50 TeamSize=10 ValidTeamSize=0 DuplicatedCount=10 DDBulkLoadTaskUnretriableError ×4 → job Error → restore aborted BulkLoadRestoreTaskComplete 0 (the restore correctly refused to claim success) ``` Every candidate team shared a server with the source, so team *selection* failed at dispatch and tasks genuinely could not load. `tests/fast/BulkLoading.toml` documents that stall and guards against it with `extraStorageMachineCountPerDC`; these three set only `extraMachineCountDC`, which adds ordinary machines and supplies no storage-class capacity. **Before this PR those runs restored incomplete data and passed.** The last commit adds the missing capacity, per DC so the multi-region variants keep their coverage. ## Tests `tests/fast/BulkLoadingDestTeamFailure.toml` and `…Exhausted.toml` drive `BulkLoadingWorkload`, which compares every restored key-value against what it wrote, while `BULKLOAD_SIM_INJECT_DEST_TEAM_FAILURES` injects a set number of destination-team failures. The knob is 0 everywhere else. A count rather than a probability: a per-poll probability either never fires on short moves or keeps firing until the task gives up, and neither exercises recovery. The budget is spent on one task, because the give-up path bounds a single task's `restartCount`. The first test keeps injections under the budget so retries win; the second exceeds it so a task gives up. Neither needed a workload change — `BulkLoadingWorkload` already excludes ranges whose task ended in `Error` before comparing, so the assertion is that the load terminates and surviving ranges are correct. Code probes confirm the injection, re-dispatch and give-up paths are all covered. ## Verification - **Joshua: 100,000 runs, 0 failures** on this tree. - Both new tests pass; the injection and give-up paths are probe-verified, not assumed. - All three `BackupS3Blob*` variants pass at the seeds that previously failed (493071098, 3780838088, 3134547887), each with zero `GetTeamFailedToFindValidTeam` and the restore completing. ## Note for review When the archived job phase cannot be read, the restore proceeds and logs `SevWarnAlways BulkLoadRestoreJobOutcomeUnknown` rather than failing. Every task reported done by that point, so failing a good restore because the outcome could not be re-read seemed worse — but it does weaken the check exactly when it cannot be evaluated, and a reviewer may prefer failing closed.",
+        "url": "https://github.com/apple/foundationdb/pull/13873",
+        "createdAt": "2026-08-15T03:01:59Z",
+        "updatedAt": "2026-08-15T17:20:29Z",
+        "timestamp": "2026-08-15T17:20:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "bulk-loading"
+        ],
+        "author": "saintstack",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:131871c3f355e06cd0fc",
+      "signalId": "github:apple/foundationdb:pull_request:13812",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13812",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Address Round 6 review feedback from PR 13344",
+        "text": "Followups from Round 6 review on PR#13344. - Bug (tracker bookkeeping can terminate the server): Added a nest-safe gInMemTrackerAlloc context (distinct from gInMemTracker, which Arena sets around real user allocations) so the tracker's own metadata/reporter allocations throw bad_alloc straight to its fail-open catch instead of tripping the fatal OOM handler after the caller's real allocation already succeeded. (As discussed in PR#13344 we think the impact of this is likely negligible, but why not fix it while we're here.) - Bug (sanitizer/gperftools/Valgrind bypass FastAllocator tracking): Added memTrackerOnAlloc/memTrackerOnFree to the USE_GPERFTOOLS/ADDRESS_SANITIZER/precise-Valgrind early-return paths in FastAllocator::allocate/release, so those builds still attribute every FastAllocator size class and the small Arena blocks backed by it. - Omission (no test forces a real tracker-owned allocation failure): Rewrote failOpenOnMetadataAllocFailure to force an actual map allocation to fail through mallocWithNewHandler and assert the installed new_handler is never invoked — and in doing so found and fixed a P0593 heap-elision bug that had made the original test pass without allocating anything. - Omission (no coverage under ASan/gperftools/Valgrind): Documented that the un-guarded fastAlloc32Accounting/arenaSmallAccounting tests now exercise the new sanitizer-path hooks under those builds (verified by the clean 100k Joshua run rather than a dedicated sanitizer CI job). Ran 1000 iterations of new tests and also: 20260803-184807-gglass-39545f72cc3ffaa1 compressed=True data_size=38391356 duration=3971129 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:46:56 sanity=False started=100000 stopped=20260803-193503 submitted=20260803-184807 timeout=5400 username=gglass",
+        "url": "https://github.com/apple/foundationdb/pull/13812",
+        "createdAt": "2026-08-03T22:11:42Z",
+        "updatedAt": "2026-08-15T17:19:37Z",
+        "timestamp": "2026-08-15T17:19:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 39
+        },
+        "labels": [],
+        "author": "gxglass",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:cca3416248518d86710b",
+      "signalId": "github:apple/foundationdb:pull_request:13782",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13782",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Backport to 7.4: add retry limit to startMoveKeys to prevent infinite loops (#13176)",
+        "text": "Add START_MOVE_KEYS_MAX_RETRIES knob (default 50, BUGGIFY=10) and throw start_move_keys_too_many_retries when exceeded. Wire the new error into DDRelocationQueue (same light-weight re-queue handler as finish_move_keys_too_many_retries and move_to_removed_server) and normalDDQueueErrors so DD does not restart. Also propagate actor_cancelled before the retry limit check in startMoveKeys. ` 20260724-003619-stack-backport-7.4-eac563f902694355 compressed=True data_size=41563174 duration=3238562 ended=100000 fail=5 fail_fast=10 max_runs=100000 pass=99995 priority=100 remaining=0 runtime=0:31:27 sanity=False started=100000 stopped=20260724-010746 submitted=20260724-003619 timeout=5400 username=stack-backport-7.4` The 5 failures are all 'RandomSeed=\"1520625388\" SourceVersion=\"ac41ec01f6c2b74a6c1432bb75f874a9c3ab2dd2\" Time=\"1784853672\" BuggifyEnabled=\"0\" DeterminismCheck=\"0\" FaultInjectionEnabled=\"1\" TestFile=\"tests/fast/MinimumThroughput.toml\"'. I'll fix in a different PR. The failures are not related to here. (They are fixed over in #13783)",
+        "url": "https://github.com/apple/foundationdb/pull/13782",
+        "createdAt": "2026-07-24T01:12:20Z",
+        "updatedAt": "2026-08-15T05:24:36Z",
+        "timestamp": "2026-08-15T05:24:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 44
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d81c1b57084f3b2177e4",
+      "signalId": "github:apple/foundationdb:pull_request:13180",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13180",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Move TSS load balancing logic out of `fdbrpc`",
+        "text": "This PR has a similar goal to https://github.com/apple/foundationdb/pull/13080, to move FDB-specific logic out of the `fdbrpc` library. Previously `loadBalance` was tightly coupled with storage servers, and specifically the testing storage server feature. In this PR, a `LoadBalanceRequestHooks` struct is added to `LoadBalance.actor.h`, specialized in a new `StorageServerLoadBalance.actor.h` file, which lives in `fdbclient` and now contains the storage-server-specific load balancing logic. Validated with 10k correctness tests.",
+        "url": "https://github.com/apple/foundationdb/pull/13180",
+        "createdAt": "2026-05-09T02:37:34Z",
+        "updatedAt": "2026-08-15T04:27:15Z",
+        "timestamp": "2026-08-15T04:27:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 49
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c00d7e8871ee47c7316a",
+      "signalId": "github:apple/foundationdb:pull_request:13867",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13867",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Document why bulkload needs DD pipeline headroom",
+        "text": "DD_MAX_PIPELINE_MOVES caps the relocations DD tracks (queued + in-flight), and its default of 1000 is below what a large bulkload job generates. Bulkload is the workload most exposed to that cap, because of three properties that ordinary data movement does not share: - Bulkload moves consume no source work factor. They read from blob storage rather than from source storage servers, so canLaunchSrc() admits them unconditionally. Every other relocation is self-limiting through the per-server busyness ledger, which can leave the pipeline cap as the only thing gating bulkload. - They run at PRIORITY_TEAM_HEALTHY (140) against splits at PRIORITY_SPLIT_SHARD (950), but unlike background rebalance a bulkload job has a caller waiting on it. - A restore into a previously empty contiguous range makes DD split that range, so the job manufactures the higher-priority relocations that then precede it. pipelineGateActor is priority-blind, so a cap sized near real demand turns admission into arrival-order FIFO, and bulkload moves cannot be reordered ahead of the splits they caused. The note records the measurement behind this (1B restore: no bulkload movement for 1h54m at cap 1000, 7.15s with headroom, in-flight unchanged at 107 -> 114, so the capacity was present throughout; 3B restore: 6041-6815 queued relocations in the same phase) and the distinction that matters when tuning, namely that raising the cap adds no concurrency. It also gives a sizing rule, because the knob has a ceiling as well as a floor: DD resident memory is roughly 4 GB + 0.11 GB per 1000 tracked relocations and in-flight converges on the cap while movement is storming, so 100000 needs ~15 GB and can OOM an 8 GB or 12 GB distributor before the cap engages, while 20000 costs ~6.2 GB and clears the demand measured above. Raising the default is therefore not the fix; the guidance is per-job. Adds the operator-facing symptom to the bulkload troubleshooting page as well: DDPipelineFull events during a load with InQueue plus InFlight sitting at the cap. Applies to 7.3, 7.4 and main alike, whose default is 1000.",
+        "url": "https://github.com/apple/foundationdb/pull/13867",
+        "createdAt": "2026-08-14T05:39:32Z",
+        "updatedAt": "2026-08-15T03:12:05Z",
+        "timestamp": "2026-08-15T03:12:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:5958af4b74d28a6fec68",
+      "signalId": "github:apple/foundationdb:pull_request:13872",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13872",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Lower backup role failure severity for IO error",
+        "text": "Problem: One off IO error when doing backup in the backup-worker when using backup-v2/partitioned logs is causing the process to report for the next 24 hours an SevError that could lead to pagable alert depending on once configuration. Solution: Make this issue a non SevError for the backup-worker due to the nature of the medium used for backup ie. blobstore or networked filesystem it can happen and will be retried by the process. Testing: Passed 10K testing in joshua",
+        "url": "https://github.com/apple/foundationdb/pull/13872",
+        "createdAt": "2026-08-14T17:34:52Z",
+        "updatedAt": "2026-08-15T03:10:02Z",
+        "timestamp": "2026-08-15T03:10:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "mpatou-openai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

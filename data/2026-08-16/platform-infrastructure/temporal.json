@@ -1,0 +1,737 @@
+{
+  "version": 4,
+  "date": "2026-08-16",
+  "group": {
+    "id": "platform-infrastructure",
+    "name": "Platform / Networking / Runtime Infrastructure"
+  },
+  "repository": {
+    "id": "temporal",
+    "repo": "temporalio/temporal",
+    "name": "Temporal",
+    "keywords": [
+      "Temporal.io",
+      "Temporal workflow"
+    ]
+  },
+  "context": {
+    "repository": "temporalio/temporal",
+    "url": "https://github.com/temporalio/temporal",
+    "description": "Temporal service",
+    "homepage": "https://docs.temporal.io",
+    "language": "Go",
+    "topics": [
+      "cronjob-scheduler",
+      "distributed-cron",
+      "distributed-systems",
+      "durable-execution",
+      "golang",
+      "microservice-framework",
+      "microservice-orchestration",
+      "microservices-architecture",
+      "orchestrator",
+      "service-bus",
+      "service-fabric",
+      "workflow-automation",
+      "workflow-engine",
+      "workflow-management",
+      "workflow-management-system",
+      "workflows"
+    ],
+    "license": "MIT",
+    "defaultBranch": "main",
+    "stars": 22329,
+    "forks": 1817,
+    "openIssues": 894,
+    "archived": false,
+    "collectedAt": "2026-08-16T02:35:35.169947+00:00"
+  },
+  "news": {
+    "repository": "temporalio/temporal",
+    "collectedAt": "2026-08-16T02:35:35.169947+00:00",
+    "latestRelease": {
+      "repository": "temporalio/temporal",
+      "tag": "v1.31.2",
+      "title": "v1.31.2",
+      "url": "https://github.com/temporalio/temporal/releases/tag/v1.31.2",
+      "publishedAt": "2026-07-08T17:10:11Z",
+      "notes": "## What's Changed\r\n* Bump defaultCliVersion to 1.7.2 for v1.31.1 admin-tools \r\n* Cherry-pick #9917, \"Cover replication streaming endpoint with authorization\"\r\n* Update Alpine to 3.23.5\r\n\r\n\r\n### Potential Breaking Change \r\nIf using authorization with replication setup, set `system.disableStreamingAuthorizer` dynamic config to `true` to opt out from changes in this release and avoid replication traffic connection errors. Check the linked CVE for implications of opting out.\r\n\r\n### **Security**\r\n- Addresses [CVE-2026-5724](https://www.cve.org/cverecord?id=CVE-2026-5724), MEDIUM\r\n\r\n**Full Changelog**: https://github.com/temporalio/temporal/compare/v1.31.1...v1.31.2",
+      "highlights": [
+        "What's Changed",
+        "Bump defaultCliVersion to 1.7.2 for v1.31.1 admin-tools",
+        "Cherry-pick #9917, \"Cover replication streaming endpoint with authorization\"",
+        "Update Alpine to 3.23.5",
+        "Potential Breaking Change",
+        "Security"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-16T02:35:31.986278Z",
+      "since": "2026-08-15T02:35:31.986278Z",
+      "observedCount": 12,
+      "changedCount": 12
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:temporalio/temporal:pull_request:11298",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Support ExecutionStatus filter in s3store and gcloud visibility archi…",
+      "text": "## What changed? s3store and gcloud visibility archivers now accept `ExecutionStatus` in archived queries. filestore already did, the other two rejected it with `unknown filter name: ExecutionStatus`. Also moved `convertStatusStr` from filestore to `common/sqlquery` as `ConvertStatusStr`, next to the parse helpers all three share. Body unchanged. ## Why? Requested in #8648. Status is already on the record (`VisibilityRecord.Status`) and already returned, so only the filter was missing. It's not in the S3 key or GCS object name, so it can't narrow the keys scanned. I match it after decode, same order filestore uses (decode, match, convert), so filtered records skip search attribute parsing. Indexing it would change the archival layout and anything archived earlier would stop matching. @yycptt asked whether a non-index column was good enough and that never got answered, so I went non-index. Happy to change direction. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) `go test -race -count=1 ./common/archiver/... ./common/sqlquery/...` ## Potential risks Inert unless a query sets `ExecutionStatus`: both `queryAll` paths pass an empty `parsedQuery`, and nil status short-circuits to existing behavior. Additive only, s3store still requires `WorkflowId`/`WorkflowTypeName` and gcloud still requires a time range plus `SearchPrecision`. Matching after read means a page can return fewer records than requested while still reporting a next page token, same as s3store's existing `queryAll` key filter, noted in both READMEs. Conflicting filters follow each parser's convention: s3store errors on a repeat, gcloud sets `emptyResult`.",
+      "url": "https://github.com/temporalio/temporal/pull/11298",
+      "createdAt": "2026-07-27T06:23:11Z",
+      "updatedAt": "2026-08-15T06:04:50Z",
+      "timestamp": "2026-08-15T06:04:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "sahilnyk",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11523",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Use Go client for flaky report GitHub API calls",
+      "text": "## What changed? - Replace the `gh api` subprocesses used by `flakereport` with a shared Go HTTP client. - Rate-limit GitHub API requests to 10 RPS by default; allow an explicit `--rps` override. - Stream artifact downloads to temporary files while preserving the existing 60-second download deadline and artifact worker pool. ## Why? The report performs a GitHub API request for every artifact. Avoiding a new `gh` process for each request removes that per-request overhead without adding a more complex processing pipeline. ## How did you test it? - [x] added new unit test(s) - [x] checked the diff for whitespace errors - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [ ] added new functional test(s) ## Potential risks The client uses the existing `GH_TOKEN`/`GITHUB_TOKEN` environment variables, falling back to one `gh auth token` call. Transient API errors are surfaced to the existing per-artifact error handling rather than retried.",
+      "url": "https://github.com/temporalio/temporal/pull/11523",
+      "createdAt": "2026-08-13T00:56:33Z",
+      "updatedAt": "2026-08-15T19:48:16Z",
+      "timestamp": "2026-08-15T19:48:16Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "reliability-2026"
+      ],
+      "author": "chaptersix",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11524",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Index GitHub Actions runs for flake bisecting",
+      "text": "## What changed? - Build one index from parsed test attempts keyed by normalized test name and GitHub Actions run commit. - Reuse that index when selecting and bisecting tests instead of rescanning every parsed attempt for each candidate. - Use `githubActions...` names in the bisect path to distinguish GitHub Actions runs from Temporal workflows. ## Why? A report can contain millions of parsed attempts. The previous bisect loop rescanned all of them for every candidate test. ## How did you test it? - [x] covered by existing tests - [x] checked the diff for whitespace errors - [ ] built - [ ] run locally and tested manually - [ ] added new unit test(s) - [ ] added new functional test(s) ## Potential risks This is stacked on #11523. The index preserves full test counts for qualification while excluding attempts without an in-range GitHub Actions commit from commit observations, matching the previous behavior.",
+      "url": "https://github.com/temporalio/temporal/pull/11524",
+      "createdAt": "2026-08-13T00:56:37Z",
+      "updatedAt": "2026-08-15T19:49:03Z",
+      "timestamp": "2026-08-15T19:49:03Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [
+        "reliability-2026"
+      ],
+      "author": "chaptersix",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11528",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Improve flaky report presentation",
+      "text": "## What changed? - Shows Bayesian commit suspects directly below the overall stats. - Separates synthetic test-runner timeouts from test failures and reports affected artifacts. - Shows final-retry test failures as affected-artifact counts rather than workflow-run rates. ## Why? The synthetic `testrunner.TotalTimeout` event was reported both as a flaky test and as a CI breaker, while the former CI-breaker percentage mixed artifact and workflow-run units. ## How did you test it? - `go test -tags test_dep ./tools/flakereport ./tools/common/github` - `make lint-code` ## Potential risks This changes report categorization and presentation only; raw `failures.json` retains synthetic timeout records as timeout events.",
+      "url": "https://github.com/temporalio/temporal/pull/11528",
+      "createdAt": "2026-08-13T01:43:14Z",
+      "updatedAt": "2026-08-15T19:49:26Z",
+      "timestamp": "2026-08-15T19:49:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "reliability-2026"
+      ],
+      "author": "chaptersix",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11543",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Release gRPC resolver registrations on shutdown",
+      "text": "## What changed? Tie process-global gRPC resolver registrations to their Fx and test owners. Resolver URLs use monotonic opaque registration IDs, test callers register cleanup directly, and matching test clients close their RPC factories during cluster shutdown. ## Why? The process-global resolver map retained cluster-owned state after shutdown. Explicit cleanup releases those references while preserving resolver availability during Fx graph construction. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./common/membership ./common/rpc/test ./tests/testcore -count=1` - `LEAK_ITERS=15 LEAK_ITERS_WARMUP=3 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 9m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Stacked on #11542.",
+      "url": "https://github.com/temporalio/temporal/pull/11543",
+      "createdAt": "2026-08-13T15:50:19Z",
+      "updatedAt": "2026-08-15T02:47:39Z",
+      "timestamp": "2026-08-15T02:47:39Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11551",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Release OTEL logger registrations on shutdown",
+      "text": "## What changed? Route process-global OTEL errors through lifecycle-owned logger registrations. The handler selects the newest ready registration and drops each logger reference when its Fx owner stops. The leak test drops the corresponding logger expectation. ## Why? The process-global OTEL error handler retained the server logger after shutdown. Lifecycle ownership releases that reference while supporting multiple in-process servers. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./temporal -count=1` - `LEAK_ITERS=5 LEAK_ITERS_WARMUP=1 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 6m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Based on #11542.",
+      "url": "https://github.com/temporalio/temporal/pull/11551",
+      "createdAt": "2026-08-13T17:59:38Z",
+      "updatedAt": "2026-08-15T05:30:36Z",
+      "timestamp": "2026-08-15T05:30:36Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11558",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Add OpenTelemetry HTTP instrumentation",
+      "text": "## What changed? Added reusable OpenTelemetry wrappers for HTTP clients and servers. It is not wired up in this PR yet. ## Why? Nexus uses HTTP in several internal and external paths, but Temporal only had shared tracing support for gRPC. This provides the common HTTP instrumentation used by the rest of the stack. ## How did you test it? - [x] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+      "url": "https://github.com/temporalio/temporal/pull/11558",
+      "createdAt": "2026-08-13T20:27:04Z",
+      "updatedAt": "2026-08-15T18:13:06Z",
+      "timestamp": "2026-08-15T18:13:06Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11560",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Trace inbound Nexus HTTP requests",
+      "text": "## What changed? Wrapped the frontend Nexus dispatch routes with the shared OpenTelemetry HTTP handler. ## Why? Nexus HTTP requests need an inbound server span to connect the caller trace. ## How did you test it? - [x] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+      "url": "https://github.com/temporalio/temporal/pull/11560",
+      "createdAt": "2026-08-13T20:27:13Z",
+      "updatedAt": "2026-08-15T17:32:11Z",
+      "timestamp": "2026-08-15T17:32:11Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "request-claude-review"
+      ],
+      "author": "stephanos",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11572",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Update test shard salt",
+      "text": "Automatically generated by the optimize-test-sharding workflow.",
+      "url": "https://github.com/temporalio/temporal/pull/11572",
+      "createdAt": "2026-08-14T07:34:18Z",
+      "updatedAt": "2026-08-15T07:13:45Z",
+      "timestamp": "2026-08-15T07:13:45Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "temporal-cicd[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11590",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "Update test shard salt",
+      "text": "Automatically generated by the optimize-test-sharding workflow.",
+      "url": "https://github.com/temporalio/temporal/pull/11590",
+      "createdAt": "2026-08-15T07:13:45Z",
+      "updatedAt": "2026-08-15T07:13:47Z",
+      "timestamp": "2026-08-15T07:13:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "temporal-cicd[bot]",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:11591",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "1.32.0: Prepare release branch",
+      "text": "Prepare release branch: - Overwrite governance files - Update dependencies",
+      "url": "https://github.com/temporalio/temporal/pull/11591",
+      "createdAt": "2026-08-15T11:33:09Z",
+      "updatedAt": "2026-08-15T11:37:40Z",
+      "timestamp": "2026-08-15T11:37:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "temporal-cicd[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:temporalio/temporal:pull_request:9980",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "temporalio/temporal",
+      "kind": "pull_request",
+      "title": "WIP: Add HostHealthAggregator",
+      "text": "## What changed? Adds a HostHealthAggregator that can aggregate the health state of Temporal components and then send it out through DeepHealthCheck. ## Why? Expose system-level monitoring to health management systems for nuanced decision-making. ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [ ] added new unit test(s) - [ ] added new functional test(s) ## Potential risks _Any change is risky. Identify all risks you are aware of. If none, remove this section._",
+      "url": "https://github.com/temporalio/temporal/pull/9980",
+      "createdAt": "2026-04-17T00:15:16Z",
+      "updatedAt": "2026-08-16T00:06:27Z",
+      "timestamp": "2026-08-16T00:06:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "stale"
+      ],
+      "author": "temporal-nick",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:9f03ee613f3f4088c05c",
+      "signalId": "github:temporalio/temporal:pull_request:9980",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:9980",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "WIP: Add HostHealthAggregator",
+        "text": "## What changed? Adds a HostHealthAggregator that can aggregate the health state of Temporal components and then send it out through DeepHealthCheck. ## Why? Expose system-level monitoring to health management systems for nuanced decision-making. ## How did you test it? - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [ ] added new unit test(s) - [ ] added new functional test(s) ## Potential risks _Any change is risky. Identify all risks you are aware of. If none, remove this section._",
+        "url": "https://github.com/temporalio/temporal/pull/9980",
+        "createdAt": "2026-04-17T00:15:16Z",
+        "updatedAt": "2026-08-16T00:06:27Z",
+        "timestamp": "2026-08-16T00:06:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "stale"
+        ],
+        "author": "temporal-nick",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8ced7379718df998d6f1",
+      "signalId": "github:temporalio/temporal:pull_request:11528",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11528",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Improve flaky report presentation",
+        "text": "## What changed? - Shows Bayesian commit suspects directly below the overall stats. - Separates synthetic test-runner timeouts from test failures and reports affected artifacts. - Shows final-retry test failures as affected-artifact counts rather than workflow-run rates. ## Why? The synthetic `testrunner.TotalTimeout` event was reported both as a flaky test and as a CI breaker, while the former CI-breaker percentage mixed artifact and workflow-run units. ## How did you test it? - `go test -tags test_dep ./tools/flakereport ./tools/common/github` - `make lint-code` ## Potential risks This changes report categorization and presentation only; raw `failures.json` retains synthetic timeout records as timeout events.",
+        "url": "https://github.com/temporalio/temporal/pull/11528",
+        "createdAt": "2026-08-13T01:43:14Z",
+        "updatedAt": "2026-08-15T19:49:26Z",
+        "timestamp": "2026-08-15T19:49:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "reliability-2026"
+        ],
+        "author": "chaptersix",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:04ffad3a8ee3fbedfe95",
+      "signalId": "github:temporalio/temporal:pull_request:11524",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11524",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Index GitHub Actions runs for flake bisecting",
+        "text": "## What changed? - Build one index from parsed test attempts keyed by normalized test name and GitHub Actions run commit. - Reuse that index when selecting and bisecting tests instead of rescanning every parsed attempt for each candidate. - Use `githubActions...` names in the bisect path to distinguish GitHub Actions runs from Temporal workflows. ## Why? A report can contain millions of parsed attempts. The previous bisect loop rescanned all of them for every candidate test. ## How did you test it? - [x] covered by existing tests - [x] checked the diff for whitespace errors - [ ] built - [ ] run locally and tested manually - [ ] added new unit test(s) - [ ] added new functional test(s) ## Potential risks This is stacked on #11523. The index preserves full test counts for qualification while excluding attempts without an in-range GitHub Actions commit from commit observations, matching the previous behavior.",
+        "url": "https://github.com/temporalio/temporal/pull/11524",
+        "createdAt": "2026-08-13T00:56:37Z",
+        "updatedAt": "2026-08-15T19:49:03Z",
+        "timestamp": "2026-08-15T19:49:03Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "reliability-2026"
+        ],
+        "author": "chaptersix",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:c087a7a4dd4afa4eb377",
+      "signalId": "github:temporalio/temporal:pull_request:11523",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11523",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Use Go client for flaky report GitHub API calls",
+        "text": "## What changed? - Replace the `gh api` subprocesses used by `flakereport` with a shared Go HTTP client. - Rate-limit GitHub API requests to 10 RPS by default; allow an explicit `--rps` override. - Stream artifact downloads to temporary files while preserving the existing 60-second download deadline and artifact worker pool. ## Why? The report performs a GitHub API request for every artifact. Avoiding a new `gh` process for each request removes that per-request overhead without adding a more complex processing pipeline. ## How did you test it? - [x] added new unit test(s) - [x] checked the diff for whitespace errors - [ ] built - [ ] run locally and tested manually - [ ] covered by existing tests - [ ] added new functional test(s) ## Potential risks The client uses the existing `GH_TOKEN`/`GITHUB_TOKEN` environment variables, falling back to one `gh auth token` call. Transient API errors are surfaced to the existing per-artifact error handling rather than retried.",
+        "url": "https://github.com/temporalio/temporal/pull/11523",
+        "createdAt": "2026-08-13T00:56:33Z",
+        "updatedAt": "2026-08-15T19:48:16Z",
+        "timestamp": "2026-08-15T19:48:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "reliability-2026"
+        ],
+        "author": "chaptersix",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a194b8ad2b888b43d64c",
+      "signalId": "github:temporalio/temporal:pull_request:11558",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11558",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Add OpenTelemetry HTTP instrumentation",
+        "text": "## What changed? Added reusable OpenTelemetry wrappers for HTTP clients and servers. It is not wired up in this PR yet. ## Why? Nexus uses HTTP in several internal and external paths, but Temporal only had shared tracing support for gRPC. This provides the common HTTP instrumentation used by the rest of the stack. ## How did you test it? - [x] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+        "url": "https://github.com/temporalio/temporal/pull/11558",
+        "createdAt": "2026-08-13T20:27:04Z",
+        "updatedAt": "2026-08-15T18:13:06Z",
+        "timestamp": "2026-08-15T18:13:06Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e7f82d93b8b6630789f3",
+      "signalId": "github:temporalio/temporal:pull_request:11560",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11560",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Trace inbound Nexus HTTP requests",
+        "text": "## What changed? Wrapped the frontend Nexus dispatch routes with the shared OpenTelemetry HTTP handler. ## Why? Nexus HTTP requests need an inbound server span to connect the caller trace. ## How did you test it? - [x] built - [ ] run locally and tested manually - [ ] covered by existing tests - [x] added new unit test(s) - [ ] added new functional test(s)",
+        "url": "https://github.com/temporalio/temporal/pull/11560",
+        "createdAt": "2026-08-13T20:27:13Z",
+        "updatedAt": "2026-08-15T17:32:11Z",
+        "timestamp": "2026-08-15T17:32:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "request-claude-review"
+        ],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:71d172f3336d8a68849d",
+      "signalId": "github:temporalio/temporal:pull_request:11591",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11591",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "1.32.0: Prepare release branch",
+        "text": "Prepare release branch: - Overwrite governance files - Update dependencies",
+        "url": "https://github.com/temporalio/temporal/pull/11591",
+        "createdAt": "2026-08-15T11:33:09Z",
+        "updatedAt": "2026-08-15T11:37:40Z",
+        "timestamp": "2026-08-15T11:37:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "temporal-cicd[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c4ff4d8f7be40b1ea7c3",
+      "signalId": "github:temporalio/temporal:pull_request:11590",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11590",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Update test shard salt",
+        "text": "Automatically generated by the optimize-test-sharding workflow.",
+        "url": "https://github.com/temporalio/temporal/pull/11590",
+        "createdAt": "2026-08-15T07:13:45Z",
+        "updatedAt": "2026-08-15T07:13:47Z",
+        "timestamp": "2026-08-15T07:13:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "temporal-cicd[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f9a3656fabaadf3d9396",
+      "signalId": "github:temporalio/temporal:pull_request:11572",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11572",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Update test shard salt",
+        "text": "Automatically generated by the optimize-test-sharding workflow.",
+        "url": "https://github.com/temporalio/temporal/pull/11572",
+        "createdAt": "2026-08-14T07:34:18Z",
+        "updatedAt": "2026-08-15T07:13:45Z",
+        "timestamp": "2026-08-15T07:13:45Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "temporal-cicd[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:50aa82fe1d192208ee62",
+      "signalId": "github:temporalio/temporal:pull_request:11298",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11298",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Support ExecutionStatus filter in s3store and gcloud visibility archi…",
+        "text": "## What changed? s3store and gcloud visibility archivers now accept `ExecutionStatus` in archived queries. filestore already did, the other two rejected it with `unknown filter name: ExecutionStatus`. Also moved `convertStatusStr` from filestore to `common/sqlquery` as `ConvertStatusStr`, next to the parse helpers all three share. Body unchanged. ## Why? Requested in #8648. Status is already on the record (`VisibilityRecord.Status`) and already returned, so only the filter was missing. It's not in the S3 key or GCS object name, so it can't narrow the keys scanned. I match it after decode, same order filestore uses (decode, match, convert), so filtered records skip search attribute parsing. Indexing it would change the archival layout and anything archived earlier would stop matching. @yycptt asked whether a non-index column was good enough and that never got answered, so I went non-index. Happy to change direction. ## How did you test it? - [x] built - [x] covered by existing tests - [x] added new unit test(s) `go test -race -count=1 ./common/archiver/... ./common/sqlquery/...` ## Potential risks Inert unless a query sets `ExecutionStatus`: both `queryAll` paths pass an empty `parsedQuery`, and nil status short-circuits to existing behavior. Additive only, s3store still requires `WorkflowId`/`WorkflowTypeName` and gcloud still requires a time range plus `SearchPrecision`. Matching after read means a page can return fewer records than requested while still reporting a next page token, same as s3store's existing `queryAll` key filter, noted in both READMEs. Conflicting filters follow each parser's convention: s3store errors on a repeat, gcloud sets `emptyResult`.",
+        "url": "https://github.com/temporalio/temporal/pull/11298",
+        "createdAt": "2026-07-27T06:23:11Z",
+        "updatedAt": "2026-08-15T06:04:50Z",
+        "timestamp": "2026-08-15T06:04:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "sahilnyk",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:32c274335e3ff79aa384",
+      "signalId": "github:temporalio/temporal:pull_request:11551",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11551",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Release OTEL logger registrations on shutdown",
+        "text": "## What changed? Route process-global OTEL errors through lifecycle-owned logger registrations. The handler selects the newest ready registration and drops each logger reference when its Fx owner stops. The leak test drops the corresponding logger expectation. ## Why? The process-global OTEL error handler retained the server logger after shutdown. Lifecycle ownership releases that reference while supporting multiple in-process servers. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./temporal -count=1` - `LEAK_ITERS=5 LEAK_ITERS_WARMUP=1 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 6m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Based on #11542.",
+        "url": "https://github.com/temporalio/temporal/pull/11551",
+        "createdAt": "2026-08-13T17:59:38Z",
+        "updatedAt": "2026-08-15T05:30:36Z",
+        "timestamp": "2026-08-15T05:30:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:af8748856fa3b9dfd9cd",
+      "signalId": "github:temporalio/temporal:pull_request:11543",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:temporalio/temporal:pull_request:11543",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "temporalio/temporal",
+        "kind": "pull_request",
+        "title": "Release gRPC resolver registrations on shutdown",
+        "text": "## What changed? Tie process-global gRPC resolver registrations to their Fx and test owners. Resolver URLs use monotonic opaque registration IDs, test callers register cleanup directly, and matching test clients close their RPC factories during cluster shutdown. ## Why? The process-global resolver map retained cluster-owned state after shutdown. Explicit cleanup releases those references while preserving resolver availability during Fx graph construction. ## Testing - `go test -race -tags disable_grpc_modules,test_dep ./common/membership ./common/rpc/test ./tests/testcore -count=1` - `LEAK_ITERS=15 LEAK_ITERS_WARMUP=3 LEAK_GC_SETTLE_TIMEOUT=30s go test -run TestClusterShutdownLeak -count=1 -timeout 9m -tags disable_grpc_modules,,test_dep, ./tests/leakcheck/ -args -persistenceType=sql -persistenceDriver=sqlite` Stacked on #11542.",
+        "url": "https://github.com/temporalio/temporal/pull/11543",
+        "createdAt": "2026-08-13T15:50:19Z",
+        "updatedAt": "2026-08-15T02:47:39Z",
+        "timestamp": "2026-08-15T02:47:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "stephanos",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

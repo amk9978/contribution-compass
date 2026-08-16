@@ -1,0 +1,1658 @@
+{
+  "version": 4,
+  "date": "2026-08-16",
+  "group": {
+    "id": "platform-infrastructure",
+    "name": "Platform / Networking / Runtime Infrastructure"
+  },
+  "repository": {
+    "id": "containerd",
+    "repo": "containerd/containerd",
+    "name": "containerd",
+    "keywords": [
+      "containerd"
+    ]
+  },
+  "context": {
+    "repository": "containerd/containerd",
+    "url": "https://github.com/containerd/containerd",
+    "description": "An open and reliable container runtime",
+    "homepage": "https://containerd.io",
+    "language": "Go",
+    "topics": [
+      "cncf",
+      "containerd",
+      "containers",
+      "cri",
+      "docker",
+      "hacktoberfest",
+      "kubernetes",
+      "oci"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 21124,
+    "forks": 4059,
+    "openIssues": 473,
+    "archived": false,
+    "collectedAt": "2026-08-16T02:35:36.652158+00:00"
+  },
+  "news": {
+    "repository": "containerd/containerd",
+    "collectedAt": "2026-08-16T02:35:36.652158+00:00",
+    "latestRelease": {
+      "repository": "containerd/containerd",
+      "tag": "v2.3.4",
+      "title": "containerd 2.3.4",
+      "url": "https://github.com/containerd/containerd/releases/tag/v2.3.4",
+      "publishedAt": "2026-08-12T17:59:47Z",
+      "notes": "Welcome to the v2.3.4 release of containerd!\n\nThe fourth patch release for containerd 2.3 contains various fixes and updates.\n\n### Highlights\n\n#### Container Runtime Interface (CRI)\n\n* Disable checkpoint restore in CreateContainer by default, requiring the enable_experimental_restore_via_create configuration option to enable ([#13913](https://github.com/containerd/containerd/pull/13913))\n* Set default runtimeFeatures.UserNamespacesHostNetwork to true in CRI ([#13914](https://github.com/containerd/containerd/pull/13914))\n* Deprecate checkpoint restore in CreateContainer ([#13868](https://github.com/containerd/containerd/pull/13868))\n* Support non-UTF-8 binary environment variable values in CRI ([#13454](https://github.com/containerd/containerd/pull/13454))\n* Enable OCI runtime feature introspection for non-runc runtimes in CRI ([#13778](https://github.com/containerd/containerd/pull/13778))\n* Disable checkpoint restore codepaths when CRIU is not installed and add enable_criu configuration option ([#13734](https://github.com/containerd/containerd/pull/13734))\n* Normalize sandbox image references in CRI to resolve images without domain prefixes ([#13759](https://github.com/containerd/containerd/pull/13759))\n\n#### Node Resource Interface (NRI)\n\n* Emit deprecation warnings for plugins using deprecated NRI interfaces ([#13935](https://github.com/containerd/containerd/pull/13935))\n\n#### Runtime\n\n* Enable log scrubbing by default on Windows ([#13904](https://github.com/containerd/containerd/pull/13904))\n* Fix memory leak in OOM watcher map when stopping container monitoring ([#13870](https://github.com/containerd/containerd/pull/13870))\n* Avoid orphaning shims on transient errors when loading process IDs ([#13857](https://github.com/containerd/containerd/pull/13857))\n* Fix corruption of binary protobuf shim start responses caused by premature whitespace trimming ([#13803](https://github.com/containerd/containerd/pull/13803))\n\n#### Snapshotters\n\n* Fix EROFS snapshotter dropping lower layers stacked above merged filesystem metadata ([#13876](https://github.com/containerd/containerd/pull/13876))\n\n#### Breaking\n\n* Disable checkpoint restore in CreateContainer by default, requiring the enable_experimental_restore_via_create configuration option to enable ([#13913](https://github.com/containerd/containerd/pull/13913))\n\n#### Deprecations\n\n* Deprecate checkpoint restore in CreateContainer ([#13868](https://github.com/containerd/containerd/pull/13868))\n\nPlease try out the release binaries and report any issues at\nhttps://github.com/containerd/containerd/issues.\n\n### Contributors\n\n* Samuel Karp\n* Maksym Pavlenko\n* Mike Brown\n* Akihiro Suda\n* Derek McGowan\n* Jordan Liggitt\n* Paweł Gronowski\n* Amir Alavi\n* Andrew Halaney\n* Bing Hongtao\n* Chris Henzie\n* Harshal Patel\n* Krisztian Litkey\n* Phil Estes\n* Wei Fu\n* ningmingxiao\n\n### Changes\n<details><summary>35 commits</summary>\n<p>\n\n  * [`c1f5360ef`](https://github.com/containerd/containerd/commit/c1f5360ef7b9afb748d4119ad7be665ba5144480) Prepare release notes for v2.3.4\n* cri: disable restore in CreateContainer by default ([#13913](https://github.com/containerd/containerd/pull/13913))\n  * [`928c03c68`](https://github.com/containerd/containerd/commit/928c03c6898cad95f795300281fdff0dbc55a32f) cri: disable restore in CreateContainer by default\n* nri,deprecation: record and emit warnings for NRI deprecations. ([#13935](https://github.com/containerd/containerd/pull/13935))\n  * [`5966e2edb`](https://github.com/containerd/containerd/commit/5966e2edb15bb939aa2bb73649fbad73a2b04094) nri,deprecation: emit warnings for old NRI plugins.\n* Set the default of runtimeFeatures.UserNamespacesHostNetwork to true ([#13914](https://github.com/containerd/containerd/pull/13914))\n  * [`ab52c58f1`](https://github.com/containerd/containerd/commit/ab52c58f16ac50bb6724354bf36cbb4da480c2a2) Set the default of runtimeFeatures.UserNamespacesHostNetwork to true\n* Use ScrubLogs by default on Windows ([#13904](https://github.com/containerd/containerd/pull/13904))\n  * [`0c255158a`](https://github.com/containerd/containerd/commit/0c255158aa1ecab40aafc42269cfc018a46eb627) ctr: add --scrub-logs flag for Windows\n  * [`1c2b13dc9`](https://github.com/containerd/containerd/commit/1c2b13dc975468197e57321e25fd09163f78a75a) cri/config: use ScrubLogs by default on Windows\n* snapshots/erofs: keep lowers stacked above a merged fsmeta ([#13876](https://github.com/containerd/containerd/pull/13876))\n  * [`0c511e068`](https://github.com/containerd/containerd/commit/0c511e068b7d6dd815418185a235b3ba3347c65a) snapshots/erofs: keep lowers stacked above a merged fsmeta\n* cri: deprecate restore in CreateContainer ([#13868](https://github.com/containerd/containerd/pull/13868))\n  * [`dc98141df`](https://github.com/containerd/containerd/commit/dc98141df70d3d72d46125c6f30de0d2de648086) cri: deprecate restore in CreateContainer\n* internal/oom: Fix memory leak by removing watcher from map on Stop ([#13870](https://github.com/containerd/containerd/pull/13870))\n  * [`537d82d54`](https://github.com/containerd/containerd/commit/537d82d545759d4a072d564d4937707af2650163) internal/oom: Fix memory leak by removing watcher from map on Stop\n* shim_load: Consider shim leaked only if we can't find pids ([#13857](https://github.com/containerd/containerd/pull/13857))\n  * [`decf97a9c`](https://github.com/containerd/containerd/commit/decf97a9c7c26f92391d2c862d35832e0a291e80) shim_load: Consider shim leaked only if we can't find pids\n* core/runtime/v2: Drop checkpointctl module dependency ([#13840](https://github.com/containerd/containerd/pull/13840))\n  * [`796f07dc8`](https://github.com/containerd/containerd/commit/796f07dc853d9ae8a3a1278fe47436755a4bc3b7) core/runtime/v2: Drop checkpointctl module dependency\n* Handle []byte envvar value for CRI ([#13454](https://github.com/containerd/containerd/pull/13454))\n  * [`751fddddb`](https://github.com/containerd/containerd/commit/751fddddbb630631e12fd63e5dac4a9530188822) Handle []byte envvar value\n  * [`0bce9060e`](https://github.com/containerd/containerd/commit/0bce9060ef3401e690b541dd6d2008c2abc50b0d) update to v0.36.x kubernetes dependencies\n* fix(cri): introspect OCI runtime features for non-runc runtimes ([#13778](https://github.com/containerd/containerd/pull/13778))\n  * [`61a8f6f45`](https://github.com/containerd/containerd/commit/61a8f6f45e34660d787988e8a7e7a218f556369c) fix(cri): introspect OCI runtime features for non-runc runtimes\n* core/runtime/v2: Preserve protobuf shim response bytes ([#13803](https://github.com/containerd/containerd/pull/13803))\n  * [`1d28017be`](https://github.com/containerd/containerd/commit/1d28017be295005bfa3aee1d47afe86341d391b6) core/runtime/v2: Preserve protobuf shim response bytes\n* Disable checkpoint restore codepath when CRIU is not installed ([#13734](https://github.com/containerd/containerd/pull/13734))\n  * [`374091d67`](https://github.com/containerd/containerd/commit/374091d67c1966969b772594ba96a74f4357bc7a) github/workflows: install criu in node-e2e\n  * [`db03e3968`](https://github.com/containerd/containerd/commit/db03e39685448a1d87025a2ca3a1e4e42713102d) cri: add enable_criu configuration option\n  * [`dacd4c7d0`](https://github.com/containerd/containerd/commit/dacd4c7d00f4a5fd71197e67afdb6355e8536e4f) cri: validate CRIU availability and version early\n* ci: bound Go fuzzing by execution count ([#13785](https://github.com/containerd/containerd/pull/13785))\n  * [`890a9c86c`](https://github.com/containerd/containerd/commit/890a9c86cd9918e53c1ef1b57c6539a943196cd5) ci: bound Go fuzzing by execution count\n* cri: auto-add prefix for pause image ([#13759](https://github.com/containerd/containerd/pull/13759))\n  * [`0b2f1d078`](https://github.com/containerd/containerd/commit/0b2f1d078124b52f4c8030dc686f2d65c1dfc17c) cri: auto-add prefix for pause image\n</p>\n</details>\n\n### Dependency Changes\n\n* **k8s.io/api**                            v0.36.0 -> v0.36.3\n* **k8s.io/apimachinery**                   v0.36.0 -> v0.36.3\n* **k8s.io/client-go**                      v0.36.0 -> v0.36.3\n* **k8s.io/component-base**                 v0.36.0 -> v0.36.3\n* **k8s.io/cri-api**                        v0.36.0 -> v0.36.3\n* **k8s.io/cri-client**                     v0.36.0 -> v0.36.3\n* **k8s.io/cri-streaming**                  v0.36.0 -> v0.36.3\n* **sigs.k8s.io/structured-merge-diff/v6**  v6.3.2 -> v6.3.3\n\nPrevious release can be found at [v2.3.3](https://github.com/containerd/containerd/releases/tag/v2.3.3)\n### Which file should I download?\n* `containerd-<VERSION>-<OS>-<ARCH>.tar.gz`:         ✅Recommended. Dynamically linked with glibc 2.35 (Ubuntu 22.04).\n* `containerd-static-<VERSION>-<OS>-<ARCH>.tar.gz`:  Statically linked. Expected to be used on Linux distributions that do not use glibc >= 2.35. Not position-independent.\n\nIn addition to containerd, typically you will have to install [runc](https://github.com/opencontainers/runc/releases)\nand [CNI plugins](https://github.com/containernetworking/plugins/releases) from their official sites too.\n\nSee also the [Getting Started](https://github.com/containerd/containerd/blob/main/docs/getting-started.md) documentation.\n",
+      "highlights": [
+        "Highlights",
+        "Container Runtime Interface (CRI)",
+        "Disable checkpoint restore in CreateContainer by default, requiring the enableexperimentalrestoreviacreate configuration option to enable (#13913)",
+        "Set default runtimeFeatures.UserNamespacesHostNetwork to true in CRI (#13914)",
+        "Deprecate checkpoint restore in CreateContainer (#13868)",
+        "Support non-UTF-8 binary environment variable values in CRI (#13454)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "containerd/containerd",
+        "kind": "milestone",
+        "title": "2.5",
+        "url": "https://github.com/containerd/containerd/milestone/52",
+        "description": "",
+        "openIssues": 0,
+        "closedIssues": 0
+      },
+      {
+        "repository": "containerd/containerd",
+        "kind": "milestone",
+        "title": "2.4",
+        "url": "https://github.com/containerd/containerd/milestone/51",
+        "description": "",
+        "dueAt": "2026-08-26T00:00:00Z",
+        "progress": 34,
+        "openIssues": 37,
+        "closedIssues": 19
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-16T02:35:31.986278Z",
+      "since": "2026-08-15T02:35:31.986278Z",
+      "observedCount": 26,
+      "changedCount": 26
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:containerd/containerd:issue:12172",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Live-restore option for containerd",
+      "text": "### Description So we are having a situation where we are running our workloads using containerd. With restart of containerd the containers are also getting restarted. This we dont want. After some investigation on how we were achieving the same thing with docker, I found out about the live-restore option in docker daemon which ensures containers keep running across daemon restarts. How can I achieve the same for my containerd workloads launched via nerdctl ? Do we have a live-restore option for containerd which lets say we can specify in config.toml ? Thanks in advance for the help. ### Steps to reproduce the issue 1. Restart containerd and you will see the containers restarting. ### Describe the results you received and expected I am expecting that with containerd restart the containers dont restart. ### What version of containerd are you using? containerd containerd.io 1.6.32 8b3b7ca2e5ce38e8f31a34f35b2b68ceb8470d89 ### Any other relevant information _No response_ ### Show configuration if it is related to CRI plugin. _No response_",
+      "url": "https://github.com/containerd/containerd/issues/12172",
+      "createdAt": "2025-08-05T09:36:04Z",
+      "updatedAt": "2026-08-16T00:09:30Z",
+      "timestamp": "2026-08-16T00:09:30Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 12
+      },
+      "labels": [
+        "kind/bug",
+        "kind/question",
+        "Stale",
+        "area/runtime"
+      ],
+      "author": "aadarsh-mohta",
+      "state": "closed",
+      "assignees": [
+        "ningmingxiao"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:12300",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Pass tracing context from containerd-shim to runc and OCI hooks",
+      "text": "### What is the problem you're trying to solve Open telemetry tracing when fully instrumented starts in the pod lifecycle within `kubelet` and goes all the way through `containerd`, and optionally into the `containerd-shim-runc-v2` if you enable the `shim_tracing` build tag. As our runc and OCI hooks also support tracing, it would be nice to complete the connection by passing the tracing parameters one more level down. ### Describe the solution you'd like While `containerd` passes the tracing context via ttrpc to the shim, this is not possible for runc and subsequent OCI hooks are binary invoked (and with code not in this project). To pass to those processes we can utilize the environment specification [1] as those binaries inherit the environment and can choose whether to create new sub spans or not. [1] https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/0258-env-context-baggage-carriers.md ### Additional context _No response_",
+      "url": "https://github.com/containerd/containerd/issues/12300",
+      "createdAt": "2025-09-13T04:21:51Z",
+      "updatedAt": "2026-08-15T18:01:29Z",
+      "timestamp": "2026-08-15T18:01:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [
+        "kind/feature",
+        "status/roadmapped",
+        "Stale",
+        "area/runtime"
+      ],
+      "author": "rutigs",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:containerd/containerd:issue:12462",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "The unexpected exit of copyPipe is blocking the container's stdout and stderr.",
+      "text": "### Description Any write error will cause copyPipe to exit, stopping the copying of container logs. When the pipe buffer is full, container log writes will then block and hang. The same logging issue applies to Nerdctl. https://github.com/containerd/containerd/blob/8bcea1029ad66baa2b9f84b4eef4f7ae219201e4/cmd/containerd-shim-runc-v2/process/io.go#L147-L153 ### Steps to reproduce the issue 1. `ctr i pull docker.io/library/busybox:latest` 2. `ctr run -d --log-uri file:///var/log/logging-test.log docker.io/library/busybox:latest logging-test ping 127.0.0.1 -i 0.1 -c 3000` 3. `chattr +i /var/log/logging-test.log && sleep 1 && chattr -i /var/log/logging-test.log` 4. The ping commands hangs forever. ### Describe the results you received and expected Received: container hang Expected: container not hang ### What version of containerd are you using? containerd containerd.io 1.6.32 8b3b7ca2e5ce38e8f31a34f35b2b68ceb8470d89 ### Any other relevant information Perhaps we can ignore log writing errors like cri. https://github.com/containerd/containerd/blob/8bcea1029ad66baa2b9f84b4eef4f7ae219201e4/internal/cri/io/logger.go#L133-L153 ### Show configuration if it is related to CRI plugin. _No response_",
+      "url": "https://github.com/containerd/containerd/issues/12462",
+      "createdAt": "2025-11-04T03:48:50Z",
+      "updatedAt": "2026-08-16T00:09:33Z",
+      "timestamp": "2026-08-16T00:09:33Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 11
+      },
+      "labels": [
+        "kind/bug",
+        "Stale",
+        "area/runtime"
+      ],
+      "author": "zwtop",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:12678",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "CRI plugin: container stuck as RUNNING after process exit",
+      "text": "## Description After a failed liveness probe, kubelet initiated container termination via `StopContainer` CRI call. The termination process involved multiple retry attempts, each failing with `context canceled` or `DeadlineExceeded`. Eventually, the container process was killed (SIGKILL sent at 10:39:32), the shim was removed, and the cgroup was deleted. However, after all physical resources were cleaned up, querying the container state reveals a state inconsistency: - `ctr tasks ls` correctly shows `STOPPED` - `crictl inspect` incorrectly shows `CONTAINER_RUNNING` with `finishedAt` unset (zero time) As a result, kubelet continues to call `StopContainer` in an infinite loop, receiving `DeadlineExceeded` errors because it's trying to stop a container that no longer exists. The pod remains stuck in `Terminating` state indefinitely. The only recovery is to restart containerd. ## Environment - **containerd**: 1.7.27 (commit 05044ec0a9a75232cad458027ca83437aae3f4da) - **runc**: 1.2.5 - **Kubernetes**: 1.31.2 ## Observed State **containerd task API shows STOPPED:** ```bash $ ctr -n k8s.io tasks ls | grep acaca462a89ac acaca462a89acd5d959f9598c8d47ce7f72e32fc86f13827f6fbeb7e5d1cd424 4758 STOPPED ``` **CRI API shows RUNNING:** ```bash $ crictl inspect acaca462a89ac | jq -r '.status.state, .status.finishedAt' CONTAINER_RUNNING 0001-01-01T00:00:00Z ``` **Physical resources are all cleaned up:** ```bash # Process does not exist $ ls /proc/4758 ls: cannot access '/proc/4758': No such file or directory # Shim removed $ ps aux | grep containerd-shim | grep acaca462a89ac (no output) # Cgroup deleted $ ls /sys/fs/cgroup/kubepods/burstable/pod39ea.../acaca462a89ac... ls: cannot access: No such file or directory ``` ## Timeline | Time | Component | Event | |------|-----------|-------| | 10:36:31 | kubelet | `StopContainer` failed: `DeadlineExceeded` | | 10:36:31 | kubelet | \"Container kube-controller-manager failed liveness probe, will be restarted\" | | 10:36:31 | kubelet | \"Killing container with grace period 30s\" | | 10:39:01 | kubelet | `StopContainer` failed: `DeadlineExceeded` (retry) | | 10:39:01 | containerd | `StopContainer` failed: `context canceled` | | 10:39:02 | containerd | `StopContainer` with timeout 30s | | 10:39:32 | containerd | SIGKILL sent | | 10:41:32 | containerd | `StopContainer` failed: `context canceled` | | 10:41:32 | containerd | \"Skipping the sending of signal terminated... because a prior stop already sent the signal\" | ## Logs **kubelet:** ``` Oct 14 10:36:31 kubelet[8345]: E1014 10:36:31.256309 \"StopContainer from runtime service failed\" err=\"rpc error: code = DeadlineExceeded desc = context deadline exceeded\" containerID=\"acaca462a89ac\" Oct 14 10:36:31 kubelet[8345]: I1014 10:36:31.605638 \"Message for Container of pod\" containerMessage=\"Container kube-controller-manager failed liveness probe, will be restarted\" Oct 14 10:36:31 kubelet[8345]: I1014 10:36:31.605725 \"Killing container with a grace period\" containerName=\"kube-controller-manager\" gracePeriod=30 Oct 14 10:39:01 kubelet[8345]: E1014 10:39:01.613275 \"StopContainer from runtime service failed\" err=\"rpc error: code = DeadlineExceeded desc = context deadline exceeded\" containerID=\"acaca462a89ac\" Oct 14 10:39:02 kubelet[8345]: I1014 10:39:02.176566 \"Message for Container of pod\" containerMessage=\"Container kube-controller-manager failed liveness probe, will be restarted\" Oct 14 10:39:02 kubelet[8345]: I1014 10:39:02.176763 \"Killing container with a grace period\" containerName=\"kube-controller-manager\" gracePeriod=30 ``` **containerd:** ``` Oct 14 10:39:01 containerd[7758]: level=error msg=\"StopContainer for \\\"acaca462a89ac\\\" failed\" error=\"rpc error: code = Canceled desc = an error occurs during waiting for container to be killed: context canceled\" Oct 14 10:39:02 containerd[7758]: level=info msg=\"StopContainer for \\\"acaca462a89ac\\\" with timeout 30 (s)\" Oct 14 10:39:32 containerd[7758]: level=info msg=\"Kill container \\\"acaca462a89ac\\\"\" Oct 14 10:41:32 containerd[7758]: level=error msg=\"StopContainer for \\\"acaca462a89ac\\\" failed\" error=\"rpc error: code = Canceled desc = an error occurs during waiting for container to be killed: context canceled\" Oct 14 10:41:32 containerd[7758]: level=info msg=\"StopContainer for \\\"acaca462a89ac\\\" with timeout 30 (s)\" Oct 14 10:41:32 containerd[7758]: level=info msg=\"Skipping the sending of signal terminated to container \\\"acaca462a89ac\\\" because a prior stop with timeout>0 request already sent the signal\" ``` ## Related Issues - #10755 — Pod stays in terminating state (same symptoms, closed) - #6080 — Containerd fails to stop containers, \"Failed to handle container TaskExit event\" ## Expected Behavior CRI plugin should update container status to `EXITED` when the container process terminates, regardless of whether the initiating gRPC context was cancelled.",
+      "url": "https://github.com/containerd/containerd/issues/12678",
+      "createdAt": "2025-12-12T06:48:41Z",
+      "updatedAt": "2026-08-15T16:08:51Z",
+      "timestamp": "2026-08-15T16:08:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 39
+      },
+      "labels": [
+        "kind/bug",
+        "area/cri",
+        "Stale"
+      ],
+      "author": "evgfitil",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:12781",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "High and steadily increasing memory usage in containerd-shim for calico-node-windows",
+      "text": "### Description Hi everyone, I'm running into a high memory consumption issue with the containerd-shim for calico-node-windows DaemonSet pod on my Windows worker nodes. Here's the setup: Kubernetes: v1.33.3 Calico: v3.31.3 (latest OSS release) Containerd: v1.7.30 ( Nodes: Windows Server 2022 Cluster: Mixed Linux/Windows, using Calico for networking The problem: The containerd-shim process associated with the calico-node-windows pod is consuming ~3.7GB of memory and it's steadily increasing over time. Has anyone seen similar behavior on Windows with latest versions? Could this be a shim leak, policy-related overhead, or something in Felix HostProcess? Any advice on debugging (e.g., tools for shim profiling on Windows) or potential workarounds/fixes? Logs/dumps available if needed. <img width=\"1281\" height=\"458\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9e01b369-3a08-48dc-bdfb-d2ad7e9ae602\" /> # # # Related issue: https://github.com/containerd/containerd/issues/7375 https://github.com/projectcalico/calico/issues/6753 ### Steps to reproduce the issue 1. 2. 3. ### Describe the results you received and expected . ### What version of containerd are you using? 1.7.30 ### Any other relevant information _No response_ ### Show configuration if it is related to CRI plugin. _No response_",
+      "url": "https://github.com/containerd/containerd/issues/12781",
+      "createdAt": "2026-01-13T14:27:04Z",
+      "updatedAt": "2026-08-16T00:09:40Z",
+      "timestamp": "2026-08-16T00:09:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "kind/bug",
+        "platform/windows",
+        "kind/external",
+        "Stale",
+        "area/runtime"
+      ],
+      "author": "cozu111",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:12890",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "`docker load` fails with \"no target for symlink layer\" on docker-archive images containing symlinked layers (containerd 2.x)",
+      "text": "### Description We're seeing docker load fail on docker-archive format images that use symlinks for layer deduplication. This worked with containerd 1.x and appears to have regressed with containerd 2.x. Is this a known issue, or is the new behavior intentional? ``` $ docker load -i junos-routing-crpd-docker-amd64-24.4R2-S2.6.tgz no target for symlink layer from \"e37c0ca938fe6033a8e7778ce76d7aef2044beaabf05bb07a1ff436d6e13369a/layer.tar\" to \"e37c0ca938fe6033a8e7778ce76d7aef2044beaabf05bb07a1ff436d6e13369a/.b145b8f10c30476da5083e92fe884fef3b125b73c68257ce48679cff05b8e43a.tar\" ``` The image tarball contains a layer directory where layer.tar is a symlink to a blob at the archive root: ``` e37c0ca938fe.../layer.tar -> .b145b8f10c30...tar (symlink) b145b8f10c30...tar (actual blob, at archive root) .b145b8f10c30...tar (also at archive root) ``` The symlink target exists at the top level of the archive but not relative to the layer subdirectory. When containerd extracts the archive to a temp directory and then tries to follow the symlink as a filesystem path, it fails because the relative path doesn't resolve from within the layer directory. ``` $ docker version Client: Version: 29.2.1 API version: 1.53 Go version: go1.25.6 Git commit: e92dd87 Built: Tue Feb 3 18:23:30 2026 OS/Arch: linux/amd64 Context: default Server: Engine: Version: 29.2.1 API version: 1.53 (minimum version 1.44) Go version: go1.25.6 Git commit: d105562 Built: Tue Feb 3 18:20:36 2026 OS/Arch: linux/amd64 Experimental: false containerd: Version: 2.2.1 GitCommit: 091922f03c2762540fd057fba91260237ff86acb runc: Version: 1.4.0 GitCommit: 51d5e94601ceffbbd85688df1c928ecccbfa4685 docker-init: Version: 0.19.0 GitCommit: de40ad0 ``` Image was built w/ podman ### Steps to reproduce the issue 1. Build or save any container image using podman that produces a docker-archive with symlinked layers 2. docker load -i <image> ### Describe the results you received and expected See description ### What version of containerd are you using? containerd github.com/containerd/containerd/v2 2.2.1 dea7da592f5d1d2b7755e3a161be07f43fad8f75 ### Any other relevant information See description Kernel: 6.19.0 Distro: Slackware64 ### Show configuration if it is related to CRI plugin. _No response_",
+      "url": "https://github.com/containerd/containerd/issues/12890",
+      "createdAt": "2026-02-11T21:53:01Z",
+      "updatedAt": "2026-08-16T00:09:46Z",
+      "timestamp": "2026-08-16T00:09:46Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 3
+      },
+      "labels": [
+        "kind/bug",
+        "kind/question",
+        "Stale",
+        "area/distribution"
+      ],
+      "author": "earies",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:13573",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "`RemoveVolatileOption` cannot recognize mount type \"fuse.nydus-overlayfs\" from nydus-snapshotter",
+      "text": "### Description The latest Nydus Snapshotter release (v0.15.15) introduced support for enabling volatile mounts globally. When using a nydus-formatted image, Nydus Snapshotter returns a mount.Mount whose type is [_\"fuse.nydus-overlayfs\"_ rather than _\"overlay\"_](https://github.com/containerd/nydus-snapshotter/blob/main/snapshot/mount_option.go). For tempmount, containerd removes the volatile mount option through `RemoveVolatileOption()`. However, this function currently only applies when the mount type is _\"overlay\"_. As a result, for Nydus mounts with type _\"fuse.nydus-overlayfs\"_, the volatile option is not removed during tempmount. This tempmount is therefore created with the volatile option, and the kernel refuses to reuse the mount, causing later mount operations to fail. It seems that `RemoveVolatileOption()` should also handle Nydus overlay mount types (e.g. fuse.nydus-overlayfs) to ensure the volatile option is removed consistently during temporary mount operations. ### Steps to reproduce the issue 1. Use nydus-snapshotter v0.15.15 for containerd 2. Set `enable_overlayfs_volatile = true` under `[snapshot]` in /etc/nydus/config.toml 3. Create a pod with nydus-formatted image ### Describe the results you received and expected Journal of containerd: ``` time=\"2026-06-10T07:49:24.585807645Z\" level=error msg=\"CreateContainer within sandbox \\\"f76b6b4cc777e1c6f1de840289e8876c7efb4f9f6abf0e0399f14f3bbaf875c4\\\" for name:\\\"test-pod\\\" failed\" error=\"failed to create containerd container: failed to mount /mnt/data0/containerd/tmpmounts/containerd-mount2071111639: mount helper [mount.fuse [overlay /mnt/data0/containerd/tmpmounts/containerd-mount2071111639 -o volatile -o workdir=/mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work -o upperdir=/mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/fs -o lowerdir=/mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/512331/mnt -o extraoption=eyJzb3VyY2UiOiIvbW50L2RhdGEwL2NvbnRhaW5lcmQvaW8uY29udGF... -o ro -t nydus-overlayfs]] failed: \\\"2026/06/10 07:49:24 mount overlayfs by syscall: invalid argument\\\\n\\\": exit status 1\" ``` At the time when error happened: ``` --- walk /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work --- DIR /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work DIR /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work/incompat DIR /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work/incompat/volatile FILE /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work/incompat/volatile/dirty (0) ``` The `dirty` file is observed. `dmesg` also reported that `overlay with incompat feature 'volatile' cannot be mounted` ### What version of containerd are you using? containerd containerd.io 1.7.25 bcc810d6b9066471b0b6fa75f557a15a1cbf31bb ### Any other relevant information Does replacing `m.Type != \"overlay\"` with `!strings.Contains(m.Type, \"overlay\")` seem more compatible? Not sure if this will cause any side effects. ### Show configuration if it is related to CRI plugin. _No response_",
+      "url": "https://github.com/containerd/containerd/issues/13573",
+      "createdAt": "2026-06-11T06:35:30Z",
+      "updatedAt": "2026-08-15T12:30:30Z",
+      "timestamp": "2026-08-15T12:30:30Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "kind/feature",
+        "area/snapshotters"
+      ],
+      "author": "hyt658",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:13967",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "btrfs snapshotter: stats collection walks 1.5M inodes per pass on an idle node",
+      "text": "This is the same problem as #6067 and #4217. Both were closed by a stale bot, not because anything was fixed, so I am opening a new one with actual numbers from a real cluster. #6067 asked for benchmark data — here it is. Environment: ``` $ containerd --version containerd github.com/containerd/containerd/v2 v2.3.2 $ uname -srm Linux 6.1.99-rbd aarch64 $ kubectl version -o json | jq -r .serverVersion.gitVersion v1.36.1 ``` Six-node bare-metal cluster, OrangePi 5 Plus (rk3588, 8 cores, 32 GB), Gentoo, `/var` on btrfs, containerd with the btrfs snapshotter, ~40 containers per node. The cluster is idle — nothing is being pulled, built or deployed. ### The problem containerd sizes snapshots by walking them recursively. With the btrfs snapshotter every layer is created as `btrfs subvolume snapshot <parent>`, so layer N physically contains layers 1..N, and a container's writable layer is a full clone of the image rootfs. The walk is therefore `O(layers x rootfs)` instead of `O(unique files)`. Inodes walked per stats pass on one node: ``` image layers (89 dirs): 526,770 writable layers (92 dirs): 998,432 --------- total: 1,525,202 ``` 1.5M `stat()` calls every cycle, on an idle node. One 8-layer image shows the multiplication clearly (inode count per snapshot directory): ``` snapshot 351: 8,111 base layer snapshot 352: 33,363 +25,252 files snapshot 353: 33,434 +71 snapshot 354: 33,435 +1 snapshot 355: 33,438 +3 snapshot 356: 33,453 +15 snapshot 357: 33,456 +3 snapshot 358: 33,463 +7 ------- sum walked: 242,153 inodes, for an image that holds 33,463 unique files ``` Layers 353-358 add between 1 and 71 files each, but every one of them costs a full 33,000-file walk. The writable layers are the bigger half — 998k inodes, 65% of the total. Each is a clone of a full image rootfs, while a running container has usually modified a few dozen files. ### Raising `stats_collect_period` does not fix it The usual advice is to raise the interval, so I set it to 900 in both the images and the runtime CRI plugins: ``` $ containerd config dump | grep stats_collect_period stats_collect_period = 900 stats_collect_period = '900s' ``` It helps, but much less than expected, because the cost is not the interval — it is the duration of one pass. Sampling containerd CPU in 30s buckets: ``` 22:36 - 22:42 6% idle 22:42 - 22:51 ~95% scan pass 22:52 - 22:55 6% idle mean over 20 minutes: 47% of one core ``` The pass itself takes 8-9 minutes out of the 15-minute cycle. The syncer goroutine confirms it — it sleeps `period - pass_duration`: ``` goroutine 53 [sleep, 2 minutes]: time.Sleep(0x91ac7272f8) # 625s of a 900s period github.com/containerd/containerd/v2/internal/cri/server/images.(*snapshotsSyncer).start.func1() ``` So on btrfs the fix is throttling one core down to half a core. To actually get rid of it you have to raise the interval to hours, and then the stats are useless anyway. There is also no way to disable it. The btrfs snapshotter plugin exposes exactly one option: ``` $ containerd config default | grep -A2 \"snapshotter.v1.btrfs\" [plugins.'io.containerd.snapshotter.v1.btrfs'] root_path = '' ``` ### Ask I understand qgroups were tried in #1836 and closed because their efficacy was not proven, and that #1871 chose walking for accuracy. Nine years later the accuracy is being paid for with a permanent core of CPU per node. Would any of these be acceptable? 1. Use qgroups for `Usage()` when quotas are enabled on the filesystem, and fall back to walking when they are not. This was already implemented in #1836. 2. An option to disable snapshot usage collection entirely, as suggested in #6067. Reporting zero is more useful than burning a core. 3. If neither, document in the btrfs snapshotter docs that it is not suitable for clusters with many layers or containers, so people do not have to find this out by profiling. Happy to run measurements on this hardware if that helps.",
+      "url": "https://github.com/containerd/containerd/issues/13967",
+      "createdAt": "2026-08-15T23:41:39Z",
+      "updatedAt": "2026-08-15T23:43:43Z",
+      "timestamp": "2026-08-15T23:43:43Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [
+        "kind/performance",
+        "area/snapshotters"
+      ],
+      "author": "cono",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:4594",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Terminate a process group grandchildren on exec timeout",
+      "text": "**TL/DR** Would it be possible to send `SIGTERM` to all leaf (grandchildren) subprocesses in an exec process group before `SIGKILL`ing them? **What is the problem you're trying to solve** There are many popular k8s helm charts which use bash scripts for readinessProbe and livenessProbe. Unfortunately, some of those scripts start a potentially long-running operation in subshell. If such subshell command takes longer than the exec `timeoutSeconds` setting, then the parent script gets terminated, leaving a zombie PID behind. A minimal example is given at the botom of this request. I've submitted a workaround for redis@github/bitnami/charts, but (thousands of) our developers use many other charts/containers with the very same issue. For example, official Elasticsearch chart has the same buggy sub-shell health check. Fixing all those charts upstream is a tedious task... I'm wondering whether it be possible to solve such common issue on containerd side? **Describe the solution you'd like** First i though that it may help to just enable [`PR_SET_CHILD_SUBREAPER`](https://man7.org/linux/man-pages/man2/prctl.2.html) on exec parent. @crosbymichael, do you know whether an exec's parent sets `PR_SET_CHILD_SUBREAPER` before running an exec or execSync command in a container? I see that shim does that for both [v1](https://github.com/containerd/containerd/blob/990076b731ec9446437972b41176a6b0f3b7bcbf/cmd/containerd-shim/shim_linux.go#L38) and [v2](https://github.com/containerd/containerd/blob/990076b731ec9446437972b41176a6b0f3b7bcbf/runtime/v2/shim/shim_linux.go#L29). But i'm not sure, whether `shim` is the actual parent process when `kubelet` is calling CRI's execSync()? Also, it's not clear whether `PR_SET_CHILD_SUBREAPER` [is helpful or not](https://man7.org/linux/man-pages/man2/prctl.2.html): > The setting of the \"child subreaper\" attribute is not inherited by children created by fork(2) and clone(2). So, if a bash script does normal fork() (which i'm not sure about), then subreaper will not help here. Therefore, I would like to send `SIGTERM` or `SIGQUIT` to the leaf child processes in a process group of an execSync() and wait for a few milliseconds. This will allow main script to `wait()` for subshell exit code and finish normally. To give an example, let's look at the processes in the pod created via \"steps to reproduce\" given below: ```bash ps fwxao pid,ppid,pgid,sid,comm | grep -v defunct PID PPID PGID SID COMMAND 12325 0 12325 12325 sh 12330 12325 12325 12325 \\_ ping.sh 12331 12330 12325 12325 \\_ ping.sh 12332 12331 12325 12325 \\_ sleep 1 0 1 1 sleep 8 1 1 1 bash 12324 8 1 1 \\_ sleep ``` Here, everything in process group 12325 corresponds to readinessProbe. Containerd only knows about the parent PID 12325, so it `SIGKILL`s the PID=12325 when exec timeout is reached. But if we (manually) `SIGTERM` the leaf process in that PG (`kill 12332`), then the readinessProbe finishes immediately without leaving a zombie/defunct PID behind. Dear maintainers, would you consider an option of iterating over leaf PIDs and `SIGTERM`ing them before `SIGKILL`ing the whole group? **Additional context** Steps to reproduce a zombie generator. <details> <summary>Click to expand!</summary> - Optional: install fresh [kind](https://github.com/kubernetes-sigs/kind) cluster ```bash kind create cluster --name zombies # Ensuring node image (kindest/node:v1.19.1)... kubectl config use-context kind-zombies ``` - Deploy a test container: ```bash cat <<'EOF' | kubectl apply -f - apiVersion: apps/v1 kind: Deployment metadata: name: zombie-test labels: app: zombie-test spec: replicas: 1 strategy: type: Recreate selector: matchLabels: app: zombie-test template: metadata: labels: app: zombie-test spec: containers: - name: zombie-test image: debian:10-slim command: - bash - -c - | cat <<'SCRIPT' > /tmp/ping.sh #!/bin/bash -x long_running_health_check=$( sleep 15 echo PONG ) if [[ $long_running_health_check != \"PONG\" ]]; then echo \"$long_running_health_check\" exit 1 fi SCRIPT chmod 755 /tmp/ping.sh apt update && apt -y install procps while true; do ps auxwf; echo '=====================' ; sleep 5; done 1>&2 & exec sleep infinity readinessProbe: exec: command: - sh - -c - /tmp/ping.sh timeoutSeconds: 10 initialDelaySeconds: 3 periodSeconds: 20 EOF kubectl logs -f -l app=zombie-test ``` </details>",
+      "url": "https://github.com/containerd/containerd/issues/4594",
+      "createdAt": "2020-09-30T10:32:41Z",
+      "updatedAt": "2026-08-15T13:13:06Z",
+      "timestamp": "2026-08-15T13:13:06Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 4
+      },
+      "labels": [
+        "exp/expert",
+        "kind/feature",
+        "kind/help-wanted",
+        "status/accepted"
+      ],
+      "author": "kabakaev",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:6067",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Excessive CPU usage during stat collection for BTRFS",
+      "text": "We are trying to switch from an `overlayfs` to `btrfs` but hitting a problem when `containerd` periodically consumes quite a lot of CPU (%sys) doing used space calculations here: https://github.com/containerd/containerd/blob/0f27a423ef12110770382095024a852bd309606c/snapshots/btrfs/btrfs.go#L160-L164 (We have quite a lot of containers and files in each.) Is it possible to have a way to either disable space usage collection or try using the `btrfs quota`-based space usage calculations if quotas are enabled (which are way faster): ``` # btrfs qgroup show -f /var/lib/containerd/io.containerd.snapshotter.v1.btrfs/active/931 qgroupid rfer excl -------- ---- ---- 0/2111 173.55MiB 1.08MiB ``` inode usage calculations should not matter, given that btrfs does dynamic inode allocation and hence is not limited by a number of preallocated inodes like xfs/ext4: ``` % df -hi / Filesystem Inodes IUsed IFree IUse% Mounted on /dev/mapper/root.crypt 0 0 0 - / ```",
+      "url": "https://github.com/containerd/containerd/issues/6067",
+      "createdAt": "2021-09-29T01:11:20Z",
+      "updatedAt": "2026-08-15T23:14:33Z",
+      "timestamp": "2026-08-15T23:14:33Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 12
+      },
+      "labels": [
+        "kind/enhancement",
+        "kind/performance"
+      ],
+      "author": "SaveTheRbtz",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:issue:6812",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "issue",
+      "title": "Ctr checkpoint export image failure",
+      "text": "### Description Exporting a checkpoint fails with an error: ``` ctr: content digest sha256:ba15b7a60f30deb2c84ddabfcfb9041492fea5998a064b48fa521f69703ba028: not found ``` ### Steps to reproduce the issue 1. Start a container in a separate console ``` sudo ctr run --rm docker.io/library/busybox:latest foo /bin/sh ``` 2. Create a checkpoint ``` sudo ctr c checkpoint --task --image --rw foo foo-ckpt ``` 4. Export a checkpoint ``` $ sudo ctr i export ./foo.tar foo-ckpt --platform linux/amd64 ctr: content digest sha256:ba15b7a60f30deb2c84ddabfcfb9041492fea5998a064b48fa521f69703ba028: not found ``` ### Describe the results you received and expected I expected the archive with checkpoint to be created. The file is created, but it is empty. ### What version of containerd are you using? containerd github.com/containerd/containerd v1.6.2 de8046a5501db9e0e478e1c10cbcfb21af4c6b2d ### Any other relevant information ``` $ sudo ctr i check ERRO[0000] unable to check unpack for foo-ckpt error=\"unexpected media type application/vnd.containerd.container.checkpoint.runtime.options+proto for sha256:d8183a03f8f3429623e6aa55d13c70d1bfc282fe5c3d6562180fdc55c7614589: not found\" REF TYPE DIGEST STATUS SIZE UNPACKED docker.io/library/busybox:latest application/vnd.docker.distribution.manifest.list.v2+json sha256:caa382c432891547782ce7140fb3b7304613d3b0438834dce1cad68896ab110a complete (2/2) 756.1 KiB/756.1 KiB true foo-ckpt application/vnd.oci.image.index.v1+json sha256:4468afbf7fd57edd61545fbad5f7aa91b36f0d8b3e92b5484e69bfaab1941901 unavailable (0/?) 0.0 B/? false ctr: unable to check unpack for foo-ckpt: unexpected media type application/vnd.containerd.container.checkpoint.runtime.options+proto for sha256:d8183a03f8f3429623e6aa55d13c70d1bfc282fe5c3d6562180fdc55c7614589: not found ``` ### Show configuration if it is related to CRI plugin. _No response_",
+      "url": "https://github.com/containerd/containerd/issues/6812",
+      "createdAt": "2022-04-15T13:27:51Z",
+      "updatedAt": "2026-08-15T15:32:39Z",
+      "timestamp": "2026-08-15T15:32:39Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 14
+      },
+      "labels": [
+        "kind/bug",
+        "area/criu"
+      ],
+      "author": "planetA",
+      "state": "open",
+      "assignees": [
+        "turan18"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:11639",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "ci:fix container must be created error on shimv1",
+      "text": "fix 1.7 ci error when use shimv1 ``` 2025-04-01T05:08:12.7620705Z restart_test.go:211: Should be able to stop and remove sandbox after restart 2025-04-01T05:08:13.0699136Z E0401 05:08:13.069402 82918 remote_runtime.go:182] RemovePodSandbox \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\" from runtime service failed: rpc error: code = FailedPrecondition desc = failed to delete sandbox \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to delete sandbox task \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to cleanup sandbox 29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce in task-service: container must be created: failed precondition 2025-04-01T05:08:13.0702963Z restart_test.go:214: 2025-04-01T05:08:13.0704077Z Error Trace: /home/runner/work/containerd/containerd/integration/restart_test.go:214 2025-04-01T05:08:13.0705112Z Error: Received unexpected error: 2025-04-01T05:08:13.0710105Z rpc error: code = FailedPrecondition desc = failed to delete sandbox \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to delete sandbox task \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to cleanup sandbox 29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce in task-service: container must be created: failed precondition 2025-04-01T05:08:13.0712133Z Test: TestContainerdRestart 2025-04-01T05:08:13.0712515Z restart_test.go:217: Should recover all images 2025-04-01T05:08:13.0943512Z --- FAIL: TestContainerdRestart (11.83s) ```",
+      "url": "https://github.com/containerd/containerd/pull/11639",
+      "createdAt": "2025-04-01T16:20:31Z",
+      "updatedAt": "2026-08-16T00:09:05Z",
+      "timestamp": "2026-08-16T00:09:05Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [
+        "kind/bug",
+        "area/cri",
+        "needs-ok-to-test",
+        "Stale",
+        "size/S"
+      ],
+      "author": "ningmingxiao",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:11652",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "cgroupv2: set max_user_instances at least 1024",
+      "text": "fix:https://github.com/containerd/containerd/issues/10468 now every shim have to create at least an Inotify instance. but default /proc/sys/fs/inotify/max_user_instances is 128. when we create many containers it will cause error \"too many open files\" ``` func (c *Manager) MemoryEventFD() (int, uint32, error) { fpath := filepath.Join(c.path, \"memory.events\") fd, err := unix.InotifyInit() if err != nil { return 0, 0, fmt.Errorf(\"failed to create inotify fd: %w\", err) } ```",
+      "url": "https://github.com/containerd/containerd/pull/11652",
+      "createdAt": "2025-04-05T13:02:39Z",
+      "updatedAt": "2026-08-16T00:09:08Z",
+      "timestamp": "2026-08-16T00:09:08Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [
+        "needs-ok-to-test",
+        "Stale",
+        "size/XS"
+      ],
+      "author": "ningmingxiao",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:11711",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "cni:support to reload cni config when receive create event",
+      "text": "we use ansible web -m copy -a \"src=/etc/cni/net.d/nmx.conflist dest=/etc/cni/net.d/nmx.conflist\" containerd will ignore create event. ``` 4月 17 10:51:25 host-10-234-74-105 containerd[5643]: time=\"2025-04-17T10:51:25.676133342+08:00\" level=debug msg=\"ignore event from cni conf dir: CREATE \\\"/etc/cni/net.d/nmx.conflist\\\"\" 4月 17 10:51:25 host-10-234-74-105 containerd[5643]: time=\"2025-04-17T10:51:25.676230486+08:00\" level=debug msg=\"ignore event from cni conf dir: CHMOD \\\"/etc/cni/net.d/nmx.conflist\\\"\" 4月 17 10:51:25 host-10-234-74-105 containerd[5643]: time=\"2025-04-17T10:51:25.677315923+08:00\" level=debug msg=\"ignore event from cni conf dir: CHMOD \\\"/etc/cni/net.d/nmx.conflist\\ ``` crictl info |grep -i last ``` \"lastCNILoadStatus\": \"cni config load failed: no network config found in /etc/cni/net.d: cni plugin not initialized: failed to load cni config\", \"lastCNILoadStatus.default\": \"cni config load failed: no network config found in /etc/cni/net.d: cni plugin not initialized: failed to load cni config\" ```",
+      "url": "https://github.com/containerd/containerd/pull/11711",
+      "createdAt": "2025-04-17T02:48:34Z",
+      "updatedAt": "2026-08-16T00:09:10Z",
+      "timestamp": "2026-08-16T00:09:10Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "area/cri",
+        "needs-ok-to-test",
+        "Stale",
+        "size/XS"
+      ],
+      "author": "ningmingxiao",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:11833",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "[release/2.0] avoid import to testing pkg outside of tests",
+      "text": "This is an automated cherry-pick of #11666 /assign austinvazquez",
+      "url": "https://github.com/containerd/containerd/pull/11833",
+      "createdAt": "2025-05-10T04:16:37Z",
+      "updatedAt": "2026-08-16T00:09:13Z",
+      "timestamp": "2026-08-16T00:09:13Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "ok-to-test",
+        "Stale",
+        "size/XS"
+      ],
+      "author": "k8s-infra-cherrypick-robot",
+      "state": "closed",
+      "assignees": [
+        "austinvazquez"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:11876",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "set debug level in discard event",
+      "text": "`discard event` should be debug level",
+      "url": "https://github.com/containerd/containerd/pull/11876",
+      "createdAt": "2025-05-21T09:01:37Z",
+      "updatedAt": "2026-08-16T00:09:15Z",
+      "timestamp": "2026-08-16T00:09:15Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "area/cri",
+        "needs-ok-to-test",
+        "Stale",
+        "size/XS"
+      ],
+      "author": "yylt",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:11906",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "contrib: Require CAP_SYS_ADMIN for lsm_set_self_attr",
+      "text": "- https://github.com/containerd/containerd/pull/11839 - https://github.com/moby/moby/pull/50097 It may be potentially unsafe to allow these syscalls (`/proc/self/attr` may be guarded by other mechanisms like apparmor), so let's put them behind CAP_SYS_ADMIN.",
+      "url": "https://github.com/containerd/containerd/pull/11906",
+      "createdAt": "2025-05-28T09:31:37Z",
+      "updatedAt": "2026-08-16T00:09:17Z",
+      "timestamp": "2026-08-16T00:09:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "needs-ok-to-test",
+        "Stale",
+        "size/XS"
+      ],
+      "author": "vvoland",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:11912",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "Let containerd run in a separate mnt namespace",
+      "text": "If there are a large number of container mount points in the environment, systemd will become very slow. Therefore, I think containerd should run in a separate mount namespace from the host mount namespace, and it is a slave in the mount namespace of the host, which can be affected by the host namespace, but can not affect the host.",
+      "url": "https://github.com/containerd/containerd/pull/11912",
+      "createdAt": "2025-05-29T08:24:50Z",
+      "updatedAt": "2026-08-16T00:09:19Z",
+      "timestamp": "2026-08-16T00:09:19Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [
+        "needs-ok-to-test",
+        "Stale",
+        "area/runtime",
+        "size/M"
+      ],
+      "author": "zzzzzzzzzy9",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:12895",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "metadata/content: add media type label on ingest",
+      "text": "## Summary Automatically sets `containerd.io/content.mediatype` label when content is ingested with an OCI descriptor that includes a media type. The label is applied in `namespacedWriter.commit()`, covering all ingest paths (Fetch, WriteBlob, direct Writer). - Callers may explicitly override the label via `WithLabels` - If no media type is present in the descriptor, no label is added - The label is informational only and does not alter behavior ## Motivation Closes #12884 The content store currently does not persist media type information. Given only a digest, consumers must either inspect blob contents or traverse the image graph to determine the media type. Both approaches are inefficient and not guaranteed to be stable. Persisting the media type at ingest time makes this metadata directly queryable via the content API without requiring blob parsing or graph traversal. Using a label avoids any API surface change and keeps the implementation fully backward compatible. ## Design considerations - Injection point: `namespacedWriter.commit()` ensures coverage for all content written through the metadata layer - Backward compatible: existing content simply will not have the label - No GC impact: the label does not use the `containerd.io/gc.*` prefix and is ignored by GC - No API changes: internal metadata-only enhancement - Minimal storage overhead: a single short string label per content entry ## Test plan - Auto-set from descriptor media type - Explicit caller override preserved - No label when descriptor has empty media type - Existing content tests pass",
+      "url": "https://github.com/containerd/containerd/pull/12895",
+      "createdAt": "2026-02-13T13:06:32Z",
+      "updatedAt": "2026-08-16T00:09:47Z",
+      "timestamp": "2026-08-16T00:09:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "Stale",
+        "size/L",
+        "area/distribution"
+      ],
+      "author": "ibrahimypr",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:12900",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "images/archive: fix relative symlink resolution during import",
+      "text": "Fixes #12890 ### Description This PR fixes an issue where image import fails if a symlink in a subdirectory points to a blob in the archive root without using relative paths (e.g., `../`). ### Changes - Added a fallback to `path.Base(linkname)` in `ImportIndex` if the initial symlink resolution fails. - Added a table-driven regression test to verify both standard and malformed archive structures. ### Verification - Verified that the new test case fails without the fix. - Verified that all tests pass with the fix. Signed-off-by: kuromii5 <aleksandrstepanov771@gmail.com>",
+      "url": "https://github.com/containerd/containerd/pull/12900",
+      "createdAt": "2026-02-14T18:47:22Z",
+      "updatedAt": "2026-08-16T00:09:50Z",
+      "timestamp": "2026-08-16T00:09:50Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [
+        "kind/bug",
+        "Stale",
+        "size/L"
+      ],
+      "author": "kuromii5",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13850",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "core/runtime/v2: bound leaked shim cleanup at load",
+      "text": "## Problem `loadShims` walks every leftover bundle in the state dir, loads them through an `errgroup` limited to `runtime.GOMAXPROCS(0)`, and ends with `eg.Wait()`. For a bundle whose task is gone, `loadShim` reaps the shim with: ```go shim.delete(ctx, false, func(ctx context.Context, id string) {}) ``` `ctx` here carries no deadline, and `shimTask.delete` starts with a `Task.Delete` RPC. A leftover shim that keeps its socket alive and simply never answers that one request parks the goroutine forever, so its errgroup slot is never released and `eg.Wait()` never returns. That happens before the daemon serves its socket, so the failure is not \"one container is stuck\", it is \"containerd never finishes starting\": - no socket, `ctr version` hangs, node goes `NotReady`, CRI is down; - the supervisor kills the daemon on its start timeout and restarts it; - the restart re-reads the same bundle from disk and hangs in exactly the same place. Nothing in the loop removes the blocker, so the node cannot leave it by itself — the reporter saw 412, 457 and 636+ identical restarts, and raising `TimeoutStartSec` to 900s did not help. Clearing `/run/containerd/*` by hand recovers the node only until the next restart rebuilds the same state. `Fixes #13848` ## Root cause The evidence that this is a missing deadline rather than a slow shim is inside the same file. `loadShimTask` deliberately bounds its own probe of the very same shim: ```go ctx, cancel := timeout.WithContext(ctx, loadTimeout) defer cancel() if _, err := s.PID(ctx); err != nil { ``` So the load path already assumes a shim may not answer — the cleanup path next to it just never got the same treatment. This also matches the reporter's minimal reproduction: a relay that passed every request through and dropped **only** the task teardown request was enough to wedge start-up, while a fully unresponsive shim (`kill -STOP`) recovered in ~10s, because that one is caught by the bounded `PID` call. The neighbouring `shim.Pids(ctx)` probe, which decides whether the shim is reapable, is unbounded for the same reason. ## Fix `shimTask.delete` is already called under a deadline elsewhere in this package — `task_manager.go` does exactly this when a task fails to be created: ```go dctx, cancel := timeout.WithContext(context.WithoutCancel(ctx), cleanupTimeout) defer cancel() _, errShim := shimTask.delete(dctx, sandboxed, func(context.Context, string) {}) ``` This change applies the same treatment on the load path, using the existing `io.containerd.timeout.shim.cleanup` key (5s default, already tunable through `[timeouts]` in `config.toml`, so no new configuration is introduced). The `Pids` probe is bounded with the existing `io.containerd.timeout.shim.load` key, matching the `PID` call it sits beside. ## State after a timeout The interesting part is what is left behind when the deadline hits, since the bundle must not be orphaned while its shim is still alive. On timeout `shimTask.delete` returns early, before it reaches `waitShutdown` and `ShimInstance.Delete`, so the cleanup has to be finished explicitly. This change sends a `Shutdown` on a **fresh** deadline (`shim.waitShutdown`, `shutdownTimeout`) rather than the exhausted one, then closes the connection. Closing is what makes the state converge, and it reuses machinery that is already there: the connection was created in `loadShim` with `ttrpc.WithOnClose(onClose)`, and that callback is the existing dead-shim path — `cleanupAfterDeadShim` → `binary.Delete`, which runs the shim's own `delete` command (reaping the runtime container), calls `bundle.Delete()`, publishes `TaskExit`/`TaskDelete`, and drops the shim from the manager. `cleanupAfterDeadShim` is itself already bounded by `cleanupTimeout`. So the end state matches the success path — bundle gone, shim reaped, events published — and, importantly for the loop in the report, an unresponsive shim is **not** met again on the next start. If a shim ignores `Task.Delete`, `Shutdown` *and* its own `delete` command, the process can still survive; that is strictly better than today, where start-up never completes at all. Worth flagging separately: `errgrpc.ToNative` rewrites `context.DeadlineExceeded` into an opaque `errdefs.customMessage`, so `errdefs.IsDeadlineExceeded` returns **false** for the error `shimTask.delete` returns on timeout. That makes the conditional context refresh in `task_manager.go` ineffective for the deadline case it was written for, and it hands `shimTask.Shutdown` an already-expired context. I did not touch it here to keep this change scoped to the reported hang, but I am happy to send a follow-up. It is also why this change refreshes the context unconditionally instead of copying that check. ## Testing `shim_load_test.go` gains a fake shim whose `Task.Delete` is never answered — it blocks until the caller's context is done, which is what a ttrpc call does when the server stays silent. Every other method is left nil via an embedded interface, so an unexpected call panics rather than passing quietly. `cleanupTimeout` is shortened for the test and restored afterwards. Before (the goroutine never returns, so the test reports the hang instead of hanging the suite): ``` $ go test ./core/runtime/v2/ -run TestCleanupLeakedShimDoesNotHang -count=1 -race -v === RUN TestCleanupLeakedShimDoesNotHang shim_load_test.go:170: cleanupLeakedShim never returned: loadShims would hang forever at startup --- FAIL: TestCleanupLeakedShimDoesNotHang (1.00s) FAIL FAIL github.com/containerd/containerd/v2/core/runtime/v2 1.703s FAIL ``` After: ``` $ go test ./core/runtime/v2/ -run TestCleanupLeakedShimDoesNotHang -count=1 -race -v === RUN TestCleanupLeakedShimDoesNotHang time=\"...\" level=error msg=\"failed to delete task\" error=\"context deadline exceeded\" id=leaked-shim --- PASS: TestCleanupLeakedShimDoesNotHang (0.10s) PASS ok github.com/containerd/containerd/v2/core/runtime/v2 1.716s ``` The test also asserts that the forced `Shutdown` receives a context that has not already expired, and that the connection is closed so the dead-shim cleanup described above actually runs. Full package, plus a cross-compile check for the linux-only files in this package (I am on darwin): ``` $ go test ./core/runtime/v2/... -count=1 -race ok github.com/containerd/containerd/v2/core/runtime/v2 1.827s $ go build ./... $ GOOS=linux go vet ./core/runtime/v2/... $ gofmt -l core/runtime/v2/ ``` The reporter's own end-to-end reproduction (a relay dropping only `Task.Delete`, then restarting containerd) is the real integration check for this and needs a node; I could not run that here.",
+      "url": "https://github.com/containerd/containerd/pull/13850",
+      "createdAt": "2026-07-25T19:05:17Z",
+      "updatedAt": "2026-08-15T12:47:16Z",
+      "timestamp": "2026-08-15T12:47:16Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "needs-rebase",
+        "size/L"
+      ],
+      "author": "locker95",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13852",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "core/runtime/v2: add timeout to shim.delete during loadShims",
+      "text": "Fixes #13848 when loadShims cleans up abandoned shims during daemon startup, it calls shim.delete() using the daemon's startup context. this context doesn't have a deadline. if a single leftover shim process never replies to the Delete grpc request (like what happens in #13848), containerd just hangs forever on startup. this wraps the context with the existing cleanupTimeout (5s) before deleting the shim, ensuring the daemon can recover and continue starting even if a shim is wedged.",
+      "url": "https://github.com/containerd/containerd/pull/13852",
+      "createdAt": "2026-07-25T19:35:24Z",
+      "updatedAt": "2026-08-15T03:02:56Z",
+      "timestamp": "2026-08-15T03:02:56Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "needs-rebase",
+        "size/XS"
+      ],
+      "author": "HarshalPatel1972",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13948",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "[pkg/shim] implement Windows support for the shim server",
+      "text": "## What Implements the Windows-specific methods in `pkg/shim` that were previously `ErrNotImplemented` stubs, so a shim built on this package can actually run and serve on Windows (not just Unix). ## Why On Windows the package exposed the shim entry points but left every platform hook unimplemented, so the serve path failed immediately (no ttrpc server, no listener, no logging). This fills those gaps using the Windows named-pipe model. An existing [Windows shim](https://github.com/microsoft/hcsshim/tree/b6b988ac86ef715646ab1b04481ebff88af03cce/cmd/containerd-shim-lcow-v2) uses the same package ([currently forked and modified in project](https://github.com/microsoft/hcsshim/tree/b6b988ac86ef715646ab1b04481ebff88af03cce/internal/shim)). Post this change, the `pkg/shim` can be used by any Windows shim end to end. ## Changes - **ttrpc serving over named pipes** — the shim now creates and serves its API on a Windows named pipe instead of a Unix socket. - **Log streaming over a reconnecting named pipe** — shim logs are served on a pipe that containerd connects to, and transparently re-accepts the reader if it reconnects (e.g. after a containerd restart). Unlike a Unix FIFO, a connection-oriented pipe requires this reconnection handling explicitly. - **Process & signal lifecycle** — signal setup, graceful shutdown on interrupt/terminate, the reap loop, sub-reaper, and stack-dump hooks are wired up with Windows-appropriate (mostly no-op where the OS handles it) behavior. ## Testing Adds unit tests covering the pipe listener, the reconnecting log writer (pre-connection drop, write-through, reconnection, concurrency, close), signal and lifecycle handling, and pipe-readiness. All four platforms (windows/linux/darwin/freebsd) build; the Windows suite passes. ## Notes Windows-only files; no behavior change on Linux/Unix.",
+      "url": "https://github.com/containerd/containerd/pull/13948",
+      "createdAt": "2026-08-12T10:55:37Z",
+      "updatedAt": "2026-08-16T00:04:23Z",
+      "timestamp": "2026-08-16T00:04:23Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XL"
+      ],
+      "author": "rawahars",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13954",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "fix(runtime): apply load timeout to load shim",
+      "text": "Carries #13852 This change applies the `io.containerd.timeout.shim.load` budget to all of shim manager load shim and `io.containerd.timeout.shim.cleanup` to cleanup shim calls to prevent a previously leaked / wedged shim from stalling containerd startup.",
+      "url": "https://github.com/containerd/containerd/pull/13954",
+      "createdAt": "2026-08-12T20:47:51Z",
+      "updatedAt": "2026-08-15T03:01:29Z",
+      "timestamp": "2026-08-15T03:01:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "size/M",
+        "cherry-pick/2.3.x"
+      ],
+      "author": "austinvazquez",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13958",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "runtime: invoke Shutdown after every task deletion",
+      "text": "TaskService.Shutdown may be invoked multiple times. A grouped shim itself does not terminate while it still has active tasks. It terminates only after receiving a Shutdown request when no active tasks remain. The shim manager should invoke TaskService.Shutdown after deleting every task, regardless of whether the task represents sandbox or not. This ensures that the shim receives Shutdown when the last active task is deleted. In CRI, the pause container uses oom_score_adj=-998, making it unlikely to be OOM-killed. However, it may still exit or be killed before the other containers in the sandbox. SandboxService.Shutdown and TaskService.Shutdown are independent APIs. Sandbox service should make sure there is no active containers before shutdown. So, for the task service, we should invoke Shutdown for each task. Removing the supportSandboxAPIVersion check does not change behavior for shims using task API versions below v3. Those shims were already forced down the non-sandboxed path and received Shutdown after every task deletion. The behavior change applies only to sandboxed tasks using task API v3, which now receive Shutdown after deletion as well. Part of https://github.com/containerd/containerd/issues/8981 REF: https://github.com/containerd/containerd/pull/6703",
+      "url": "https://github.com/containerd/containerd/pull/13958",
+      "createdAt": "2026-08-14T02:03:53Z",
+      "updatedAt": "2026-08-15T17:36:09Z",
+      "timestamp": "2026-08-15T17:36:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/L",
+        "cherry-pick/2.2.x",
+        "cherry-pick/2.3.x"
+      ],
+      "author": "fuweid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:containerd/containerd:pull_request:13966",
+      "source": "github",
+      "group": "platform-infrastructure",
+      "project": "containerd/containerd",
+      "kind": "pull_request",
+      "title": "core/unpack: fetch layers of every config-sharing manifest",
+      "text": "An index can carry two manifests that share a config. A config lists uncompressed layer digests, so packaging the same layers with different compression (which `podman manifest push --add-compression` does) produces manifests with identical configs and the same digest. The unpacker cannot unpack a manifest until the config supplies the `diff_ids`, so it stores each manifest's layers in a map keyed by the config's digest and unpacks them when the config is visited. Because that map holds one set of layers per config digest, when there's a shared (identical) config, only the last visited manifest keeps its layers, and the other manifest's blobs are not fetched. Image pulls still report success, but later exports or pushes of the image will fail with NotFound. Fix this by storing a slice of layer sets per config (one per manifest); when the config is handled, unpack the first and fetch the rest. Sets that share a config unpack to the same snapshot chain, so the extra sets only need their blobs in the content store. Because nothing guarantees a manifest is handled before the config it points at (a manifest nested deeper in the index can arrive after another manifest has already led to the shared config), a manifest arriving late must fetch its own layers rather than store them for a lookup that will never happen. Remember each config's digest once it's handled, and drop its map entry, so a late manifest can recognize this case. Don't store anything for a manifest with no layers; an empty set reaching the unpack would fail the pull. Assisted-by: Claude Code",
+      "url": "https://github.com/containerd/containerd/pull/13966",
+      "createdAt": "2026-08-15T20:50:49Z",
+      "updatedAt": "2026-08-15T21:35:59Z",
+      "timestamp": "2026-08-15T21:35:59Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "size/L"
+      ],
+      "author": "chrishenzie",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:27f3e8fe88bc3943a7a7",
+      "signalId": "github:containerd/containerd:pull_request:12900",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:12900",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "images/archive: fix relative symlink resolution during import",
+        "text": "Fixes #12890 ### Description This PR fixes an issue where image import fails if a symlink in a subdirectory points to a blob in the archive root without using relative paths (e.g., `../`). ### Changes - Added a fallback to `path.Base(linkname)` in `ImportIndex` if the initial symlink resolution fails. - Added a table-driven regression test to verify both standard and malformed archive structures. ### Verification - Verified that the new test case fails without the fix. - Verified that all tests pass with the fix. Signed-off-by: kuromii5 <aleksandrstepanov771@gmail.com>",
+        "url": "https://github.com/containerd/containerd/pull/12900",
+        "createdAt": "2026-02-14T18:47:22Z",
+        "updatedAt": "2026-08-16T00:09:50Z",
+        "timestamp": "2026-08-16T00:09:50Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "kind/bug",
+          "Stale",
+          "size/L"
+        ],
+        "author": "kuromii5",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:21124c615aaf6091a3bf",
+      "signalId": "github:containerd/containerd:pull_request:12895",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:12895",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "metadata/content: add media type label on ingest",
+        "text": "## Summary Automatically sets `containerd.io/content.mediatype` label when content is ingested with an OCI descriptor that includes a media type. The label is applied in `namespacedWriter.commit()`, covering all ingest paths (Fetch, WriteBlob, direct Writer). - Callers may explicitly override the label via `WithLabels` - If no media type is present in the descriptor, no label is added - The label is informational only and does not alter behavior ## Motivation Closes #12884 The content store currently does not persist media type information. Given only a digest, consumers must either inspect blob contents or traverse the image graph to determine the media type. Both approaches are inefficient and not guaranteed to be stable. Persisting the media type at ingest time makes this metadata directly queryable via the content API without requiring blob parsing or graph traversal. Using a label avoids any API surface change and keeps the implementation fully backward compatible. ## Design considerations - Injection point: `namespacedWriter.commit()` ensures coverage for all content written through the metadata layer - Backward compatible: existing content simply will not have the label - No GC impact: the label does not use the `containerd.io/gc.*` prefix and is ignored by GC - No API changes: internal metadata-only enhancement - Minimal storage overhead: a single short string label per content entry ## Test plan - Auto-set from descriptor media type - Explicit caller override preserved - No label when descriptor has empty media type - Existing content tests pass",
+        "url": "https://github.com/containerd/containerd/pull/12895",
+        "createdAt": "2026-02-13T13:06:32Z",
+        "updatedAt": "2026-08-16T00:09:47Z",
+        "timestamp": "2026-08-16T00:09:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "Stale",
+          "size/L",
+          "area/distribution"
+        ],
+        "author": "ibrahimypr",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:50c1047aee79e4e9ca18",
+      "signalId": "github:containerd/containerd:issue:12890",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:12890",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "`docker load` fails with \"no target for symlink layer\" on docker-archive images containing symlinked layers (containerd 2.x)",
+        "text": "### Description We're seeing docker load fail on docker-archive format images that use symlinks for layer deduplication. This worked with containerd 1.x and appears to have regressed with containerd 2.x. Is this a known issue, or is the new behavior intentional? ``` $ docker load -i junos-routing-crpd-docker-amd64-24.4R2-S2.6.tgz no target for symlink layer from \"e37c0ca938fe6033a8e7778ce76d7aef2044beaabf05bb07a1ff436d6e13369a/layer.tar\" to \"e37c0ca938fe6033a8e7778ce76d7aef2044beaabf05bb07a1ff436d6e13369a/.b145b8f10c30476da5083e92fe884fef3b125b73c68257ce48679cff05b8e43a.tar\" ``` The image tarball contains a layer directory where layer.tar is a symlink to a blob at the archive root: ``` e37c0ca938fe.../layer.tar -> .b145b8f10c30...tar (symlink) b145b8f10c30...tar (actual blob, at archive root) .b145b8f10c30...tar (also at archive root) ``` The symlink target exists at the top level of the archive but not relative to the layer subdirectory. When containerd extracts the archive to a temp directory and then tries to follow the symlink as a filesystem path, it fails because the relative path doesn't resolve from within the layer directory. ``` $ docker version Client: Version: 29.2.1 API version: 1.53 Go version: go1.25.6 Git commit: e92dd87 Built: Tue Feb 3 18:23:30 2026 OS/Arch: linux/amd64 Context: default Server: Engine: Version: 29.2.1 API version: 1.53 (minimum version 1.44) Go version: go1.25.6 Git commit: d105562 Built: Tue Feb 3 18:20:36 2026 OS/Arch: linux/amd64 Experimental: false containerd: Version: 2.2.1 GitCommit: 091922f03c2762540fd057fba91260237ff86acb runc: Version: 1.4.0 GitCommit: 51d5e94601ceffbbd85688df1c928ecccbfa4685 docker-init: Version: 0.19.0 GitCommit: de40ad0 ``` Image was built w/ podman ### Steps to reproduce the issue 1. Build or save any container image using podman that produces a docker-archive with symlinked layers 2. docker load -i <image> ### Describe the results you received and expected See description ### What version of containerd are you using? containerd github.com/containerd/containerd/v2 2.2.1 dea7da592f5d1d2b7755e3a161be07f43fad8f75 ### Any other relevant information See description Kernel: 6.19.0 Distro: Slackware64 ### Show configuration if it is related to CRI plugin. _No response_",
+        "url": "https://github.com/containerd/containerd/issues/12890",
+        "createdAt": "2026-02-11T21:53:01Z",
+        "updatedAt": "2026-08-16T00:09:46Z",
+        "timestamp": "2026-08-16T00:09:46Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [
+          "kind/bug",
+          "kind/question",
+          "Stale",
+          "area/distribution"
+        ],
+        "author": "earies",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:1f7c6dd52d5ea8549f50",
+      "signalId": "github:containerd/containerd:issue:12781",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:12781",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "High and steadily increasing memory usage in containerd-shim for calico-node-windows",
+        "text": "### Description Hi everyone, I'm running into a high memory consumption issue with the containerd-shim for calico-node-windows DaemonSet pod on my Windows worker nodes. Here's the setup: Kubernetes: v1.33.3 Calico: v3.31.3 (latest OSS release) Containerd: v1.7.30 ( Nodes: Windows Server 2022 Cluster: Mixed Linux/Windows, using Calico for networking The problem: The containerd-shim process associated with the calico-node-windows pod is consuming ~3.7GB of memory and it's steadily increasing over time. Has anyone seen similar behavior on Windows with latest versions? Could this be a shim leak, policy-related overhead, or something in Felix HostProcess? Any advice on debugging (e.g., tools for shim profiling on Windows) or potential workarounds/fixes? Logs/dumps available if needed. <img width=\"1281\" height=\"458\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9e01b369-3a08-48dc-bdfb-d2ad7e9ae602\" /> # # # Related issue: https://github.com/containerd/containerd/issues/7375 https://github.com/projectcalico/calico/issues/6753 ### Steps to reproduce the issue 1. 2. 3. ### Describe the results you received and expected . ### What version of containerd are you using? 1.7.30 ### Any other relevant information _No response_ ### Show configuration if it is related to CRI plugin. _No response_",
+        "url": "https://github.com/containerd/containerd/issues/12781",
+        "createdAt": "2026-01-13T14:27:04Z",
+        "updatedAt": "2026-08-16T00:09:40Z",
+        "timestamp": "2026-08-16T00:09:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "kind/bug",
+          "platform/windows",
+          "kind/external",
+          "Stale",
+          "area/runtime"
+        ],
+        "author": "cozu111",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:cc79653b1485b393126e",
+      "signalId": "github:containerd/containerd:issue:12462",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:12462",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "The unexpected exit of copyPipe is blocking the container's stdout and stderr.",
+        "text": "### Description Any write error will cause copyPipe to exit, stopping the copying of container logs. When the pipe buffer is full, container log writes will then block and hang. The same logging issue applies to Nerdctl. https://github.com/containerd/containerd/blob/8bcea1029ad66baa2b9f84b4eef4f7ae219201e4/cmd/containerd-shim-runc-v2/process/io.go#L147-L153 ### Steps to reproduce the issue 1. `ctr i pull docker.io/library/busybox:latest` 2. `ctr run -d --log-uri file:///var/log/logging-test.log docker.io/library/busybox:latest logging-test ping 127.0.0.1 -i 0.1 -c 3000` 3. `chattr +i /var/log/logging-test.log && sleep 1 && chattr -i /var/log/logging-test.log` 4. The ping commands hangs forever. ### Describe the results you received and expected Received: container hang Expected: container not hang ### What version of containerd are you using? containerd containerd.io 1.6.32 8b3b7ca2e5ce38e8f31a34f35b2b68ceb8470d89 ### Any other relevant information Perhaps we can ignore log writing errors like cri. https://github.com/containerd/containerd/blob/8bcea1029ad66baa2b9f84b4eef4f7ae219201e4/internal/cri/io/logger.go#L133-L153 ### Show configuration if it is related to CRI plugin. _No response_",
+        "url": "https://github.com/containerd/containerd/issues/12462",
+        "createdAt": "2025-11-04T03:48:50Z",
+        "updatedAt": "2026-08-16T00:09:33Z",
+        "timestamp": "2026-08-16T00:09:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [
+          "kind/bug",
+          "Stale",
+          "area/runtime"
+        ],
+        "author": "zwtop",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:73f4ea88ef20cbf2e173",
+      "signalId": "github:containerd/containerd:issue:12172",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:12172",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Live-restore option for containerd",
+        "text": "### Description So we are having a situation where we are running our workloads using containerd. With restart of containerd the containers are also getting restarted. This we dont want. After some investigation on how we were achieving the same thing with docker, I found out about the live-restore option in docker daemon which ensures containers keep running across daemon restarts. How can I achieve the same for my containerd workloads launched via nerdctl ? Do we have a live-restore option for containerd which lets say we can specify in config.toml ? Thanks in advance for the help. ### Steps to reproduce the issue 1. Restart containerd and you will see the containers restarting. ### Describe the results you received and expected I am expecting that with containerd restart the containers dont restart. ### What version of containerd are you using? containerd containerd.io 1.6.32 8b3b7ca2e5ce38e8f31a34f35b2b68ceb8470d89 ### Any other relevant information _No response_ ### Show configuration if it is related to CRI plugin. _No response_",
+        "url": "https://github.com/containerd/containerd/issues/12172",
+        "createdAt": "2025-08-05T09:36:04Z",
+        "updatedAt": "2026-08-16T00:09:30Z",
+        "timestamp": "2026-08-16T00:09:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 12
+        },
+        "labels": [
+          "kind/bug",
+          "kind/question",
+          "Stale",
+          "area/runtime"
+        ],
+        "author": "aadarsh-mohta",
+        "state": "closed",
+        "assignees": [
+          "ningmingxiao"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:3d23dd709a600f8bfe65",
+      "signalId": "github:containerd/containerd:pull_request:11912",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:11912",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "Let containerd run in a separate mnt namespace",
+        "text": "If there are a large number of container mount points in the environment, systemd will become very slow. Therefore, I think containerd should run in a separate mount namespace from the host mount namespace, and it is a slave in the mount namespace of the host, which can be affected by the host namespace, but can not affect the host.",
+        "url": "https://github.com/containerd/containerd/pull/11912",
+        "createdAt": "2025-05-29T08:24:50Z",
+        "updatedAt": "2026-08-16T00:09:19Z",
+        "timestamp": "2026-08-16T00:09:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [
+          "needs-ok-to-test",
+          "Stale",
+          "area/runtime",
+          "size/M"
+        ],
+        "author": "zzzzzzzzzy9",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:df6a0acf7648f70ae0dc",
+      "signalId": "github:containerd/containerd:pull_request:11906",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:11906",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "contrib: Require CAP_SYS_ADMIN for lsm_set_self_attr",
+        "text": "- https://github.com/containerd/containerd/pull/11839 - https://github.com/moby/moby/pull/50097 It may be potentially unsafe to allow these syscalls (`/proc/self/attr` may be guarded by other mechanisms like apparmor), so let's put them behind CAP_SYS_ADMIN.",
+        "url": "https://github.com/containerd/containerd/pull/11906",
+        "createdAt": "2025-05-28T09:31:37Z",
+        "updatedAt": "2026-08-16T00:09:17Z",
+        "timestamp": "2026-08-16T00:09:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "needs-ok-to-test",
+          "Stale",
+          "size/XS"
+        ],
+        "author": "vvoland",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:7f5b81d110fcdf63f334",
+      "signalId": "github:containerd/containerd:pull_request:11876",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:11876",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "set debug level in discard event",
+        "text": "`discard event` should be debug level",
+        "url": "https://github.com/containerd/containerd/pull/11876",
+        "createdAt": "2025-05-21T09:01:37Z",
+        "updatedAt": "2026-08-16T00:09:15Z",
+        "timestamp": "2026-08-16T00:09:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "area/cri",
+          "needs-ok-to-test",
+          "Stale",
+          "size/XS"
+        ],
+        "author": "yylt",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9d30a11cd95c09ccc6da",
+      "signalId": "github:containerd/containerd:pull_request:11833",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:11833",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "[release/2.0] avoid import to testing pkg outside of tests",
+        "text": "This is an automated cherry-pick of #11666 /assign austinvazquez",
+        "url": "https://github.com/containerd/containerd/pull/11833",
+        "createdAt": "2025-05-10T04:16:37Z",
+        "updatedAt": "2026-08-16T00:09:13Z",
+        "timestamp": "2026-08-16T00:09:13Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "ok-to-test",
+          "Stale",
+          "size/XS"
+        ],
+        "author": "k8s-infra-cherrypick-robot",
+        "state": "closed",
+        "assignees": [
+          "austinvazquez"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:74b909a56dd762c90d08",
+      "signalId": "github:containerd/containerd:pull_request:11711",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:11711",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "cni:support to reload cni config when receive create event",
+        "text": "we use ansible web -m copy -a \"src=/etc/cni/net.d/nmx.conflist dest=/etc/cni/net.d/nmx.conflist\" containerd will ignore create event. ``` 4月 17 10:51:25 host-10-234-74-105 containerd[5643]: time=\"2025-04-17T10:51:25.676133342+08:00\" level=debug msg=\"ignore event from cni conf dir: CREATE \\\"/etc/cni/net.d/nmx.conflist\\\"\" 4月 17 10:51:25 host-10-234-74-105 containerd[5643]: time=\"2025-04-17T10:51:25.676230486+08:00\" level=debug msg=\"ignore event from cni conf dir: CHMOD \\\"/etc/cni/net.d/nmx.conflist\\\"\" 4月 17 10:51:25 host-10-234-74-105 containerd[5643]: time=\"2025-04-17T10:51:25.677315923+08:00\" level=debug msg=\"ignore event from cni conf dir: CHMOD \\\"/etc/cni/net.d/nmx.conflist\\ ``` crictl info |grep -i last ``` \"lastCNILoadStatus\": \"cni config load failed: no network config found in /etc/cni/net.d: cni plugin not initialized: failed to load cni config\", \"lastCNILoadStatus.default\": \"cni config load failed: no network config found in /etc/cni/net.d: cni plugin not initialized: failed to load cni config\" ```",
+        "url": "https://github.com/containerd/containerd/pull/11711",
+        "createdAt": "2025-04-17T02:48:34Z",
+        "updatedAt": "2026-08-16T00:09:10Z",
+        "timestamp": "2026-08-16T00:09:10Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "area/cri",
+          "needs-ok-to-test",
+          "Stale",
+          "size/XS"
+        ],
+        "author": "ningmingxiao",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8947577472ee19af5a54",
+      "signalId": "github:containerd/containerd:pull_request:11652",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:11652",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "cgroupv2: set max_user_instances at least 1024",
+        "text": "fix:https://github.com/containerd/containerd/issues/10468 now every shim have to create at least an Inotify instance. but default /proc/sys/fs/inotify/max_user_instances is 128. when we create many containers it will cause error \"too many open files\" ``` func (c *Manager) MemoryEventFD() (int, uint32, error) { fpath := filepath.Join(c.path, \"memory.events\") fd, err := unix.InotifyInit() if err != nil { return 0, 0, fmt.Errorf(\"failed to create inotify fd: %w\", err) } ```",
+        "url": "https://github.com/containerd/containerd/pull/11652",
+        "createdAt": "2025-04-05T13:02:39Z",
+        "updatedAt": "2026-08-16T00:09:08Z",
+        "timestamp": "2026-08-16T00:09:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [
+          "needs-ok-to-test",
+          "Stale",
+          "size/XS"
+        ],
+        "author": "ningmingxiao",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:230cca33b93b7b3d56c5",
+      "signalId": "github:containerd/containerd:pull_request:11639",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:11639",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "ci:fix container must be created error on shimv1",
+        "text": "fix 1.7 ci error when use shimv1 ``` 2025-04-01T05:08:12.7620705Z restart_test.go:211: Should be able to stop and remove sandbox after restart 2025-04-01T05:08:13.0699136Z E0401 05:08:13.069402 82918 remote_runtime.go:182] RemovePodSandbox \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\" from runtime service failed: rpc error: code = FailedPrecondition desc = failed to delete sandbox \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to delete sandbox task \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to cleanup sandbox 29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce in task-service: container must be created: failed precondition 2025-04-01T05:08:13.0702963Z restart_test.go:214: 2025-04-01T05:08:13.0704077Z Error Trace: /home/runner/work/containerd/containerd/integration/restart_test.go:214 2025-04-01T05:08:13.0705112Z Error: Received unexpected error: 2025-04-01T05:08:13.0710105Z rpc error: code = FailedPrecondition desc = failed to delete sandbox \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to delete sandbox task \"29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce\": failed to cleanup sandbox 29a1a2870c23894c1d0c2a507a8a45d64a49c7f6a167756a61bdb407a747a4ce in task-service: container must be created: failed precondition 2025-04-01T05:08:13.0712133Z Test: TestContainerdRestart 2025-04-01T05:08:13.0712515Z restart_test.go:217: Should recover all images 2025-04-01T05:08:13.0943512Z --- FAIL: TestContainerdRestart (11.83s) ```",
+        "url": "https://github.com/containerd/containerd/pull/11639",
+        "createdAt": "2025-04-01T16:20:31Z",
+        "updatedAt": "2026-08-16T00:09:05Z",
+        "timestamp": "2026-08-16T00:09:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "kind/bug",
+          "area/cri",
+          "needs-ok-to-test",
+          "Stale",
+          "size/S"
+        ],
+        "author": "ningmingxiao",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:bcb9022639801f03d258",
+      "signalId": "github:containerd/containerd:pull_request:13948",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13948",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "[pkg/shim] implement Windows support for the shim server",
+        "text": "## What Implements the Windows-specific methods in `pkg/shim` that were previously `ErrNotImplemented` stubs, so a shim built on this package can actually run and serve on Windows (not just Unix). ## Why On Windows the package exposed the shim entry points but left every platform hook unimplemented, so the serve path failed immediately (no ttrpc server, no listener, no logging). This fills those gaps using the Windows named-pipe model. An existing [Windows shim](https://github.com/microsoft/hcsshim/tree/b6b988ac86ef715646ab1b04481ebff88af03cce/cmd/containerd-shim-lcow-v2) uses the same package ([currently forked and modified in project](https://github.com/microsoft/hcsshim/tree/b6b988ac86ef715646ab1b04481ebff88af03cce/internal/shim)). Post this change, the `pkg/shim` can be used by any Windows shim end to end. ## Changes - **ttrpc serving over named pipes** — the shim now creates and serves its API on a Windows named pipe instead of a Unix socket. - **Log streaming over a reconnecting named pipe** — shim logs are served on a pipe that containerd connects to, and transparently re-accepts the reader if it reconnects (e.g. after a containerd restart). Unlike a Unix FIFO, a connection-oriented pipe requires this reconnection handling explicitly. - **Process & signal lifecycle** — signal setup, graceful shutdown on interrupt/terminate, the reap loop, sub-reaper, and stack-dump hooks are wired up with Windows-appropriate (mostly no-op where the OS handles it) behavior. ## Testing Adds unit tests covering the pipe listener, the reconnecting log writer (pre-connection drop, write-through, reconnection, concurrency, close), signal and lifecycle handling, and pipe-readiness. All four platforms (windows/linux/darwin/freebsd) build; the Windows suite passes. ## Notes Windows-only files; no behavior change on Linux/Unix.",
+        "url": "https://github.com/containerd/containerd/pull/13948",
+        "createdAt": "2026-08-12T10:55:37Z",
+        "updatedAt": "2026-08-16T00:04:23Z",
+        "timestamp": "2026-08-16T00:04:23Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/XL"
+        ],
+        "author": "rawahars",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:58c97fe990e9b8a6a3cb",
+      "signalId": "github:containerd/containerd:issue:13967",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:13967",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "btrfs snapshotter: stats collection walks 1.5M inodes per pass on an idle node",
+        "text": "This is the same problem as #6067 and #4217. Both were closed by a stale bot, not because anything was fixed, so I am opening a new one with actual numbers from a real cluster. #6067 asked for benchmark data — here it is. Environment: ``` $ containerd --version containerd github.com/containerd/containerd/v2 v2.3.2 $ uname -srm Linux 6.1.99-rbd aarch64 $ kubectl version -o json | jq -r .serverVersion.gitVersion v1.36.1 ``` Six-node bare-metal cluster, OrangePi 5 Plus (rk3588, 8 cores, 32 GB), Gentoo, `/var` on btrfs, containerd with the btrfs snapshotter, ~40 containers per node. The cluster is idle — nothing is being pulled, built or deployed. ### The problem containerd sizes snapshots by walking them recursively. With the btrfs snapshotter every layer is created as `btrfs subvolume snapshot <parent>`, so layer N physically contains layers 1..N, and a container's writable layer is a full clone of the image rootfs. The walk is therefore `O(layers x rootfs)` instead of `O(unique files)`. Inodes walked per stats pass on one node: ``` image layers (89 dirs): 526,770 writable layers (92 dirs): 998,432 --------- total: 1,525,202 ``` 1.5M `stat()` calls every cycle, on an idle node. One 8-layer image shows the multiplication clearly (inode count per snapshot directory): ``` snapshot 351: 8,111 base layer snapshot 352: 33,363 +25,252 files snapshot 353: 33,434 +71 snapshot 354: 33,435 +1 snapshot 355: 33,438 +3 snapshot 356: 33,453 +15 snapshot 357: 33,456 +3 snapshot 358: 33,463 +7 ------- sum walked: 242,153 inodes, for an image that holds 33,463 unique files ``` Layers 353-358 add between 1 and 71 files each, but every one of them costs a full 33,000-file walk. The writable layers are the bigger half — 998k inodes, 65% of the total. Each is a clone of a full image rootfs, while a running container has usually modified a few dozen files. ### Raising `stats_collect_period` does not fix it The usual advice is to raise the interval, so I set it to 900 in both the images and the runtime CRI plugins: ``` $ containerd config dump | grep stats_collect_period stats_collect_period = 900 stats_collect_period = '900s' ``` It helps, but much less than expected, because the cost is not the interval — it is the duration of one pass. Sampling containerd CPU in 30s buckets: ``` 22:36 - 22:42 6% idle 22:42 - 22:51 ~95% scan pass 22:52 - 22:55 6% idle mean over 20 minutes: 47% of one core ``` The pass itself takes 8-9 minutes out of the 15-minute cycle. The syncer goroutine confirms it — it sleeps `period - pass_duration`: ``` goroutine 53 [sleep, 2 minutes]: time.Sleep(0x91ac7272f8) # 625s of a 900s period github.com/containerd/containerd/v2/internal/cri/server/images.(*snapshotsSyncer).start.func1() ``` So on btrfs the fix is throttling one core down to half a core. To actually get rid of it you have to raise the interval to hours, and then the stats are useless anyway. There is also no way to disable it. The btrfs snapshotter plugin exposes exactly one option: ``` $ containerd config default | grep -A2 \"snapshotter.v1.btrfs\" [plugins.'io.containerd.snapshotter.v1.btrfs'] root_path = '' ``` ### Ask I understand qgroups were tried in #1836 and closed because their efficacy was not proven, and that #1871 chose walking for accuracy. Nine years later the accuracy is being paid for with a permanent core of CPU per node. Would any of these be acceptable? 1. Use qgroups for `Usage()` when quotas are enabled on the filesystem, and fall back to walking when they are not. This was already implemented in #1836. 2. An option to disable snapshot usage collection entirely, as suggested in #6067. Reporting zero is more useful than burning a core. 3. If neither, document in the btrfs snapshotter docs that it is not suitable for clusters with many layers or containers, so people do not have to find this out by profiling. Happy to run measurements on this hardware if that helps.",
+        "url": "https://github.com/containerd/containerd/issues/13967",
+        "createdAt": "2026-08-15T23:41:39Z",
+        "updatedAt": "2026-08-15T23:43:43Z",
+        "timestamp": "2026-08-15T23:43:43Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [
+          "kind/performance",
+          "area/snapshotters"
+        ],
+        "author": "cono",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a9ecc7cf43fec4bbe361",
+      "signalId": "github:containerd/containerd:issue:6067",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:6067",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Excessive CPU usage during stat collection for BTRFS",
+        "text": "We are trying to switch from an `overlayfs` to `btrfs` but hitting a problem when `containerd` periodically consumes quite a lot of CPU (%sys) doing used space calculations here: https://github.com/containerd/containerd/blob/0f27a423ef12110770382095024a852bd309606c/snapshots/btrfs/btrfs.go#L160-L164 (We have quite a lot of containers and files in each.) Is it possible to have a way to either disable space usage collection or try using the `btrfs quota`-based space usage calculations if quotas are enabled (which are way faster): ``` # btrfs qgroup show -f /var/lib/containerd/io.containerd.snapshotter.v1.btrfs/active/931 qgroupid rfer excl -------- ---- ---- 0/2111 173.55MiB 1.08MiB ``` inode usage calculations should not matter, given that btrfs does dynamic inode allocation and hence is not limited by a number of preallocated inodes like xfs/ext4: ``` % df -hi / Filesystem Inodes IUsed IFree IUse% Mounted on /dev/mapper/root.crypt 0 0 0 - / ```",
+        "url": "https://github.com/containerd/containerd/issues/6067",
+        "createdAt": "2021-09-29T01:11:20Z",
+        "updatedAt": "2026-08-15T23:14:33Z",
+        "timestamp": "2026-08-15T23:14:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 12
+        },
+        "labels": [
+          "kind/enhancement",
+          "kind/performance"
+        ],
+        "author": "SaveTheRbtz",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d6fd03b6e68d8e11c2e6",
+      "signalId": "github:containerd/containerd:pull_request:13966",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13966",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "core/unpack: fetch layers of every config-sharing manifest",
+        "text": "An index can carry two manifests that share a config. A config lists uncompressed layer digests, so packaging the same layers with different compression (which `podman manifest push --add-compression` does) produces manifests with identical configs and the same digest. The unpacker cannot unpack a manifest until the config supplies the `diff_ids`, so it stores each manifest's layers in a map keyed by the config's digest and unpacks them when the config is visited. Because that map holds one set of layers per config digest, when there's a shared (identical) config, only the last visited manifest keeps its layers, and the other manifest's blobs are not fetched. Image pulls still report success, but later exports or pushes of the image will fail with NotFound. Fix this by storing a slice of layer sets per config (one per manifest); when the config is handled, unpack the first and fetch the rest. Sets that share a config unpack to the same snapshot chain, so the extra sets only need their blobs in the content store. Because nothing guarantees a manifest is handled before the config it points at (a manifest nested deeper in the index can arrive after another manifest has already led to the shared config), a manifest arriving late must fetch its own layers rather than store them for a lookup that will never happen. Remember each config's digest once it's handled, and drop its map entry, so a late manifest can recognize this case. Don't store anything for a manifest with no layers; an empty set reaching the unpack would fail the pull. Assisted-by: Claude Code",
+        "url": "https://github.com/containerd/containerd/pull/13966",
+        "createdAt": "2026-08-15T20:50:49Z",
+        "updatedAt": "2026-08-15T21:35:59Z",
+        "timestamp": "2026-08-15T21:35:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/L"
+        ],
+        "author": "chrishenzie",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:e199f3819c69e618822a",
+      "signalId": "github:containerd/containerd:issue:12300",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "labels",
+        "state"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:issue:12300",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Pass tracing context from containerd-shim to runc and OCI hooks",
+        "text": "### What is the problem you're trying to solve Open telemetry tracing when fully instrumented starts in the pod lifecycle within `kubelet` and goes all the way through `containerd`, and optionally into the `containerd-shim-runc-v2` if you enable the `shim_tracing` build tag. As our runc and OCI hooks also support tracing, it would be nice to complete the connection by passing the tracing parameters one more level down. ### Describe the solution you'd like While `containerd` passes the tracing context via ttrpc to the shim, this is not possible for runc and subsequent OCI hooks are binary invoked (and with code not in this project). To pass to those processes we can utilize the environment specification [1] as those binaries inherit the environment and can choose whether to create new sub spans or not. [1] https://github.com/open-telemetry/opentelemetry-specification/blob/main/oteps/0258-env-context-baggage-carriers.md ### Additional context _No response_",
+        "url": "https://github.com/containerd/containerd/issues/12300",
+        "createdAt": "2025-09-13T04:21:51Z",
+        "updatedAt": "2026-08-15T18:01:29Z",
+        "timestamp": "2026-08-15T18:01:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [
+          "kind/feature",
+          "status/roadmapped",
+          "Stale",
+          "area/runtime"
+        ],
+        "author": "rutigs",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6315705187766c82dbee",
+      "signalId": "github:containerd/containerd:pull_request:13958",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "labels"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13958",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "runtime: invoke Shutdown after every task deletion",
+        "text": "TaskService.Shutdown may be invoked multiple times. A grouped shim itself does not terminate while it still has active tasks. It terminates only after receiving a Shutdown request when no active tasks remain. The shim manager should invoke TaskService.Shutdown after deleting every task, regardless of whether the task represents sandbox or not. This ensures that the shim receives Shutdown when the last active task is deleted. In CRI, the pause container uses oom_score_adj=-998, making it unlikely to be OOM-killed. However, it may still exit or be killed before the other containers in the sandbox. SandboxService.Shutdown and TaskService.Shutdown are independent APIs. Sandbox service should make sure there is no active containers before shutdown. So, for the task service, we should invoke Shutdown for each task. Removing the supportSandboxAPIVersion check does not change behavior for shims using task API versions below v3. Those shims were already forced down the non-sandboxed path and received Shutdown after every task deletion. The behavior change applies only to sandboxed tasks using task API v3, which now receive Shutdown after deletion as well. Part of https://github.com/containerd/containerd/issues/8981 REF: https://github.com/containerd/containerd/pull/6703",
+        "url": "https://github.com/containerd/containerd/pull/13958",
+        "createdAt": "2026-08-14T02:03:53Z",
+        "updatedAt": "2026-08-15T17:36:09Z",
+        "timestamp": "2026-08-15T17:36:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/L",
+          "cherry-pick/2.2.x",
+          "cherry-pick/2.3.x"
+        ],
+        "author": "fuweid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:183d3b8d7896796a01ce",
+      "signalId": "github:containerd/containerd:issue:12678",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:12678",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "CRI plugin: container stuck as RUNNING after process exit",
+        "text": "## Description After a failed liveness probe, kubelet initiated container termination via `StopContainer` CRI call. The termination process involved multiple retry attempts, each failing with `context canceled` or `DeadlineExceeded`. Eventually, the container process was killed (SIGKILL sent at 10:39:32), the shim was removed, and the cgroup was deleted. However, after all physical resources were cleaned up, querying the container state reveals a state inconsistency: - `ctr tasks ls` correctly shows `STOPPED` - `crictl inspect` incorrectly shows `CONTAINER_RUNNING` with `finishedAt` unset (zero time) As a result, kubelet continues to call `StopContainer` in an infinite loop, receiving `DeadlineExceeded` errors because it's trying to stop a container that no longer exists. The pod remains stuck in `Terminating` state indefinitely. The only recovery is to restart containerd. ## Environment - **containerd**: 1.7.27 (commit 05044ec0a9a75232cad458027ca83437aae3f4da) - **runc**: 1.2.5 - **Kubernetes**: 1.31.2 ## Observed State **containerd task API shows STOPPED:** ```bash $ ctr -n k8s.io tasks ls | grep acaca462a89ac acaca462a89acd5d959f9598c8d47ce7f72e32fc86f13827f6fbeb7e5d1cd424 4758 STOPPED ``` **CRI API shows RUNNING:** ```bash $ crictl inspect acaca462a89ac | jq -r '.status.state, .status.finishedAt' CONTAINER_RUNNING 0001-01-01T00:00:00Z ``` **Physical resources are all cleaned up:** ```bash # Process does not exist $ ls /proc/4758 ls: cannot access '/proc/4758': No such file or directory # Shim removed $ ps aux | grep containerd-shim | grep acaca462a89ac (no output) # Cgroup deleted $ ls /sys/fs/cgroup/kubepods/burstable/pod39ea.../acaca462a89ac... ls: cannot access: No such file or directory ``` ## Timeline | Time | Component | Event | |------|-----------|-------| | 10:36:31 | kubelet | `StopContainer` failed: `DeadlineExceeded` | | 10:36:31 | kubelet | \"Container kube-controller-manager failed liveness probe, will be restarted\" | | 10:36:31 | kubelet | \"Killing container with grace period 30s\" | | 10:39:01 | kubelet | `StopContainer` failed: `DeadlineExceeded` (retry) | | 10:39:01 | containerd | `StopContainer` failed: `context canceled` | | 10:39:02 | containerd | `StopContainer` with timeout 30s | | 10:39:32 | containerd | SIGKILL sent | | 10:41:32 | containerd | `StopContainer` failed: `context canceled` | | 10:41:32 | containerd | \"Skipping the sending of signal terminated... because a prior stop already sent the signal\" | ## Logs **kubelet:** ``` Oct 14 10:36:31 kubelet[8345]: E1014 10:36:31.256309 \"StopContainer from runtime service failed\" err=\"rpc error: code = DeadlineExceeded desc = context deadline exceeded\" containerID=\"acaca462a89ac\" Oct 14 10:36:31 kubelet[8345]: I1014 10:36:31.605638 \"Message for Container of pod\" containerMessage=\"Container kube-controller-manager failed liveness probe, will be restarted\" Oct 14 10:36:31 kubelet[8345]: I1014 10:36:31.605725 \"Killing container with a grace period\" containerName=\"kube-controller-manager\" gracePeriod=30 Oct 14 10:39:01 kubelet[8345]: E1014 10:39:01.613275 \"StopContainer from runtime service failed\" err=\"rpc error: code = DeadlineExceeded desc = context deadline exceeded\" containerID=\"acaca462a89ac\" Oct 14 10:39:02 kubelet[8345]: I1014 10:39:02.176566 \"Message for Container of pod\" containerMessage=\"Container kube-controller-manager failed liveness probe, will be restarted\" Oct 14 10:39:02 kubelet[8345]: I1014 10:39:02.176763 \"Killing container with a grace period\" containerName=\"kube-controller-manager\" gracePeriod=30 ``` **containerd:** ``` Oct 14 10:39:01 containerd[7758]: level=error msg=\"StopContainer for \\\"acaca462a89ac\\\" failed\" error=\"rpc error: code = Canceled desc = an error occurs during waiting for container to be killed: context canceled\" Oct 14 10:39:02 containerd[7758]: level=info msg=\"StopContainer for \\\"acaca462a89ac\\\" with timeout 30 (s)\" Oct 14 10:39:32 containerd[7758]: level=info msg=\"Kill container \\\"acaca462a89ac\\\"\" Oct 14 10:41:32 containerd[7758]: level=error msg=\"StopContainer for \\\"acaca462a89ac\\\" failed\" error=\"rpc error: code = Canceled desc = an error occurs during waiting for container to be killed: context canceled\" Oct 14 10:41:32 containerd[7758]: level=info msg=\"StopContainer for \\\"acaca462a89ac\\\" with timeout 30 (s)\" Oct 14 10:41:32 containerd[7758]: level=info msg=\"Skipping the sending of signal terminated to container \\\"acaca462a89ac\\\" because a prior stop with timeout>0 request already sent the signal\" ``` ## Related Issues - #10755 — Pod stays in terminating state (same symptoms, closed) - #6080 — Containerd fails to stop containers, \"Failed to handle container TaskExit event\" ## Expected Behavior CRI plugin should update container status to `EXITED` when the container process terminates, regardless of whether the initiating gRPC context was cancelled.",
+        "url": "https://github.com/containerd/containerd/issues/12678",
+        "createdAt": "2025-12-12T06:48:41Z",
+        "updatedAt": "2026-08-15T16:08:51Z",
+        "timestamp": "2026-08-15T16:08:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 39
+        },
+        "labels": [
+          "kind/bug",
+          "area/cri",
+          "Stale"
+        ],
+        "author": "evgfitil",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:700865d8b508a66c8953",
+      "signalId": "github:containerd/containerd:issue:6812",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:6812",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Ctr checkpoint export image failure",
+        "text": "### Description Exporting a checkpoint fails with an error: ``` ctr: content digest sha256:ba15b7a60f30deb2c84ddabfcfb9041492fea5998a064b48fa521f69703ba028: not found ``` ### Steps to reproduce the issue 1. Start a container in a separate console ``` sudo ctr run --rm docker.io/library/busybox:latest foo /bin/sh ``` 2. Create a checkpoint ``` sudo ctr c checkpoint --task --image --rw foo foo-ckpt ``` 4. Export a checkpoint ``` $ sudo ctr i export ./foo.tar foo-ckpt --platform linux/amd64 ctr: content digest sha256:ba15b7a60f30deb2c84ddabfcfb9041492fea5998a064b48fa521f69703ba028: not found ``` ### Describe the results you received and expected I expected the archive with checkpoint to be created. The file is created, but it is empty. ### What version of containerd are you using? containerd github.com/containerd/containerd v1.6.2 de8046a5501db9e0e478e1c10cbcfb21af4c6b2d ### Any other relevant information ``` $ sudo ctr i check ERRO[0000] unable to check unpack for foo-ckpt error=\"unexpected media type application/vnd.containerd.container.checkpoint.runtime.options+proto for sha256:d8183a03f8f3429623e6aa55d13c70d1bfc282fe5c3d6562180fdc55c7614589: not found\" REF TYPE DIGEST STATUS SIZE UNPACKED docker.io/library/busybox:latest application/vnd.docker.distribution.manifest.list.v2+json sha256:caa382c432891547782ce7140fb3b7304613d3b0438834dce1cad68896ab110a complete (2/2) 756.1 KiB/756.1 KiB true foo-ckpt application/vnd.oci.image.index.v1+json sha256:4468afbf7fd57edd61545fbad5f7aa91b36f0d8b3e92b5484e69bfaab1941901 unavailable (0/?) 0.0 B/? false ctr: unable to check unpack for foo-ckpt: unexpected media type application/vnd.containerd.container.checkpoint.runtime.options+proto for sha256:d8183a03f8f3429623e6aa55d13c70d1bfc282fe5c3d6562180fdc55c7614589: not found ``` ### Show configuration if it is related to CRI plugin. _No response_",
+        "url": "https://github.com/containerd/containerd/issues/6812",
+        "createdAt": "2022-04-15T13:27:51Z",
+        "updatedAt": "2026-08-15T15:32:39Z",
+        "timestamp": "2026-08-15T15:32:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 14
+        },
+        "labels": [
+          "kind/bug",
+          "area/criu"
+        ],
+        "author": "planetA",
+        "state": "open",
+        "assignees": [
+          "turan18"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2a88b7be53d6fdce14b3",
+      "signalId": "github:containerd/containerd:issue:4594",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:4594",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "Terminate a process group grandchildren on exec timeout",
+        "text": "**TL/DR** Would it be possible to send `SIGTERM` to all leaf (grandchildren) subprocesses in an exec process group before `SIGKILL`ing them? **What is the problem you're trying to solve** There are many popular k8s helm charts which use bash scripts for readinessProbe and livenessProbe. Unfortunately, some of those scripts start a potentially long-running operation in subshell. If such subshell command takes longer than the exec `timeoutSeconds` setting, then the parent script gets terminated, leaving a zombie PID behind. A minimal example is given at the botom of this request. I've submitted a workaround for redis@github/bitnami/charts, but (thousands of) our developers use many other charts/containers with the very same issue. For example, official Elasticsearch chart has the same buggy sub-shell health check. Fixing all those charts upstream is a tedious task... I'm wondering whether it be possible to solve such common issue on containerd side? **Describe the solution you'd like** First i though that it may help to just enable [`PR_SET_CHILD_SUBREAPER`](https://man7.org/linux/man-pages/man2/prctl.2.html) on exec parent. @crosbymichael, do you know whether an exec's parent sets `PR_SET_CHILD_SUBREAPER` before running an exec or execSync command in a container? I see that shim does that for both [v1](https://github.com/containerd/containerd/blob/990076b731ec9446437972b41176a6b0f3b7bcbf/cmd/containerd-shim/shim_linux.go#L38) and [v2](https://github.com/containerd/containerd/blob/990076b731ec9446437972b41176a6b0f3b7bcbf/runtime/v2/shim/shim_linux.go#L29). But i'm not sure, whether `shim` is the actual parent process when `kubelet` is calling CRI's execSync()? Also, it's not clear whether `PR_SET_CHILD_SUBREAPER` [is helpful or not](https://man7.org/linux/man-pages/man2/prctl.2.html): > The setting of the \"child subreaper\" attribute is not inherited by children created by fork(2) and clone(2). So, if a bash script does normal fork() (which i'm not sure about), then subreaper will not help here. Therefore, I would like to send `SIGTERM` or `SIGQUIT` to the leaf child processes in a process group of an execSync() and wait for a few milliseconds. This will allow main script to `wait()` for subshell exit code and finish normally. To give an example, let's look at the processes in the pod created via \"steps to reproduce\" given below: ```bash ps fwxao pid,ppid,pgid,sid,comm | grep -v defunct PID PPID PGID SID COMMAND 12325 0 12325 12325 sh 12330 12325 12325 12325 \\_ ping.sh 12331 12330 12325 12325 \\_ ping.sh 12332 12331 12325 12325 \\_ sleep 1 0 1 1 sleep 8 1 1 1 bash 12324 8 1 1 \\_ sleep ``` Here, everything in process group 12325 corresponds to readinessProbe. Containerd only knows about the parent PID 12325, so it `SIGKILL`s the PID=12325 when exec timeout is reached. But if we (manually) `SIGTERM` the leaf process in that PG (`kill 12332`), then the readinessProbe finishes immediately without leaving a zombie/defunct PID behind. Dear maintainers, would you consider an option of iterating over leaf PIDs and `SIGTERM`ing them before `SIGKILL`ing the whole group? **Additional context** Steps to reproduce a zombie generator. <details> <summary>Click to expand!</summary> - Optional: install fresh [kind](https://github.com/kubernetes-sigs/kind) cluster ```bash kind create cluster --name zombies # Ensuring node image (kindest/node:v1.19.1)... kubectl config use-context kind-zombies ``` - Deploy a test container: ```bash cat <<'EOF' | kubectl apply -f - apiVersion: apps/v1 kind: Deployment metadata: name: zombie-test labels: app: zombie-test spec: replicas: 1 strategy: type: Recreate selector: matchLabels: app: zombie-test template: metadata: labels: app: zombie-test spec: containers: - name: zombie-test image: debian:10-slim command: - bash - -c - | cat <<'SCRIPT' > /tmp/ping.sh #!/bin/bash -x long_running_health_check=$( sleep 15 echo PONG ) if [[ $long_running_health_check != \"PONG\" ]]; then echo \"$long_running_health_check\" exit 1 fi SCRIPT chmod 755 /tmp/ping.sh apt update && apt -y install procps while true; do ps auxwf; echo '=====================' ; sleep 5; done 1>&2 & exec sleep infinity readinessProbe: exec: command: - sh - -c - /tmp/ping.sh timeoutSeconds: 10 initialDelaySeconds: 3 periodSeconds: 20 EOF kubectl logs -f -l app=zombie-test ``` </details>",
+        "url": "https://github.com/containerd/containerd/issues/4594",
+        "createdAt": "2020-09-30T10:32:41Z",
+        "updatedAt": "2026-08-15T13:13:06Z",
+        "timestamp": "2026-08-15T13:13:06Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 4
+        },
+        "labels": [
+          "exp/expert",
+          "kind/feature",
+          "kind/help-wanted",
+          "status/accepted"
+        ],
+        "author": "kabakaev",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b053a85782fa50aff6b8",
+      "signalId": "github:containerd/containerd:pull_request:13850",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13850",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "core/runtime/v2: bound leaked shim cleanup at load",
+        "text": "## Problem `loadShims` walks every leftover bundle in the state dir, loads them through an `errgroup` limited to `runtime.GOMAXPROCS(0)`, and ends with `eg.Wait()`. For a bundle whose task is gone, `loadShim` reaps the shim with: ```go shim.delete(ctx, false, func(ctx context.Context, id string) {}) ``` `ctx` here carries no deadline, and `shimTask.delete` starts with a `Task.Delete` RPC. A leftover shim that keeps its socket alive and simply never answers that one request parks the goroutine forever, so its errgroup slot is never released and `eg.Wait()` never returns. That happens before the daemon serves its socket, so the failure is not \"one container is stuck\", it is \"containerd never finishes starting\": - no socket, `ctr version` hangs, node goes `NotReady`, CRI is down; - the supervisor kills the daemon on its start timeout and restarts it; - the restart re-reads the same bundle from disk and hangs in exactly the same place. Nothing in the loop removes the blocker, so the node cannot leave it by itself — the reporter saw 412, 457 and 636+ identical restarts, and raising `TimeoutStartSec` to 900s did not help. Clearing `/run/containerd/*` by hand recovers the node only until the next restart rebuilds the same state. `Fixes #13848` ## Root cause The evidence that this is a missing deadline rather than a slow shim is inside the same file. `loadShimTask` deliberately bounds its own probe of the very same shim: ```go ctx, cancel := timeout.WithContext(ctx, loadTimeout) defer cancel() if _, err := s.PID(ctx); err != nil { ``` So the load path already assumes a shim may not answer — the cleanup path next to it just never got the same treatment. This also matches the reporter's minimal reproduction: a relay that passed every request through and dropped **only** the task teardown request was enough to wedge start-up, while a fully unresponsive shim (`kill -STOP`) recovered in ~10s, because that one is caught by the bounded `PID` call. The neighbouring `shim.Pids(ctx)` probe, which decides whether the shim is reapable, is unbounded for the same reason. ## Fix `shimTask.delete` is already called under a deadline elsewhere in this package — `task_manager.go` does exactly this when a task fails to be created: ```go dctx, cancel := timeout.WithContext(context.WithoutCancel(ctx), cleanupTimeout) defer cancel() _, errShim := shimTask.delete(dctx, sandboxed, func(context.Context, string) {}) ``` This change applies the same treatment on the load path, using the existing `io.containerd.timeout.shim.cleanup` key (5s default, already tunable through `[timeouts]` in `config.toml`, so no new configuration is introduced). The `Pids` probe is bounded with the existing `io.containerd.timeout.shim.load` key, matching the `PID` call it sits beside. ## State after a timeout The interesting part is what is left behind when the deadline hits, since the bundle must not be orphaned while its shim is still alive. On timeout `shimTask.delete` returns early, before it reaches `waitShutdown` and `ShimInstance.Delete`, so the cleanup has to be finished explicitly. This change sends a `Shutdown` on a **fresh** deadline (`shim.waitShutdown`, `shutdownTimeout`) rather than the exhausted one, then closes the connection. Closing is what makes the state converge, and it reuses machinery that is already there: the connection was created in `loadShim` with `ttrpc.WithOnClose(onClose)`, and that callback is the existing dead-shim path — `cleanupAfterDeadShim` → `binary.Delete`, which runs the shim's own `delete` command (reaping the runtime container), calls `bundle.Delete()`, publishes `TaskExit`/`TaskDelete`, and drops the shim from the manager. `cleanupAfterDeadShim` is itself already bounded by `cleanupTimeout`. So the end state matches the success path — bundle gone, shim reaped, events published — and, importantly for the loop in the report, an unresponsive shim is **not** met again on the next start. If a shim ignores `Task.Delete`, `Shutdown` *and* its own `delete` command, the process can still survive; that is strictly better than today, where start-up never completes at all. Worth flagging separately: `errgrpc.ToNative` rewrites `context.DeadlineExceeded` into an opaque `errdefs.customMessage`, so `errdefs.IsDeadlineExceeded` returns **false** for the error `shimTask.delete` returns on timeout. That makes the conditional context refresh in `task_manager.go` ineffective for the deadline case it was written for, and it hands `shimTask.Shutdown` an already-expired context. I did not touch it here to keep this change scoped to the reported hang, but I am happy to send a follow-up. It is also why this change refreshes the context unconditionally instead of copying that check. ## Testing `shim_load_test.go` gains a fake shim whose `Task.Delete` is never answered — it blocks until the caller's context is done, which is what a ttrpc call does when the server stays silent. Every other method is left nil via an embedded interface, so an unexpected call panics rather than passing quietly. `cleanupTimeout` is shortened for the test and restored afterwards. Before (the goroutine never returns, so the test reports the hang instead of hanging the suite): ``` $ go test ./core/runtime/v2/ -run TestCleanupLeakedShimDoesNotHang -count=1 -race -v === RUN TestCleanupLeakedShimDoesNotHang shim_load_test.go:170: cleanupLeakedShim never returned: loadShims would hang forever at startup --- FAIL: TestCleanupLeakedShimDoesNotHang (1.00s) FAIL FAIL github.com/containerd/containerd/v2/core/runtime/v2 1.703s FAIL ``` After: ``` $ go test ./core/runtime/v2/ -run TestCleanupLeakedShimDoesNotHang -count=1 -race -v === RUN TestCleanupLeakedShimDoesNotHang time=\"...\" level=error msg=\"failed to delete task\" error=\"context deadline exceeded\" id=leaked-shim --- PASS: TestCleanupLeakedShimDoesNotHang (0.10s) PASS ok github.com/containerd/containerd/v2/core/runtime/v2 1.716s ``` The test also asserts that the forced `Shutdown` receives a context that has not already expired, and that the connection is closed so the dead-shim cleanup described above actually runs. Full package, plus a cross-compile check for the linux-only files in this package (I am on darwin): ``` $ go test ./core/runtime/v2/... -count=1 -race ok github.com/containerd/containerd/v2/core/runtime/v2 1.827s $ go build ./... $ GOOS=linux go vet ./core/runtime/v2/... $ gofmt -l core/runtime/v2/ ``` The reporter's own end-to-end reproduction (a relay dropping only `Task.Delete`, then restarting containerd) is the real integration check for this and needs a node; I could not run that here.",
+        "url": "https://github.com/containerd/containerd/pull/13850",
+        "createdAt": "2026-07-25T19:05:17Z",
+        "updatedAt": "2026-08-15T12:47:16Z",
+        "timestamp": "2026-08-15T12:47:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "needs-rebase",
+          "size/L"
+        ],
+        "author": "locker95",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:baa0cabc074d4ed7fd39",
+      "signalId": "github:containerd/containerd:issue:13573",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:containerd/containerd:issue:13573",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "issue",
+        "title": "`RemoveVolatileOption` cannot recognize mount type \"fuse.nydus-overlayfs\" from nydus-snapshotter",
+        "text": "### Description The latest Nydus Snapshotter release (v0.15.15) introduced support for enabling volatile mounts globally. When using a nydus-formatted image, Nydus Snapshotter returns a mount.Mount whose type is [_\"fuse.nydus-overlayfs\"_ rather than _\"overlay\"_](https://github.com/containerd/nydus-snapshotter/blob/main/snapshot/mount_option.go). For tempmount, containerd removes the volatile mount option through `RemoveVolatileOption()`. However, this function currently only applies when the mount type is _\"overlay\"_. As a result, for Nydus mounts with type _\"fuse.nydus-overlayfs\"_, the volatile option is not removed during tempmount. This tempmount is therefore created with the volatile option, and the kernel refuses to reuse the mount, causing later mount operations to fail. It seems that `RemoveVolatileOption()` should also handle Nydus overlay mount types (e.g. fuse.nydus-overlayfs) to ensure the volatile option is removed consistently during temporary mount operations. ### Steps to reproduce the issue 1. Use nydus-snapshotter v0.15.15 for containerd 2. Set `enable_overlayfs_volatile = true` under `[snapshot]` in /etc/nydus/config.toml 3. Create a pod with nydus-formatted image ### Describe the results you received and expected Journal of containerd: ``` time=\"2026-06-10T07:49:24.585807645Z\" level=error msg=\"CreateContainer within sandbox \\\"f76b6b4cc777e1c6f1de840289e8876c7efb4f9f6abf0e0399f14f3bbaf875c4\\\" for name:\\\"test-pod\\\" failed\" error=\"failed to create containerd container: failed to mount /mnt/data0/containerd/tmpmounts/containerd-mount2071111639: mount helper [mount.fuse [overlay /mnt/data0/containerd/tmpmounts/containerd-mount2071111639 -o volatile -o workdir=/mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work -o upperdir=/mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/fs -o lowerdir=/mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/512331/mnt -o extraoption=eyJzb3VyY2UiOiIvbW50L2RhdGEwL2NvbnRhaW5lcmQvaW8uY29udGF... -o ro -t nydus-overlayfs]] failed: \\\"2026/06/10 07:49:24 mount overlayfs by syscall: invalid argument\\\\n\\\": exit status 1\" ``` At the time when error happened: ``` --- walk /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work --- DIR /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work DIR /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work/incompat DIR /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work/incompat/volatile FILE /mnt/data0/containerd/io.containerd.snapshotter.v1.nydus/snapshots/586383/work/work/incompat/volatile/dirty (0) ``` The `dirty` file is observed. `dmesg` also reported that `overlay with incompat feature 'volatile' cannot be mounted` ### What version of containerd are you using? containerd containerd.io 1.7.25 bcc810d6b9066471b0b6fa75f557a15a1cbf31bb ### Any other relevant information Does replacing `m.Type != \"overlay\"` with `!strings.Contains(m.Type, \"overlay\")` seem more compatible? Not sure if this will cause any side effects. ### Show configuration if it is related to CRI plugin. _No response_",
+        "url": "https://github.com/containerd/containerd/issues/13573",
+        "createdAt": "2026-06-11T06:35:30Z",
+        "updatedAt": "2026-08-15T12:30:30Z",
+        "timestamp": "2026-08-15T12:30:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "kind/feature",
+          "area/snapshotters"
+        ],
+        "author": "hyt658",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:1fa9482293f25cee386e",
+      "signalId": "github:containerd/containerd:pull_request:13852",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13852",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "core/runtime/v2: add timeout to shim.delete during loadShims",
+        "text": "Fixes #13848 when loadShims cleans up abandoned shims during daemon startup, it calls shim.delete() using the daemon's startup context. this context doesn't have a deadline. if a single leftover shim process never replies to the Delete grpc request (like what happens in #13848), containerd just hangs forever on startup. this wraps the context with the existing cleanupTimeout (5s) before deleting the shim, ensuring the daemon can recover and continue starting even if a shim is wedged.",
+        "url": "https://github.com/containerd/containerd/pull/13852",
+        "createdAt": "2026-07-25T19:35:24Z",
+        "updatedAt": "2026-08-15T03:02:56Z",
+        "timestamp": "2026-08-15T03:02:56Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "needs-rebase",
+          "size/XS"
+        ],
+        "author": "HarshalPatel1972",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e30f80a93142aeb55e22",
+      "signalId": "github:containerd/containerd:pull_request:13954",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:containerd/containerd:pull_request:13954",
+        "source": "github",
+        "group": "platform-infrastructure",
+        "project": "containerd/containerd",
+        "kind": "pull_request",
+        "title": "fix(runtime): apply load timeout to load shim",
+        "text": "Carries #13852 This change applies the `io.containerd.timeout.shim.load` budget to all of shim manager load shim and `io.containerd.timeout.shim.cleanup` to cleanup shim calls to prevent a previously leaked / wedged shim from stalling containerd startup.",
+        "url": "https://github.com/containerd/containerd/pull/13954",
+        "createdAt": "2026-08-12T20:47:51Z",
+        "updatedAt": "2026-08-15T03:01:29Z",
+        "timestamp": "2026-08-15T03:01:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "size/M",
+          "cherry-pick/2.3.x"
+        ],
+        "author": "austinvazquez",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}
