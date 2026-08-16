@@ -1,0 +1,239 @@
+{
+  "version": 4,
+  "date": "2026-08-16",
+  "group": {
+    "id": "ai-infrastructure",
+    "name": "AI Infrastructure"
+  },
+  "repository": {
+    "id": "bentoml",
+    "repo": "bentoml/BentoML",
+    "name": "BentoML",
+    "keywords": [
+      "BentoML"
+    ]
+  },
+  "context": {
+    "repository": "bentoml/BentoML",
+    "url": "https://github.com/bentoml/BentoML",
+    "description": "The easiest way to serve AI apps and models - Build Model Inference APIs, Job queues, LLM apps, Multi-model pipelines, and more!",
+    "homepage": "https://bentoml.com",
+    "language": "Python",
+    "topics": [
+      "ai-inference",
+      "deep-learning",
+      "generative-ai",
+      "inference-platform",
+      "llm",
+      "llm-inference",
+      "llm-serving",
+      "llmops",
+      "machine-learning",
+      "ml-engineering",
+      "mlops",
+      "model-inference-service",
+      "model-serving",
+      "multimodal",
+      "python"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 8787,
+    "forks": 1009,
+    "openIssues": 204,
+    "archived": false,
+    "collectedAt": "2026-08-16T02:35:43.135978+00:00"
+  },
+  "news": {
+    "repository": "bentoml/BentoML",
+    "collectedAt": "2026-08-16T02:35:43.135978+00:00",
+    "latestRelease": {
+      "repository": "bentoml/BentoML",
+      "tag": "v1.4.39",
+      "title": "v1.4.39",
+      "url": "https://github.com/bentoml/BentoML/releases/tag/v1.4.39",
+      "publishedAt": "2026-05-07T10:37:29Z",
+      "notes": "## What's Changed\r\n* ci: pre-commit autoupdate [skip ci] by @pre-commit-ci[bot] in https://github.com/bentoml/BentoML/pull/5593\r\n* fix: prevent following symlinks when copying files in BentoStore by @frostming in https://github.com/bentoml/BentoML/pull/5598\r\n* fix: add sharing=locked to BuildKit cache mounts for multi-arch builds by @lawrence3699 in https://github.com/bentoml/BentoML/pull/5597\r\n* fix: enhance Dockerfile generation by normalizing base image lines and adding tests by @frostming in https://github.com/bentoml/BentoML/pull/5603\r\n* fix: defer prometheus_client import in bentoml.metrics to fix histogram collection in multiprocess mode by @ramkrishs in https://github.com/bentoml/BentoML/pull/5602\r\n* ci: pre-commit autoupdate [skip ci] by @pre-commit-ci[bot] in https://github.com/bentoml/BentoML/pull/5605\r\n* fix: handle string input in FileSchema by encoding to UTF-8 by @frostming in https://github.com/bentoml/BentoML/pull/5606\r\n\r\n## New Contributors\r\n* @lawrence3699 made their first contribution in https://github.com/bentoml/BentoML/pull/5597\r\n* @ramkrishs made their first contribution in https://github.com/bentoml/BentoML/pull/5602\r\n\r\n**Full Changelog**: https://github.com/bentoml/BentoML/compare/v1.4.38...v1.4.39",
+      "highlights": [
+        "What's Changed",
+        "ci: pre-commit autoupdate [skip ci] by @pre-commit-ci[bot] in https://github.com/bentoml/BentoML/pull/5593",
+        "fix: prevent following symlinks when copying files in BentoStore by @frostming in https://github.com/bentoml/BentoML/pull/5598",
+        "fix: add sharing=locked to BuildKit cache mounts for multi-arch builds by @lawrence3699 in https://github.com/bentoml/BentoML/pull/5597",
+        "fix: enhance Dockerfile generation by normalizing base image lines and adding tests by @frostming in https://github.com/bentoml/BentoML/pull/5603",
+        "fix: defer prometheusclient import in bentoml.metrics to fix histogram collection in multiprocess mode by @ramkrishs in https://github.com/bentoml/BentoML/pull/5602"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-16T02:35:31.986278Z",
+      "since": "2026-08-15T02:35:31.986278Z",
+      "observedCount": 3,
+      "changedCount": 3
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:bentoml/BentoML:issue:4863",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "bentoml/BentoML",
+      "kind": "issue",
+      "title": "bug: Async Return Latency Issues with BentoML Image IO API",
+      "text": "### Describe the bug Hello, I'm facing an issue with BentoML API serving where significant delays occur during the async return of images. Here’s the simplified code: ```python from io import BytesIO import time from bentoml.io import Multipart, File, Image from PIL import Image as PILImage @service.api( input=Multipart(data=File()), output=Image(mime_type=\"image/png\"), route=\"/inpaint/test/wrinkles\", ) async def api_test(data: BytesIO): start_time = time.time() image = PILImage.open(BytesIO(data.read())).convert(\"RGB\") print(\"Image loaded in\", time.time() - start_time, \"seconds\") return image ```` Loading the image is efficient (0.08-0.1 seconds), but returning it asynchronously incurs a delay of up to 10 seconds. Attempting to resolve this with a runner leads to a format error: ``` Traceback (most recent call last): File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/server/http_app.py\", line 334, in api_func output = await api.func(**input_data) File \"/root/snowflake/backend/python/firm/services/inpaint/service.py\", line 215, in api return await post_process_runner.forward.async_run(source=image, target=output_image) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/runner.py\", line 56, in async_run return await self.runner._runner_handle.async_run_method(self, *args, **kwargs) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/runner_handle/remote.py\", line 201, in async_run_method payload_params = Params[Payload](*args, **kwargs).map( File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/utils.py\", line 65, in map kwargs = {k: function(v) for k, v in self.kwargs.items()} File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/utils.py\", line 65, in <dictcomp> kwargs = {k: function(v) for k, v in self.kwargs.items()} File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/container.py\", line 700, in to_payload return container_cls.to_payload(batch, batch_dim) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/container.py\", line 490, in to_payload batch.save(buffer, format=batch.format) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/PIL/Image.py\", line 2546, in save raise ValueError(msg) from e ValueError: unknown file extension: ``` How can I properly handle async returns with bentoml.io.Image() to avoid these delays? Thank you for your assistance. ### To reproduce _No response_ ### Expected behavior _No response_ ### Environment #### Environment variable ```bash BENTOML_DEBUG='' BENTOML_QUIET='' BENTOML_BUNDLE_LOCAL_BUILD='' BENTOML_DO_NOT_TRACK='' BENTOML_CONFIG='' BENTOML_CONFIG_OPTIONS='' BENTOML_PORT='' BENTOML_HOST='' BENTOML_API_WORKERS='' ``` #### System information `bentoml`: 1.2.16 `python`: 3.10.14 `platform`: Linux-4.18.0-425.19.2.el8_7.x86_64-x86_64-with-glibc2.31 `uid_gid`: 0:0 `conda`: 23.5.0 `in_conda_env`: True <details><summary><code>conda_packages</code></summary> <br> ```yaml name: firm channels: - defaults dependencies: - _libgcc_mutex=0.1=main - _openmp_mutex=5.1=1_gnu - bzip2=1.0.8=h5eee18b_6 - ca-certificates=2024.3.11=h06a4308_0 - ld_impl_linux-64=2.38=h1181459_1 - libffi=3.4.4=h6a678d5_1 - libgcc-ng=11.2.0=h1234567_1 - libgomp=11.2.0=h1234567_1 - libstdcxx-ng=11.2.0=h1234567_1 - libuuid=1.41.5=h5eee18b_0 - ncurses=6.4=h6a678d5_0 - openssl=3.0.14=h5eee18b_0 - pip=24.0=py310h06a4308_0 - python=3.10.14=h955ad1f_1 - readline=8.2=h5eee18b_0 - setuptools=69.5.1=py310h06a4308_0 - sqlite=3.45.3=h5eee18b_0 - tk=8.6.14=h39e8969_0 - wheel=0.43.0=py310h06a4308_0 - xz=5.4.6=h5eee18b_1 - zlib=1.2.13=h5eee18b_1 - pip: - absl-py==2.1.0 - aenum==3.1.15 - aiofiles==24.1.0 - aiohttp==3.9.5 - aioresponses==0.7.6 - aiosignal==1.3.1 - annotated-types==0.7.0 - anyio==4.4.0 - appdirs==1.4.4 - apscheduler==3.10.1 - asgiref==3.8.1 - asttokens==2.4.1 - async-timeout==4.0.3 - attrs==23.2.0 - awscli==1.29.54 - backoff==2.2.1 - bentoml==1.2.16 - blendmodes==2024.1 - boto3==1.28.23 - botocore==1.31.54 - build==1.2.1 - cachetools==5.3.3 - cattrs==23.1.2 - certifi==2024.7.4 - cffi==1.16.0 - charset-normalizer==3.3.2 - circus==0.18.0 - click==8.1.7 - click-option-group==0.5.6 - cloudpickle==3.0.0 - cmake==3.30.0 - colorama==0.4.4 - coloredlogs==15.0.1 - comm==0.2.2 - contourpy==1.2.1 - coverage==7.5.1 - cryptography==42.0.8 - cycler==0.12.1 - cython==3.0.0 - dataclasses-json==0.6.7 - decorator==5.1.1 - deepmerge==1.1.1 - defusedxml==0.7.1 - deprecated==1.2.14 - distro==1.9.0 - docker==6.1.3 - docutils==0.16 - exceptiongroup==1.2.1 - executing==2.0.1 - fastapi==0.110.3 - filelock==3.15.4 - flatbuffers==24.3.25 - fonttools==4.53.1 - frozenlist==1.4.1 - fs==2.4.16 - fsspec==2024.6.1 - google-api-core==2.19.1 - google-api-python-client==2.136.0 - google-auth==2.31.0 - google-auth-httplib2==0.2.0 - google-cloud-core==2.4.1 - google-cloud-storage==2.17.0 - google-crc32c==1.5.0 - google-resumable-media==2.7.1 - googleapis-common-protos==1.63.2 - gputil==1.4.0 - h11==0.14.0 - httpcore==1.0.5 - httplib2==0.22.0 - httpx==0.27.0 - huggingface-hub==0.23.4 - humanfriendly==10.0 - idna==3.7 - imagehash==4.3.1 - imageio==2.34.2 - importlib-metadata==6.11.0 - inference-gpu==0.12.0 - inflection==0.5.1 - iniconfig==2.0.0 - ipython==8.26.0 - ipywidgets==8.1.3 - jax==0.4.30 - jaxlib==0.4.30 - jedi==0.19.1 - jinja2==3.1.4 - jmespath==1.0.1 - jsonschema==4.22.0 - jsonschema-specifications==2023.12.1 - jupyterlab-widgets==3.0.11 - kiwisolver==1.4.5 - lazy-loader==0.4 - line-profiler==4.1.3 - lit==18.1.8 - markdown-it-py==3.0.0 - markupsafe==2.1.5 - marshmallow==3.21.3 - matplotlib==3.9.1 - matplotlib-inline==0.1.7 - mdurl==0.1.2 - mediapipe==0.10.14 - ml-dtypes==0.4.0 - mpmath==1.3.0 - multidict==6.0.5 - mypy-extensions==1.0.0 - natsort==8.4.0 - networkx==3.3 - numpy==1.26.4 - nvidia-cublas-cu11==11.10.3.66 - nvidia-cuda-cupti-cu11==11.7.101 - nvidia-cuda-nvrtc-cu11==11.7.99 - nvidia-cuda-runtime-cu11==11.7.99 - nvidia-cudnn-cu11==8.5.0.96 - nvidia-cufft-cu11==10.9.0.58 - nvidia-curand-cu11==10.2.10.91 - nvidia-cusolver-cu11==11.4.0.1 - nvidia-cusparse-cu11==11.7.4.91 - nvidia-ml-py==11.525.150 - nvidia-nccl-cu11==2.14.3 - nvidia-nvtx-cu11==11.7.91 - onnxruntime-gpu==1.15.1 - openai==1.35.10 - opencv-contrib-python==4.10.0.84 - opencv-python==4.8.0.76 - opencv-python-headless==4.10.0.84 - opentelemetry-api==1.20.0 - opentelemetry-instrumentation==0.41b0 - opentelemetry-instrumentation-aiohttp-client==0.41b0 - opentelemetry-instrumentation-asgi==0.41b0 - opentelemetry-sdk==1.20.0 - opentelemetry-semantic-conventions==0.41b0 - opentelemetry-util-http==0.41b0 - opt-einsum==3.3.0 - packaging==24.1 - pandas==2.2.2 - parso==0.8.4 - pathspec==0.12.1 - pendulum==3.0.0 - pexpect==4.9.0 - piexif==1.1.3 - pillow==10.4.0 - pillow-heif==0.14.0 - pip-requirements-parser==32.0.1 - pip-tools==7.4.1 - pluggy==1.5.0 - prettytable==3.10.0 - prometheus-client==0.20.0 - prometheus-fastapi-instrumentator==6.0.0 - prompt-toolkit==3.0.47 - proto-plus==1.24.0 - protobuf==4.25.3 - psutil==6.0.0 - ptyprocess==0.7.0 - pulp==2.8.0 - pure-eval==0.2.2 - py-cpuinfo==9.0.0 - pyasn1==0.6.0 - pyasn1-modules==0.4.0 - pybase64==1.3.2 - pycparser==2.22 - pydantic==2.8.2 - pydantic-core==2.20.1 - pydot==2.0.0 - pyfacer==0.0.4 - pygments==2.18.0 - pyparsing==3.1.2 - pyproject-hooks==1.1.0 - pytest==8.2.2 - pytest-asyncio==0.21.1 - python-dateutil==2.9.0.post0 - python-dotenv==1.0.1 - python-json-logger==2.0.7 - python-multipart==0.0.9 - pytz==2024.1 - pywavelets==1.6.0 - pyyaml==6.0.1 - pyzmq==26.0.3 - redis==5.0.7 - referencing==0.35.1 - requests==2.31.0 - requests-toolbelt==1.0.0 - rich==13.5.2 - rpds-py==0.18.1 - rsa==4.7.2 - s3transfer==0.6.2 - safetensors==0.4.3 - schema==0.7.7 - scikit-image==0.24.0 - scipy==1.14.0 - seaborn==0.13.2 - shapely==2.0.1 - simple-di==0.1.5 - six==1.16.0 - skypilot==0.5.0 - sniffio==1.3.1 - sounddevice==0.4.7 - stack-data==0.6.3 - starlette==0.37.2 - structlog==24.2.0 - supervision==0.21.0 - sympy==1.12.1 - tabulate==0.9.0 - thop==0.1.1-2209072238 - tifffile==2024.7.2 - time-machine==2.14.2 - timm==1.0.3 - tomli==2.0.1 - tomli-w==1.0.0 - torch==2.0.1 - torchaudio==2.0.2 - torchvision==0.15.2 - tornado==6.4.1 - tqdm==4.66.4 - traitlets==5.14.3 - triton==2.0.0 - typer==0.9.0 - typing-extensions==4.12.2 - typing-inspect==0.9.0 - tzdata==2024.1 - tzlocal==5.2 - ultralytics==8.2.18 - uritemplate==4.1.1 - urllib3==1.26.19 - uvicorn==0.30.1 - validators==0.30.0 - watchfiles==0.22.0 - wcwidth==0.2.13 - websocket-client==1.8.0 - widgetsnbextension==4.0.11 - wrapt==1.16.0 - yarl==1.9.4 - zipp==3.19.2 - zxing-cpp==2.2.0 prefix: /root/miniconda3/envs/firm ``` </details> <details><summary><code>pip_packages</code></summary> <br> ``` absl-py==2.1.0 aenum==3.1.15 aiofiles==24.1.0 aiohttp==3.9.5 aioresponses==0.7.6 aiosignal==1.3.1 annotated-types==0.7.0 anyio==4.4.0 appdirs==1.4.4 APScheduler==3.10.1 asgiref==3.8.1 asttokens==2.4.1 async-timeout==4.0.3 attrs==23.2.0 awscli==1.29.54 backoff==2.2.1 bentoml==1.2.16 blendmodes==2024.1 boto3==1.28.23 botocore==1.31.54 build==1.2.1 cachetools==5.3.3 cattrs==23.1.2 certifi==2024.7.4 cffi==1.16.0 charset-normalizer==3.3.2 circus==0.18.0 click==8.1.7 click-option-group==0.5.6 cloudpickle==3.0.0 cmake==3.30.0 colorama==0.4.4 coloredlogs==15.0.1 comm==0.2.2 contourpy==1.2.1 coverage==7.5.1 cryptography==42.0.8 cycler==0.12.1 Cython==3.0.0 dataclasses-json==0.6.7 decorator==5.1.1 deepmerge==1.1.1 defusedxml==0.7.1 Deprecated==1.2.14 distro==1.9.0 docker==6.1.3 docutils==0.16 exceptiongroup==1.2.1 executing==2.0.1 fastapi==0.110.3 filelock==3.15.4 flatbuffers==24.3.25 fonttools==4.53.1 frozenlist==1.4.1 fs==2.4.16 fsspec==2024.6.1 google-api-core==2.19.1 google-api-python-client==2.136.0 google-auth==2.31.0 google-auth-httplib2==0.2.0 google-cloud-core==2.4.1 google-cloud-storage==2.17.0 google-crc32c==1.5.0 google-resumable-media==2.7.1 googleapis-common-protos==1.63.2 GPUtil==1.4.0 h11==0.14.0 httpcore==1.0.5 httplib2==0.22.0 httpx==0.27.0 huggingface-hub==0.23.4 humanfriendly==10.0 idna==3.7 ImageHash==4.3.1 imageio==2.34.2 importlib-metadata==6.11.0 inference-gpu==0.12.0 inflection==0.5.1 iniconfig==2.0.0 ipython==8.26.0 ipywidgets==8.1.3 jax==0.4.30 jaxlib==0.4.30 jedi==0.19.1 Jinja2==3.1.4 jmespath==1.0.1 jsonschema==4.22.0 jsonschema-specifications==2023.12.1 jupyterlab_widgets==3.0.11 kiwisolver==1.4.5 lazy_loader==0.4 line_profiler==4.1.3 lit==18.1.8 markdown-it-py==3.0.0 MarkupSafe==2.1.5 marshmallow==3.21.3 matplotlib==3.9.1 matplotlib-inline==0.1.7 mdurl==0.1.2 mediapipe==0.10.14 ml-dtypes==0.4.0 mpmath==1.3.0 multidict==6.0.5 mypy-extensions==1.0.0 natsort==8.4.0 networkx==3.3 numpy==1.26.4 nvidia-cublas-cu11==11.10.3.66 nvidia-cuda-cupti-cu11==11.7.101 nvidia-cuda-nvrtc-cu11==11.7.99 nvidia-cuda-runtime-cu11==11.7.99 nvidia-cudnn-cu11==8.5.0.96 nvidia-cufft-cu11==10.9.0.58 nvidia-curand-cu11==10.2.10.91 nvidia-cusolver-cu11==11.4.0.1 nvidia-cusparse-cu11==11.7.4.91 nvidia-ml-py==11.525.150 nvidia-nccl-cu11==2.14.3 nvidia-nvtx-cu11==11.7.91 onnxruntime-gpu==1.15.1 openai==1.35.10 opencv-contrib-python==4.10.0.84 opencv-python==4.8.0.76 opencv-python-headless==4.10.0.84 opentelemetry-api==1.20.0 opentelemetry-instrumentation==0.41b0 opentelemetry-instrumentation-aiohttp-client==0.41b0 opentelemetry-instrumentation-asgi==0.41b0 opentelemetry-sdk==1.20.0 opentelemetry-semantic-conventions==0.41b0 opentelemetry-util-http==0.41b0 opt-einsum==3.3.0 packaging==24.1 pandas==2.2.2 parso==0.8.4 pathspec==0.12.1 pendulum==3.0.0 pexpect==4.9.0 piexif==1.1.3 pillow==10.4.0 pillow-heif==0.14.0 pip-requirements-parser==32.0.1 pip-tools==7.4.1 pluggy==1.5.0 prettytable==3.10.0 prometheus-fastapi-instrumentator==6.0.0 prometheus_client==0.20.0 prompt_toolkit==3.0.47 proto-plus==1.24.0 protobuf==4.25.3 psutil==6.0.0 ptyprocess==0.7.0 PuLP==2.8.0 pure-eval==0.2.2 py-cpuinfo==9.0.0 pyasn1==0.6.0 pyasn1_modules==0.4.0 pybase64==1.3.2 pycparser==2.22 pydantic==2.8.2 pydantic_core==2.20.1 pydot==2.0.0 pyfacer==0.0.4 Pygments==2.18.0 pyparsing==3.1.2 pyproject_hooks==1.1.0 pytest==8.2.2 pytest-asyncio==0.21.1 python-dateutil==2.9.0.post0 python-dotenv==1.0.1 python-json-logger==2.0.7 python-multipart==0.0.9 pytz==2024.1 PyWavelets==1.6.0 PyYAML==6.0.1 pyzmq==26.0.3 redis==5.0.7 referencing==0.35.1 requests==2.31.0 requests-toolbelt==1.0.0 rich==13.5.2 rpds-py==0.18.1 rsa==4.7.2 s3transfer==0.6.2 safetensors==0.4.3 schema==0.7.7 scikit-image==0.24.0 scipy==1.14.0 seaborn==0.13.2 shapely==2.0.1 simple-di==0.1.5 six==1.16.0 skypilot==0.5.0 sniffio==1.3.1 sounddevice==0.4.7 stack-data==0.6.3 starlette==0.37.2 structlog==24.2.0 supervision==0.21.0 sympy==1.12.1 tabulate==0.9.0 thop==0.1.1.post2209072238 tifffile==2024.7.2 time-machine==2.14.2 timm==1.0.3 tomli==2.0.1 tomli_w==1.0.0 torch==2.0.1 torchaudio==2.0.2 torchvision==0.15.2 tornado==6.4.1 tqdm==4.66.4 traitlets==5.14.3 triton==2.0.0 typer==0.9.0 typing-inspect==0.9.0 typing_extensions==4.12.2 tzdata==2024.1 tzlocal==5.2 ultralytics==8.2.18 uritemplate==4.1.1 urllib3==1.26.19 uvicorn==0.30.1 validators==0.30.0 watchfiles==0.22.0 wcwidth==0.2.13 websocket-client==1.8.0 widgetsnbextension==4.0.11 wrapt==1.16.0 yarl==1.9.4 zipp==3.19.2 zxing-cpp==2.2.0 ``` </details>",
+      "url": "https://github.com/bentoml/BentoML/issues/4863",
+      "createdAt": "2024-07-16T08:27:59Z",
+      "updatedAt": "2026-08-15T08:56:12Z",
+      "timestamp": "2026-08-15T08:56:12Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "takhyun12",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:bentoml/BentoML:pull_request:5691",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "bentoml/BentoML",
+      "kind": "pull_request",
+      "title": "fix: send one multipart part per URL in list file fields",
+      "text": "## What does this PR address? Remote clients (HTTPX sync/async and the aiohttp proxy2 clients) serialise a `list[Path]` endpoint field with URL-backed values by writing each URL into the multipart `data` dict under the same field name. The dict can only hold one value per name, so every URL except the last is silently dropped before the request reaches the service. Repro at current main (`73c4dbe`): a `list[Path]` field receiving `[url_a, url_b]` delivers only `[url_b]` to the service — reproduced through the HTTPX sync/async clients and the proxy2 client (issue #5675). ## Fix - `http.py`: URL-backed values are appended to the multipart `files` list as text parts (`(name, (None, url))`) instead of overwriting the `data` dict entry, so a list field emits one same-name part per value. - `proxy2.py`: URL-backed values are collected in `url_parts` and added to the `aiohttp.FormData` via repeated `add_field` calls, again producing one same-name field per value. The server already aggregates repeated field names via `form.getlist(k)` in `MultipartSerde.parse_request`, so both clients now deliver the complete list. ## Test New `tests/unit/_internal/client/test_multipart.py` builds multipart requests directly from both client implementations with an in-memory URL file manager and asserts one same-name part per URL: ``` PYTHONPATH=src python3 -m pytest tests/unit/_internal/client/test_multipart.py -q 3 passed ``` Neighbouring client and multipart io tests also pass (9 passed). Fixes #5675",
+      "url": "https://github.com/bentoml/BentoML/pull/5691",
+      "createdAt": "2026-08-15T09:47:17Z",
+      "updatedAt": "2026-08-15T16:47:50Z",
+      "timestamp": "2026-08-15T16:47:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "feiiiiii5",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:bentoml/BentoML:pull_request:5692",
+      "source": "github",
+      "group": "ai-infrastructure",
+      "project": "bentoml/BentoML",
+      "kind": "pull_request",
+      "title": "fix: sanitize newlines in docker env dict values and v2 env rendering",
+      "text": "## What does this PR address? Values supplied through the legacy `docker.env` dict (`bentofile.yaml` -> `docker.env: {KEY: VALUE}`) and through the new `envs` path are interpolated into generated Dockerfile `ARG` lines. A value containing a newline breaks out of the line and injects an arbitrary Dockerfile instruction (e.g. `RUN ...`), which executes during `docker build`. Fixes #5656. ## Fix Sanitize only at the Dockerfile render boundary, so the config model keeps user values byte-for-byte: - `base.j2` (legacy dict path): `ARG {{ key|normalize_line }}={{ value|normalize_line|bash_quote }}` and the matching `ENV` reference. - `base_v2.j2` (`envs` path): add `normalize_line` before `bash_quote` for the value. ## Test - Newline injection regression renders both paths and asserts the value stays on the quoted `ARG` line. - New model-preservation regression asserts `DockerOptions.env` keeps tabs, repeated spaces, and surrounding whitespace unchanged. ```bash PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=src python3 -m pytest tests/unit/_internal/container -q 24 passed ``` ## Before submitting: - [x] Does the Pull Request follow Conventional Commits specification naming? - [x] Does the code follow BentoML's code style, `pre-commit run -a` script has passed? - [x] Did you read through contribution guidelines and follow development guidelines? - [x] Did your changes require updates to the documentation? Have you updated those accordingly? - [x] Did you write tests to cover your changes?",
+      "url": "https://github.com/bentoml/BentoML/pull/5692",
+      "createdAt": "2026-08-15T09:54:05Z",
+      "updatedAt": "2026-08-15T16:32:21Z",
+      "timestamp": "2026-08-15T16:32:21Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "feiiiiii5",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:e5fc8c32a6304d57eee5",
+      "signalId": "github:bentoml/BentoML:pull_request:5691",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:bentoml/BentoML:pull_request:5691",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "bentoml/BentoML",
+        "kind": "pull_request",
+        "title": "fix: send one multipart part per URL in list file fields",
+        "text": "## What does this PR address? Remote clients (HTTPX sync/async and the aiohttp proxy2 clients) serialise a `list[Path]` endpoint field with URL-backed values by writing each URL into the multipart `data` dict under the same field name. The dict can only hold one value per name, so every URL except the last is silently dropped before the request reaches the service. Repro at current main (`73c4dbe`): a `list[Path]` field receiving `[url_a, url_b]` delivers only `[url_b]` to the service — reproduced through the HTTPX sync/async clients and the proxy2 client (issue #5675). ## Fix - `http.py`: URL-backed values are appended to the multipart `files` list as text parts (`(name, (None, url))`) instead of overwriting the `data` dict entry, so a list field emits one same-name part per value. - `proxy2.py`: URL-backed values are collected in `url_parts` and added to the `aiohttp.FormData` via repeated `add_field` calls, again producing one same-name field per value. The server already aggregates repeated field names via `form.getlist(k)` in `MultipartSerde.parse_request`, so both clients now deliver the complete list. ## Test New `tests/unit/_internal/client/test_multipart.py` builds multipart requests directly from both client implementations with an in-memory URL file manager and asserts one same-name part per URL: ``` PYTHONPATH=src python3 -m pytest tests/unit/_internal/client/test_multipart.py -q 3 passed ``` Neighbouring client and multipart io tests also pass (9 passed). Fixes #5675",
+        "url": "https://github.com/bentoml/BentoML/pull/5691",
+        "createdAt": "2026-08-15T09:47:17Z",
+        "updatedAt": "2026-08-15T16:47:50Z",
+        "timestamp": "2026-08-15T16:47:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "feiiiiii5",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a1837dfadcd195dd7e1c",
+      "signalId": "github:bentoml/BentoML:pull_request:5692",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:bentoml/BentoML:pull_request:5692",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "bentoml/BentoML",
+        "kind": "pull_request",
+        "title": "fix: sanitize newlines in docker env dict values and v2 env rendering",
+        "text": "## What does this PR address? Values supplied through the legacy `docker.env` dict (`bentofile.yaml` -> `docker.env: {KEY: VALUE}`) and through the new `envs` path are interpolated into generated Dockerfile `ARG` lines. A value containing a newline breaks out of the line and injects an arbitrary Dockerfile instruction (e.g. `RUN ...`), which executes during `docker build`. Fixes #5656. ## Fix Sanitize only at the Dockerfile render boundary, so the config model keeps user values byte-for-byte: - `base.j2` (legacy dict path): `ARG {{ key|normalize_line }}={{ value|normalize_line|bash_quote }}` and the matching `ENV` reference. - `base_v2.j2` (`envs` path): add `normalize_line` before `bash_quote` for the value. ## Test - Newline injection regression renders both paths and asserts the value stays on the quoted `ARG` line. - New model-preservation regression asserts `DockerOptions.env` keeps tabs, repeated spaces, and surrounding whitespace unchanged. ```bash PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=src python3 -m pytest tests/unit/_internal/container -q 24 passed ``` ## Before submitting: - [x] Does the Pull Request follow Conventional Commits specification naming? - [x] Does the code follow BentoML's code style, `pre-commit run -a` script has passed? - [x] Did you read through contribution guidelines and follow development guidelines? - [x] Did your changes require updates to the documentation? Have you updated those accordingly? - [x] Did you write tests to cover your changes?",
+        "url": "https://github.com/bentoml/BentoML/pull/5692",
+        "createdAt": "2026-08-15T09:54:05Z",
+        "updatedAt": "2026-08-15T16:32:21Z",
+        "timestamp": "2026-08-15T16:32:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "feiiiiii5",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:4fee7476ca78ba667ee4",
+      "signalId": "github:bentoml/BentoML:issue:4863",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:bentoml/BentoML:issue:4863",
+        "source": "github",
+        "group": "ai-infrastructure",
+        "project": "bentoml/BentoML",
+        "kind": "issue",
+        "title": "bug: Async Return Latency Issues with BentoML Image IO API",
+        "text": "### Describe the bug Hello, I'm facing an issue with BentoML API serving where significant delays occur during the async return of images. Here’s the simplified code: ```python from io import BytesIO import time from bentoml.io import Multipart, File, Image from PIL import Image as PILImage @service.api( input=Multipart(data=File()), output=Image(mime_type=\"image/png\"), route=\"/inpaint/test/wrinkles\", ) async def api_test(data: BytesIO): start_time = time.time() image = PILImage.open(BytesIO(data.read())).convert(\"RGB\") print(\"Image loaded in\", time.time() - start_time, \"seconds\") return image ```` Loading the image is efficient (0.08-0.1 seconds), but returning it asynchronously incurs a delay of up to 10 seconds. Attempting to resolve this with a runner leads to a format error: ``` Traceback (most recent call last): File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/server/http_app.py\", line 334, in api_func output = await api.func(**input_data) File \"/root/snowflake/backend/python/firm/services/inpaint/service.py\", line 215, in api return await post_process_runner.forward.async_run(source=image, target=output_image) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/runner.py\", line 56, in async_run return await self.runner._runner_handle.async_run_method(self, *args, **kwargs) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/runner_handle/remote.py\", line 201, in async_run_method payload_params = Params[Payload](*args, **kwargs).map( File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/utils.py\", line 65, in map kwargs = {k: function(v) for k, v in self.kwargs.items()} File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/utils.py\", line 65, in <dictcomp> kwargs = {k: function(v) for k, v in self.kwargs.items()} File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/container.py\", line 700, in to_payload return container_cls.to_payload(batch, batch_dim) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/bentoml/_internal/runner/container.py\", line 490, in to_payload batch.save(buffer, format=batch.format) File \"/root/miniconda3/envs/firm/lib/python3.10/site-packages/PIL/Image.py\", line 2546, in save raise ValueError(msg) from e ValueError: unknown file extension: ``` How can I properly handle async returns with bentoml.io.Image() to avoid these delays? Thank you for your assistance. ### To reproduce _No response_ ### Expected behavior _No response_ ### Environment #### Environment variable ```bash BENTOML_DEBUG='' BENTOML_QUIET='' BENTOML_BUNDLE_LOCAL_BUILD='' BENTOML_DO_NOT_TRACK='' BENTOML_CONFIG='' BENTOML_CONFIG_OPTIONS='' BENTOML_PORT='' BENTOML_HOST='' BENTOML_API_WORKERS='' ``` #### System information `bentoml`: 1.2.16 `python`: 3.10.14 `platform`: Linux-4.18.0-425.19.2.el8_7.x86_64-x86_64-with-glibc2.31 `uid_gid`: 0:0 `conda`: 23.5.0 `in_conda_env`: True <details><summary><code>conda_packages</code></summary> <br> ```yaml name: firm channels: - defaults dependencies: - _libgcc_mutex=0.1=main - _openmp_mutex=5.1=1_gnu - bzip2=1.0.8=h5eee18b_6 - ca-certificates=2024.3.11=h06a4308_0 - ld_impl_linux-64=2.38=h1181459_1 - libffi=3.4.4=h6a678d5_1 - libgcc-ng=11.2.0=h1234567_1 - libgomp=11.2.0=h1234567_1 - libstdcxx-ng=11.2.0=h1234567_1 - libuuid=1.41.5=h5eee18b_0 - ncurses=6.4=h6a678d5_0 - openssl=3.0.14=h5eee18b_0 - pip=24.0=py310h06a4308_0 - python=3.10.14=h955ad1f_1 - readline=8.2=h5eee18b_0 - setuptools=69.5.1=py310h06a4308_0 - sqlite=3.45.3=h5eee18b_0 - tk=8.6.14=h39e8969_0 - wheel=0.43.0=py310h06a4308_0 - xz=5.4.6=h5eee18b_1 - zlib=1.2.13=h5eee18b_1 - pip: - absl-py==2.1.0 - aenum==3.1.15 - aiofiles==24.1.0 - aiohttp==3.9.5 - aioresponses==0.7.6 - aiosignal==1.3.1 - annotated-types==0.7.0 - anyio==4.4.0 - appdirs==1.4.4 - apscheduler==3.10.1 - asgiref==3.8.1 - asttokens==2.4.1 - async-timeout==4.0.3 - attrs==23.2.0 - awscli==1.29.54 - backoff==2.2.1 - bentoml==1.2.16 - blendmodes==2024.1 - boto3==1.28.23 - botocore==1.31.54 - build==1.2.1 - cachetools==5.3.3 - cattrs==23.1.2 - certifi==2024.7.4 - cffi==1.16.0 - charset-normalizer==3.3.2 - circus==0.18.0 - click==8.1.7 - click-option-group==0.5.6 - cloudpickle==3.0.0 - cmake==3.30.0 - colorama==0.4.4 - coloredlogs==15.0.1 - comm==0.2.2 - contourpy==1.2.1 - coverage==7.5.1 - cryptography==42.0.8 - cycler==0.12.1 - cython==3.0.0 - dataclasses-json==0.6.7 - decorator==5.1.1 - deepmerge==1.1.1 - defusedxml==0.7.1 - deprecated==1.2.14 - distro==1.9.0 - docker==6.1.3 - docutils==0.16 - exceptiongroup==1.2.1 - executing==2.0.1 - fastapi==0.110.3 - filelock==3.15.4 - flatbuffers==24.3.25 - fonttools==4.53.1 - frozenlist==1.4.1 - fs==2.4.16 - fsspec==2024.6.1 - google-api-core==2.19.1 - google-api-python-client==2.136.0 - google-auth==2.31.0 - google-auth-httplib2==0.2.0 - google-cloud-core==2.4.1 - google-cloud-storage==2.17.0 - google-crc32c==1.5.0 - google-resumable-media==2.7.1 - googleapis-common-protos==1.63.2 - gputil==1.4.0 - h11==0.14.0 - httpcore==1.0.5 - httplib2==0.22.0 - httpx==0.27.0 - huggingface-hub==0.23.4 - humanfriendly==10.0 - idna==3.7 - imagehash==4.3.1 - imageio==2.34.2 - importlib-metadata==6.11.0 - inference-gpu==0.12.0 - inflection==0.5.1 - iniconfig==2.0.0 - ipython==8.26.0 - ipywidgets==8.1.3 - jax==0.4.30 - jaxlib==0.4.30 - jedi==0.19.1 - jinja2==3.1.4 - jmespath==1.0.1 - jsonschema==4.22.0 - jsonschema-specifications==2023.12.1 - jupyterlab-widgets==3.0.11 - kiwisolver==1.4.5 - lazy-loader==0.4 - line-profiler==4.1.3 - lit==18.1.8 - markdown-it-py==3.0.0 - markupsafe==2.1.5 - marshmallow==3.21.3 - matplotlib==3.9.1 - matplotlib-inline==0.1.7 - mdurl==0.1.2 - mediapipe==0.10.14 - ml-dtypes==0.4.0 - mpmath==1.3.0 - multidict==6.0.5 - mypy-extensions==1.0.0 - natsort==8.4.0 - networkx==3.3 - numpy==1.26.4 - nvidia-cublas-cu11==11.10.3.66 - nvidia-cuda-cupti-cu11==11.7.101 - nvidia-cuda-nvrtc-cu11==11.7.99 - nvidia-cuda-runtime-cu11==11.7.99 - nvidia-cudnn-cu11==8.5.0.96 - nvidia-cufft-cu11==10.9.0.58 - nvidia-curand-cu11==10.2.10.91 - nvidia-cusolver-cu11==11.4.0.1 - nvidia-cusparse-cu11==11.7.4.91 - nvidia-ml-py==11.525.150 - nvidia-nccl-cu11==2.14.3 - nvidia-nvtx-cu11==11.7.91 - onnxruntime-gpu==1.15.1 - openai==1.35.10 - opencv-contrib-python==4.10.0.84 - opencv-python==4.8.0.76 - opencv-python-headless==4.10.0.84 - opentelemetry-api==1.20.0 - opentelemetry-instrumentation==0.41b0 - opentelemetry-instrumentation-aiohttp-client==0.41b0 - opentelemetry-instrumentation-asgi==0.41b0 - opentelemetry-sdk==1.20.0 - opentelemetry-semantic-conventions==0.41b0 - opentelemetry-util-http==0.41b0 - opt-einsum==3.3.0 - packaging==24.1 - pandas==2.2.2 - parso==0.8.4 - pathspec==0.12.1 - pendulum==3.0.0 - pexpect==4.9.0 - piexif==1.1.3 - pillow==10.4.0 - pillow-heif==0.14.0 - pip-requirements-parser==32.0.1 - pip-tools==7.4.1 - pluggy==1.5.0 - prettytable==3.10.0 - prometheus-client==0.20.0 - prometheus-fastapi-instrumentator==6.0.0 - prompt-toolkit==3.0.47 - proto-plus==1.24.0 - protobuf==4.25.3 - psutil==6.0.0 - ptyprocess==0.7.0 - pulp==2.8.0 - pure-eval==0.2.2 - py-cpuinfo==9.0.0 - pyasn1==0.6.0 - pyasn1-modules==0.4.0 - pybase64==1.3.2 - pycparser==2.22 - pydantic==2.8.2 - pydantic-core==2.20.1 - pydot==2.0.0 - pyfacer==0.0.4 - pygments==2.18.0 - pyparsing==3.1.2 - pyproject-hooks==1.1.0 - pytest==8.2.2 - pytest-asyncio==0.21.1 - python-dateutil==2.9.0.post0 - python-dotenv==1.0.1 - python-json-logger==2.0.7 - python-multipart==0.0.9 - pytz==2024.1 - pywavelets==1.6.0 - pyyaml==6.0.1 - pyzmq==26.0.3 - redis==5.0.7 - referencing==0.35.1 - requests==2.31.0 - requests-toolbelt==1.0.0 - rich==13.5.2 - rpds-py==0.18.1 - rsa==4.7.2 - s3transfer==0.6.2 - safetensors==0.4.3 - schema==0.7.7 - scikit-image==0.24.0 - scipy==1.14.0 - seaborn==0.13.2 - shapely==2.0.1 - simple-di==0.1.5 - six==1.16.0 - skypilot==0.5.0 - sniffio==1.3.1 - sounddevice==0.4.7 - stack-data==0.6.3 - starlette==0.37.2 - structlog==24.2.0 - supervision==0.21.0 - sympy==1.12.1 - tabulate==0.9.0 - thop==0.1.1-2209072238 - tifffile==2024.7.2 - time-machine==2.14.2 - timm==1.0.3 - tomli==2.0.1 - tomli-w==1.0.0 - torch==2.0.1 - torchaudio==2.0.2 - torchvision==0.15.2 - tornado==6.4.1 - tqdm==4.66.4 - traitlets==5.14.3 - triton==2.0.0 - typer==0.9.0 - typing-extensions==4.12.2 - typing-inspect==0.9.0 - tzdata==2024.1 - tzlocal==5.2 - ultralytics==8.2.18 - uritemplate==4.1.1 - urllib3==1.26.19 - uvicorn==0.30.1 - validators==0.30.0 - watchfiles==0.22.0 - wcwidth==0.2.13 - websocket-client==1.8.0 - widgetsnbextension==4.0.11 - wrapt==1.16.0 - yarl==1.9.4 - zipp==3.19.2 - zxing-cpp==2.2.0 prefix: /root/miniconda3/envs/firm ``` </details> <details><summary><code>pip_packages</code></summary> <br> ``` absl-py==2.1.0 aenum==3.1.15 aiofiles==24.1.0 aiohttp==3.9.5 aioresponses==0.7.6 aiosignal==1.3.1 annotated-types==0.7.0 anyio==4.4.0 appdirs==1.4.4 APScheduler==3.10.1 asgiref==3.8.1 asttokens==2.4.1 async-timeout==4.0.3 attrs==23.2.0 awscli==1.29.54 backoff==2.2.1 bentoml==1.2.16 blendmodes==2024.1 boto3==1.28.23 botocore==1.31.54 build==1.2.1 cachetools==5.3.3 cattrs==23.1.2 certifi==2024.7.4 cffi==1.16.0 charset-normalizer==3.3.2 circus==0.18.0 click==8.1.7 click-option-group==0.5.6 cloudpickle==3.0.0 cmake==3.30.0 colorama==0.4.4 coloredlogs==15.0.1 comm==0.2.2 contourpy==1.2.1 coverage==7.5.1 cryptography==42.0.8 cycler==0.12.1 Cython==3.0.0 dataclasses-json==0.6.7 decorator==5.1.1 deepmerge==1.1.1 defusedxml==0.7.1 Deprecated==1.2.14 distro==1.9.0 docker==6.1.3 docutils==0.16 exceptiongroup==1.2.1 executing==2.0.1 fastapi==0.110.3 filelock==3.15.4 flatbuffers==24.3.25 fonttools==4.53.1 frozenlist==1.4.1 fs==2.4.16 fsspec==2024.6.1 google-api-core==2.19.1 google-api-python-client==2.136.0 google-auth==2.31.0 google-auth-httplib2==0.2.0 google-cloud-core==2.4.1 google-cloud-storage==2.17.0 google-crc32c==1.5.0 google-resumable-media==2.7.1 googleapis-common-protos==1.63.2 GPUtil==1.4.0 h11==0.14.0 httpcore==1.0.5 httplib2==0.22.0 httpx==0.27.0 huggingface-hub==0.23.4 humanfriendly==10.0 idna==3.7 ImageHash==4.3.1 imageio==2.34.2 importlib-metadata==6.11.0 inference-gpu==0.12.0 inflection==0.5.1 iniconfig==2.0.0 ipython==8.26.0 ipywidgets==8.1.3 jax==0.4.30 jaxlib==0.4.30 jedi==0.19.1 Jinja2==3.1.4 jmespath==1.0.1 jsonschema==4.22.0 jsonschema-specifications==2023.12.1 jupyterlab_widgets==3.0.11 kiwisolver==1.4.5 lazy_loader==0.4 line_profiler==4.1.3 lit==18.1.8 markdown-it-py==3.0.0 MarkupSafe==2.1.5 marshmallow==3.21.3 matplotlib==3.9.1 matplotlib-inline==0.1.7 mdurl==0.1.2 mediapipe==0.10.14 ml-dtypes==0.4.0 mpmath==1.3.0 multidict==6.0.5 mypy-extensions==1.0.0 natsort==8.4.0 networkx==3.3 numpy==1.26.4 nvidia-cublas-cu11==11.10.3.66 nvidia-cuda-cupti-cu11==11.7.101 nvidia-cuda-nvrtc-cu11==11.7.99 nvidia-cuda-runtime-cu11==11.7.99 nvidia-cudnn-cu11==8.5.0.96 nvidia-cufft-cu11==10.9.0.58 nvidia-curand-cu11==10.2.10.91 nvidia-cusolver-cu11==11.4.0.1 nvidia-cusparse-cu11==11.7.4.91 nvidia-ml-py==11.525.150 nvidia-nccl-cu11==2.14.3 nvidia-nvtx-cu11==11.7.91 onnxruntime-gpu==1.15.1 openai==1.35.10 opencv-contrib-python==4.10.0.84 opencv-python==4.8.0.76 opencv-python-headless==4.10.0.84 opentelemetry-api==1.20.0 opentelemetry-instrumentation==0.41b0 opentelemetry-instrumentation-aiohttp-client==0.41b0 opentelemetry-instrumentation-asgi==0.41b0 opentelemetry-sdk==1.20.0 opentelemetry-semantic-conventions==0.41b0 opentelemetry-util-http==0.41b0 opt-einsum==3.3.0 packaging==24.1 pandas==2.2.2 parso==0.8.4 pathspec==0.12.1 pendulum==3.0.0 pexpect==4.9.0 piexif==1.1.3 pillow==10.4.0 pillow-heif==0.14.0 pip-requirements-parser==32.0.1 pip-tools==7.4.1 pluggy==1.5.0 prettytable==3.10.0 prometheus-fastapi-instrumentator==6.0.0 prometheus_client==0.20.0 prompt_toolkit==3.0.47 proto-plus==1.24.0 protobuf==4.25.3 psutil==6.0.0 ptyprocess==0.7.0 PuLP==2.8.0 pure-eval==0.2.2 py-cpuinfo==9.0.0 pyasn1==0.6.0 pyasn1_modules==0.4.0 pybase64==1.3.2 pycparser==2.22 pydantic==2.8.2 pydantic_core==2.20.1 pydot==2.0.0 pyfacer==0.0.4 Pygments==2.18.0 pyparsing==3.1.2 pyproject_hooks==1.1.0 pytest==8.2.2 pytest-asyncio==0.21.1 python-dateutil==2.9.0.post0 python-dotenv==1.0.1 python-json-logger==2.0.7 python-multipart==0.0.9 pytz==2024.1 PyWavelets==1.6.0 PyYAML==6.0.1 pyzmq==26.0.3 redis==5.0.7 referencing==0.35.1 requests==2.31.0 requests-toolbelt==1.0.0 rich==13.5.2 rpds-py==0.18.1 rsa==4.7.2 s3transfer==0.6.2 safetensors==0.4.3 schema==0.7.7 scikit-image==0.24.0 scipy==1.14.0 seaborn==0.13.2 shapely==2.0.1 simple-di==0.1.5 six==1.16.0 skypilot==0.5.0 sniffio==1.3.1 sounddevice==0.4.7 stack-data==0.6.3 starlette==0.37.2 structlog==24.2.0 supervision==0.21.0 sympy==1.12.1 tabulate==0.9.0 thop==0.1.1.post2209072238 tifffile==2024.7.2 time-machine==2.14.2 timm==1.0.3 tomli==2.0.1 tomli_w==1.0.0 torch==2.0.1 torchaudio==2.0.2 torchvision==0.15.2 tornado==6.4.1 tqdm==4.66.4 traitlets==5.14.3 triton==2.0.0 typer==0.9.0 typing-inspect==0.9.0 typing_extensions==4.12.2 tzdata==2024.1 tzlocal==5.2 ultralytics==8.2.18 uritemplate==4.1.1 urllib3==1.26.19 uvicorn==0.30.1 validators==0.30.0 watchfiles==0.22.0 wcwidth==0.2.13 websocket-client==1.8.0 widgetsnbextension==4.0.11 wrapt==1.16.0 yarl==1.9.4 zipp==3.19.2 zxing-cpp==2.2.0 ``` </details>",
+        "url": "https://github.com/bentoml/BentoML/issues/4863",
+        "createdAt": "2024-07-16T08:27:59Z",
+        "updatedAt": "2026-08-15T08:56:12Z",
+        "timestamp": "2026-08-15T08:56:12Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "bug"
+        ],
+        "author": "takhyun12",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}

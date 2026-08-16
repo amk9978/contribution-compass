@@ -1,0 +1,486 @@
+{
+  "version": 4,
+  "date": "2026-08-16",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "dagger",
+    "repo": "dagger/dagger",
+    "name": "Dagger",
+    "keywords": [
+      "Dagger CI"
+    ]
+  },
+  "context": {
+    "repository": "dagger/dagger",
+    "url": "https://github.com/dagger/dagger",
+    "description": "Automation engine to build, test and ship any codebase. Runs locally, in CI, or directly in the cloud",
+    "homepage": "https://dagger.io",
+    "language": "Go",
+    "topics": [
+      "agents",
+      "caching",
+      "ci-cd",
+      "containers",
+      "continuous-deployment",
+      "continuous-integration",
+      "devops",
+      "docker",
+      "graphql",
+      "workflows"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16164,
+    "forks": 912,
+    "openIssues": 138,
+    "archived": false,
+    "collectedAt": "2026-08-16T02:35:43.234849+00:00"
+  },
+  "news": {
+    "repository": "dagger/dagger",
+    "collectedAt": "2026-08-16T02:35:43.234849+00:00",
+    "latestRelease": {
+      "repository": "dagger/dagger",
+      "tag": "v0.21.8",
+      "title": "v0.21.8",
+      "url": "https://github.com/dagger/dagger/releases/tag/v0.21.8",
+      "publishedAt": "2026-07-29T17:07:24Z",
+      "notes": "## v0.21.8 - 2026-07-29\n\n### Changed\n\n- Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in\n  https://github.com/dagger/dagger/pull/13615\n\n### Fixed\n\n- Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: `COPY`-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content\n  actually changes. by @marcosnils in https://github.com/dagger/dagger/pull/13765\n- The `--x-release` CLI re-exec so `_EXPERIMENTAL_DAGGER_RUNNER_HOST` is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by\n  @tiborvass in https://github.com/dagger/dagger/pull/13752\n- Silent SDK sessions no longer retain frontend telemetry in memory while Cloud and OTLP export remain enabled. `DAGGER_SILENT` is now honored as the equivalent of `--silent`. by @sipsma in\n  https://github.com/dagger/dagger/pull/13762\n\n### What to do next?\n\n- Read the [documentation](https://docs.dagger.io)\n- Join our [Discord server](https://discord.gg/dagger-io)\n- Follow us on [Twitter](https://twitter.com/dagger_io)\n\n",
+      "highlights": [
+        "v0.21.8 - 2026-07-29",
+        "Changed",
+        "Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in",
+        "Fixed",
+        "Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: COPY-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content",
+        "The --x-release CLI re-exec so EXPERIMENTALDAGGERRUNNERHOST is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "vsometime",
+        "url": "https://github.com/dagger/dagger/milestone/37",
+        "description": "High-priority issues that should be released soon, but are not strict blockers for the immediate next release.",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 36
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.1",
+        "url": "https://github.com/dagger/dagger/milestone/130",
+        "progress": 0,
+        "openIssues": 1,
+        "closedIssues": 0
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.0-beta.8",
+        "url": "https://github.com/dagger/dagger/milestone/131",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 9
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v0.21.9",
+        "url": "https://github.com/dagger/dagger/milestone/132",
+        "description": "",
+        "progress": 80,
+        "openIssues": 1,
+        "closedIssues": 4
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-16T02:35:31.986278Z",
+      "since": "2026-08-15T02:35:31.986278Z",
+      "observedCount": 7,
+      "changedCount": 7
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:dagger/dagger:pull_request:13443",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "feat: kubectl image engine client driver",
+      "text": "Adds the use of `kubectl` to provision engines for the `image://` driver. The `image+kubectl://` driver behaves much like the existing image drivers backed by e.g. `docker`, except that instead of creating a Dagger engine in a Docker container or similar, it creates one in a Kubernetes Pod. The primary difference is incurred by the fact that the client cannot be assumed to share a filesystem with the target Kubernetes cluster, so it creates an intermediate ConfigMap and Secret to mount `~/.config/dagger/engine.toml`, `~/.config/dagger/ca-certificates`, and `DAGGER_CLOUD_TOKEN` into the Pod instead of using bind mounts and plain environment variables. resolves https://github.com/dagger/dagger/issues/13034",
+      "url": "https://github.com/dagger/dagger/pull/13443",
+      "createdAt": "2026-06-15T01:09:52Z",
+      "updatedAt": "2026-08-15T19:06:47Z",
+      "timestamp": "2026-08-15T19:06:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "frantjc",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13735",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "dagql: release abandoned arbitrary cache results",
+      "text": "## Summary - release successful `GetOrInitArbitrary` values that finish after every waiter has abandoned the initialization - serialize cleanup transfer with waiter and session ownership so `OnRelease` runs exactly once and outside cache locks - add deterministic regression coverage for abandonment, replacement initialization, and multiple session owners ## Root cause `GetOrInitArbitrary` runs its initializer in a goroutine. When the last waiter was canceled, the cancellation path removed the unfinished entry because it had no waiters or session owners. If the initializer ignored or narrowly raced cancellation and then successfully returned an `OnReleaser`, the goroutine recorded its callback after the entry was already detached. No session owned the value, it was absent from both arbitrary-call maps, and arbitrary entries are neither persisted nor handled by cache pruning. Nothing could invoke `OnRelease`. ## Fix An initialization with zero waiters and zero session owners is now treated as abandoned. If it subsequently succeeds, its cleanup callback is transferred under `callsMu`, cleared from the entry, and invoked immediately after unlocking. Clearing the callback during transfer provides the exact-once invariant across initializer completion, waiter cancellation, and session release. Successful callers and cache hits now claim session ownership while detachment is excluded. Map removal is pointer-conditional, so an abandoned initializer finishing late cannot remove or release a replacement entry created for the same key. The regression test controls the ordering with channels: it waits for initialization to begin, cancels the last waiter, proves the unfinished entry has been detached with no owner, and only then allows an `OnReleaser` value to return. Neighboring tests verify replacement initialization remains owned and cacheable, callbacks run outside `callsMu`, and cleanup waits for every session owner. ## Validation - `dagger api call engine-dev test --pkg ./dagql --run='TestCacheArbitrary' --race` - `dagger api call engine-dev test --pkg ./dagql`",
+      "url": "https://github.com/dagger/dagger/pull/13735",
+      "createdAt": "2026-07-24T21:29:30Z",
+      "updatedAt": "2026-08-16T02:03:07Z",
+      "timestamp": "2026-08-16T02:03:07Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "sipsma",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13789",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "core: let container commands inherit workspaces",
+      "text": "Closes #13054. ## Context The execution and module-provenance contract is written down in [the design proposal](hack/designs/container-workspace-inheritance.md). ## Problem A Dagger client started inside a container detects its workspace from the container filesystem. That is normally correct, but it breaks commands that are meant to operate on the workspace selected by their caller. The concrete case is a Go test running in `Container.withExec`: when the test calls `dagger.Connect`, `CurrentWorkspace` resolves from the test container instead of the outer client. `experimentalPrivilegedNesting` grants Dagger API access, but does not carry a workspace binding. Implicitly inheriting every parent workspace would be unsafe. Module runtimes must not gain ambient access to caller workspaces, and workspace modules also carry environment and schema state that cannot be reconstructed from an arbitrary `Workspace` object. ## Solution Add an optional `inheritWorkspace` argument to the command-definition surfaces: - `Container.withExec` - `Container.asService` - `Container.up` - `Container.terminal` - `Directory.terminal` The argument grants the command nested Dagger access and installs the supplied workspace as its default. Explicit selection by the nested client still wins; otherwise the inherited binding wins over detection from the container filesystem. Omitting it preserves existing behavior. The binding is command-scoped, retained as a typed DAG dependency, and persisted with lazy exec and service state. It survives the conventional `withExec(...).asService()` conversion and failed-exec terminal path without becoming ambient `Container` configuration. When the value is a live ancestor workspace binding, the nested client also receives its selected environment and demand-loaded workspace module schema. Child `-m` modules keep precedence, parent extra modules and module-runtime schema remain isolated, and sibling requests synchronize module gathering without losing demand. Arbitrary or synthetic workspace values remain valid for `currentWorkspace` and core workspace APIs, but do not synthesize module commands. `Container.up` is included because it defines the same service command as `Container.asService(...).up()` and already mirrors those command options. `Directory.terminal` is included because it creates the temporary container command itself. `Service.up` and `Service.terminal` remain unchanged because their service command has already been defined. Official SDK clients and reference docs are regenerated from the resulting schema.",
+      "url": "https://github.com/dagger/dagger/pull/13789",
+      "createdAt": "2026-07-30T15:19:44Z",
+      "updatedAt": "2026-08-16T02:03:04Z",
+      "timestamp": "2026-08-16T02:03:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "shykes",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13838",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "dagger agent dev env: in-repo agent modules",
+      "text": "The dogfooding layer: the in-repo agent modules that `dagger agent --env dev` composes, plus the wiring that makes them reachable. No engine changes. | module | what it does | | --- | --- | | `editor` | a sandboxed coding agent — read, write, edit, find, grep, todoWrite — plus a commit tool built on the workspace's staged commits. Vendored from `github.com/vito/editor` so it can be iterated on in-tree. | | `review` | the `git status` / `git diff` an agent with no Bash tool can't otherwise get, via `Workspace.git.uncommitted`'s diffstats and patch | | `history` | the `git log` half of the same, over `Workspace.git.stagedCommits` | | `delegate` | hands a noisy, context-heavy subtask to a fresh sub-agent that runs it in its own conversation and returns one distilled report | | `engine-lab` | `./hack/dev` + `./hack/with-dev` as agent tools: build from the workspace, hold the engine as a Service, exec against it, poke its debug endpoints | | `contributor` | the same idea aimed at somebody else's repo — fetch it as a Workspace, compose editor's tools onto it, work the task, open the PR | | `tui-qa` | drives nested agent TUI sessions; now inherits the session's LLM config and gets a real git repo as its fixture | Supporting changes: `EngineDev.GoContainer` is a Wolfi Go base with the from-source `dagger` on `$PATH`, so Go commands (and the integration tests, which shell out to `dagger`) find the CLI without paying for a full engine build — it's what the `golang` toolchain is based on in the dev env. `dagger.toml` gains the `env.dev` module set, with contributor's GitHub token resolving through `cmd://gh auth token` rather than being stored. And catwalk moves to v0.51.11 for its refreshed model catalog. Each module commit is self-contained, and the `dagger.toml` wiring is last, so any intermediate state is a module directory with no install entry — inert rather than broken.",
+      "url": "https://github.com/dagger/dagger/pull/13838",
+      "createdAt": "2026-08-04T23:43:30Z",
+      "updatedAt": "2026-08-15T20:23:51Z",
+      "timestamp": "2026-08-15T20:23:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "vito",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13879",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "sdk(improvement): support nullable object returns",
+      "text": "#### What Support nullable GraphQL object and interface results in generated clients and module SDKs. Nullable methods now resolve the object's ID before returning. A missing ID becomes the language's empty value; a present ID is rebuilt as a normal client. Non-null object methods stay lazy. #### Client APIs Each SDK uses its normal optional value: `Nullable` in Go, `null` in TypeScript, PHP, and .NET, `None` in Python, `Option` in Rust, `Optional` in Java, and `{:ok, value | nil}` in Elixir. For example, Go callers can handle `GitCommit.releaseTag` explicitly: ```go result, err := commit.ReleaseTag(ctx) if err != nil { return err } tag, ok := result.Get() if !ok { return nil } name, err := tag.Name(ctx) ``` #### Module APIs Module authors can declare nullable object returns with their SDK's existing syntax: - TypeScript: `Promise<User | null>` - PHP: `?Directory` - Java: `Optional<Directory>` - Go: `dagger.Nullable[*dagger.Directory]` - Python: `User | None` - Elixir: `User.t() | nil` Rust and .NET do not currently support modules. Dang already supports nullable return types. #### Compatibility and tests Generated templates use the schema version to keep the old lazy method shape before `v1.0.0-beta.10`. From beta.10 onward, nullable object methods use the resolved optional result. Tests cover both sides of the version boundary, object and interface results, and both present and null module returns. Java and .NET also exercise the runtime null path directly.",
+      "url": "https://github.com/dagger/dagger/pull/13879",
+      "createdAt": "2026-08-11T21:14:04Z",
+      "updatedAt": "2026-08-15T08:09:40Z",
+      "timestamp": "2026-08-15T08:09:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "grouville",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13904",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "feat(llm): support OrcaRouter as an LLM provider",
+      "text": "## Summary Adds [OrcaRouter](https://www.orcarouter.ai) as a model provider. OrcaRouter is an OpenAI-compatible model routing gateway that exposes 150+ models from OpenAI, Anthropic, Google, DeepSeek, Qwen, MiniMax, xAI and others behind a single endpoint and API key. It also provides gateway-level security controls for AI agents. I'm an engineer on the OrcaRouter team. ## What this changes - `internal/cmd/dagger/llm_config.go`: register `orcarouter` in the shared OpenAI env slot (`OPENAI_API_KEY` / `OPENAI_MODEL` / `OPENAI_BASE_URL`), in `llm add-key` provider validation, base-URL defaulting (`https://api.orcarouter.ai/v1`) and the default model - `internal/cmd/dagger/llmconfig/models.go`: add OrcaRouter to the interactive setup provider list and the catwalk model catalog - `internal/cmd/dagger/llmconfig/setup.go`: base URL and signup URL for the interactive API-key flow - `internal/cmd/dagger/llm_config_test.go`: extend the OPENAI_* slot tests to cover orcarouter - `docs/current_docs/reference/cli/index.mdx`: document the new provider alongside the existing ones ## Why a separate provider rather than the OpenAI-compatible escape hatch This mirrors how OpenRouter is wired in this repo: OrcaRouter joins the named providers in the model picker, setup flow and docs, so the config reference stays consistent for users. ## How to use it 1. Get an API key at https://www.orcarouter.ai/console (keys start with `sk-orca-`). 2. `dagger llm add-key orcarouter` (or pick OrcaRouter in `dagger llm setup`). 3. Pick a model id such as `openai/gpt-5.5`, `anthropic/claude-opus-4.8` or `z-ai/glm-5.2`. The full catalog is at https://www.orcarouter.ai/models. ## Verification - Unit tests: `TestApplyLLMConfigEnvOpenAISlot` (including the new `default orcarouter wins the slot` case) and `TestRemoveKeyClearsDefaultModel` pass; the `internal/cmd/dagger/llmconfig` package tests pass. - Live API: `dagger llm add-key orcarouter` persists `base_url = \"https://api.orcarouter.ai/v1\"` with default model `openai/gpt-5.5`; a live chat completion through OrcaRouter using `openai/gpt-5.5` succeeds. - Build: `go build ./cmd/dagger` and `GOOS=linux go build ./internal/cmd/dagger/...` pass.",
+      "url": "https://github.com/dagger/dagger/pull/13904",
+      "createdAt": "2026-08-15T16:42:22Z",
+      "updatedAt": "2026-08-15T16:42:23Z",
+      "timestamp": "2026-08-15T16:42:23Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "Marc-oss-hub",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13905",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "sdk/rust: simplify release assembly",
+      "text": "## Summary - remove the deprecated Rust SDK completeness/evidence build graph and observation hooks - assemble the two public crate packages and a complete `linux/amd64` engine through the ordinary Dagger build - retain engine compatibility, CLI checksum, credential-safe diagnostic, module, and external-consumer checks - document the engine-free, Rust-first development boundary and the reproducible Namespace artifact build ## Why The maintained Rust SDK path still carried build-only evidence and provenance machinery that was not a genuine SDK capability and made release assembly unnecessarily costly. This replaces it with normal package and complete-engine construction plus one external Rust consumer verification. This change does not add TUF, GitHub Actions, Dagger CLI surface, crates.io publication, tags, or releases. ## Validation - `cargo fmt --all --check` - `cargo test --workspace --all-features --locked` - `cargo clippy --workspace --all-targets --all-features --locked -- -D warnings` - rustdoc with warnings denied - `cargo deny check` - Rust generator, focused Go, engine-development, package-pair, and ordinary-build checks - Namespace `linux/amd64` ordinary build and external consumer verification against the completed engine - independent crate and OCI artifact checksum verification - Gitleaks scan across all branch commits: zero findings Agent contribution: Codex co-authored the implementation, documentation, and verification work.",
+      "url": "https://github.com/dagger/dagger/pull/13905",
+      "createdAt": "2026-08-15T21:51:42Z",
+      "updatedAt": "2026-08-15T21:58:58Z",
+      "timestamp": "2026-08-15T21:58:58Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "iw",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:9bb400392609eb2db8cc",
+      "signalId": "github:dagger/dagger:pull_request:13735",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13735",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "dagql: release abandoned arbitrary cache results",
+        "text": "## Summary - release successful `GetOrInitArbitrary` values that finish after every waiter has abandoned the initialization - serialize cleanup transfer with waiter and session ownership so `OnRelease` runs exactly once and outside cache locks - add deterministic regression coverage for abandonment, replacement initialization, and multiple session owners ## Root cause `GetOrInitArbitrary` runs its initializer in a goroutine. When the last waiter was canceled, the cancellation path removed the unfinished entry because it had no waiters or session owners. If the initializer ignored or narrowly raced cancellation and then successfully returned an `OnReleaser`, the goroutine recorded its callback after the entry was already detached. No session owned the value, it was absent from both arbitrary-call maps, and arbitrary entries are neither persisted nor handled by cache pruning. Nothing could invoke `OnRelease`. ## Fix An initialization with zero waiters and zero session owners is now treated as abandoned. If it subsequently succeeds, its cleanup callback is transferred under `callsMu`, cleared from the entry, and invoked immediately after unlocking. Clearing the callback during transfer provides the exact-once invariant across initializer completion, waiter cancellation, and session release. Successful callers and cache hits now claim session ownership while detachment is excluded. Map removal is pointer-conditional, so an abandoned initializer finishing late cannot remove or release a replacement entry created for the same key. The regression test controls the ordering with channels: it waits for initialization to begin, cancels the last waiter, proves the unfinished entry has been detached with no owner, and only then allows an `OnReleaser` value to return. Neighboring tests verify replacement initialization remains owned and cacheable, callbacks run outside `callsMu`, and cleanup waits for every session owner. ## Validation - `dagger api call engine-dev test --pkg ./dagql --run='TestCacheArbitrary' --race` - `dagger api call engine-dev test --pkg ./dagql`",
+        "url": "https://github.com/dagger/dagger/pull/13735",
+        "createdAt": "2026-07-24T21:29:30Z",
+        "updatedAt": "2026-08-16T02:03:07Z",
+        "timestamp": "2026-08-16T02:03:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "sipsma",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:163b508113d0deb33e38",
+      "signalId": "github:dagger/dagger:pull_request:13789",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13789",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "core: let container commands inherit workspaces",
+        "text": "Closes #13054. ## Context The execution and module-provenance contract is written down in [the design proposal](hack/designs/container-workspace-inheritance.md). ## Problem A Dagger client started inside a container detects its workspace from the container filesystem. That is normally correct, but it breaks commands that are meant to operate on the workspace selected by their caller. The concrete case is a Go test running in `Container.withExec`: when the test calls `dagger.Connect`, `CurrentWorkspace` resolves from the test container instead of the outer client. `experimentalPrivilegedNesting` grants Dagger API access, but does not carry a workspace binding. Implicitly inheriting every parent workspace would be unsafe. Module runtimes must not gain ambient access to caller workspaces, and workspace modules also carry environment and schema state that cannot be reconstructed from an arbitrary `Workspace` object. ## Solution Add an optional `inheritWorkspace` argument to the command-definition surfaces: - `Container.withExec` - `Container.asService` - `Container.up` - `Container.terminal` - `Directory.terminal` The argument grants the command nested Dagger access and installs the supplied workspace as its default. Explicit selection by the nested client still wins; otherwise the inherited binding wins over detection from the container filesystem. Omitting it preserves existing behavior. The binding is command-scoped, retained as a typed DAG dependency, and persisted with lazy exec and service state. It survives the conventional `withExec(...).asService()` conversion and failed-exec terminal path without becoming ambient `Container` configuration. When the value is a live ancestor workspace binding, the nested client also receives its selected environment and demand-loaded workspace module schema. Child `-m` modules keep precedence, parent extra modules and module-runtime schema remain isolated, and sibling requests synchronize module gathering without losing demand. Arbitrary or synthetic workspace values remain valid for `currentWorkspace` and core workspace APIs, but do not synthesize module commands. `Container.up` is included because it defines the same service command as `Container.asService(...).up()` and already mirrors those command options. `Directory.terminal` is included because it creates the temporary container command itself. `Service.up` and `Service.terminal` remain unchanged because their service command has already been defined. Official SDK clients and reference docs are regenerated from the resulting schema.",
+        "url": "https://github.com/dagger/dagger/pull/13789",
+        "createdAt": "2026-07-30T15:19:44Z",
+        "updatedAt": "2026-08-16T02:03:04Z",
+        "timestamp": "2026-08-16T02:03:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "shykes",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:629eec91b0f8c6a8ab55",
+      "signalId": "github:dagger/dagger:pull_request:13905",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13905",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "sdk/rust: simplify release assembly",
+        "text": "## Summary - remove the deprecated Rust SDK completeness/evidence build graph and observation hooks - assemble the two public crate packages and a complete `linux/amd64` engine through the ordinary Dagger build - retain engine compatibility, CLI checksum, credential-safe diagnostic, module, and external-consumer checks - document the engine-free, Rust-first development boundary and the reproducible Namespace artifact build ## Why The maintained Rust SDK path still carried build-only evidence and provenance machinery that was not a genuine SDK capability and made release assembly unnecessarily costly. This replaces it with normal package and complete-engine construction plus one external Rust consumer verification. This change does not add TUF, GitHub Actions, Dagger CLI surface, crates.io publication, tags, or releases. ## Validation - `cargo fmt --all --check` - `cargo test --workspace --all-features --locked` - `cargo clippy --workspace --all-targets --all-features --locked -- -D warnings` - rustdoc with warnings denied - `cargo deny check` - Rust generator, focused Go, engine-development, package-pair, and ordinary-build checks - Namespace `linux/amd64` ordinary build and external consumer verification against the completed engine - independent crate and OCI artifact checksum verification - Gitleaks scan across all branch commits: zero findings Agent contribution: Codex co-authored the implementation, documentation, and verification work.",
+        "url": "https://github.com/dagger/dagger/pull/13905",
+        "createdAt": "2026-08-15T21:51:42Z",
+        "updatedAt": "2026-08-15T21:58:58Z",
+        "timestamp": "2026-08-15T21:58:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "iw",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d35abede1be2c1ef53bd",
+      "signalId": "github:dagger/dagger:pull_request:13838",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13838",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "dagger agent dev env: in-repo agent modules",
+        "text": "The dogfooding layer: the in-repo agent modules that `dagger agent --env dev` composes, plus the wiring that makes them reachable. No engine changes. | module | what it does | | --- | --- | | `editor` | a sandboxed coding agent — read, write, edit, find, grep, todoWrite — plus a commit tool built on the workspace's staged commits. Vendored from `github.com/vito/editor` so it can be iterated on in-tree. | | `review` | the `git status` / `git diff` an agent with no Bash tool can't otherwise get, via `Workspace.git.uncommitted`'s diffstats and patch | | `history` | the `git log` half of the same, over `Workspace.git.stagedCommits` | | `delegate` | hands a noisy, context-heavy subtask to a fresh sub-agent that runs it in its own conversation and returns one distilled report | | `engine-lab` | `./hack/dev` + `./hack/with-dev` as agent tools: build from the workspace, hold the engine as a Service, exec against it, poke its debug endpoints | | `contributor` | the same idea aimed at somebody else's repo — fetch it as a Workspace, compose editor's tools onto it, work the task, open the PR | | `tui-qa` | drives nested agent TUI sessions; now inherits the session's LLM config and gets a real git repo as its fixture | Supporting changes: `EngineDev.GoContainer` is a Wolfi Go base with the from-source `dagger` on `$PATH`, so Go commands (and the integration tests, which shell out to `dagger`) find the CLI without paying for a full engine build — it's what the `golang` toolchain is based on in the dev env. `dagger.toml` gains the `env.dev` module set, with contributor's GitHub token resolving through `cmd://gh auth token` rather than being stored. And catwalk moves to v0.51.11 for its refreshed model catalog. Each module commit is self-contained, and the `dagger.toml` wiring is last, so any intermediate state is a module directory with no install entry — inert rather than broken.",
+        "url": "https://github.com/dagger/dagger/pull/13838",
+        "createdAt": "2026-08-04T23:43:30Z",
+        "updatedAt": "2026-08-15T20:23:51Z",
+        "timestamp": "2026-08-15T20:23:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "vito",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:87f9ccbf26152997a0f7",
+      "signalId": "github:dagger/dagger:pull_request:13443",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13443",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "feat: kubectl image engine client driver",
+        "text": "Adds the use of `kubectl` to provision engines for the `image://` driver. The `image+kubectl://` driver behaves much like the existing image drivers backed by e.g. `docker`, except that instead of creating a Dagger engine in a Docker container or similar, it creates one in a Kubernetes Pod. The primary difference is incurred by the fact that the client cannot be assumed to share a filesystem with the target Kubernetes cluster, so it creates an intermediate ConfigMap and Secret to mount `~/.config/dagger/engine.toml`, `~/.config/dagger/ca-certificates`, and `DAGGER_CLOUD_TOKEN` into the Pod instead of using bind mounts and plain environment variables. resolves https://github.com/dagger/dagger/issues/13034",
+        "url": "https://github.com/dagger/dagger/pull/13443",
+        "createdAt": "2026-06-15T01:09:52Z",
+        "updatedAt": "2026-08-15T19:06:47Z",
+        "timestamp": "2026-08-15T19:06:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "frantjc",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:95fa780503c225a0bcfb",
+      "signalId": "github:dagger/dagger:pull_request:13904",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13904",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "feat(llm): support OrcaRouter as an LLM provider",
+        "text": "## Summary Adds [OrcaRouter](https://www.orcarouter.ai) as a model provider. OrcaRouter is an OpenAI-compatible model routing gateway that exposes 150+ models from OpenAI, Anthropic, Google, DeepSeek, Qwen, MiniMax, xAI and others behind a single endpoint and API key. It also provides gateway-level security controls for AI agents. I'm an engineer on the OrcaRouter team. ## What this changes - `internal/cmd/dagger/llm_config.go`: register `orcarouter` in the shared OpenAI env slot (`OPENAI_API_KEY` / `OPENAI_MODEL` / `OPENAI_BASE_URL`), in `llm add-key` provider validation, base-URL defaulting (`https://api.orcarouter.ai/v1`) and the default model - `internal/cmd/dagger/llmconfig/models.go`: add OrcaRouter to the interactive setup provider list and the catwalk model catalog - `internal/cmd/dagger/llmconfig/setup.go`: base URL and signup URL for the interactive API-key flow - `internal/cmd/dagger/llm_config_test.go`: extend the OPENAI_* slot tests to cover orcarouter - `docs/current_docs/reference/cli/index.mdx`: document the new provider alongside the existing ones ## Why a separate provider rather than the OpenAI-compatible escape hatch This mirrors how OpenRouter is wired in this repo: OrcaRouter joins the named providers in the model picker, setup flow and docs, so the config reference stays consistent for users. ## How to use it 1. Get an API key at https://www.orcarouter.ai/console (keys start with `sk-orca-`). 2. `dagger llm add-key orcarouter` (or pick OrcaRouter in `dagger llm setup`). 3. Pick a model id such as `openai/gpt-5.5`, `anthropic/claude-opus-4.8` or `z-ai/glm-5.2`. The full catalog is at https://www.orcarouter.ai/models. ## Verification - Unit tests: `TestApplyLLMConfigEnvOpenAISlot` (including the new `default orcarouter wins the slot` case) and `TestRemoveKeyClearsDefaultModel` pass; the `internal/cmd/dagger/llmconfig` package tests pass. - Live API: `dagger llm add-key orcarouter` persists `base_url = \"https://api.orcarouter.ai/v1\"` with default model `openai/gpt-5.5`; a live chat completion through OrcaRouter using `openai/gpt-5.5` succeeds. - Build: `go build ./cmd/dagger` and `GOOS=linux go build ./internal/cmd/dagger/...` pass.",
+        "url": "https://github.com/dagger/dagger/pull/13904",
+        "createdAt": "2026-08-15T16:42:22Z",
+        "updatedAt": "2026-08-15T16:42:23Z",
+        "timestamp": "2026-08-15T16:42:23Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "Marc-oss-hub",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:6326aea213e38102cfad",
+      "signalId": "github:dagger/dagger:pull_request:13879",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13879",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "sdk(improvement): support nullable object returns",
+        "text": "#### What Support nullable GraphQL object and interface results in generated clients and module SDKs. Nullable methods now resolve the object's ID before returning. A missing ID becomes the language's empty value; a present ID is rebuilt as a normal client. Non-null object methods stay lazy. #### Client APIs Each SDK uses its normal optional value: `Nullable` in Go, `null` in TypeScript, PHP, and .NET, `None` in Python, `Option` in Rust, `Optional` in Java, and `{:ok, value | nil}` in Elixir. For example, Go callers can handle `GitCommit.releaseTag` explicitly: ```go result, err := commit.ReleaseTag(ctx) if err != nil { return err } tag, ok := result.Get() if !ok { return nil } name, err := tag.Name(ctx) ``` #### Module APIs Module authors can declare nullable object returns with their SDK's existing syntax: - TypeScript: `Promise<User | null>` - PHP: `?Directory` - Java: `Optional<Directory>` - Go: `dagger.Nullable[*dagger.Directory]` - Python: `User | None` - Elixir: `User.t() | nil` Rust and .NET do not currently support modules. Dang already supports nullable return types. #### Compatibility and tests Generated templates use the schema version to keep the old lazy method shape before `v1.0.0-beta.10`. From beta.10 onward, nullable object methods use the resolved optional result. Tests cover both sides of the version boundary, object and interface results, and both present and null module returns. Java and .NET also exercise the runtime null path directly.",
+        "url": "https://github.com/dagger/dagger/pull/13879",
+        "createdAt": "2026-08-11T21:14:04Z",
+        "updatedAt": "2026-08-15T08:09:40Z",
+        "timestamp": "2026-08-15T08:09:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "grouville",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

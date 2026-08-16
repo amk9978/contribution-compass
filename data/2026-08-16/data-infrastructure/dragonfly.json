@@ -1,0 +1,541 @@
+{
+  "version": 4,
+  "date": "2026-08-16",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "dragonfly",
+    "repo": "dragonflydb/dragonfly",
+    "name": "Dragonfly",
+    "keywords": [
+      "DragonflyDB"
+    ]
+  },
+  "context": {
+    "repository": "dragonflydb/dragonfly",
+    "url": "https://github.com/dragonflydb/dragonfly",
+    "description": "A modern replacement for Redis and Memcached",
+    "homepage": "https://www.dragonflydb.io/",
+    "language": "C++",
+    "topics": [
+      "cache",
+      "cpp",
+      "database",
+      "fibers",
+      "in-memory",
+      "in-memory-database",
+      "key-value",
+      "keydb",
+      "memcached",
+      "message-broker",
+      "multi-threading",
+      "nosql",
+      "redis",
+      "valkey",
+      "vector-search"
+    ],
+    "license": "NOASSERTION",
+    "defaultBranch": "main",
+    "stars": 31001,
+    "forks": 1226,
+    "openIssues": 307,
+    "archived": false,
+    "collectedAt": "2026-08-16T02:35:39.969779+00:00"
+  },
+  "news": {
+    "repository": "dragonflydb/dragonfly",
+    "collectedAt": "2026-08-16T02:35:39.969779+00:00",
+    "latestRelease": {
+      "repository": "dragonflydb/dragonfly",
+      "tag": "v1.40.1",
+      "title": "v1.40.1",
+      "url": "https://github.com/dragonflydb/dragonfly/releases/tag/v1.40.1",
+      "publishedAt": "2026-08-06T06:54:05Z",
+      "notes": "## This is a patch release.\r\n\r\n### What's Changed\r\n\r\n- Fixed connection-state handling in squashed pipelines. Commands following `AUTH`, `SELECT`, `HELLO`, `CLIENT`, or `RESET` now observe the updated connection state instead of stale authentication, database, or RESP protocol state ([#8016](https://github.com/dragonflydb/dragonfly/pull/8016)).\r\n- Fixed compressed QList node memory accounting and defragmentation ([#8011](https://github.com/dragonflydb/dragonfly/pull/8011), [#8014](https://github.com/dragonflydb/dragonfly/pull/8014)).\r\n\r\nFull Changelog: [v1.40.0...v1.40.1](https://github.com/dragonflydb/dragonfly/compare/v1.40.0...v1.40.1)",
+      "highlights": [
+        "This is a patch release.",
+        "What's Changed",
+        "Fixed connection-state handling in squashed pipelines. Commands following AUTH, SELECT, HELLO, CLIENT, or RESET now observe the updated connection state instead of stale authentication, database, or RESP protocol state (#8016).",
+        "Fixed compressed QList node memory accounting and defragmentation (#8011, #8014)."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "Cluster Search",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/19",
+        "description": "",
+        "dueAt": "2025-12-31T00:00:00Z",
+        "progress": 60,
+        "openIssues": 2,
+        "closedIssues": 3
+      },
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "v1.41",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/24",
+        "description": "",
+        "dueAt": "2026-09-10T00:00:00Z",
+        "progress": 12,
+        "openIssues": 7,
+        "closedIssues": 1
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-16T02:35:31.986278Z",
+      "since": "2026-08-15T02:35:31.986278Z",
+      "observedCount": 8,
+      "changedCount": 8
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8087",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "ZMPOP RESP2 reply is incompatibile with Redis",
+      "text": "# `ZMPOP` returns the wrong RESP2 null type when no member can be popped **NOTE**: I found this issue when adding `dragonfly` to PhpRedis' CI (https://github.com/phpredis/phpredis/pull/2907). This surfaced about half a dozen reply shape incompatibilities with Redis. If perfect compatibility isn't a goal of dragonfly just let me know and I can instead update our tests **Describe the bug** When no member can be popped, Dragonfly returns a RESP2 null bulk string (`$-1\\r\\n`) instead of the null array (`*-1\\r\\n`) returned by Redis. RESP2 null bulk strings and null arrays are distinct wire types even though some clients map both to the same language-level value. PhpRedis parses `ZMPOP` with its multi-bulk response parser. Dragonfly's null bulk string does not match the expected aggregate response type, so PhpRedis rejects the response and returns `false` instead of the expected empty result or `null`. **To Reproduce** 1. Connect using RESP2 to databases where `zs` does not exist or is empty. 2. Run `ZMPOP 1 zs MIN` against Redis and Dragonfly. 3. Compare the wire responses. In the example below, port 6379 is Redis and port 9999 is Dragonfly. ```console $ printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 6379 *-1 $ printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 9999 $-1 ``` **Expected behavior** Like Redis, Dragonfly should return a RESP2 null array: ```text *-1\\r\\n ``` `ZMPOP` otherwise returns an aggregate containing the selected key and popped members, so its nil result should retain the aggregate response type. **Screenshots** Not applicable; the raw protocol responses are included above. **Environment (please complete the following information):** - OS: Not recorded - Kernel: Not recorded - Containerized?: Not recorded - Dragonfly Version: `df-v1.39.0` Redis control version: `8.9.241` Protocol: RESP2 **Reproducible Code Snippet** ```sh printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 9999 ``` **Additional context** With `Redis::OPT_NULL_MULTIBULK_AS_NULL` enabled, PhpRedis recognizes a null array as an empty `ZMPOP` result and returns it to PHP as `null`. This mismatch causes `Redis_Test::testZmpop` to fail: ```text Assertion failed: testZmpop - (false) !== (null) ``` Dragonfly's `ZMPopGeneric` empty-result path calls `SendNull()`: - [ZMPOP implementation](https://github.com/dragonflydb/dragonfly/blob/main/src/server/zset_family.cc) - [RESP reply builder](https://github.com/dragonflydb/dragonfly/blob/main/src/facade/reply_builder.cc) For RESP2, `SendNull()` emits `$-1\\r\\n`. The reply builder has a distinct `SendNullArray()` method which emits `*-1\\r\\n`. Dragonfly also returns `$-1\\r\\n` for an empty or timed-out `BZMPOP`. The current PhpRedis `testBZmpop` only asserts the default `false` result, so it does not expose the type mismatch through `OPT_NULL_MULTIBULK_AS_NULL`.",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8087",
+      "createdAt": "2026-08-14T16:30:52Z",
+      "updatedAt": "2026-08-15T19:26:18Z",
+      "timestamp": "2026-08-15T19:26:18Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "michael-grunder",
+      "state": "open",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8089",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "ZADD GT/LT are silently ignored once a sorted set leaves listpack encoding",
+      "text": "## Summary `ZADD ... GT` and `ZADD ... LT` are silently ignored for sorted sets that are not listpack-encoded. The flag is dropped with no error and the command behaves like a plain `ZADD`, so the score is overwritten unconditionally. Two independent conditions push a zset out of listpack encoding, and either one is enough to trigger this: - any member longer than **32 bytes** - more than **128 members** `NX` continues to behave correctly on the same keys, so this looks specific to GT/LT handling rather than to option parsing in general. Reproduced on **v1.39.0** and **v1.40.1** (latest at time of writing). Redis 7.4.10 is correct in every case, including at `skiplist` encoding. ## Reproduction ``` $ redis-cli DEL k $ redis-cli ZADD k GT 10 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa # 33-byte member, inserts $ redis-cli ZADD k GT 3 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa # must be a no-op: 3 < 10 $ redis-cli ZSCORE k aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \"3\" # expected \"10\" ``` The same member at 32 bytes returns `\"10\"` as expected. A self-contained script covering both boundaries and the `NX` contrast case: ```bash #!/usr/bin/env bash set -u IMAGE=\"${1:-docker.dragonflydb.io/dragonflydb/dragonfly:v1.40.1}\" NAME=\"zadd_gtlt_repro_$$\" docker rm -f \"$NAME\" >/dev/null 2>&1 if [[ \"$IMAGE\" == *dragonfly* ]]; then docker run -d --name \"$NAME\" \"$IMAGE\" --logtostderr >/dev/null else docker run -d --name \"$NAME\" \"$IMAGE\" >/dev/null fi sleep 4 C() { docker exec \"$NAME\" redis-cli \"$@\"; } echo \"server: $(C INFO server | grep -E 'dragonfly_version|redis_version' | tr -d '\\r')\" fail=0 check() { local label=\"$1\" flag=\"$2\" first=\"$3\" second=\"$4\" expect=\"$5\" member=\"$6\" local key=\"k$RANDOM$RANDOM\" C DEL \"$key\" >/dev/null C ZADD \"$key\" \"$flag\" \"$first\" \"$member\" >/dev/null # insert C ZADD \"$key\" \"$flag\" \"$second\" \"$member\" >/dev/null # must NOT apply local got; got=$(C ZSCORE \"$key\" \"$member\" | tr -d '\\r') local status=OK if [[ \"$got\" != \"$expect\" ]]; then status=BROKEN; fail=1; fi printf ' %-34s ZADD %s %-5s -> %-5s (want %-5s) %s\\n' \\ \"$label\" \"$flag\" \"$second\" \"$got\" \"$expect\" \"$status\" C DEL \"$key\" >/dev/null } echo \"--- member length ---\" check \"1-byte member\" GT 10 3 10 \"x\" check \"32-byte member\" GT 10 3 10 \"$(printf 'a%.0s' {1..32})\" check \"33-byte member\" GT 10 3 10 \"$(printf 'a%.0s' {1..33})\" check \"33-byte member\" LT 3 10 3 \"$(printf 'a%.0s' {1..33})\" echo \"--- member count (all members 2 bytes) ---\" for count in 128 129; do key=\"c$count\" C DEL \"$key\" >/dev/null { for i in $(seq 1 \"$count\"); do echo \"ZADD $key GT 10 m$i\"; done; } \\ | docker exec -i \"$NAME\" redis-cli >/dev/null C ZADD \"$key\" GT 3 m1 >/dev/null got=$(C ZSCORE \"$key\" m1 | tr -d '\\r') status=OK if [[ \"$got\" != \"10\" ]]; then status=BROKEN; fail=1; fi printf ' %-34s ZADD GT 3 -> %-5s (want 10 ) %s\\n' \"$count members\" \"$got\" \"$status\" C DEL \"$key\" >/dev/null done echo \"--- NX on a 33-byte member, for contrast ---\" key=\"nx$RANDOM\"; M=\"$(printf 'a%.0s' {1..33})\" C DEL \"$key\" >/dev/null C ZADD \"$key\" 10 \"$M\" >/dev/null C ZADD \"$key\" NX 3 \"$M\" >/dev/null got=$(C ZSCORE \"$key\" \"$M\" | tr -d '\\r') printf ' %-34s ZADD NX 3 -> %-5s (want 10 ) %s\\n' \"33-byte member\" \"$got\" \\ \"$([[ \"$got\" == 10 ]] && echo OK || echo BROKEN)\" C DEL \"$key\" >/dev/null docker rm -f \"$NAME\" >/dev/null 2>&1 echo [[ $fail -eq 0 ]] && echo \"RESULT: all GT/LT clamps held\" || echo \"RESULT: GT/LT ignored in some encodings\" exit $fail ``` ## Observed output Dragonfly v1.40.1 (identical on v1.39.0): ``` server: redis_version:7.4.0 dragonfly_version:df-v1.40.1 --- member length --- 1-byte member ZADD GT 3 -> 10 (want 10 ) OK 32-byte member ZADD GT 3 -> 10 (want 10 ) OK 33-byte member ZADD GT 3 -> 3 (want 10 ) BROKEN 33-byte member ZADD LT 10 -> 10 (want 3 ) BROKEN --- member count (all members 2 bytes) --- 128 members ZADD GT 3 -> 10 (want 10 ) OK 129 members ZADD GT 3 -> 3 (want 10 ) BROKEN --- NX on a 33-byte member, for contrast --- 33-byte member ZADD NX 3 -> 10 (want 10 ) OK RESULT: GT/LT ignored in some encodings ``` Redis 7.4.10, same script: ``` server: redis_version:7.4.10 --- member length --- 1-byte member ZADD GT 3 -> 10 (want 10 ) OK 32-byte member ZADD GT 3 -> 10 (want 10 ) OK 33-byte member ZADD GT 3 -> 10 (want 10 ) OK 33-byte member ZADD LT 10 -> 3 (want 3 ) OK --- member count (all members 2 bytes) --- 128 members ZADD GT 3 -> 10 (want 10 ) OK 129 members ZADD GT 3 -> 10 (want 10 ) OK --- NX on a 33-byte member, for contrast --- 33-byte member ZADD NX 3 -> 10 (want 10 ) OK RESULT: all GT/LT clamps held ``` ## Expected behaviour Per the `ZADD` contract, `GT` updates an existing member only if the new score is greater than the current one, and `LT` only if it is less. Neither prevents inserting an absent member. This should hold regardless of the internal encoding. ## Environment - Dragonfly `v1.39.0` and `v1.40.1`, official images, default flags plus `--logtostderr` - Docker on macOS (arm64) - Reference: `redis:7.4-alpine` (7.4.10), default config ## Why this matters `ZADD GT`/`LT` is the only native atomic max/min in the Redis API, so it is the natural primitive for tracking running extrema without a read-modify-write or a Lua script. Because the flag is dropped silently rather than rejected, the failure surfaces as plausible-looking but wrong data — a stored extremum becomes \"the most recently written value\" — and only for keys that happen to have grown past a threshold. There is no error and no metric to alert on. Small smoke tests will pass, which makes this easy to adopt and hard to detect: we validated the primitive with short members on an empty key, built on it, and only caught the problem when a concurrency test on realistic key shapes reported a minimum of 919.5 where the true minimum was 81. Rejecting GT/LT with an error on unsupported encodings would at least be safe, but matching Redis semantics is obviously preferable.",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8089",
+      "createdAt": "2026-08-15T10:44:05Z",
+      "updatedAt": "2026-08-15T16:11:29Z",
+      "timestamp": "2026-08-15T16:11:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "dbwcanalhas",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8090",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_heartbeat_eviction_propagation",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/replication_specific_test.py::test_heartbeat_eviction_propagation[df_factory0]` - Backend: iouring - Commit: 05abfddc5d90733369aaa7f74526870e573653aa - Run: https://github.com/dragonflydb/dragonfly/actions/runs/31883683950 - Marker: run/31883683950/attempt/1 ``` Reason: AssertionError: assert equals failed _______________ test_heartbeat_eviction_propagation[df_factory0] _______________ df_factory = Factory({}) async def test_heartbeat_eviction_propagation(df_factory): master, [replica], c_master, [c_replica] = await setup_replication( df_factory, master_args={ \"proactor_threads\": 1, \"cache_mode\": \"true\", \"maxmemory\": \"256mb\", \"enable_heartbeat_eviction\": \"false\", }, replica_args={\"proactor_threads\": 1}, connect=False, ) # fill the master to use about 233mb > 256mb * 0.9, which will trigger heartbeat eviction. await c_master.execute_command(\"DEBUG POPULATE 233 size 1048576\") await start_replication(c_replica, master.port) # now enable heart beat eviction await c_master.execute_command(\"CONFIG SET enable_heartbeat_eviction true\") while True: info = await c_master.info(\"stats\") evicted_1 = info[\"evicted_keys\"] time.sleep(2) info = await c_master.info(\"stats\") evicted_2 = info[\"evicted_keys\"] if evicted_2 == evicted_1: break else: print(\"waiting for eviction to finish...\", end=\"\\r\", flush=True) await check_all_replicas_finished([c_replica], c_master) keys_master = await c_master.execute_command(\"keys *\") keys_replica = await c_replica.execute_command(\"keys *\") > assert set(keys_master) == set(keys_replica) E AssertionError: assert equals failed E 'size:206', 'size:206', E 'size:207', 'size:207', E 'size:208', 'size:208', E 'size:209', 'size:209', E 'size:21', 'size:21', E 'size:210', E 'size:212', 'size:212', E 'size:213', 'size:213', E 'size:214', 'size:214', E 'size:215', 'size:215', E 'size:216', 'size:216', c_master = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=40243,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> c_replica = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=35731,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_factory = Factory({}) evicted_1 = 18 evicted_2 = 18 info = {'batch_read_commands_bytes': 0, 'batch_read_commands_total': 0, 'batch_write_commands_bytes': 0, 'batch_write_commands_total': 0, ...} keys_master = ['size:222', 'size:18', 'size:163', 'size:186', 'size:24', 'size:57', ...] keys_replica = ['size:222', 'size:18', 'size:163', 'size:186', 'size:24', 'size:57', ...] master = :40243 replica = :35731 dragonfly/replication_specific_test.py:151: AssertionError ----------------------------- Captured stdout call ----------------------------- waiting for eviction to finish... ----------------------------- Captured stderr call ----------------------------- [2026-08-15 12:25:39,708: INFO/MainProcess] Starting /__w/dragonfly/dragonfly/build/dragonfly --proactor_threads=1 --cache_mode=true --maxmemory=256mb --enable_heartbeat_eviction=false --dbfilename= --noversion_check --vmodule=dragonfly_connection=1,db_slice=1,listener_interface=1,main_service=1,rdb_save=1,rdb_load=1,rep ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8090",
+      "createdAt": "2026-08-15T12:40:01Z",
+      "updatedAt": "2026-08-15T12:40:11Z",
+      "timestamp": "2026-08-15T12:40:11Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "failing-test",
+        "iouring"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:7984",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(geo): add GEOSEARCHSTORE command",
+      "text": "<!-- **Commits Must Be Signed and Your PR title must conform to the conventional commit spec** * See: https://github.com/dragonflydb/dragonfly/blob/main/CONTRIBUTING.md * Please follow the section on `pre-commit hooks`, a linter will validate before you push Example PR Title: <type>(<scope>)!: <description> * `type` = bug, chore, feat, fix, docs, build, style, refactor, perf, test * `!` = OPTIONAL: signals a breaking change * `scope` = Optional when `type` is \"chore\" or \"docs\" * `description` = short description of the change Examples: * chore(examples): Clarify `docker` usage #120 * docs(readme): Fix Example Links #121 * feat(ingest)!: Add new ingest #122 * fix(ingest): Refactor for loop to list comprehension #123 --> Adds GEOSEARCHSTORE (dest + src keys, same search options as GEOSEARCH, optional STOREDIST). Most of the work was already in GeoSearchStoreGeneric() via GEORADIUS ... STORE — this wires up the dedicated command and parser. Closes #3883. Also fixed a couple of Redis mismatches in the shared store/search path: - STORE when the source key is missing now returns 0 and clears the dest key (was an empty array) - COUNT without ASC/DESC now defaults to ASC, same as Redis Tests in geo_family_test.cc. Ran geo_family_test locally + manual redis-cli checks.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/7984",
+      "createdAt": "2026-08-03T03:51:25Z",
+      "updatedAt": "2026-08-15T13:17:22Z",
+      "timestamp": "2026-08-15T13:17:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [],
+      "author": "rounaknandanwar",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8080",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): lower table growth margin default",
+      "text": "## Summary - Lower the default `table_growth_margin` from `0.4` to `0.15`. - Reduce the conservative free-capacity estimate before allowing table growth. ## Test plan - `git diff --check` passed. - `ninja -C build-dbg dragonfly` reached and compiled `src/server/db_slice.cc`; the full build was blocked by the host filesystem running out of space.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8080",
+      "createdAt": "2026-08-14T05:28:30Z",
+      "updatedAt": "2026-08-15T05:36:16Z",
+      "timestamp": "2026-08-15T05:36:16Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "romange",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8088",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): probe heterogeneous blocking waiters instead of aborting…",
+      "text": "## Summary `BlockingController` keeps one FIFO queue per `(db, key)` shared by *all* blocking commands watching that key. `NotifyWatchQueue()` only checked the front waiter: when its checker returned `kKeyNotFound` (e.g. `BLPOP`/`BZPOP*`/`BLMPOP` on a missing key), the scan aborted entirely and the one-shot wake event was cleared, so any *later* waiter in the same queue, from a different command family, was never checked at all. Concretely: a client blocked on `XREADGROUP` queued behind an earlier `BLPOP` waiter on the same key would never receive its `NOGROUP` error when the key was deleted. It stayed blocked indefinitely, only released later by an unrelated mutation of the key. ## Fix `NotifyWatchQueue` no longer aborts the whole scan on `kKeyNotFound`. It now tracks the checker (command family) that reported the key missing, and only fast-skips *later* waiters sharing that exact checker, this preserves the O (1)-per-item short-circuit from #7225 for the common homogeneous case (many `BLPOP` waiters on one absent key). Waiters from a different command family (e.g. `XREADGROUP` sharing a queue with `BLPOP`) are still probed individually, so they get the correct, immediate result instead of being hidden behind an unrelated waiter's outcome. ## Test plan - [x] New regression test `BlockingControllerTest.NotifyWatchQueueHeterogeneousCheckers`- two waiters with different checker types on one key's queue; the first reports `kKeyNotFound`, and the test asserts the second is still probed. - [x] Existing `BlockingControllerTest.NotifyWatchQueueFastPathOnAbsentKey` (the #7225 perf regression test) still passes unmodified, same-checker-type fast path is preserved. - [x] `blocking_controller_test`, `stream_family_test`, `list_family_test`, `zset_family_test` all passes. - [x] `pre-commit` (clang-format et al.) clean. Fixes #8067",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8088",
+      "createdAt": "2026-08-14T16:38:32Z",
+      "updatedAt": "2026-08-15T16:06:07Z",
+      "timestamp": "2026-08-15T16:06:07Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "Shikha-code36",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8091",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(zset): honor GT/LT flags for skiplist-encoded sorted sets",
+      "text": "## Summary `ZADD ... GT` and `ZADD ... LT` were silently ignored once a sorted set left listpack encoding (i.e. once it had a member longer than 32 bytes, or more than 128 members). The score was overwritten unconditionally, as if the command were a plain `ZADD`, with no error. Root cause: the GT/LT clamp check exists in the listpack path (`ZsetAdd` in `zset_family.cc`) but was missing entirely from the skiplist path (`SortedMap::AddElem` in `sorted_map.cc`), which just updated the score whenever the element already existed. ## Fix Add the same GT/LT clamp to `SortedMap::AddElem`: if `LT` and the new score isn't lower, or `GT` and the new score isn't higher, treat the update as a no-op (matching the listpack path and Redis semantics). ## Test plan - Added `ZSetFamilyTest.AddGtLtSkiplist`, using a 33-byte member to force skiplist encoding immediately, covering both GT and LT in both the no-op and update directions. - `ninja zset_family_test && ./zset_family_test --gtest_filter='*GtLt*:*Add*'` — all 5 tests pass. - `pre-commit` clang-format check passes on both changed files. Fixes #8089",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8091",
+      "createdAt": "2026-08-15T15:03:25Z",
+      "updatedAt": "2026-08-15T15:05:37Z",
+      "timestamp": "2026-08-15T15:05:37Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "Shikha-code36",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8092",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: reply with a null array for empty ZMPOP/BZMPOP/LMPOP/BLMPOP",
+      "text": "When no element can be popped, ZMPOP/BZMPOP/LMPOP/BLMPOP replied with a RESP2 null bulk string (`$-1\\r\\n`) instead of the null array (`*-1\\r\\n`) expected for aggregate-reply commands, so strict clients (e.g. PhpRedis) rejected the reply. Changes: - `RedisReplyBuilderBase::SendNullArray()` is now protocol-aware: `*-1` under RESP2, `_` under RESP3 (previously it always emitted `*-1`, a legacy RESP2 encoding). - The empty/timeout reply paths of ZMPOP/BZMPOP (`zset_family.cc`) and LMPOP/BLMPOP (`list_family.cc`) use `SendNullArray()`. - BLMPOP now maps non-OK statuses the same way BLPOP does; a `WRONGTYPE` error is no longer swallowed into a null reply. - `InterpreterReplier::SendNullArray()` converts a null-array reply to Lua `false` (previously it produced an empty table and called `PostItem()` twice, which hit a DCHECK in debug builds when reached, e.g. via `EVAL` calling `XINFO STREAM` on an empty stream). - Tests: existing empty/timeout assertions now expect the null array; added a BLMPOP wrong-type test, a RESP3 `SendNullArray` byte test, a Lua conversion test, and a raw-socket pytest asserting the exact wire bytes under RESP2 and RESP3. Intentional side effect: Blocking-timeout and no-data replies of BLPOP/BRPOP, BZPOPMIN/BZPOPMAX, XREAD/XREADGROUP, and XINFO STREAM's empty `first-entry`/`last-entry` now emit the protocol-correct `_` instead of the legacy `*-1` under RESP3. RESP2 bytes for those commands are unchanged. Fixes #8087",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8092",
+      "createdAt": "2026-08-15T19:12:22Z",
+      "updatedAt": "2026-08-15T19:32:51Z",
+      "timestamp": "2026-08-15T19:32:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "open",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:11b65345786f92c94c5e",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8092",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8092",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: reply with a null array for empty ZMPOP/BZMPOP/LMPOP/BLMPOP",
+        "text": "When no element can be popped, ZMPOP/BZMPOP/LMPOP/BLMPOP replied with a RESP2 null bulk string (`$-1\\r\\n`) instead of the null array (`*-1\\r\\n`) expected for aggregate-reply commands, so strict clients (e.g. PhpRedis) rejected the reply. Changes: - `RedisReplyBuilderBase::SendNullArray()` is now protocol-aware: `*-1` under RESP2, `_` under RESP3 (previously it always emitted `*-1`, a legacy RESP2 encoding). - The empty/timeout reply paths of ZMPOP/BZMPOP (`zset_family.cc`) and LMPOP/BLMPOP (`list_family.cc`) use `SendNullArray()`. - BLMPOP now maps non-OK statuses the same way BLPOP does; a `WRONGTYPE` error is no longer swallowed into a null reply. - `InterpreterReplier::SendNullArray()` converts a null-array reply to Lua `false` (previously it produced an empty table and called `PostItem()` twice, which hit a DCHECK in debug builds when reached, e.g. via `EVAL` calling `XINFO STREAM` on an empty stream). - Tests: existing empty/timeout assertions now expect the null array; added a BLMPOP wrong-type test, a RESP3 `SendNullArray` byte test, a Lua conversion test, and a raw-socket pytest asserting the exact wire bytes under RESP2 and RESP3. Intentional side effect: Blocking-timeout and no-data replies of BLPOP/BRPOP, BZPOPMIN/BZPOPMAX, XREAD/XREADGROUP, and XINFO STREAM's empty `first-entry`/`last-entry` now emit the protocol-correct `_` instead of the legacy `*-1` under RESP3. RESP2 bytes for those commands are unchanged. Fixes #8087",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8092",
+        "createdAt": "2026-08-15T19:12:22Z",
+        "updatedAt": "2026-08-15T19:32:51Z",
+        "timestamp": "2026-08-15T19:32:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "vyavdoshenko",
+        "state": "open",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a5897efeaf23a0f6d829",
+      "signalId": "github:dragonflydb/dragonfly:issue:8087",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "assignees"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8087",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "ZMPOP RESP2 reply is incompatibile with Redis",
+        "text": "# `ZMPOP` returns the wrong RESP2 null type when no member can be popped **NOTE**: I found this issue when adding `dragonfly` to PhpRedis' CI (https://github.com/phpredis/phpredis/pull/2907). This surfaced about half a dozen reply shape incompatibilities with Redis. If perfect compatibility isn't a goal of dragonfly just let me know and I can instead update our tests **Describe the bug** When no member can be popped, Dragonfly returns a RESP2 null bulk string (`$-1\\r\\n`) instead of the null array (`*-1\\r\\n`) returned by Redis. RESP2 null bulk strings and null arrays are distinct wire types even though some clients map both to the same language-level value. PhpRedis parses `ZMPOP` with its multi-bulk response parser. Dragonfly's null bulk string does not match the expected aggregate response type, so PhpRedis rejects the response and returns `false` instead of the expected empty result or `null`. **To Reproduce** 1. Connect using RESP2 to databases where `zs` does not exist or is empty. 2. Run `ZMPOP 1 zs MIN` against Redis and Dragonfly. 3. Compare the wire responses. In the example below, port 6379 is Redis and port 9999 is Dragonfly. ```console $ printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 6379 *-1 $ printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 9999 $-1 ``` **Expected behavior** Like Redis, Dragonfly should return a RESP2 null array: ```text *-1\\r\\n ``` `ZMPOP` otherwise returns an aggregate containing the selected key and popped members, so its nil result should retain the aggregate response type. **Screenshots** Not applicable; the raw protocol responses are included above. **Environment (please complete the following information):** - OS: Not recorded - Kernel: Not recorded - Containerized?: Not recorded - Dragonfly Version: `df-v1.39.0` Redis control version: `8.9.241` Protocol: RESP2 **Reproducible Code Snippet** ```sh printf 'ZMPOP 1 zs MIN\\n' | nc -N localhost 9999 ``` **Additional context** With `Redis::OPT_NULL_MULTIBULK_AS_NULL` enabled, PhpRedis recognizes a null array as an empty `ZMPOP` result and returns it to PHP as `null`. This mismatch causes `Redis_Test::testZmpop` to fail: ```text Assertion failed: testZmpop - (false) !== (null) ``` Dragonfly's `ZMPopGeneric` empty-result path calls `SendNull()`: - [ZMPOP implementation](https://github.com/dragonflydb/dragonfly/blob/main/src/server/zset_family.cc) - [RESP reply builder](https://github.com/dragonflydb/dragonfly/blob/main/src/facade/reply_builder.cc) For RESP2, `SendNull()` emits `$-1\\r\\n`. The reply builder has a distinct `SendNullArray()` method which emits `*-1\\r\\n`. Dragonfly also returns `$-1\\r\\n` for an empty or timed-out `BZMPOP`. The current PhpRedis `testBZmpop` only asserts the default `false` result, so it does not expose the type mismatch through `OPT_NULL_MULTIBULK_AS_NULL`.",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8087",
+        "createdAt": "2026-08-14T16:30:52Z",
+        "updatedAt": "2026-08-15T19:26:18Z",
+        "timestamp": "2026-08-15T19:26:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "bug"
+        ],
+        "author": "michael-grunder",
+        "state": "open",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:eb07a7f949cf2836bc6c",
+      "signalId": "github:dragonflydb/dragonfly:issue:8089",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8089",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "ZADD GT/LT are silently ignored once a sorted set leaves listpack encoding",
+        "text": "## Summary `ZADD ... GT` and `ZADD ... LT` are silently ignored for sorted sets that are not listpack-encoded. The flag is dropped with no error and the command behaves like a plain `ZADD`, so the score is overwritten unconditionally. Two independent conditions push a zset out of listpack encoding, and either one is enough to trigger this: - any member longer than **32 bytes** - more than **128 members** `NX` continues to behave correctly on the same keys, so this looks specific to GT/LT handling rather than to option parsing in general. Reproduced on **v1.39.0** and **v1.40.1** (latest at time of writing). Redis 7.4.10 is correct in every case, including at `skiplist` encoding. ## Reproduction ``` $ redis-cli DEL k $ redis-cli ZADD k GT 10 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa # 33-byte member, inserts $ redis-cli ZADD k GT 3 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa # must be a no-op: 3 < 10 $ redis-cli ZSCORE k aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \"3\" # expected \"10\" ``` The same member at 32 bytes returns `\"10\"` as expected. A self-contained script covering both boundaries and the `NX` contrast case: ```bash #!/usr/bin/env bash set -u IMAGE=\"${1:-docker.dragonflydb.io/dragonflydb/dragonfly:v1.40.1}\" NAME=\"zadd_gtlt_repro_$$\" docker rm -f \"$NAME\" >/dev/null 2>&1 if [[ \"$IMAGE\" == *dragonfly* ]]; then docker run -d --name \"$NAME\" \"$IMAGE\" --logtostderr >/dev/null else docker run -d --name \"$NAME\" \"$IMAGE\" >/dev/null fi sleep 4 C() { docker exec \"$NAME\" redis-cli \"$@\"; } echo \"server: $(C INFO server | grep -E 'dragonfly_version|redis_version' | tr -d '\\r')\" fail=0 check() { local label=\"$1\" flag=\"$2\" first=\"$3\" second=\"$4\" expect=\"$5\" member=\"$6\" local key=\"k$RANDOM$RANDOM\" C DEL \"$key\" >/dev/null C ZADD \"$key\" \"$flag\" \"$first\" \"$member\" >/dev/null # insert C ZADD \"$key\" \"$flag\" \"$second\" \"$member\" >/dev/null # must NOT apply local got; got=$(C ZSCORE \"$key\" \"$member\" | tr -d '\\r') local status=OK if [[ \"$got\" != \"$expect\" ]]; then status=BROKEN; fail=1; fi printf ' %-34s ZADD %s %-5s -> %-5s (want %-5s) %s\\n' \\ \"$label\" \"$flag\" \"$second\" \"$got\" \"$expect\" \"$status\" C DEL \"$key\" >/dev/null } echo \"--- member length ---\" check \"1-byte member\" GT 10 3 10 \"x\" check \"32-byte member\" GT 10 3 10 \"$(printf 'a%.0s' {1..32})\" check \"33-byte member\" GT 10 3 10 \"$(printf 'a%.0s' {1..33})\" check \"33-byte member\" LT 3 10 3 \"$(printf 'a%.0s' {1..33})\" echo \"--- member count (all members 2 bytes) ---\" for count in 128 129; do key=\"c$count\" C DEL \"$key\" >/dev/null { for i in $(seq 1 \"$count\"); do echo \"ZADD $key GT 10 m$i\"; done; } \\ | docker exec -i \"$NAME\" redis-cli >/dev/null C ZADD \"$key\" GT 3 m1 >/dev/null got=$(C ZSCORE \"$key\" m1 | tr -d '\\r') status=OK if [[ \"$got\" != \"10\" ]]; then status=BROKEN; fail=1; fi printf ' %-34s ZADD GT 3 -> %-5s (want 10 ) %s\\n' \"$count members\" \"$got\" \"$status\" C DEL \"$key\" >/dev/null done echo \"--- NX on a 33-byte member, for contrast ---\" key=\"nx$RANDOM\"; M=\"$(printf 'a%.0s' {1..33})\" C DEL \"$key\" >/dev/null C ZADD \"$key\" 10 \"$M\" >/dev/null C ZADD \"$key\" NX 3 \"$M\" >/dev/null got=$(C ZSCORE \"$key\" \"$M\" | tr -d '\\r') printf ' %-34s ZADD NX 3 -> %-5s (want 10 ) %s\\n' \"33-byte member\" \"$got\" \\ \"$([[ \"$got\" == 10 ]] && echo OK || echo BROKEN)\" C DEL \"$key\" >/dev/null docker rm -f \"$NAME\" >/dev/null 2>&1 echo [[ $fail -eq 0 ]] && echo \"RESULT: all GT/LT clamps held\" || echo \"RESULT: GT/LT ignored in some encodings\" exit $fail ``` ## Observed output Dragonfly v1.40.1 (identical on v1.39.0): ``` server: redis_version:7.4.0 dragonfly_version:df-v1.40.1 --- member length --- 1-byte member ZADD GT 3 -> 10 (want 10 ) OK 32-byte member ZADD GT 3 -> 10 (want 10 ) OK 33-byte member ZADD GT 3 -> 3 (want 10 ) BROKEN 33-byte member ZADD LT 10 -> 10 (want 3 ) BROKEN --- member count (all members 2 bytes) --- 128 members ZADD GT 3 -> 10 (want 10 ) OK 129 members ZADD GT 3 -> 3 (want 10 ) BROKEN --- NX on a 33-byte member, for contrast --- 33-byte member ZADD NX 3 -> 10 (want 10 ) OK RESULT: GT/LT ignored in some encodings ``` Redis 7.4.10, same script: ``` server: redis_version:7.4.10 --- member length --- 1-byte member ZADD GT 3 -> 10 (want 10 ) OK 32-byte member ZADD GT 3 -> 10 (want 10 ) OK 33-byte member ZADD GT 3 -> 10 (want 10 ) OK 33-byte member ZADD LT 10 -> 3 (want 3 ) OK --- member count (all members 2 bytes) --- 128 members ZADD GT 3 -> 10 (want 10 ) OK 129 members ZADD GT 3 -> 10 (want 10 ) OK --- NX on a 33-byte member, for contrast --- 33-byte member ZADD NX 3 -> 10 (want 10 ) OK RESULT: all GT/LT clamps held ``` ## Expected behaviour Per the `ZADD` contract, `GT` updates an existing member only if the new score is greater than the current one, and `LT` only if it is less. Neither prevents inserting an absent member. This should hold regardless of the internal encoding. ## Environment - Dragonfly `v1.39.0` and `v1.40.1`, official images, default flags plus `--logtostderr` - Docker on macOS (arm64) - Reference: `redis:7.4-alpine` (7.4.10), default config ## Why this matters `ZADD GT`/`LT` is the only native atomic max/min in the Redis API, so it is the natural primitive for tracking running extrema without a read-modify-write or a Lua script. Because the flag is dropped silently rather than rejected, the failure surfaces as plausible-looking but wrong data — a stored extremum becomes \"the most recently written value\" — and only for keys that happen to have grown past a threshold. There is no error and no metric to alert on. Small smoke tests will pass, which makes this easy to adopt and hard to detect: we validated the primitive with short members on an empty key, built on it, and only caught the problem when a concurrency test on realistic key shapes reported a minimum of 919.5 where the true minimum was 81. Rejecting GT/LT with an error on unsupported encodings would at least be safe, but matching Redis semantics is obviously preferable.",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8089",
+        "createdAt": "2026-08-15T10:44:05Z",
+        "updatedAt": "2026-08-15T16:11:29Z",
+        "timestamp": "2026-08-15T16:11:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "dbwcanalhas",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2cf9319b93724643b3d0",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8088",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8088",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(server): probe heterogeneous blocking waiters instead of aborting…",
+        "text": "## Summary `BlockingController` keeps one FIFO queue per `(db, key)` shared by *all* blocking commands watching that key. `NotifyWatchQueue()` only checked the front waiter: when its checker returned `kKeyNotFound` (e.g. `BLPOP`/`BZPOP*`/`BLMPOP` on a missing key), the scan aborted entirely and the one-shot wake event was cleared, so any *later* waiter in the same queue, from a different command family, was never checked at all. Concretely: a client blocked on `XREADGROUP` queued behind an earlier `BLPOP` waiter on the same key would never receive its `NOGROUP` error when the key was deleted. It stayed blocked indefinitely, only released later by an unrelated mutation of the key. ## Fix `NotifyWatchQueue` no longer aborts the whole scan on `kKeyNotFound`. It now tracks the checker (command family) that reported the key missing, and only fast-skips *later* waiters sharing that exact checker, this preserves the O (1)-per-item short-circuit from #7225 for the common homogeneous case (many `BLPOP` waiters on one absent key). Waiters from a different command family (e.g. `XREADGROUP` sharing a queue with `BLPOP`) are still probed individually, so they get the correct, immediate result instead of being hidden behind an unrelated waiter's outcome. ## Test plan - [x] New regression test `BlockingControllerTest.NotifyWatchQueueHeterogeneousCheckers`- two waiters with different checker types on one key's queue; the first reports `kKeyNotFound`, and the test asserts the second is still probed. - [x] Existing `BlockingControllerTest.NotifyWatchQueueFastPathOnAbsentKey` (the #7225 perf regression test) still passes unmodified, same-checker-type fast path is preserved. - [x] `blocking_controller_test`, `stream_family_test`, `list_family_test`, `zset_family_test` all passes. - [x] `pre-commit` (clang-format et al.) clean. Fixes #8067",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8088",
+        "createdAt": "2026-08-14T16:38:32Z",
+        "updatedAt": "2026-08-15T16:06:07Z",
+        "timestamp": "2026-08-15T16:06:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "Shikha-code36",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:641dc96ef9dde09e658b",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8091",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8091",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(zset): honor GT/LT flags for skiplist-encoded sorted sets",
+        "text": "## Summary `ZADD ... GT` and `ZADD ... LT` were silently ignored once a sorted set left listpack encoding (i.e. once it had a member longer than 32 bytes, or more than 128 members). The score was overwritten unconditionally, as if the command were a plain `ZADD`, with no error. Root cause: the GT/LT clamp check exists in the listpack path (`ZsetAdd` in `zset_family.cc`) but was missing entirely from the skiplist path (`SortedMap::AddElem` in `sorted_map.cc`), which just updated the score whenever the element already existed. ## Fix Add the same GT/LT clamp to `SortedMap::AddElem`: if `LT` and the new score isn't lower, or `GT` and the new score isn't higher, treat the update as a no-op (matching the listpack path and Redis semantics). ## Test plan - Added `ZSetFamilyTest.AddGtLtSkiplist`, using a 33-byte member to force skiplist encoding immediately, covering both GT and LT in both the no-op and update directions. - `ninja zset_family_test && ./zset_family_test --gtest_filter='*GtLt*:*Add*'` — all 5 tests pass. - `pre-commit` clang-format check passes on both changed files. Fixes #8089",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8091",
+        "createdAt": "2026-08-15T15:03:25Z",
+        "updatedAt": "2026-08-15T15:05:37Z",
+        "timestamp": "2026-08-15T15:05:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "Shikha-code36",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c500c639f2c250d6b514",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:7984",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:7984",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(geo): add GEOSEARCHSTORE command",
+        "text": "<!-- **Commits Must Be Signed and Your PR title must conform to the conventional commit spec** * See: https://github.com/dragonflydb/dragonfly/blob/main/CONTRIBUTING.md * Please follow the section on `pre-commit hooks`, a linter will validate before you push Example PR Title: <type>(<scope>)!: <description> * `type` = bug, chore, feat, fix, docs, build, style, refactor, perf, test * `!` = OPTIONAL: signals a breaking change * `scope` = Optional when `type` is \"chore\" or \"docs\" * `description` = short description of the change Examples: * chore(examples): Clarify `docker` usage #120 * docs(readme): Fix Example Links #121 * feat(ingest)!: Add new ingest #122 * fix(ingest): Refactor for loop to list comprehension #123 --> Adds GEOSEARCHSTORE (dest + src keys, same search options as GEOSEARCH, optional STOREDIST). Most of the work was already in GeoSearchStoreGeneric() via GEORADIUS ... STORE — this wires up the dedicated command and parser. Closes #3883. Also fixed a couple of Redis mismatches in the shared store/search path: - STORE when the source key is missing now returns 0 and clears the dest key (was an empty array) - COUNT without ASC/DESC now defaults to ASC, same as Redis Tests in geo_family_test.cc. Ran geo_family_test locally + manual redis-cli checks.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/7984",
+        "createdAt": "2026-08-03T03:51:25Z",
+        "updatedAt": "2026-08-15T13:17:22Z",
+        "timestamp": "2026-08-15T13:17:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [],
+        "author": "rounaknandanwar",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:60afab409a5483a7ebc4",
+      "signalId": "github:dragonflydb/dragonfly:issue:8090",
+      "event": "discovered",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8090",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "test_heartbeat_eviction_propagation",
+        "text": "Automated regression triage opened this issue. - Test: `dragonfly/replication_specific_test.py::test_heartbeat_eviction_propagation[df_factory0]` - Backend: iouring - Commit: 05abfddc5d90733369aaa7f74526870e573653aa - Run: https://github.com/dragonflydb/dragonfly/actions/runs/31883683950 - Marker: run/31883683950/attempt/1 ``` Reason: AssertionError: assert equals failed _______________ test_heartbeat_eviction_propagation[df_factory0] _______________ df_factory = Factory({}) async def test_heartbeat_eviction_propagation(df_factory): master, [replica], c_master, [c_replica] = await setup_replication( df_factory, master_args={ \"proactor_threads\": 1, \"cache_mode\": \"true\", \"maxmemory\": \"256mb\", \"enable_heartbeat_eviction\": \"false\", }, replica_args={\"proactor_threads\": 1}, connect=False, ) # fill the master to use about 233mb > 256mb * 0.9, which will trigger heartbeat eviction. await c_master.execute_command(\"DEBUG POPULATE 233 size 1048576\") await start_replication(c_replica, master.port) # now enable heart beat eviction await c_master.execute_command(\"CONFIG SET enable_heartbeat_eviction true\") while True: info = await c_master.info(\"stats\") evicted_1 = info[\"evicted_keys\"] time.sleep(2) info = await c_master.info(\"stats\") evicted_2 = info[\"evicted_keys\"] if evicted_2 == evicted_1: break else: print(\"waiting for eviction to finish...\", end=\"\\r\", flush=True) await check_all_replicas_finished([c_replica], c_master) keys_master = await c_master.execute_command(\"keys *\") keys_replica = await c_replica.execute_command(\"keys *\") > assert set(keys_master) == set(keys_replica) E AssertionError: assert equals failed E 'size:206', 'size:206', E 'size:207', 'size:207', E 'size:208', 'size:208', E 'size:209', 'size:209', E 'size:21', 'size:21', E 'size:210', E 'size:212', 'size:212', E 'size:213', 'size:213', E 'size:214', 'size:214', E 'size:215', 'size:215', E 'size:216', 'size:216', c_master = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=40243,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> c_replica = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=35731,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_factory = Factory({}) evicted_1 = 18 evicted_2 = 18 info = {'batch_read_commands_bytes': 0, 'batch_read_commands_total': 0, 'batch_write_commands_bytes': 0, 'batch_write_commands_total': 0, ...} keys_master = ['size:222', 'size:18', 'size:163', 'size:186', 'size:24', 'size:57', ...] keys_replica = ['size:222', 'size:18', 'size:163', 'size:186', 'size:24', 'size:57', ...] master = :40243 replica = :35731 dragonfly/replication_specific_test.py:151: AssertionError ----------------------------- Captured stdout call ----------------------------- waiting for eviction to finish... ----------------------------- Captured stderr call ----------------------------- [2026-08-15 12:25:39,708: INFO/MainProcess] Starting /__w/dragonfly/dragonfly/build/dragonfly --proactor_threads=1 --cache_mode=true --maxmemory=256mb --enable_heartbeat_eviction=false --dbfilename= --noversion_check --vmodule=dragonfly_connection=1,db_slice=1,listener_interface=1,main_service=1,rdb_save=1,rdb_load=1,rep ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8090",
+        "createdAt": "2026-08-15T12:40:01Z",
+        "updatedAt": "2026-08-15T12:40:11Z",
+        "timestamp": "2026-08-15T12:40:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "failing-test",
+          "iouring"
+        ],
+        "author": "dragonclaw-dragonflydb",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b6ba00d7454acfba1847",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8080",
+      "event": "changed",
+      "observedAt": "2026-08-16T02:35:31.986278Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8080",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(server): lower table growth margin default",
+        "text": "## Summary - Lower the default `table_growth_margin` from `0.4` to `0.15`. - Reduce the conservative free-capacity estimate before allowing table growth. ## Test plan - `git diff --check` passed. - `ninja -C build-dbg dragonfly` reached and compiled `src/server/db_slice.cc`; the full build was blocked by the host filesystem running out of space.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8080",
+        "createdAt": "2026-08-14T05:28:30Z",
+        "updatedAt": "2026-08-15T05:36:16Z",
+        "timestamp": "2026-08-15T05:36:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "romange",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}
