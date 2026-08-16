@@ -201,16 +201,6 @@ repo_groups:
   coding-agent-infrastructure:
     name: Coding-Agent Infrastructure
     repos:
-      - id: claude-code
-        repo: anthropics/claude-code
-        name: Claude Code
-        paginated: true
-        keywords: [Claude Code]
-      - id: codex
-        repo: openai/codex
-        name: Codex
-        paginated: true
-        keywords: [OpenAI Codex]
       - id: opencode
         repo: anomalyco/opencode
         name: OpenCode
