@@ -1,0 +1,155 @@
+{
+  "version": 4,
+  "date": "2026-08-17",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "redpanda",
+    "repo": "redpanda-data/redpanda",
+    "name": "Redpanda",
+    "keywords": [
+      "Redpanda"
+    ]
+  },
+  "context": {
+    "repository": "redpanda-data/redpanda",
+    "url": "https://github.com/redpanda-data/redpanda",
+    "description": "Redpanda is a streaming data platform for developers. Kafka API compatible. 10x faster. No ZooKeeper. No JVM!",
+    "homepage": "https://redpanda.com",
+    "language": "C++",
+    "topics": [
+      "containers",
+      "cpp",
+      "event-driven",
+      "go",
+      "kafka",
+      "kubernetes",
+      "microservices",
+      "realtime",
+      "redpanda",
+      "seastar",
+      "storage-engine",
+      "stream-processing",
+      "streaming"
+    ],
+    "defaultBranch": "dev",
+    "stars": 12452,
+    "forks": 786,
+    "openIssues": 618,
+    "archived": false,
+    "collectedAt": "2026-08-17T02:35:20.476385+00:00"
+  },
+  "news": {
+    "repository": "redpanda-data/redpanda",
+    "collectedAt": "2026-08-17T02:35:20.476385+00:00",
+    "latestRelease": {
+      "repository": "redpanda-data/redpanda",
+      "tag": "v26.1.16",
+      "title": "v26.1.16",
+      "url": "https://github.com/redpanda-data/redpanda/releases/tag/v26.1.16",
+      "publishedAt": "2026-08-13T19:25:19Z",
+      "notes": "## Bug Fixes\r\n* Fixed a crash that could occur when removing a partition with a very large number of log segments, e.g. during partition rebalancing. by @pgellert in [#31505](https://github.com/redpanda-data/redpanda/pull/31505)\r\n* Fixed a crash where a snapshot write failing on a full disk (ENOSPC) aborted the node with a misleading \"snapshot writer has to be closed\" assertion instead of surfacing the I/O error. by @nvartolomei in [#31186](https://github.com/redpanda-data/redpanda/pull/31186)\r\n* Fixed a double-free / use-after-free in c-ares query-completion handling (CVE-2026-33630). by @bartoszpiekny-redpanda in [#31486](https://github.com/redpanda-data/redpanda/pull/31486)\r\n* Fixed a race in the internal Kafka client where a concurrent request on a freshly established SASL connection could be sent before authentication finished, causing the broker to drop the connection. by @nvartolomei in [#31192](https://github.com/redpanda-data/redpanda/pull/31192)\r\n* [#31550](https://github.com/redpanda-data/redpanda/issues/31550) `rpk connect upgrade` no longer fails to determine the currently-installed Redpanda Connect version when that version has a segment of three or more digits, which had blocked upgrading any Connect install since 4.100.0. by @JakeSCahill in [#31551](https://github.com/redpanda-data/redpanda/pull/31551)\r\n\r\n**Full Changelog**: https://github.com/redpanda-data/redpanda/compare/v26.1.15...v26.1.16",
+      "highlights": [
+        "Bug Fixes",
+        "Fixed a crash that could occur when removing a partition with a very large number of log segments, e.g. during partition rebalancing. by @pgellert in #31505",
+        "Fixed a crash where a snapshot write failing on a full disk (ENOSPC) aborted the node with a misleading \"snapshot writer has to be closed\" assertion instead of surfacing the I/O error. by @nvartolomei in #31186",
+        "Fixed a double-free / use-after-free in c-ares query-completion handling (CVE-2026-33630). by @bartoszpiekny-redpanda in #31486",
+        "Fixed a race in the internal Kafka client where a concurrent request on a freshly established SASL connection could be sent before authentication finished, causing the broker to drop the connection. by @nvartolomei in #31192",
+        "31550 rpk connect upgrade no longer fails to determine the currently-installed Redpanda Connect version when that version has a segment of three or more digits, which had blocked upgrading any Connect install since 4.100.0. by @JakeSCahill "
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "redpanda-data/redpanda",
+        "kind": "milestone",
+        "title": "v26.2.x-next",
+        "url": "https://github.com/redpanda-data/redpanda/milestone/329",
+        "progress": 90,
+        "openIssues": 7,
+        "closedIssues": 60
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-17T02:35:14.463156Z",
+      "since": "2026-08-16T02:35:14.463156Z",
+      "observedCount": 1,
+      "changedCount": 1
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:redpanda-data/redpanda:pull_request:31579",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "redpanda-data/redpanda",
+      "kind": "pull_request",
+      "title": "[CORE-16806] - KIP-848: assignor interface and the homogeneous uniform assignor",
+      "text": "<!-- See https://github.com/redpanda-data/redpanda/blob/dev/CONTRIBUTING.md#pull-request-body for more details and examples of what is expected in a PR body. Content in this top section is REQUIRED. Describe, in plain language, the motivation behind the change (bug fix, feature, improvement) in this PR and how the included commits address it. Add the GitHub keyword `Fixes` to link to bug(s) this PR will fix, e.g. Fixes #ISSUE-NUMBER, Fixes #ISSUE-NUMBER, ... If this PR is a backport, link to the original with `Backport of PR`, e.g. Backport of PR #PR-NUMBER --> KIP-848 moves partition assignment from the consumers into the group coordinator. This PR adds the assignor interface and the uniform assignor for homogeneous groups, where every member subscribes to the same topics. - `consumer_group_assignor`: the interface. A `group_spec` carries the members with their subscriptions and current assignments, and a `topic_describer` supplies partition counts. The assignor returns a `group_assignment` or an `assignor_error`. - `uniform_assignor`: the same algorithm as Kafka's `UniformHomogeneousAssignmentBuilder`. Partitions split evenly across the members, and every member keeps as much of its current assignment as the even split allows. - tests: 17 cases over the even split, stickiness across membership and subscription changes, and the failure paths. - consumer_group_assignor_rpbench measures the coordinator-shard cost of computing a target assignment, over four group scenarios at three sizes. The assignor has no callers yet: the group coordinator wires it in with the ConsumerGroupHeartbeat path. A heterogeneous group asserts; that pass comes in a follow-up PR. ## Backports Required <!-- Checking at least one of the checkboxes is REQUIRED if this PR is not a backport. --> - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none <!-- If the changes in this PR do not need to be mentioned in the release notes, then don't add a sub-section and simply list `none`, e.g. * none Otherwise, adding a sub-section or `none` is REQUIRED if the PR is not a backport PR. If this is a backport PR, adding contents to this section will override the release notes section inherited from the original PR to dev. Add one or more of the sub-sections with a short description bullet point of the change, e.g. ### Bug Fixes * Short description of the bug fix if this is a PR to `dev` branch. ### Features * Short description of the feature. Explain how to configure. ### Improvements * Short description of how this PR improves existing behavior. -->",
+      "url": "https://github.com/redpanda-data/redpanda/pull/31579",
+      "createdAt": "2026-08-14T00:32:55Z",
+      "updatedAt": "2026-08-16T20:00:56Z",
+      "timestamp": "2026-08-16T20:00:56Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "area/build",
+        "area/redpanda",
+        "claude-review"
+      ],
+      "author": "oleiman",
+      "state": "open",
+      "assignees": [
+        "oleiman"
+      ],
+      "change": "updated"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:3d5a28d471140375e3a3",
+      "signalId": "github:redpanda-data/redpanda:pull_request:31579",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:redpanda-data/redpanda:pull_request:31579",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "redpanda-data/redpanda",
+        "kind": "pull_request",
+        "title": "[CORE-16806] - KIP-848: assignor interface and the homogeneous uniform assignor",
+        "text": "<!-- See https://github.com/redpanda-data/redpanda/blob/dev/CONTRIBUTING.md#pull-request-body for more details and examples of what is expected in a PR body. Content in this top section is REQUIRED. Describe, in plain language, the motivation behind the change (bug fix, feature, improvement) in this PR and how the included commits address it. Add the GitHub keyword `Fixes` to link to bug(s) this PR will fix, e.g. Fixes #ISSUE-NUMBER, Fixes #ISSUE-NUMBER, ... If this PR is a backport, link to the original with `Backport of PR`, e.g. Backport of PR #PR-NUMBER --> KIP-848 moves partition assignment from the consumers into the group coordinator. This PR adds the assignor interface and the uniform assignor for homogeneous groups, where every member subscribes to the same topics. - `consumer_group_assignor`: the interface. A `group_spec` carries the members with their subscriptions and current assignments, and a `topic_describer` supplies partition counts. The assignor returns a `group_assignment` or an `assignor_error`. - `uniform_assignor`: the same algorithm as Kafka's `UniformHomogeneousAssignmentBuilder`. Partitions split evenly across the members, and every member keeps as much of its current assignment as the even split allows. - tests: 17 cases over the even split, stickiness across membership and subscription changes, and the failure paths. - consumer_group_assignor_rpbench measures the coordinator-shard cost of computing a target assignment, over four group scenarios at three sizes. The assignor has no callers yet: the group coordinator wires it in with the ConsumerGroupHeartbeat path. A heterogeneous group asserts; that pass comes in a follow-up PR. ## Backports Required <!-- Checking at least one of the checkboxes is REQUIRED if this PR is not a backport. --> - [x] none - not a bug fix - [ ] none - this is a backport - [ ] none - issue does not exist in previous branches - [ ] none - papercut/not impactful enough to backport - [ ] v26.2.x - [ ] v26.1.x - [ ] v25.3.x ## Release Notes * none <!-- If the changes in this PR do not need to be mentioned in the release notes, then don't add a sub-section and simply list `none`, e.g. * none Otherwise, adding a sub-section or `none` is REQUIRED if the PR is not a backport PR. If this is a backport PR, adding contents to this section will override the release notes section inherited from the original PR to dev. Add one or more of the sub-sections with a short description bullet point of the change, e.g. ### Bug Fixes * Short description of the bug fix if this is a PR to `dev` branch. ### Features * Short description of the feature. Explain how to configure. ### Improvements * Short description of how this PR improves existing behavior. -->",
+        "url": "https://github.com/redpanda-data/redpanda/pull/31579",
+        "createdAt": "2026-08-14T00:32:55Z",
+        "updatedAt": "2026-08-16T20:00:56Z",
+        "timestamp": "2026-08-16T20:00:56Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "area/build",
+          "area/redpanda",
+          "claude-review"
+        ],
+        "author": "oleiman",
+        "state": "open",
+        "assignees": [
+          "oleiman"
+        ],
+        "change": "updated"
+      }
+    }
+  ]
+}

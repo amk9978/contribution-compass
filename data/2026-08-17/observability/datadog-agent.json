@@ -1,0 +1,1332 @@
+{
+  "version": 4,
+  "date": "2026-08-17",
+  "group": {
+    "id": "observability",
+    "name": "Observability & Reliability"
+  },
+  "repository": {
+    "id": "datadog-agent",
+    "repo": "DataDog/datadog-agent",
+    "name": "Datadog Agent",
+    "keywords": [
+      "Datadog Agent"
+    ]
+  },
+  "context": {
+    "repository": "DataDog/datadog-agent",
+    "url": "https://github.com/DataDog/datadog-agent",
+    "description": "Main repository for Datadog Agent",
+    "homepage": "https://docs.datadoghq.com/",
+    "language": "Go",
+    "topics": [
+      "apm-agent",
+      "apm-instrumentation",
+      "datadog",
+      "distributed-tracing",
+      "go",
+      "logging",
+      "metrics",
+      "monitoring",
+      "observability",
+      "open-telemetry",
+      "otel",
+      "profiling",
+      "tracing"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 3702,
+    "forks": 1474,
+    "openIssues": 717,
+    "archived": false,
+    "collectedAt": "2026-08-17T02:35:18.692522+00:00"
+  },
+  "news": {
+    "repository": "DataDog/datadog-agent",
+    "collectedAt": "2026-08-17T02:35:18.692522+00:00",
+    "latestRelease": {
+      "repository": "DataDog/datadog-agent",
+      "tag": "7.82.1",
+      "title": "7.82.1",
+      "url": "https://github.com/DataDog/datadog-agent/releases/tag/7.82.1",
+      "publishedAt": "2026-08-10T15:37:55Z",
+      "notes": "# Agent\r\n\r\n### Prelude\r\n\r\nReleased on: 2026-08-11\r\n\r\n- Please refer to the [7.82.1 tag on integrations-core](https://github.com/DataDog/integrations-core/blob/master/AGENT_CHANGELOG.md#datadog-agent-version-7821) for the list of changes on the Core Checks\r\n\r\n### Bug Fixes\r\n\r\n- Windows: Fixed an issue where an explicit `DDAGENTUSER_KEEP_RIGHTS` or `DDAGENTUSER_NAME` value passed as an install argument to a Fleet Automation-triggered Windows Agent install/upgrade could be silently overridden by a stale fallback value (respectively from the registry and from the running service account).\r\n- Fix an issue where GPU monitoring could trigger a kernel panic on multi-GPU nodes with Hopper/Blackwell GPUs.\r\n\r\n# Datadog Cluster Agent\r\n\r\n### Prelude\r\n\r\nReleased on: 2026-08-11 Pinned to datadog-agent v7.82.1: [CHANGELOG](https://github.com/DataDog/datadog-agent/blob/main/CHANGELOG.rst#7821).\r\n",
+      "highlights": [
+        "Prelude",
+        "Please refer to the 7.82.1 tag on integrations-core for the list of changes on the Core Checks",
+        "Bug Fixes",
+        "Windows: Fixed an issue where an explicit DDAGENTUSERKEEPRIGHTS or DDAGENTUSERNAME value passed as an install argument to a Fleet Automation-triggered Windows Agent install/upgrade could be silently overridden by a stale fallback value (res",
+        "Fix an issue where GPU monitoring could trigger a kernel panic on multi-GPU nodes with Hopper/Blackwell GPUs."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "DataDog/datadog-agent",
+        "kind": "milestone",
+        "title": "Triage",
+        "url": "https://github.com/DataDog/datadog-agent/milestone/22",
+        "description": "",
+        "progress": 100,
+        "openIssues": 8,
+        "closedIssues": 2826
+      },
+      {
+        "repository": "DataDog/datadog-agent",
+        "kind": "milestone",
+        "title": "Release Maintenance",
+        "url": "https://github.com/DataDog/datadog-agent/milestone/127",
+        "description": "For PRs which aim at fixing release branch pipelines, not tied to a specific Agent release.",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 46
+      },
+      {
+        "repository": "DataDog/datadog-agent",
+        "kind": "milestone",
+        "title": "no-mile",
+        "url": "https://github.com/DataDog/datadog-agent/milestone/180",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 17
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-17T02:35:14.463156Z",
+      "since": "2026-08-16T02:35:14.463156Z",
+      "observedCount": 19,
+      "changedCount": 19
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:DataDog/datadog-agent:issue:33469",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "issue",
+      "title": "Dependency Dashboard",
+      "text": "This issue lists Renovate updates and detected dependencies. Read the [Dependency Dashboard](https://docs.renovatebot.com/key-concepts/dashboard/) docs to learn more.<br>[View this repository on the Mend.io Web Portal](https://developer.mend.io/github/DataDog/datadog-agent). ## Repository Problems These problems occurred while renovating this repository. [View logs](https://developer.mend.io//github/DataDog/datadog-agent). - ⚠️ WARN: Package lookup failures ## Deprecations / Replacements > [!WARNING] The following dependencies are either deprecated or have replacements available. | Datasource | Package | Replacement PR? | |------------|------|--------------| | nuget | [xunit](https://redirect.github.com/xunit/xunit) | ![Unavailable](https://img.shields.io/badge/unavailable-orange?style=flat-square) | ## Pending Approval The following branches are pending approval. To create them, click on a checkbox below. - [ ] <!-- approve-branch=renovate/github.com-alecthomas-participle-2.x -->Update module github.com/alecthomas/participle to v2 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-authorization-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/authorization/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-compute-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/compute/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-containerservice-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/containerservice/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-managedidentity-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/managedidentity/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-network-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/network/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-docker-sdk-v4-5.x -->Update module github.com/pulumi/pulumi-docker/sdk/v4 to v5 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-tls-sdk-v4-5.x -->Update module github.com/pulumi/pulumi-tls/sdk/v4 to v5 - [ ] <!-- approve-branch=renovate/github.com-sijms-go-ora-v2-3.x -->Update module github.com/sijms/go-ora/v2 to v3 - [ ] <!-- approve-branch=renovate/gitlab.com-gitlab-org-api-client-go-2.x -->Update module gitlab.com/gitlab-org/api/client-go to v2 - [ ] <!-- approve-branch=renovate/gopkg.in-datadog-dd-trace-go.v1-2.x -->Update module gopkg.in/DataDog/dd-trace-go.v1 to v2 - [ ] <!-- approve-all-pending-prs -->🔐 **Create all pending approval PRs at once** 🔐 ## Rate-Limited The following updates are currently rate-limited. To force their creation now, click on a checkbox below. - [ ] <!-- unlimit-branch=renovate/integrations-core-digest -->Update integrations-core digest to 05ce03c - [ ] <!-- unlimit-branch=renovate/linux-images-130951605.x -->Update dependency linux-images to v130951605 - [ ] <!-- unlimit-branch=renovate/linux-images-devcontainer-130951605.x -->Update dependency linux-images-devcontainer to v130951605 - [ ] <!-- unlimit-branch=renovate/windows-images-130951605.x -->Update dependency windows-images to v130951605 - [ ] <!-- unlimit-branch=renovate/github-actions -->Update github-actions (`DataDog/dd-sts-action`, `actions/checkout`, `aws-actions/configure-aws-credentials`, `docker/login-action`, `dtolnay/rust-toolchain`, `tcort/github-action-markdown-link-check`) - [ ] <!-- unlimit-branch=renovate/github.com-datadog-dd-trace-go-v2-2.x -->Update module github.com/DataDog/dd-trace-go/v2 to v2.9.2 - [ ] <!-- unlimit-branch=renovate/github.com-jarcoal-httpmock-1.x -->Update module github.com/jarcoal/httpmock to v1.4.2 - [ ] <!-- unlimit-branch=renovate/github.com-klauspost-compress-1.x -->Update module github.com/klauspost/compress to v1.19.2 - [ ] <!-- unlimit-branch=renovate/github.com-mattn-go-sqlite3-1.x -->Update module github.com/mattn/go-sqlite3 to v1.14.49 - [ ] <!-- unlimit-branch=renovate/github.com-pierrec-lz4-v4-4.x -->Update module github.com/pierrec/lz4/v4 to v4.1.28 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-random-sdk-v4-4.x -->Update module github.com/pulumi/pulumi-random/sdk/v4 to v4.21.1 - [ ] <!-- unlimit-branch=renovate/github.com-santhosh-tekuri-jsonschema-v6-6.x -->Update module github.com/santhosh-tekuri/jsonschema/v6 to v6.0.3 - [ ] <!-- unlimit-branch=renovate/github.com-vektra-mockery-v3-3.x -->Update module github.com/vektra/mockery/v3 to v3.7.2 - [ ] <!-- unlimit-branch=renovate/go.etcd.io-etcd-client-v2-2.x -->Update module go.etcd.io/etcd/client/v2 to v2.305.33 - [ ] <!-- unlimit-branch=renovate/go.temporal.io-api-1.x -->Update module go.temporal.io/api to v1.63.5 - [ ] <!-- unlimit-branch=renovate/clap-4.x-lockfile -->Update Rust crate clap to v4.6.6 - [ ] <!-- unlimit-branch=renovate/dd_sds-0.x -->Update Rust crate dd_sds to v0.1.0-20260807-dd8be015454d - [ ] <!-- unlimit-branch=renovate/thiserror-2.x-lockfile -->Update Rust crate thiserror to v2.0.20 - [ ] <!-- unlimit-branch=renovate/packaging-26.x -->Update dependency packaging to v26.3 - [ ] <!-- unlimit-branch=renovate/cloud.google.com-go-compute-1.x -->Update module cloud.google.com/go/compute to v1.66.0 - [ ] <!-- unlimit-branch=renovate/code.cloudfoundry.org-bbs-1.x -->Update module code.cloudfoundry.org/bbs to v1.12.0 - [ ] <!-- unlimit-branch=renovate/code.cloudfoundry.org-lager-v3-3.x -->Update module code.cloudfoundry.org/lager/v3 to v3.81.0 - [ ] <!-- unlimit-branch=renovate/github.com-apache-arrow-go-v18-18.x -->Update module github.com/apache/arrow-go/v18 to v18.7.0 - [ ] <!-- unlimit-branch=renovate/github.com-aquasecurity-trivy-0.x -->Update module github.com/aquasecurity/trivy to v0.73.0 - [ ] <!-- unlimit-branch=renovate/github.com-containerd-containerd-v2-2.x -->Update module github.com/containerd/containerd/v2 to v2.3.3 - [ ] <!-- unlimit-branch=renovate/github.com-datadog-datadog-api-client-go-v2-2.x -->Update module github.com/DataDog/datadog-api-client-go/v2 to v2.63.0 - [ ] <!-- unlimit-branch=renovate/github.com-datadog-dd-trace-go-contrib-net-http-v2-2.x -->Update module github.com/DataDog/dd-trace-go/contrib/net/http/v2 to v2.9.2 - [ ] <!-- unlimit-branch=renovate/github.com-datadog-orchestrion-1.x -->Update module github.com/DataDog/orchestrion to v1.12.0 - [ ] <!-- unlimit-branch=renovate/github.com-docker-cli-29.x -->Update module github.com/docker/cli to v29.7.2+incompatible - [ ] <!-- unlimit-branch=renovate/github.com-envoyproxy-gateway-1.x -->Update module github.com/envoyproxy/gateway to v1.8.3 - [ ] <!-- unlimit-branch=renovate/github.com-google-cel-go-0.x -->Update module github.com/google/cel-go to v0.31.0 - [ ] <!-- unlimit-branch=renovate/github.com-open-policy-agent-opa-1.x -->Update module github.com/open-policy-agent/opa to v1.19.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-aws-sdk-v7-7.x -->Update module github.com/pulumi/pulumi-aws/sdk/v7 to v7.41.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-awsx-sdk-v3-3.x -->Update module github.com/pulumi/pulumi-awsx/sdk/v3 to v3.8.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-eks-sdk-v4-4.x -->Update module github.com/pulumi/pulumi-eks/sdk/v4 to v4.3.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-gcp-sdk-v9-9.x -->Update module github.com/pulumi/pulumi-gcp/sdk/v9 to v9.33.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-sdk-v3-3.x -->Update module github.com/pulumi/pulumi/sdk/v3 to v3.256.0 - [ ] <!-- unlimit-branch=renovate/github.com-rabbitmq-amqp091-go-1.x -->Update module github.com/rabbitmq/amqp091-go to v1.13.0 - [ ] <!-- unlimit-branch=renovate/github.com-redis-go-redis-v9-9.x -->Update module github.com/redis/go-redis/v9 to v9.22.0 - [ ] <!-- unlimit-branch=renovate/go.temporal.io-sdk-1.x -->Update module go.temporal.io/sdk to v1.47.0 - [ ] <!-- unlimit-branch=renovate/sigs.k8s.io-gateway-api-1.x -->Update module sigs.k8s.io/gateway-api to v1.6.1 - [ ] <!-- unlimit-branch=renovate/redis-7.x -->Update redis Docker tag to v7.4 - [ ] <!-- unlimit-branch=renovate/ureq-3.x-lockfile -->Update Rust crate ureq to v3.4.0 - [ ] <!-- unlimit-branch=renovate/confluentinc-cp-kafka-8.x -->Update confluentinc/cp-kafka Docker tag to v8 - [ ] <!-- unlimit-branch=renovate/major-github-actions -->Update github-actions (major) (`actions/cache`, `actions/labeler`, `actions/setup-go`, `actions/setup-node`, `actions/setup-python`, `actions/stale`, `slackapi/slack-github-action`) - [ ] <!-- unlimit-branch=renovate/redis-8.x -->Update redis Docker tag to v8 - [ ] <!-- create-all-rate-limited-prs -->🔐 **Create all rate-limited PRs at once** 🔐 ## Pending Status Checks The following updates await pending status checks. To force their creation now, click on a checkbox below. - [ ] <!-- approvePr-branch=renovate/aws-sdk-go-v2 -->Update aws-sdk-go-v2 (`github.com/aws/aws-sdk-go-v2`, `github.com/aws/aws-sdk-go-v2/config`, `github.com/aws/aws-sdk-go-v2/credentials`, `github.com/aws/aws-sdk-go-v2/service/ec2`, `github.com/aws/aws-sdk-go-v2/service/ecr`, `github.com/aws/aws-sdk-go-v2/service/ecs`, `github.com/aws/aws-sdk-go-v2/service/eks`, `github.com/aws/aws-sdk-go-v2/service/rds`, `github.com/aws/aws-sdk-go-v2/service/s3`, `github.com/aws/aws-sdk-go-v2/service/secretsmanager`, `github.com/aws/aws-sdk-go-v2/service/ssm`, `github.com/aws/aws-sdk-go-v2/service/sts`) - [ ] <!-- approvePr-branch=renovate/confluentinc-cp-kafka-7.x -->Update confluentinc/cp-kafka Docker tag to v7.9.9 - [ ] <!-- approvePr-branch=renovate/rules_rs-0.x -->Update dependency rules_rs to v0.0.104 - [ ] <!-- approvePr-branch=renovate/docker.io-library-golang-1.x -->Update docker.io/library/golang Docker tag to v1.26.6 - [ ] <!-- approvePr-branch=renovate/github.com-cri-o-ocicni-0.x -->Update module github.com/cri-o/ocicni to v0.5.1 - [ ] <!-- approvePr-branch=renovate/github.com-go-delve-delve-1.x -->Update module github.com/go-delve/delve to v1.27.1 - [ ] <!-- approvePr-branch=renovate/github.com-google-go-containerregistry-0.x -->Update module github.com/google/go-containerregistry to v0.21.9 - [ ] <!-- approvePr-branch=renovate/franz-go -->Update module github.com/twmb/franz-go to v1.21.6 - [ ] <!-- approvePr-branch=renovate/google.golang.org-protobuf-1.x -->Update module google.golang.org/protobuf to v1.36.12 - [ ] <!-- approvePr-branch=renovate/http-body-util-0.x-lockfile -->Update Rust crate http-body-util to v0.1.5 - [ ] <!-- approvePr-branch=renovate/uuid-1.x-lockfile -->Update Rust crate uuid to v1.24.1 - [ ] <!-- approvePr-branch=renovate/hatchling-1.x -->Update dependency hatchling to v1.32.0 - [ ] <!-- approvePr-branch=renovate/rules_go-0.x -->Update dependency rules_go to v0.63.0 - [ ] <!-- approvePr-branch=renovate/rules_python-2.x -->Update dependency rules_python to v2.3.1 - [ ] <!-- approvePr-branch=renovate/azure-sdk-for-go-monorepo -->Update module github.com/Azure/azure-sdk-for-go/sdk/azcore to v1.23.0 - [ ] <!-- approvePr-branch=renovate/github.com-sirupsen-logrus-1.x -->Update module github.com/sirupsen/logrus to v1.10.0 - [ ] <!-- approvePr-branch=renovate/public.ecr.aws-docker-library-alpine-3.x -->Update public.ecr.aws/docker/library/alpine Docker tag to v3.24.1 - [ ] <!-- approvePr-branch=renovate/npm-sentry-dotagents-3.x -->Update dependency npm:@sentry/dotagents to v3 - [ ] <!-- approvePr-branch=renovate/major-xunit-dotnet-monorepo -->Update dependency xunit.analyzers to v2 - [ ] <!-- approvePr-branch=renovate/postgres-18.x -->Update postgres Docker tag to v18 --- > [!WARNING] > Renovate failed to look up the following dependencies: `Failed to look up go package github.com/mdlayher/vsock: no-result`. > > Files affected: `comp/core/ipc/httphelpers/go.mod`, `comp/core/tagger/impl-remote/go.mod`, `go.mod`, `pkg/util/grpc/go.mod`, `pkg/util/system/go.mod` --- ## Open The following updates have all been created. To force a retry/rebase of any, click on a checkbox below. - [ ] <!-- rebase-branch=renovate/go-github.com-datadog-dd-trace-go-v2-vulnerability -->[Update module github.com/DataDog/dd-trace-go/v2 to v2.8.1 [SECURITY]](../pull/53708) - [ ] <!-- rebase-branch=renovate/datadog-dd-apm-library-python-4.x -->[Update dependency DataDog/dd-apm-library-python to v4.13.1](../pull/54940) - [ ] <!-- rebase-branch=renovate/datadog-datadog-agent-dev-0.x -->[Update dependency DataDog/datadog-agent-dev to v0.38.0](../pull/52555) - [ ] <!-- rebase-branch=renovate/sentry-dotagents-3.x -->[Update dependency @sentry/dotagents to v3](../pull/54802) - [ ] <!-- rebase-branch=renovate/gawk-5.x -->[Update dependency gawk to v5.4.0](../pull/52963) - [ ] <!-- rebase-branch=renovate/kubernetes-monorepo -->[Update kubernetes monorepo to v0.36.3](../pull/51833) (`k8s.io/api`, `k8s.io/apiextensions-apiserver`, `k8s.io/apimachinery`, `k8s.io/cli-runtime`, `k8s.io/client-go`, `k8s.io/component-base`, `k8s.io/cri-api`, `k8s.io/cri-client`, `k8s.io/kube-aggregator`, `k8s.io/kubectl`, `k8s.io/kubelet`, `k8s.io/metrics`) - [ ] <!-- rebase-branch=renovate/github.com-godror-godror-0.x -->[Update module github.com/godror/godror to v0.51.0](../pull/53235) - [ ] <!-- rebase-branch=renovate/k8s.io-autoscaler-vertical-pod-autoscaler-1.x -->[Update module k8s.io/autoscaler/vertical-pod-autoscaler to v1.7.1](../pull/51852) - [ ] <!-- rebase-branch=renovate/k8s.io-kube-state-metrics-v2-2.x -->[Update module k8s.io/kube-state-metrics/v2 to v2.19.1](../pull/52895) - [ ] <!-- rebase-branch=renovate/sigs.k8s.io-custom-metrics-apiserver-1.x -->[Update module sigs.k8s.io/custom-metrics-apiserver to v1.36.0](../pull/52282) - [ ] <!-- rebase-branch=renovate/docker.io-library-ubuntu-26.x -->[Update docker.io/library/ubuntu Docker tag to v26](../pull/52153) - [ ] <!-- rebase-branch=renovate/docker.io-ubuntu-26.x -->[Update docker.io/ubuntu Docker tag to v26](../pull/50840) - [ ] <!-- rebase-branch=renovate/github.com-cloudfoundry-community-go-cfclient-v2-3.x -->[Update module github.com/cloudfoundry-community/go-cfclient/v2 to v3](../pull/53622) - [ ] <!-- rebase-branch=renovate/github.com-netsampler-goflow2-2.x -->[Update module github.com/netsampler/goflow2 to v2](../pull/53239) - [ ] <!-- rebase-branch=renovate/major-franz-go -->[Update module github.com/twmb/franz-go/pkg/kmsg to v2](../pull/53824) - [ ] <!-- rebase-all-open-prs -->**Click on this checkbox to rebase all open PRs at once** ## PR Closed (Blocked) The following updates are blocked by an existing closed PR. To recreate the PR, click on a checkbox below. - [ ] <!-- recreate-branch=renovate/github.com-aws-karpenter-provider-aws-1.x -->[Update module github.com/aws/karpenter-provider-aws to v1.14.0](../pull/53819) - [ ] <!-- recreate-branch=renovate/github.com-bazelbuild-rules_go-0.x -->[Update module github.com/bazelbuild/rules_go to v0.62.0](../pull/54057) - [ ] <!-- recreate-branch=renovate/gopkg.in-datadog-dd-trace-go.v1-1.x -->[Update module gopkg.in/DataDog/dd-trace-go.v1 to v1.74.8](../pull/52894) - [ ] <!-- recreate-branch=renovate/sigs.k8s.io-karpenter-1.x -->[Update module sigs.k8s.io/karpenter to v1.14.0](../pull/53820) - [ ] <!-- recreate-branch=renovate/chef-sugar-5.x -->[Update dependency chef-sugar to v5](../pull/51540) - [ ] <!-- recreate-branch=renovate/invoke-3.x -->[Update dependency invoke to v3](../pull/50838) - [ ] <!-- recreate-branch=renovate/code.cloudfoundry.org-bbs-models-1.x -->[Update module code.cloudfoundry.org/bbs/models to v1](../pull/53823) - [ ] <!-- recreate-branch=renovate/github.com-santhosh-tekuri-jsonschema-v5-6.x -->[Update module github.com/santhosh-tekuri/jsonschema/v5 to v6](../pull/54069) - [ ] <!-- recreate-branch=renovate/go.etcd.io-etcd-client-v2-3.x -->[Update module go.etcd.io/etcd/client/v2 to v3](../pull/53825) - [ ] <!-- recreate-branch=renovate/go.yaml.in-yaml-v2-3.x -->[Update module go.yaml.in/yaml/v2 to v3](../pull/53527) ## Detected Dependencies > [!NOTE] > Detected dependencies section has been truncated <details><summary>bazel-module (2)</summary> <blockquote> <details><summary>deps/repos.MODULE.bazel</summary> </details> <details><summary>MODULE.bazel (20)</summary> - `bazel_lib 3.7.1` - `bazel_skylib 1.9.2` - `gawk 5.3.2.bcr.7` → [Updates: `5.4.0`] - `gazelle 0.52.2` - `libarchive 3.8.1.bcr.2` - `platforms 1.1.0` - `re.bzl 0.3.1` - `rules_cc 0.2.22` - `rules_flex 0.4.1` - `rules_go 0.61.1` → [Updates: `0.63.0`] - `rules_m4 0.3.bcr.1` - `rules_multitool 1.11.1` - `rules_python 2.2.0` → [Updates: `2.3.1`] - `rules_rs 0.0.27` → [Updates: `0.0.104`] - `rules_rust 0.73.0` - `rules_rust_prost 0.73.0` - `rules_shell 0.8.0` - `toml.bzl 0.4.1` - `rules_testing 0.9.0` - `apple_support 2.8.0` </details> </blockquote> </details> <details><summary>bazelisk (1)</summary> <blockquote> <details><summary>.bazelversion</summary> </details> </blockquote> </details> <details><summary>bitbucket-pipelines (1)</summary> <blockquote> <details><summary>.gitlab/.pre/cancel-prev-pipelines.yml</summary> </details> </blockquote> </details> <details><summary>bundler (1)</summary> <blockquote> <details><summary>omnibus/Gemfile (2)</summary> - `chef-sugar v3.6.0` → [Updates: `v5.1.12`] - `mixlib-cli '~> 2.1.0'` </details> </blockquote> </details> <details><summary>cargo (10)</summary> <blockquote> <details><summary>Cargo.toml (57)</summary> - `anyhow 1.0.98` - `cap-std 4.0` - `dd_sds =0.1.0-20260803-1e4349aada52` → [Updates: `=0.1.0-20260807-dd8be015454d`] - `caps 0.5` - `chrono 0.4` - `clap 4.5` → [Updates: `4.5`] - `elf 0.8.0` - `glob-match 0.2` - `http-body-util 0.1` → [Updates: `0.1`] - `hostname 0.4` - `hyper 1` - `hyper-util 0.1` - `libc 0.2` - `log 0.4` - `prost 0.14` - `prost-build 0.14` - `prost-types 0.14` - `protoc-gen-prost 0.5` - `protoc-gen-tonic 0.5` - `lru 0.18.0` - `memchr 2.7.6` - `nom 8.0` - `normalize-path 0.2` - `phf 0.14` - `rawzip 0.5.0` - `xml-rs 1.0` - `rmp-serde 1.3` - `serde 1.0.219` - `serde_json 1.0` - `serde_yaml 0.9` - `time 0.3` - `thiserror 2.0.12` → [Updates: `2.0.12`] - `tokio 1` - `tokio-stream 0.1` - `tonic 0.14` - `tonic-build 0.14` - `tonic-prost 0.14` - `tonic-prost-build 0.14` - `tonic-reflection 0.14` - `ureq 3.0` → [Updates: `3.0`] - `uzers 0.12` - `walkdir 2` - `saphyr-parser 0.0.11` - `yaml-rust2 0.11` - `zip 8.0` - `flate2 1.1` - `tower 0.5` - `uuid 1` → [Updates: `1`] - `windows-registry 0.6` - `windows-sys 0.61` - `dircpy 0.3.19` - `regex 1` - `memmap2 0.9` - `nix 0.31` - `scopeguard 1.2` - `temp-env 0.3` - `tempfile 3.0` </details> <details><summary>cmd/ai_prompt_logger/Cargo.toml</summary> </details> <details><summary>comp/core/log/rust/Cargo.toml</summary> </details> <details><summary>pkg/collector/sharedlibrary/rustchecks/checks/datasecurity/Cargo.toml (1)</summary> - `postgres 0.19` </details> <details><summary>pkg/collector/sharedlibrary/rustchecks/checks/example/Cargo.toml</summary> </details> <details><summary>pkg/collector/sharedlibrary/rustchecks/core/Cargo.toml</summary> </details> <details><summary>pkg/discovery/module/rust/Cargo.toml</summary> </details> <details><summary>pkg/privateactionrunner/par-control/Cargo.toml</summary> </details> <details><summary>pkg/procmgr/rust/Cargo.toml</summary> </details> <details><summary>pkg/procmgr/rust/client/Cargo.toml</summary> </details> </blockquote> </details> <details><summary>docker-compose (36)</summary> <blockquote> <details><summary>cmd/host-profiler/docker-compose.yml (1)</summary> - `registry.datadoghq.com/agent 7` </details> <details><summary>pkg/collector/corechecks/oracle/compose/docker-compose.yml</summary> </details> <details><summary>pkg/discovery/module/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/amqp/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/http/testutil/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/kafka/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/mongo/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/mysql/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/postgres/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/redis/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/tls/gotls/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/tls/nodejs/testdata/docker-compose-ubuntu.yml</summary> </details> <details><summary>pkg/network/protocols/tls/nodejs/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/tracer/testdata/dnsworkload/docker-compose.yml</summary> </details> <details><summary>pkg/network/usm/testdata/bio_leak_test/docker-compose.yml</summary> </details> <details><summary>pkg/network/usm/testdata/musl/docker-compose.yml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/dogstatsd/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/jmxfetch/docker-compose-all-metrics.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/jmxfetch/docker-compose-slow-metrics.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/jmxfetch/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/logger/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/redis/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/integration/etcd/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/integration/kafka/docker-compose.yaml (3)</summary> - `confluentinc/cp-kafka 7.9.8` → [Updates: `7.9.9`, `8.3.1`] - `confluentinc/cp-kafka 7.9.8` → [Updates: `7.9.9`, `8.3.1`] - `confluentinc/cp-kafka 7.9.8` → [Updates: `7.9.9`, `8.3.1`] </details> <details><summary>test/e2e-framework/components/integration/postgres/docker-compose.yaml (2)</summary> - `postgres 16` → [Updates: `18`] - `postgres 16` → [Updates: `18`] </details> <details><summary>test/e2e-framework/components/integration/redisdb/docker-compose.yaml (2)</summary> - `redis 7.2` → [Updates: `7.4`, `8.10`] - `redis 7.2` → [Updates: `7.4`, `8.10`] </details> <details><summary>test/fakeintake/docker-compose.yaml</summary> </details> <details><summary>test/new-e2e/examples/testfixtures/docker-compose.fake-process.yaml</summary> </details> <details><summary>test/new-e2e/examples/testfixtures/docker-compose.lighttpd.yaml</summary> </details> <details><summary>test/new-e2e/tests/agent-health/fixtures/docker-compose.busybox.yaml</summary> </details> <details><summary>test/new-e2e/tests/discovery/testdata/compose/docker-compose.configfilesdiscovery-kafka.yaml</summary> </details> <details><summary>test/new-e2e/tests/discovery/testdata/compose/docker-compose.configfilesdiscovery-redis.yaml</summary> </details> <details><summary>test/new-e2e/tests/discovery/testdata/compose/docker-compose.fake-krakend.yaml</summary> </details> <details><summary>test/new-e2e/tests/fips-compliance/fixtures/docker-compose-cluster-agent.yaml</summary> </details> <details><summary>test/new-e2e/tests/fips-compliance/fixtures/docker-compose-fips-server.yaml</summary> </details> <details><summary>test/new-e2e/tests/fips-compliance/fixtures/docker-compose.yaml</summary> </details> </blockquote> </details> <details><summary>dockerfile (15)</summary> <blockquote> <details><summary>Dockerfiles/agent-ddot/Dockerfile</summary> </details> <details><summary>Dockerfiles/agent-ddot/Dockerfile.agent-otel (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/agent/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/agent/windows/amd64/Dockerfile (1)</summary> - `mcr.microsoft.com/dotnet/sdk 9.0-windowsservercore-ltsc2019` </details> <details><summary>Dockerfiles/base-image/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/cluster-agent/Dockerfile (2)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/ddot-ebpf/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/dogstatsd/alpine/Dockerfile (1)</summary> - `public.ecr.aws/docker/library/alpine 3.23.3` → [Updates: `3.24.1`] </details> <details><summary>Dockerfiles/otel-agent/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>test/e2e-framework/resources/local/podman/data/Dockerfile (1)</summary> - `docker.io/library/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>test/fakeintake/Dockerfile (2)</summary> - `docker.io/library/golang 1.26.5` → [Updates: `1.26.6`] - `docker.io/library/alpine 3.24.1` </details> <details><summary>tools/ebpf/Dockerfiles/Dockerfile-process-agent-dev</summary> </details> <details><summary>tools/ebpf/Dockerfiles/Dockerfile-security-agent-dev</summary> </details> <details><summary>tools/gdb/Dockerfile (1)</summary> - `registry.datadoghq.com/agent 7` </details> <details><summary>tools/host-profiler/Dockerfile</summary> </details> </blockquote> </details> <details><summary>github-actions (45)</summary> <blockquote> <details><summary>.github/actions/bazel-cache/action.yml (2)</summary> - `actions/cache v6.1.0@55cc8345863c7cc4c66a329aec7e433d2d1c52a9` - `actions/cache v6.1.0@55cc8345863c7cc4c66a329aec7e433d2d1c52a9` </details> <details><summary>.github/actions/deps-tidy-push/action.yml</summary> </details> <details><summary>.github/actions/deps-tidy-setup/action.yml (1)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` </details> <details><summary>.github/actions/install-dda/action.yml (3)</summary> - `actions/cache v6.1.0@55cc8345863c7cc4c66a329aec7e433d2d1c52a9` - `DataDog/datadog-agent-dev install@00e4a423088309efce1d5ba6b8c5366eef648710` - `DataDog/datadog-agent-dev install@00e4a423088309efce1d5ba6b8c5366eef648710` </details> <details><summary>.github/workflows/add-dependabot-pr-to-mq.yml (3)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/add-label-community-pr.yml (2)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/add-label-pr.yml (3)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/add-milestone.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/agenttelemetry-metric-reminder.yml (1)</summary> - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/ask-review.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/assess-permissions.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/assign-issue.yml (1)</summary> - `DataDog/issue-triage-action v1.0.1@b39f0bc12abc52fe8aa70dc9b9353bf307a13219` </details> <details><summary>.github/workflows/backport-pr.yml (4)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/buildimages-update.yml (5)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/chase-for-qa-cards.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/check-issue-status.yml (5)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/check-skip.yml</summary> </details> <details><summary>.github/workflows/cla.yml (2)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `contributor-assistant/github-action v2.6.1@ca4a40a7d1004f18d9960b404b97e5f30a505a08` </details> <details><summary>.github/workflows/code-review-complexity.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/code-review.yml (1)</summary> - `DataDog/code-review-action v1.1.0@56d6862711348b11ec2603edfb29c52c09f4b84c` </details> <details><summary>.github/workflows/codex-review-draft.yml (1)</summary> - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/codex-review-ready-for-review.yml</summary> </details> <details><summary>.github/workflows/collector-generate-and-update.yml (5)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `slackapi/slack-github-action v3.0.5@0d95c9a7becc1e6e297d76df9bc735c44f4cbcbc` → [Updates: `v4.0.0`] </details> <details><summary>.github/workflows/create-rc-pr.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/cws-btfhub-sync.yml (11)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `ubuntu 24.04` - `ubuntu 24.04` </details> <details><summary>.github/workflows/deps-tidy.yml (7)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `dtolnay/rust-toolchain v1@e97e2d8cc328f1b50210efc529dca0028893a2d9` → [Updates: `v1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `rust stable` </details> <details><summary>.github/workflows/do-not-merge.yml</summary> </details> <details><summary>.github/workflows/docs-dev.yml (8)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `peaceiris/actions-gh-pages v4.1.0@84c30a85c19949d7eee79c4ff27748b70285e453` </details> <details><summary>.github/workflows/go-update-commenter.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/gohai.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] </details> <details><summary>.github/workflows/label-analysis.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/labeler.yml (1)</summary> - `actions/labeler v6.2.0@b8dd2d9be0f68b860e7dae5dae7d772984eacd6d` → [Updates: `v7.0.0`] </details> <details><summary>.github/workflows/markdown-lint-check.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `tcort/github-action-markdown-link-check v1.1.2@e7c7a18363c842693fadde5d41a3bd3573a7a225` → [Updates: `v1.1.3`] </details> <details><summary>.github/workflows/push-bazel-cache.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/report-merged-pr.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `DataDog/dd-sts-action v1.0.0@2e8187910199bd93129520183c093e19aa585c75` → [Updates: `v1.0.5`] </details> <details><summary>.github/workflows/slapr_backport.yml (1)</summary> - `DataDog/slapr 1.1.0@95312d6b8528460243ba27c7f8167bfe20a68bec` </details> <details><summary>.github/workflows/slapr.yml (3)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `DataDog/slapr 1.1.0@95312d6b8528460243ba27c7f8167bfe20a68bec` </details> <details><summary>.github/workflows/stale.yml (2)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/stale v10.4.0@1e223db275d687790206a7acac4d1a11bd6fe629` → [Updates: `v11.0.0`] </details> <details><summary>.github/workflows/test-devcontainer.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-node v6.5.0@249970729cb0ef3589644e2896645e5dc5ba9c38` → [Updates: `v7.0.0`] </details> <details><summary>.github/workflows/update-dependencies.yml (4)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/update-ebpf-profiler-branch.yml (4)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/update-kubernetes-versions.yml (8)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-python v6.3.0@ece7cb06caefa5fff74198d8649806c4678c61a1` → [Updates: `v7.0.0`] - `helm/kind-action v1.14.0@ef37e7f390d99f746eb8b610417061a60e82a6cc` - `aws-actions/configure-aws-credentials v6.2.2@517a711dbcd0e402f90c77e7e2f81e849156e31d` → [Updates: `v6.2.3`] - `docker/login-action v4.4.0@af1e73f918a031802d376d3c8bbc3fe56130a9b0` → [Updates: `v4.6.0`] - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `python 3.14` </details> <details><summary>.github/workflows/upgrade-python-patch-version.yml (5)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-python v6.3.0@ece7cb06caefa5fff74198d8649806c4678c61a1` → [Updates: `v7.0.0`] - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `python 3.14` </details> <details><summary>.github/workflows/validate-renovate-deps.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/warn-failed-dependabot-pr.yml</summary> </details> </blockquote> </details> <details><summary>gomod (80)</summary> <blockquote> <details><summary>comp/anomalydetection/observer/def/go.mod</summary> </details> <details><summary>comp/anomalydetection/recorder/def/go.mod</summary> </details> <details><summary>comp/anomalydetection/severityevents/def/go.mod</summary> </details> <details><summary>comp/api/api/def/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/agenttelemetry/def/go.mod</summary> </details> <details><summary>comp/core/agenttelemetry/fx/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/agenttelemetry/impl/go.mod (7)</summary> - `github.com/DataDog/zstd v1.5.8-0.20260421145859-31a7e515a571@31a7e515a571` → [Updates: `v1.5.8-0.20260421145859-31a7e515a571`] - `github.com/prometheus/client_model v0.6.2` - `github.com/robfig/cron/v3 v3.0.1` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/core/config/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/configstreamconsumer/def/go.mod</summary> </details> <details><summary>comp/core/configsync/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/delegatedauth/api/cloudauth/aws/go.mod (2)</summary> - `github.com/aws/aws-sdk-go-v2 v1.43.3` → [Updates: `v1.43.4`] - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/delegatedauth/go.mod (2)</summary> - `github.com/cenkalti/backoff/v7 v7.0.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/flare/builder/go.mod</summary> </details> <details><summary>comp/core/flare/types/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/hostname/hostnameinterface/def/go.mod</summary> </details> <details><summary>comp/core/hostname/hostnameinterface/go.mod</summary> </details> <details><summary>comp/core/hostname/hostnameinterface/mock/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/ipc/def/go.mod</summary> </details> <details><summary>comp/core/ipc/httphelpers/go.mod (2)</summary> - `github.com/mdlayher/vsock v1.3.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/ipc/impl/go.mod (2)</summary> - `github.com/gofrs/flock v0.13.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/ipc/mock/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/def/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/fx/go.mod</summary> </details> <details><summary>comp/core/log/impl-trace/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/impl/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/mock/go.mod</summary> </details> <details><summary>comp/core/secrets/def/go.mod</summary> </details> <details><summary>comp/core/secrets/fx/go.mod</summary> </details> <details><summary>comp/core/secrets/impl/go.mod (4)</summary> - `github.com/benbjohnson/clock v1.3.5` - `github.com/json-iterator/go v1.1.12` - `github.com/stretchr/testify v1.11.1` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/secrets/mock/go.mod (1)</summary> - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/secrets/noop-impl/go.mod</summary> </details> <details><summary>comp/core/secrets/utils/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/status/go.mod (4)</summary> - `github.com/dustin/go-humanize v1.0.1` - `github.com/fatih/color v1.19.0` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/status/statusimpl/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/tagger/def/go.mod</summary> </details> <details><summary>comp/core/tagger/fx-remote/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/tagger/generic_store/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/impl-remote/go.mod (5)</summary> - `github.com/cenkalti/backoff/v7 v7.0.0` - `github.com/google/uuid v1.6.0` - `github.com/mdlayher/vsock v1.3.0` - `github.com/stretchr/testify v1.11.1` - `google.golang.org/grpc v1.83.0` </details> <details><summary>comp/core/tagger/origindetection/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/subscriber/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/tags/go.mod</summary> </details> <details><summary>comp/core/tagger/telemetry/go.mod</summary> </details> <details><summary>comp/core/tagger/types/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/utils/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/telemetry/go.mod (6)</summary> - `github.com/prometheus/client_golang v1.24.1` - `github.com/prometheus/client_model v0.6.2` - `github.com/prometheus/common v0.70.1` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/def/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/forwarder/defaultforwarder/go.mod (6)</summary> - `github.com/benbjohnson/clock v1.3.5` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.uber.org/fx v1.24.0` - `go.uber.org/multierr v1.11.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/forwarder/orchestrator/orchestratorinterface/go.mod</summary> </details> <details><summary>comp/host-profiler/symboluploader/testdata/go.mod</summary> </details> <details><summary>comp/logs-library/go.mod (4)</summary> - `github.com/DataDog/agent-payload/v5 v5.0.209` - `github.com/benbjohnson/clock v1.3.5` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` </details> <details><summary>comp/logs/agent/config/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.yaml.in/yaml/v3 v3.0.5` </details> <details><summary>comp/netflow/payload/go.mod</summary> </details> <details><summary>comp/otelcol/collector-contrib/def/go.mod</summary> </details> <details><summary>comp/otelcol/collector-contrib/impl/go.mod</summary> </details> <details><summary>comp/otelcol/converter/def/go.mod</summary> </details> <details><summary>comp/otelcol/converter/impl/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/ddflareextension/def/go.mod</summary> </details> <details><summary>comp/otelcol/ddflareextension/impl/go.mod (6)</summary> - `github.com/google/go-cmp v0.7.0` - `github.com/google/uuid v1.6.0` - `github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826@c48cc78d4826` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/otelcol/ddflareextension/types/go.mod</summary> </details> <details><summary>comp/otelcol/ddprofilingextension/def/go.mod</summary> </details> <details><summary>comp/otelcol/ddprofilingextension/impl/go.mod (3)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/DataDog/dd-trace-go/v2 v2.9.0` → [Updates: `v2.9.2`] - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/otelcol/logsagentpipeline/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/logsagentpipeline/logsagentpipelineimpl/go.mod</summary> </details> <details><summary>comp/otelcol/otlp/components/connector/datadogconnector/go.mod (5)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/google/go-cmp v0.7.0` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/otelcol/otlp/components/datadogconfig/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/otlp/components/exporter/datadogexporter/go.mod (4)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/otelcol/otlp/components/exporter/logsagentexporter/go.mod (4)</summary> - `github.com/DataDog/agent-payload/v5 v5.0.209` - `github.com/patrickmn/go-cache v2.1.0+incompatible` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/otlp/components/exporter/serializerexporter/go.mod (8)</summary> - `github.com/google/go-cmp v0.7.0` - `github.com/stretchr/testify v1.11.1` - `github.com/tinylib/msgp v1.6.4` - `go.uber.org/fx v1.24.0` - `go.uber.org/multierr v1.11.0` - `go.uber.org/zap v1.28.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] - `go.uber.org/atomic v1.11.0` </details> <details><summary>comp/otelcol/otlp/components/metricsclient/go.mod (2)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/otelcol/otlp/components/processor/infraattributesprocessor/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/otlp/testutil/go.mod (3)</summary> - `github.com/DataDog/sketches-go v1.4.8` - `github.com/stretchr/testify v1.11.1` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/otelcol/status/def/go.mod</summary> </details> <details><summary>comp/otelcol/status/impl/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.yaml.in/yaml/v3 v3.0.5` </details> <details><summary>comp/serializer/logscompression/go.mod</summary> </details> <details><summary>comp/serializer/metricscompression/go.mod</summary> </details> <details><summary>comp/trace/agent/def/go.mod</summary> </details> <details><summary>comp/trace/compression/def/go.mod</summary> </details> <details><summary>comp/trace/compression/impl-gzip/go.mod</summary> </details> <details><summary>comp/trace/compression/impl-zstd/go.mod (1)</summary> - `github.com/DataDog/zstd v1.5.8-0.20260421145859-31a7e515a571@31a7e515a571` → [Updates: `v1.5.8-0.20260421145859-31a7e515a571`] </details> <details><summary>go.mod (98)</summary> - `code.cloudfoundry.org/bbs v1.3.0` → [Updates: `v1.12.0`] - `code.cloudfoundry.org/bbs/models v0.0.0-20260618205254-dc4b9f8d5bc9@dc4b9f8d5bc9` → [Updates: `v1.8.0`] - `code.cloudfoundry.org/garden v0.0.0-20260617020226-a9e754564bb5@a9e754564bb5` → [Updates: `v0.0.0-20260814181737-66902029982f`] - `code.cloudfoundry.org/lager/v3 v3.78.0` → [Updates: `v3.81.0`] - `dario.cat/mergo v1.0.2` - `github.com/Azure/azure-sdk-for-go/sdk/azcore v1.22.0` → [Updates: `v1.23.0`] - `github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.14.0` - `github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.5.0` - `github.com/CycloneDX/cyclonedx-go v0.11.0` - `github.com/DATA-DOG/go-sqlmock v1.5.2` - `github.com/DataDog/agent-payload/v5 v5.0.209` - `github.com/DataDog/datadog-api-client-go/v2 v2.62.0` → [Updates: `v2.63.0`] - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/DataDog/datadog-operator/api v0.0.0-20260807013103-1518bb55e423@1518bb55e423` → [Updates: `v0.0.0-20260814092432-76c74ab76c39`] - `github.com/DataDog/datadog-traceroute v1.0.19` - `github.com/DataDog/dd-policy-engine/go v0.0.0-20260730181922-c5e419a4ec7d@c5e419a4ec7d` → [Updates: `v0.0.0-20260803230307-dd41045a4bb2`] - `github.com/DataDog/dd-trace-go/v2 v2.9.0` → [Updates: `v2.9.2`] - `github.com/DataDog/ddtrivy v0.0.0-20260519164847-bf6bcaf2f9b7@bf6bcaf2f9b7` → [Updates: `v0.0.0-20260519164847-bf6bcaf2f9b7`] - `github.com/DataDog/ebpf-manager v0.8.1` - `github.com/DataDog/go-acl v1.0.1` - `github.com/DataDog/go-sqllexer v0.2.4` - `github.com/DataDog/jsonapi v0.13.0` - `github.com/DataDog/rshell v0.0.24` - `github.com/DataDog/sketches-go v1.4.8` - `github.com/DataDog/watermarkpodautoscaler/apis v0.0.0-20250108152814-82e58d0231d1@82e58d0231d1` → [Updates: `v0.0.0-20260803084540-a82e1114b53b`] - `github.com/DataDog/zstd v1.5.8-0.20260421145859-31a7e515a571@31a7e515a571` → [Updates: `v1.5.8-0.20260421145859-31a7e515a571`] - `github.com/Masterminds/semver/v3 v3.5.0` - `github.com/Masterminds/sprig/v3 v3.3.0` - `github.com/Microsoft/go-winio v0.6.2` - `github.com/Microsoft/hcsshim v0.14.1` - `github.com/NVIDIA/go-nvml v0.13.1-0` - `github.com/ProtonMail/go-crypto v1.4.1` - `github.com/acobaugh/osrelease v0.1.0` - `github.com/alecthomas/units v0.0.0-20240927000941-0f3dac36c52b@0f3dac36c52b` - `github.com/aptly-dev/aptly v1.6.3` - `github.com/aquasecurity/trivy v0.72.0` → [Updates: `v0.73.0`] - `github.com/aquasecurity/trivy-db v0.0.0-20251222105351-a833f47f8f0d@a833f47f8f0d` → [Updates: `v0.0.0-20260813095258-0e0340a01b57`] - `github.com/aws/aws-sdk-go-v2 v1.43.3` → [Updates: `v1.43.4`] - `github.com/aws/aws-sdk-go-v2/config v1.32.34` → [Updates: `v1.32.35`] - `github.com/aws/aws-sdk-go-v2/credentials v1.19.33` → [Updates: `v1.19.34`] - `github.com/aws/aws-sdk-go-v2/service/ec2 v1.318.1` → [Updates: `v1.321.0`] - `github.com/aws/aws-sdk-go-v2/service/rds v1.120.1` → [Updates: `v1.124.1`] - `github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.44.0` → [Updates: `v1.44.4`] - `github.com/aws/aws-sdk-go-v2/service/ssm v1.73.0` → [Updates: `v1.73.4`] - `github.com/aws/aws-sdk-go-v2/service/sts v1.45.3` → [Updates: `v1.45.4`] - `github.com/aws/karpenter-provider-aws v1.9.0` → [Updates: `v1.14.0`] - `github.com/aymerick/raymond v2.0.2+incompatible` - `github.com/bazelbuild/rules_go v0.61.1` → [Updates: `v0.62.0`] - `github.com/beevik/ntp v1.5.0` - `github.com/benbjohnson/clock v1.3.5` - `github.com/bhmj/jsonslice v1.1.3` - `github.com/blabber/go-freebsd-sysctl v0.0.0-20201130114544-503969f39d8f@503969f39d8f` - `github.com/bmatcuk/doublestar/v4 v4.10.0` - `github.com/cenkalti/backoff/v7 v7.0.0` - `github.com/cespare/xxhash/v2 v2.3.0` - `github.com/cilium/ebpf v0.22.0` - `github.com/clbanning/mxj/v2 v2.7.0` - `github.com/cloudflare/cbpfc v0.0.0-20260219140841-0661ad29132c@0661ad29132c` → [Updates: `v0.0.0-20260805072904-7ac485fd93e1`] - `github.com/cloudfoundry-community/go-cfclient/v2 v2.0.1-0.20230503155151-3d15366c5820@3d15366c5820` → [Updates: `v3.0.0-beta.1`] - `github.com/containerd/cgroups/v3 v3.1.3` - `github.com/containerd/containerd/api v1.11.1` - `github.com/containerd/containerd/v2 v2.2.5` → [Updates: `v2.3.3`] - `github.com/containerd/errdefs v1.0.0` - `github.com/containerd/typeurl/v2 v2.3.0` - `github.com/containernetworking/cni v1.3.0` - `github.com/coreos/go-semver v0.3.1` - `github.com/coreos/go-systemd/v22 v22.7.0` - `github.com/creack/pty v1.1.24` - `github.com/cri-o/ocicni v0.5.0` → [Updates: `v0.5.1`] - `github.com/cyphar/filepath-securejoin v0.7.0` - `github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc@d8f796af33cc` - `github.com/distribution/reference v0.6.0` - `github.com/dustin/go-humanize v1.0.1` - `github.com/elastic/go-freelru v0.16.0` - `github.com/elastic/go-libaudit/v2 v2.6.2` - `github.com/elastic/go-seccomp-bpf v1.6.0` - `github.com/envoyproxy/gateway v1.7.4` → [Updates: `v1.8.3`] - `github.com/evanphx/json-patch/v5 v5.9.11` - `github.com/fatih/color v1.19.0` - `github.com/fatih/structtag v1.2.0` - `github.com/freddierice/go-losetup v0.0.0-20220711213114-2a14873012db@2a14873012db` - `github.com/ghodss/yaml v1.0.1-0.20220118164431-d8423dcdf344@d8423dcdf344` - `github.com/glaslos/ssdeep v1.0.0` - `github.com/go-delve/delve v1.27.0` → [Updates: `v1.27.1`] - `github.com/go-jose/go-jose/v4 v4.1.4` - `github.com/go-json-experiment/json v0.0.0-20250517221953-25912455fbc8@25912455fbc8` → [Updates: `v0.0.0-20260623181947-01eb4420fa68`] - `github.com/go-ole/go-ole v1.3.0` - `github.com/go-sql-driver/mysql v1.10.0` - `github.com/go-viper/mapstructure/v2 v2.5.0` - `github.com/go-zookeeper/zk v1.0.4` - `github.com/gobwas/glob v0.2.3` - `github.com/goccy/go-yaml v1.19.2` - `github.com/gocomply/scap v0.1.3` - `github.com/godbus/dbus/v5 v5.2.2` - `github.com/godror/godror v0.50.0` → [Updates: `v0.51.0`] - `github.com/gogo/protobuf v1.3.2` - `github.com/golang-jwt/jwt/v5 v5.3.1` - `github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8@2c02b8208cf8` </details> </blockquote> </details> --- - [ ] <!-- manual job -->Check this box to trigger a request for Renovate to run again on this repository",
+      "url": "https://github.com/DataDog/datadog-agent/issues/33469",
+      "createdAt": "2025-01-28T12:05:52Z",
+      "updatedAt": "2026-08-17T01:41:25Z",
+      "timestamp": "2026-08-17T01:41:25Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "team/agent-devx",
+        "pending",
+        "oss/0"
+      ],
+      "author": "renovate[bot]",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:46398",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Gabriel.plassard/add dd script user to agent dockerfile tmp",
+      "text": "### What does this PR do? ### Motivation ### Describe how you validated your changes ### Additional Notes",
+      "url": "https://github.com/DataDog/datadog-agent/pull/46398",
+      "createdAt": "2026-02-13T15:49:23Z",
+      "updatedAt": "2026-08-16T03:01:43Z",
+      "timestamp": "2026-08-16T03:01:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "medium review",
+        "team/agent-build",
+        "stale",
+        "auto-closed",
+        "team/action-platform",
+        "internal"
+      ],
+      "author": "dd-gplassard",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:46400",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Revert \"Support AWS IRSA credentials chain\"",
+      "text": "Reverts DataDog/datadog-agent#45530 Tentative for #incident-49543.",
+      "url": "https://github.com/DataDog/datadog-agent/pull/46400",
+      "createdAt": "2026-02-13T16:14:31Z",
+      "updatedAt": "2026-08-16T03:01:51Z",
+      "timestamp": "2026-08-16T03:01:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "medium review",
+        "team/agent-runtimes",
+        "internal"
+      ],
+      "author": "alopezz",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:46413",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "[TEST] pass store backend sgc",
+      "text": "### What does this PR do? ### Motivation ### Describe how you validated your changes ### Additional Notes",
+      "url": "https://github.com/DataDog/datadog-agent/pull/46413",
+      "createdAt": "2026-02-13T22:24:42Z",
+      "updatedAt": "2026-08-16T03:01:55Z",
+      "timestamp": "2026-08-16T03:01:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [
+        "dev/testing",
+        "medium review",
+        "team/agent-configuration",
+        "stale",
+        "auto-closed",
+        "internal"
+      ],
+      "author": "s-alad",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:53003",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "chore: Update devcontainer prebuilt image reference",
+      "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+      "url": "https://github.com/DataDog/datadog-agent/pull/53003",
+      "createdAt": "2026-06-30T18:36:01Z",
+      "updatedAt": "2026-08-16T15:29:14Z",
+      "timestamp": "2026-08-16T15:29:14Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [
+        "campaigner-automated-change"
+      ],
+      "author": "gh-worker-campaigns-3e9aa4[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:53012",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "chore: Update devcontainer prebuilt image reference",
+      "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+      "url": "https://github.com/DataDog/datadog-agent/pull/53012",
+      "createdAt": "2026-06-30T20:14:22Z",
+      "updatedAt": "2026-08-16T15:30:52Z",
+      "timestamp": "2026-08-16T15:30:52Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 1
+      },
+      "labels": [
+        "campaigner-automated-change"
+      ],
+      "author": "gh-worker-campaigns-3e9aa4[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:53014",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "chore: Update devcontainer prebuilt image reference",
+      "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+      "url": "https://github.com/DataDog/datadog-agent/pull/53014",
+      "createdAt": "2026-06-30T20:22:20Z",
+      "updatedAt": "2026-08-16T14:28:04Z",
+      "timestamp": "2026-08-16T14:28:04Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 1
+      },
+      "labels": [
+        "campaigner-automated-change"
+      ],
+      "author": "gh-worker-campaigns-3e9aa4[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:53015",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "chore: Update devcontainer prebuilt image reference",
+      "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+      "url": "https://github.com/DataDog/datadog-agent/pull/53015",
+      "createdAt": "2026-06-30T20:24:42Z",
+      "updatedAt": "2026-08-16T15:08:43Z",
+      "timestamp": "2026-08-16T15:08:43Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [
+        "campaigner-automated-change"
+      ],
+      "author": "gh-worker-campaigns-3e9aa4[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:53372",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "chore: Update devcontainer prebuilt image reference",
+      "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+      "url": "https://github.com/DataDog/datadog-agent/pull/53372",
+      "createdAt": "2026-07-08T10:00:21Z",
+      "updatedAt": "2026-08-16T14:29:33Z",
+      "timestamp": "2026-08-16T14:29:33Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 2
+      },
+      "labels": [
+        "campaigner-automated-change"
+      ],
+      "author": "gh-worker-campaigns-3e9aa4[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54308",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Reduce empty process command line debug logging",
+      "text": "### What does this PR do? Moves the per-process empty-command-line messages from debug to trace in both process collection paths. At debug level, each scan now emits one aggregate summary with: - the total number of affected processes - up to five sample PIDs Process collection and filtering behavior is unchanged. ### Motivation On hosts with large process tables, an empty command line can generate tens of thousands of debug messages per collection interval. That volume can rapidly rotate the Agent logs and hide the diagnostic history needed to investigate collection or intake lag. Keeping the per-PID detail at trace preserves it for targeted troubleshooting, while the bounded debug summary still shows the scale of the condition and provides representative PIDs. ### Describe how you validated your changes - Pre-commit hooks passed. - Pre-push Go tests and golangci-lint passed. - Focused Bazel tests passed: - `//pkg/process/checks:checks_test_base` - `//pkg/process/procutil:procutil_test_base` with `TestProcessesByPIDTest(FS|IgnoringZombiesFS)` - `git diff --check` passed. ### Additional Notes The full procutil Bazel suite also exposed an existing `TestProcfsChange` fixture failure unrelated to these logging paths; the directly affected procutil tests pass.",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54308",
+      "createdAt": "2026-07-31T15:06:53Z",
+      "updatedAt": "2026-08-16T16:07:06Z",
+      "timestamp": "2026-08-16T16:07:06Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 7
+      },
+      "labels": [
+        "short review",
+        "team/container-experiences",
+        "stale",
+        "internal"
+      ],
+      "author": "gengnamstyle",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54496",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "apm: use url.template for OTLP HTTP client resource names",
+      "text": "## What does this PR do? Uses the OpenTelemetry `url.template` attribute when generating resource names for HTTP client spans. Client spans now use `METHOD url.template` when available and retain the method-only fallback otherwise. Server spans continue to use `METHOD http.route`. Both the current and legacy OTLP resource-name paths are covered to keep behavior consistent when operation/resource name V2 is disabled. Fixes #31570. ## Motivation HTTP client resource names currently collapse to the HTTP method even when OpenTelemetry instrumentation provides a low-cardinality URL template. Using the template produces more useful resource grouping without falling back to high-cardinality raw URLs. ## Testing Added focused unit coverage for client URL templates, method-only fallback, and client/server attribute precedence. Local `dda inv test --targets=./pkg/trace/api,./pkg/trace/otel/traceutil` could not run because Windows Defender quarantined the standalone `dda.exe` after its PyPI bootstrap failed with a TLS handshake error. CI is expected to run the required test targets. ## Additional Notes The current commit is unsigned because no local signing key is configured; it will need to be replaced with a signed commit before merge.",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54496",
+      "createdAt": "2026-08-05T21:37:23Z",
+      "updatedAt": "2026-08-16T21:05:44Z",
+      "timestamp": "2026-08-16T21:05:44Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 9
+      },
+      "labels": [
+        "community",
+        "team/agent-apm",
+        "team/agent-security",
+        "team/ebpf-platform",
+        "team/opentelemetry",
+        "team/container-platform",
+        "team/agent-delivery",
+        "team/agent-integrations",
+        "team/container-integrations",
+        "team/agent-discovery",
+        "team/agent-runtimes",
+        "team/agent-log-pipelines",
+        "team/agent-metric-pipelines",
+        "team/agent-devx",
+        "team/container-experiences",
+        "team/agent-build",
+        "team/action-platform",
+        "team/gpu-monitoring-agent",
+        "team/fleet-automation",
+        "team/agent-data-plane"
+      ],
+      "author": "niharikag09",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54744",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "remove unneeded python spec in legacy omnibus",
+      "text": "### What does this PR do? Remove unneeded python spec in legcay omnibus - Lift python3.rb dependency up datadog-agent-integrations-py3 - Add the missing license declaration for //deps:cpython - put all the files for cpython together in deps/cpython. This preserves the license we were using before. It also preserves the fact that the Omnibus build was using a personal copy cached at https://dd-agent-omnibus.s3.amazonaws.com/licenses/Python-2.0. That's not great - we should use the upstream license, but the upstream license is not a true copy of the license. It has history which is unrelated to the current license, so it is actually less good than our copy. This is a thing to sort out in the future. At least now the fact that we use a private copy is explicit, rather than being hidden in the omnibus code. ### Motivation - Do not specify the python version in two places, while only using it in one. Every time integrations updated python, they would needlessly update the omnibus scripts and cpython.MODULE.bazel - Remove dead code. All omnibus scripting is going away. ### Describe how you validated your changes - CI - The missing file detector does not show that we lost the license. Early runs did, so I have confidence that CI correctly detects it. - The missing file detector says the license file is slightly renamed. The content is the same. The renaming is a legally allowed transformation. What matters is that we have the content of the license in the distribution, not what we name it.",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54744",
+      "createdAt": "2026-08-11T18:56:37Z",
+      "updatedAt": "2026-08-16T16:28:31Z",
+      "timestamp": "2026-08-16T16:28:31Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 4
+      },
+      "labels": [
+        "changelog/no-changelog",
+        "qa/no-code-change",
+        "medium review",
+        "team/agent-integrations",
+        "team/agent-build",
+        "internal"
+      ],
+      "author": "aiuto",
+      "state": "open",
+      "assignees": [
+        "Kyle-Neale"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54802",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Update dependency @sentry/dotagents to v3",
+      "text": "This PR contains the following updates: | Package | Change | [Age](https://docs.renovatebot.com/merge-confidence/) | [Adoption](https://docs.renovatebot.com/merge-confidence/) | [Passing](https://docs.renovatebot.com/merge-confidence/) | [Confidence](https://docs.renovatebot.com/merge-confidence/) | |---|---|---|---|---|---| | @&#8203;sentry/dotagents | `1.19.0` → `3.0.1` | ![age](https://developer.mend.io/api/mc/badges/age/npm/@sentry%2fdotagents/3.0.1?slim=true) | ![adoption](https://developer.mend.io/api/mc/badges/adoption/npm/@sentry%2fdotagents/3.0.1?slim=true) | ![passing](https://developer.mend.io/api/mc/badges/compatibility/npm/@sentry%2fdotagents/1.19.0/3.0.1?slim=true) | ![confidence](https://developer.mend.io/api/mc/badges/confidence/npm/@sentry%2fdotagents/1.19.0/3.0.1?slim=true) | --- > [!WARNING] > Some dependencies could not be looked up. Check the [Dependency Dashboard](../issues/33469) for more information. --- ### Configuration 📅 **Schedule**: (in timezone Europe/Paris) - Branch creation - At 12:00 AM through 04:59 AM and 10:00 PM through 11:59 PM, Monday through Friday (`* 0-4,22-23 * * 1-5`) - Only on Sunday and Saturday (`* * * * 0,6`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/DataDog/datadog-agent). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4yNC4wIiwidXBkYXRlZEluVmVyIjoiNDQuMjkuNSIsInRhcmdldEJyYW5jaCI6Im1haW4iLCJsYWJlbHMiOlsiY2hhbmdlbG9nL25vLWNoYW5nZWxvZyIsImRlcGVuZGVuY2llcyIsInFhL25vLWNvZGUtY2hhbmdlIl19-->",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54802",
+      "createdAt": "2026-08-12T21:11:49Z",
+      "updatedAt": "2026-08-17T01:41:20Z",
+      "timestamp": "2026-08-17T01:41:20Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 2
+      },
+      "labels": [
+        "changelog/no-changelog",
+        "dependencies",
+        "qa/no-code-change",
+        "short review",
+        "team/agent-devx",
+        "internal"
+      ],
+      "author": "renovate[bot]",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54860",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Tokenize IPv4 so IIS W3C logs are not concatenated",
+      "text": "### What does this PR do? Collapses IPv4 dotted quads to a single tokenizer token so auto multi-line detection no longer treats them as part of a timestamp. ### Motivation IIS W3C records were concatenated after 7.82.0 enabled auto multi-line detection by default ([AGENT-16759](https://datadoghq.atlassian.net/browse/AGENT-16759)). Kadane maximizes pair-score *sum*, then reports sum / length. The threshold check is strict `> 0.5`. #### Before ``` 2026-08-11 10:34:49 W3SVC1 10.1.48.10 GET DDDD-DD-DD DD:DD:DD CDCCCD DD.D.DD.DD CCC +++++++++++----+++--++++ ``` Timestamp-only: `11/11 = 1.0`. Kadane extends through the IP for a higher sum: `12/24 = 0.5`. `0.5 > 0.5` is false, so the line is aggregated. #### After ``` 2026-08-11 10:34:49 W3SVC1 10.1.48.10 GET DDDD-DD-DD DD:DD:DD CDCCCD IPv4 CCC +++++++++++----+---- ``` The IP is one token with no graph edges, so Kadane stays on the timestamp: `11/11 = 1.0`. #54753 scored a leading timestamp run in isolation. This follows the review there: represent a valid IP as one token so the existing algorithm stops treating it as a timestamp fragment. Hybrid tokens (UUID, paths, etc.) were already on the roadmap. ### Describe how you validated your changes - [x] IIS W3C records from the escalation start a new group - [x] Tokenizer tests for dotted-quad collapse, including non-matches (`1.2.3`, `1...2.3.4`, `1234.1.1.1`) - [x] Existing timestamp-detector corpus still assigns the same labels - [x] `dda inv test --targets=./pkg/logs/internal/decoder/preprocessor/...` (414 passed) ### Additional Notes IPv6 is not collapsed yet. Consecutive colons already collapse to one `Colon` token, so detecting IPv6 needs a look at the original bytes. I'm leaving it out of this PR for now since the motivation here was in response to a specific customer scenario. [AGENT-16759]: https://datadoghq.atlassian.net/browse/AGENT-16759?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54860",
+      "createdAt": "2026-08-13T20:09:58Z",
+      "updatedAt": "2026-08-16T15:41:01Z",
+      "timestamp": "2026-08-16T15:41:01Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 4
+      },
+      "labels": [
+        "qa/done",
+        "medium review",
+        "team/agent-log-pipelines",
+        "internal"
+      ],
+      "author": "mwdd146980",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54919",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Update integrations-core digest to b383598",
+      "text": "This PR contains the following updates: | Package | Update | Change | |---|---|---| | integrations-core ([changelog](https://redirect.github.com/DataDog/integrations-core/compare/3bce68335dbbf693c3dde72d6fe0792b3e742f33..b383598fb85f73824847106f856eefb7c89b47bf)) | digest | `3bce683` → `b383598` | --- > [!WARNING] > Some dependencies could not be looked up. Check the [Dependency Dashboard](../issues/33469) for more information. --- ### Configuration 📅 **Schedule**: (in timezone Europe/Paris) - Branch creation - Between 02:00 AM and 06:59 AM, only on Monday and Wednesday (`* 2-6 * * 1,3`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/DataDog/datadog-agent). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4yOS41IiwidXBkYXRlZEluVmVyIjoiNDQuMjkuNSIsInRhcmdldEJyYW5jaCI6Im1haW4iLCJsYWJlbHMiOlsiY2hhbmdlbG9nL25vLWNoYW5nZWxvZyIsImRlcGVuZGVuY2llcyIsInFhL25vLWNvZGUtY2hhbmdlIl19-->",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54919",
+      "createdAt": "2026-08-14T17:04:11Z",
+      "updatedAt": "2026-08-17T01:15:32Z",
+      "timestamp": "2026-08-17T01:15:32Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 7
+      },
+      "labels": [
+        "changelog/no-changelog",
+        "dependencies",
+        "qa/no-code-change",
+        "team/agent-delivery",
+        "short review",
+        "team/agent-integrations",
+        "team/agent-build",
+        "internal"
+      ],
+      "author": "renovate[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54938",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Add baseline Dynamic Tests for CNM",
+      "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Adds opt-in baseline Dynamic Tests for Cloud Network Monitoring (CNM). Baseline mode selects a small, representative set of paths directly from each CNM connection snapshot when full connection-monitoring Dynamic Tests are disabled. Traceroute must also be enabled in the system-probe configuration. If full connection-monitoring Dynamic Tests are enabled, they take precedence and the collector continues to use standard scheduling. ### Motivation Hosts without full Dynamic Tests currently have no included Network Path coverage for observed CNM traffic. Baseline mode provides limited recurring path visibility. The selector favors connections that are more useful for diagnosis while keeping resource use predictable: timeout, RTO, and retransmit observations rank ahead of healthy traffic, then higher-volume connections rank first. ### Design and key changes #### Snapshot selection - Reuses the existing connection eligibility filters before ranking. - Selects at most three unique paths from each complete CNM snapshot. - Ranks diagnostic observations first, then total sent and received bytes, with the stable path hash as the final tie-breaker. - Keeps only the best three candidates while scanning, so selection memory remains bounded and connections are not aggregated. - Reconsiders a repeated path only when its later observation has a stronger score. #### Data boundary Both CNM producers populate the same generic `ConnectionSignals` structure on `NetworkPathConnection`: normalized timeout count, RTO count, retransmits, sent bytes, and received bytes. These are raw connection observations rather than baseline-specific derived state. The baseline selector in `baseline.go` is the only layer that interprets those signals into the diagnostic and traffic-volume ranking dimensions. This keeps producer behavior equivalent without coupling the shared connection model to baseline policy. #### Scheduling and payloads Standard, baseline, and NetFlow paths share the collector's existing eligibility checks, path construction, scheduling telemetry, deduplication, interval, TTL, context limit, and rate limit. Baseline mode adds only the snapshot-ranking step before selected paths enter that common machinery. Baseline results are recurring Dynamic Tests and carry `dynamic_test_profile: \"baseline\"` in Network Path payloads so downstream consumers can distinguish them from standard tests. Baseline-only operation also enables the collector and its reverse-DNS dependency. Baseline mode and Dynamic Remote Configuration filters are compatible and independent: baseline mode controls snapshot ranking, while the effective local-plus-RC filter controls path admission. When an RC rule admits the winning baseline candidate, its configuration ID, source, and tags are preserved alongside `dynamic_test_profile: \"baseline\"`. #### E2E coverage Adds a packaged-Agent E2E suite that generates CNM host traffic and verifies through fakeintake that a Network Path event is emitted with the baseline profile. The existing Remote Config host-traffic suite and the new baseline suite now share one fixture. The fixture replaces the GHCR-backed HTTP container and runtime `curl` installation with Python standard-library HTTP and traffic generation, including readiness checks, cleanup, and failure logs. ### Manual validation Use this minimal `datadog.yaml` configuration: ```yaml network_config: enabled: true network_path: connections_monitoring: baseline_tests_enabled: true ``` Enable traceroute in `system-probe.yaml`: ```yaml traceroute: enabled: true ``` After generating outbound TCP traffic from the host, verify that Network Path events are emitted with `test_run_type: \"dynamic\"` and `dynamic_test_profile: \"baseline\"`. Up to three unique eligible paths should be selected from each CNM snapshot, subject to the existing collector filters and scheduling limits. ### Describe how you validated your changes - `bazel test //comp/networkpath/npcollector/impl:impl_test` - Added focused unit coverage for selection order, each diagnostic signal, sent/received byte derivation, repeated-path handling, configuration, producer signal mapping, payload serialization, and recurring scheduling cadence. - Added packaged-Agent E2E coverage for baseline Network Path events through fakeintake. ### Additional Notes The new configuration setting defaults to `false` and remains an internal rollout control omitted from generated `datadog.yaml` examples.",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54938",
+      "createdAt": "2026-08-15T12:20:03Z",
+      "updatedAt": "2026-08-16T14:50:56Z",
+      "timestamp": "2026-08-16T14:50:56Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 50
+      },
+      "labels": [
+        "component/system-probe",
+        "team/ebpf-platform",
+        "qa/done",
+        "long review",
+        "team/ndm-integrations",
+        "team/agent-build",
+        "team/windows-products",
+        "team/cloud-network-monitoring",
+        "team/network-path",
+        "internal",
+        "team/fleet-automation"
+      ],
+      "author": "AlexandreYang",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54940",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "Update dependency DataDog/dd-apm-library-python to v4.13.1",
+      "text": "This PR contains the following updates: | Package | Update | Change | |---|---|---| | DataDog/dd-apm-library-python | patch | `4.13.0` → `4.13.1` | --- > [!WARNING] > Some dependencies could not be looked up. Check the [Dependency Dashboard](../issues/33469) for more information. --- ### Configuration 📅 **Schedule**: (in timezone Europe/Paris) - Branch creation - At 12:00 AM through 04:59 AM and 10:00 PM through 11:59 PM, Monday through Friday (`* 0-4,22-23 * * 1-5`) - Only on Sunday and Saturday (`* * * * 0,6`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/DataDog/datadog-agent). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4yOS41IiwidXBkYXRlZEluVmVyIjoiNDQuMjkuNSIsInRhcmdldEJyYW5jaCI6Im1haW4iLCJsYWJlbHMiOlsiY2hhbmdlbG9nL25vLWNoYW5nZWxvZyIsImRlcGVuZGVuY2llcyIsInFhL25vLWNvZGUtY2hhbmdlIl19-->",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54940",
+      "createdAt": "2026-08-16T01:06:00Z",
+      "updatedAt": "2026-08-17T01:41:18Z",
+      "timestamp": "2026-08-17T01:41:18Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 2
+      },
+      "labels": [
+        "changelog/no-changelog",
+        "dependencies",
+        "qa/no-code-change",
+        "short review",
+        "team/windows-products",
+        "internal"
+      ],
+      "author": "renovate[bot]",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54941",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "feat(autodiscovery): report ignored keys when AD formats are mixed",
+      "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Autodiscovery applies one check configuration format per entity — v2 (`checks`), then v1 (`check_names` + `init_configs` + `instances`), then legacy — and until now the ones that lost were dropped silently. This reports them through the errors `extractTemplatesFromMapWithV2` already collects, so they surface in `agent status` under `Configuration Errors` and as an AD annotation health issue. That function is the common entry point for pod annotations, container labels and Kubernetes service/endpoints annotations. ``` ad.datadoghq.com/server.checks takes precedence, ignoring ad.datadoghq.com/server.check_names, ad.datadoghq.com/server.init_configs, ad.datadoghq.com/server.instances: Autodiscovery only applies the check configuration with the highest priority (v2, then v1, then legacy) ``` Detection is limited to the keys that define a check: `ignore_autodiscovery_tags` and `logs` are excluded because they are read next to a v2 configuration — the former is applied on top of one when `cluster_checks.support_hybrid_ignore_ad_tags` is enabled. Following #41372, this uses the stored errors rather than a log line. ### Motivation A team on a cluster we operate followed the docs and added a v2 annotation to a workload that already had v1 ones, and their existing checks silently stopped — no warning, no log line, nothing in `agent status`. Both forms are valid Autodiscovery syntax, so nothing looked wrong at a glance, and finding the cause took a while. The precedence is intentional, but it is documented only in a code comment. ### Describe how you validated your changes Added cases for v1 next to v2 and v1 next to legacy; six existing mixed-format cases were updated. The single-format cases still assert no error, and the hybrid-mode case in `kube_services_test.go` guards the exclusion above. ### Additional Notes Users who mix formats today will see a new error in `agent status` and a new AD annotation health issue (`MEDIUM`); the applied configuration does not change. Follow-ups not included: the health issue's remediation steps, documenting the precedence rule, and reporting a standalone `check_tag_cardinality` that is dropped next to a v2 configuration.",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54941",
+      "createdAt": "2026-08-16T05:09:44Z",
+      "updatedAt": "2026-08-16T07:12:24Z",
+      "timestamp": "2026-08-16T07:12:24Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "community",
+        "team/container-platform"
+      ],
+      "author": "jumpe1",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:DataDog/datadog-agent:pull_request:54942",
+      "source": "github",
+      "group": "observability",
+      "project": "DataDog/datadog-agent",
+      "kind": "pull_request",
+      "title": "[bot] Update EKS nodes version",
+      "text": "> [!NOTE] > This PR was auto generated by this [job](https://gitlab.ddbuild.io/DataDog/ami-builder/-/jobs/1956041947). This updates EKS nodes version using the latest release versions. - AL2023_ARM_64_STANDARD 1.32 1.32.13-20260728 -> 1.32.13-20260810 - AL2023_ARM_64_STANDARD 1.33 1.33.13-20260728 -> 1.33.13-20260810 - AL2023_ARM_64_STANDARD 1.34 1.34.9-20260728 -> 1.34.9-20260810 - AL2023_x86_64_NVIDIA 1.32 1.32.13-20260728 -> 1.32.13-20260810 - AL2023_x86_64_NVIDIA 1.33 1.33.13-20260728 -> 1.33.13-20260810 - AL2023_x86_64_NVIDIA 1.34 1.34.9-20260728 -> 1.34.9-20260810 - AL2023_x86_64_STANDARD 1.32 1.32.13-20260728 -> 1.32.13-20260810 - AL2023_x86_64_STANDARD 1.33 1.33.13-20260728 -> 1.33.13-20260810 - AL2023_x86_64_STANDARD 1.34 1.34.9-20260728 -> 1.34.9-20260810 - BOTTLEROCKET_x86_64 1.32 1.63.0-d4932ff8 -> 1.64.0-ad9d4847 - BOTTLEROCKET_x86_64 1.33 1.63.0-d4932ff8 -> 1.64.0-ad9d4847 - BOTTLEROCKET_x86_64 1.34 1.63.0-d4932ff8 -> 1.64.0-ad9d4847",
+      "url": "https://github.com/DataDog/datadog-agent/pull/54942",
+      "createdAt": "2026-08-17T01:04:45Z",
+      "updatedAt": "2026-08-17T01:33:51Z",
+      "timestamp": "2026-08-17T01:33:51Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 2
+      },
+      "labels": [
+        "changelog/no-changelog",
+        "qa/no-code-change",
+        "short review",
+        "team/agent-devx",
+        "internal"
+      ],
+      "author": "dd-octo-sts[bot]",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:7aa14e6fbde444478218",
+      "signalId": "github:DataDog/datadog-agent:issue:33469",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:issue:33469",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "issue",
+        "title": "Dependency Dashboard",
+        "text": "This issue lists Renovate updates and detected dependencies. Read the [Dependency Dashboard](https://docs.renovatebot.com/key-concepts/dashboard/) docs to learn more.<br>[View this repository on the Mend.io Web Portal](https://developer.mend.io/github/DataDog/datadog-agent). ## Repository Problems These problems occurred while renovating this repository. [View logs](https://developer.mend.io//github/DataDog/datadog-agent). - ⚠️ WARN: Package lookup failures ## Deprecations / Replacements > [!WARNING] The following dependencies are either deprecated or have replacements available. | Datasource | Package | Replacement PR? | |------------|------|--------------| | nuget | [xunit](https://redirect.github.com/xunit/xunit) | ![Unavailable](https://img.shields.io/badge/unavailable-orange?style=flat-square) | ## Pending Approval The following branches are pending approval. To create them, click on a checkbox below. - [ ] <!-- approve-branch=renovate/github.com-alecthomas-participle-2.x -->Update module github.com/alecthomas/participle to v2 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-authorization-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/authorization/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-compute-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/compute/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-containerservice-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/containerservice/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-managedidentity-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/managedidentity/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-network-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/network/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-azure-native-sdk-v2-3.x -->Update module github.com/pulumi/pulumi-azure-native-sdk/v2 to v3 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-docker-sdk-v4-5.x -->Update module github.com/pulumi/pulumi-docker/sdk/v4 to v5 - [ ] <!-- approve-branch=renovate/github.com-pulumi-pulumi-tls-sdk-v4-5.x -->Update module github.com/pulumi/pulumi-tls/sdk/v4 to v5 - [ ] <!-- approve-branch=renovate/github.com-sijms-go-ora-v2-3.x -->Update module github.com/sijms/go-ora/v2 to v3 - [ ] <!-- approve-branch=renovate/gitlab.com-gitlab-org-api-client-go-2.x -->Update module gitlab.com/gitlab-org/api/client-go to v2 - [ ] <!-- approve-branch=renovate/gopkg.in-datadog-dd-trace-go.v1-2.x -->Update module gopkg.in/DataDog/dd-trace-go.v1 to v2 - [ ] <!-- approve-all-pending-prs -->🔐 **Create all pending approval PRs at once** 🔐 ## Rate-Limited The following updates are currently rate-limited. To force their creation now, click on a checkbox below. - [ ] <!-- unlimit-branch=renovate/integrations-core-digest -->Update integrations-core digest to 05ce03c - [ ] <!-- unlimit-branch=renovate/linux-images-130951605.x -->Update dependency linux-images to v130951605 - [ ] <!-- unlimit-branch=renovate/linux-images-devcontainer-130951605.x -->Update dependency linux-images-devcontainer to v130951605 - [ ] <!-- unlimit-branch=renovate/windows-images-130951605.x -->Update dependency windows-images to v130951605 - [ ] <!-- unlimit-branch=renovate/github-actions -->Update github-actions (`DataDog/dd-sts-action`, `actions/checkout`, `aws-actions/configure-aws-credentials`, `docker/login-action`, `dtolnay/rust-toolchain`, `tcort/github-action-markdown-link-check`) - [ ] <!-- unlimit-branch=renovate/github.com-datadog-dd-trace-go-v2-2.x -->Update module github.com/DataDog/dd-trace-go/v2 to v2.9.2 - [ ] <!-- unlimit-branch=renovate/github.com-jarcoal-httpmock-1.x -->Update module github.com/jarcoal/httpmock to v1.4.2 - [ ] <!-- unlimit-branch=renovate/github.com-klauspost-compress-1.x -->Update module github.com/klauspost/compress to v1.19.2 - [ ] <!-- unlimit-branch=renovate/github.com-mattn-go-sqlite3-1.x -->Update module github.com/mattn/go-sqlite3 to v1.14.49 - [ ] <!-- unlimit-branch=renovate/github.com-pierrec-lz4-v4-4.x -->Update module github.com/pierrec/lz4/v4 to v4.1.28 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-random-sdk-v4-4.x -->Update module github.com/pulumi/pulumi-random/sdk/v4 to v4.21.1 - [ ] <!-- unlimit-branch=renovate/github.com-santhosh-tekuri-jsonschema-v6-6.x -->Update module github.com/santhosh-tekuri/jsonschema/v6 to v6.0.3 - [ ] <!-- unlimit-branch=renovate/github.com-vektra-mockery-v3-3.x -->Update module github.com/vektra/mockery/v3 to v3.7.2 - [ ] <!-- unlimit-branch=renovate/go.etcd.io-etcd-client-v2-2.x -->Update module go.etcd.io/etcd/client/v2 to v2.305.33 - [ ] <!-- unlimit-branch=renovate/go.temporal.io-api-1.x -->Update module go.temporal.io/api to v1.63.5 - [ ] <!-- unlimit-branch=renovate/clap-4.x-lockfile -->Update Rust crate clap to v4.6.6 - [ ] <!-- unlimit-branch=renovate/dd_sds-0.x -->Update Rust crate dd_sds to v0.1.0-20260807-dd8be015454d - [ ] <!-- unlimit-branch=renovate/thiserror-2.x-lockfile -->Update Rust crate thiserror to v2.0.20 - [ ] <!-- unlimit-branch=renovate/packaging-26.x -->Update dependency packaging to v26.3 - [ ] <!-- unlimit-branch=renovate/cloud.google.com-go-compute-1.x -->Update module cloud.google.com/go/compute to v1.66.0 - [ ] <!-- unlimit-branch=renovate/code.cloudfoundry.org-bbs-1.x -->Update module code.cloudfoundry.org/bbs to v1.12.0 - [ ] <!-- unlimit-branch=renovate/code.cloudfoundry.org-lager-v3-3.x -->Update module code.cloudfoundry.org/lager/v3 to v3.81.0 - [ ] <!-- unlimit-branch=renovate/github.com-apache-arrow-go-v18-18.x -->Update module github.com/apache/arrow-go/v18 to v18.7.0 - [ ] <!-- unlimit-branch=renovate/github.com-aquasecurity-trivy-0.x -->Update module github.com/aquasecurity/trivy to v0.73.0 - [ ] <!-- unlimit-branch=renovate/github.com-containerd-containerd-v2-2.x -->Update module github.com/containerd/containerd/v2 to v2.3.3 - [ ] <!-- unlimit-branch=renovate/github.com-datadog-datadog-api-client-go-v2-2.x -->Update module github.com/DataDog/datadog-api-client-go/v2 to v2.63.0 - [ ] <!-- unlimit-branch=renovate/github.com-datadog-dd-trace-go-contrib-net-http-v2-2.x -->Update module github.com/DataDog/dd-trace-go/contrib/net/http/v2 to v2.9.2 - [ ] <!-- unlimit-branch=renovate/github.com-datadog-orchestrion-1.x -->Update module github.com/DataDog/orchestrion to v1.12.0 - [ ] <!-- unlimit-branch=renovate/github.com-docker-cli-29.x -->Update module github.com/docker/cli to v29.7.2+incompatible - [ ] <!-- unlimit-branch=renovate/github.com-envoyproxy-gateway-1.x -->Update module github.com/envoyproxy/gateway to v1.8.3 - [ ] <!-- unlimit-branch=renovate/github.com-google-cel-go-0.x -->Update module github.com/google/cel-go to v0.31.0 - [ ] <!-- unlimit-branch=renovate/github.com-open-policy-agent-opa-1.x -->Update module github.com/open-policy-agent/opa to v1.19.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-aws-sdk-v7-7.x -->Update module github.com/pulumi/pulumi-aws/sdk/v7 to v7.41.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-awsx-sdk-v3-3.x -->Update module github.com/pulumi/pulumi-awsx/sdk/v3 to v3.8.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-eks-sdk-v4-4.x -->Update module github.com/pulumi/pulumi-eks/sdk/v4 to v4.3.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-gcp-sdk-v9-9.x -->Update module github.com/pulumi/pulumi-gcp/sdk/v9 to v9.33.0 - [ ] <!-- unlimit-branch=renovate/github.com-pulumi-pulumi-sdk-v3-3.x -->Update module github.com/pulumi/pulumi/sdk/v3 to v3.256.0 - [ ] <!-- unlimit-branch=renovate/github.com-rabbitmq-amqp091-go-1.x -->Update module github.com/rabbitmq/amqp091-go to v1.13.0 - [ ] <!-- unlimit-branch=renovate/github.com-redis-go-redis-v9-9.x -->Update module github.com/redis/go-redis/v9 to v9.22.0 - [ ] <!-- unlimit-branch=renovate/go.temporal.io-sdk-1.x -->Update module go.temporal.io/sdk to v1.47.0 - [ ] <!-- unlimit-branch=renovate/sigs.k8s.io-gateway-api-1.x -->Update module sigs.k8s.io/gateway-api to v1.6.1 - [ ] <!-- unlimit-branch=renovate/redis-7.x -->Update redis Docker tag to v7.4 - [ ] <!-- unlimit-branch=renovate/ureq-3.x-lockfile -->Update Rust crate ureq to v3.4.0 - [ ] <!-- unlimit-branch=renovate/confluentinc-cp-kafka-8.x -->Update confluentinc/cp-kafka Docker tag to v8 - [ ] <!-- unlimit-branch=renovate/major-github-actions -->Update github-actions (major) (`actions/cache`, `actions/labeler`, `actions/setup-go`, `actions/setup-node`, `actions/setup-python`, `actions/stale`, `slackapi/slack-github-action`) - [ ] <!-- unlimit-branch=renovate/redis-8.x -->Update redis Docker tag to v8 - [ ] <!-- create-all-rate-limited-prs -->🔐 **Create all rate-limited PRs at once** 🔐 ## Pending Status Checks The following updates await pending status checks. To force their creation now, click on a checkbox below. - [ ] <!-- approvePr-branch=renovate/aws-sdk-go-v2 -->Update aws-sdk-go-v2 (`github.com/aws/aws-sdk-go-v2`, `github.com/aws/aws-sdk-go-v2/config`, `github.com/aws/aws-sdk-go-v2/credentials`, `github.com/aws/aws-sdk-go-v2/service/ec2`, `github.com/aws/aws-sdk-go-v2/service/ecr`, `github.com/aws/aws-sdk-go-v2/service/ecs`, `github.com/aws/aws-sdk-go-v2/service/eks`, `github.com/aws/aws-sdk-go-v2/service/rds`, `github.com/aws/aws-sdk-go-v2/service/s3`, `github.com/aws/aws-sdk-go-v2/service/secretsmanager`, `github.com/aws/aws-sdk-go-v2/service/ssm`, `github.com/aws/aws-sdk-go-v2/service/sts`) - [ ] <!-- approvePr-branch=renovate/confluentinc-cp-kafka-7.x -->Update confluentinc/cp-kafka Docker tag to v7.9.9 - [ ] <!-- approvePr-branch=renovate/rules_rs-0.x -->Update dependency rules_rs to v0.0.104 - [ ] <!-- approvePr-branch=renovate/docker.io-library-golang-1.x -->Update docker.io/library/golang Docker tag to v1.26.6 - [ ] <!-- approvePr-branch=renovate/github.com-cri-o-ocicni-0.x -->Update module github.com/cri-o/ocicni to v0.5.1 - [ ] <!-- approvePr-branch=renovate/github.com-go-delve-delve-1.x -->Update module github.com/go-delve/delve to v1.27.1 - [ ] <!-- approvePr-branch=renovate/github.com-google-go-containerregistry-0.x -->Update module github.com/google/go-containerregistry to v0.21.9 - [ ] <!-- approvePr-branch=renovate/franz-go -->Update module github.com/twmb/franz-go to v1.21.6 - [ ] <!-- approvePr-branch=renovate/google.golang.org-protobuf-1.x -->Update module google.golang.org/protobuf to v1.36.12 - [ ] <!-- approvePr-branch=renovate/http-body-util-0.x-lockfile -->Update Rust crate http-body-util to v0.1.5 - [ ] <!-- approvePr-branch=renovate/uuid-1.x-lockfile -->Update Rust crate uuid to v1.24.1 - [ ] <!-- approvePr-branch=renovate/hatchling-1.x -->Update dependency hatchling to v1.32.0 - [ ] <!-- approvePr-branch=renovate/rules_go-0.x -->Update dependency rules_go to v0.63.0 - [ ] <!-- approvePr-branch=renovate/rules_python-2.x -->Update dependency rules_python to v2.3.1 - [ ] <!-- approvePr-branch=renovate/azure-sdk-for-go-monorepo -->Update module github.com/Azure/azure-sdk-for-go/sdk/azcore to v1.23.0 - [ ] <!-- approvePr-branch=renovate/github.com-sirupsen-logrus-1.x -->Update module github.com/sirupsen/logrus to v1.10.0 - [ ] <!-- approvePr-branch=renovate/public.ecr.aws-docker-library-alpine-3.x -->Update public.ecr.aws/docker/library/alpine Docker tag to v3.24.1 - [ ] <!-- approvePr-branch=renovate/npm-sentry-dotagents-3.x -->Update dependency npm:@sentry/dotagents to v3 - [ ] <!-- approvePr-branch=renovate/major-xunit-dotnet-monorepo -->Update dependency xunit.analyzers to v2 - [ ] <!-- approvePr-branch=renovate/postgres-18.x -->Update postgres Docker tag to v18 --- > [!WARNING] > Renovate failed to look up the following dependencies: `Failed to look up go package github.com/mdlayher/vsock: no-result`. > > Files affected: `comp/core/ipc/httphelpers/go.mod`, `comp/core/tagger/impl-remote/go.mod`, `go.mod`, `pkg/util/grpc/go.mod`, `pkg/util/system/go.mod` --- ## Open The following updates have all been created. To force a retry/rebase of any, click on a checkbox below. - [ ] <!-- rebase-branch=renovate/go-github.com-datadog-dd-trace-go-v2-vulnerability -->[Update module github.com/DataDog/dd-trace-go/v2 to v2.8.1 [SECURITY]](../pull/53708) - [ ] <!-- rebase-branch=renovate/datadog-dd-apm-library-python-4.x -->[Update dependency DataDog/dd-apm-library-python to v4.13.1](../pull/54940) - [ ] <!-- rebase-branch=renovate/datadog-datadog-agent-dev-0.x -->[Update dependency DataDog/datadog-agent-dev to v0.38.0](../pull/52555) - [ ] <!-- rebase-branch=renovate/sentry-dotagents-3.x -->[Update dependency @sentry/dotagents to v3](../pull/54802) - [ ] <!-- rebase-branch=renovate/gawk-5.x -->[Update dependency gawk to v5.4.0](../pull/52963) - [ ] <!-- rebase-branch=renovate/kubernetes-monorepo -->[Update kubernetes monorepo to v0.36.3](../pull/51833) (`k8s.io/api`, `k8s.io/apiextensions-apiserver`, `k8s.io/apimachinery`, `k8s.io/cli-runtime`, `k8s.io/client-go`, `k8s.io/component-base`, `k8s.io/cri-api`, `k8s.io/cri-client`, `k8s.io/kube-aggregator`, `k8s.io/kubectl`, `k8s.io/kubelet`, `k8s.io/metrics`) - [ ] <!-- rebase-branch=renovate/github.com-godror-godror-0.x -->[Update module github.com/godror/godror to v0.51.0](../pull/53235) - [ ] <!-- rebase-branch=renovate/k8s.io-autoscaler-vertical-pod-autoscaler-1.x -->[Update module k8s.io/autoscaler/vertical-pod-autoscaler to v1.7.1](../pull/51852) - [ ] <!-- rebase-branch=renovate/k8s.io-kube-state-metrics-v2-2.x -->[Update module k8s.io/kube-state-metrics/v2 to v2.19.1](../pull/52895) - [ ] <!-- rebase-branch=renovate/sigs.k8s.io-custom-metrics-apiserver-1.x -->[Update module sigs.k8s.io/custom-metrics-apiserver to v1.36.0](../pull/52282) - [ ] <!-- rebase-branch=renovate/docker.io-library-ubuntu-26.x -->[Update docker.io/library/ubuntu Docker tag to v26](../pull/52153) - [ ] <!-- rebase-branch=renovate/docker.io-ubuntu-26.x -->[Update docker.io/ubuntu Docker tag to v26](../pull/50840) - [ ] <!-- rebase-branch=renovate/github.com-cloudfoundry-community-go-cfclient-v2-3.x -->[Update module github.com/cloudfoundry-community/go-cfclient/v2 to v3](../pull/53622) - [ ] <!-- rebase-branch=renovate/github.com-netsampler-goflow2-2.x -->[Update module github.com/netsampler/goflow2 to v2](../pull/53239) - [ ] <!-- rebase-branch=renovate/major-franz-go -->[Update module github.com/twmb/franz-go/pkg/kmsg to v2](../pull/53824) - [ ] <!-- rebase-all-open-prs -->**Click on this checkbox to rebase all open PRs at once** ## PR Closed (Blocked) The following updates are blocked by an existing closed PR. To recreate the PR, click on a checkbox below. - [ ] <!-- recreate-branch=renovate/github.com-aws-karpenter-provider-aws-1.x -->[Update module github.com/aws/karpenter-provider-aws to v1.14.0](../pull/53819) - [ ] <!-- recreate-branch=renovate/github.com-bazelbuild-rules_go-0.x -->[Update module github.com/bazelbuild/rules_go to v0.62.0](../pull/54057) - [ ] <!-- recreate-branch=renovate/gopkg.in-datadog-dd-trace-go.v1-1.x -->[Update module gopkg.in/DataDog/dd-trace-go.v1 to v1.74.8](../pull/52894) - [ ] <!-- recreate-branch=renovate/sigs.k8s.io-karpenter-1.x -->[Update module sigs.k8s.io/karpenter to v1.14.0](../pull/53820) - [ ] <!-- recreate-branch=renovate/chef-sugar-5.x -->[Update dependency chef-sugar to v5](../pull/51540) - [ ] <!-- recreate-branch=renovate/invoke-3.x -->[Update dependency invoke to v3](../pull/50838) - [ ] <!-- recreate-branch=renovate/code.cloudfoundry.org-bbs-models-1.x -->[Update module code.cloudfoundry.org/bbs/models to v1](../pull/53823) - [ ] <!-- recreate-branch=renovate/github.com-santhosh-tekuri-jsonschema-v5-6.x -->[Update module github.com/santhosh-tekuri/jsonschema/v5 to v6](../pull/54069) - [ ] <!-- recreate-branch=renovate/go.etcd.io-etcd-client-v2-3.x -->[Update module go.etcd.io/etcd/client/v2 to v3](../pull/53825) - [ ] <!-- recreate-branch=renovate/go.yaml.in-yaml-v2-3.x -->[Update module go.yaml.in/yaml/v2 to v3](../pull/53527) ## Detected Dependencies > [!NOTE] > Detected dependencies section has been truncated <details><summary>bazel-module (2)</summary> <blockquote> <details><summary>deps/repos.MODULE.bazel</summary> </details> <details><summary>MODULE.bazel (20)</summary> - `bazel_lib 3.7.1` - `bazel_skylib 1.9.2` - `gawk 5.3.2.bcr.7` → [Updates: `5.4.0`] - `gazelle 0.52.2` - `libarchive 3.8.1.bcr.2` - `platforms 1.1.0` - `re.bzl 0.3.1` - `rules_cc 0.2.22` - `rules_flex 0.4.1` - `rules_go 0.61.1` → [Updates: `0.63.0`] - `rules_m4 0.3.bcr.1` - `rules_multitool 1.11.1` - `rules_python 2.2.0` → [Updates: `2.3.1`] - `rules_rs 0.0.27` → [Updates: `0.0.104`] - `rules_rust 0.73.0` - `rules_rust_prost 0.73.0` - `rules_shell 0.8.0` - `toml.bzl 0.4.1` - `rules_testing 0.9.0` - `apple_support 2.8.0` </details> </blockquote> </details> <details><summary>bazelisk (1)</summary> <blockquote> <details><summary>.bazelversion</summary> </details> </blockquote> </details> <details><summary>bitbucket-pipelines (1)</summary> <blockquote> <details><summary>.gitlab/.pre/cancel-prev-pipelines.yml</summary> </details> </blockquote> </details> <details><summary>bundler (1)</summary> <blockquote> <details><summary>omnibus/Gemfile (2)</summary> - `chef-sugar v3.6.0` → [Updates: `v5.1.12`] - `mixlib-cli '~> 2.1.0'` </details> </blockquote> </details> <details><summary>cargo (10)</summary> <blockquote> <details><summary>Cargo.toml (57)</summary> - `anyhow 1.0.98` - `cap-std 4.0` - `dd_sds =0.1.0-20260803-1e4349aada52` → [Updates: `=0.1.0-20260807-dd8be015454d`] - `caps 0.5` - `chrono 0.4` - `clap 4.5` → [Updates: `4.5`] - `elf 0.8.0` - `glob-match 0.2` - `http-body-util 0.1` → [Updates: `0.1`] - `hostname 0.4` - `hyper 1` - `hyper-util 0.1` - `libc 0.2` - `log 0.4` - `prost 0.14` - `prost-build 0.14` - `prost-types 0.14` - `protoc-gen-prost 0.5` - `protoc-gen-tonic 0.5` - `lru 0.18.0` - `memchr 2.7.6` - `nom 8.0` - `normalize-path 0.2` - `phf 0.14` - `rawzip 0.5.0` - `xml-rs 1.0` - `rmp-serde 1.3` - `serde 1.0.219` - `serde_json 1.0` - `serde_yaml 0.9` - `time 0.3` - `thiserror 2.0.12` → [Updates: `2.0.12`] - `tokio 1` - `tokio-stream 0.1` - `tonic 0.14` - `tonic-build 0.14` - `tonic-prost 0.14` - `tonic-prost-build 0.14` - `tonic-reflection 0.14` - `ureq 3.0` → [Updates: `3.0`] - `uzers 0.12` - `walkdir 2` - `saphyr-parser 0.0.11` - `yaml-rust2 0.11` - `zip 8.0` - `flate2 1.1` - `tower 0.5` - `uuid 1` → [Updates: `1`] - `windows-registry 0.6` - `windows-sys 0.61` - `dircpy 0.3.19` - `regex 1` - `memmap2 0.9` - `nix 0.31` - `scopeguard 1.2` - `temp-env 0.3` - `tempfile 3.0` </details> <details><summary>cmd/ai_prompt_logger/Cargo.toml</summary> </details> <details><summary>comp/core/log/rust/Cargo.toml</summary> </details> <details><summary>pkg/collector/sharedlibrary/rustchecks/checks/datasecurity/Cargo.toml (1)</summary> - `postgres 0.19` </details> <details><summary>pkg/collector/sharedlibrary/rustchecks/checks/example/Cargo.toml</summary> </details> <details><summary>pkg/collector/sharedlibrary/rustchecks/core/Cargo.toml</summary> </details> <details><summary>pkg/discovery/module/rust/Cargo.toml</summary> </details> <details><summary>pkg/privateactionrunner/par-control/Cargo.toml</summary> </details> <details><summary>pkg/procmgr/rust/Cargo.toml</summary> </details> <details><summary>pkg/procmgr/rust/client/Cargo.toml</summary> </details> </blockquote> </details> <details><summary>docker-compose (36)</summary> <blockquote> <details><summary>cmd/host-profiler/docker-compose.yml (1)</summary> - `registry.datadoghq.com/agent 7` </details> <details><summary>pkg/collector/corechecks/oracle/compose/docker-compose.yml</summary> </details> <details><summary>pkg/discovery/module/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/amqp/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/http/testutil/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/kafka/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/mongo/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/mysql/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/postgres/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/redis/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/tls/gotls/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/protocols/tls/nodejs/testdata/docker-compose-ubuntu.yml</summary> </details> <details><summary>pkg/network/protocols/tls/nodejs/testdata/docker-compose.yml</summary> </details> <details><summary>pkg/network/tracer/testdata/dnsworkload/docker-compose.yml</summary> </details> <details><summary>pkg/network/usm/testdata/bio_leak_test/docker-compose.yml</summary> </details> <details><summary>pkg/network/usm/testdata/musl/docker-compose.yml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/dogstatsd/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/jmxfetch/docker-compose-all-metrics.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/jmxfetch/docker-compose-slow-metrics.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/jmxfetch/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/logger/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/datadog/apps/redis/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/integration/etcd/docker-compose.yaml</summary> </details> <details><summary>test/e2e-framework/components/integration/kafka/docker-compose.yaml (3)</summary> - `confluentinc/cp-kafka 7.9.8` → [Updates: `7.9.9`, `8.3.1`] - `confluentinc/cp-kafka 7.9.8` → [Updates: `7.9.9`, `8.3.1`] - `confluentinc/cp-kafka 7.9.8` → [Updates: `7.9.9`, `8.3.1`] </details> <details><summary>test/e2e-framework/components/integration/postgres/docker-compose.yaml (2)</summary> - `postgres 16` → [Updates: `18`] - `postgres 16` → [Updates: `18`] </details> <details><summary>test/e2e-framework/components/integration/redisdb/docker-compose.yaml (2)</summary> - `redis 7.2` → [Updates: `7.4`, `8.10`] - `redis 7.2` → [Updates: `7.4`, `8.10`] </details> <details><summary>test/fakeintake/docker-compose.yaml</summary> </details> <details><summary>test/new-e2e/examples/testfixtures/docker-compose.fake-process.yaml</summary> </details> <details><summary>test/new-e2e/examples/testfixtures/docker-compose.lighttpd.yaml</summary> </details> <details><summary>test/new-e2e/tests/agent-health/fixtures/docker-compose.busybox.yaml</summary> </details> <details><summary>test/new-e2e/tests/discovery/testdata/compose/docker-compose.configfilesdiscovery-kafka.yaml</summary> </details> <details><summary>test/new-e2e/tests/discovery/testdata/compose/docker-compose.configfilesdiscovery-redis.yaml</summary> </details> <details><summary>test/new-e2e/tests/discovery/testdata/compose/docker-compose.fake-krakend.yaml</summary> </details> <details><summary>test/new-e2e/tests/fips-compliance/fixtures/docker-compose-cluster-agent.yaml</summary> </details> <details><summary>test/new-e2e/tests/fips-compliance/fixtures/docker-compose-fips-server.yaml</summary> </details> <details><summary>test/new-e2e/tests/fips-compliance/fixtures/docker-compose.yaml</summary> </details> </blockquote> </details> <details><summary>dockerfile (15)</summary> <blockquote> <details><summary>Dockerfiles/agent-ddot/Dockerfile</summary> </details> <details><summary>Dockerfiles/agent-ddot/Dockerfile.agent-otel (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/agent/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/agent/windows/amd64/Dockerfile (1)</summary> - `mcr.microsoft.com/dotnet/sdk 9.0-windowsservercore-ltsc2019` </details> <details><summary>Dockerfiles/base-image/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/cluster-agent/Dockerfile (2)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/ddot-ebpf/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>Dockerfiles/dogstatsd/alpine/Dockerfile (1)</summary> - `public.ecr.aws/docker/library/alpine 3.23.3` → [Updates: `3.24.1`] </details> <details><summary>Dockerfiles/otel-agent/Dockerfile (1)</summary> - `docker.io/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>test/e2e-framework/resources/local/podman/data/Dockerfile (1)</summary> - `docker.io/library/ubuntu 24.04` → [Updates: `26.04`] </details> <details><summary>test/fakeintake/Dockerfile (2)</summary> - `docker.io/library/golang 1.26.5` → [Updates: `1.26.6`] - `docker.io/library/alpine 3.24.1` </details> <details><summary>tools/ebpf/Dockerfiles/Dockerfile-process-agent-dev</summary> </details> <details><summary>tools/ebpf/Dockerfiles/Dockerfile-security-agent-dev</summary> </details> <details><summary>tools/gdb/Dockerfile (1)</summary> - `registry.datadoghq.com/agent 7` </details> <details><summary>tools/host-profiler/Dockerfile</summary> </details> </blockquote> </details> <details><summary>github-actions (45)</summary> <blockquote> <details><summary>.github/actions/bazel-cache/action.yml (2)</summary> - `actions/cache v6.1.0@55cc8345863c7cc4c66a329aec7e433d2d1c52a9` - `actions/cache v6.1.0@55cc8345863c7cc4c66a329aec7e433d2d1c52a9` </details> <details><summary>.github/actions/deps-tidy-push/action.yml</summary> </details> <details><summary>.github/actions/deps-tidy-setup/action.yml (1)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` </details> <details><summary>.github/actions/install-dda/action.yml (3)</summary> - `actions/cache v6.1.0@55cc8345863c7cc4c66a329aec7e433d2d1c52a9` - `DataDog/datadog-agent-dev install@00e4a423088309efce1d5ba6b8c5366eef648710` - `DataDog/datadog-agent-dev install@00e4a423088309efce1d5ba6b8c5366eef648710` </details> <details><summary>.github/workflows/add-dependabot-pr-to-mq.yml (3)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/add-label-community-pr.yml (2)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/add-label-pr.yml (3)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/add-milestone.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/agenttelemetry-metric-reminder.yml (1)</summary> - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/ask-review.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/assess-permissions.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/assign-issue.yml (1)</summary> - `DataDog/issue-triage-action v1.0.1@b39f0bc12abc52fe8aa70dc9b9353bf307a13219` </details> <details><summary>.github/workflows/backport-pr.yml (4)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/buildimages-update.yml (5)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/chase-for-qa-cards.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/check-issue-status.yml (5)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/check-skip.yml</summary> </details> <details><summary>.github/workflows/cla.yml (2)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `contributor-assistant/github-action v2.6.1@ca4a40a7d1004f18d9960b404b97e5f30a505a08` </details> <details><summary>.github/workflows/code-review-complexity.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/code-review.yml (1)</summary> - `DataDog/code-review-action v1.1.0@56d6862711348b11ec2603edfb29c52c09f4b84c` </details> <details><summary>.github/workflows/codex-review-draft.yml (1)</summary> - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/codex-review-ready-for-review.yml</summary> </details> <details><summary>.github/workflows/collector-generate-and-update.yml (5)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `slackapi/slack-github-action v3.0.5@0d95c9a7becc1e6e297d76df9bc735c44f4cbcbc` → [Updates: `v4.0.0`] </details> <details><summary>.github/workflows/create-rc-pr.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/cws-btfhub-sync.yml (11)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `ubuntu 24.04` - `ubuntu 24.04` </details> <details><summary>.github/workflows/deps-tidy.yml (7)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `dtolnay/rust-toolchain v1@e97e2d8cc328f1b50210efc529dca0028893a2d9` → [Updates: `v1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `rust stable` </details> <details><summary>.github/workflows/do-not-merge.yml</summary> </details> <details><summary>.github/workflows/docs-dev.yml (8)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/cache v4.3.0@0057852bfaa89a56745cba8c7296529d2fc39830` → [Updates: `v6.1.0`] - `actions/upload-artifact v7.0.1@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` - `actions/download-artifact v8.0.1@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` - `peaceiris/actions-gh-pages v4.1.0@84c30a85c19949d7eee79c4ff27748b70285e453` </details> <details><summary>.github/workflows/go-update-commenter.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/github-script v9.0.0@3a2844b7e9c422d3c10d287c895573f7108da1b3` </details> <details><summary>.github/workflows/gohai.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] </details> <details><summary>.github/workflows/label-analysis.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/labeler.yml (1)</summary> - `actions/labeler v6.2.0@b8dd2d9be0f68b860e7dae5dae7d772984eacd6d` → [Updates: `v7.0.0`] </details> <details><summary>.github/workflows/markdown-lint-check.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `tcort/github-action-markdown-link-check v1.1.2@e7c7a18363c842693fadde5d41a3bd3573a7a225` → [Updates: `v1.1.3`] </details> <details><summary>.github/workflows/push-bazel-cache.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/report-merged-pr.yml (2)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `DataDog/dd-sts-action v1.0.0@2e8187910199bd93129520183c093e19aa585c75` → [Updates: `v1.0.5`] </details> <details><summary>.github/workflows/slapr_backport.yml (1)</summary> - `DataDog/slapr 1.1.0@95312d6b8528460243ba27c7f8167bfe20a68bec` </details> <details><summary>.github/workflows/slapr.yml (3)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `DataDog/slapr 1.1.0@95312d6b8528460243ba27c7f8167bfe20a68bec` </details> <details><summary>.github/workflows/stale.yml (2)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/stale v10.4.0@1e223db275d687790206a7acac4d1a11bd6fe629` → [Updates: `v11.0.0`] </details> <details><summary>.github/workflows/test-devcontainer.yml (3)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-node v6.5.0@249970729cb0ef3589644e2896645e5dc5ba9c38` → [Updates: `v7.0.0`] </details> <details><summary>.github/workflows/update-dependencies.yml (4)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/update-ebpf-profiler-branch.yml (4)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-go v6.5.0@924ae3a1cded613372ab5595356fb5720e22ba16` → [Updates: `v7.0.0`] - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` </details> <details><summary>.github/workflows/update-kubernetes-versions.yml (8)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-python v6.3.0@ece7cb06caefa5fff74198d8649806c4678c61a1` → [Updates: `v7.0.0`] - `helm/kind-action v1.14.0@ef37e7f390d99f746eb8b610417061a60e82a6cc` - `aws-actions/configure-aws-credentials v6.2.2@517a711dbcd0e402f90c77e7e2f81e849156e31d` → [Updates: `v6.2.3`] - `docker/login-action v4.4.0@af1e73f918a031802d376d3c8bbc3fe56130a9b0` → [Updates: `v4.6.0`] - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `python 3.14` </details> <details><summary>.github/workflows/upgrade-python-patch-version.yml (5)</summary> - `DataDog/dd-octo-sts-action v1.0.4@96a25462dbcb10ebf0bfd6e2ccc917d2ab235b9a` - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] - `actions/setup-python v6.3.0@ece7cb06caefa5fff74198d8649806c4678c61a1` → [Updates: `v7.0.0`] - `peter-evans/create-pull-request v8.1.1@5f6978faf089d4d20b00c7766989d076bb2fc7f1` - `python 3.14` </details> <details><summary>.github/workflows/validate-renovate-deps.yml (1)</summary> - `actions/checkout v7.0.0@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0` → [Updates: `v7.0.1`] </details> <details><summary>.github/workflows/warn-failed-dependabot-pr.yml</summary> </details> </blockquote> </details> <details><summary>gomod (80)</summary> <blockquote> <details><summary>comp/anomalydetection/observer/def/go.mod</summary> </details> <details><summary>comp/anomalydetection/recorder/def/go.mod</summary> </details> <details><summary>comp/anomalydetection/severityevents/def/go.mod</summary> </details> <details><summary>comp/api/api/def/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/agenttelemetry/def/go.mod</summary> </details> <details><summary>comp/core/agenttelemetry/fx/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/agenttelemetry/impl/go.mod (7)</summary> - `github.com/DataDog/zstd v1.5.8-0.20260421145859-31a7e515a571@31a7e515a571` → [Updates: `v1.5.8-0.20260421145859-31a7e515a571`] - `github.com/prometheus/client_model v0.6.2` - `github.com/robfig/cron/v3 v3.0.1` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/core/config/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/configstreamconsumer/def/go.mod</summary> </details> <details><summary>comp/core/configsync/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/delegatedauth/api/cloudauth/aws/go.mod (2)</summary> - `github.com/aws/aws-sdk-go-v2 v1.43.3` → [Updates: `v1.43.4`] - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/delegatedauth/go.mod (2)</summary> - `github.com/cenkalti/backoff/v7 v7.0.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/flare/builder/go.mod</summary> </details> <details><summary>comp/core/flare/types/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/hostname/hostnameinterface/def/go.mod</summary> </details> <details><summary>comp/core/hostname/hostnameinterface/go.mod</summary> </details> <details><summary>comp/core/hostname/hostnameinterface/mock/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/ipc/def/go.mod</summary> </details> <details><summary>comp/core/ipc/httphelpers/go.mod (2)</summary> - `github.com/mdlayher/vsock v1.3.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/ipc/impl/go.mod (2)</summary> - `github.com/gofrs/flock v0.13.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/ipc/mock/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/def/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/fx/go.mod</summary> </details> <details><summary>comp/core/log/impl-trace/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/impl/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/log/mock/go.mod</summary> </details> <details><summary>comp/core/secrets/def/go.mod</summary> </details> <details><summary>comp/core/secrets/fx/go.mod</summary> </details> <details><summary>comp/core/secrets/impl/go.mod (4)</summary> - `github.com/benbjohnson/clock v1.3.5` - `github.com/json-iterator/go v1.1.12` - `github.com/stretchr/testify v1.11.1` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/secrets/mock/go.mod (1)</summary> - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/secrets/noop-impl/go.mod</summary> </details> <details><summary>comp/core/secrets/utils/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/core/status/go.mod (4)</summary> - `github.com/dustin/go-humanize v1.0.1` - `github.com/fatih/color v1.19.0` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/status/statusimpl/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/tagger/def/go.mod</summary> </details> <details><summary>comp/core/tagger/fx-remote/go.mod (1)</summary> - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/core/tagger/generic_store/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/impl-remote/go.mod (5)</summary> - `github.com/cenkalti/backoff/v7 v7.0.0` - `github.com/google/uuid v1.6.0` - `github.com/mdlayher/vsock v1.3.0` - `github.com/stretchr/testify v1.11.1` - `google.golang.org/grpc v1.83.0` </details> <details><summary>comp/core/tagger/origindetection/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/subscriber/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/tags/go.mod</summary> </details> <details><summary>comp/core/tagger/telemetry/go.mod</summary> </details> <details><summary>comp/core/tagger/types/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/tagger/utils/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/core/telemetry/go.mod (6)</summary> - `github.com/prometheus/client_golang v1.24.1` - `github.com/prometheus/client_model v0.6.2` - `github.com/prometheus/common v0.70.1` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.uber.org/fx v1.24.0` </details> <details><summary>comp/def/go.mod (1)</summary> - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/forwarder/defaultforwarder/go.mod (6)</summary> - `github.com/benbjohnson/clock v1.3.5` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.uber.org/fx v1.24.0` - `go.uber.org/multierr v1.11.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/forwarder/orchestrator/orchestratorinterface/go.mod</summary> </details> <details><summary>comp/host-profiler/symboluploader/testdata/go.mod</summary> </details> <details><summary>comp/logs-library/go.mod (4)</summary> - `github.com/DataDog/agent-payload/v5 v5.0.209` - `github.com/benbjohnson/clock v1.3.5` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` </details> <details><summary>comp/logs/agent/config/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/atomic v1.11.0` - `go.yaml.in/yaml/v3 v3.0.5` </details> <details><summary>comp/netflow/payload/go.mod</summary> </details> <details><summary>comp/otelcol/collector-contrib/def/go.mod</summary> </details> <details><summary>comp/otelcol/collector-contrib/impl/go.mod</summary> </details> <details><summary>comp/otelcol/converter/def/go.mod</summary> </details> <details><summary>comp/otelcol/converter/impl/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/ddflareextension/def/go.mod</summary> </details> <details><summary>comp/otelcol/ddflareextension/impl/go.mod (6)</summary> - `github.com/google/go-cmp v0.7.0` - `github.com/google/uuid v1.6.0` - `github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826@c48cc78d4826` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` - `go.yaml.in/yaml/v2 v2.4.4` → [Updates: `v3.0.5`] </details> <details><summary>comp/otelcol/ddflareextension/types/go.mod</summary> </details> <details><summary>comp/otelcol/ddprofilingextension/def/go.mod</summary> </details> <details><summary>comp/otelcol/ddprofilingextension/impl/go.mod (3)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/DataDog/dd-trace-go/v2 v2.9.0` → [Updates: `v2.9.2`] - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/otelcol/logsagentpipeline/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/logsagentpipeline/logsagentpipelineimpl/go.mod</summary> </details> <details><summary>comp/otelcol/otlp/components/connector/datadogconnector/go.mod (5)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/google/go-cmp v0.7.0` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/otelcol/otlp/components/datadogconfig/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/otlp/components/exporter/datadogexporter/go.mod (4)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/otelcol/otlp/components/exporter/logsagentexporter/go.mod (4)</summary> - `github.com/DataDog/agent-payload/v5 v5.0.209` - `github.com/patrickmn/go-cache v2.1.0+incompatible` - `github.com/stretchr/testify v1.11.1` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/otlp/components/exporter/serializerexporter/go.mod (8)</summary> - `github.com/google/go-cmp v0.7.0` - `github.com/stretchr/testify v1.11.1` - `github.com/tinylib/msgp v1.6.4` - `go.uber.org/fx v1.24.0` - `go.uber.org/multierr v1.11.0` - `go.uber.org/zap v1.28.0` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] - `go.uber.org/atomic v1.11.0` </details> <details><summary>comp/otelcol/otlp/components/metricsclient/go.mod (2)</summary> - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/stretchr/testify v1.11.1` </details> <details><summary>comp/otelcol/otlp/components/processor/infraattributesprocessor/go.mod (3)</summary> - `github.com/stretchr/testify v1.11.1` - `go.uber.org/fx v1.24.0` - `go.uber.org/zap v1.28.0` </details> <details><summary>comp/otelcol/otlp/testutil/go.mod (3)</summary> - `github.com/DataDog/sketches-go v1.4.8` - `github.com/stretchr/testify v1.11.1` - `google.golang.org/protobuf v1.36.12-0.20260116114154-8c4c4ae446ca@8c4c4ae446ca` → [Updates: `v1.36.12`] </details> <details><summary>comp/otelcol/status/def/go.mod</summary> </details> <details><summary>comp/otelcol/status/impl/go.mod (2)</summary> - `github.com/stretchr/testify v1.11.1` - `go.yaml.in/yaml/v3 v3.0.5` </details> <details><summary>comp/serializer/logscompression/go.mod</summary> </details> <details><summary>comp/serializer/metricscompression/go.mod</summary> </details> <details><summary>comp/trace/agent/def/go.mod</summary> </details> <details><summary>comp/trace/compression/def/go.mod</summary> </details> <details><summary>comp/trace/compression/impl-gzip/go.mod</summary> </details> <details><summary>comp/trace/compression/impl-zstd/go.mod (1)</summary> - `github.com/DataDog/zstd v1.5.8-0.20260421145859-31a7e515a571@31a7e515a571` → [Updates: `v1.5.8-0.20260421145859-31a7e515a571`] </details> <details><summary>go.mod (98)</summary> - `code.cloudfoundry.org/bbs v1.3.0` → [Updates: `v1.12.0`] - `code.cloudfoundry.org/bbs/models v0.0.0-20260618205254-dc4b9f8d5bc9@dc4b9f8d5bc9` → [Updates: `v1.8.0`] - `code.cloudfoundry.org/garden v0.0.0-20260617020226-a9e754564bb5@a9e754564bb5` → [Updates: `v0.0.0-20260814181737-66902029982f`] - `code.cloudfoundry.org/lager/v3 v3.78.0` → [Updates: `v3.81.0`] - `dario.cat/mergo v1.0.2` - `github.com/Azure/azure-sdk-for-go/sdk/azcore v1.22.0` → [Updates: `v1.23.0`] - `github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.14.0` - `github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.5.0` - `github.com/CycloneDX/cyclonedx-go v0.11.0` - `github.com/DATA-DOG/go-sqlmock v1.5.2` - `github.com/DataDog/agent-payload/v5 v5.0.209` - `github.com/DataDog/datadog-api-client-go/v2 v2.62.0` → [Updates: `v2.63.0`] - `github.com/DataDog/datadog-go/v5 v5.9.0` - `github.com/DataDog/datadog-operator/api v0.0.0-20260807013103-1518bb55e423@1518bb55e423` → [Updates: `v0.0.0-20260814092432-76c74ab76c39`] - `github.com/DataDog/datadog-traceroute v1.0.19` - `github.com/DataDog/dd-policy-engine/go v0.0.0-20260730181922-c5e419a4ec7d@c5e419a4ec7d` → [Updates: `v0.0.0-20260803230307-dd41045a4bb2`] - `github.com/DataDog/dd-trace-go/v2 v2.9.0` → [Updates: `v2.9.2`] - `github.com/DataDog/ddtrivy v0.0.0-20260519164847-bf6bcaf2f9b7@bf6bcaf2f9b7` → [Updates: `v0.0.0-20260519164847-bf6bcaf2f9b7`] - `github.com/DataDog/ebpf-manager v0.8.1` - `github.com/DataDog/go-acl v1.0.1` - `github.com/DataDog/go-sqllexer v0.2.4` - `github.com/DataDog/jsonapi v0.13.0` - `github.com/DataDog/rshell v0.0.24` - `github.com/DataDog/sketches-go v1.4.8` - `github.com/DataDog/watermarkpodautoscaler/apis v0.0.0-20250108152814-82e58d0231d1@82e58d0231d1` → [Updates: `v0.0.0-20260803084540-a82e1114b53b`] - `github.com/DataDog/zstd v1.5.8-0.20260421145859-31a7e515a571@31a7e515a571` → [Updates: `v1.5.8-0.20260421145859-31a7e515a571`] - `github.com/Masterminds/semver/v3 v3.5.0` - `github.com/Masterminds/sprig/v3 v3.3.0` - `github.com/Microsoft/go-winio v0.6.2` - `github.com/Microsoft/hcsshim v0.14.1` - `github.com/NVIDIA/go-nvml v0.13.1-0` - `github.com/ProtonMail/go-crypto v1.4.1` - `github.com/acobaugh/osrelease v0.1.0` - `github.com/alecthomas/units v0.0.0-20240927000941-0f3dac36c52b@0f3dac36c52b` - `github.com/aptly-dev/aptly v1.6.3` - `github.com/aquasecurity/trivy v0.72.0` → [Updates: `v0.73.0`] - `github.com/aquasecurity/trivy-db v0.0.0-20251222105351-a833f47f8f0d@a833f47f8f0d` → [Updates: `v0.0.0-20260813095258-0e0340a01b57`] - `github.com/aws/aws-sdk-go-v2 v1.43.3` → [Updates: `v1.43.4`] - `github.com/aws/aws-sdk-go-v2/config v1.32.34` → [Updates: `v1.32.35`] - `github.com/aws/aws-sdk-go-v2/credentials v1.19.33` → [Updates: `v1.19.34`] - `github.com/aws/aws-sdk-go-v2/service/ec2 v1.318.1` → [Updates: `v1.321.0`] - `github.com/aws/aws-sdk-go-v2/service/rds v1.120.1` → [Updates: `v1.124.1`] - `github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.44.0` → [Updates: `v1.44.4`] - `github.com/aws/aws-sdk-go-v2/service/ssm v1.73.0` → [Updates: `v1.73.4`] - `github.com/aws/aws-sdk-go-v2/service/sts v1.45.3` → [Updates: `v1.45.4`] - `github.com/aws/karpenter-provider-aws v1.9.0` → [Updates: `v1.14.0`] - `github.com/aymerick/raymond v2.0.2+incompatible` - `github.com/bazelbuild/rules_go v0.61.1` → [Updates: `v0.62.0`] - `github.com/beevik/ntp v1.5.0` - `github.com/benbjohnson/clock v1.3.5` - `github.com/bhmj/jsonslice v1.1.3` - `github.com/blabber/go-freebsd-sysctl v0.0.0-20201130114544-503969f39d8f@503969f39d8f` - `github.com/bmatcuk/doublestar/v4 v4.10.0` - `github.com/cenkalti/backoff/v7 v7.0.0` - `github.com/cespare/xxhash/v2 v2.3.0` - `github.com/cilium/ebpf v0.22.0` - `github.com/clbanning/mxj/v2 v2.7.0` - `github.com/cloudflare/cbpfc v0.0.0-20260219140841-0661ad29132c@0661ad29132c` → [Updates: `v0.0.0-20260805072904-7ac485fd93e1`] - `github.com/cloudfoundry-community/go-cfclient/v2 v2.0.1-0.20230503155151-3d15366c5820@3d15366c5820` → [Updates: `v3.0.0-beta.1`] - `github.com/containerd/cgroups/v3 v3.1.3` - `github.com/containerd/containerd/api v1.11.1` - `github.com/containerd/containerd/v2 v2.2.5` → [Updates: `v2.3.3`] - `github.com/containerd/errdefs v1.0.0` - `github.com/containerd/typeurl/v2 v2.3.0` - `github.com/containernetworking/cni v1.3.0` - `github.com/coreos/go-semver v0.3.1` - `github.com/coreos/go-systemd/v22 v22.7.0` - `github.com/creack/pty v1.1.24` - `github.com/cri-o/ocicni v0.5.0` → [Updates: `v0.5.1`] - `github.com/cyphar/filepath-securejoin v0.7.0` - `github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc@d8f796af33cc` - `github.com/distribution/reference v0.6.0` - `github.com/dustin/go-humanize v1.0.1` - `github.com/elastic/go-freelru v0.16.0` - `github.com/elastic/go-libaudit/v2 v2.6.2` - `github.com/elastic/go-seccomp-bpf v1.6.0` - `github.com/envoyproxy/gateway v1.7.4` → [Updates: `v1.8.3`] - `github.com/evanphx/json-patch/v5 v5.9.11` - `github.com/fatih/color v1.19.0` - `github.com/fatih/structtag v1.2.0` - `github.com/freddierice/go-losetup v0.0.0-20220711213114-2a14873012db@2a14873012db` - `github.com/ghodss/yaml v1.0.1-0.20220118164431-d8423dcdf344@d8423dcdf344` - `github.com/glaslos/ssdeep v1.0.0` - `github.com/go-delve/delve v1.27.0` → [Updates: `v1.27.1`] - `github.com/go-jose/go-jose/v4 v4.1.4` - `github.com/go-json-experiment/json v0.0.0-20250517221953-25912455fbc8@25912455fbc8` → [Updates: `v0.0.0-20260623181947-01eb4420fa68`] - `github.com/go-ole/go-ole v1.3.0` - `github.com/go-sql-driver/mysql v1.10.0` - `github.com/go-viper/mapstructure/v2 v2.5.0` - `github.com/go-zookeeper/zk v1.0.4` - `github.com/gobwas/glob v0.2.3` - `github.com/goccy/go-yaml v1.19.2` - `github.com/gocomply/scap v0.1.3` - `github.com/godbus/dbus/v5 v5.2.2` - `github.com/godror/godror v0.50.0` → [Updates: `v0.51.0`] - `github.com/gogo/protobuf v1.3.2` - `github.com/golang-jwt/jwt/v5 v5.3.1` - `github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8@2c02b8208cf8` </details> </blockquote> </details> --- - [ ] <!-- manual job -->Check this box to trigger a request for Renovate to run again on this repository",
+        "url": "https://github.com/DataDog/datadog-agent/issues/33469",
+        "createdAt": "2025-01-28T12:05:52Z",
+        "updatedAt": "2026-08-17T01:41:25Z",
+        "timestamp": "2026-08-17T01:41:25Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "team/agent-devx",
+          "pending",
+          "oss/0"
+        ],
+        "author": "renovate[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a0f768838e3a6e0d4b50",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54802",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54802",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Update dependency @sentry/dotagents to v3",
+        "text": "This PR contains the following updates: | Package | Change | [Age](https://docs.renovatebot.com/merge-confidence/) | [Adoption](https://docs.renovatebot.com/merge-confidence/) | [Passing](https://docs.renovatebot.com/merge-confidence/) | [Confidence](https://docs.renovatebot.com/merge-confidence/) | |---|---|---|---|---|---| | @&#8203;sentry/dotagents | `1.19.0` → `3.0.1` | ![age](https://developer.mend.io/api/mc/badges/age/npm/@sentry%2fdotagents/3.0.1?slim=true) | ![adoption](https://developer.mend.io/api/mc/badges/adoption/npm/@sentry%2fdotagents/3.0.1?slim=true) | ![passing](https://developer.mend.io/api/mc/badges/compatibility/npm/@sentry%2fdotagents/1.19.0/3.0.1?slim=true) | ![confidence](https://developer.mend.io/api/mc/badges/confidence/npm/@sentry%2fdotagents/1.19.0/3.0.1?slim=true) | --- > [!WARNING] > Some dependencies could not be looked up. Check the [Dependency Dashboard](../issues/33469) for more information. --- ### Configuration 📅 **Schedule**: (in timezone Europe/Paris) - Branch creation - At 12:00 AM through 04:59 AM and 10:00 PM through 11:59 PM, Monday through Friday (`* 0-4,22-23 * * 1-5`) - Only on Sunday and Saturday (`* * * * 0,6`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/DataDog/datadog-agent). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4yNC4wIiwidXBkYXRlZEluVmVyIjoiNDQuMjkuNSIsInRhcmdldEJyYW5jaCI6Im1haW4iLCJsYWJlbHMiOlsiY2hhbmdlbG9nL25vLWNoYW5nZWxvZyIsImRlcGVuZGVuY2llcyIsInFhL25vLWNvZGUtY2hhbmdlIl19-->",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54802",
+        "createdAt": "2026-08-12T21:11:49Z",
+        "updatedAt": "2026-08-17T01:41:20Z",
+        "timestamp": "2026-08-17T01:41:20Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "dependencies",
+          "qa/no-code-change",
+          "short review",
+          "team/agent-devx",
+          "internal"
+        ],
+        "author": "renovate[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:36ebee0a1267a6eb1548",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54940",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54940",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Update dependency DataDog/dd-apm-library-python to v4.13.1",
+        "text": "This PR contains the following updates: | Package | Update | Change | |---|---|---| | DataDog/dd-apm-library-python | patch | `4.13.0` → `4.13.1` | --- > [!WARNING] > Some dependencies could not be looked up. Check the [Dependency Dashboard](../issues/33469) for more information. --- ### Configuration 📅 **Schedule**: (in timezone Europe/Paris) - Branch creation - At 12:00 AM through 04:59 AM and 10:00 PM through 11:59 PM, Monday through Friday (`* 0-4,22-23 * * 1-5`) - Only on Sunday and Saturday (`* * * * 0,6`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/DataDog/datadog-agent). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4yOS41IiwidXBkYXRlZEluVmVyIjoiNDQuMjkuNSIsInRhcmdldEJyYW5jaCI6Im1haW4iLCJsYWJlbHMiOlsiY2hhbmdlbG9nL25vLWNoYW5nZWxvZyIsImRlcGVuZGVuY2llcyIsInFhL25vLWNvZGUtY2hhbmdlIl19-->",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54940",
+        "createdAt": "2026-08-16T01:06:00Z",
+        "updatedAt": "2026-08-17T01:41:18Z",
+        "timestamp": "2026-08-17T01:41:18Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "dependencies",
+          "qa/no-code-change",
+          "short review",
+          "team/windows-products",
+          "internal"
+        ],
+        "author": "renovate[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:805901d50a353f6803c6",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54942",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54942",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[bot] Update EKS nodes version",
+        "text": "> [!NOTE] > This PR was auto generated by this [job](https://gitlab.ddbuild.io/DataDog/ami-builder/-/jobs/1956041947). This updates EKS nodes version using the latest release versions. - AL2023_ARM_64_STANDARD 1.32 1.32.13-20260728 -> 1.32.13-20260810 - AL2023_ARM_64_STANDARD 1.33 1.33.13-20260728 -> 1.33.13-20260810 - AL2023_ARM_64_STANDARD 1.34 1.34.9-20260728 -> 1.34.9-20260810 - AL2023_x86_64_NVIDIA 1.32 1.32.13-20260728 -> 1.32.13-20260810 - AL2023_x86_64_NVIDIA 1.33 1.33.13-20260728 -> 1.33.13-20260810 - AL2023_x86_64_NVIDIA 1.34 1.34.9-20260728 -> 1.34.9-20260810 - AL2023_x86_64_STANDARD 1.32 1.32.13-20260728 -> 1.32.13-20260810 - AL2023_x86_64_STANDARD 1.33 1.33.13-20260728 -> 1.33.13-20260810 - AL2023_x86_64_STANDARD 1.34 1.34.9-20260728 -> 1.34.9-20260810 - BOTTLEROCKET_x86_64 1.32 1.63.0-d4932ff8 -> 1.64.0-ad9d4847 - BOTTLEROCKET_x86_64 1.33 1.63.0-d4932ff8 -> 1.64.0-ad9d4847 - BOTTLEROCKET_x86_64 1.34 1.63.0-d4932ff8 -> 1.64.0-ad9d4847",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54942",
+        "createdAt": "2026-08-17T01:04:45Z",
+        "updatedAt": "2026-08-17T01:33:51Z",
+        "timestamp": "2026-08-17T01:33:51Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "qa/no-code-change",
+          "short review",
+          "team/agent-devx",
+          "internal"
+        ],
+        "author": "dd-octo-sts[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c80e32acd14edfc9df7a",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54919",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54919",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Update integrations-core digest to b383598",
+        "text": "This PR contains the following updates: | Package | Update | Change | |---|---|---| | integrations-core ([changelog](https://redirect.github.com/DataDog/integrations-core/compare/3bce68335dbbf693c3dde72d6fe0792b3e742f33..b383598fb85f73824847106f856eefb7c89b47bf)) | digest | `3bce683` → `b383598` | --- > [!WARNING] > Some dependencies could not be looked up. Check the [Dependency Dashboard](../issues/33469) for more information. --- ### Configuration 📅 **Schedule**: (in timezone Europe/Paris) - Branch creation - Between 02:00 AM and 06:59 AM, only on Monday and Wednesday (`* 2-6 * * 1,3`) - Automerge - At any time (no schedule defined) 🚦 **Automerge**: Disabled by config. Please merge this manually once you are satisfied. ♻ **Rebasing**: Whenever PR becomes conflicted, or you tick the rebase/retry checkbox. 🔕 **Ignore**: Close this PR and you won't be reminded about this update again. --- - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box --- This PR was generated by [Mend Renovate](https://mend.io/renovate/). View the [repository job log](https://developer.mend.io/github/DataDog/datadog-agent). <!--renovate-debug:eyJjcmVhdGVkSW5WZXIiOiI0NC4yOS41IiwidXBkYXRlZEluVmVyIjoiNDQuMjkuNSIsInRhcmdldEJyYW5jaCI6Im1haW4iLCJsYWJlbHMiOlsiY2hhbmdlbG9nL25vLWNoYW5nZWxvZyIsImRlcGVuZGVuY2llcyIsInFhL25vLWNvZGUtY2hhbmdlIl19-->",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54919",
+        "createdAt": "2026-08-14T17:04:11Z",
+        "updatedAt": "2026-08-17T01:15:32Z",
+        "timestamp": "2026-08-17T01:15:32Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 7
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "dependencies",
+          "qa/no-code-change",
+          "team/agent-delivery",
+          "short review",
+          "team/agent-integrations",
+          "team/agent-build",
+          "internal"
+        ],
+        "author": "renovate[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:21567f3163f21aba2f4b",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54496",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54496",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "apm: use url.template for OTLP HTTP client resource names",
+        "text": "## What does this PR do? Uses the OpenTelemetry `url.template` attribute when generating resource names for HTTP client spans. Client spans now use `METHOD url.template` when available and retain the method-only fallback otherwise. Server spans continue to use `METHOD http.route`. Both the current and legacy OTLP resource-name paths are covered to keep behavior consistent when operation/resource name V2 is disabled. Fixes #31570. ## Motivation HTTP client resource names currently collapse to the HTTP method even when OpenTelemetry instrumentation provides a low-cardinality URL template. Using the template produces more useful resource grouping without falling back to high-cardinality raw URLs. ## Testing Added focused unit coverage for client URL templates, method-only fallback, and client/server attribute precedence. Local `dda inv test --targets=./pkg/trace/api,./pkg/trace/otel/traceutil` could not run because Windows Defender quarantined the standalone `dda.exe` after its PyPI bootstrap failed with a TLS handshake error. CI is expected to run the required test targets. ## Additional Notes The current commit is unsigned because no local signing key is configured; it will need to be replaced with a signed commit before merge.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54496",
+        "createdAt": "2026-08-05T21:37:23Z",
+        "updatedAt": "2026-08-16T21:05:44Z",
+        "timestamp": "2026-08-16T21:05:44Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 9
+        },
+        "labels": [
+          "community",
+          "team/agent-apm",
+          "team/agent-security",
+          "team/ebpf-platform",
+          "team/opentelemetry",
+          "team/container-platform",
+          "team/agent-delivery",
+          "team/agent-integrations",
+          "team/container-integrations",
+          "team/agent-discovery",
+          "team/agent-runtimes",
+          "team/agent-log-pipelines",
+          "team/agent-metric-pipelines",
+          "team/agent-devx",
+          "team/container-experiences",
+          "team/agent-build",
+          "team/action-platform",
+          "team/gpu-monitoring-agent",
+          "team/fleet-automation",
+          "team/agent-data-plane"
+        ],
+        "author": "niharikag09",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:65f4ac39b0f645b6c37c",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54744",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54744",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "remove unneeded python spec in legacy omnibus",
+        "text": "### What does this PR do? Remove unneeded python spec in legcay omnibus - Lift python3.rb dependency up datadog-agent-integrations-py3 - Add the missing license declaration for //deps:cpython - put all the files for cpython together in deps/cpython. This preserves the license we were using before. It also preserves the fact that the Omnibus build was using a personal copy cached at https://dd-agent-omnibus.s3.amazonaws.com/licenses/Python-2.0. That's not great - we should use the upstream license, but the upstream license is not a true copy of the license. It has history which is unrelated to the current license, so it is actually less good than our copy. This is a thing to sort out in the future. At least now the fact that we use a private copy is explicit, rather than being hidden in the omnibus code. ### Motivation - Do not specify the python version in two places, while only using it in one. Every time integrations updated python, they would needlessly update the omnibus scripts and cpython.MODULE.bazel - Remove dead code. All omnibus scripting is going away. ### Describe how you validated your changes - CI - The missing file detector does not show that we lost the license. Early runs did, so I have confidence that CI correctly detects it. - The missing file detector says the license file is slightly renamed. The content is the same. The renaming is a legally allowed transformation. What matters is that we have the content of the license in the distribution, not what we name it.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54744",
+        "createdAt": "2026-08-11T18:56:37Z",
+        "updatedAt": "2026-08-16T16:28:31Z",
+        "timestamp": "2026-08-16T16:28:31Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 4
+        },
+        "labels": [
+          "changelog/no-changelog",
+          "qa/no-code-change",
+          "medium review",
+          "team/agent-integrations",
+          "team/agent-build",
+          "internal"
+        ],
+        "author": "aiuto",
+        "state": "open",
+        "assignees": [
+          "Kyle-Neale"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:90ce0a8c4a33350e3036",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54308",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54308",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Reduce empty process command line debug logging",
+        "text": "### What does this PR do? Moves the per-process empty-command-line messages from debug to trace in both process collection paths. At debug level, each scan now emits one aggregate summary with: - the total number of affected processes - up to five sample PIDs Process collection and filtering behavior is unchanged. ### Motivation On hosts with large process tables, an empty command line can generate tens of thousands of debug messages per collection interval. That volume can rapidly rotate the Agent logs and hide the diagnostic history needed to investigate collection or intake lag. Keeping the per-PID detail at trace preserves it for targeted troubleshooting, while the bounded debug summary still shows the scale of the condition and provides representative PIDs. ### Describe how you validated your changes - Pre-commit hooks passed. - Pre-push Go tests and golangci-lint passed. - Focused Bazel tests passed: - `//pkg/process/checks:checks_test_base` - `//pkg/process/procutil:procutil_test_base` with `TestProcessesByPIDTest(FS|IgnoringZombiesFS)` - `git diff --check` passed. ### Additional Notes The full procutil Bazel suite also exposed an existing `TestProcfsChange` fixture failure unrelated to these logging paths; the directly affected procutil tests pass.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54308",
+        "createdAt": "2026-07-31T15:06:53Z",
+        "updatedAt": "2026-08-16T16:07:06Z",
+        "timestamp": "2026-08-16T16:07:06Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 7
+        },
+        "labels": [
+          "short review",
+          "team/container-experiences",
+          "stale",
+          "internal"
+        ],
+        "author": "gengnamstyle",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8b3ac481cf3b231e4968",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54860",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54860",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Tokenize IPv4 so IIS W3C logs are not concatenated",
+        "text": "### What does this PR do? Collapses IPv4 dotted quads to a single tokenizer token so auto multi-line detection no longer treats them as part of a timestamp. ### Motivation IIS W3C records were concatenated after 7.82.0 enabled auto multi-line detection by default ([AGENT-16759](https://datadoghq.atlassian.net/browse/AGENT-16759)). Kadane maximizes pair-score *sum*, then reports sum / length. The threshold check is strict `> 0.5`. #### Before ``` 2026-08-11 10:34:49 W3SVC1 10.1.48.10 GET DDDD-DD-DD DD:DD:DD CDCCCD DD.D.DD.DD CCC +++++++++++----+++--++++ ``` Timestamp-only: `11/11 = 1.0`. Kadane extends through the IP for a higher sum: `12/24 = 0.5`. `0.5 > 0.5` is false, so the line is aggregated. #### After ``` 2026-08-11 10:34:49 W3SVC1 10.1.48.10 GET DDDD-DD-DD DD:DD:DD CDCCCD IPv4 CCC +++++++++++----+---- ``` The IP is one token with no graph edges, so Kadane stays on the timestamp: `11/11 = 1.0`. #54753 scored a leading timestamp run in isolation. This follows the review there: represent a valid IP as one token so the existing algorithm stops treating it as a timestamp fragment. Hybrid tokens (UUID, paths, etc.) were already on the roadmap. ### Describe how you validated your changes - [x] IIS W3C records from the escalation start a new group - [x] Tokenizer tests for dotted-quad collapse, including non-matches (`1.2.3`, `1...2.3.4`, `1234.1.1.1`) - [x] Existing timestamp-detector corpus still assigns the same labels - [x] `dda inv test --targets=./pkg/logs/internal/decoder/preprocessor/...` (414 passed) ### Additional Notes IPv6 is not collapsed yet. Consecutive colons already collapse to one `Colon` token, so detecting IPv6 needs a look at the original bytes. I'm leaving it out of this PR for now since the motivation here was in response to a specific customer scenario. [AGENT-16759]: https://datadoghq.atlassian.net/browse/AGENT-16759?atlOrigin=eyJpIjoiNWRkNTljNzYxNjVmNDY3MDlhMDU5Y2ZhYzA5YTRkZjUiLCJwIjoiZ2l0aHViLWNvbS1KU1cifQ",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54860",
+        "createdAt": "2026-08-13T20:09:58Z",
+        "updatedAt": "2026-08-16T15:41:01Z",
+        "timestamp": "2026-08-16T15:41:01Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 4
+        },
+        "labels": [
+          "qa/done",
+          "medium review",
+          "team/agent-log-pipelines",
+          "internal"
+        ],
+        "author": "mwdd146980",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6c46da91e273b48df30d",
+      "signalId": "github:DataDog/datadog-agent:pull_request:53012",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:53012",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "chore: Update devcontainer prebuilt image reference",
+        "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+        "url": "https://github.com/DataDog/datadog-agent/pull/53012",
+        "createdAt": "2026-06-30T20:14:22Z",
+        "updatedAt": "2026-08-16T15:30:52Z",
+        "timestamp": "2026-08-16T15:30:52Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 1
+        },
+        "labels": [
+          "campaigner-automated-change"
+        ],
+        "author": "gh-worker-campaigns-3e9aa4[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:6b60957860de76dbd9e4",
+      "signalId": "github:DataDog/datadog-agent:pull_request:53003",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:53003",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "chore: Update devcontainer prebuilt image reference",
+        "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+        "url": "https://github.com/DataDog/datadog-agent/pull/53003",
+        "createdAt": "2026-06-30T18:36:01Z",
+        "updatedAt": "2026-08-16T15:29:14Z",
+        "timestamp": "2026-08-16T15:29:14Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "campaigner-automated-change"
+        ],
+        "author": "gh-worker-campaigns-3e9aa4[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:001503ce8fb8212878fc",
+      "signalId": "github:DataDog/datadog-agent:pull_request:53015",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:53015",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "chore: Update devcontainer prebuilt image reference",
+        "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+        "url": "https://github.com/DataDog/datadog-agent/pull/53015",
+        "createdAt": "2026-06-30T20:24:42Z",
+        "updatedAt": "2026-08-16T15:08:43Z",
+        "timestamp": "2026-08-16T15:08:43Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [
+          "campaigner-automated-change"
+        ],
+        "author": "gh-worker-campaigns-3e9aa4[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:68f00b49c0518a1a48ee",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54938",
+      "event": "changed",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54938",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Add baseline Dynamic Tests for CNM",
+        "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Adds opt-in baseline Dynamic Tests for Cloud Network Monitoring (CNM). Baseline mode selects a small, representative set of paths directly from each CNM connection snapshot when full connection-monitoring Dynamic Tests are disabled. Traceroute must also be enabled in the system-probe configuration. If full connection-monitoring Dynamic Tests are enabled, they take precedence and the collector continues to use standard scheduling. ### Motivation Hosts without full Dynamic Tests currently have no included Network Path coverage for observed CNM traffic. Baseline mode provides limited recurring path visibility. The selector favors connections that are more useful for diagnosis while keeping resource use predictable: timeout, RTO, and retransmit observations rank ahead of healthy traffic, then higher-volume connections rank first. ### Design and key changes #### Snapshot selection - Reuses the existing connection eligibility filters before ranking. - Selects at most three unique paths from each complete CNM snapshot. - Ranks diagnostic observations first, then total sent and received bytes, with the stable path hash as the final tie-breaker. - Keeps only the best three candidates while scanning, so selection memory remains bounded and connections are not aggregated. - Reconsiders a repeated path only when its later observation has a stronger score. #### Data boundary Both CNM producers populate the same generic `ConnectionSignals` structure on `NetworkPathConnection`: normalized timeout count, RTO count, retransmits, sent bytes, and received bytes. These are raw connection observations rather than baseline-specific derived state. The baseline selector in `baseline.go` is the only layer that interprets those signals into the diagnostic and traffic-volume ranking dimensions. This keeps producer behavior equivalent without coupling the shared connection model to baseline policy. #### Scheduling and payloads Standard, baseline, and NetFlow paths share the collector's existing eligibility checks, path construction, scheduling telemetry, deduplication, interval, TTL, context limit, and rate limit. Baseline mode adds only the snapshot-ranking step before selected paths enter that common machinery. Baseline results are recurring Dynamic Tests and carry `dynamic_test_profile: \"baseline\"` in Network Path payloads so downstream consumers can distinguish them from standard tests. Baseline-only operation also enables the collector and its reverse-DNS dependency. Baseline mode and Dynamic Remote Configuration filters are compatible and independent: baseline mode controls snapshot ranking, while the effective local-plus-RC filter controls path admission. When an RC rule admits the winning baseline candidate, its configuration ID, source, and tags are preserved alongside `dynamic_test_profile: \"baseline\"`. #### E2E coverage Adds a packaged-Agent E2E suite that generates CNM host traffic and verifies through fakeintake that a Network Path event is emitted with the baseline profile. The existing Remote Config host-traffic suite and the new baseline suite now share one fixture. The fixture replaces the GHCR-backed HTTP container and runtime `curl` installation with Python standard-library HTTP and traffic generation, including readiness checks, cleanup, and failure logs. ### Manual validation Use this minimal `datadog.yaml` configuration: ```yaml network_config: enabled: true network_path: connections_monitoring: baseline_tests_enabled: true ``` Enable traceroute in `system-probe.yaml`: ```yaml traceroute: enabled: true ``` After generating outbound TCP traffic from the host, verify that Network Path events are emitted with `test_run_type: \"dynamic\"` and `dynamic_test_profile: \"baseline\"`. Up to three unique eligible paths should be selected from each CNM snapshot, subject to the existing collector filters and scheduling limits. ### Describe how you validated your changes - `bazel test //comp/networkpath/npcollector/impl:impl_test` - Added focused unit coverage for selection order, each diagnostic signal, sent/received byte derivation, repeated-path handling, configuration, producer signal mapping, payload serialization, and recurring scheduling cadence. - Added packaged-Agent E2E coverage for baseline Network Path events through fakeintake. ### Additional Notes The new configuration setting defaults to `false` and remains an internal rollout control omitted from generated `datadog.yaml` examples.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54938",
+        "createdAt": "2026-08-15T12:20:03Z",
+        "updatedAt": "2026-08-16T14:50:56Z",
+        "timestamp": "2026-08-16T14:50:56Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 50
+        },
+        "labels": [
+          "component/system-probe",
+          "team/ebpf-platform",
+          "qa/done",
+          "long review",
+          "team/ndm-integrations",
+          "team/agent-build",
+          "team/windows-products",
+          "team/cloud-network-monitoring",
+          "team/network-path",
+          "internal",
+          "team/fleet-automation"
+        ],
+        "author": "AlexandreYang",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8b29ca5e95a13014164c",
+      "signalId": "github:DataDog/datadog-agent:pull_request:53372",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:53372",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "chore: Update devcontainer prebuilt image reference",
+        "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+        "url": "https://github.com/DataDog/datadog-agent/pull/53372",
+        "createdAt": "2026-07-08T10:00:21Z",
+        "updatedAt": "2026-08-16T14:29:33Z",
+        "timestamp": "2026-08-16T14:29:33Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 2
+        },
+        "labels": [
+          "campaigner-automated-change"
+        ],
+        "author": "gh-worker-campaigns-3e9aa4[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:6532719fc175b9fbaf82",
+      "signalId": "github:DataDog/datadog-agent:pull_request:53014",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:53014",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "chore: Update devcontainer prebuilt image reference",
+        "text": "Prebuilt devcontainer image reference updated to reflect latest config. This automation in driven by the [workspaces-image-builder service](https://sdp.ddbuild.io/#/services/details?name=workspaces-imagebuilder) and the [github-devcontainer-prebuild service](https://sdp.ddbuild.io/#/services/details?name=github-devcontainer-prebuild). For workspaces on-call: If there are any unexpected behaviors with this automation, see the [troubleshooting runbook](https://datadoghq.atlassian.net/wiki/spaces/DEVX/pages/4880237711/Troubleshooting+Devcontainer+Pre-Builds).",
+        "url": "https://github.com/DataDog/datadog-agent/pull/53014",
+        "createdAt": "2026-06-30T20:22:20Z",
+        "updatedAt": "2026-08-16T14:28:04Z",
+        "timestamp": "2026-08-16T14:28:04Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 1
+        },
+        "labels": [
+          "campaigner-automated-change"
+        ],
+        "author": "gh-worker-campaigns-3e9aa4[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:bc7f2ecf04a78d2c0564",
+      "signalId": "github:DataDog/datadog-agent:pull_request:54941",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:54941",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "feat(autodiscovery): report ignored keys when AD formats are mixed",
+        "text": "<!--Please give us some feedback on your experience writing this PR ! https://app.datadoghq.com/forms/43db4c02-6837-400c-8083-692e141b1b88 !--> ### What does this PR do? Autodiscovery applies one check configuration format per entity — v2 (`checks`), then v1 (`check_names` + `init_configs` + `instances`), then legacy — and until now the ones that lost were dropped silently. This reports them through the errors `extractTemplatesFromMapWithV2` already collects, so they surface in `agent status` under `Configuration Errors` and as an AD annotation health issue. That function is the common entry point for pod annotations, container labels and Kubernetes service/endpoints annotations. ``` ad.datadoghq.com/server.checks takes precedence, ignoring ad.datadoghq.com/server.check_names, ad.datadoghq.com/server.init_configs, ad.datadoghq.com/server.instances: Autodiscovery only applies the check configuration with the highest priority (v2, then v1, then legacy) ``` Detection is limited to the keys that define a check: `ignore_autodiscovery_tags` and `logs` are excluded because they are read next to a v2 configuration — the former is applied on top of one when `cluster_checks.support_hybrid_ignore_ad_tags` is enabled. Following #41372, this uses the stored errors rather than a log line. ### Motivation A team on a cluster we operate followed the docs and added a v2 annotation to a workload that already had v1 ones, and their existing checks silently stopped — no warning, no log line, nothing in `agent status`. Both forms are valid Autodiscovery syntax, so nothing looked wrong at a glance, and finding the cause took a while. The precedence is intentional, but it is documented only in a code comment. ### Describe how you validated your changes Added cases for v1 next to v2 and v1 next to legacy; six existing mixed-format cases were updated. The single-format cases still assert no error, and the hybrid-mode case in `kube_services_test.go` guards the exclusion above. ### Additional Notes Users who mix formats today will see a new error in `agent status` and a new AD annotation health issue (`MEDIUM`); the applied configuration does not change. Follow-ups not included: the health issue's remediation steps, documenting the precedence rule, and reporting a standalone `check_tag_cardinality` that is dropped next to a v2 configuration.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/54941",
+        "createdAt": "2026-08-16T05:09:44Z",
+        "updatedAt": "2026-08-16T07:12:24Z",
+        "timestamp": "2026-08-16T07:12:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "community",
+          "team/container-platform"
+        ],
+        "author": "jumpe1",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f77284a6cc04af9d5e7e",
+      "signalId": "github:DataDog/datadog-agent:pull_request:46413",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:46413",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "[TEST] pass store backend sgc",
+        "text": "### What does this PR do? ### Motivation ### Describe how you validated your changes ### Additional Notes",
+        "url": "https://github.com/DataDog/datadog-agent/pull/46413",
+        "createdAt": "2026-02-13T22:24:42Z",
+        "updatedAt": "2026-08-16T03:01:55Z",
+        "timestamp": "2026-08-16T03:01:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [
+          "dev/testing",
+          "medium review",
+          "team/agent-configuration",
+          "stale",
+          "auto-closed",
+          "internal"
+        ],
+        "author": "s-alad",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:876f1fb9a9aa0f06ef80",
+      "signalId": "github:DataDog/datadog-agent:pull_request:46400",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:46400",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Revert \"Support AWS IRSA credentials chain\"",
+        "text": "Reverts DataDog/datadog-agent#45530 Tentative for #incident-49543.",
+        "url": "https://github.com/DataDog/datadog-agent/pull/46400",
+        "createdAt": "2026-02-13T16:14:31Z",
+        "updatedAt": "2026-08-16T03:01:51Z",
+        "timestamp": "2026-08-16T03:01:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "medium review",
+          "team/agent-runtimes",
+          "internal"
+        ],
+        "author": "alopezz",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:446f7f08e24c8985d633",
+      "signalId": "github:DataDog/datadog-agent:pull_request:46398",
+      "event": "discovered",
+      "observedAt": "2026-08-17T02:35:14.463156Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:DataDog/datadog-agent:pull_request:46398",
+        "source": "github",
+        "group": "observability",
+        "project": "DataDog/datadog-agent",
+        "kind": "pull_request",
+        "title": "Gabriel.plassard/add dd script user to agent dockerfile tmp",
+        "text": "### What does this PR do? ### Motivation ### Describe how you validated your changes ### Additional Notes",
+        "url": "https://github.com/DataDog/datadog-agent/pull/46398",
+        "createdAt": "2026-02-13T15:49:23Z",
+        "updatedAt": "2026-08-16T03:01:43Z",
+        "timestamp": "2026-08-16T03:01:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "medium review",
+          "team/agent-build",
+          "stale",
+          "auto-closed",
+          "team/action-platform",
+          "internal"
+        ],
+        "author": "dd-gplassard",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "version": 4,
+  "date": "2026-08-17",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "tigerbeetle",
+    "repo": "tigerbeetle/tigerbeetle",
+    "name": "TigerBeetle",
+    "keywords": [
+      "TigerBeetle"
+    ]
+  },
+  "context": {
+    "repository": "tigerbeetle/tigerbeetle",
+    "url": "https://github.com/tigerbeetle/tigerbeetle",
+    "description": "The financial transactions database designed for mission critical safety and performance.",
+    "homepage": "https://tigerbeetle.com",
+    "language": "Zig",
+    "topics": [],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16799,
+    "forks": 887,
+    "openIssues": 124,
+    "archived": false,
+    "collectedAt": "2026-08-17T02:35:16.119488+00:00"
+  },
+  "news": {
+    "repository": "tigerbeetle/tigerbeetle",
+    "collectedAt": "2026-08-17T02:35:16.119488+00:00",
+    "latestRelease": {
+      "repository": "tigerbeetle/tigerbeetle",
+      "tag": "0.17.9",
+      "title": "0.17.9",
+      "url": "https://github.com/tigerbeetle/tigerbeetle/releases/tag/0.17.9",
+      "publishedAt": "2026-07-06T17:24:50Z",
+      "notes": "# 0.17.9\r\n\r\n### Supported upgrade versions\r\n\r\nOldest supported client version: 0.16.4\r\nOldest upgradable replica version: 0.17.5\r\n\r\n## Server\r\n\r\n* Binary: Download the zip for your OS and architecture from this page and unzip.\r\n* Docker: `docker pull ghcr.io/tigerbeetle/tigerbeetle:0.17.9`\r\n* Docker (debug image): `docker pull ghcr.io/tigerbeetle/tigerbeetle:0.17.9-debug`\r\n\r\n## Clients\r\n\r\n**NOTE**: Because of package manager caching, it may take a few\r\nminutes after the release for this version to appear in the package\r\nmanager.\r\n\r\nYou cannot run a newer client against an older cluster: clients are only compatible\r\nwith replicas from their own release *or newer*, subject to the newer release's\r\n`Oldest supported client version`.\r\n\r\n* .NET: `dotnet add package tigerbeetle --version 0.17.9`\r\n* Go: `go mod edit -require github.com/tigerbeetle/tigerbeetle-go@v0.17.9`\r\n* Java: Update the version of `com.tigerbeetle.tigerbeetle-java` in `pom.xml`\r\n  to `0.17.9`.\r\n* Node.js: `npm install --save-exact tigerbeetle-node@0.17.9`\r\n* Python: `pip install tigerbeetle==0.17.9`\r\n\r\n## Changelog\r\n\r\n\r\n### Safety And Performance\r\n\r\n- [#3810](https://github.com/tigerbeetle/tigerbeetle/pull/3810)\r\n\r\n  Revert unique keys, which caused compatibility issues\r\n  (see [#3802](https://github.com/tigerbeetle/tigerbeetle/pull/3802)).\r\n\r\n- [#3822](https://github.com/tigerbeetle/tigerbeetle/pull/3822),\r\n  [#3844](https://github.com/tigerbeetle/tigerbeetle/pull/3844)\r\n\r\n  Extend `inspect constants` to catch schema changes and prints\r\n  the `Checkpoint Schedule` section.\r\n\r\n- [#3845](https://github.com/tigerbeetle/tigerbeetle/pull/3845)\r\n\r\n  Micro-optimization to the radix sort algorithm to avoid copies when dealing\r\n  with large stack-allocated values.\r\n\r\n- [#3840](https://github.com/tigerbeetle/tigerbeetle/pull/3840)\r\n\r\n  Online schema validation, ensuring coherent `key_min`/`key_max` when reading data.\r\n\r\n### Features\r\n\r\n- [#3816](https://github.com/tigerbeetle/tigerbeetle/pull/3816)\r\n\r\n  Improve the Ruby client migration guide.\r\n\r\n- [#3836](https://github.com/tigerbeetle/tigerbeetle/pull/3836),\r\n  [#3832](https://github.com/tigerbeetle/tigerbeetle/pull/3832),\r\n  [#3835](https://github.com/tigerbeetle/tigerbeetle/pull/3835),\r\n  [#3834](https://github.com/tigerbeetle/tigerbeetle/pull/3834)\r\n\r\n  Various docs improvements, including adding the Ruby client and print layout support.\r\n\r\n- [#3830](https://github.com/tigerbeetle/tigerbeetle/pull/3830),\r\n  [#3811](https://github.com/tigerbeetle/tigerbeetle/pull/3811)\r\n\r\n  Add a u128 bounds check in the Ruby client and make its status return type more idiomatic.\r\n\r\n- [#3827](https://github.com/tigerbeetle/tigerbeetle/pull/3827)\r\n\r\n  Improve the Rust client, removing the bitflags dependency and enabling overflow checks.\r\n\r\n- [#3852](https://github.com/tigerbeetle/tigerbeetle/pull/3852)\r\n\r\n  Experimental CLI `--memory` flag that automatically sizes the grid and object caches to use\r\n  all assigned memory.\r\n\r\n### Internals\r\n\r\n- [#3825](https://github.com/tigerbeetle/tigerbeetle/pull/3825),\r\n  [#3831](https://github.com/tigerbeetle/tigerbeetle/pull/3831)\r\n\r\n  Improve various code comments.\r\n\r\n- [#3793](https://github.com/tigerbeetle/tigerbeetle/pull/3793)\r\n\r\n  Switch to `stdx.SocketAddress`.\r\n\r\n- [#3826](https://github.com/tigerbeetle/tigerbeetle/pull/3826)\r\n\r\n  Fail on curl instead of unzip for network flakes during Vortex builds.\r\n\r\n- [#3813](https://github.com/tigerbeetle/tigerbeetle/pull/3813)\r\n\r\n  Expose `TimeSim` and fixtures in VSR.\r\n\r\n- [#3820](https://github.com/tigerbeetle/tigerbeetle/pull/3820)\r\n\r\n  Introduce the canonical workload principle for benchmarks.\r\n\r\n- [#3682](https://github.com/tigerbeetle/tigerbeetle/pull/3682)\r\n\r\n  Make publishing TigerBeetle client artifacts idempotent.\r\n\r\n- [#3817](https://github.com/tigerbeetle/tigerbeetle/pull/3817)\r\n\r\n  Workaround MacOS builds on Zig 0.14.1 (see [issue](ttps://codeberg.org/ziglang/zig/issues/31658)).\r\n\r\n### TigerTracks 🎧\r\n\r\n- [Home](https://www.youtube.com/watch?v=5Fc9A6mLHJU)\r\n\r\n<img width=\"1712\" height=\"1152\" alt=\"image\" src=\"https://github.com/user-attachments/assets/0e04023d-3860-4138-a3f0-8f7598c2ef0c\" />\r\n",
+      "highlights": [
+        "Supported upgrade versions",
+        "Server",
+        "Binary: Download the zip for your OS and architecture from this page and unzip.",
+        "Docker: docker pull ghcr.io/tigerbeetle/tigerbeetle:0.17.9",
+        "Docker (debug image): docker pull ghcr.io/tigerbeetle/tigerbeetle:0.17.9-debug",
+        "Clients"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-17T02:35:14.463156Z",
+      "since": "2026-08-16T02:35:14.463156Z",
+      "observedCount": 0,
+      "changedCount": 0
+    }
+  ],
+  "signals": [],
+  "events": []
+}
