@@ -1,0 +1,2317 @@
+{
+  "version": 4,
+  "date": "2026-08-19",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "foundationdb",
+    "repo": "apple/foundationdb",
+    "name": "FoundationDB",
+    "keywords": [
+      "FoundationDB"
+    ]
+  },
+  "context": {
+    "repository": "apple/foundationdb",
+    "url": "https://github.com/apple/foundationdb",
+    "description": "FoundationDB - the open source, distributed, transactional key-value store",
+    "homepage": "https://apple.github.io/foundationdb/",
+    "language": "C++",
+    "topics": [
+      "acid",
+      "distributed-database",
+      "foundationdb",
+      "key-value-store",
+      "transactional"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16610,
+    "forks": 1550,
+    "openIssues": 769,
+    "archived": false,
+    "collectedAt": "2026-08-19T02:33:27.855426+00:00"
+  },
+  "news": {
+    "repository": "apple/foundationdb",
+    "collectedAt": "2026-08-19T02:33:27.855426+00:00",
+    "latestRelease": {
+      "repository": "apple/foundationdb",
+      "tag": "7.3.77",
+      "title": "Release 7.3.77",
+      "url": "https://github.com/apple/foundationdb/releases/tag/7.3.77",
+      "publishedAt": "2026-04-16T19:24:36Z",
+      "notes": "Same code as 7.3.76 but with avx enabled.",
+      "highlights": [],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.79",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.79",
+        "description": "Same code as 7.3.78 but with avx enabled.",
+        "tag": "7.3.79",
+        "publishedAt": "2026-07-15T20:13:35Z"
+      },
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.78",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.78",
+        "description": "This release is compiled without avx instructions.",
+        "tag": "7.3.78",
+        "publishedAt": "2026-07-15T20:13:34Z"
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-19T02:33:24.702454Z",
+      "since": "2026-08-18T02:33:24.702454Z",
+      "observedCount": 42,
+      "changedCount": 42
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:apple/foundationdb:pull_request:12549",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Update the base image to RockyLinux 10.2",
+      "text": "RockyLinux 10 adds new architecture riscv64, a per-requisite for building riscv64 releases. * Update the base image to RockyLinux 10.1 # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [x] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches If this PR is made against a release-branch, please also check the following: - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
+      "url": "https://github.com/apple/foundationdb/pull/12549",
+      "createdAt": "2025-11-12T15:03:42Z",
+      "updatedAt": "2026-08-18T20:40:20Z",
+      "timestamp": "2026-08-18T20:40:20Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 37
+      },
+      "labels": [],
+      "author": "eshattow",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13180",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Move TSS load balancing logic out of `fdbrpc`",
+      "text": "This PR has a similar goal to https://github.com/apple/foundationdb/pull/13080, to move FDB-specific logic out of the `fdbrpc` library. Previously `loadBalance` was tightly coupled with storage servers, and specifically the testing storage server feature. In this PR, a `LoadBalanceRequestHooks` struct is added to `LoadBalance.actor.h`, specialized in a new `StorageServerLoadBalance.actor.h` file, which lives in `fdbclient` and now contains the storage-server-specific load balancing logic. Validated with 10k correctness tests.",
+      "url": "https://github.com/apple/foundationdb/pull/13180",
+      "createdAt": "2026-05-09T02:37:34Z",
+      "updatedAt": "2026-08-18T20:40:22Z",
+      "timestamp": "2026-08-18T20:40:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 93
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13416",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "add new commit statistics metrics",
+      "text": "Rebase #10993 Co-authored-by: @oleg68 Oleg Samarin osamarin@openintegration.inc # Problem statement Now it is hard to tune a fdb cluster for a write-intensive workload. # Description While tuning a fdb cluster with a write-intensive application often the bottleneck is the commit latency: when trying to parallel degree of transactions payload, the commit latency grows and prevents increasing the transaction throughput. There are lots of conditions and knobs influencing the commit latency: number of commit proxies, number of resolvers, number of tlog processes, commit batching knobs: MAX_COMMIT_BATCH_INTERVAL, COMMIT_TRANSACTION_BATCH_INTERVAL_MAX, COMMIT_TRANSACTION_BATCH_INTERVAL_SMOOTHER_ALPHA and others. But for now, there is no any information, where is the root cause of the high commit latency, so it is unclear, what is to be changed. # Proposal - To collect and to log latency statistics from parts of commit workflow: - Waiting for a batch - Preresolution (allocating a commit version) - Resolution - Postresolution - Pushing to TLog - Replying - To collect and log the batch size statistics - The number of transactions in one batch - The total bytes in the transaction batch # PR content This PR implements this proposal: the following new metrics are logged and exposed in ``status json``: - CommitBatchTransactions (commit_batch_transactions) - the number of transactions in one batch - CommitBatchBytes (commit_batch_bytes) - the total size of one commit batch in bytes - CommitBatchingWaiting (commit_batching_waiting) - the time while the transaction is waiting for the batch becomes ready - CommitPreresolutionLatency (commit_preresolution_latency) - the time of the Preresolution phase - CommitResolutionLatency (commit_resolution_latency) - the time of the Resolution phase - CommitPostResolutionLatency (commit_resolution_latency) - the time of the Postresolution phase - CommitTLogLoggingLatency (commit_tlog_logging_latency) - the time of the TlogLogging phase - CommitReplyLatency (commit_reply_latency) - the time of Reply phase The sum of the added *_latency_mean metrics should be equal to the commit_latency_mean metrics that already exists",
+      "url": "https://github.com/apple/foundationdb/pull/13416",
+      "createdAt": "2026-07-01T14:26:34Z",
+      "updatedAt": "2026-08-18T20:02:01Z",
+      "timestamp": "2026-08-18T20:02:01Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 16
+      },
+      "labels": [],
+      "author": "MarkSh1",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13673",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Plumb TraceID/SpanID into debug tracing logs",
+      "text": "I found that debug transactions offer the highest quality telemetry for where in the commit pipeline a transaction gets stuck, but that the logs were difficult to work with (need to join across log lines distributed across roles to get the full connected graph of IDs that belong to a debug transaction). The tracing tool we use internally does not support this kind of stateful aggregation and instead relies on a consistent TraceID plumbed throughout the call graph. Conveniently, this already exists in the code base in the form of the OTEL tracing context. I added those IDs to all debug logs and was able to get a trace view in our systems that is useful to me. Here's what it looks like in our internal trace viewing tool. Yellow boxes correspond to the FDB Client debug traces (NativeAPIActor), the smaller green events are coming from GRV, Commit, and Storage Servers. This gives me a good view of stalls anywhere in the transaction lifecycle. I'm still refining how I parse these to make them more visually intuitive, but already useful in its current state. <img width=\"1727\" height=\"743\" alt=\"Screenshot 2026-07-10 at 12 23 08 PM\" src=\"https://github.com/user-attachments/assets/feaba889-0daa-4d98-b832-1f7d3226940d\" /> I use this by setting the Transaction ID through the SpecialKeys API, which then sets the span context: ```java String debugTransactionId = getDebugTransactionIdFromTraceMetadata(traceMetadata); String specialKeysTransactionId = getFdbTransactionIdFromTraceMetadata(traceMetadata); log.debug( \"Enabling FDB transaction debugging\", SafeArg.of(\"debugTransactionId\", debugTransactionId), SafeArg.of(\"specialKeysTransactionId\", specialKeysTransactionId)); transaction.options().setSpecialKeySpaceEnableWrites(); transaction.set(FDB_TRACING_TRANSACTION_ID_KEY, specialKeysTransactionId.getBytes(StandardCharsets.UTF_8)); transaction.options().setDebugTransactionIdentifier(debugTransactionId); transaction.options().setLogTransaction(); transaction.options().setServerRequestTracing(); ```",
+      "url": "https://github.com/apple/foundationdb/pull/13673",
+      "createdAt": "2026-07-10T05:25:55Z",
+      "updatedAt": "2026-08-18T16:53:00Z",
+      "timestamp": "2026-08-18T16:53:00Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 26
+      },
+      "labels": [],
+      "author": "laflechejonathan",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13724",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "ci: codebuild-cleanup action: consolidate graphql queries",
+      "text": "just one graphql query to get all comments along with minimized status (replacing the initial rest query to get all comments) ------------ A follow-up to https://github.com/apple/foundationdb/pull/13721 which seems to be working fine, but I realized all the separate queries to look up \"isMinimized\" for each comment were not necessary (and I wonder if the github api would ratelimit this on a PR with lots of updates and codebuild comments).",
+      "url": "https://github.com/apple/foundationdb/pull/13724",
+      "createdAt": "2026-07-18T01:24:02Z",
+      "updatedAt": "2026-08-18T18:16:44Z",
+      "timestamp": "2026-08-18T18:16:44Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 15
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13731",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Fix stateless process recruitment in small configurations",
+      "text": "## Summary - Admit all eligible workers with the same role fitness during cluster-controller recruitment while preserving existing fitness and usage ordering. - Recruit the requested commit proxies, GRV proxies, and resolvers from distinct stateless processes even when those processes share one machine. - Remove the simulator-only automatic stateless-machine reservation; retain explicit stateless assignment to real machines and correct storage-candidate accounting. - Add a full-dispatch cluster-controller regression with three stateless processes on one machine and independently placed TLogs. ## Validation - `fdbserver_clustercontroller_test -f /fdbserver/clustercontroller/recruitStatelessProcessesOnOneMachine` - `fdbserver_clustercontroller_test` (32 tests passed) - `fdbserver -r simulation -f tests/fast/ReportConflictingKeys.toml` - `fdbserver -r simulation -f tests/fast/AtomicOpsApiCorrectness.toml` - `clang-format` 19 and `git diff --check`",
+      "url": "https://github.com/apple/foundationdb/pull/13731",
+      "createdAt": "2026-07-18T03:26:27Z",
+      "updatedAt": "2026-08-18T10:29:21Z",
+      "timestamp": "2026-08-18T10:29:21Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 77
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13754",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Protect `Transaction#close` in `Database#runAsync` from cancellation",
+      "text": "`FDBDatabase#runAsync` returns a future on a complicated chain of retry and cleanup logic to create a transaction, run the user-supplied closure, commit the transaction, and close it. The final future actually returned is the result of `CompletableFuture#whenComplete(/* close the open transaction */)`. Unfortunately, this means that if the returned future is cancelled, the `whenComplete` callback is also not called, resulting in the last-opened transaction not being closed, and in turn `Transaction not closed` warnings appearing on stderr. This change fixes that problem by swapping the order of two `CompletableFuture` method calls, moving the `whenComplete` above a `CompletableFuture#thenApply` call that fixes up the return value to what `runAsync`'s future is expected to supply. Cancelling *that* future is not a problem, since the fixed-up return value would be clobbered by the resulting `CancellationException` anyway, and `CompletableFuture` cancellation does not propagate to parent futures' tasks. We also add a unit test verifying the behavior of `db.runAsync(something).cancel(true)` with respect to closing opened transactions. This test reliably fails without the change to `FDBDatabase` and passes with it.",
+      "url": "https://github.com/apple/foundationdb/pull/13754",
+      "createdAt": "2026-07-20T19:15:05Z",
+      "updatedAt": "2026-08-18T19:32:32Z",
+      "timestamp": "2026-08-18T19:32:32Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "jkt-signal",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13757",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "docker: update base to rockylinux-9.8, golang build base, README",
+      "text": "I plan to work backwards, and update release-7.4 and release-7.3 branches appropriately (release-7.3 currently uses rockylinux-9.4) There's a lot that I think could be cleaned-up in `build-images.sh` ... but that seems like a big bag of worms which I can approach gradually later. For now, the motivation is that some internal dev/test/ci stuff uses these images and is flagged by some scanners for having old rockylinux packages in the images.",
+      "url": "https://github.com/apple/foundationdb/pull/13757",
+      "createdAt": "2026-07-20T22:39:41Z",
+      "updatedAt": "2026-08-18T18:16:34Z",
+      "timestamp": "2026-08-18T18:16:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 23
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13786",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "always increment finishedQueries counter if incrementing allQueries",
+      "text": "Storage server processes publish a pair of counters `total_queries` and `finished_queries` (as well as a derived special counter `query_queue_max`) tracking how many read operations have been started and finished (and the high-water-mark for the number of pending queries—those that have been started, but not finished—in a status-fetch interval). Unfortunately, the counter underlying `total_queries` was incremented at the beginning of one of several actors, and the matching increment to `finished_queries` was done at the end, with several intervening `wait`s. If the actor was cancelled (or experienced another non-returnable error), `finished_queries` was not incremented, resulting in a permanent drift between `total_queries` and `all_queries` and apparently endless growth in `query_queue_max`. The easiest way to demonstrate this behavior is to have two different clients alternate between setting watches and updating values for the same keys—for example, run two simultaneous instances of this [simple Java program](https://gist.github.com/jkt-signal/1c3ea2a4a6aafd51571b462c57b50fd9) against a single database, and monitor its status to see `query_queue_max` on storage servers go up permanently every time you run the test. To solve this problem, we add a simple class `CountedSection` to `flow/Stats.h` to bump two counters in RAII-enforced balance; once a local `CountedSection` has bumped the first counter, it will always eventually bump the second one whether it is destroyed as a result of normal exit or exception. (Of course, if you store one in a heap object and leak it, you will still experience drift, so, uh, don't do that.) `CountedSection` is made move-only so you can use it in actor state, since `state` variables seem to always be default-constructed and then assigned to their initializers even if the initialization comes before the first `wait` in an actor. One of the actors involved actually updates a second counter pair, `getMappedRangeQueries` and `finishedGetMappedRangeQueries`, in a way vulnerable to the same problem, so we use `CountedSection` to address that as well, though I have not seen any instances of these getting out of sync (entirely due to lack of trying). Some other metrics updated at the ends of the affected actors—mostly latency metrics, but also some tagged size distributions—are not addressed by this change. Arguably they should not be, since including latency and response size of interrupted queries may significantly throw off the statistics in a not-necessarily-useful way. Leaving this as an RFC because I'm not sufficiently familiar with the FoundationDB testing setup to write a good test; the Java program linked above is a great demonstration but is not trivially adapted to an integration test (and presumably we'd like tests of the fdbserver itself to be C++, not dependent on the Java bindings). Advice for how to test the change greatly appreciated! This PR is against the 7.3 branch, rather than `main`, because all the relevant actors have been rewritten to use C++20 standard coroutines in the interim, and while I strongly suspect the same bug applies equally in `main`, I was not able to confirm this because `main` does not currently build a usable fdb for me. Porting forward to `main` should be relatively trivial and I'm happy to do so if requested.",
+      "url": "https://github.com/apple/foundationdb/pull/13786",
+      "createdAt": "2026-07-24T20:35:08Z",
+      "updatedAt": "2026-08-18T20:45:36Z",
+      "timestamp": "2026-08-18T20:45:36Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 16
+      },
+      "labels": [],
+      "author": "jkt-signal",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13810",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "docker: update base to rockylinux-9.8, golang builder, README",
+      "text": "* update Dockerfile base to rockylinux-9.8 * update golang builder to golang 1.24.13 * update docker README build instructions, copy from main backport of https://github.com/apple/foundationdb/pull/13757 (mostly)",
+      "url": "https://github.com/apple/foundationdb/pull/13810",
+      "createdAt": "2026-08-03T19:56:11Z",
+      "updatedAt": "2026-08-18T18:17:13Z",
+      "timestamp": "2026-08-18T18:17:13Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 23
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13816",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "packaging/docker: minor tweaks to match release-7.4 changes",
+      "text": "follow-up to https://github.com/apple/foundationdb/pull/13757 after it was backported with adjustments in https://github.com/apple/foundationdb/pull/13810",
+      "url": "https://github.com/apple/foundationdb/pull/13816",
+      "createdAt": "2026-08-05T22:03:24Z",
+      "updatedAt": "2026-08-18T18:17:27Z",
+      "timestamp": "2026-08-18T18:17:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13818",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Backport call-site aware memory tracking to release-7.4 (PR #13344)",
+      "text": "Backport of PR #13344 (\"call-site aware memory tracking\", main commit aa705c8c02) to the release-7.4 line. Adds a sampled, always-compiled, knob-controlled per-call-site memory tracker (flow/MemoryTracker.{cpp,h}) hooked into the three FDB-owned allocation paths: the global operator new/delete set, FastAllocator<Size>, and ArenaBlock::create/destroyLeaf. A periodic dump from SystemMonitor emits MemoryTrackerSite / MemoryTrackerSummary TraceEvents. Prod default is off; simulation samples 1-in-10 so the path is exercised. The whole feature is gated at compile time by FDB_MEMORY_TRACKER (on by default; build with -DFDB_MEMORY_TRACKER=OFF to compile it out). The replaced global operator new / operator delete (and the legacy ALLOC_INSTRUMENTATION accounting variants) are moved into fdbserver/GlobalNewDelete.cpp so the interposition is compiled into the fdbserver executable only, never into flow / libfdb_c / the client bindings. Verified with nm: the strong operator-new/delete definitions are present in the fdbserver binary and absent from libfdb_c.so and libflow.a. Differences from the main-branch PR, due to release-7.4 divergence: - operator-new removal and memTrackerInit() wiring applied to fdbserver/fdbserver.actor.cpp (main: fdbserver.cpp); knob re-init uses g_knobs.initialize() rather than initializeServerKnobs(). - forceLinkMemoryTrackerTests() wired into fdbserver/workloads/UnitTests.actor.cpp (main: UnitTests.cpp). - AGENTS.md added, adapted to 7.4 (flat fdbserver/ layout, ServerKnobs under fdbclient/, fdbserver -r unittests, absent design docs dropped). - Omitted: design/memory-tracker.md, the fdbserver/bench microbenchmark (needs main's benchmark harness, absent from 7.4), and the two contrib/mako_ab_*.py scripts (need contrib/mako_storage_bench.sh, absent from 7.4). Testing, correctness: - All 14 /flow/MemoryTracker/ unit tests pass; ran 1000x with randomized seeds, 1000/1000 passed, 0 failures. - 100K Joshua correctness run, clean: 20260805-213736-gglass-36215d1242f71327 compressed=True data_size=41598074 duration=4226513 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:41:34 sanity=False started=100000 stopped=20260805-221910 submitted=20260805-213736 timeout=5400 username=gglass Testing, performance: Attachments show **saturation throughput** of {{*compiled out* vs *compiled-in but disabled*}, {*compiled in, disabled* vs *compiled in, enabled at 1% sampling*}}; and **p50 latency** of {{*compiled out* vs *compiled-in but disabled*}, {{*compiled-in, disabled* vs *compiled-in, enabled at 1% sampling*}}. Summary: - Throughput reduction: O(1%) (compiled out --> compiled in) and O(10%) (disabled --> enabled at 1% sampling). - Latency increase at p50: O(1%) (compiled out --> compiled in) and O(7%) (disabled --> enabled at 1% sampling). The intent is to be able to compile in by default and ship that, and only enable when needed (e.g. interesting end to end test scenarios, or for leak debugging as a last resort in actual production). [FDB Memory Tracker A_B_ release-7.4 tracker compiled out vs in (tracking off).pdf](https://github.com/user-attachments/files/30765125/FDB.Memory.Tracker.A_B_.release-7.4.tracker.compiled.out.vs.in.tracking.off.pdf) [FDB Memory Tracker A_B_ off vs 1_100 sampling.pdf](https://github.com/user-attachments/files/30765129/FDB.Memory.Tracker.A_B_.off.vs.1_100.sampling.pdf) [FDB Memory Tracker A_B_ compiled-out vs compiled-in-disabled latency @ 2500 tps.pdf](https://github.com/user-attachments/files/30768955/FDB.Memory.Tracker.A_B_.compiled-out.vs.compiled-in-disabled.latency.%40.2500.tps.pdf) [FDB Memory Tracker A_B_ latency @ 2500 tps (sub-saturation, 3 runs_arm).pdf](https://github.com/user-attachments/files/30766774/FDB.Memory.Tracker.A_B_.latency.%40.2500.tps.sub-saturation.3.runs_arm.pdf) **EDIT**: subsequent testing on real clusters shows higher overhead -- incremental CPU usage for (compiled out) vs (compiled in, disabled). We may want to put this in but compiled off per the cmake flag.",
+      "url": "https://github.com/apple/foundationdb/pull/13818",
+      "createdAt": "2026-08-05T22:24:02Z",
+      "updatedAt": "2026-08-18T18:46:57Z",
+      "timestamp": "2026-08-18T18:46:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 14
+      },
+      "labels": [],
+      "author": "gxglass",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13836",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Convert `ActorCollection` to standard coroutines",
+      "text": "## Summary - Convert `ActorCollection.actor.cpp` into a standard C++ coroutine implementation in `ActorCollection.cpp`. - Preserve the existing public API, source-ordered event handling, deterministic cancellation, error propagation, and callback lineage. - Use persistent callbacks and separate cancellation/completion paths to avoid per-event allocations. - Add regression coverage for cancellation order, reentrant collection cancellation, sampling lineage, queued-ready actors, and add-stream errors. ## Benchmark results `flow_bench`; Clang 19.1.5; Release build; sanitizers disabled; pinned to one CPU; seven repetitions; 0.15-second minimum benchmark time. | Benchmark | Before | After | Change | |---|---:|---:|---:| | Ready actor | 169 ns | 154 ns | **−9.0%** | | Add 1 pending | 2.91 µs | 2.90 µs | −0.5% | | Add 16 pending | 4.04 µs | 3.97 µs | −1.8% | | Add 256 pending | 20.28 µs | 18.65 µs | **−8.0%** | | Complete 1 pending | 2.90 µs | 2.89 µs | −0.3% | | Complete 16 pending | 4.08 µs | 3.79 µs | **−7.1%** | | Complete 256 pending | 21.23 µs | 15.91 µs | **−25.0%** | A comparison with a `Choose/When` implementation was also performed, showing that the PR's implementation has better performance (but exact numbers couldn't be recalled at the time of writing). ## Testing - `flow_test -f /flow/actorCollection/ --seed 12345`: 12 passed. - `flow_test -f /flow/coro/noThrowOnCancel/ --seed 12345`: 7 passed. - `flow_test --ignore /flow/coro/FlowMutex --seed 12345`: 189 passed; excludes an unrelated long-running mutex stress test. - `flow_test -f /flow/actorCollection/testSamplingLineage --seed 12345` with `ENABLE_SAMPLING`: 1 passed. - Built `flow_bench` and `flow_sampling`, including the sampling-enabled implementation. - `clang-format` 19.1.5 check passed.",
+      "url": "https://github.com/apple/foundationdb/pull/13836",
+      "createdAt": "2026-08-10T12:41:55Z",
+      "updatedAt": "2026-08-18T19:56:26Z",
+      "timestamp": "2026-08-18T19:56:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 67
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13838",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Bound degraded-team relocation retries across pipeline transitions",
+      "text": "## Summary - Preserve per-team submitted-shard deduplication while the data-distribution pipeline rapidly transitions between full and available. - Retry unchanged degraded-team ranges only after the existing polling interval, a genuine team-health change, or unhealthy-relocation drainage. - Extend the existing merged-shard team-tracker regression to cover repeated pipeline full/clear transitions. ## Validation - `fdbserver_datadistributor_test --simulation --filter /DataDistribution/TeamTracker/RetriesMergedShardForUndesiredServer` - `fdbserver_datadistributor_test --simulation` (50 tests passed). - Two unchanged `tests/fast/ShardEncodeRollback.toml` simulations with buggify and fault injection enabled.",
+      "url": "https://github.com/apple/foundationdb/pull/13838",
+      "createdAt": "2026-08-10T18:47:03Z",
+      "updatedAt": "2026-08-18T10:25:18Z",
+      "timestamp": "2026-08-18T10:25:18Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 18
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13851",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "documentation: update to sphinx 6.2.1 and remove setuptools",
+      "text": "I think setuptools really isn't needed here, I think it was added for an older version of python and pip. I'm not sure it really worked in this spot anyway: it's possible that someone may have had to install or update setuptools before pip could install some source package requirements here, but that would have to happen before the pip install of these requirements. So the first commit is my proposal to address https://github.com/apple/foundationdb/pull/13815 After that I tried to update the deps a bit. There's a good reason to update to sphinx 6.2.1 which is that older versions don't work with python-3.13+ but this update also required some other adjustments. The build container images already have sphinx-5.1.1 installed and you can see there was some struggle to get cmake to require the newer version. And the update required some tweaks to make our sphinx theme work the same. In addition to looking at the generated docs and clicking around, I diffed the full static site code, I'll post a summary of that tomorrow. All that said, I'd be happy to split out or trim down to just the minimal \"remove setuptools\", and stick with sphinx-5.1.1 for now.",
+      "url": "https://github.com/apple/foundationdb/pull/13851",
+      "createdAt": "2026-08-12T05:03:50Z",
+      "updatedAt": "2026-08-18T18:17:40Z",
+      "timestamp": "2026-08-18T18:17:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13854",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Convert LoadBalance.actor.h to standard coroutines",
+      "text": "## Summary - Convert load-balancing, replica-comparison, and TSS-comparison actors to standard C++ coroutines. - Consolidate the migrated implementation into `fdbrpc/LoadBalance.h` and update direct includes so the header no longer requires actor compilation. - Preserve request ownership, cancellation, inert `Never()` handling, race ordering, replica consistency checks, and `Void`-reply compatibility. ## Testing - `fdbrpc_test -f /fdbrpc/waitValueOrSignal/` — 3 tests passed. - `fdbclient_test -f /StorageServerInterface/TSSCompare/` — 1 test passed. - Built `fdbserver` successfully. - `tests/fast/CycleTest.toml` with replica consistency checking enabled — 2 simulation tests passed. - `clang-format` and `git diff --check` passed.",
+      "url": "https://github.com/apple/foundationdb/pull/13854",
+      "createdAt": "2026-08-12T10:34:28Z",
+      "updatedAt": "2026-08-18T03:26:40Z",
+      "timestamp": "2026-08-18T03:26:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 29
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13855",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "documentation: update downloads links with foundationdb-7.3.77",
+      "text": "also update supported OS version guidance (will validate by building docs locally and testing the links) After this, I can backport all docs-site updates to release-7.4 branch for inclusion in the next 7.4.x release. We could consider updating these version numbers just _before_ building the release, to match the impending release, but we do not mark a release stable right away - that comes some weeks later.",
+      "url": "https://github.com/apple/foundationdb/pull/13855",
+      "createdAt": "2026-08-12T17:10:42Z",
+      "updatedAt": "2026-08-18T18:17:58Z",
+      "timestamp": "2026-08-18T18:17:58Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 30
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13861",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "documentation: release-notes titles, consolidate pre-1.0",
+      "text": "Append Major.Minor to titles of release-notes pages so they better distinguish themselves. URLs do not change, they are based on filename. Consolidate pre-1.0 alpha and beta release notes into the 1.0 page (subjective 🤷) Latest release-notes-740 keep version-less title because of links to \"latest Release Notes\" elsewhere in the docs site that would be affected by the title change. -------- The main place these updated titles can be appreciated is in the Previous Releases page (which might only be linked from the entire site index anyway): Before: <img width=\"1166\" height=\"826\" alt=\"Screenshot 2026-08-13 at 1 21 32 PM\" src=\"https://github.com/user-attachments/assets/9a247e5e-a1bf-45c7-8bbb-2c3692a98c26\" /> After: <img width=\"1187\" height=\"749\" alt=\"Screenshot 2026-08-13 at 1 20 47 PM\" src=\"https://github.com/user-attachments/assets/a5a6fb7d-8123-4334-9a16-c328a5701698\" />",
+      "url": "https://github.com/apple/foundationdb/pull/13861",
+      "createdAt": "2026-08-13T17:33:00Z",
+      "updatedAt": "2026-08-18T18:18:12Z",
+      "timestamp": "2026-08-18T18:18:12Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13871",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Backport four bug fixes from main to release-7.4 (#12318, #12643, #12750, #12755)",
+      "text": "Backports four already-merged `main` bug fixes to `release-7.4`, ahead of 7.4.7. 1. https://github.com/apple/foundationdb/pull/12318, Fix circular recursion in Snapshot.Options() (Go binding) 2. https://github.com/apple/foundationdb/pull/12643, Fix a few file read cancellation bugs (partial: only the calculateFileChecksum() UAF hunk applies to release-7.4, see commit message and conflict notes) 3. https://github.com/apple/foundationdb/pull/12750, Fix a DD shutdown crash 4. https://github.com/apple/foundationdb/pull/12755, Track min popped version separately for system localities in TLog Did not fully backport number 2 above, either because part of it was already there, or part of it had its logic changed. For the latter, I'll do more research and open a new PR if needed. 100K: 20260813-181902-praza-port-7.4-audit-batch1-1e1c9c9a89774015, 100000/100000 pass",
+      "url": "https://github.com/apple/foundationdb/pull/13871",
+      "createdAt": "2026-08-14T17:26:46Z",
+      "updatedAt": "2026-08-18T20:30:25Z",
+      "timestamp": "2026-08-18T20:30:25Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 19
+      },
+      "labels": [],
+      "author": "spraza",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13872",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Lower backup role failure severity for IO error",
+      "text": "Problem: One off IO error when doing backup in the backup-worker when using backup-v2/partitioned logs is causing the process to report for the next 24 hours an SevError that could lead to pagable alert depending on once configuration. Solution: Make this issue a non SevError for the backup-worker due to the nature of the medium used for backup ie. blobstore or networked filesystem it can happen and will be retried by the process. Testing: Passed 10K testing in joshua",
+      "url": "https://github.com/apple/foundationdb/pull/13872",
+      "createdAt": "2026-08-14T17:34:52Z",
+      "updatedAt": "2026-08-18T04:45:19Z",
+      "timestamp": "2026-08-18T04:45:19Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "mpatou-openai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13879",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Exercise duplicate snapshot requests on the current binary",
+      "text": "## Summary - Add a registered fast simulation that exercises duplicate snapshot requests on the current binary. - Verify an in-progress duplicate replaces the original request and a completed duplicate reuses the recorded result. - Preserve existing snapshot workload behavior unless the new deterministic duplicate-checking options are enabled. ## Validation - `clang-format --dry-run --Werror fdbserver/workloads/SnapTest.cpp` - `fdbserver -r simulation -f tests/fast/SnapshotDuplicateRequests.toml`",
+      "url": "https://github.com/apple/foundationdb/pull/13879",
+      "createdAt": "2026-08-15T17:26:14Z",
+      "updatedAt": "2026-08-18T04:45:50Z",
+      "timestamp": "2026-08-18T04:45:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 14
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13882",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "[release-7.4] documentation: sphinx-6.2.1 and release-notes cleanup",
+      "text": "Backport from main: * #13851 * #13855 * #13861 * #12687 (I had a couple conflicts cherry-picking due to these typo fixes, and figured we might as well apply the typo fixes to the docs that will be published on the next 7.4.x release)",
+      "url": "https://github.com/apple/foundationdb/pull/13882",
+      "createdAt": "2026-08-16T18:28:31Z",
+      "updatedAt": "2026-08-18T18:19:41Z",
+      "timestamp": "2026-08-18T18:19:41Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 40
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13884",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Wait for a spare storage server before perpetual wiggle migration",
+      "text": "## Summary - Wait for a spare storage server before selecting perpetual-wiggle migration and exclusion targets. - Preserve the existing minimum-server assertion, randomized topology, failure injection, and storage-engine reset coverage. ## Testing - Targeted data-distribution recruitment cooldown and storage-wiggler unit tests. - Perpetual-wiggle storage-migration simulation across multiple deterministic seeds. - Matched unpatched and fixed simulations with delayed storage-server list updates. - Adjacent perpetual-wiggle statistics simulation.",
+      "url": "https://github.com/apple/foundationdb/pull/13884",
+      "createdAt": "2026-08-17T02:59:28Z",
+      "updatedAt": "2026-08-18T22:05:08Z",
+      "timestamp": "2026-08-18T22:05:08Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 26
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13885",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Make no-throw coroutine cancellation reentrant-safe",
+      "text": "## Summary Make shared `NoThrowOnCancel` coroutine cancellation safe against synchronous reentry from cleanup. Previously, detaching a waiter or destroying the coroutine frame could cancel the same unresolved future again and attempt to destroy its frame twice. Mark cancellation before either cleanup step and ignore recursive cancellation. Add a focused regression that cancels again from scope cleanup and checks the cancellation result, exactly-once cleanup, released waiter references, and repeated-cancel behavior. This extracts the shared runtime fix from #13836. It does not change ActorCollection. ## Testing - `git diff --check` passed. - The same cancellation fix and regression were previously tested in #13836 (`flow_test -f /flow/coro/noThrowOnCancel/ --seed 12345`: 7 passed). - A fresh test run on this standalone branch is pending.",
+      "url": "https://github.com/apple/foundationdb/pull/13885",
+      "createdAt": "2026-08-17T18:28:14Z",
+      "updatedAt": "2026-08-18T12:23:30Z",
+      "timestamp": "2026-08-18T12:23:30Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 39
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13886",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Audit: bound validate_restore's slowest task instead of its average batch",
+      "text": "The `validate_restore` audit phase finishes only when its slowest task does, and nothing bounded that task. Measured at 100M scale, the slowest task took **2535.86s of a 2536.0s phase — 100% of the wall clock**, so per-task throughput improvements could not move the phase at all. An earlier attempt raised the per-batch byte budget, gained a real 1.94x in per-task throughput, and made the phase **25% slower**, because that run's shards happened to be 1.87x fatter. It was optimising an average when the metric is a maximum. This PR is a bit of a bucket. I tried splitting it out into 3/4 pieces but was hard to tell a story about each of the pieces. ## 1. Cap the size of one audit task `scheduleAuditOnRange` divided work by live `keyServers` boundaries — one task per shard, dispatched to a single storage server that scans it sequentially — with no size cap anywhere in the audit dispatch path, so a fat shard was an unbounded straggler. Shards above `AUDIT_TASK_MAX_BYTES` (default 128MB) are now subdivided via `splitStorageMetrics`, lazily one shard at a time so the first task dispatches immediately. A failed metrics read falls back to the unsplit shard — the previous behaviour — so this cannot fail an audit that would otherwise pass. `minSplitBytes` is `target/2`. The storage server stops splitting once `remaining.bytes < 2 * minSplitBytes`, so that product is the real \"leave it alone\" threshold and half the target is what puts it on the target. Passing the target itself pushes the threshold to *twice* the target and opens a dead band: 287 of 867 tasks sat unsplit in the 128–256MB band, too big for the cap but too small for the server to bother, and the tail stayed at 1215.92s. Going *below* `target/2` makes little difference, because `getSplitKey` only splits while `remaining > target/2` and that binds first. Note also that the client discards a trailing piece under `STORAGE_METRICS_UNFAIR_SPLIT_LIMIT` (2/3) of the target, so the largest task can reach roughly **1.4x** the knob rather than exactly 1x. The `delay(0.1)` that paces dispatch stays per `keyServers` shard rather than becoming per piece. Per piece it multiplies by the split factor and caps dispatch at 10 tasks/sec, adding a term linear in the piece count to the very wall-clock this cap exists to shorten. ## 2. Treat the batch byte budget as a ceiling and adapt within it `AUDIT_RESTORE_BATCH_BYTE_LIMIT` previously used `CLIENT_KNOBS->REPLY_BYTE_LIMIT` (80KB), a generic per-RPC-reply cap with nothing to do with audit batching. 80KB is reached long before `AUDIT_RESTORE_BATCH_KEY_LIMIT`'s 100,000 keys at any realistic record size, so that knob was unreachable and raising it changed nothing: a 1B validation spent 2h26m in ~3.6M two-round-trip iterations at ~5.5MB/s per server, against an `AUDIT_STORAGE_RATE_PER_SERVER_MAX` allowance ~9x higher. A fixed 4MB is no better — it took `transaction_too_old` from 679 to 2515 — because the real constraint is a **deadline, not a size**. A batch reads at a pinned version that expires after `MAX_READ_TRANSACTION_LIFE_VERSIONS`, so what a server can fetch in one go depends on current load; overshooting fails and the retry re-reads from the same key, buying double work rather than throughput. The budget now halves on a retryable error and grows back additively above `AUDIT_RESTORE_BATCH_BYTE_LIMIT_MIN`. Also on this path: - The two sides of a batch were read **serially** on one transaction, for two independent ranges at the same explicit read version. They are now issued together. - Retries slept a flat 1.0s regardless of cause. They now use the existing `Backoff` helper (`DEFAULT_BACKOFF` → `DEFAULT_MAX_BACKOFF` at `BACKOFF_GROWTH_RATE`, jittered), reset on success so an occasional retry does not ratchet to the maximum. - `numValidatedKeys`/`validatedBytes` advanced before the progress-persist that can throw, so a batch failing *there* double-counted the counters the throughput analysis reads. All per-attempt state is now snapshotted and rolled back — including `complete`, which is derived from `sourceReply.more` and would otherwise be able to end an audit early over a range never fully read. ## 3. Let a server work several audit tasks at once `SERVE_AUDIT_STORAGE_PARALLELISM` defaulted to 1, so subdivided pieces landing on the same server would serialize and the cap would buy nothing; the default is now 4, randomized 1..4 in simulation so both paths keep coverage. That exposed two things the knob being 1 had masked: - The rate limiter was built **per call site**, so concurrent tasks multiplied an allowance whose knob is named `AUDIT_STORAGE_RATE_PER_SERVER_MAX`. One limiter is now shared per server, with time blocked on it reported in `SSAuditRestoreComplete` — `auditRestoreQ` had no limiter accounting at all, so a throttled audit was indistinguishable from a slow one. - `auditStorageServerShardQ` requires **exclusive** use of the server: it owns `shardAssignmentHistory`, which is single-instance state, and `startTrackShardAssignment()` asserts tracking is off. It now takes a dedicated lock instead of relying on the permit count. Without that, the per-server retry at the end of `scheduleAuditStorageShardOnServer` can re-dispatch while the previous attempt is still running on that server; at one permit the second request queued, at four it runs concurrently and trips the guard. Observed as `SevError ExistStorageServerShardAuditExit` on `Sideband`, `InventoryTestSomeWrites` and `MoveKeysCycle` — 3 hits across 20,000 runs, every one audit id 1 and `usable_regions:=2`. ## 4. Two pre-existing ways an ssshard audit wedges a storage server Both reachable without any of the above, and both found while diagnosing the failure in §3. - **Cancellation stranded the tracking flag.** `stopTrackShardAssignment()` was reached only by plain statements at the end of the function and on its error paths. Cancellation runs none of them — it destroys the coroutine frame — leaving `trackShardAssignmentMinVersion` set with no audit owning it, after which every later ssshard audit on that server bails out on the guard **for the life of the process**. Now runs from a `ScopeExit` guard. - **The guard leaked a parallelism permit.** Its early `co_return` sat between `take()` and the `FlowLock::Releaser`, and that lock is shared by every audit type, so enough leaks exhaust it and every subsequent audit on that server blocks in `take()` forever, with only a warning to say so. Cancellation is routine here — the retry above re-dispatches after any failure, and Attrition, `RandomMoveKeys` and remote-DC latency all supply those failures — so these are worth considering for backport independently of the performance work. ## 5. Two report-storm fixes - **BulkLoad** — `scheduleBulkLoadTasks()` rescans task metadata every `DD_BULKLOAD_SCHEDULE_MIN_INTERVAL_SEC`, and a task in the terminal `Error` phase is deliberately left in place (unlike `Acknowledged`, it is never erased), so the `SevWarnAlways` report fired again on every scan for the life of the cluster: 11,313 events from 2 tasks in one 1B run, still climbing hours after the job finished. Each task is now reported once, carrying the running total. - **BulkDump** — the SS bulkdump loop retries up to 50 times, a second apart, while shards move underneath it; retrying is the normal path. Every attempt logged `SevWarn SSBulkDumpError` — 18,023 events in one run against 29,026 files generated. Intermediate retries move to `SSBulkDumpRetry` at `bulkLoadVerboseEventSev()`; the terminal cases keep the original name and severity, so existing greps and dashboards keep working and now match only tasks that actually failed. Both matter beyond tidiness: this is how the real failure ends up buried thousands of log lines from the top. ## Results | | before | after | |---|---|---| | audit phase | 42m16s | **25m00s** (also 26% below the 33m47s pre-existing baseline) | | `transaction_too_old` | 2515 | **150** (below the baseline's 679) | | aggregate audit throughput | 79 MB/s | **130 MB/s** | | `RateLimiterTotalWaitTime` | — | 0, so the shared limiter never bound | Zero `SSAuditRestoreError`, zero `StorageServerFailed`. **These numbers need retaking.** They were measured before the `minSplitBytes` correction in §1 and before the dispatch-throttle decision, both of which change the task count. Treat them as evidence that the approach works, not as the current figures. ## Testing `nextAuditBatchBytes()` is pure and unit tested for the budget staying within `[floor, ceiling]` and never reaching zero or below. That is *not* hang protection — `GetRangeLimits` sets `minRows = 1`, so even a zero budget returns a key — but because `GetRangeLimits` overloads the sign of `bytes`: `-1` means `BYTE_LIMIT_UNLIMITED` and silently removes the bound, below `-1` fails `isValid()`, and `0` costs a round trip per key. `boundAuditTaskRange()` is covered by a mock `IDDTxnProcessor`, including that a failed metrics read degrades to the unsplit shard rather than failing the audit, and asserting `minSplitBytes <= target/2` because exceeding it is silent — subdivision just does not happen and the only symptom is a slower tail that looks like variance. Split points become task ranges with the same consecutive-pairs idiom `DDShardTracker::executeShardSplit()` uses. `splitStorageMetrics()` guarantees `begin` and `end` as its first and last points and `NativeAPI` rejects out-of-order replies, so no defensive re-derivation is needed here. Per-batch traces are gated behind the existing `ENABLE_AUDIT_VERBOSE_TRACE` knob; at 1B scale they were ~18M unconditional `SevInfo` events. There is a `TODO(Audit)` to move that gate into `fdbclient/Audit.h` and adopt it in `DataDistribution.cpp`, which currently gates the same knob with six `if` blocks — deferred because it flips those sites from emitting nothing to `SevDebug`, a trace-volume change worth measuring on its own. Joshua, 100k runs, clean: ``` 20260818-041541-stack-13886-04944201f8ee8683 ended=100000 pass=100000 remaining=0 max_runs=100000 runtime=0:31:15 timeout=5400 username=stack-13886 ``` `ExistStorageServerShardAuditExit` did not recur, against 3 hits in 20,000 runs before §3 and §4. --- <sub>Rebased and squashed to a single commit since first posted. Substantive changes from review: `minSplitBytes` `target/8` → `target/2`; the dispatch throttle kept per-shard rather than per-piece; the ssshard fixes in §4 added; `AUDIT_RESTORE_BATCH_BYTE_LIMIT`/`_MIN` narrowed `int64_t` → `int` since they feed `GetRangeLimits::bytes`; and three reimplementations dropped in favour of existing machinery — a bespoke split-point partitioner (NativeAPI already guarantees the contract), a hand-rolled backoff (`Backoff`), and a local scope guard (`flow/ScopeExit.h`).</sub>",
+      "url": "https://github.com/apple/foundationdb/pull/13886",
+      "createdAt": "2026-08-17T18:39:12Z",
+      "updatedAt": "2026-08-18T09:43:41Z",
+      "timestamp": "2026-08-18T09:43:41Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 36
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13888",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "packaging/docker: update to kubectl 1.31.14 for YCSB image",
+      "text": "k8s 1.31 is the oldest allowed version on AWS EKS now, and version of kubectl shouldn't drift *too far* from k8s control-plane",
+      "url": "https://github.com/apple/foundationdb/pull/13888",
+      "createdAt": "2026-08-17T19:45:17Z",
+      "updatedAt": "2026-08-18T16:08:59Z",
+      "timestamp": "2026-08-18T16:08:59Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 11
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13889",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Remove redundant `explicit(false)` from copy and move constructors",
+      "text": "Earlier enforcement of `explicit` or `explicit(false)` single-argument constructors was too broad, affecting copy and move constructors, which was unnecessary",
+      "url": "https://github.com/apple/foundationdb/pull/13889",
+      "createdAt": "2026-08-17T20:24:41Z",
+      "updatedAt": "2026-08-18T14:50:07Z",
+      "timestamp": "2026-08-18T14:50:07Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 30
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13890",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "[release-7.4] packaging: remove python-2.7 package from macOS pkg build",
+      "text": "It is obsolete. In practice, python developers will use uv, poetry, or pip in a venv, with python-3.9+ to install the fdb python package, which uses the system libfdb_c (.so or .dylib) which the macOS pkg still includes. backport of https://github.com/apple/foundationdb/pull/13880",
+      "url": "https://github.com/apple/foundationdb/pull/13890",
+      "createdAt": "2026-08-17T21:47:50Z",
+      "updatedAt": "2026-08-18T15:22:09Z",
+      "timestamp": "2026-08-18T15:22:09Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 16
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13891",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Replace explicit-self helpers with member coroutines",
+      "text": "## Summary Replace 20 actor-compiler-era static helpers that take an explicit receiver with ordinary C++ coroutine members. Fold pure forwarding wrappers into the existing entry points where possible. The nine commits cover mutation-log readers, Net2 listeners, Flow cache and lock helpers, team metrics, coordinator liveness checking, exclusion tracking, tag throttling, resolution balancing, and backup-file writers. Matching declarations are updated in the same commit as their implementation. Preserve the existing instance and virtual entry-point signatures, by-value Future ownership, synchronous lock fast paths, cancellation cleanup, retry and suspension order, and backup-file encoding. Remove obsolete static helper declarations. No behavior change is intended. ## Validation - Clang-format 19.1.5; receiver-normalized comparison of all 20 coroutine bodies. - Full `flow_test --seed 1`: 184 passed. - Focused `fdbclient_test` mutation-log-reader tests in normal and simulation modes, plus local backup-container tests: 10 passed. - Data Distributor and coordinator tests in normal and simulation modes, plus sequencer tests: 61 passed. `fdbserver_ratekeeperlinktest` also passed. - Full `fdbserver` build, followed by `MutationLogReaderCorrectness.toml`, `CycleTest.toml`, `BackupCorrectnessClean.toml`, and `TransactionTagApiCorrectness.toml`: all five test cases passed with seed 1. Buggify was on for Cycle and off for the other three files.",
+      "url": "https://github.com/apple/foundationdb/pull/13891",
+      "createdAt": "2026-08-17T23:32:28Z",
+      "updatedAt": "2026-08-18T14:23:35Z",
+      "timestamp": "2026-08-18T14:23:35Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 18
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13892",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "cherry-pick: tests: keep storage wiggle disabled for minimum throughput",
+      "text": "Cherry-pick of ``` 385eaaad1f15134a4f5cbaeab927e99352019260 Trevor Clinkenbeard <tclinkenbeard@openai.com> Sun Jul 19 19:11:03 2026 -0700 tests: keep storage wiggle disabled for minimum throughput ``` I tripped over this failure on release-7.4 branch `RandomSeed=\"1313027825\" SourceVersion=\"24033df897ff6409674b290039331086fd029ec2\" Time=\"1787002575\" BuggifyEnabled=\"0\" DeterminismCheck=\"0\" FaultInjectionEnabled=\"1\" TestFile=\"tests/fast/MinimumThroughput.toml\"`",
+      "url": "https://github.com/apple/foundationdb/pull/13892",
+      "createdAt": "2026-08-17T23:35:17Z",
+      "updatedAt": "2026-08-18T11:59:48Z",
+      "timestamp": "2026-08-18T11:59:48Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 17
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13893",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Retire old TLog roles after terminal recovery",
+      "text": "## Summary Keep the old-generation TLog availability protection from #13331 during partial recovery, but retire those roles after the ordinary recovery has durably written its terminal coordinator state. That state must contain every expected current log set and no old generations. The retirement transition stops advertising old roles without changing the current transaction-system membership or clearing shared in-memory log data. Remove the `OldTLogExcluded` recovery trigger, which otherwise starts another recovery solely to retire an already-drained excluded TLog. ## Tests Added focused regressions for partial/remote recovery, terminal retirement, and preservation of recovery for an excluded current TLog. Source formatting and whitespace checks pass. Compilation and execution of the unit tests are still pending. This draft is not ready to merge.",
+      "url": "https://github.com/apple/foundationdb/pull/13893",
+      "createdAt": "2026-08-18T01:06:24Z",
+      "updatedAt": "2026-08-18T21:05:24Z",
+      "timestamp": "2026-08-18T21:05:24Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 24
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13894",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Restore region recovery configuration after simulation restart",
+      "text": "## Summary A paired simulation restart can lose the region commands that fresh setup initializes. If a datacenter later becomes unavailable, dead-region repair submits an incomplete configuration command, ignores `UNKNOWN_OPTION`, and can wait until the trace limit aborts the test. - Reconstruct the original and disabled-region commands once from the persisted two-region configuration, preserving region ordering and satellite settings. - Share command construction with fresh setup and check both recovery configuration results while preserving the concurrent-repair guard. - Add focused coverage for datacenter selection, satellite and extension-field preservation, configuration parsing, and initialization boundaries. No workload or fault settings change. ## Validation - `fdbserver_core_test -f /fdbserver/FDBSimulationPolicy/`: two tests passed in both normal mode and Sim2. - The unchanged `restarting/from_7.3.29/ClientTransactionProfilingCorrectness` test pair passed with the historical 7.3 server, buggify, and fault injection preserved. The recovery trace confirms the configuration was applied, old log generations drained, full recovery completed, and no severe errors occurred.",
+      "url": "https://github.com/apple/foundationdb/pull/13894",
+      "createdAt": "2026-08-18T01:34:21Z",
+      "updatedAt": "2026-08-18T09:31:19Z",
+      "timestamp": "2026-08-18T09:31:19Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13895",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Retire obsolete bad-team trackers when rebuilding storage teams",
+      "text": "## Problem Data distribution can recreate a server team before its old redundant-team tracker is removed. Both trackers refer to the same shard mappings, so the obsolete tracker can repeatedly request relocations back onto the valid team and prevent data distribution from becoming idle. ## Change Remove and cancel matching bad-team trackers before starting a valid replacement. Preserve unrelated bad teams and leave genuine server-failure handling with the replacement. Add a regression covering tracker retirement, accounting, team membership, quiescence, and a subsequent server failure. ## Testing - The focused regression fails without the fix and passes with it. - `fdbserver_datadistributor_test`: 51 passed, 0 failed. - The existing `tests/restarting/from_7.3.0_until_7.4.0/SnapCycleRestart-{1,2}.toml` pair reproduces the failure before the fix and passes both phases afterward with its original settings.",
+      "url": "https://github.com/apple/foundationdb/pull/13895",
+      "createdAt": "2026-08-18T01:48:40Z",
+      "updatedAt": "2026-08-18T09:07:36Z",
+      "timestamp": "2026-08-18T09:07:36Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13896",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Retry old-epoch backup mutation-log uploads",
+      "text": "## Summary An I/O error while writing partitioned backup logs can terminate an old-epoch backup worker. Those failures deliberately do not restart transaction recovery, so the old log generation can remain retained and backup progress can stop indefinitely. Retry `io_error` and `io_timeout` for old-epoch mutation-log uploads while retaining the same role and message prefix. Each attempt opens fresh files. Freeze the recipient ranges and encoding boundaries so an ambiguous finish produces byte-identical duplicates, and handle newly observed overlapping backups before discarding messages or advancing durable progress. Preserve current-epoch recovery, cancellation, and displacement behavior. Add focused regression coverage for file creation, partial append, ambiguous finish, changing recipients, long transient outages, and stopping during an upload or retry. ## Validation - `fdbserver_backupworker_test`: 8/8 in normal mode and 8/8 in simulation mode. - `BackupCorrectnessPartitioned.toml` with buggify and fault injection enabled: passed; backup and restore completed. - A matched control with only old-epoch retries disabled reproduces the stalled backup; enabling retries completes the same test. - The workload and fault settings are unchanged. This change covers transient destination I/O failures. It does not add replacement of an already-terminated process or recovery from a permanently hung destination.",
+      "url": "https://github.com/apple/foundationdb/pull/13896",
+      "createdAt": "2026-08-18T02:00:49Z",
+      "updatedAt": "2026-08-18T09:05:55Z",
+      "timestamp": "2026-08-18T09:05:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 8
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13897",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Make DD relocation retry observations resilient to delay jitter",
+      "text": "## Summary The merged-shard retry test waits slightly longer than one polling interval and expects exactly two requests. Simulation delay jitter can extend that observation across multiple valid retry rounds, making the final empty-stream assertion fail. Observe four consecutive requests as they arrive, verify their merged range and failed-team priority, and check that no three observed requests fall within one polling interval. Keep a bounded wait for missing retries, then stop the observation and yield before destroying the fixture because stream sends invoke callbacks synchronously. No production behavior or workload configuration changes. ## Validation - Clang Release build of `fdbserver_datadistributor_test` and `fdbserver`. - On this branch, the complete default Data Distributor unit suite passed all 50 tests in both native and simulation modes. The focused TeamTracker and shard-mapping regressions also passed in both modes. - Matched `SpecificUnitTests.toml` simulation reproduction on one source baseline: unchanged source fails; the fix passes with the same test and injection settings.",
+      "url": "https://github.com/apple/foundationdb/pull/13897",
+      "createdAt": "2026-08-18T02:25:27Z",
+      "updatedAt": "2026-08-18T08:10:40Z",
+      "timestamp": "2026-08-18T08:10:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13898",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "bindings/python: update pycodestyle test",
+      "text": "It must not have been run in a while, there were 10 or so violations of \"E203 whitespace before ':'\" and a couple others. So: * add E203 to the ignore list * reduce max-line-length to 130 * 2 spots to normalize to 2 blank lines between top-level stuff * 2 spots to fix very long comment lines * run pycodestyle as a proper ctest ----------- Tested locally, of course. Before this PR, the test was a target for ninja, not a ctest, but only if pycodestyle was already installed, and it seems like it still wasn't in the default \"all\" target set? Not only would it find style violations if it ran, it couldn't actually run: ``` $ ninja fdb_python_check [0/2] Re-checking globbed directories... [1/2] Check python code style FAILED: [code=1] bindings/python/check_py_code_style /Users/pierce/scratch/buildfdb/bindings/python/check_py_code_style cd /Users/pierce/scratch/okteto-rhel9/foundationdb/bindings/python && /Users/pierce/scratch/venv312/bin/pycodestyle bindings/python --config=/Users/pierce/scratch/okteto-rhel9/foundationdb/bindings/python/pycodestyle.cfg && /opt/homebrew/bin/cmake -E /Users/pierce/scratch/buildfdb/bindings/python/check_py_code_style bindings/python:1:1: E902 FileNotFoundError: [Errno 2] No such file or directory: 'bindings/python' ninja: build stopped: subcommand failed. ``` Anyway ... I can add pycodestyle to the base build images, and it will finally run in CI, for the main branch, when _ctest_ is run. I think it will still be skipped by default for the release-7.4 branch? but we may want to backport this to get it running there too.",
+      "url": "https://github.com/apple/foundationdb/pull/13898",
+      "createdAt": "2026-08-18T04:49:47Z",
+      "updatedAt": "2026-08-18T18:57:29Z",
+      "timestamp": "2026-08-18T18:57:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 21
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13899",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "documentation: fix typo PiPy -> PyPI",
+      "text": "forward-port of something I noticed and fixed in https://github.com/apple/foundationdb/pull/13882",
+      "url": "https://github.com/apple/foundationdb/pull/13899",
+      "createdAt": "2026-08-18T05:14:19Z",
+      "updatedAt": "2026-08-18T16:45:29Z",
+      "timestamp": "2026-08-18T16:45:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13900",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "docs: fix broken links and typos in flow/README.md",
+      "text": "The `actorcompiler.h` and `FastRef.h` headers were moved into `flow/include/flow/`, but the Flow tutorial still linked to their old top-level paths, so both links 404 on GitHub. This repoints them to the correct `include/flow/` locations. Also fixes a \"nothing\" → \"noting\" typo and two subject-verb agreement errors (\"send\" → \"sends\") in the same file. Docs-only change; no code or behavior is affected.",
+      "url": "https://github.com/apple/foundationdb/pull/13900",
+      "createdAt": "2026-08-18T09:34:52Z",
+      "updatedAt": "2026-08-18T20:27:04Z",
+      "timestamp": "2026-08-18T20:27:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "PARTHDESHMUKH2005",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13901",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "tests: simpler fallible authorization_venv_setup",
+      "text": "The \"|| echo 'venv already set up'\" part was suppressing errors from pip/pypi (e.g. when pypi is under stress and gives 502 responses). All that can be simplified away, it is OK to run venv and pip again on the next ctest run, they work (and skip what is already done). This is already how test_venv_setup works in cmake/AddFdbTest.cmake. Also no need to pip upgrade pip. ------------------- In the past few days when PyPI was often giving 502 responses to our CI Codebuild VMs, you would sometimes see a few tests fail with \"pytest not found\" instead of showing the failure in the venv install, because this was suppressing it. This is not present on the main-branch / 8.x, the tenant authz stuff was all removed.",
+      "url": "https://github.com/apple/foundationdb/pull/13901",
+      "createdAt": "2026-08-18T16:00:17Z",
+      "updatedAt": "2026-08-18T23:33:29Z",
+      "timestamp": "2026-08-18T23:33:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 24
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13902",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Move storage simulation capabilities out of fdbrpc",
+      "text": "## Summary Follow up on #13080 and #13180 by moving the storage/TSS capability API out of the generic simulator policy. - Define `FDBSimulationCapability` and `IFDBSimulationPolicy` in `fdbclient`, and implement the interface in the existing server-owned `FDBSimulationPolicy`. - Query the currently installed, reference-counted simulation policy. Missing or non-FDB policies keep all capabilities disabled, and policy replacement cannot leave a stale provider. - Preserve the existing live TSS-mode predicates, mismatch severity, and fault-injection behavior. No protocol, serialization, scheduling, or random-draw changes are intended. - Add regression coverage for defaults, live answers, policy replacement and lifetime, and the complete TSS-mode capability table. ## Testing - New client capability tests: 3/3 passed in both normal and simulated modes. - Real FDB policy capability test: 1/1 passed in both modes. - Existing TSS comparison, load-balancing hook, and `waitValueOrSignal` tests: 6/6 passed in both modes. - Compiled and linked `fdbrpclinktest`, `fdbclient_test`, `fdbrpc_test`, `fdbserver_core_test`, and `fdbserver`; executed the independent RPC link test successfully. - Two unchanged `tests/fast/CycleTest.toml` runs with BUGGIFY off and fault injection on: all four test phases passed, with no severity-40 trace events. - Clang-format 19 and `git diff --check` passed. The simulation runs selected normal and mutation-dropping TSS configurations, but neither completed TSS pairing. They provide general integration coverage, not proof of active TSS request comparison or injected faults; the focused tests cover the capability dispatch and mode mapping directly.",
+      "url": "https://github.com/apple/foundationdb/pull/13902",
+      "createdAt": "2026-08-18T19:12:01Z",
+      "updatedAt": "2026-08-18T22:47:56Z",
+      "timestamp": "2026-08-18T22:47:56Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 14
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13903",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "fdbclient: after unlink of per-thread library copy, symlink to original",
+      "text": "This is an attempt to enable profilers (and debuggers etc) to find the dynamic library file for symbols and \"buildid\" (used to lookup debug symbols if they are separate). There is a lot to explain about these behaviors in libfdb_c: It seems the library must have global state that should not be shared between threads, so there must be separate loaded copies that get their own global data/bss areas in the process memory space. Real file copies need to be used instead of symlinks in the first place, otherwise the OS kernel will treat it as the already-loaded dynamic library. The `unlinkOnLoad` is to prevent many copies of library file accumulating and filling the storage volume, if the process is being restarted periodically. After the name in the filesystem is unlinked, the loaded library reference in the running process keeps the inode and filedata alive in the filesystem, until the process ends and the OS kernel cleans up. There is no place in fdbclient or libfdb_c where the \"external\" loaded dynamic library is explicitly unloaded, there are no destructors for these client objects. Anyway, if the running process was crashing and restarting, graceful cleanup would not run, so the unlinkOnLoad trick makes sense to let the OS kernel clean up. There is already a \"network\" option to keep the library file copies. This new symlink behavior should be a much lighter-weight alternative that can be left on everywhere. ------------------- I haven't really tested this, I'll need some help to figure out a semi-realistic setup. I assume that another copy of the original library path, in each DLApi class (in each thread), is no problem. But it is slightly awkward, making this kinda awkward logic a tiny bit worse. I tried a refactor, ran into a bit of awkwardness, maybe I should try again...",
+      "url": "https://github.com/apple/foundationdb/pull/13903",
+      "createdAt": "2026-08-18T20:13:57Z",
+      "updatedAt": "2026-08-19T00:27:39Z",
+      "timestamp": "2026-08-19T00:27:39Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 18
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13904",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "build: always compress debug section, cleanup debug level",
+      "text": "Debug section compression \"-gz\" was disabled for FDB_RELEASE because of compatibility with cpack (from cmake), but we really want them compressed for distribution to be practical. The more recent cmake/cpack 3.31.0 we now use seems to work. Instead of using -ggdb, use -gdwarf-4 or -gddwarf-5 with level -g3 or -g2 or -g1. It amounts to the same, but more clearly. ------------ I'll be honest, on my (okteto) dev VM, building the RPMs is very slow, it takes like 90 minutes 😬 ... seems to be cpu-limited, maxing-out 2 cpu cores? I'm investigating this now, will fix ... More details from https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html > -ggdb > Produce debugging information for use by GDB. This means to use the most expressive format available (DWARF, stabs, or the native format if neither of those are supported), including GDB extensions if at all possible. > -gdwarf > -gdwarf-_version_ > Produce debugging information in DWARF format (if that is supported). The value of _version_ may be either 2, 3, 4 or 5; the default version for most targets is 5 (with the exception of VxWorks, TPF and Darwin / macOS, which default to version 2, and AIX, which defaults to version 4). > -g _level_ > -ggdb _level_ > Request debugging information and also use _level_ to specify how much information. The default level is 2. > Level 0 produces no debug information at all. Thus, -g0 negates -g. > Level 1 produces minimal information, enough for making backtraces in parts of the program that you don’t plan to debug. This includes descriptions of functions and external variables, and line number tables, but no information about local variables. > Level 2 is the normal setting to produce debuggable code. The debug output includes all the information from level 1, plus information about local variables and typedefs to allow stepping through code and examining its state. For C++ code, additional information is also emitted to assist in debugging namespace, class, and template functions. > Level 3 includes extra information, such as all the macro definitions present in the program. Some debuggers support macro expansion when you use -g3. > If you use multiple -g options, with or without level numbers, the last such option is the one that is effective. > -gdwarf does not accept a concatenated debug level, to avoid confusion with -gdwarf-_level_. Instead use an additional -g _level_ option to change the debug level for DWARF.",
+      "url": "https://github.com/apple/foundationdb/pull/13904",
+      "createdAt": "2026-08-18T23:03:35Z",
+      "updatedAt": "2026-08-19T00:58:57Z",
+      "timestamp": "2026-08-19T00:58:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:02a65189832fcd04b3bc",
+      "signalId": "github:apple/foundationdb:pull_request:13904",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13904",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "build: always compress debug section, cleanup debug level",
+        "text": "Debug section compression \"-gz\" was disabled for FDB_RELEASE because of compatibility with cpack (from cmake), but we really want them compressed for distribution to be practical. The more recent cmake/cpack 3.31.0 we now use seems to work. Instead of using -ggdb, use -gdwarf-4 or -gddwarf-5 with level -g3 or -g2 or -g1. It amounts to the same, but more clearly. ------------ I'll be honest, on my (okteto) dev VM, building the RPMs is very slow, it takes like 90 minutes 😬 ... seems to be cpu-limited, maxing-out 2 cpu cores? I'm investigating this now, will fix ... More details from https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html > -ggdb > Produce debugging information for use by GDB. This means to use the most expressive format available (DWARF, stabs, or the native format if neither of those are supported), including GDB extensions if at all possible. > -gdwarf > -gdwarf-_version_ > Produce debugging information in DWARF format (if that is supported). The value of _version_ may be either 2, 3, 4 or 5; the default version for most targets is 5 (with the exception of VxWorks, TPF and Darwin / macOS, which default to version 2, and AIX, which defaults to version 4). > -g _level_ > -ggdb _level_ > Request debugging information and also use _level_ to specify how much information. The default level is 2. > Level 0 produces no debug information at all. Thus, -g0 negates -g. > Level 1 produces minimal information, enough for making backtraces in parts of the program that you don’t plan to debug. This includes descriptions of functions and external variables, and line number tables, but no information about local variables. > Level 2 is the normal setting to produce debuggable code. The debug output includes all the information from level 1, plus information about local variables and typedefs to allow stepping through code and examining its state. For C++ code, additional information is also emitted to assist in debugging namespace, class, and template functions. > Level 3 includes extra information, such as all the macro definitions present in the program. Some debuggers support macro expansion when you use -g3. > If you use multiple -g options, with or without level numbers, the last such option is the one that is effective. > -gdwarf does not accept a concatenated debug level, to avoid confusion with -gdwarf-_level_. Instead use an additional -g _level_ option to change the debug level for DWARF.",
+        "url": "https://github.com/apple/foundationdb/pull/13904",
+        "createdAt": "2026-08-18T23:03:35Z",
+        "updatedAt": "2026-08-19T00:58:57Z",
+        "timestamp": "2026-08-19T00:58:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2f6296eb947e425e34c3",
+      "signalId": "github:apple/foundationdb:pull_request:13903",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13903",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "fdbclient: after unlink of per-thread library copy, symlink to original",
+        "text": "This is an attempt to enable profilers (and debuggers etc) to find the dynamic library file for symbols and \"buildid\" (used to lookup debug symbols if they are separate). There is a lot to explain about these behaviors in libfdb_c: It seems the library must have global state that should not be shared between threads, so there must be separate loaded copies that get their own global data/bss areas in the process memory space. Real file copies need to be used instead of symlinks in the first place, otherwise the OS kernel will treat it as the already-loaded dynamic library. The `unlinkOnLoad` is to prevent many copies of library file accumulating and filling the storage volume, if the process is being restarted periodically. After the name in the filesystem is unlinked, the loaded library reference in the running process keeps the inode and filedata alive in the filesystem, until the process ends and the OS kernel cleans up. There is no place in fdbclient or libfdb_c where the \"external\" loaded dynamic library is explicitly unloaded, there are no destructors for these client objects. Anyway, if the running process was crashing and restarting, graceful cleanup would not run, so the unlinkOnLoad trick makes sense to let the OS kernel clean up. There is already a \"network\" option to keep the library file copies. This new symlink behavior should be a much lighter-weight alternative that can be left on everywhere. ------------------- I haven't really tested this, I'll need some help to figure out a semi-realistic setup. I assume that another copy of the original library path, in each DLApi class (in each thread), is no problem. But it is slightly awkward, making this kinda awkward logic a tiny bit worse. I tried a refactor, ran into a bit of awkwardness, maybe I should try again...",
+        "url": "https://github.com/apple/foundationdb/pull/13903",
+        "createdAt": "2026-08-18T20:13:57Z",
+        "updatedAt": "2026-08-19T00:27:39Z",
+        "timestamp": "2026-08-19T00:27:39Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 18
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b1938db50c4699fc60dd",
+      "signalId": "github:apple/foundationdb:pull_request:13901",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13901",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "tests: simpler fallible authorization_venv_setup",
+        "text": "The \"|| echo 'venv already set up'\" part was suppressing errors from pip/pypi (e.g. when pypi is under stress and gives 502 responses). All that can be simplified away, it is OK to run venv and pip again on the next ctest run, they work (and skip what is already done). This is already how test_venv_setup works in cmake/AddFdbTest.cmake. Also no need to pip upgrade pip. ------------------- In the past few days when PyPI was often giving 502 responses to our CI Codebuild VMs, you would sometimes see a few tests fail with \"pytest not found\" instead of showing the failure in the venv install, because this was suppressing it. This is not present on the main-branch / 8.x, the tenant authz stuff was all removed.",
+        "url": "https://github.com/apple/foundationdb/pull/13901",
+        "createdAt": "2026-08-18T16:00:17Z",
+        "updatedAt": "2026-08-18T23:33:29Z",
+        "timestamp": "2026-08-18T23:33:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 24
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:aa4936c22aabb7332bf8",
+      "signalId": "github:apple/foundationdb:pull_request:13902",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13902",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Move storage simulation capabilities out of fdbrpc",
+        "text": "## Summary Follow up on #13080 and #13180 by moving the storage/TSS capability API out of the generic simulator policy. - Define `FDBSimulationCapability` and `IFDBSimulationPolicy` in `fdbclient`, and implement the interface in the existing server-owned `FDBSimulationPolicy`. - Query the currently installed, reference-counted simulation policy. Missing or non-FDB policies keep all capabilities disabled, and policy replacement cannot leave a stale provider. - Preserve the existing live TSS-mode predicates, mismatch severity, and fault-injection behavior. No protocol, serialization, scheduling, or random-draw changes are intended. - Add regression coverage for defaults, live answers, policy replacement and lifetime, and the complete TSS-mode capability table. ## Testing - New client capability tests: 3/3 passed in both normal and simulated modes. - Real FDB policy capability test: 1/1 passed in both modes. - Existing TSS comparison, load-balancing hook, and `waitValueOrSignal` tests: 6/6 passed in both modes. - Compiled and linked `fdbrpclinktest`, `fdbclient_test`, `fdbrpc_test`, `fdbserver_core_test`, and `fdbserver`; executed the independent RPC link test successfully. - Two unchanged `tests/fast/CycleTest.toml` runs with BUGGIFY off and fault injection on: all four test phases passed, with no severity-40 trace events. - Clang-format 19 and `git diff --check` passed. The simulation runs selected normal and mutation-dropping TSS configurations, but neither completed TSS pairing. They provide general integration coverage, not proof of active TSS request comparison or injected faults; the focused tests cover the capability dispatch and mode mapping directly.",
+        "url": "https://github.com/apple/foundationdb/pull/13902",
+        "createdAt": "2026-08-18T19:12:01Z",
+        "updatedAt": "2026-08-18T22:47:56Z",
+        "timestamp": "2026-08-18T22:47:56Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 14
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:35b2384e22a321727266",
+      "signalId": "github:apple/foundationdb:pull_request:13884",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13884",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Wait for a spare storage server before perpetual wiggle migration",
+        "text": "## Summary - Wait for a spare storage server before selecting perpetual-wiggle migration and exclusion targets. - Preserve the existing minimum-server assertion, randomized topology, failure injection, and storage-engine reset coverage. ## Testing - Targeted data-distribution recruitment cooldown and storage-wiggler unit tests. - Perpetual-wiggle storage-migration simulation across multiple deterministic seeds. - Matched unpatched and fixed simulations with delayed storage-server list updates. - Adjacent perpetual-wiggle statistics simulation.",
+        "url": "https://github.com/apple/foundationdb/pull/13884",
+        "createdAt": "2026-08-17T02:59:28Z",
+        "updatedAt": "2026-08-18T22:05:08Z",
+        "timestamp": "2026-08-18T22:05:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 26
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6817d7921134e483a0fa",
+      "signalId": "github:apple/foundationdb:pull_request:13893",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13893",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Retire old TLog roles after terminal recovery",
+        "text": "## Summary Keep the old-generation TLog availability protection from #13331 during partial recovery, but retire those roles after the ordinary recovery has durably written its terminal coordinator state. That state must contain every expected current log set and no old generations. The retirement transition stops advertising old roles without changing the current transaction-system membership or clearing shared in-memory log data. Remove the `OldTLogExcluded` recovery trigger, which otherwise starts another recovery solely to retire an already-drained excluded TLog. ## Tests Added focused regressions for partial/remote recovery, terminal retirement, and preservation of recovery for an excluded current TLog. Source formatting and whitespace checks pass. Compilation and execution of the unit tests are still pending. This draft is not ready to merge.",
+        "url": "https://github.com/apple/foundationdb/pull/13893",
+        "createdAt": "2026-08-18T01:06:24Z",
+        "updatedAt": "2026-08-18T21:05:24Z",
+        "timestamp": "2026-08-18T21:05:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 24
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e998767f2a31b2488008",
+      "signalId": "github:apple/foundationdb:pull_request:13786",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13786",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "always increment finishedQueries counter if incrementing allQueries",
+        "text": "Storage server processes publish a pair of counters `total_queries` and `finished_queries` (as well as a derived special counter `query_queue_max`) tracking how many read operations have been started and finished (and the high-water-mark for the number of pending queries—those that have been started, but not finished—in a status-fetch interval). Unfortunately, the counter underlying `total_queries` was incremented at the beginning of one of several actors, and the matching increment to `finished_queries` was done at the end, with several intervening `wait`s. If the actor was cancelled (or experienced another non-returnable error), `finished_queries` was not incremented, resulting in a permanent drift between `total_queries` and `all_queries` and apparently endless growth in `query_queue_max`. The easiest way to demonstrate this behavior is to have two different clients alternate between setting watches and updating values for the same keys—for example, run two simultaneous instances of this [simple Java program](https://gist.github.com/jkt-signal/1c3ea2a4a6aafd51571b462c57b50fd9) against a single database, and monitor its status to see `query_queue_max` on storage servers go up permanently every time you run the test. To solve this problem, we add a simple class `CountedSection` to `flow/Stats.h` to bump two counters in RAII-enforced balance; once a local `CountedSection` has bumped the first counter, it will always eventually bump the second one whether it is destroyed as a result of normal exit or exception. (Of course, if you store one in a heap object and leak it, you will still experience drift, so, uh, don't do that.) `CountedSection` is made move-only so you can use it in actor state, since `state` variables seem to always be default-constructed and then assigned to their initializers even if the initialization comes before the first `wait` in an actor. One of the actors involved actually updates a second counter pair, `getMappedRangeQueries` and `finishedGetMappedRangeQueries`, in a way vulnerable to the same problem, so we use `CountedSection` to address that as well, though I have not seen any instances of these getting out of sync (entirely due to lack of trying). Some other metrics updated at the ends of the affected actors—mostly latency metrics, but also some tagged size distributions—are not addressed by this change. Arguably they should not be, since including latency and response size of interrupted queries may significantly throw off the statistics in a not-necessarily-useful way. Leaving this as an RFC because I'm not sufficiently familiar with the FoundationDB testing setup to write a good test; the Java program linked above is a great demonstration but is not trivially adapted to an integration test (and presumably we'd like tests of the fdbserver itself to be C++, not dependent on the Java bindings). Advice for how to test the change greatly appreciated! This PR is against the 7.3 branch, rather than `main`, because all the relevant actors have been rewritten to use C++20 standard coroutines in the interim, and while I strongly suspect the same bug applies equally in `main`, I was not able to confirm this because `main` does not currently build a usable fdb for me. Porting forward to `main` should be relatively trivial and I'm happy to do so if requested.",
+        "url": "https://github.com/apple/foundationdb/pull/13786",
+        "createdAt": "2026-07-24T20:35:08Z",
+        "updatedAt": "2026-08-18T20:45:36Z",
+        "timestamp": "2026-08-18T20:45:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 16
+        },
+        "labels": [],
+        "author": "jkt-signal",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:68ec64bb7805c2e9718d",
+      "signalId": "github:apple/foundationdb:pull_request:13180",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13180",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Move TSS load balancing logic out of `fdbrpc`",
+        "text": "This PR has a similar goal to https://github.com/apple/foundationdb/pull/13080, to move FDB-specific logic out of the `fdbrpc` library. Previously `loadBalance` was tightly coupled with storage servers, and specifically the testing storage server feature. In this PR, a `LoadBalanceRequestHooks` struct is added to `LoadBalance.actor.h`, specialized in a new `StorageServerLoadBalance.actor.h` file, which lives in `fdbclient` and now contains the storage-server-specific load balancing logic. Validated with 10k correctness tests.",
+        "url": "https://github.com/apple/foundationdb/pull/13180",
+        "createdAt": "2026-05-09T02:37:34Z",
+        "updatedAt": "2026-08-18T20:40:22Z",
+        "timestamp": "2026-08-18T20:40:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 93
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:880ad2234cdbd53aee6d",
+      "signalId": "github:apple/foundationdb:pull_request:12549",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:12549",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Update the base image to RockyLinux 10.2",
+        "text": "RockyLinux 10 adds new architecture riscv64, a per-requisite for building riscv64 releases. * Update the base image to RockyLinux 10.1 # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [x] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches If this PR is made against a release-branch, please also check the following: - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
+        "url": "https://github.com/apple/foundationdb/pull/12549",
+        "createdAt": "2025-11-12T15:03:42Z",
+        "updatedAt": "2026-08-18T20:40:20Z",
+        "timestamp": "2026-08-18T20:40:20Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 37
+        },
+        "labels": [],
+        "author": "eshattow",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:84f57e779fd2b8657fb7",
+      "signalId": "github:apple/foundationdb:pull_request:13871",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13871",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Backport four bug fixes from main to release-7.4 (#12318, #12643, #12750, #12755)",
+        "text": "Backports four already-merged `main` bug fixes to `release-7.4`, ahead of 7.4.7. 1. https://github.com/apple/foundationdb/pull/12318, Fix circular recursion in Snapshot.Options() (Go binding) 2. https://github.com/apple/foundationdb/pull/12643, Fix a few file read cancellation bugs (partial: only the calculateFileChecksum() UAF hunk applies to release-7.4, see commit message and conflict notes) 3. https://github.com/apple/foundationdb/pull/12750, Fix a DD shutdown crash 4. https://github.com/apple/foundationdb/pull/12755, Track min popped version separately for system localities in TLog Did not fully backport number 2 above, either because part of it was already there, or part of it had its logic changed. For the latter, I'll do more research and open a new PR if needed. 100K: 20260813-181902-praza-port-7.4-audit-batch1-1e1c9c9a89774015, 100000/100000 pass",
+        "url": "https://github.com/apple/foundationdb/pull/13871",
+        "createdAt": "2026-08-14T17:26:46Z",
+        "updatedAt": "2026-08-18T20:30:25Z",
+        "timestamp": "2026-08-18T20:30:25Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 19
+        },
+        "labels": [],
+        "author": "spraza",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:554ecc1e347675b16ec0",
+      "signalId": "github:apple/foundationdb:pull_request:13900",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13900",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "docs: fix broken links and typos in flow/README.md",
+        "text": "The `actorcompiler.h` and `FastRef.h` headers were moved into `flow/include/flow/`, but the Flow tutorial still linked to their old top-level paths, so both links 404 on GitHub. This repoints them to the correct `include/flow/` locations. Also fixes a \"nothing\" → \"noting\" typo and two subject-verb agreement errors (\"send\" → \"sends\") in the same file. Docs-only change; no code or behavior is affected.",
+        "url": "https://github.com/apple/foundationdb/pull/13900",
+        "createdAt": "2026-08-18T09:34:52Z",
+        "updatedAt": "2026-08-18T20:27:04Z",
+        "timestamp": "2026-08-18T20:27:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "PARTHDESHMUKH2005",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:540cb91d39b5c50a8563",
+      "signalId": "github:apple/foundationdb:pull_request:13416",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13416",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "add new commit statistics metrics",
+        "text": "Rebase #10993 Co-authored-by: @oleg68 Oleg Samarin osamarin@openintegration.inc # Problem statement Now it is hard to tune a fdb cluster for a write-intensive workload. # Description While tuning a fdb cluster with a write-intensive application often the bottleneck is the commit latency: when trying to parallel degree of transactions payload, the commit latency grows and prevents increasing the transaction throughput. There are lots of conditions and knobs influencing the commit latency: number of commit proxies, number of resolvers, number of tlog processes, commit batching knobs: MAX_COMMIT_BATCH_INTERVAL, COMMIT_TRANSACTION_BATCH_INTERVAL_MAX, COMMIT_TRANSACTION_BATCH_INTERVAL_SMOOTHER_ALPHA and others. But for now, there is no any information, where is the root cause of the high commit latency, so it is unclear, what is to be changed. # Proposal - To collect and to log latency statistics from parts of commit workflow: - Waiting for a batch - Preresolution (allocating a commit version) - Resolution - Postresolution - Pushing to TLog - Replying - To collect and log the batch size statistics - The number of transactions in one batch - The total bytes in the transaction batch # PR content This PR implements this proposal: the following new metrics are logged and exposed in ``status json``: - CommitBatchTransactions (commit_batch_transactions) - the number of transactions in one batch - CommitBatchBytes (commit_batch_bytes) - the total size of one commit batch in bytes - CommitBatchingWaiting (commit_batching_waiting) - the time while the transaction is waiting for the batch becomes ready - CommitPreresolutionLatency (commit_preresolution_latency) - the time of the Preresolution phase - CommitResolutionLatency (commit_resolution_latency) - the time of the Resolution phase - CommitPostResolutionLatency (commit_resolution_latency) - the time of the Postresolution phase - CommitTLogLoggingLatency (commit_tlog_logging_latency) - the time of the TlogLogging phase - CommitReplyLatency (commit_reply_latency) - the time of Reply phase The sum of the added *_latency_mean metrics should be equal to the commit_latency_mean metrics that already exists",
+        "url": "https://github.com/apple/foundationdb/pull/13416",
+        "createdAt": "2026-07-01T14:26:34Z",
+        "updatedAt": "2026-08-18T20:02:01Z",
+        "timestamp": "2026-08-18T20:02:01Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 16
+        },
+        "labels": [],
+        "author": "MarkSh1",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:db28df19bbc1101c62ad",
+      "signalId": "github:apple/foundationdb:pull_request:13836",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13836",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert `ActorCollection` to standard coroutines",
+        "text": "## Summary - Convert `ActorCollection.actor.cpp` into a standard C++ coroutine implementation in `ActorCollection.cpp`. - Preserve the existing public API, source-ordered event handling, deterministic cancellation, error propagation, and callback lineage. - Use persistent callbacks and separate cancellation/completion paths to avoid per-event allocations. - Add regression coverage for cancellation order, reentrant collection cancellation, sampling lineage, queued-ready actors, and add-stream errors. ## Benchmark results `flow_bench`; Clang 19.1.5; Release build; sanitizers disabled; pinned to one CPU; seven repetitions; 0.15-second minimum benchmark time. | Benchmark | Before | After | Change | |---|---:|---:|---:| | Ready actor | 169 ns | 154 ns | **−9.0%** | | Add 1 pending | 2.91 µs | 2.90 µs | −0.5% | | Add 16 pending | 4.04 µs | 3.97 µs | −1.8% | | Add 256 pending | 20.28 µs | 18.65 µs | **−8.0%** | | Complete 1 pending | 2.90 µs | 2.89 µs | −0.3% | | Complete 16 pending | 4.08 µs | 3.79 µs | **−7.1%** | | Complete 256 pending | 21.23 µs | 15.91 µs | **−25.0%** | A comparison with a `Choose/When` implementation was also performed, showing that the PR's implementation has better performance (but exact numbers couldn't be recalled at the time of writing). ## Testing - `flow_test -f /flow/actorCollection/ --seed 12345`: 12 passed. - `flow_test -f /flow/coro/noThrowOnCancel/ --seed 12345`: 7 passed. - `flow_test --ignore /flow/coro/FlowMutex --seed 12345`: 189 passed; excludes an unrelated long-running mutex stress test. - `flow_test -f /flow/actorCollection/testSamplingLineage --seed 12345` with `ENABLE_SAMPLING`: 1 passed. - Built `flow_bench` and `flow_sampling`, including the sampling-enabled implementation. - `clang-format` 19.1.5 check passed.",
+        "url": "https://github.com/apple/foundationdb/pull/13836",
+        "createdAt": "2026-08-10T12:41:55Z",
+        "updatedAt": "2026-08-18T19:56:26Z",
+        "timestamp": "2026-08-18T19:56:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 67
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8740def42fd4bd749843",
+      "signalId": "github:apple/foundationdb:pull_request:13754",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13754",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Protect `Transaction#close` in `Database#runAsync` from cancellation",
+        "text": "`FDBDatabase#runAsync` returns a future on a complicated chain of retry and cleanup logic to create a transaction, run the user-supplied closure, commit the transaction, and close it. The final future actually returned is the result of `CompletableFuture#whenComplete(/* close the open transaction */)`. Unfortunately, this means that if the returned future is cancelled, the `whenComplete` callback is also not called, resulting in the last-opened transaction not being closed, and in turn `Transaction not closed` warnings appearing on stderr. This change fixes that problem by swapping the order of two `CompletableFuture` method calls, moving the `whenComplete` above a `CompletableFuture#thenApply` call that fixes up the return value to what `runAsync`'s future is expected to supply. Cancelling *that* future is not a problem, since the fixed-up return value would be clobbered by the resulting `CancellationException` anyway, and `CompletableFuture` cancellation does not propagate to parent futures' tasks. We also add a unit test verifying the behavior of `db.runAsync(something).cancel(true)` with respect to closing opened transactions. This test reliably fails without the change to `FDBDatabase` and passes with it.",
+        "url": "https://github.com/apple/foundationdb/pull/13754",
+        "createdAt": "2026-07-20T19:15:05Z",
+        "updatedAt": "2026-08-18T19:32:32Z",
+        "timestamp": "2026-08-18T19:32:32Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "jkt-signal",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9af8ba5ba0ca44c7c5b7",
+      "signalId": "github:apple/foundationdb:pull_request:13898",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13898",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "bindings/python: update pycodestyle test",
+        "text": "It must not have been run in a while, there were 10 or so violations of \"E203 whitespace before ':'\" and a couple others. So: * add E203 to the ignore list * reduce max-line-length to 130 * 2 spots to normalize to 2 blank lines between top-level stuff * 2 spots to fix very long comment lines * run pycodestyle as a proper ctest ----------- Tested locally, of course. Before this PR, the test was a target for ninja, not a ctest, but only if pycodestyle was already installed, and it seems like it still wasn't in the default \"all\" target set? Not only would it find style violations if it ran, it couldn't actually run: ``` $ ninja fdb_python_check [0/2] Re-checking globbed directories... [1/2] Check python code style FAILED: [code=1] bindings/python/check_py_code_style /Users/pierce/scratch/buildfdb/bindings/python/check_py_code_style cd /Users/pierce/scratch/okteto-rhel9/foundationdb/bindings/python && /Users/pierce/scratch/venv312/bin/pycodestyle bindings/python --config=/Users/pierce/scratch/okteto-rhel9/foundationdb/bindings/python/pycodestyle.cfg && /opt/homebrew/bin/cmake -E /Users/pierce/scratch/buildfdb/bindings/python/check_py_code_style bindings/python:1:1: E902 FileNotFoundError: [Errno 2] No such file or directory: 'bindings/python' ninja: build stopped: subcommand failed. ``` Anyway ... I can add pycodestyle to the base build images, and it will finally run in CI, for the main branch, when _ctest_ is run. I think it will still be skipped by default for the release-7.4 branch? but we may want to backport this to get it running there too.",
+        "url": "https://github.com/apple/foundationdb/pull/13898",
+        "createdAt": "2026-08-18T04:49:47Z",
+        "updatedAt": "2026-08-18T18:57:29Z",
+        "timestamp": "2026-08-18T18:57:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 21
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:856ff5d1cb2606359e06",
+      "signalId": "github:apple/foundationdb:pull_request:13818",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13818",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Backport call-site aware memory tracking to release-7.4 (PR #13344)",
+        "text": "Backport of PR #13344 (\"call-site aware memory tracking\", main commit aa705c8c02) to the release-7.4 line. Adds a sampled, always-compiled, knob-controlled per-call-site memory tracker (flow/MemoryTracker.{cpp,h}) hooked into the three FDB-owned allocation paths: the global operator new/delete set, FastAllocator<Size>, and ArenaBlock::create/destroyLeaf. A periodic dump from SystemMonitor emits MemoryTrackerSite / MemoryTrackerSummary TraceEvents. Prod default is off; simulation samples 1-in-10 so the path is exercised. The whole feature is gated at compile time by FDB_MEMORY_TRACKER (on by default; build with -DFDB_MEMORY_TRACKER=OFF to compile it out). The replaced global operator new / operator delete (and the legacy ALLOC_INSTRUMENTATION accounting variants) are moved into fdbserver/GlobalNewDelete.cpp so the interposition is compiled into the fdbserver executable only, never into flow / libfdb_c / the client bindings. Verified with nm: the strong operator-new/delete definitions are present in the fdbserver binary and absent from libfdb_c.so and libflow.a. Differences from the main-branch PR, due to release-7.4 divergence: - operator-new removal and memTrackerInit() wiring applied to fdbserver/fdbserver.actor.cpp (main: fdbserver.cpp); knob re-init uses g_knobs.initialize() rather than initializeServerKnobs(). - forceLinkMemoryTrackerTests() wired into fdbserver/workloads/UnitTests.actor.cpp (main: UnitTests.cpp). - AGENTS.md added, adapted to 7.4 (flat fdbserver/ layout, ServerKnobs under fdbclient/, fdbserver -r unittests, absent design docs dropped). - Omitted: design/memory-tracker.md, the fdbserver/bench microbenchmark (needs main's benchmark harness, absent from 7.4), and the two contrib/mako_ab_*.py scripts (need contrib/mako_storage_bench.sh, absent from 7.4). Testing, correctness: - All 14 /flow/MemoryTracker/ unit tests pass; ran 1000x with randomized seeds, 1000/1000 passed, 0 failures. - 100K Joshua correctness run, clean: 20260805-213736-gglass-36215d1242f71327 compressed=True data_size=41598074 duration=4226513 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:41:34 sanity=False started=100000 stopped=20260805-221910 submitted=20260805-213736 timeout=5400 username=gglass Testing, performance: Attachments show **saturation throughput** of {{*compiled out* vs *compiled-in but disabled*}, {*compiled in, disabled* vs *compiled in, enabled at 1% sampling*}}; and **p50 latency** of {{*compiled out* vs *compiled-in but disabled*}, {{*compiled-in, disabled* vs *compiled-in, enabled at 1% sampling*}}. Summary: - Throughput reduction: O(1%) (compiled out --> compiled in) and O(10%) (disabled --> enabled at 1% sampling). - Latency increase at p50: O(1%) (compiled out --> compiled in) and O(7%) (disabled --> enabled at 1% sampling). The intent is to be able to compile in by default and ship that, and only enable when needed (e.g. interesting end to end test scenarios, or for leak debugging as a last resort in actual production). [FDB Memory Tracker A_B_ release-7.4 tracker compiled out vs in (tracking off).pdf](https://github.com/user-attachments/files/30765125/FDB.Memory.Tracker.A_B_.release-7.4.tracker.compiled.out.vs.in.tracking.off.pdf) [FDB Memory Tracker A_B_ off vs 1_100 sampling.pdf](https://github.com/user-attachments/files/30765129/FDB.Memory.Tracker.A_B_.off.vs.1_100.sampling.pdf) [FDB Memory Tracker A_B_ compiled-out vs compiled-in-disabled latency @ 2500 tps.pdf](https://github.com/user-attachments/files/30768955/FDB.Memory.Tracker.A_B_.compiled-out.vs.compiled-in-disabled.latency.%40.2500.tps.pdf) [FDB Memory Tracker A_B_ latency @ 2500 tps (sub-saturation, 3 runs_arm).pdf](https://github.com/user-attachments/files/30766774/FDB.Memory.Tracker.A_B_.latency.%40.2500.tps.sub-saturation.3.runs_arm.pdf) **EDIT**: subsequent testing on real clusters shows higher overhead -- incremental CPU usage for (compiled out) vs (compiled in, disabled). We may want to put this in but compiled off per the cmake flag.",
+        "url": "https://github.com/apple/foundationdb/pull/13818",
+        "createdAt": "2026-08-05T22:24:02Z",
+        "updatedAt": "2026-08-18T18:46:57Z",
+        "timestamp": "2026-08-18T18:46:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 14
+        },
+        "labels": [],
+        "author": "gxglass",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:23744d121ec5984645ec",
+      "signalId": "github:apple/foundationdb:pull_request:13882",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13882",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "[release-7.4] documentation: sphinx-6.2.1 and release-notes cleanup",
+        "text": "Backport from main: * #13851 * #13855 * #13861 * #12687 (I had a couple conflicts cherry-picking due to these typo fixes, and figured we might as well apply the typo fixes to the docs that will be published on the next 7.4.x release)",
+        "url": "https://github.com/apple/foundationdb/pull/13882",
+        "createdAt": "2026-08-16T18:28:31Z",
+        "updatedAt": "2026-08-18T18:19:41Z",
+        "timestamp": "2026-08-18T18:19:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 40
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f88f36d83b1bfb579b5d",
+      "signalId": "github:apple/foundationdb:pull_request:13861",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13861",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: release-notes titles, consolidate pre-1.0",
+        "text": "Append Major.Minor to titles of release-notes pages so they better distinguish themselves. URLs do not change, they are based on filename. Consolidate pre-1.0 alpha and beta release notes into the 1.0 page (subjective 🤷) Latest release-notes-740 keep version-less title because of links to \"latest Release Notes\" elsewhere in the docs site that would be affected by the title change. -------- The main place these updated titles can be appreciated is in the Previous Releases page (which might only be linked from the entire site index anyway): Before: <img width=\"1166\" height=\"826\" alt=\"Screenshot 2026-08-13 at 1 21 32 PM\" src=\"https://github.com/user-attachments/assets/9a247e5e-a1bf-45c7-8bbb-2c3692a98c26\" /> After: <img width=\"1187\" height=\"749\" alt=\"Screenshot 2026-08-13 at 1 20 47 PM\" src=\"https://github.com/user-attachments/assets/a5a6fb7d-8123-4334-9a16-c328a5701698\" />",
+        "url": "https://github.com/apple/foundationdb/pull/13861",
+        "createdAt": "2026-08-13T17:33:00Z",
+        "updatedAt": "2026-08-18T18:18:12Z",
+        "timestamp": "2026-08-18T18:18:12Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1bbcd8fc64474160a8be",
+      "signalId": "github:apple/foundationdb:pull_request:13855",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13855",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: update downloads links with foundationdb-7.3.77",
+        "text": "also update supported OS version guidance (will validate by building docs locally and testing the links) After this, I can backport all docs-site updates to release-7.4 branch for inclusion in the next 7.4.x release. We could consider updating these version numbers just _before_ building the release, to match the impending release, but we do not mark a release stable right away - that comes some weeks later.",
+        "url": "https://github.com/apple/foundationdb/pull/13855",
+        "createdAt": "2026-08-12T17:10:42Z",
+        "updatedAt": "2026-08-18T18:17:58Z",
+        "timestamp": "2026-08-18T18:17:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 30
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:63f14fae2f7bc47f0616",
+      "signalId": "github:apple/foundationdb:pull_request:13851",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13851",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: update to sphinx 6.2.1 and remove setuptools",
+        "text": "I think setuptools really isn't needed here, I think it was added for an older version of python and pip. I'm not sure it really worked in this spot anyway: it's possible that someone may have had to install or update setuptools before pip could install some source package requirements here, but that would have to happen before the pip install of these requirements. So the first commit is my proposal to address https://github.com/apple/foundationdb/pull/13815 After that I tried to update the deps a bit. There's a good reason to update to sphinx 6.2.1 which is that older versions don't work with python-3.13+ but this update also required some other adjustments. The build container images already have sphinx-5.1.1 installed and you can see there was some struggle to get cmake to require the newer version. And the update required some tweaks to make our sphinx theme work the same. In addition to looking at the generated docs and clicking around, I diffed the full static site code, I'll post a summary of that tomorrow. All that said, I'd be happy to split out or trim down to just the minimal \"remove setuptools\", and stick with sphinx-5.1.1 for now.",
+        "url": "https://github.com/apple/foundationdb/pull/13851",
+        "createdAt": "2026-08-12T05:03:50Z",
+        "updatedAt": "2026-08-18T18:17:40Z",
+        "timestamp": "2026-08-18T18:17:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:23a72ad84a0cf23d611f",
+      "signalId": "github:apple/foundationdb:pull_request:13816",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13816",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "packaging/docker: minor tweaks to match release-7.4 changes",
+        "text": "follow-up to https://github.com/apple/foundationdb/pull/13757 after it was backported with adjustments in https://github.com/apple/foundationdb/pull/13810",
+        "url": "https://github.com/apple/foundationdb/pull/13816",
+        "createdAt": "2026-08-05T22:03:24Z",
+        "updatedAt": "2026-08-18T18:17:27Z",
+        "timestamp": "2026-08-18T18:17:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:345f2f7f289310f16343",
+      "signalId": "github:apple/foundationdb:pull_request:13810",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13810",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "docker: update base to rockylinux-9.8, golang builder, README",
+        "text": "* update Dockerfile base to rockylinux-9.8 * update golang builder to golang 1.24.13 * update docker README build instructions, copy from main backport of https://github.com/apple/foundationdb/pull/13757 (mostly)",
+        "url": "https://github.com/apple/foundationdb/pull/13810",
+        "createdAt": "2026-08-03T19:56:11Z",
+        "updatedAt": "2026-08-18T18:17:13Z",
+        "timestamp": "2026-08-18T18:17:13Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 23
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8481c26696d8b5d777a0",
+      "signalId": "github:apple/foundationdb:pull_request:13724",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13724",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "ci: codebuild-cleanup action: consolidate graphql queries",
+        "text": "just one graphql query to get all comments along with minimized status (replacing the initial rest query to get all comments) ------------ A follow-up to https://github.com/apple/foundationdb/pull/13721 which seems to be working fine, but I realized all the separate queries to look up \"isMinimized\" for each comment were not necessary (and I wonder if the github api would ratelimit this on a PR with lots of updates and codebuild comments).",
+        "url": "https://github.com/apple/foundationdb/pull/13724",
+        "createdAt": "2026-07-18T01:24:02Z",
+        "updatedAt": "2026-08-18T18:16:44Z",
+        "timestamp": "2026-08-18T18:16:44Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 15
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a00112bc70063f4304d0",
+      "signalId": "github:apple/foundationdb:pull_request:13757",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13757",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "docker: update base to rockylinux-9.8, golang build base, README",
+        "text": "I plan to work backwards, and update release-7.4 and release-7.3 branches appropriately (release-7.3 currently uses rockylinux-9.4) There's a lot that I think could be cleaned-up in `build-images.sh` ... but that seems like a big bag of worms which I can approach gradually later. For now, the motivation is that some internal dev/test/ci stuff uses these images and is flagged by some scanners for having old rockylinux packages in the images.",
+        "url": "https://github.com/apple/foundationdb/pull/13757",
+        "createdAt": "2026-07-20T22:39:41Z",
+        "updatedAt": "2026-08-18T18:16:34Z",
+        "timestamp": "2026-08-18T18:16:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 23
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2b8a2555a382a14cdec2",
+      "signalId": "github:apple/foundationdb:pull_request:13673",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13673",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Plumb TraceID/SpanID into debug tracing logs",
+        "text": "I found that debug transactions offer the highest quality telemetry for where in the commit pipeline a transaction gets stuck, but that the logs were difficult to work with (need to join across log lines distributed across roles to get the full connected graph of IDs that belong to a debug transaction). The tracing tool we use internally does not support this kind of stateful aggregation and instead relies on a consistent TraceID plumbed throughout the call graph. Conveniently, this already exists in the code base in the form of the OTEL tracing context. I added those IDs to all debug logs and was able to get a trace view in our systems that is useful to me. Here's what it looks like in our internal trace viewing tool. Yellow boxes correspond to the FDB Client debug traces (NativeAPIActor), the smaller green events are coming from GRV, Commit, and Storage Servers. This gives me a good view of stalls anywhere in the transaction lifecycle. I'm still refining how I parse these to make them more visually intuitive, but already useful in its current state. <img width=\"1727\" height=\"743\" alt=\"Screenshot 2026-07-10 at 12 23 08 PM\" src=\"https://github.com/user-attachments/assets/feaba889-0daa-4d98-b832-1f7d3226940d\" /> I use this by setting the Transaction ID through the SpecialKeys API, which then sets the span context: ```java String debugTransactionId = getDebugTransactionIdFromTraceMetadata(traceMetadata); String specialKeysTransactionId = getFdbTransactionIdFromTraceMetadata(traceMetadata); log.debug( \"Enabling FDB transaction debugging\", SafeArg.of(\"debugTransactionId\", debugTransactionId), SafeArg.of(\"specialKeysTransactionId\", specialKeysTransactionId)); transaction.options().setSpecialKeySpaceEnableWrites(); transaction.set(FDB_TRACING_TRANSACTION_ID_KEY, specialKeysTransactionId.getBytes(StandardCharsets.UTF_8)); transaction.options().setDebugTransactionIdentifier(debugTransactionId); transaction.options().setLogTransaction(); transaction.options().setServerRequestTracing(); ```",
+        "url": "https://github.com/apple/foundationdb/pull/13673",
+        "createdAt": "2026-07-10T05:25:55Z",
+        "updatedAt": "2026-08-18T16:53:00Z",
+        "timestamp": "2026-08-18T16:53:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 26
+        },
+        "labels": [],
+        "author": "laflechejonathan",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:79f6554eb740fc118a6c",
+      "signalId": "github:apple/foundationdb:pull_request:13899",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13899",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "documentation: fix typo PiPy -> PyPI",
+        "text": "forward-port of something I noticed and fixed in https://github.com/apple/foundationdb/pull/13882",
+        "url": "https://github.com/apple/foundationdb/pull/13899",
+        "createdAt": "2026-08-18T05:14:19Z",
+        "updatedAt": "2026-08-18T16:45:29Z",
+        "timestamp": "2026-08-18T16:45:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5ff6301b87a054e40215",
+      "signalId": "github:apple/foundationdb:pull_request:13888",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13888",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "packaging/docker: update to kubectl 1.31.14 for YCSB image",
+        "text": "k8s 1.31 is the oldest allowed version on AWS EKS now, and version of kubectl shouldn't drift *too far* from k8s control-plane",
+        "url": "https://github.com/apple/foundationdb/pull/13888",
+        "createdAt": "2026-08-17T19:45:17Z",
+        "updatedAt": "2026-08-18T16:08:59Z",
+        "timestamp": "2026-08-18T16:08:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2eab1911eb24c7d5364b",
+      "signalId": "github:apple/foundationdb:pull_request:13890",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13890",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "[release-7.4] packaging: remove python-2.7 package from macOS pkg build",
+        "text": "It is obsolete. In practice, python developers will use uv, poetry, or pip in a venv, with python-3.9+ to install the fdb python package, which uses the system libfdb_c (.so or .dylib) which the macOS pkg still includes. backport of https://github.com/apple/foundationdb/pull/13880",
+        "url": "https://github.com/apple/foundationdb/pull/13890",
+        "createdAt": "2026-08-17T21:47:50Z",
+        "updatedAt": "2026-08-18T15:22:09Z",
+        "timestamp": "2026-08-18T15:22:09Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 16
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:275b2e30b0edfddf83bf",
+      "signalId": "github:apple/foundationdb:pull_request:13889",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13889",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Remove redundant `explicit(false)` from copy and move constructors",
+        "text": "Earlier enforcement of `explicit` or `explicit(false)` single-argument constructors was too broad, affecting copy and move constructors, which was unnecessary",
+        "url": "https://github.com/apple/foundationdb/pull/13889",
+        "createdAt": "2026-08-17T20:24:41Z",
+        "updatedAt": "2026-08-18T14:50:07Z",
+        "timestamp": "2026-08-18T14:50:07Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 30
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3767600b80b6f801a13d",
+      "signalId": "github:apple/foundationdb:pull_request:13891",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13891",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Replace explicit-self helpers with member coroutines",
+        "text": "## Summary Replace 20 actor-compiler-era static helpers that take an explicit receiver with ordinary C++ coroutine members. Fold pure forwarding wrappers into the existing entry points where possible. The nine commits cover mutation-log readers, Net2 listeners, Flow cache and lock helpers, team metrics, coordinator liveness checking, exclusion tracking, tag throttling, resolution balancing, and backup-file writers. Matching declarations are updated in the same commit as their implementation. Preserve the existing instance and virtual entry-point signatures, by-value Future ownership, synchronous lock fast paths, cancellation cleanup, retry and suspension order, and backup-file encoding. Remove obsolete static helper declarations. No behavior change is intended. ## Validation - Clang-format 19.1.5; receiver-normalized comparison of all 20 coroutine bodies. - Full `flow_test --seed 1`: 184 passed. - Focused `fdbclient_test` mutation-log-reader tests in normal and simulation modes, plus local backup-container tests: 10 passed. - Data Distributor and coordinator tests in normal and simulation modes, plus sequencer tests: 61 passed. `fdbserver_ratekeeperlinktest` also passed. - Full `fdbserver` build, followed by `MutationLogReaderCorrectness.toml`, `CycleTest.toml`, `BackupCorrectnessClean.toml`, and `TransactionTagApiCorrectness.toml`: all five test cases passed with seed 1. Buggify was on for Cycle and off for the other three files.",
+        "url": "https://github.com/apple/foundationdb/pull/13891",
+        "createdAt": "2026-08-17T23:32:28Z",
+        "updatedAt": "2026-08-18T14:23:35Z",
+        "timestamp": "2026-08-18T14:23:35Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 18
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1fec3803ef236f71f5ea",
+      "signalId": "github:apple/foundationdb:pull_request:13885",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13885",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Make no-throw coroutine cancellation reentrant-safe",
+        "text": "## Summary Make shared `NoThrowOnCancel` coroutine cancellation safe against synchronous reentry from cleanup. Previously, detaching a waiter or destroying the coroutine frame could cancel the same unresolved future again and attempt to destroy its frame twice. Mark cancellation before either cleanup step and ignore recursive cancellation. Add a focused regression that cancels again from scope cleanup and checks the cancellation result, exactly-once cleanup, released waiter references, and repeated-cancel behavior. This extracts the shared runtime fix from #13836. It does not change ActorCollection. ## Testing - `git diff --check` passed. - The same cancellation fix and regression were previously tested in #13836 (`flow_test -f /flow/coro/noThrowOnCancel/ --seed 12345`: 7 passed). - A fresh test run on this standalone branch is pending.",
+        "url": "https://github.com/apple/foundationdb/pull/13885",
+        "createdAt": "2026-08-17T18:28:14Z",
+        "updatedAt": "2026-08-18T12:23:30Z",
+        "timestamp": "2026-08-18T12:23:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 39
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ccca372fdc39830df1c5",
+      "signalId": "github:apple/foundationdb:pull_request:13892",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13892",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "cherry-pick: tests: keep storage wiggle disabled for minimum throughput",
+        "text": "Cherry-pick of ``` 385eaaad1f15134a4f5cbaeab927e99352019260 Trevor Clinkenbeard <tclinkenbeard@openai.com> Sun Jul 19 19:11:03 2026 -0700 tests: keep storage wiggle disabled for minimum throughput ``` I tripped over this failure on release-7.4 branch `RandomSeed=\"1313027825\" SourceVersion=\"24033df897ff6409674b290039331086fd029ec2\" Time=\"1787002575\" BuggifyEnabled=\"0\" DeterminismCheck=\"0\" FaultInjectionEnabled=\"1\" TestFile=\"tests/fast/MinimumThroughput.toml\"`",
+        "url": "https://github.com/apple/foundationdb/pull/13892",
+        "createdAt": "2026-08-17T23:35:17Z",
+        "updatedAt": "2026-08-18T11:59:48Z",
+        "timestamp": "2026-08-18T11:59:48Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 17
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:dfdb16647d3c65d6dc55",
+      "signalId": "github:apple/foundationdb:pull_request:13731",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13731",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Fix stateless process recruitment in small configurations",
+        "text": "## Summary - Admit all eligible workers with the same role fitness during cluster-controller recruitment while preserving existing fitness and usage ordering. - Recruit the requested commit proxies, GRV proxies, and resolvers from distinct stateless processes even when those processes share one machine. - Remove the simulator-only automatic stateless-machine reservation; retain explicit stateless assignment to real machines and correct storage-candidate accounting. - Add a full-dispatch cluster-controller regression with three stateless processes on one machine and independently placed TLogs. ## Validation - `fdbserver_clustercontroller_test -f /fdbserver/clustercontroller/recruitStatelessProcessesOnOneMachine` - `fdbserver_clustercontroller_test` (32 tests passed) - `fdbserver -r simulation -f tests/fast/ReportConflictingKeys.toml` - `fdbserver -r simulation -f tests/fast/AtomicOpsApiCorrectness.toml` - `clang-format` 19 and `git diff --check`",
+        "url": "https://github.com/apple/foundationdb/pull/13731",
+        "createdAt": "2026-07-18T03:26:27Z",
+        "updatedAt": "2026-08-18T10:29:21Z",
+        "timestamp": "2026-08-18T10:29:21Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 77
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4e21ffa98b6f3269ec4e",
+      "signalId": "github:apple/foundationdb:pull_request:13838",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13838",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Bound degraded-team relocation retries across pipeline transitions",
+        "text": "## Summary - Preserve per-team submitted-shard deduplication while the data-distribution pipeline rapidly transitions between full and available. - Retry unchanged degraded-team ranges only after the existing polling interval, a genuine team-health change, or unhealthy-relocation drainage. - Extend the existing merged-shard team-tracker regression to cover repeated pipeline full/clear transitions. ## Validation - `fdbserver_datadistributor_test --simulation --filter /DataDistribution/TeamTracker/RetriesMergedShardForUndesiredServer` - `fdbserver_datadistributor_test --simulation` (50 tests passed). - Two unchanged `tests/fast/ShardEncodeRollback.toml` simulations with buggify and fault injection enabled.",
+        "url": "https://github.com/apple/foundationdb/pull/13838",
+        "createdAt": "2026-08-10T18:47:03Z",
+        "updatedAt": "2026-08-18T10:25:18Z",
+        "timestamp": "2026-08-18T10:25:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 18
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8a8dd2f1a220d790a2a8",
+      "signalId": "github:apple/foundationdb:pull_request:13886",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "text",
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13886",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Audit: bound validate_restore's slowest task instead of its average batch",
+        "text": "The `validate_restore` audit phase finishes only when its slowest task does, and nothing bounded that task. Measured at 100M scale, the slowest task took **2535.86s of a 2536.0s phase — 100% of the wall clock**, so per-task throughput improvements could not move the phase at all. An earlier attempt raised the per-batch byte budget, gained a real 1.94x in per-task throughput, and made the phase **25% slower**, because that run's shards happened to be 1.87x fatter. It was optimising an average when the metric is a maximum. This PR is a bit of a bucket. I tried splitting it out into 3/4 pieces but was hard to tell a story about each of the pieces. ## 1. Cap the size of one audit task `scheduleAuditOnRange` divided work by live `keyServers` boundaries — one task per shard, dispatched to a single storage server that scans it sequentially — with no size cap anywhere in the audit dispatch path, so a fat shard was an unbounded straggler. Shards above `AUDIT_TASK_MAX_BYTES` (default 128MB) are now subdivided via `splitStorageMetrics`, lazily one shard at a time so the first task dispatches immediately. A failed metrics read falls back to the unsplit shard — the previous behaviour — so this cannot fail an audit that would otherwise pass. `minSplitBytes` is `target/2`. The storage server stops splitting once `remaining.bytes < 2 * minSplitBytes`, so that product is the real \"leave it alone\" threshold and half the target is what puts it on the target. Passing the target itself pushes the threshold to *twice* the target and opens a dead band: 287 of 867 tasks sat unsplit in the 128–256MB band, too big for the cap but too small for the server to bother, and the tail stayed at 1215.92s. Going *below* `target/2` makes little difference, because `getSplitKey` only splits while `remaining > target/2` and that binds first. Note also that the client discards a trailing piece under `STORAGE_METRICS_UNFAIR_SPLIT_LIMIT` (2/3) of the target, so the largest task can reach roughly **1.4x** the knob rather than exactly 1x. The `delay(0.1)` that paces dispatch stays per `keyServers` shard rather than becoming per piece. Per piece it multiplies by the split factor and caps dispatch at 10 tasks/sec, adding a term linear in the piece count to the very wall-clock this cap exists to shorten. ## 2. Treat the batch byte budget as a ceiling and adapt within it `AUDIT_RESTORE_BATCH_BYTE_LIMIT` previously used `CLIENT_KNOBS->REPLY_BYTE_LIMIT` (80KB), a generic per-RPC-reply cap with nothing to do with audit batching. 80KB is reached long before `AUDIT_RESTORE_BATCH_KEY_LIMIT`'s 100,000 keys at any realistic record size, so that knob was unreachable and raising it changed nothing: a 1B validation spent 2h26m in ~3.6M two-round-trip iterations at ~5.5MB/s per server, against an `AUDIT_STORAGE_RATE_PER_SERVER_MAX` allowance ~9x higher. A fixed 4MB is no better — it took `transaction_too_old` from 679 to 2515 — because the real constraint is a **deadline, not a size**. A batch reads at a pinned version that expires after `MAX_READ_TRANSACTION_LIFE_VERSIONS`, so what a server can fetch in one go depends on current load; overshooting fails and the retry re-reads from the same key, buying double work rather than throughput. The budget now halves on a retryable error and grows back additively above `AUDIT_RESTORE_BATCH_BYTE_LIMIT_MIN`. Also on this path: - The two sides of a batch were read **serially** on one transaction, for two independent ranges at the same explicit read version. They are now issued together. - Retries slept a flat 1.0s regardless of cause. They now use the existing `Backoff` helper (`DEFAULT_BACKOFF` → `DEFAULT_MAX_BACKOFF` at `BACKOFF_GROWTH_RATE`, jittered), reset on success so an occasional retry does not ratchet to the maximum. - `numValidatedKeys`/`validatedBytes` advanced before the progress-persist that can throw, so a batch failing *there* double-counted the counters the throughput analysis reads. All per-attempt state is now snapshotted and rolled back — including `complete`, which is derived from `sourceReply.more` and would otherwise be able to end an audit early over a range never fully read. ## 3. Let a server work several audit tasks at once `SERVE_AUDIT_STORAGE_PARALLELISM` defaulted to 1, so subdivided pieces landing on the same server would serialize and the cap would buy nothing; the default is now 4, randomized 1..4 in simulation so both paths keep coverage. That exposed two things the knob being 1 had masked: - The rate limiter was built **per call site**, so concurrent tasks multiplied an allowance whose knob is named `AUDIT_STORAGE_RATE_PER_SERVER_MAX`. One limiter is now shared per server, with time blocked on it reported in `SSAuditRestoreComplete` — `auditRestoreQ` had no limiter accounting at all, so a throttled audit was indistinguishable from a slow one. - `auditStorageServerShardQ` requires **exclusive** use of the server: it owns `shardAssignmentHistory`, which is single-instance state, and `startTrackShardAssignment()` asserts tracking is off. It now takes a dedicated lock instead of relying on the permit count. Without that, the per-server retry at the end of `scheduleAuditStorageShardOnServer` can re-dispatch while the previous attempt is still running on that server; at one permit the second request queued, at four it runs concurrently and trips the guard. Observed as `SevError ExistStorageServerShardAuditExit` on `Sideband`, `InventoryTestSomeWrites` and `MoveKeysCycle` — 3 hits across 20,000 runs, every one audit id 1 and `usable_regions:=2`. ## 4. Two pre-existing ways an ssshard audit wedges a storage server Both reachable without any of the above, and both found while diagnosing the failure in §3. - **Cancellation stranded the tracking flag.** `stopTrackShardAssignment()` was reached only by plain statements at the end of the function and on its error paths. Cancellation runs none of them — it destroys the coroutine frame — leaving `trackShardAssignmentMinVersion` set with no audit owning it, after which every later ssshard audit on that server bails out on the guard **for the life of the process**. Now runs from a `ScopeExit` guard. - **The guard leaked a parallelism permit.** Its early `co_return` sat between `take()` and the `FlowLock::Releaser`, and that lock is shared by every audit type, so enough leaks exhaust it and every subsequent audit on that server blocks in `take()` forever, with only a warning to say so. Cancellation is routine here — the retry above re-dispatches after any failure, and Attrition, `RandomMoveKeys` and remote-DC latency all supply those failures — so these are worth considering for backport independently of the performance work. ## 5. Two report-storm fixes - **BulkLoad** — `scheduleBulkLoadTasks()` rescans task metadata every `DD_BULKLOAD_SCHEDULE_MIN_INTERVAL_SEC`, and a task in the terminal `Error` phase is deliberately left in place (unlike `Acknowledged`, it is never erased), so the `SevWarnAlways` report fired again on every scan for the life of the cluster: 11,313 events from 2 tasks in one 1B run, still climbing hours after the job finished. Each task is now reported once, carrying the running total. - **BulkDump** — the SS bulkdump loop retries up to 50 times, a second apart, while shards move underneath it; retrying is the normal path. Every attempt logged `SevWarn SSBulkDumpError` — 18,023 events in one run against 29,026 files generated. Intermediate retries move to `SSBulkDumpRetry` at `bulkLoadVerboseEventSev()`; the terminal cases keep the original name and severity, so existing greps and dashboards keep working and now match only tasks that actually failed. Both matter beyond tidiness: this is how the real failure ends up buried thousands of log lines from the top. ## Results | | before | after | |---|---|---| | audit phase | 42m16s | **25m00s** (also 26% below the 33m47s pre-existing baseline) | | `transaction_too_old` | 2515 | **150** (below the baseline's 679) | | aggregate audit throughput | 79 MB/s | **130 MB/s** | | `RateLimiterTotalWaitTime` | — | 0, so the shared limiter never bound | Zero `SSAuditRestoreError`, zero `StorageServerFailed`. **These numbers need retaking.** They were measured before the `minSplitBytes` correction in §1 and before the dispatch-throttle decision, both of which change the task count. Treat them as evidence that the approach works, not as the current figures. ## Testing `nextAuditBatchBytes()` is pure and unit tested for the budget staying within `[floor, ceiling]` and never reaching zero or below. That is *not* hang protection — `GetRangeLimits` sets `minRows = 1`, so even a zero budget returns a key — but because `GetRangeLimits` overloads the sign of `bytes`: `-1` means `BYTE_LIMIT_UNLIMITED` and silently removes the bound, below `-1` fails `isValid()`, and `0` costs a round trip per key. `boundAuditTaskRange()` is covered by a mock `IDDTxnProcessor`, including that a failed metrics read degrades to the unsplit shard rather than failing the audit, and asserting `minSplitBytes <= target/2` because exceeding it is silent — subdivision just does not happen and the only symptom is a slower tail that looks like variance. Split points become task ranges with the same consecutive-pairs idiom `DDShardTracker::executeShardSplit()` uses. `splitStorageMetrics()` guarantees `begin` and `end` as its first and last points and `NativeAPI` rejects out-of-order replies, so no defensive re-derivation is needed here. Per-batch traces are gated behind the existing `ENABLE_AUDIT_VERBOSE_TRACE` knob; at 1B scale they were ~18M unconditional `SevInfo` events. There is a `TODO(Audit)` to move that gate into `fdbclient/Audit.h` and adopt it in `DataDistribution.cpp`, which currently gates the same knob with six `if` blocks — deferred because it flips those sites from emitting nothing to `SevDebug`, a trace-volume change worth measuring on its own. Joshua, 100k runs, clean: ``` 20260818-041541-stack-13886-04944201f8ee8683 ended=100000 pass=100000 remaining=0 max_runs=100000 runtime=0:31:15 timeout=5400 username=stack-13886 ``` `ExistStorageServerShardAuditExit` did not recur, against 3 hits in 20,000 runs before §3 and §4. --- <sub>Rebased and squashed to a single commit since first posted. Substantive changes from review: `minSplitBytes` `target/8` → `target/2`; the dispatch throttle kept per-shard rather than per-piece; the ssshard fixes in §4 added; `AUDIT_RESTORE_BATCH_BYTE_LIMIT`/`_MIN` narrowed `int64_t` → `int` since they feed `GetRangeLimits::bytes`; and three reimplementations dropped in favour of existing machinery — a bespoke split-point partitioner (NativeAPI already guarantees the contract), a hand-rolled backoff (`Backoff`), and a local scope guard (`flow/ScopeExit.h`).</sub>",
+        "url": "https://github.com/apple/foundationdb/pull/13886",
+        "createdAt": "2026-08-17T18:39:12Z",
+        "updatedAt": "2026-08-18T09:43:41Z",
+        "timestamp": "2026-08-18T09:43:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 36
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2f549946e3425bab71a5",
+      "signalId": "github:apple/foundationdb:pull_request:13894",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13894",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Restore region recovery configuration after simulation restart",
+        "text": "## Summary A paired simulation restart can lose the region commands that fresh setup initializes. If a datacenter later becomes unavailable, dead-region repair submits an incomplete configuration command, ignores `UNKNOWN_OPTION`, and can wait until the trace limit aborts the test. - Reconstruct the original and disabled-region commands once from the persisted two-region configuration, preserving region ordering and satellite settings. - Share command construction with fresh setup and check both recovery configuration results while preserving the concurrent-repair guard. - Add focused coverage for datacenter selection, satellite and extension-field preservation, configuration parsing, and initialization boundaries. No workload or fault settings change. ## Validation - `fdbserver_core_test -f /fdbserver/FDBSimulationPolicy/`: two tests passed in both normal mode and Sim2. - The unchanged `restarting/from_7.3.29/ClientTransactionProfilingCorrectness` test pair passed with the historical 7.3 server, buggify, and fault injection preserved. The recovery trace confirms the configuration was applied, old log generations drained, full recovery completed, and no severe errors occurred.",
+        "url": "https://github.com/apple/foundationdb/pull/13894",
+        "createdAt": "2026-08-18T01:34:21Z",
+        "updatedAt": "2026-08-18T09:31:19Z",
+        "timestamp": "2026-08-18T09:31:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4bbbc80bba617abddc9c",
+      "signalId": "github:apple/foundationdb:pull_request:13895",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13895",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Retire obsolete bad-team trackers when rebuilding storage teams",
+        "text": "## Problem Data distribution can recreate a server team before its old redundant-team tracker is removed. Both trackers refer to the same shard mappings, so the obsolete tracker can repeatedly request relocations back onto the valid team and prevent data distribution from becoming idle. ## Change Remove and cancel matching bad-team trackers before starting a valid replacement. Preserve unrelated bad teams and leave genuine server-failure handling with the replacement. Add a regression covering tracker retirement, accounting, team membership, quiescence, and a subsequent server failure. ## Testing - The focused regression fails without the fix and passes with it. - `fdbserver_datadistributor_test`: 51 passed, 0 failed. - The existing `tests/restarting/from_7.3.0_until_7.4.0/SnapCycleRestart-{1,2}.toml` pair reproduces the failure before the fix and passes both phases afterward with its original settings.",
+        "url": "https://github.com/apple/foundationdb/pull/13895",
+        "createdAt": "2026-08-18T01:48:40Z",
+        "updatedAt": "2026-08-18T09:07:36Z",
+        "timestamp": "2026-08-18T09:07:36Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:896a781fa60ac8433ff5",
+      "signalId": "github:apple/foundationdb:pull_request:13896",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13896",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Retry old-epoch backup mutation-log uploads",
+        "text": "## Summary An I/O error while writing partitioned backup logs can terminate an old-epoch backup worker. Those failures deliberately do not restart transaction recovery, so the old log generation can remain retained and backup progress can stop indefinitely. Retry `io_error` and `io_timeout` for old-epoch mutation-log uploads while retaining the same role and message prefix. Each attempt opens fresh files. Freeze the recipient ranges and encoding boundaries so an ambiguous finish produces byte-identical duplicates, and handle newly observed overlapping backups before discarding messages or advancing durable progress. Preserve current-epoch recovery, cancellation, and displacement behavior. Add focused regression coverage for file creation, partial append, ambiguous finish, changing recipients, long transient outages, and stopping during an upload or retry. ## Validation - `fdbserver_backupworker_test`: 8/8 in normal mode and 8/8 in simulation mode. - `BackupCorrectnessPartitioned.toml` with buggify and fault injection enabled: passed; backup and restore completed. - A matched control with only old-epoch retries disabled reproduces the stalled backup; enabling retries completes the same test. - The workload and fault settings are unchanged. This change covers transient destination I/O failures. It does not add replacement of an already-terminated process or recovery from a permanently hung destination.",
+        "url": "https://github.com/apple/foundationdb/pull/13896",
+        "createdAt": "2026-08-18T02:00:49Z",
+        "updatedAt": "2026-08-18T09:05:55Z",
+        "timestamp": "2026-08-18T09:05:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:48368706c9f5660f496a",
+      "signalId": "github:apple/foundationdb:pull_request:13897",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13897",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Make DD relocation retry observations resilient to delay jitter",
+        "text": "## Summary The merged-shard retry test waits slightly longer than one polling interval and expects exactly two requests. Simulation delay jitter can extend that observation across multiple valid retry rounds, making the final empty-stream assertion fail. Observe four consecutive requests as they arrive, verify their merged range and failed-team priority, and check that no three observed requests fall within one polling interval. Keep a bounded wait for missing retries, then stop the observation and yield before destroying the fixture because stream sends invoke callbacks synchronously. No production behavior or workload configuration changes. ## Validation - Clang Release build of `fdbserver_datadistributor_test` and `fdbserver`. - On this branch, the complete default Data Distributor unit suite passed all 50 tests in both native and simulation modes. The focused TeamTracker and shard-mapping regressions also passed in both modes. - Matched `SpecificUnitTests.toml` simulation reproduction on one source baseline: unchanged source fails; the fix passes with the same test and injection settings.",
+        "url": "https://github.com/apple/foundationdb/pull/13897",
+        "createdAt": "2026-08-18T02:25:27Z",
+        "updatedAt": "2026-08-18T08:10:40Z",
+        "timestamp": "2026-08-18T08:10:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4964df425d25d68cf89d",
+      "signalId": "github:apple/foundationdb:pull_request:13879",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13879",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Exercise duplicate snapshot requests on the current binary",
+        "text": "## Summary - Add a registered fast simulation that exercises duplicate snapshot requests on the current binary. - Verify an in-progress duplicate replaces the original request and a completed duplicate reuses the recorded result. - Preserve existing snapshot workload behavior unless the new deterministic duplicate-checking options are enabled. ## Validation - `clang-format --dry-run --Werror fdbserver/workloads/SnapTest.cpp` - `fdbserver -r simulation -f tests/fast/SnapshotDuplicateRequests.toml`",
+        "url": "https://github.com/apple/foundationdb/pull/13879",
+        "createdAt": "2026-08-15T17:26:14Z",
+        "updatedAt": "2026-08-18T04:45:50Z",
+        "timestamp": "2026-08-18T04:45:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 14
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8aa69e682d98db3d9936",
+      "signalId": "github:apple/foundationdb:pull_request:13872",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13872",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Lower backup role failure severity for IO error",
+        "text": "Problem: One off IO error when doing backup in the backup-worker when using backup-v2/partitioned logs is causing the process to report for the next 24 hours an SevError that could lead to pagable alert depending on once configuration. Solution: Make this issue a non SevError for the backup-worker due to the nature of the medium used for backup ie. blobstore or networked filesystem it can happen and will be retried by the process. Testing: Passed 10K testing in joshua",
+        "url": "https://github.com/apple/foundationdb/pull/13872",
+        "createdAt": "2026-08-14T17:34:52Z",
+        "updatedAt": "2026-08-18T04:45:19Z",
+        "timestamp": "2026-08-18T04:45:19Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 8
+        },
+        "labels": [],
+        "author": "mpatou-openai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a13c2d857fedeff381bd",
+      "signalId": "github:apple/foundationdb:pull_request:13854",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13854",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert LoadBalance.actor.h to standard coroutines",
+        "text": "## Summary - Convert load-balancing, replica-comparison, and TSS-comparison actors to standard C++ coroutines. - Consolidate the migrated implementation into `fdbrpc/LoadBalance.h` and update direct includes so the header no longer requires actor compilation. - Preserve request ownership, cancellation, inert `Never()` handling, race ordering, replica consistency checks, and `Void`-reply compatibility. ## Testing - `fdbrpc_test -f /fdbrpc/waitValueOrSignal/` — 3 tests passed. - `fdbclient_test -f /StorageServerInterface/TSSCompare/` — 1 test passed. - Built `fdbserver` successfully. - `tests/fast/CycleTest.toml` with replica consistency checking enabled — 2 simulation tests passed. - `clang-format` and `git diff --check` passed.",
+        "url": "https://github.com/apple/foundationdb/pull/13854",
+        "createdAt": "2026-08-12T10:34:28Z",
+        "updatedAt": "2026-08-18T03:26:40Z",
+        "timestamp": "2026-08-18T03:26:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 29
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

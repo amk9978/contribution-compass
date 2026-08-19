@@ -1,0 +1,309 @@
+{
+  "version": 4,
+  "date": "2026-08-19",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "testcontainers-go",
+    "repo": "testcontainers/testcontainers-go",
+    "name": "Testcontainers for Go",
+    "keywords": [
+      "Testcontainers"
+    ]
+  },
+  "context": {
+    "repository": "testcontainers/testcontainers-go",
+    "url": "https://github.com/testcontainers/testcontainers-go",
+    "description": "Testcontainers for Go is a Go package that makes it simple to create and clean up container-based dependencies for automated integration/smoke tests. The clean, easy-to-use API enables developers to programmatically define containers that should be run as part of a test and clean up those resources when the test is done.",
+    "homepage": "https://golang.testcontainers.org",
+    "language": "Go",
+    "topics": [
+      "automation",
+      "docker",
+      "go",
+      "golang",
+      "hacktoberfest",
+      "testcontainers",
+      "testcontainers-go",
+      "testing"
+    ],
+    "license": "MIT",
+    "defaultBranch": "main",
+    "stars": 4952,
+    "forks": 628,
+    "openIssues": 163,
+    "archived": false,
+    "collectedAt": "2026-08-19T02:33:38.516060+00:00"
+  },
+  "news": {
+    "repository": "testcontainers/testcontainers-go",
+    "collectedAt": "2026-08-19T02:33:38.516060+00:00",
+    "latestRelease": {
+      "repository": "testcontainers/testcontainers-go",
+      "tag": "v0.44.0",
+      "title": "v0.44.0",
+      "url": "https://github.com/testcontainers/testcontainers-go/releases/tag/v0.44.0",
+      "publishedAt": "2026-08-07T10:53:52Z",
+      "notes": "# What's Changed\r\n## 🔒 Security\r\n\r\n* security: fix Dependabot alerts for grpc and OTel (#3835) @mdelapenya\r\n\r\n## 🚀 Features\r\n\r\n* feat: allow overriding the session ID (#3051) @jcmfernandes\r\n* feat: add Azure SQL Edge module (#3787) @mdelapenya\r\n* feat: add S3Mock module (#3781) @mdelapenya\r\n* feat: add Fake-GCS-Server module (#3770) @mdelapenya\r\n* feat: add Typesense module (#3786) @mdelapenya\r\n* feat: add Firebird module (#3771) @mdelapenya\r\n* feat: add CouchDB module (#3768) @mdelapenya\r\n* feat: add Mosquitto module (#3774) @mdelapenya\r\n* feat: add Papercut-SMTP module (#3777) @mdelapenya\r\n* feat: add Timeplus module (#3784) @mdelapenya\r\n* feat: add Solr module (#3783) @mdelapenya\r\n* feat: add SFTP module (#3782) @mdelapenya\r\n* feat: add RavenDB module (#3780) @mdelapenya\r\n* feat: add QuestDB module (#3779) @mdelapenya\r\n* feat: add Presto module (#3778) @mdelapenya\r\n* feat: add OrientDB module (#3776) @mdelapenya\r\n* feat: add Nginx module (#3775) @mdelapenya\r\n* feat: add Mailpit module (#3773) @mdelapenya\r\n* feat: add Trino module (#3785) @mdelapenya\r\n* feat: add KurrentDB module (#3772) @mdelapenya\r\n* feat: add CrateDB module (#3769) @mdelapenya\r\n* feat: add ActiveMQ Classic module (#3767) @mdelapenya\r\n* feat: add ability to chain WithConfigModifier, WithEndpointSettingsModifier and WithHostConfigModifier (#3733) @LaurentGoderre\r\n\r\n## 🐛 Bug Fixes\r\n\r\n* fix: escape the container name in the Docker name filter (#3837) @jcmfernandes\r\n* fix: should print max information by default (#3459) @strowk\r\n* fix: read exec exit code only after draining the output stream (#3766) @dean-island\r\n* fix: properly wait for Ryuk startup when reusing reaper (#3761) @karsov\r\n* fix(openfga): remove playground wait from Run and up image to v1.18.0 (#3745) @selvakannanjr\r\n\r\n## 📖 Documentation\r\n\r\n* docs: fix incomplete CleanupContainer documentation (#3826) @Hashim1999164\r\n* docs: fix typo in SkipIfProviderIsNotHealthy docstring (#3764) @salandered\r\n* chore: update modules usage metrics (2026-07) (#3759) @[github-actions[bot]](https://github.com/apps/github-actions)\r\n* chore: update usage metrics (2026-07) (#3757) @[github-actions[bot]](https://github.com/apps/github-actions)\r\n* chore(metrics): usage metrics for modules (#3737) @mdelapenya\r\n* docs(site): add missing languages and reorder docs navigation (#3735) @mdelapenya\r\n\r\n## 🧹 Housekeeping\r\n\r\n* chore: update usage metrics (2026-08) (#3830) @[github-actions[bot]](https://github.com/apps/github-actions)\r\n* chore: update modules usage metrics (2026-08) (#3831) @[github-actions[bot]](https://github.com/apps/github-actions)\r\n* fix: correct indentation in dependabot.yml (#3808) @mdelapenya\r\n* chore(compose): use require instead of assert for service name checks (#3765) @sunghyun1999\r\n* chore: update usage metrics (2026-07) (#3757) @[github-actions[bot]](https://github.com/apps/github-actions)\r\n* chore(wait): replace manual StrategyTarget mocks with generated mockery mocks (#3603) @mateenali66\r\n* chore: use testify's require instead of assert (#3740) @TheRodzz\r\n* fix(metrics): harden collect.go and modules workflow (#3738) @mdelapenya\r\n\r\n## 📦 Dependency updates\r\n\r\n* chore(deps): bump slackapi/slack-github-action from 3.0.3 to 4.0.0 (#3788) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump actions/upload-artifact from 7.0.0 to 7.0.1 (#3789) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump docker/setup-docker-action from 5.1.0 to 5.4.0 (#3790) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(azurite): tidy module dependencies (#3838) @mdelapenya\r\n* security: fix Dependabot alerts for grpc and OTel (#3835) @mdelapenya\r\n* chore(deps): bump github.com/Azure/azure-sdk-for-go/sdk/storage/azblob from 1.6.0 to 1.8.0 in /modules/azure (#3805) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets from 1.4.0 to 1.5.0 in /modules/azure (#3806) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump google.golang.org/grpc from 1.79.3 to 1.82.1 in /modules/weaviate (#3820) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump google.golang.org/grpc from 1.79.3 to 1.82.1 in /modules/qdrant (#3821) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump google.golang.org/grpc from 1.80.0 to 1.82.1 in /modules/grafana-lgtm (#3822) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump google.golang.org/grpc from 1.81.0 to 1.82.1 in /modules/gcloud (#3823) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump google.golang.org/grpc from 1.81.1 to 1.82.1 in /modules/compose (#3824) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore: propagate azcore dependency update to azurite module (#3818) @mdelapenya\r\n* chore(deps): bump github.com/Azure/azure-sdk-for-go/sdk/azcore from 1.21.1 to 1.22.0 in /modules/azure (#3809) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/crypto from 0.53.0 to 0.54.0 (#3791) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/shirou/gopsutil/v4 from 4.26.5 to 4.26.6 (#3750) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/Azure/azure-sdk-for-go/sdk/data/azcosmos from 1.4.1 to 1.5.0 in /modules/azure (#3810) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/aws/aws-sdk-go-v2/credentials from 1.17.5 to 1.19.29 in /modules/localstack (#3812) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/aws/aws-sdk-go-v2/credentials from 1.19.28 to 1.19.29 in /modules/s3mock (#3813) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/aws/aws-sdk-go-v2/credentials from 1.17.46 to 1.19.29 in /modules/scylladb (#3814) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/crypto from 0.53.0 to 0.54.0 in /modules/azure (#3811) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/crypto from 0.53.0 to 0.54.0 in /modules/azure (#3794) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/go-stomp/stomp/v3 from 3.0.5 to 3.1.5 in /modules/artemis (#3801) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/Azure/azure-sdk-for-go/sdk/azidentity from 1.13.1 to 1.14.0 in /modules/azure (#3803) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump software.sslmate.com/src/go-pkcs12 from 0.6.0 to 0.7.3 in /modules/cassandra (#3804) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/mod from 0.37.0 to 0.38.0 in /modules/elasticsearch (#3796) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/mod from 0.37.0 to 0.38.0 in /modules/kafka (#3797) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/arangodb/go-driver/v2 from 2.1.3 to 2.3.1 in /modules/arangodb (#3800) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/crypto from 0.52.0 to 0.54.0 in /modules/dex (#3795) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump github.com/aerospike/aerospike-client-go/v8 from 8.6.0 to 8.7.0 in /modules/aerospike (#3799) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/crypto from 0.51.0 to 0.52.0 in /modules/dex (#3763) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/net from 0.53.0 to 0.55.0 in /modules/dex (#3758) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/mod from 0.36.0 to 0.37.0 in /modulegen (#3751) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/mod from 0.33.0 to 0.37.0 in /modules/redpanda (#3756) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golangci/golangci-lint-action from 7.0.0 to 9.3.0 (#3748) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump tj-actions/changed-files from 47.0.1 to 47.0.6 (#3746) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump SonarSource/sonarqube-scan-action from 5.1.0 to 8.2.0 (#3747) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump mkdocs-include-markdown-plugin from 7.2.2 to 7.3.0 (#3749) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/text from 0.34.0 to 0.38.0 in /modulegen (#3752) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/mod from 0.33.0 to 0.37.0 in /modules/elasticsearch (#3753) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/mod from 0.33.0 to 0.37.0 in /modules/kafka (#3754) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump golang.org/x/mod from 0.33.0 to 0.37.0 in /modules/localstack (#3755) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump actions/github-script from 7.0.1 to 9.0.0 (#3675) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump pymdown-extensions from 10.16.1 to 10.21.3 (#3707) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump go.mongodb.org/mongo-driver/v2 from 2.3.0 to 2.4.2 in /modules/mongodb (#3730) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): bump go.mongodb.org/mongo-driver from 1.14.0 to 1.17.7 in /modules/weaviate (#3731) @[dependabot[bot]](https://github.com/apps/dependabot)\r\n* chore(deps): update moby to latest version (#3736) @Steven-Harris\r\n",
+      "highlights": [
+        "🔒 Security",
+        "security: fix Dependabot alerts for grpc and OTel (#3835) @mdelapenya",
+        "🚀 Features",
+        "feat: allow overriding the session ID (#3051) @jcmfernandes",
+        "feat: add Azure SQL Edge module (#3787) @mdelapenya",
+        "feat: add S3Mock module (#3781) @mdelapenya"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-19T02:33:24.702454Z",
+      "since": "2026-08-18T02:33:24.702454Z",
+      "observedCount": 4,
+      "changedCount": 4
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:testcontainers/testcontainers-go:pull_request:3841",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "testcontainers/testcontainers-go",
+      "kind": "pull_request",
+      "title": "fix: return reaper handshake errors",
+      "text": "This supersedes #3828. The original PR was automatically closed after I accidentally deleted my fork ## Related issues - Closes #3827 ## What does this PR do? This PR makes `Reaper.connect` perform the Ryuk handshake synchronously before returning a successful connection. If the handshake fails, the connection is closed and the handshake error is returned to the caller. The existing retry path can then handle the failure instead of treating the reaper connection as successful. It also adds a regression test using a local TCP listener that returns an invalid ACK, verifying that `connect` returns an error and no termination channel. ## Why is it important? Previously, handshake failures were only logged inside the connection goroutine. `Reaper.connect` still returned a non-nil termination channel and nil error, so callers could believe the reaper was connected even though Ryuk had rejected or failed the handshake. Returning the error makes reaper startup failures visible and retryable. ## How to test this PR ```shell go test ./ -run \"TestReaperConnectReturnsHandshakeError|TestSpawnerRetryError|TestSpawnerBackoff\"",
+      "url": "https://github.com/testcontainers/testcontainers-go/pull/3841",
+      "createdAt": "2026-08-06T17:26:16Z",
+      "updatedAt": "2026-08-18T17:10:57Z",
+      "timestamp": "2026-08-18T17:10:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "drawliin",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:testcontainers/testcontainers-go:pull_request:3850",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "testcontainers/testcontainers-go",
+      "kind": "pull_request",
+      "title": "chore(deps): bump github.com/cilium/ebpf from 0.11.0 to 0.22.0 in /modules/milvus",
+      "text": "Bumps [github.com/cilium/ebpf](https://github.com/cilium/ebpf) from 0.11.0 to 0.22.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/cilium/ebpf/commit/e55144e17360b60cc4583229c35c2dbf0935b308\"><code>e55144e</code></a> btf: Add BTF layout header parsing</li> <li><a href=\"https://github.com/cilium/ebpf/commit/d37ad9c7ca6e67ca4151800c8d81850f14f989d8\"><code>d37ad9c</code></a> struct_ops_test: Fix <code>TestCreateStructOpsMapSpecSimple</code></li> <li><a href=\"https://github.com/cilium/ebpf/commit/5e8bcc7b5fd4f508e2e0b4fa27deb2ba9e3794ca\"><code>5e8bcc7</code></a> btf: Remove vmlinux dedup test</li> <li><a href=\"https://github.com/cilium/ebpf/commit/f1eb026fa3e39a68c4ba7b42b29751f509e092c2\"><code>f1eb026</code></a> Update kernel dependencies to 7.1</li> <li><a href=\"https://github.com/cilium/ebpf/commit/970a97d4cdf6755a563189385e8ead590aa67f94\"><code>970a97d</code></a> CODEOWNERS: allow reviewers to merge docs/, add rgo3 to link/</li> <li><a href=\"https://github.com/cilium/ebpf/commit/7be98ef83bb9812d474bc7b448bb64b72e3283f7\"><code>7be98ef</code></a> variable: reject offsets that overflow uint32 bounds</li> <li><a href=\"https://github.com/cilium/ebpf/commit/b404658b94df8f784d4a2df26210d12fae06c377\"><code>b404658</code></a> build(deps): bump golangci/golangci-lint-action from 9.2.0 to 9.2.1</li> <li><a href=\"https://github.com/cilium/ebpf/commit/63647bcd9aacdc967007204cf9d42822db815071\"><code>63647bc</code></a> build(deps): bump mkdocs-git-revision-date-localized-plugin</li> <li><a href=\"https://github.com/cilium/ebpf/commit/e30ccb7bbbc3dfa7376773ab08f977fba4710e99\"><code>e30ccb7</code></a> memory: use unsafe.Add to align unsafe memory instead of uintptr conversion</li> <li><a href=\"https://github.com/cilium/ebpf/commit/0e35955f9c5a611322d33cce83103f04e2d008e3\"><code>0e35955</code></a> Makefile: pre-create GOCACHE, GOPATH and GOMODCACHE for podman</li> <li>Additional commits viewable in <a href=\"https://github.com/cilium/ebpf/compare/v0.11.0...v0.22.0\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=github.com/cilium/ebpf&package-manager=go_modules&previous-version=0.11.0&new-version=0.22.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) You can trigger a rebase of this PR by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/testcontainers/testcontainers-go/network/alerts). </details>",
+      "url": "https://github.com/testcontainers/testcontainers-go/pull/3850",
+      "createdAt": "2026-08-17T13:38:36Z",
+      "updatedAt": "2026-08-18T07:12:53Z",
+      "timestamp": "2026-08-18T07:12:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:testcontainers/testcontainers-go:pull_request:3851",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "testcontainers/testcontainers-go",
+      "kind": "pull_request",
+      "title": "chore(deps): bump software.sslmate.com/src/go-pkcs12 from 0.7.0 to 0.7.2 in /modules/azure",
+      "text": "Bumps software.sslmate.com/src/go-pkcs12 from 0.7.0 to 0.7.2. [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=software.sslmate.com/src/go-pkcs12&package-manager=go_modules&previous-version=0.7.0&new-version=0.7.2)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) You can trigger a rebase of this PR by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/testcontainers/testcontainers-go/network/alerts). </details>",
+      "url": "https://github.com/testcontainers/testcontainers-go/pull/3851",
+      "createdAt": "2026-08-17T22:46:30Z",
+      "updatedAt": "2026-08-18T07:12:13Z",
+      "timestamp": "2026-08-18T07:12:13Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:testcontainers/testcontainers-go:pull_request:3852",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "testcontainers/testcontainers-go",
+      "kind": "pull_request",
+      "title": "chore(deps): bump github.com/moby/go-archive from 0.2.0 to 0.3.0 in /modules/valkey",
+      "text": "Bumps [github.com/moby/go-archive](https://github.com/moby/go-archive) from 0.2.0 to 0.3.0. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/moby/go-archive/releases\">github.com/moby/go-archive's releases</a>.</em></p> <blockquote> <h2>v0.3.0</h2> <h2>Security</h2> <p>This release fixes <strong>CVE-2026-17106</strong> / <strong><a href=\"https://github.com/moby/go-archive/security/advisories/GHSA-hfg8-hc9c-6c3h\">GHSA-hfg8-hc9c-6c3h</a></strong>, where a crafted tar archive could use links to cause extraction operations to create or overwrite files outside the intended destination directory.</p> <p>The issue affected <code>Unpack</code>, <code>UnpackLayer</code>, <code>Untar</code>, <code>UntarUncompressed</code>, and the <code>ApplyLayer</code> helpers. Users should upgrade and avoid extracting untrusted archives with earlier versions.</p> <h2>What's Changed</h2> <ul> <li>archive: harden tar extraction against path traversal <a href=\"https://redirect.github.com/moby/go-archive/pull/45\">moby/go-archive#45</a></li> <li>archive: do not follow reparse points in chtimes <a href=\"https://redirect.github.com/moby/go-archive/pull/90\">moby/go-archive#90</a></li> <li>archive: fix creation time updates on Windows <a href=\"https://redirect.github.com/moby/go-archive/pull/79\">moby/go-archive#79</a></li> <li>archive: minor cleanups and godoc touch-up <a href=\"https://redirect.github.com/moby/go-archive/pull/87\">moby/go-archive#87</a></li> <li>archive: RebaseArchiveEntries: fix archive path rebasing <a href=\"https://redirect.github.com/moby/go-archive/pull/43\">moby/go-archive#43</a></li> </ul> <h2>Test and CI changes</h2> <ul> <li>ci: enable dependabot for actions <a href=\"https://redirect.github.com/moby/go-archive/pull/81\">moby/go-archive#81</a></li> <li>archive: make breakoutErr unwrap its cause <a href=\"https://redirect.github.com/moby/go-archive/pull/91\">moby/go-archive#91</a></li> <li>archive: use filepath for filesystem paths in tests <a href=\"https://redirect.github.com/moby/go-archive/pull/80\">moby/go-archive#80</a></li> <li>archive: use filepath for filesystem paths in tests <a href=\"https://redirect.github.com/moby/go-archive/pull/80\">moby/go-archive#80</a></li> </ul> <p><strong>Full Changelog</strong>: <a href=\"https://github.com/moby/go-archive/compare/v0.2.1...v0.3.0\">https://github.com/moby/go-archive/compare/v0.2.1...v0.3.0</a></p> <h2>v0.2.1</h2> <h2>What's Changed</h2> <ul> <li>reject out-of-range device numbers in layer <a href=\"https://redirect.github.com/moby/go-archive/pull/36\">moby/go-archive#36</a></li> <li>createImpliedDirectories: fix directory detection and path handling <a href=\"https://redirect.github.com/moby/go-archive/pull/44\">moby/go-archive#44</a></li> <li>createImpliedDirectories: honor NoLchown for implied directories <a href=\"https://redirect.github.com/moby/go-archive/pull/70\">moby/go-archive#70</a></li> <li>createTarFile: use switch for timestamp updates <a href=\"https://redirect.github.com/moby/go-archive/pull/67\">moby/go-archive#67</a></li> <li>drop redundant ExcludePatterns initialization <a href=\"https://redirect.github.com/moby/go-archive/pull/62\">moby/go-archive#62</a></li> <li>ExportChanges: use POSIX / Unix conventions for Tar operations <a href=\"https://redirect.github.com/moby/go-archive/pull/41\">moby/go-archive#41</a></li> <li>getInodeFromStat: return error on failure <a href=\"https://redirect.github.com/moby/go-archive/pull/50\">moby/go-archive#50</a></li> <li>overlayWhiteoutConverter.ConvertRead: avoid redundant chown <a href=\"https://redirect.github.com/moby/go-archive/pull/55\">moby/go-archive#55</a></li> <li>overlayWhiteoutConverter.ConvertWrite: explicitly use POSIX / Unix <a href=\"https://redirect.github.com/moby/go-archive/pull/38\">moby/go-archive#38</a></li> <li>overlayWhiteoutConverter.ConvertWrite: simplify directory check <a href=\"https://redirect.github.com/moby/go-archive/pull/34\">moby/go-archive#34</a></li> <li>overlayWhiteoutConverter: fixes and cleanups <a href=\"https://redirect.github.com/moby/go-archive/pull/52\">moby/go-archive#52</a></li> <li>RebaseArchiveEntries: use POSIX / Unix paths <a href=\"https://redirect.github.com/moby/go-archive/pull/42\">moby/go-archive#42</a></li> <li>tarAppender.addTarFile: normalize archivePath to POSIX <a href=\"https://redirect.github.com/moby/go-archive/pull/40\">moby/go-archive#40</a></li> <li>tarAppender.addTarFile: return error before writing header <a href=\"https://redirect.github.com/moby/go-archive/pull/51\">moby/go-archive#51</a></li> <li>TarOptions: document IncludeFiles, ExcludePatterns <a href=\"https://redirect.github.com/moby/go-archive/pull/61\">moby/go-archive#61</a></li> <li>Unpack: prevent nil-pointer if nil-options are passed <a href=\"https://redirect.github.com/moby/go-archive/pull/66\">moby/go-archive#66</a></li> <li>remove some intermediate vars <a href=\"https://redirect.github.com/moby/go-archive/pull/53\">moby/go-archive#53</a></li> <li>rename some vars to prevent shadowing &quot;path&quot; import <a href=\"https://redirect.github.com/moby/go-archive/pull/35\">moby/go-archive#35</a></li> <li>rename vars to prevent shadowing and for clarity <a href=\"https://redirect.github.com/moby/go-archive/pull/39\">moby/go-archive#39</a></li> <li>fix typos in comments <a href=\"https://redirect.github.com/moby/go-archive/pull/59\">moby/go-archive#59</a></li> <li>modernize code <a href=\"https://redirect.github.com/moby/go-archive/pull/30\">moby/go-archive#30</a></li> </ul> <!-- raw HTML omitted --> </blockquote> <p>... (truncated)</p> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/moby/go-archive/commit/1c23372e409716c3691a540871806083644f348a\"><code>1c23372</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/43\">#43</a> from thaJeztah/fix_rebase_from_root</li> <li><a href=\"https://github.com/moby/go-archive/commit/8829a251b613c4f71e8d66a4d7561ac47d7879ae\"><code>8829a25</code></a> RebaseArchiveEntries: fix archive path rebasing</li> <li><a href=\"https://github.com/moby/go-archive/commit/c583b20c9c4c442597ca897b9f66d2280e16ff8b\"><code>c583b20</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/90\">#90</a> from thaJeztah/chtimes_nofollow</li> <li><a href=\"https://github.com/moby/go-archive/commit/a0576cbfb800af90375daf73aaf785bbfa4daa72\"><code>a0576cb</code></a> archive: do not follow reparse points in chtimes</li> <li><a href=\"https://github.com/moby/go-archive/commit/b0d5baf0b7665618751942678c3f241ac22e82c4\"><code>b0d5baf</code></a> archive: add test for unexpected reparse points in chtimes</li> <li><a href=\"https://github.com/moby/go-archive/commit/c23e4e565e1dd2941e8782f3d20ea613dd632064\"><code>c23e4e5</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/79\">#79</a> from thaJeztah/test_chtimes</li> <li><a href=\"https://github.com/moby/go-archive/commit/aa1541a0af4d8d2a3183e69b847c54db9cd2e78e\"><code>aa1541a</code></a> archive: fix creation time updates on Windows</li> <li><a href=\"https://github.com/moby/go-archive/commit/c68e60d59e3aef1ce3f881fc438058a418189152\"><code>c68e60d</code></a> archive: add Windows creation time test</li> <li><a href=\"https://github.com/moby/go-archive/commit/a11565d1683c22864784efdaaffc4d770601b31e\"><code>a11565d</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/91\">#91</a> from thaJeztah/breakout_unwrap</li> <li><a href=\"https://github.com/moby/go-archive/commit/b680a6145296afddd9e31abec3e6c2d655e441b6\"><code>b680a61</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/89\">#89</a> from moby/dependabot/github_actions/codeql-actions-ba9...</li> <li>Additional commits viewable in <a href=\"https://github.com/moby/go-archive/compare/v0.2.0...v0.3.0\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=github.com/moby/go-archive&package-manager=go_modules&previous-version=0.2.0&new-version=0.3.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) You can trigger a rebase of this PR by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/testcontainers/testcontainers-go/network/alerts). </details>",
+      "url": "https://github.com/testcontainers/testcontainers-go/pull/3852",
+      "createdAt": "2026-08-18T21:33:38Z",
+      "updatedAt": "2026-08-18T21:34:11Z",
+      "timestamp": "2026-08-18T21:34:11Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "chore",
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:a2529d1f4be141230224",
+      "signalId": "github:testcontainers/testcontainers-go:pull_request:3852",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:testcontainers/testcontainers-go:pull_request:3852",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "testcontainers/testcontainers-go",
+        "kind": "pull_request",
+        "title": "chore(deps): bump github.com/moby/go-archive from 0.2.0 to 0.3.0 in /modules/valkey",
+        "text": "Bumps [github.com/moby/go-archive](https://github.com/moby/go-archive) from 0.2.0 to 0.3.0. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/moby/go-archive/releases\">github.com/moby/go-archive's releases</a>.</em></p> <blockquote> <h2>v0.3.0</h2> <h2>Security</h2> <p>This release fixes <strong>CVE-2026-17106</strong> / <strong><a href=\"https://github.com/moby/go-archive/security/advisories/GHSA-hfg8-hc9c-6c3h\">GHSA-hfg8-hc9c-6c3h</a></strong>, where a crafted tar archive could use links to cause extraction operations to create or overwrite files outside the intended destination directory.</p> <p>The issue affected <code>Unpack</code>, <code>UnpackLayer</code>, <code>Untar</code>, <code>UntarUncompressed</code>, and the <code>ApplyLayer</code> helpers. Users should upgrade and avoid extracting untrusted archives with earlier versions.</p> <h2>What's Changed</h2> <ul> <li>archive: harden tar extraction against path traversal <a href=\"https://redirect.github.com/moby/go-archive/pull/45\">moby/go-archive#45</a></li> <li>archive: do not follow reparse points in chtimes <a href=\"https://redirect.github.com/moby/go-archive/pull/90\">moby/go-archive#90</a></li> <li>archive: fix creation time updates on Windows <a href=\"https://redirect.github.com/moby/go-archive/pull/79\">moby/go-archive#79</a></li> <li>archive: minor cleanups and godoc touch-up <a href=\"https://redirect.github.com/moby/go-archive/pull/87\">moby/go-archive#87</a></li> <li>archive: RebaseArchiveEntries: fix archive path rebasing <a href=\"https://redirect.github.com/moby/go-archive/pull/43\">moby/go-archive#43</a></li> </ul> <h2>Test and CI changes</h2> <ul> <li>ci: enable dependabot for actions <a href=\"https://redirect.github.com/moby/go-archive/pull/81\">moby/go-archive#81</a></li> <li>archive: make breakoutErr unwrap its cause <a href=\"https://redirect.github.com/moby/go-archive/pull/91\">moby/go-archive#91</a></li> <li>archive: use filepath for filesystem paths in tests <a href=\"https://redirect.github.com/moby/go-archive/pull/80\">moby/go-archive#80</a></li> <li>archive: use filepath for filesystem paths in tests <a href=\"https://redirect.github.com/moby/go-archive/pull/80\">moby/go-archive#80</a></li> </ul> <p><strong>Full Changelog</strong>: <a href=\"https://github.com/moby/go-archive/compare/v0.2.1...v0.3.0\">https://github.com/moby/go-archive/compare/v0.2.1...v0.3.0</a></p> <h2>v0.2.1</h2> <h2>What's Changed</h2> <ul> <li>reject out-of-range device numbers in layer <a href=\"https://redirect.github.com/moby/go-archive/pull/36\">moby/go-archive#36</a></li> <li>createImpliedDirectories: fix directory detection and path handling <a href=\"https://redirect.github.com/moby/go-archive/pull/44\">moby/go-archive#44</a></li> <li>createImpliedDirectories: honor NoLchown for implied directories <a href=\"https://redirect.github.com/moby/go-archive/pull/70\">moby/go-archive#70</a></li> <li>createTarFile: use switch for timestamp updates <a href=\"https://redirect.github.com/moby/go-archive/pull/67\">moby/go-archive#67</a></li> <li>drop redundant ExcludePatterns initialization <a href=\"https://redirect.github.com/moby/go-archive/pull/62\">moby/go-archive#62</a></li> <li>ExportChanges: use POSIX / Unix conventions for Tar operations <a href=\"https://redirect.github.com/moby/go-archive/pull/41\">moby/go-archive#41</a></li> <li>getInodeFromStat: return error on failure <a href=\"https://redirect.github.com/moby/go-archive/pull/50\">moby/go-archive#50</a></li> <li>overlayWhiteoutConverter.ConvertRead: avoid redundant chown <a href=\"https://redirect.github.com/moby/go-archive/pull/55\">moby/go-archive#55</a></li> <li>overlayWhiteoutConverter.ConvertWrite: explicitly use POSIX / Unix <a href=\"https://redirect.github.com/moby/go-archive/pull/38\">moby/go-archive#38</a></li> <li>overlayWhiteoutConverter.ConvertWrite: simplify directory check <a href=\"https://redirect.github.com/moby/go-archive/pull/34\">moby/go-archive#34</a></li> <li>overlayWhiteoutConverter: fixes and cleanups <a href=\"https://redirect.github.com/moby/go-archive/pull/52\">moby/go-archive#52</a></li> <li>RebaseArchiveEntries: use POSIX / Unix paths <a href=\"https://redirect.github.com/moby/go-archive/pull/42\">moby/go-archive#42</a></li> <li>tarAppender.addTarFile: normalize archivePath to POSIX <a href=\"https://redirect.github.com/moby/go-archive/pull/40\">moby/go-archive#40</a></li> <li>tarAppender.addTarFile: return error before writing header <a href=\"https://redirect.github.com/moby/go-archive/pull/51\">moby/go-archive#51</a></li> <li>TarOptions: document IncludeFiles, ExcludePatterns <a href=\"https://redirect.github.com/moby/go-archive/pull/61\">moby/go-archive#61</a></li> <li>Unpack: prevent nil-pointer if nil-options are passed <a href=\"https://redirect.github.com/moby/go-archive/pull/66\">moby/go-archive#66</a></li> <li>remove some intermediate vars <a href=\"https://redirect.github.com/moby/go-archive/pull/53\">moby/go-archive#53</a></li> <li>rename some vars to prevent shadowing &quot;path&quot; import <a href=\"https://redirect.github.com/moby/go-archive/pull/35\">moby/go-archive#35</a></li> <li>rename vars to prevent shadowing and for clarity <a href=\"https://redirect.github.com/moby/go-archive/pull/39\">moby/go-archive#39</a></li> <li>fix typos in comments <a href=\"https://redirect.github.com/moby/go-archive/pull/59\">moby/go-archive#59</a></li> <li>modernize code <a href=\"https://redirect.github.com/moby/go-archive/pull/30\">moby/go-archive#30</a></li> </ul> <!-- raw HTML omitted --> </blockquote> <p>... (truncated)</p> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/moby/go-archive/commit/1c23372e409716c3691a540871806083644f348a\"><code>1c23372</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/43\">#43</a> from thaJeztah/fix_rebase_from_root</li> <li><a href=\"https://github.com/moby/go-archive/commit/8829a251b613c4f71e8d66a4d7561ac47d7879ae\"><code>8829a25</code></a> RebaseArchiveEntries: fix archive path rebasing</li> <li><a href=\"https://github.com/moby/go-archive/commit/c583b20c9c4c442597ca897b9f66d2280e16ff8b\"><code>c583b20</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/90\">#90</a> from thaJeztah/chtimes_nofollow</li> <li><a href=\"https://github.com/moby/go-archive/commit/a0576cbfb800af90375daf73aaf785bbfa4daa72\"><code>a0576cb</code></a> archive: do not follow reparse points in chtimes</li> <li><a href=\"https://github.com/moby/go-archive/commit/b0d5baf0b7665618751942678c3f241ac22e82c4\"><code>b0d5baf</code></a> archive: add test for unexpected reparse points in chtimes</li> <li><a href=\"https://github.com/moby/go-archive/commit/c23e4e565e1dd2941e8782f3d20ea613dd632064\"><code>c23e4e5</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/79\">#79</a> from thaJeztah/test_chtimes</li> <li><a href=\"https://github.com/moby/go-archive/commit/aa1541a0af4d8d2a3183e69b847c54db9cd2e78e\"><code>aa1541a</code></a> archive: fix creation time updates on Windows</li> <li><a href=\"https://github.com/moby/go-archive/commit/c68e60d59e3aef1ce3f881fc438058a418189152\"><code>c68e60d</code></a> archive: add Windows creation time test</li> <li><a href=\"https://github.com/moby/go-archive/commit/a11565d1683c22864784efdaaffc4d770601b31e\"><code>a11565d</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/91\">#91</a> from thaJeztah/breakout_unwrap</li> <li><a href=\"https://github.com/moby/go-archive/commit/b680a6145296afddd9e31abec3e6c2d655e441b6\"><code>b680a61</code></a> Merge pull request <a href=\"https://redirect.github.com/moby/go-archive/issues/89\">#89</a> from moby/dependabot/github_actions/codeql-actions-ba9...</li> <li>Additional commits viewable in <a href=\"https://github.com/moby/go-archive/compare/v0.2.0...v0.3.0\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=github.com/moby/go-archive&package-manager=go_modules&previous-version=0.2.0&new-version=0.3.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) You can trigger a rebase of this PR by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/testcontainers/testcontainers-go/network/alerts). </details>",
+        "url": "https://github.com/testcontainers/testcontainers-go/pull/3852",
+        "createdAt": "2026-08-18T21:33:38Z",
+        "updatedAt": "2026-08-18T21:34:11Z",
+        "timestamp": "2026-08-18T21:34:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "chore",
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c7794b73c251f0d804d0",
+      "signalId": "github:testcontainers/testcontainers-go:pull_request:3841",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:testcontainers/testcontainers-go:pull_request:3841",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "testcontainers/testcontainers-go",
+        "kind": "pull_request",
+        "title": "fix: return reaper handshake errors",
+        "text": "This supersedes #3828. The original PR was automatically closed after I accidentally deleted my fork ## Related issues - Closes #3827 ## What does this PR do? This PR makes `Reaper.connect` perform the Ryuk handshake synchronously before returning a successful connection. If the handshake fails, the connection is closed and the handshake error is returned to the caller. The existing retry path can then handle the failure instead of treating the reaper connection as successful. It also adds a regression test using a local TCP listener that returns an invalid ACK, verifying that `connect` returns an error and no termination channel. ## Why is it important? Previously, handshake failures were only logged inside the connection goroutine. `Reaper.connect` still returned a non-nil termination channel and nil error, so callers could believe the reaper was connected even though Ryuk had rejected or failed the handshake. Returning the error makes reaper startup failures visible and retryable. ## How to test this PR ```shell go test ./ -run \"TestReaperConnectReturnsHandshakeError|TestSpawnerRetryError|TestSpawnerBackoff\"",
+        "url": "https://github.com/testcontainers/testcontainers-go/pull/3841",
+        "createdAt": "2026-08-06T17:26:16Z",
+        "updatedAt": "2026-08-18T17:10:57Z",
+        "timestamp": "2026-08-18T17:10:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "drawliin",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fd2c8ce5453c5f849d03",
+      "signalId": "github:testcontainers/testcontainers-go:pull_request:3850",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "labels",
+        "state"
+      ],
+      "signal": {
+        "id": "github:testcontainers/testcontainers-go:pull_request:3850",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "testcontainers/testcontainers-go",
+        "kind": "pull_request",
+        "title": "chore(deps): bump github.com/cilium/ebpf from 0.11.0 to 0.22.0 in /modules/milvus",
+        "text": "Bumps [github.com/cilium/ebpf](https://github.com/cilium/ebpf) from 0.11.0 to 0.22.0. <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/cilium/ebpf/commit/e55144e17360b60cc4583229c35c2dbf0935b308\"><code>e55144e</code></a> btf: Add BTF layout header parsing</li> <li><a href=\"https://github.com/cilium/ebpf/commit/d37ad9c7ca6e67ca4151800c8d81850f14f989d8\"><code>d37ad9c</code></a> struct_ops_test: Fix <code>TestCreateStructOpsMapSpecSimple</code></li> <li><a href=\"https://github.com/cilium/ebpf/commit/5e8bcc7b5fd4f508e2e0b4fa27deb2ba9e3794ca\"><code>5e8bcc7</code></a> btf: Remove vmlinux dedup test</li> <li><a href=\"https://github.com/cilium/ebpf/commit/f1eb026fa3e39a68c4ba7b42b29751f509e092c2\"><code>f1eb026</code></a> Update kernel dependencies to 7.1</li> <li><a href=\"https://github.com/cilium/ebpf/commit/970a97d4cdf6755a563189385e8ead590aa67f94\"><code>970a97d</code></a> CODEOWNERS: allow reviewers to merge docs/, add rgo3 to link/</li> <li><a href=\"https://github.com/cilium/ebpf/commit/7be98ef83bb9812d474bc7b448bb64b72e3283f7\"><code>7be98ef</code></a> variable: reject offsets that overflow uint32 bounds</li> <li><a href=\"https://github.com/cilium/ebpf/commit/b404658b94df8f784d4a2df26210d12fae06c377\"><code>b404658</code></a> build(deps): bump golangci/golangci-lint-action from 9.2.0 to 9.2.1</li> <li><a href=\"https://github.com/cilium/ebpf/commit/63647bcd9aacdc967007204cf9d42822db815071\"><code>63647bc</code></a> build(deps): bump mkdocs-git-revision-date-localized-plugin</li> <li><a href=\"https://github.com/cilium/ebpf/commit/e30ccb7bbbc3dfa7376773ab08f977fba4710e99\"><code>e30ccb7</code></a> memory: use unsafe.Add to align unsafe memory instead of uintptr conversion</li> <li><a href=\"https://github.com/cilium/ebpf/commit/0e35955f9c5a611322d33cce83103f04e2d008e3\"><code>0e35955</code></a> Makefile: pre-create GOCACHE, GOPATH and GOMODCACHE for podman</li> <li>Additional commits viewable in <a href=\"https://github.com/cilium/ebpf/compare/v0.11.0...v0.22.0\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=github.com/cilium/ebpf&package-manager=go_modules&previous-version=0.11.0&new-version=0.22.0)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) You can trigger a rebase of this PR by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/testcontainers/testcontainers-go/network/alerts). </details>",
+        "url": "https://github.com/testcontainers/testcontainers-go/pull/3850",
+        "createdAt": "2026-08-17T13:38:36Z",
+        "updatedAt": "2026-08-18T07:12:53Z",
+        "timestamp": "2026-08-18T07:12:53Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8b25f2fd7af8eba11ad1",
+      "signalId": "github:testcontainers/testcontainers-go:pull_request:3851",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "labels",
+        "state"
+      ],
+      "signal": {
+        "id": "github:testcontainers/testcontainers-go:pull_request:3851",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "testcontainers/testcontainers-go",
+        "kind": "pull_request",
+        "title": "chore(deps): bump software.sslmate.com/src/go-pkcs12 from 0.7.0 to 0.7.2 in /modules/azure",
+        "text": "Bumps software.sslmate.com/src/go-pkcs12 from 0.7.0 to 0.7.2. [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=software.sslmate.com/src/go-pkcs12&package-manager=go_modules&previous-version=0.7.0&new-version=0.7.2)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) You can trigger a rebase of this PR by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) You can disable automated security fix PRs for this repo from the [Security Alerts page](https://github.com/testcontainers/testcontainers-go/network/alerts). </details>",
+        "url": "https://github.com/testcontainers/testcontainers-go/pull/3851",
+        "createdAt": "2026-08-17T22:46:30Z",
+        "updatedAt": "2026-08-18T07:12:13Z",
+        "timestamp": "2026-08-18T07:12:13Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

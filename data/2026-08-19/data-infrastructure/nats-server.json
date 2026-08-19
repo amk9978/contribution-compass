@@ -1,0 +1,557 @@
+{
+  "version": 4,
+  "date": "2026-08-19",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "nats-server",
+    "repo": "nats-io/nats-server",
+    "name": "NATS Server",
+    "keywords": [
+      "NATS server",
+      "NATS.io"
+    ]
+  },
+  "context": {
+    "repository": "nats-io/nats-server",
+    "url": "https://github.com/nats-io/nats-server",
+    "description": "High-Performance server for NATS.io, the cloud and edge native messaging system.",
+    "homepage": "https://nats.io",
+    "language": "Go",
+    "topics": [
+      "cloud",
+      "cloud-computing",
+      "cloud-native",
+      "connected-vehicle",
+      "distributed-systems",
+      "edge",
+      "edge-ai",
+      "edge-computing",
+      "go",
+      "golang",
+      "message-bus",
+      "message-queue",
+      "messaging",
+      "microservices-architecture",
+      "nats-server"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 20541,
+    "forks": 1912,
+    "openIssues": 547,
+    "archived": false,
+    "collectedAt": "2026-08-19T02:33:33.299658+00:00"
+  },
+  "news": {
+    "repository": "nats-io/nats-server",
+    "collectedAt": "2026-08-19T02:33:33.299658+00:00",
+    "latestRelease": {
+      "repository": "nats-io/nats-server",
+      "tag": "v2.14.5",
+      "title": "Release v2.14.5",
+      "url": "https://github.com/nats-io/nats-server/releases/tag/v2.14.5",
+      "publishedAt": "2026-08-12T15:31:27Z",
+      "notes": "## Changelog\r\n\r\nRefer to the [2.14 Upgrade Guide](https://docs.nats.io/release-notes/whats_new/whats_new_214) for backwards compatibility notes with 2.12.x. Please note that the 2.13.x version was skipped.\r\n\r\n### Go Version\r\n\r\n- 1.26.5\r\n\r\n### Dependencies\r\n\r\n- github.com/klauspost/compress v1.19.2 (#8459)\r\n- golang.org/x/crypto v0.55.0 (#8459)\r\n\r\n### Added\r\n\r\nLeafnodes\r\n\r\n- New `dial_timeout` option can be specified in the `leafnode` config block or for specific remotes in the configuration, allowing it to be increased above the default 1 second for high-latency links (#8427)\r\n\r\n### Fixed\r\n\r\nGeneral\r\n\r\n- Fixed a deadlock that could occur in the logger when a close error occurs (#8430)\r\n\r\nJetStream\r\n\r\n- Fix a bug that could result in potential data loss when handling idempotent stream creates when an offline node catches up from a metalayer snapshot, caused by an incorrect update to the create time in the stream assignment (#8449)\r\n\r\n### Complete Changes\r\n \r\nhttps://github.com/nats-io/nats-server/compare/v2.14.4...v2.14.5",
+      "highlights": [
+        "Changelog",
+        "Go Version",
+        "1.26.5",
+        "Dependencies",
+        "github.com/klauspost/compress v1.19.2 (#8459)",
+        "golang.org/x/crypto v0.55.0 (#8459)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-19T02:33:24.702454Z",
+      "since": "2026-08-18T02:33:24.702454Z",
+      "observedCount": 9,
+      "changedCount": 9
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:nats-io/nats-server:pull_request:7882",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) Stream backup/restore v2",
+      "text": "Signed-off-by: Neil Twigg <neil@nats.io>",
+      "url": "https://github.com/nats-io/nats-server/pull/7882",
+      "createdAt": "2026-02-26T17:12:20Z",
+      "updatedAt": "2026-08-18T16:46:31Z",
+      "timestamp": "2026-08-18T16:46:31Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 20
+      },
+      "labels": [],
+      "author": "neilalexander",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8282",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [IMPROVED] Index stream sources to avoid backward scans",
+      "text": "The first commit refactors `fs.recoverTTLState()` and `fs.recoverMsgSchedulingState()`, since if both required recovering that would result in two separate linear scans, instead of one linear scan reused for recovering both. The second commit introduces indexing for stream sources, which will ensure that backward scanning for pre-existing stream sources is eliminated. - As messages come in, their `Nats-Stream-Source` is inspected and the source key is mapped to the sequence that's sourced. - That state is kept in-memory and can be reused by methods like `mset.startingSequenceForSources()` to use the index, and only fall back to backward scanning remaining sources if necessary. - This index is written to disk as `sources.db` when using file-based streams, similar to the `thw.db` and `sched.db` files. The approach of having an index that scales by sources versus that scans the stream by messages results in a tremendous performance improvement, especially as streams get larger and the backward scan would otherwise need to reach way further back. The `sources.db` file is stored at the stream's root, as opposed to in the `msgs` directory, since it should not be removed if the stream is purged: ```diff streams/<stream>/ ├── meta.inf, meta.sum,meta.key + ├── sources.db ├── msgs/ │ ├── 1.blk, 2.blk, … │ ├── index.db, thw.db, sched.db └── obs/ └── <consumer>/… ``` The third commit adds a check preventing users from publishing messages with the `Nats-Stream-Source` header directly. The fourth commit restores pre-2.10 test coverage. The fifth commit ensures the source state is replicated if the stream is, ensuring all replicas (especially as followers go offline, miss messages and are later caught up) end up at the same source state. Since it requires stream snapshot format changes, it requires an explicit opt-in of the `js_snapshot_sources` feature flag, which can become the default in 2.16.",
+      "url": "https://github.com/nats-io/nats-server/pull/8282",
+      "createdAt": "2026-06-08T13:28:54Z",
+      "updatedAt": "2026-08-19T02:01:22Z",
+      "timestamp": "2026-08-19T02:01:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 7
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8283",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[ADDED] Expose highest sourced seq in StreamSourceInfo",
+      "text": "Add a `seq` field to `StreamSourceInfo` that reports the highest stream sequence seen from each source, surfaced via the stream info API.",
+      "url": "https://github.com/nats-io/nats-server/pull/8283",
+      "createdAt": "2026-06-08T18:40:07Z",
+      "updatedAt": "2026-08-19T02:01:20Z",
+      "timestamp": "2026-08-19T02:01:20Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 3
+      },
+      "labels": [
+        "stale"
+      ],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8445",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) Raft proposal fast path",
+      "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+      "url": "https://github.com/nats-io/nats-server/pull/8445",
+      "createdAt": "2026-08-10T09:01:52Z",
+      "updatedAt": "2026-08-18T15:04:13Z",
+      "timestamp": "2026-08-18T15:04:13Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8447",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+      "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+      "url": "https://github.com/nats-io/nats-server/pull/8447",
+      "createdAt": "2026-08-10T10:58:45Z",
+      "updatedAt": "2026-08-18T15:00:07Z",
+      "timestamp": "2026-08-18T15:00:07Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8475",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Inline block compaction ignores SyncAlways",
+      "text": "Inline compaction works by rewriting an entire block file and replacing the old file with the new compacted file. However, inline compaction ignored the SyncAlways setting. Meaning that a power loss could result in the loss of acknowledged messages.",
+      "url": "https://github.com/nats-io/nats-server/pull/8475",
+      "createdAt": "2026-08-17T12:14:54Z",
+      "updatedAt": "2026-08-18T15:12:10Z",
+      "timestamp": "2026-08-18T15:12:10Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8476",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [IMPROVED] Finalize desired meta reconciliation",
+      "text": "This PR finalizes desired meta reconciliation with some tweaks: - The JS lock was held throughout both `runStreamMigration` and `runConsumerMigration`. Now we snapshot the fields we need and then release the JS lock so we're not holding JS lock when accessing stream, consumer or Raft data/locks. - When peer-removing a stream peer can't replace the peer, it leaves an empty spot that can be later added when a new peer joins the cluster. However, while in this \"under-replicated\" state it marked it as migrating, which resulted in constant meta layer churn since it initialized and finalized desired state in a loop while in this state. This PR fixes that by only running desired state reconciliation if there is desired state, if the assignment's peer set is different from the Raft group, or the group is part of a legacy move where the assignment's peer set is larger than the intended replica count. - A stream cancel move endpoint was added, which has similar behavior to the system-level cancel move, but is scoped purely to the account the user is in and allows the user to cancel a move which wasn't possible before. The `\"stream move not in progress\"` error was renamed to `\"stream reconfiguration not in progress\"` and a `\"stream reconfiguration already in progress\"` error was added since desired state is not limited to moves, it also includes scaling and retention changes. - Scale and retention changes can now be stacked again, and the meta layer and stream/consumer layer together ensure data is kept safe throughout. But, errors are kept to deny: concurrent scale and move, move while one is already in progress, move while a scale is already in progress, etc. - A little bit of code deduplication between `runStreamMigration` and `runConsumerMigration` by extracting: `desiredSnapshot` which snapshots all desired-related data under the JS lock, `removeEvictedPeers` which removes peers that are still part of the Raft group, but are no longer in the assignment (usually as a result of peer-remove, but could fix lingering peer set desync prior to upgrade too), and `extendPeerSet` which gradually adds peers to the Raft group. - Reporting migration status in stream/consumer info: `Cluster.Desired.Status: { Description: string, Type: string, Err: string? }`. The description contains a simple human-readable description of what status the migration is in, and the type contains an enum that can be used for identifying what the migration is waiting on, like a membership change, quorum, blocked on a consumer moving, etc. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+      "url": "https://github.com/nats-io/nats-server/pull/8476",
+      "createdAt": "2026-08-18T07:50:17Z",
+      "updatedAt": "2026-08-18T15:21:45Z",
+      "timestamp": "2026-08-18T15:21:45Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8477",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) NRG: Maximize batch size",
+      "text": "Cap batches to the configured maximum payload size.",
+      "url": "https://github.com/nats-io/nats-server/pull/8477",
+      "createdAt": "2026-08-18T08:57:14Z",
+      "updatedAt": "2026-08-18T14:57:42Z",
+      "timestamp": "2026-08-18T14:57:42Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8478",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Data race reading consumer config in stream consumer getters",
+      "text": "`getPublicConsumers` and `getDirectConsumers` walk `mset.cList` and read `o.cfg.Direct` while holding only `mset.clsMu`, never the consumer's own lock. `updateConfig` assigns the whole `ConsumerConfig` struct under `o.mu`, so a consumer update concurrent with a consumer list is an unsynchronized read/write on the same field. This is reachable from the JetStream API on a single server, no cluster required: `jsConsumerCreateRequest`'s update path against `jsConsumerListRequest`. It shows up in downstream test suites that run `-race` while creating and listing consumers, where a single race poisons every test in the package run. ``` WARNING: DATA RACE Write at 0x00c0006003e0 by goroutine 108: server.(*consumer).updateConfig() consumer.go:2657 // o.cfg = *cfg Previous read at 0x00c0006003e1 by goroutine 109: server.(*stream).getPublicConsumers() stream.go:8633 // o.cfg.Direct ``` The two addresses are one byte apart: `MemoryStorage` and `Direct` are adjacent `bool`s in `ConsumerConfig`, so the struct assignment and the field read overlap in the same word. ## Changes - `getPublicConsumers` and `getDirectConsumers` now take `o.mu.RLock()` around the `o.cfg.Direct` read. This mirrors `numDirectConsumers`, which already reads that exact field under the consumer lock, so the fix makes the three list-walking getters consistent rather than introducing a new pattern. - `locksordering.txt` records `clsMu -> consumer`. That order was already relied upon by `numDirectConsumers` but undocumented. The reverse is forbidden because a consumer may take the stream lock and `stream -> clsMu` is established, which is the reasoning behind the existing \"Take a copy of cList to avoid o.purge() potentially taking the stream lock\" comment. ## Why this and not immutability `Direct` and `Sourcing` are immutable in practice, and `checkNewConsumerConfig` does not reject changing them. Caching them as set-once fields on `consumer`, or adding them to the rejected-update list, would remove them from the racing set entirely instead of guarding each reader. **I went with the minimal lock fix because it is small and backportable, but I am happy to do the deeper change instead if maintainers prefer it.** ## Testing Added `TestJetStreamConsumerConfigDirectRace`, which pairs an `updateConfig` loop with a `getPublicConsumers` loop, following the existing `TestJetStreamConsumerUpdateConfigStopRace` idiom in the same file. - Reports the race on 8 of 8 runs before the fix - Passes on 5 of 5 runs after it - `TestJetStreamDirectConsumersBeingReported`, `TestJetStreamMirrorBasics`, `TestJetStreamSourceBasics`, `TestJetStreamClusterCheckForOrphansDoesntDeleteDirectConsumers` and both neighbouring consumer race tests pass under `-race`",
+      "url": "https://github.com/nats-io/nats-server/pull/8478",
+      "createdAt": "2026-08-18T09:00:58Z",
+      "updatedAt": "2026-08-18T09:13:34Z",
+      "timestamp": "2026-08-18T09:13:34Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "nberlee",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:2f582382a636551d8f09",
+      "signalId": "github:nats-io/nats-server:pull_request:8282",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8282",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [IMPROVED] Index stream sources to avoid backward scans",
+        "text": "The first commit refactors `fs.recoverTTLState()` and `fs.recoverMsgSchedulingState()`, since if both required recovering that would result in two separate linear scans, instead of one linear scan reused for recovering both. The second commit introduces indexing for stream sources, which will ensure that backward scanning for pre-existing stream sources is eliminated. - As messages come in, their `Nats-Stream-Source` is inspected and the source key is mapped to the sequence that's sourced. - That state is kept in-memory and can be reused by methods like `mset.startingSequenceForSources()` to use the index, and only fall back to backward scanning remaining sources if necessary. - This index is written to disk as `sources.db` when using file-based streams, similar to the `thw.db` and `sched.db` files. The approach of having an index that scales by sources versus that scans the stream by messages results in a tremendous performance improvement, especially as streams get larger and the backward scan would otherwise need to reach way further back. The `sources.db` file is stored at the stream's root, as opposed to in the `msgs` directory, since it should not be removed if the stream is purged: ```diff streams/<stream>/ ├── meta.inf, meta.sum,meta.key + ├── sources.db ├── msgs/ │ ├── 1.blk, 2.blk, … │ ├── index.db, thw.db, sched.db └── obs/ └── <consumer>/… ``` The third commit adds a check preventing users from publishing messages with the `Nats-Stream-Source` header directly. The fourth commit restores pre-2.10 test coverage. The fifth commit ensures the source state is replicated if the stream is, ensuring all replicas (especially as followers go offline, miss messages and are later caught up) end up at the same source state. Since it requires stream snapshot format changes, it requires an explicit opt-in of the `js_snapshot_sources` feature flag, which can become the default in 2.16.",
+        "url": "https://github.com/nats-io/nats-server/pull/8282",
+        "createdAt": "2026-06-08T13:28:54Z",
+        "updatedAt": "2026-08-19T02:01:22Z",
+        "timestamp": "2026-08-19T02:01:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 7
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f5e9fc0a99e3bca1a02d",
+      "signalId": "github:nats-io/nats-server:pull_request:8283",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8283",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[ADDED] Expose highest sourced seq in StreamSourceInfo",
+        "text": "Add a `seq` field to `StreamSourceInfo` that reports the highest stream sequence seen from each source, surfaced via the stream info API.",
+        "url": "https://github.com/nats-io/nats-server/pull/8283",
+        "createdAt": "2026-06-08T18:40:07Z",
+        "updatedAt": "2026-08-19T02:01:20Z",
+        "timestamp": "2026-08-19T02:01:20Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [
+          "stale"
+        ],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9c50a5c46e38b131150a",
+      "signalId": "github:nats-io/nats-server:pull_request:7882",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:7882",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) Stream backup/restore v2",
+        "text": "Signed-off-by: Neil Twigg <neil@nats.io>",
+        "url": "https://github.com/nats-io/nats-server/pull/7882",
+        "createdAt": "2026-02-26T17:12:20Z",
+        "updatedAt": "2026-08-18T16:46:31Z",
+        "timestamp": "2026-08-18T16:46:31Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 20
+        },
+        "labels": [],
+        "author": "neilalexander",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6f7bbf68babc94a63f52",
+      "signalId": "github:nats-io/nats-server:pull_request:8476",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8476",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [IMPROVED] Finalize desired meta reconciliation",
+        "text": "This PR finalizes desired meta reconciliation with some tweaks: - The JS lock was held throughout both `runStreamMigration` and `runConsumerMigration`. Now we snapshot the fields we need and then release the JS lock so we're not holding JS lock when accessing stream, consumer or Raft data/locks. - When peer-removing a stream peer can't replace the peer, it leaves an empty spot that can be later added when a new peer joins the cluster. However, while in this \"under-replicated\" state it marked it as migrating, which resulted in constant meta layer churn since it initialized and finalized desired state in a loop while in this state. This PR fixes that by only running desired state reconciliation if there is desired state, if the assignment's peer set is different from the Raft group, or the group is part of a legacy move where the assignment's peer set is larger than the intended replica count. - A stream cancel move endpoint was added, which has similar behavior to the system-level cancel move, but is scoped purely to the account the user is in and allows the user to cancel a move which wasn't possible before. The `\"stream move not in progress\"` error was renamed to `\"stream reconfiguration not in progress\"` and a `\"stream reconfiguration already in progress\"` error was added since desired state is not limited to moves, it also includes scaling and retention changes. - Scale and retention changes can now be stacked again, and the meta layer and stream/consumer layer together ensure data is kept safe throughout. But, errors are kept to deny: concurrent scale and move, move while one is already in progress, move while a scale is already in progress, etc. - A little bit of code deduplication between `runStreamMigration` and `runConsumerMigration` by extracting: `desiredSnapshot` which snapshots all desired-related data under the JS lock, `removeEvictedPeers` which removes peers that are still part of the Raft group, but are no longer in the assignment (usually as a result of peer-remove, but could fix lingering peer set desync prior to upgrade too), and `extendPeerSet` which gradually adds peers to the Raft group. - Reporting migration status in stream/consumer info: `Cluster.Desired.Status: { Description: string, Type: string, Err: string? }`. The description contains a simple human-readable description of what status the migration is in, and the type contains an enum that can be used for identifying what the migration is waiting on, like a membership change, quorum, blocked on a consumer moving, etc. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8476",
+        "createdAt": "2026-08-18T07:50:17Z",
+        "updatedAt": "2026-08-18T15:21:45Z",
+        "timestamp": "2026-08-18T15:21:45Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:70400e30cbdf22554621",
+      "signalId": "github:nats-io/nats-server:pull_request:8475",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8475",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Inline block compaction ignores SyncAlways",
+        "text": "Inline compaction works by rewriting an entire block file and replacing the old file with the new compacted file. However, inline compaction ignored the SyncAlways setting. Meaning that a power loss could result in the loss of acknowledged messages.",
+        "url": "https://github.com/nats-io/nats-server/pull/8475",
+        "createdAt": "2026-08-17T12:14:54Z",
+        "updatedAt": "2026-08-18T15:12:10Z",
+        "timestamp": "2026-08-18T15:12:10Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:409bb86ad0596f7fe91e",
+      "signalId": "github:nats-io/nats-server:pull_request:8445",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8445",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) Raft proposal fast path",
+        "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+        "url": "https://github.com/nats-io/nats-server/pull/8445",
+        "createdAt": "2026-08-10T09:01:52Z",
+        "updatedAt": "2026-08-18T15:04:13Z",
+        "timestamp": "2026-08-18T15:04:13Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9cbcf9f53317944c9997",
+      "signalId": "github:nats-io/nats-server:pull_request:8447",
+      "event": "changed",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8447",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+        "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+        "url": "https://github.com/nats-io/nats-server/pull/8447",
+        "createdAt": "2026-08-10T10:58:45Z",
+        "updatedAt": "2026-08-18T15:00:07Z",
+        "timestamp": "2026-08-18T15:00:07Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:9fe4b078cf28e6d7e4be",
+      "signalId": "github:nats-io/nats-server:pull_request:8477",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8477",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) NRG: Maximize batch size",
+        "text": "Cap batches to the configured maximum payload size.",
+        "url": "https://github.com/nats-io/nats-server/pull/8477",
+        "createdAt": "2026-08-18T08:57:14Z",
+        "updatedAt": "2026-08-18T14:57:42Z",
+        "timestamp": "2026-08-18T14:57:42Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:4f1026455973122958f5",
+      "signalId": "github:nats-io/nats-server:pull_request:8478",
+      "event": "discovered",
+      "observedAt": "2026-08-19T02:33:24.702454Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8478",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Data race reading consumer config in stream consumer getters",
+        "text": "`getPublicConsumers` and `getDirectConsumers` walk `mset.cList` and read `o.cfg.Direct` while holding only `mset.clsMu`, never the consumer's own lock. `updateConfig` assigns the whole `ConsumerConfig` struct under `o.mu`, so a consumer update concurrent with a consumer list is an unsynchronized read/write on the same field. This is reachable from the JetStream API on a single server, no cluster required: `jsConsumerCreateRequest`'s update path against `jsConsumerListRequest`. It shows up in downstream test suites that run `-race` while creating and listing consumers, where a single race poisons every test in the package run. ``` WARNING: DATA RACE Write at 0x00c0006003e0 by goroutine 108: server.(*consumer).updateConfig() consumer.go:2657 // o.cfg = *cfg Previous read at 0x00c0006003e1 by goroutine 109: server.(*stream).getPublicConsumers() stream.go:8633 // o.cfg.Direct ``` The two addresses are one byte apart: `MemoryStorage` and `Direct` are adjacent `bool`s in `ConsumerConfig`, so the struct assignment and the field read overlap in the same word. ## Changes - `getPublicConsumers` and `getDirectConsumers` now take `o.mu.RLock()` around the `o.cfg.Direct` read. This mirrors `numDirectConsumers`, which already reads that exact field under the consumer lock, so the fix makes the three list-walking getters consistent rather than introducing a new pattern. - `locksordering.txt` records `clsMu -> consumer`. That order was already relied upon by `numDirectConsumers` but undocumented. The reverse is forbidden because a consumer may take the stream lock and `stream -> clsMu` is established, which is the reasoning behind the existing \"Take a copy of cList to avoid o.purge() potentially taking the stream lock\" comment. ## Why this and not immutability `Direct` and `Sourcing` are immutable in practice, and `checkNewConsumerConfig` does not reject changing them. Caching them as set-once fields on `consumer`, or adding them to the rejected-update list, would remove them from the racing set entirely instead of guarding each reader. **I went with the minimal lock fix because it is small and backportable, but I am happy to do the deeper change instead if maintainers prefer it.** ## Testing Added `TestJetStreamConsumerConfigDirectRace`, which pairs an `updateConfig` loop with a `getPublicConsumers` loop, following the existing `TestJetStreamConsumerUpdateConfigStopRace` idiom in the same file. - Reports the race on 8 of 8 runs before the fix - Passes on 5 of 5 runs after it - `TestJetStreamDirectConsumersBeingReported`, `TestJetStreamMirrorBasics`, `TestJetStreamSourceBasics`, `TestJetStreamClusterCheckForOrphansDoesntDeleteDirectConsumers` and both neighbouring consumer race tests pass under `-race`",
+        "url": "https://github.com/nats-io/nats-server/pull/8478",
+        "createdAt": "2026-08-18T09:00:58Z",
+        "updatedAt": "2026-08-18T09:13:34Z",
+        "timestamp": "2026-08-18T09:13:34Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "nberlee",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}
