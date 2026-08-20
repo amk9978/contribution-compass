@@ -1,0 +1,1007 @@
+{
+  "version": 4,
+  "date": "2026-08-20",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "dragonfly",
+    "repo": "dragonflydb/dragonfly",
+    "name": "Dragonfly",
+    "keywords": [
+      "DragonflyDB"
+    ]
+  },
+  "context": {
+    "repository": "dragonflydb/dragonfly",
+    "url": "https://github.com/dragonflydb/dragonfly",
+    "description": "A modern replacement for Redis and Memcached",
+    "homepage": "https://www.dragonflydb.io/",
+    "language": "C++",
+    "topics": [
+      "cache",
+      "cpp",
+      "database",
+      "fibers",
+      "in-memory",
+      "in-memory-database",
+      "key-value",
+      "keydb",
+      "memcached",
+      "message-broker",
+      "multi-threading",
+      "nosql",
+      "redis",
+      "valkey",
+      "vector-search"
+    ],
+    "license": "NOASSERTION",
+    "defaultBranch": "main",
+    "stars": 31011,
+    "forks": 1229,
+    "openIssues": 298,
+    "archived": false,
+    "collectedAt": "2026-08-20T02:32:31.257746+00:00"
+  },
+  "news": {
+    "repository": "dragonflydb/dragonfly",
+    "collectedAt": "2026-08-20T02:32:31.257746+00:00",
+    "latestRelease": {
+      "repository": "dragonflydb/dragonfly",
+      "tag": "v1.40.1",
+      "title": "v1.40.1",
+      "url": "https://github.com/dragonflydb/dragonfly/releases/tag/v1.40.1",
+      "publishedAt": "2026-08-06T06:54:05Z",
+      "notes": "## This is a patch release.\r\n\r\n### What's Changed\r\n\r\n- Fixed connection-state handling in squashed pipelines. Commands following `AUTH`, `SELECT`, `HELLO`, `CLIENT`, or `RESET` now observe the updated connection state instead of stale authentication, database, or RESP protocol state ([#8016](https://github.com/dragonflydb/dragonfly/pull/8016)).\r\n- Fixed compressed QList node memory accounting and defragmentation ([#8011](https://github.com/dragonflydb/dragonfly/pull/8011), [#8014](https://github.com/dragonflydb/dragonfly/pull/8014)).\r\n\r\nFull Changelog: [v1.40.0...v1.40.1](https://github.com/dragonflydb/dragonfly/compare/v1.40.0...v1.40.1)",
+      "highlights": [
+        "This is a patch release.",
+        "What's Changed",
+        "Fixed connection-state handling in squashed pipelines. Commands following AUTH, SELECT, HELLO, CLIENT, or RESET now observe the updated connection state instead of stale authentication, database, or RESP protocol state (#8016).",
+        "Fixed compressed QList node memory accounting and defragmentation (#8011, #8014)."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "Cluster Search",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/19",
+        "description": "",
+        "dueAt": "2025-12-31T00:00:00Z",
+        "progress": 60,
+        "openIssues": 2,
+        "closedIssues": 3
+      },
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "v1.41",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/24",
+        "description": "",
+        "dueAt": "2026-09-10T00:00:00Z",
+        "progress": 12,
+        "openIssues": 7,
+        "closedIssues": 1
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-20T02:32:22.344433Z",
+      "since": "2026-08-19T02:32:22.344433Z",
+      "observedCount": 16,
+      "changedCount": 16
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8102",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "crash: main_service.cc:1669] Check failed: rb->RepliesRecorded() > replies_recorded_ (0 vs. 0) CF.ADD",
+      "text": "Found by analysing the AFL++ RESP fuzz run [31959833026](https://github.com/dragonflydb/dragonfly/actions/runs/31959833026) - 14 of its 20 crash artifacts are this bug. Reproduction (the 4 GiB cap is required): ```bash mkdir -p /tmp/dfA/db ( ulimit -v 4194304; exec ./build-dbg/dragonfly --port=7793 --proactor_threads=1 \\ --dbfilename= --dir=/tmp/dfA/db --alsologtostderr ) & redis-cli -p 7793 CF.RESERVE cf 1000 BUCKETSIZE 4 MAXITERATIONS 100 EXPANSION 2 for i in $(seq 1 200); do printf 'MULTI\\nCF.ADD cf item1\\nEXEC\\n'; done | redis-cli -p 7793 ``` Aborts on the 153rd iteration, 5/5 runs: ``` E main_service.cc:1717] Internal error, system probably unstable std::bad_alloc F main_service.cc:1669] Check failed: rb->RepliesRecorded() > replies_recorded_ (0 vs. 0) CF.ADD N6facade21CapturingReplyBuilderE ``` Two defects: 1. **Cuckoo filter growth is bounded by sub-filter count, not by memory.** Because an item's two candidate buckets form a 2-cycle, repeated adds of the same item can never be placed, and each expansion appends a sub-filter twice the size of the last. With `EXPANSION 2` a couple hundred adds reach a 512 MiB allocation, which throws. The expansion itself is not the defect. `CF.ADD` counts every add as a separate entry, and repeated items are documented to fill the filter up and expand it ([cuckoo filter docs](https://redis.io/docs/latest/develop/data-types/probabilistic/cuckoo-filter/): \"Adding the same element multiple times will create multiple entries, thus filling up your filter\"). Upstream bounds growth by a count as well and carries the same exposure — what differs here is that the allocation failure is fatal. A fix has to keep expanding on duplicates and add a memory ceiling, not refuse duplicates. 2. **An exception has no handler on the squashed-`MULTI` path.** The squashed-stub callback has no try/catch, unlike the ordinary transaction callback, so the `bad_alloc` escapes into command dispatch, which logs it and returns without writing a reply — and the reply guard trips. Defect 2 is command-agnostic: any handler that throws inside `EXEC` hits it. In release builds the reply guard is compiled out and the command sends nothing at all. `EXEC` has already written its array header by then, so the client is left mid-array and consumes the next command's reply as the missing element — a connection desync, not just a short array. Note: do not simply copy the ordinary transaction callback's handlers into the squashed-stub path. It also has `catch (std::exception&) { LOG(FATAL) }`, which would turn today's silent no-reply into a hard release-build crash.",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8102",
+      "createdAt": "2026-08-17T16:22:13Z",
+      "updatedAt": "2026-08-19T17:59:41Z",
+      "timestamp": "2026-08-19T17:59:41Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [
+        "bug",
+        "fuzzing"
+      ],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8104",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "BF.LOADCHUNK of a header-only chunk produces an unloadable snapshot (data loss on restart) and aborts on COPY at generic_family.cc:435",
+      "text": "Found by analysing the AFL++ RESP fuzz run [31957444982](https://github.com/dragonflydb/dragonfly/actions/runs/31957444982). The fuzzer found the `COPY` abort; the snapshot corruption below is the more severe consequence of the same defect. The 12-byte blob is a valid `BF.SCANDUMP` cursor-1 header (`uint32le version=1` + `double-le grow_factor=2.0`). **A — data loss, silent:** ```bash mkdir -p /tmp/dfC/db ./build-dbg/dragonfly --port=7788 --proactor_threads=1 --dbfilename=dump --dir=/tmp/dfC/db & redis-cli -p 7788 SET k1 v1 redis-cli -p 7788 BF.LOADCHUNK bkey 1 $'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x40' # +OK redis-cli -p 7788 SAVE # +OK redis-cli -p 7788 SHUTDOWN ./build-dbg/dragonfly --port=7788 --proactor_threads=1 --dbfilename=dump --dir=/tmp/dfC/db ``` The restart exits 1 and every key in the snapshot is lost: ``` E rdb_load.cc:2673] Error while calling LoadKeyValPair(type, &settings): Internal error when loading RDB file 5 E server_family.cc:1541] Rdb load failed: Internal error when loading RDB file 5 ``` **B — abort, 5/5 runs:** ```bash redis-cli -p 7788 BF.LOADCHUNK bkey 1 $'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x40' redis-cli -p 7788 COPY bkey dst ``` ``` E generic_family.cc:205] failed to load data for type id 34 F generic_family.cc:435] Error during rename command, deserialize_status: 5 del_status: 0 ``` `LoadSBFHeader` creates an SBF with zero filters and `fp_prob_ = 0.0` (`src/core/bloom.cc:410`). Query commands are guarded by `IsBeingLoaded()` (`src/server/bloom_family.cc:45-47`), but the serialization path is not: `SaveSBFObject` writes `fp_prob = 0.0` unvalidated (`src/server/rdb_save.cc:677-716`) and the loader rejects its own output, accepting only `(0, 0.5]` (`src/server/rdb_load.cc:2007`). `COPY` always takes the `Renamer` DUMP→RESTORE path (`src/server/generic_family.cc:2514`), unlike `RENAME`, which has a single-shard fast path. The same writer/loader asymmetry exists for fully-formed filters: `AddNewFilterToSBF` accepts `fp_prob` in `(0, 1)` (`src/core/bloom.cc:430`) while the loader accepts `(0, 0.5]`. Boundary verified: 0.50 survives, 0.51 aborts. A fix should close the range mismatch, not just the zero-filter case. `BF.LOADCHUNK` is not a restricted command.",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8104",
+      "createdAt": "2026-08-17T16:24:26Z",
+      "updatedAt": "2026-08-19T11:06:16Z",
+      "timestamp": "2026-08-19T11:06:16Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "bug",
+        "fuzzing"
+      ],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8106",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_slot_migration_oom_replica_rollback",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/cluster_test.py::test_slot_migration_oom_replica_rollback[df_factory0]` - Backend: iouring - Commit: 770bf7a4c8fda3ac5a08bbefb138be8fb18c385e - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32120110288 - Marker: run/32120110288/attempt/1 ``` Reason: AssertionError: target_master still has 57 keys after OOM rollback ____________ test_slot_migration_oom_replica_rollback[df_factory0] _____________ df_factory = Factory({'cluster_mode': 'yes'}) @dfly_args({\"cluster_mode\": \"yes\"}) async def test_slot_migration_oom_replica_rollback(df_factory): \"\"\" Regression test: when incoming slot migration fails with OOM, the target master rolls back the migrated keys via DeleteSlots, but that deletion must also be propagated to the target's replica via WriteFlushSlotsToJournal. Without the journal write, the replica retains the migrated keys while the master has already deleted them, causing master/replica divergence. After OOM rollback both target_master and target_replica must have 0 keys. \"\"\" source = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=4, maxmemory=\"1024MB\", ) target_master = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) target_replica = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) df_factory.start_all([source, target_master, target_replica]) source_node = await create_node_info(source) target_node = await create_node_info(target_master) source_node.slots = [(0, 16383)] target_node.slots = [] # Apply initial cluster config to source and target only (replica is not a cluster member) await apply_config([source_node, target_node]) # Populate source with large values that will OOM the target during migration await source_node.client.execute_command(\"DEBUG POPULATE 100 test 10000000\") # Start replication: target_replica follows target_master before migration begins c_replica_admin = target_replica.admin_client() await c_replica_admin.execute_command(f\"replicaof localhost {target_master.port}\") await wait_available_async(c_replica_admin) # Kick off migration from source -> target (expects OOM on target) source_node.migrations.append( MigrationInfo(\"127.0.0.1\", target_master.admin_port, [(0, 16383)], target_node.id) ) logging.info(\"Starting migration (expect OOM on target)\") await apply_config([source_node, target_node]) # Wait for both sides to reach FATAL await wait_for_status(source_node.admin_client, target_node.id, \"FATAL\", 300) await wait_for_status(target_node.admin_client, source_node.id, \"FATAL\") # Give the replica time to catch up with whatever the master has after rollback await check_all_replicas_finished([c_replica_admin], target_node.admin_client) master_keys = await target_node.admin_client.execute_command(\"DBSIZE\") replica_keys = await c_replica_admin.execute_command(\"DBSIZE\") logging.info(\"target_master DBSIZE=%d, target_replica DBSIZE=%d\", master_keys, replica_keys) # After OOM rollback the master must have 0 keys (DeleteSlots ran). > assert master_keys == 0, f\"target_master still has {master_keys} keys after OOM rollback\" E AssertionError: target_master still has 57 keys after OOM rollback E assert 57 == 0 c_replica_admin = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=30207,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_factory = Factory({'cluster_mode': 'yes'}) master_keys = 57 replica_keys = 57 source = :30202 source_node = NodeInfo(id='7c935bb6a16febed71134be6f248713e24628785', instance=:30202, client=<redis.asyncio.client.Redis(<redis.asy...1', port= ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8106",
+      "createdAt": "2026-08-18T09:48:38Z",
+      "updatedAt": "2026-08-19T21:40:50Z",
+      "timestamp": "2026-08-19T21:40:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [
+        "failing-test",
+        "iouring"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8077",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(tiering): Use TraverseBySegmentOrder and export more metrics/configs",
+      "text": "The changes that I merged into 1.40 branch Only functional change: 1. Fixes small bins defrag by using bounded TraverseBySegmentOrder to avoid blowing up iteration costs when the table is largely empty Metrics & config: 1. Exports missing tiering fields from info to metrics 2. Adds new configurable values to allow limiting CPU limit consumption of offloading / background scanning",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8077",
+      "createdAt": "2026-08-13T11:05:19Z",
+      "updatedAt": "2026-08-19T07:50:59Z",
+      "timestamp": "2026-08-19T07:50:59Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "dranikpg",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8095",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(server): make conn_use_incoming_cpu runtime mutable",
+      "text": "## Summary `conn_use_incoming_cpu` controls how new connections are distributed across proactor threads, and `Listener::PickConnectionProactor` already reads it on every accept — but it is not registered in the config registry, so changing it requires a restart. This PR registers it as mutable, so `CONFIG SET conn_use_incoming_cpu <bool>` takes effect immediately for new connections. Note on `CONFIG REWRITE`: registering the flag also makes it participate in `CONFIG REWRITE`, which persists any registered flag whose current value differs from its default — including values that came from the command line or flagfile rather than `CONFIG SET` (`RewriteConfigFile`, src/server/server_family.cc). Conversely, a flag set back to its default is not rewritten, so a stale non-default line in the flagfile survives. Both behaviors are pre-existing properties of every registered flag (e.g. `maxclients`, `timeout`); this PR adds `conn_use_incoming_cpu` to that set rather than changing the semantics. Happy to open a separate issue for the default-value rewrite gap if useful. ## Motivation The flag's own comment notes it is only safe with correct RPS tuning: *\"connections will be handled only on the CPUs that handle the softirqs for the incoming packets. To avoid imbalance in CPU load, RPS tuning is strongly advised.\"* In practice, steering misconfiguration is discovered in production. On one of our deployments (144 vCPUs; NIC IRQs pinned to CPUs 0–15, Dragonfly on 16–143) an RPS mask covering only part of the worker range concentrated **all** connections on 47 of 128 threads. A latency blip then became a self-feeding reconnect storm: the overloaded connection threads slowed replies, clients timed out and reconnected, and every new connection landed on the same hot threads. Dragonfly already offers `CLIENT MIGRATE <client-id> <tid>` to rebalance connections that are **already** placed on hot threads. This PR covers the complementary population: with the flag mutable, an operator can flip placement policy for **future** accepts at runtime — stopping the storm from re-concentrating while `CLIENT MIGRATE` (or natural churn) drains the hot threads — and flip it back once steering is fixed, without restarting a loaded master. The structural fix (correct RPS masks / not enabling the flag on such hosts) is what we are rolling out at image level; the runtime toggle is for incident response when the misconfiguration is discovered live. ## Why changing it at runtime is safe - The flag is read exactly once per accept via `absl::GetFlag` (thread-safe), and the decision is consumed immediately. No state is derived from or cached based on the flag anywhere else: `ProactorPool::MapCpuToThreads` is built once at pool startup and is only consulted, never mutated, by the placement path. - A toggle only affects **future** accepts. Existing connections are placed once at accept time and are never re-placed by it, so they cannot be affected by a change. - An accept racing a `CONFIG SET` observes either the old or the new value — both select a well-defined placement path, and the incoming-cpu path already degrades gracefully to round-robin when the reported CPU has no matching thread. ## Tests - `test_conn_use_incoming_cpu_placement` — proves the toggle actually changes placement (catches a cached-flag regression): `conn_io_thread_start=2 conn_io_threads=2` pins the round-robin fallback to tids {2,3}; the test process is pinned to the first allowed CPU, where proactor thread 0 is pinned, so with the flag **on** a fresh loopback connection must land on `tid=0` (asserted via `CLIENT INFO` `tid=`) — a placement the fallback window can never produce; with the flag **off** connections must stay in {2,3}. Skips on non-Linux or kernels without `SO_INCOMING_CPU`. - `test_conn_use_incoming_cpu` — reads the startup value instead of assuming the default (so `--df conn_use_incoming_cpu=true` keeps working), races 80 fresh connections against 40 concurrent toggles while 5 pre-existing connections hold state, and restores the startup value at the end. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8095",
+      "createdAt": "2026-08-16T08:15:49Z",
+      "updatedAt": "2026-08-19T06:23:22Z",
+      "timestamp": "2026-08-19T06:23:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "shahyash2609",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8096",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(facade): log V2 traffic before dispatch",
+      "text": "Move V2 traffic logging out of ParseRedis: V2 can call it from a receive callback that must not preempt, while logging may suspend. Log at the pre-dispatch boundary instead, preserving squashing and dispatch order. V1 stays the same. Extend DispatchSquashedBatch with an optional pre-dispatch callback that is invoked for each accepted command immediately before execution. has_unparsed_input preserves parser-buffer continuation metadata when logging is deferred. Tests cover ordered V1/V2 pipeline records and V2 proactor parsing without preemption.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8096",
+      "createdAt": "2026-08-16T08:52:19Z",
+      "updatedAt": "2026-08-19T17:41:58Z",
+      "timestamp": "2026-08-19T17:41:58Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 13
+      },
+      "labels": [],
+      "author": "glevkovich",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8107",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "server: Add warning to defragment commands about time based CPU use",
+      "text": "The defragment commands use time based quota, so they may run for the full time period they are alloted, whereas earlier they had only fixed number of iterations. While the quota is examined closely, this PR adds a help text to warn the user about to run the command.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8107",
+      "createdAt": "2026-08-18T11:19:44Z",
+      "updatedAt": "2026-08-19T05:56:50Z",
+      "timestamp": "2026-08-19T05:56:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "abhijat",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8110",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: stop SCRIPT FLUSH from deadlocking against a borrowed interpreter",
+      "text": "`InterpreterManager::Reset()` blocked until every borrowed interpreter was returned, so `SCRIPT FLUSH` inherited every lock its holders were waiting on. Reset no longer blocks: idle interpreters are destroyed inline, borrowed ones are retired and destroyed by whoever returns them. Three shapes, all reproduced on a debug build: 1. `MULTI; EVAL \"return 1\" 0; SCRIPT FLUSH; EXEC` - EXEC pre-borrows an interpreter and returns it only after the body ran, so it waits for itself. `SCRIPT` is `NO_KEY_TRANSACTIONAL`, so the EXEC runs as a global transaction: afterwards even `GET` hangs and only `PING` answers. 2. Concurrent `EVAL` + `SCRIPT FLUSH` - the flusher holds `ScriptMgr::mu_` while waiting for an interpreter whose holder is blocked on that same mutex. All scripting wedges permanently. 3. No pre-borrow at all - a keyed `EVAL` holds an interpreter behind the global lock that a concurrent `MULTI; SCRIPT FLUSH; EXEC` holds.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8110",
+      "createdAt": "2026-08-18T17:08:02Z",
+      "updatedAt": "2026-08-19T16:38:17Z",
+      "timestamp": "2026-08-19T16:38:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 9
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "open",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8111",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: release the global shard lock in the mode it was taken",
+      "text": "A read-only script that runs in global mode (`EVAL_RO` / `EVALSHA_RO` with `allow-undeclared-keys`) acquires the shard lock in shared mode but released it as exclusive, so the server aborted on `assert(cnt_[m] >= val)` in `IntentLock::Release`. No setup and no privileges are needed: EVAL_RO \"--!df flags=allow-undeclared-keys return 1\" 0 `ScheduleInShard` acquires with `LockMode()`, which is `SHARED` for a `CO::READONLY` command, while `StartMultiGlobal` recorded `EXCLUSIVE` and `UnlockMultiShardCb` released `EXCLUSIVE`. `StartMultiLockedAhead` already used `LockMode()` - the global branch was the only one hardcoding it. In release builds the assert is compiled out, so `cnt_[EXCLUSIVE]` underflows and `cnt_[SHARED]` stays held. `IntentLock::Check` then fails forever and `EngineShard::Heartbeat` takes its `!can_acquire_global_lock` early return on every tick, silently stopping background expiry and eviction on that shard for the life of the process. Not reproducible with a single shard: that path goes through `PrepareSingleSquash` and never reaches `UnlockMulti`.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8111",
+      "createdAt": "2026-08-18T18:32:58Z",
+      "updatedAt": "2026-08-19T16:20:17Z",
+      "timestamp": "2026-08-19T16:20:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8112",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(tiering): Skip forced snapshot serialization for redundant writes",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8112",
+      "createdAt": "2026-08-18T19:35:14Z",
+      "updatedAt": "2026-08-19T08:29:32Z",
+      "timestamp": "2026-08-19T08:29:32Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "dranikpg",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8113",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(bloom): reject SBF filters the rdb loader would refuse to load back",
+      "text": "A `BF.LOADCHUNK` stopped right after the 12-byte header leaves an SBF with zero filters and `fp_prob = 0.0`. That value is written to snapshots unvalidated but the rdb loader rejects it, so the filter's own snapshot fails to load - taking every other key in it down on the next restart - and `COPY` (which always goes through DUMP->RESTORE) aborts the process: BF.LOADCHUNK bkey 1 <12-byte header> SAVE ; restart -> exits 1, whole snapshot lost COPY bkey dst -> abort at generic_family.cc:435 The same writer/loader disagreement exists for fully-formed filters: LOADCHUNK accepted any `fp_prob` in (0, 1) while the loader accepts only (0, 0.5]. A restore can be interrupted without any malice - a client dying between the header and the first filter chunk is enough - after which snapshot_cron persists the poison unattended. Fixes: #8104",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8113",
+      "createdAt": "2026-08-19T08:23:20Z",
+      "updatedAt": "2026-08-19T11:06:17Z",
+      "timestamp": "2026-08-19T11:06:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8114",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: handle bad_alloc in squashed MULTI callback and surface hop status",
+      "text": "A `bad_alloc` thrown by a shard callback inside a squashed `MULTI` escaped `RunSquashedMultiCb` uncaught, so the sub-command wrote no reply into the already-started `EXEC` array - tripping the reply-guard CHECK in debug builds (SIGABRT, found by the RESP fuzzer) and desyncing the connection in release builds. Verified against the original repro (`ulimit -v 4194304`, 200x `MULTI`/`CF.ADD`/`EXEC` on a filter with `EXPANSION 2`): previously aborted at iteration ~153, now the failing iterations reply `ERR Out of memory`, the server stays responsive and the connection stays in sync. Fixes: #8102",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8114",
+      "createdAt": "2026-08-19T12:15:10Z",
+      "updatedAt": "2026-08-19T17:59:41Z",
+      "timestamp": "2026-08-19T17:59:41Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "closed",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8115",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(server): throttle defrag task CPU duty cycle",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8115",
+      "createdAt": "2026-08-19T12:41:34Z",
+      "updatedAt": "2026-08-19T16:14:43Z",
+      "timestamp": "2026-08-19T16:14:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8116",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(acl): script context acl and enable flaky tests",
+      "text": "Long ago we changed how acl's are verified for multi/exec by effectively matching against a user's acl list at the command verification (and not later again). We never adjusted this for lua scripts. For reference: https://github.com/dragonflydb/dragonfly/pull/6340 * check acl's for a user only at eval * re-enable flaky tests As for test_acl_del_user_while_running_lua_script the main issue is that the script could execute before the del command run. The fix is simple, increase the load slightly + run this in debug more only. * additionally increase the load #4538",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8116",
+      "createdAt": "2026-08-19T13:00:08Z",
+      "updatedAt": "2026-08-19T15:59:04Z",
+      "timestamp": "2026-08-19T15:59:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8117",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: test_slot_migration_oom_replica_rollback",
+      "text": "`check_all_replicas_finished + assert dbsize` is flaky. The former checks the offsets match but may very well be that the slots have not yet been flushed (dragonfly backoffs for 500ms and then on INIT it flushes the slots). Use `assert_eventually` instead with a timeout of 5 seconds. fixes #8106",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8117",
+      "createdAt": "2026-08-19T15:51:03Z",
+      "updatedAt": "2026-08-19T15:53:02Z",
+      "timestamp": "2026-08-19T15:53:02Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8118",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "chore: split python cluster tests",
+      "text": "As the python cluster tests grew too much (over >5k lines) split them by category/intent. `cluster_test.py` is split to: * cluster_client_test.py * cluster_config_test.py * cluster_migration_resilience_test.py * cluster_migration_test.py * cluster_pubsub_test.py * cluster_replication_test.py * cluster_search_test.py",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8118",
+      "createdAt": "2026-08-19T16:07:53Z",
+      "updatedAt": "2026-08-19T16:40:53Z",
+      "timestamp": "2026-08-19T16:40:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:55d1f81005e44c1458cc",
+      "signalId": "github:dragonflydb/dragonfly:issue:8106",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "assignees"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8106",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "test_slot_migration_oom_replica_rollback",
+        "text": "Automated regression triage opened this issue. - Test: `dragonfly/cluster_test.py::test_slot_migration_oom_replica_rollback[df_factory0]` - Backend: iouring - Commit: 770bf7a4c8fda3ac5a08bbefb138be8fb18c385e - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32120110288 - Marker: run/32120110288/attempt/1 ``` Reason: AssertionError: target_master still has 57 keys after OOM rollback ____________ test_slot_migration_oom_replica_rollback[df_factory0] _____________ df_factory = Factory({'cluster_mode': 'yes'}) @dfly_args({\"cluster_mode\": \"yes\"}) async def test_slot_migration_oom_replica_rollback(df_factory): \"\"\" Regression test: when incoming slot migration fails with OOM, the target master rolls back the migrated keys via DeleteSlots, but that deletion must also be propagated to the target's replica via WriteFlushSlotsToJournal. Without the journal write, the replica retains the migrated keys while the master has already deleted them, causing master/replica divergence. After OOM rollback both target_master and target_replica must have 0 keys. \"\"\" source = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=4, maxmemory=\"1024MB\", ) target_master = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) target_replica = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) df_factory.start_all([source, target_master, target_replica]) source_node = await create_node_info(source) target_node = await create_node_info(target_master) source_node.slots = [(0, 16383)] target_node.slots = [] # Apply initial cluster config to source and target only (replica is not a cluster member) await apply_config([source_node, target_node]) # Populate source with large values that will OOM the target during migration await source_node.client.execute_command(\"DEBUG POPULATE 100 test 10000000\") # Start replication: target_replica follows target_master before migration begins c_replica_admin = target_replica.admin_client() await c_replica_admin.execute_command(f\"replicaof localhost {target_master.port}\") await wait_available_async(c_replica_admin) # Kick off migration from source -> target (expects OOM on target) source_node.migrations.append( MigrationInfo(\"127.0.0.1\", target_master.admin_port, [(0, 16383)], target_node.id) ) logging.info(\"Starting migration (expect OOM on target)\") await apply_config([source_node, target_node]) # Wait for both sides to reach FATAL await wait_for_status(source_node.admin_client, target_node.id, \"FATAL\", 300) await wait_for_status(target_node.admin_client, source_node.id, \"FATAL\") # Give the replica time to catch up with whatever the master has after rollback await check_all_replicas_finished([c_replica_admin], target_node.admin_client) master_keys = await target_node.admin_client.execute_command(\"DBSIZE\") replica_keys = await c_replica_admin.execute_command(\"DBSIZE\") logging.info(\"target_master DBSIZE=%d, target_replica DBSIZE=%d\", master_keys, replica_keys) # After OOM rollback the master must have 0 keys (DeleteSlots ran). > assert master_keys == 0, f\"target_master still has {master_keys} keys after OOM rollback\" E AssertionError: target_master still has 57 keys after OOM rollback E assert 57 == 0 c_replica_admin = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=30207,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_factory = Factory({'cluster_mode': 'yes'}) master_keys = 57 replica_keys = 57 source = :30202 source_node = NodeInfo(id='7c935bb6a16febed71134be6f248713e24628785', instance=:30202, client=<redis.asyncio.client.Redis(<redis.asy...1', port= ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8106",
+        "createdAt": "2026-08-18T09:48:38Z",
+        "updatedAt": "2026-08-19T21:40:50Z",
+        "timestamp": "2026-08-19T21:40:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [
+          "failing-test",
+          "iouring"
+        ],
+        "author": "dragonclaw-dragonflydb",
+        "state": "open",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:54c07686560f2a5ab1f6",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8114",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8114",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: handle bad_alloc in squashed MULTI callback and surface hop status",
+        "text": "A `bad_alloc` thrown by a shard callback inside a squashed `MULTI` escaped `RunSquashedMultiCb` uncaught, so the sub-command wrote no reply into the already-started `EXEC` array - tripping the reply-guard CHECK in debug builds (SIGABRT, found by the RESP fuzzer) and desyncing the connection in release builds. Verified against the original repro (`ulimit -v 4194304`, 200x `MULTI`/`CF.ADD`/`EXEC` on a filter with `EXPANSION 2`): previously aborted at iteration ~153, now the failing iterations reply `ERR Out of memory`, the server stays responsive and the connection stays in sync. Fixes: #8102",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8114",
+        "createdAt": "2026-08-19T12:15:10Z",
+        "updatedAt": "2026-08-19T17:59:41Z",
+        "timestamp": "2026-08-19T17:59:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "vyavdoshenko",
+        "state": "closed",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ede8a145c2b42ab33ddb",
+      "signalId": "github:dragonflydb/dragonfly:issue:8102",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "state",
+        "assignees"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8102",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "crash: main_service.cc:1669] Check failed: rb->RepliesRecorded() > replies_recorded_ (0 vs. 0) CF.ADD",
+        "text": "Found by analysing the AFL++ RESP fuzz run [31959833026](https://github.com/dragonflydb/dragonfly/actions/runs/31959833026) - 14 of its 20 crash artifacts are this bug. Reproduction (the 4 GiB cap is required): ```bash mkdir -p /tmp/dfA/db ( ulimit -v 4194304; exec ./build-dbg/dragonfly --port=7793 --proactor_threads=1 \\ --dbfilename= --dir=/tmp/dfA/db --alsologtostderr ) & redis-cli -p 7793 CF.RESERVE cf 1000 BUCKETSIZE 4 MAXITERATIONS 100 EXPANSION 2 for i in $(seq 1 200); do printf 'MULTI\\nCF.ADD cf item1\\nEXEC\\n'; done | redis-cli -p 7793 ``` Aborts on the 153rd iteration, 5/5 runs: ``` E main_service.cc:1717] Internal error, system probably unstable std::bad_alloc F main_service.cc:1669] Check failed: rb->RepliesRecorded() > replies_recorded_ (0 vs. 0) CF.ADD N6facade21CapturingReplyBuilderE ``` Two defects: 1. **Cuckoo filter growth is bounded by sub-filter count, not by memory.** Because an item's two candidate buckets form a 2-cycle, repeated adds of the same item can never be placed, and each expansion appends a sub-filter twice the size of the last. With `EXPANSION 2` a couple hundred adds reach a 512 MiB allocation, which throws. The expansion itself is not the defect. `CF.ADD` counts every add as a separate entry, and repeated items are documented to fill the filter up and expand it ([cuckoo filter docs](https://redis.io/docs/latest/develop/data-types/probabilistic/cuckoo-filter/): \"Adding the same element multiple times will create multiple entries, thus filling up your filter\"). Upstream bounds growth by a count as well and carries the same exposure — what differs here is that the allocation failure is fatal. A fix has to keep expanding on duplicates and add a memory ceiling, not refuse duplicates. 2. **An exception has no handler on the squashed-`MULTI` path.** The squashed-stub callback has no try/catch, unlike the ordinary transaction callback, so the `bad_alloc` escapes into command dispatch, which logs it and returns without writing a reply — and the reply guard trips. Defect 2 is command-agnostic: any handler that throws inside `EXEC` hits it. In release builds the reply guard is compiled out and the command sends nothing at all. `EXEC` has already written its array header by then, so the client is left mid-array and consumes the next command's reply as the missing element — a connection desync, not just a short array. Note: do not simply copy the ordinary transaction callback's handlers into the squashed-stub path. It also has `catch (std::exception&) { LOG(FATAL) }`, which would turn today's silent no-reply into a hard release-build crash.",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8102",
+        "createdAt": "2026-08-17T16:22:13Z",
+        "updatedAt": "2026-08-19T17:59:41Z",
+        "timestamp": "2026-08-19T17:59:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [
+          "bug",
+          "fuzzing"
+        ],
+        "author": "vyavdoshenko",
+        "state": "closed",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ba2019b8642158a9ee7d",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8096",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8096",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(facade): log V2 traffic before dispatch",
+        "text": "Move V2 traffic logging out of ParseRedis: V2 can call it from a receive callback that must not preempt, while logging may suspend. Log at the pre-dispatch boundary instead, preserving squashing and dispatch order. V1 stays the same. Extend DispatchSquashedBatch with an optional pre-dispatch callback that is invoked for each accepted command immediately before execution. has_unparsed_input preserves parser-buffer continuation metadata when logging is deferred. Tests cover ordered V1/V2 pipeline records and V2 proactor parsing without preemption.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8096",
+        "createdAt": "2026-08-16T08:52:19Z",
+        "updatedAt": "2026-08-19T17:41:58Z",
+        "timestamp": "2026-08-19T17:41:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 13
+        },
+        "labels": [],
+        "author": "glevkovich",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e9f8b6a6f65a66991f72",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8118",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8118",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "chore: split python cluster tests",
+        "text": "As the python cluster tests grew too much (over >5k lines) split them by category/intent. `cluster_test.py` is split to: * cluster_client_test.py * cluster_config_test.py * cluster_migration_resilience_test.py * cluster_migration_test.py * cluster_pubsub_test.py * cluster_replication_test.py * cluster_search_test.py",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8118",
+        "createdAt": "2026-08-19T16:07:53Z",
+        "updatedAt": "2026-08-19T16:40:53Z",
+        "timestamp": "2026-08-19T16:40:53Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "open",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a91324858adf93d77789",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8110",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8110",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: stop SCRIPT FLUSH from deadlocking against a borrowed interpreter",
+        "text": "`InterpreterManager::Reset()` blocked until every borrowed interpreter was returned, so `SCRIPT FLUSH` inherited every lock its holders were waiting on. Reset no longer blocks: idle interpreters are destroyed inline, borrowed ones are retired and destroyed by whoever returns them. Three shapes, all reproduced on a debug build: 1. `MULTI; EVAL \"return 1\" 0; SCRIPT FLUSH; EXEC` - EXEC pre-borrows an interpreter and returns it only after the body ran, so it waits for itself. `SCRIPT` is `NO_KEY_TRANSACTIONAL`, so the EXEC runs as a global transaction: afterwards even `GET` hangs and only `PING` answers. 2. Concurrent `EVAL` + `SCRIPT FLUSH` - the flusher holds `ScriptMgr::mu_` while waiting for an interpreter whose holder is blocked on that same mutex. All scripting wedges permanently. 3. No pre-borrow at all - a keyed `EVAL` holds an interpreter behind the global lock that a concurrent `MULTI; SCRIPT FLUSH; EXEC` holds.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8110",
+        "createdAt": "2026-08-18T17:08:02Z",
+        "updatedAt": "2026-08-19T16:38:17Z",
+        "timestamp": "2026-08-19T16:38:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 9
+        },
+        "labels": [],
+        "author": "vyavdoshenko",
+        "state": "open",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:789348ffc4a07abe382a",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8111",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8111",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: release the global shard lock in the mode it was taken",
+        "text": "A read-only script that runs in global mode (`EVAL_RO` / `EVALSHA_RO` with `allow-undeclared-keys`) acquires the shard lock in shared mode but released it as exclusive, so the server aborted on `assert(cnt_[m] >= val)` in `IntentLock::Release`. No setup and no privileges are needed: EVAL_RO \"--!df flags=allow-undeclared-keys return 1\" 0 `ScheduleInShard` acquires with `LockMode()`, which is `SHARED` for a `CO::READONLY` command, while `StartMultiGlobal` recorded `EXCLUSIVE` and `UnlockMultiShardCb` released `EXCLUSIVE`. `StartMultiLockedAhead` already used `LockMode()` - the global branch was the only one hardcoding it. In release builds the assert is compiled out, so `cnt_[EXCLUSIVE]` underflows and `cnt_[SHARED]` stays held. `IntentLock::Check` then fails forever and `EngineShard::Heartbeat` takes its `!can_acquire_global_lock` early return on every tick, silently stopping background expiry and eviction on that shard for the life of the process. Not reproducible with a single shard: that path goes through `PrepareSingleSquash` and never reaches `UnlockMulti`.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8111",
+        "createdAt": "2026-08-18T18:32:58Z",
+        "updatedAt": "2026-08-19T16:20:17Z",
+        "timestamp": "2026-08-19T16:20:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "vyavdoshenko",
+        "state": "closed",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8d14910542b10ab21e5a",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8115",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8115",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(server): throttle defrag task CPU duty cycle",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8115",
+        "createdAt": "2026-08-19T12:41:34Z",
+        "updatedAt": "2026-08-19T16:14:43Z",
+        "timestamp": "2026-08-19T16:14:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "open",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:68f3400dfafacae0cc66",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8116",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8116",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(acl): script context acl and enable flaky tests",
+        "text": "Long ago we changed how acl's are verified for multi/exec by effectively matching against a user's acl list at the command verification (and not later again). We never adjusted this for lua scripts. For reference: https://github.com/dragonflydb/dragonfly/pull/6340 * check acl's for a user only at eval * re-enable flaky tests As for test_acl_del_user_while_running_lua_script the main issue is that the script could execute before the del command run. The fix is simple, increase the load slightly + run this in debug more only. * additionally increase the load #4538",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8116",
+        "createdAt": "2026-08-19T13:00:08Z",
+        "updatedAt": "2026-08-19T15:59:04Z",
+        "timestamp": "2026-08-19T15:59:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "open",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:317eb7ddf6edf7c75238",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8117",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8117",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: test_slot_migration_oom_replica_rollback",
+        "text": "`check_all_replicas_finished + assert dbsize` is flaky. The former checks the offsets match but may very well be that the slots have not yet been flushed (dragonfly backoffs for 500ms and then on INIT it flushes the slots). Use `assert_eventually` instead with a timeout of 5 seconds. fixes #8106",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8117",
+        "createdAt": "2026-08-19T15:51:03Z",
+        "updatedAt": "2026-08-19T15:53:02Z",
+        "timestamp": "2026-08-19T15:53:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "open",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:899a6c4c419168b79f51",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8113",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8113",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(bloom): reject SBF filters the rdb loader would refuse to load back",
+        "text": "A `BF.LOADCHUNK` stopped right after the 12-byte header leaves an SBF with zero filters and `fp_prob = 0.0`. That value is written to snapshots unvalidated but the rdb loader rejects it, so the filter's own snapshot fails to load - taking every other key in it down on the next restart - and `COPY` (which always goes through DUMP->RESTORE) aborts the process: BF.LOADCHUNK bkey 1 <12-byte header> SAVE ; restart -> exits 1, whole snapshot lost COPY bkey dst -> abort at generic_family.cc:435 The same writer/loader disagreement exists for fully-formed filters: LOADCHUNK accepted any `fp_prob` in (0, 1) while the loader accepts only (0, 0.5]. A restore can be interrupted without any malice - a client dying between the header and the first filter chunk is enough - after which snapshot_cron persists the poison unattended. Fixes: #8104",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8113",
+        "createdAt": "2026-08-19T08:23:20Z",
+        "updatedAt": "2026-08-19T11:06:17Z",
+        "timestamp": "2026-08-19T11:06:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "vyavdoshenko",
+        "state": "closed",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5463f0fd581d65d34ac8",
+      "signalId": "github:dragonflydb/dragonfly:issue:8104",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8104",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "BF.LOADCHUNK of a header-only chunk produces an unloadable snapshot (data loss on restart) and aborts on COPY at generic_family.cc:435",
+        "text": "Found by analysing the AFL++ RESP fuzz run [31957444982](https://github.com/dragonflydb/dragonfly/actions/runs/31957444982). The fuzzer found the `COPY` abort; the snapshot corruption below is the more severe consequence of the same defect. The 12-byte blob is a valid `BF.SCANDUMP` cursor-1 header (`uint32le version=1` + `double-le grow_factor=2.0`). **A — data loss, silent:** ```bash mkdir -p /tmp/dfC/db ./build-dbg/dragonfly --port=7788 --proactor_threads=1 --dbfilename=dump --dir=/tmp/dfC/db & redis-cli -p 7788 SET k1 v1 redis-cli -p 7788 BF.LOADCHUNK bkey 1 $'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x40' # +OK redis-cli -p 7788 SAVE # +OK redis-cli -p 7788 SHUTDOWN ./build-dbg/dragonfly --port=7788 --proactor_threads=1 --dbfilename=dump --dir=/tmp/dfC/db ``` The restart exits 1 and every key in the snapshot is lost: ``` E rdb_load.cc:2673] Error while calling LoadKeyValPair(type, &settings): Internal error when loading RDB file 5 E server_family.cc:1541] Rdb load failed: Internal error when loading RDB file 5 ``` **B — abort, 5/5 runs:** ```bash redis-cli -p 7788 BF.LOADCHUNK bkey 1 $'\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x40' redis-cli -p 7788 COPY bkey dst ``` ``` E generic_family.cc:205] failed to load data for type id 34 F generic_family.cc:435] Error during rename command, deserialize_status: 5 del_status: 0 ``` `LoadSBFHeader` creates an SBF with zero filters and `fp_prob_ = 0.0` (`src/core/bloom.cc:410`). Query commands are guarded by `IsBeingLoaded()` (`src/server/bloom_family.cc:45-47`), but the serialization path is not: `SaveSBFObject` writes `fp_prob = 0.0` unvalidated (`src/server/rdb_save.cc:677-716`) and the loader rejects its own output, accepting only `(0, 0.5]` (`src/server/rdb_load.cc:2007`). `COPY` always takes the `Renamer` DUMP→RESTORE path (`src/server/generic_family.cc:2514`), unlike `RENAME`, which has a single-shard fast path. The same writer/loader asymmetry exists for fully-formed filters: `AddNewFilterToSBF` accepts `fp_prob` in `(0, 1)` (`src/core/bloom.cc:430`) while the loader accepts `(0, 0.5]`. Boundary verified: 0.50 survives, 0.51 aborts. A fix should close the range mismatch, not just the zero-filter case. `BF.LOADCHUNK` is not a restricted command.",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8104",
+        "createdAt": "2026-08-17T16:24:26Z",
+        "updatedAt": "2026-08-19T11:06:16Z",
+        "timestamp": "2026-08-19T11:06:16Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "bug",
+          "fuzzing"
+        ],
+        "author": "vyavdoshenko",
+        "state": "closed",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8b561490c7be9e38265f",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8112",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8112",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(tiering): Skip forced snapshot serialization for redundant writes",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8112",
+        "createdAt": "2026-08-18T19:35:14Z",
+        "updatedAt": "2026-08-19T08:29:32Z",
+        "timestamp": "2026-08-19T08:29:32Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:31028b60b967277ab934",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8077",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8077",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(tiering): Use TraverseBySegmentOrder and export more metrics/configs",
+        "text": "The changes that I merged into 1.40 branch Only functional change: 1. Fixes small bins defrag by using bounded TraverseBySegmentOrder to avoid blowing up iteration costs when the table is largely empty Metrics & config: 1. Exports missing tiering fields from info to metrics 2. Adds new configurable values to allow limiting CPU limit consumption of offloading / background scanning",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8077",
+        "createdAt": "2026-08-13T11:05:19Z",
+        "updatedAt": "2026-08-19T07:50:59Z",
+        "timestamp": "2026-08-19T07:50:59Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3064e4cbdc1932d2b601",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8095",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8095",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(server): make conn_use_incoming_cpu runtime mutable",
+        "text": "## Summary `conn_use_incoming_cpu` controls how new connections are distributed across proactor threads, and `Listener::PickConnectionProactor` already reads it on every accept — but it is not registered in the config registry, so changing it requires a restart. This PR registers it as mutable, so `CONFIG SET conn_use_incoming_cpu <bool>` takes effect immediately for new connections. Note on `CONFIG REWRITE`: registering the flag also makes it participate in `CONFIG REWRITE`, which persists any registered flag whose current value differs from its default — including values that came from the command line or flagfile rather than `CONFIG SET` (`RewriteConfigFile`, src/server/server_family.cc). Conversely, a flag set back to its default is not rewritten, so a stale non-default line in the flagfile survives. Both behaviors are pre-existing properties of every registered flag (e.g. `maxclients`, `timeout`); this PR adds `conn_use_incoming_cpu` to that set rather than changing the semantics. Happy to open a separate issue for the default-value rewrite gap if useful. ## Motivation The flag's own comment notes it is only safe with correct RPS tuning: *\"connections will be handled only on the CPUs that handle the softirqs for the incoming packets. To avoid imbalance in CPU load, RPS tuning is strongly advised.\"* In practice, steering misconfiguration is discovered in production. On one of our deployments (144 vCPUs; NIC IRQs pinned to CPUs 0–15, Dragonfly on 16–143) an RPS mask covering only part of the worker range concentrated **all** connections on 47 of 128 threads. A latency blip then became a self-feeding reconnect storm: the overloaded connection threads slowed replies, clients timed out and reconnected, and every new connection landed on the same hot threads. Dragonfly already offers `CLIENT MIGRATE <client-id> <tid>` to rebalance connections that are **already** placed on hot threads. This PR covers the complementary population: with the flag mutable, an operator can flip placement policy for **future** accepts at runtime — stopping the storm from re-concentrating while `CLIENT MIGRATE` (or natural churn) drains the hot threads — and flip it back once steering is fixed, without restarting a loaded master. The structural fix (correct RPS masks / not enabling the flag on such hosts) is what we are rolling out at image level; the runtime toggle is for incident response when the misconfiguration is discovered live. ## Why changing it at runtime is safe - The flag is read exactly once per accept via `absl::GetFlag` (thread-safe), and the decision is consumed immediately. No state is derived from or cached based on the flag anywhere else: `ProactorPool::MapCpuToThreads` is built once at pool startup and is only consulted, never mutated, by the placement path. - A toggle only affects **future** accepts. Existing connections are placed once at accept time and are never re-placed by it, so they cannot be affected by a change. - An accept racing a `CONFIG SET` observes either the old or the new value — both select a well-defined placement path, and the incoming-cpu path already degrades gracefully to round-robin when the reported CPU has no matching thread. ## Tests - `test_conn_use_incoming_cpu_placement` — proves the toggle actually changes placement (catches a cached-flag regression): `conn_io_thread_start=2 conn_io_threads=2` pins the round-robin fallback to tids {2,3}; the test process is pinned to the first allowed CPU, where proactor thread 0 is pinned, so with the flag **on** a fresh loopback connection must land on `tid=0` (asserted via `CLIENT INFO` `tid=`) — a placement the fallback window can never produce; with the flag **off** connections must stay in {2,3}. Skips on non-Linux or kernels without `SO_INCOMING_CPU`. - `test_conn_use_incoming_cpu` — reads the startup value instead of assuming the default (so `--df conn_use_incoming_cpu=true` keeps working), races 80 fresh connections against 40 concurrent toggles while 5 pre-existing connections hold state, and restores the startup value at the end. 🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8095",
+        "createdAt": "2026-08-16T08:15:49Z",
+        "updatedAt": "2026-08-19T06:23:22Z",
+        "timestamp": "2026-08-19T06:23:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "shahyash2609",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:509b6a06c4de07441fbb",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8107",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8107",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "server: Add warning to defragment commands about time based CPU use",
+        "text": "The defragment commands use time based quota, so they may run for the full time period they are alloted, whereas earlier they had only fixed number of iterations. While the quota is examined closely, this PR adds a help text to warn the user about to run the command.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8107",
+        "createdAt": "2026-08-18T11:19:44Z",
+        "updatedAt": "2026-08-19T05:56:50Z",
+        "timestamp": "2026-08-19T05:56:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "abhijat",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

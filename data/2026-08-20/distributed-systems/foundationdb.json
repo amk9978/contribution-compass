@@ -1,0 +1,1461 @@
+{
+  "version": 4,
+  "date": "2026-08-20",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "foundationdb",
+    "repo": "apple/foundationdb",
+    "name": "FoundationDB",
+    "keywords": [
+      "FoundationDB"
+    ]
+  },
+  "context": {
+    "repository": "apple/foundationdb",
+    "url": "https://github.com/apple/foundationdb",
+    "description": "FoundationDB - the open source, distributed, transactional key-value store",
+    "homepage": "https://apple.github.io/foundationdb/",
+    "language": "C++",
+    "topics": [
+      "acid",
+      "distributed-database",
+      "foundationdb",
+      "key-value-store",
+      "transactional"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16612,
+    "forks": 1550,
+    "openIssues": 773,
+    "archived": false,
+    "collectedAt": "2026-08-20T02:32:25.371524+00:00"
+  },
+  "news": {
+    "repository": "apple/foundationdb",
+    "collectedAt": "2026-08-20T02:32:25.371524+00:00",
+    "latestRelease": {
+      "repository": "apple/foundationdb",
+      "tag": "7.3.77",
+      "title": "Release 7.3.77",
+      "url": "https://github.com/apple/foundationdb/releases/tag/7.3.77",
+      "publishedAt": "2026-04-16T19:24:36Z",
+      "notes": "Same code as 7.3.76 but with avx enabled.",
+      "highlights": [],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.79",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.79",
+        "description": "Same code as 7.3.78 but with avx enabled.",
+        "tag": "7.3.79",
+        "publishedAt": "2026-07-15T20:13:35Z"
+      },
+      {
+        "repository": "apple/foundationdb",
+        "kind": "prerelease",
+        "title": "Release 7.3.78",
+        "url": "https://github.com/apple/foundationdb/releases/tag/7.3.78",
+        "description": "This release is compiled without avx instructions.",
+        "tag": "7.3.78",
+        "publishedAt": "2026-07-15T20:13:34Z"
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-20T02:32:22.344433Z",
+      "since": "2026-08-19T02:32:22.344433Z",
+      "observedCount": 26,
+      "changedCount": 26
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:apple/foundationdb:issue:2739",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "issue",
+      "title": "Remove the double logging for open trace file failure from the TraceEvent cache based implementation",
+      "text": "With the new issue reporting mechanism in place (PR #2605), the old TraceEvent cache based implementation specifically for trace file open failure can be removed.",
+      "url": "https://github.com/apple/foundationdb/issues/2739",
+      "createdAt": "2020-02-25T03:24:14Z",
+      "updatedAt": "2026-08-19T10:08:38Z",
+      "timestamp": "2026-08-19T10:08:38Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "good first issue"
+      ],
+      "author": "dongxinEric",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:12309",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "[release-7.3] Fix some potential DatabaseContext leaks in NativeApi",
+      "text": "1. Only start `clientStatusUpdateActor` when `DatabaseContext` successfully established connection to the cluster. 2. `DatabaseContext` starts few actors for monitoring as well as update client status to server. These sometimes pass pointers to `DatabaseContext` and the `Transaction` object created within these actors will increment the refcount. This can lead to cyclic references or holding `DatabaseContext` objects for long period of times if `Transaction` object is not cleaned up or we keep retrying forever without any limit. 3. Some actors don't handle `actor_cancelled` errors which can lead then to stay alive forever. This patch fixes some of those. rdar://155780163 found that in multi-version client if primary is incompatible with the cluster, we keep trying to reconnect with cluster, and spamming with IncompatibleConnectionClosed messages. (1) should be enough to fix that, but other issues were found during investigation which can potentially lead to similar issues in future. Testing: Manually started a 7.1 cluster, with 7.4 primary client and 7.1. secondary client. Started a client. Without this patch we'll see bunch of IncompatibleConnectionClosed messages, and with this patch they will be gone. # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [ ] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches If this PR is made against a release-branch, please also check the following: - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
+      "url": "https://github.com/apple/foundationdb/pull/12309",
+      "createdAt": "2025-08-15T22:54:43Z",
+      "updatedAt": "2026-08-19T13:09:03Z",
+      "timestamp": "2026-08-19T13:09:03Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "vishesh",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13295",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "report degraded multi-region status when failover is stuck waiting on the unavailable remote DC #12071",
+      "text": "### Commit 1: XDB-546 — Show keys data size and moving size when DD is initializing File: `fdbserver/clustercontroller/Status.cpp` __What:__ Moved the \"DD is initializing\" early-return check __after__ parsing `dataStats`, so that partition count, moving data size, and other data metrics are still populated in the status JSON even during DD initialization. Previously, these fields were omitted because the function returned before parsing them. __Why:__ To show moving-data volume during DD initialization (e.g., after a failover) instead of waiting for initialization to complete. --- ### Commit 2: XDB-546 — Add degraded multiregion status when recovery is stuck at accepting_commits __Files:__ `fdbserver/clustercontroller/Status.cpp`, `fdbclient/Schemas.cpp`, `fdbcli/StatusCommand.cpp` __What:__ 1. Introduced a `degraded_multi_region` flag: set to `true` when the cluster is configured with `usableRegions > 1` and recovery is stuck at `accepting_commits`. Exposed this field in the status JSON schema. 2. When DD reports its state as `initializing` in a degraded multiregion scenario, the description now reads `\"Degraded multiregional (Re)initializing automatic data distribution\"` — making the nature of the degradation explicit. 3. In `fdbcli status` output, when `degraded_multi_region` is `true`, the warning message *\"may have data loss and availability loss\"* is suppressed. This is replaced with a neutral header followed by the actionable message (which TLog interfaces to restart). __Why:__ In a multi-region cluster, when one region fails, recovery gets stuck at `accepting_commits` because the failed region's logs are unreachable. However, commits are already being accepted in the surviving region (and its satellite), and all committed data is safe and consistent. This is a __degraded-but-not-data-losing__ state. Previously, `fdbcli status` showed a misleading warning about potential data loss. Now the status honestly reflects degraded multiregion without a false data-loss alarm. topic in foundationdb forum about this problem : [link](https://forums.foundationdb.org/t/3dc2regions-simulating-primary-datacenter-failure/3329/5)",
+      "url": "https://github.com/apple/foundationdb/pull/13295",
+      "createdAt": "2026-05-28T13:13:50Z",
+      "updatedAt": "2026-08-19T13:42:26Z",
+      "timestamp": "2026-08-19T13:42:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 36
+      },
+      "labels": [],
+      "author": "MarkSh1",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13642",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "(Backport to 7.4): DD finishMoveKeys: move waitForShardReady outside transaction (#13364)",
+      "text": "Backport 0887ae6d29 from main to release-7.4 ``` ## Backport notes - Branch `release-7.4` uses Flow actors (`.actor.cpp`, `state` keyword, `wait()` macro) rather than main's C++20 coroutines (`co_await`). Local variables that need to cross a `wait()` point are declared with `state`; return statements use `return`, not `co_return`. - `constexpr` is not compatible with `state` variables on 7.4. - Otherwise the change is behavior-identical to the main PR. ``` DD finishMove*: drop the transaction across waitForShardReady SERVER_READY_QUORUM_TIMEOUT (15s) was used inside a transaction with a ~5s lifetime (MAX_WRITE_TRANSACTION_LIFE_VERSIONS). When destination servers were slow to respond, the wait alone consumed the txn budget, and commits failed with transaction_too_old — retries too, cascading into the DD pipeline stalls observed in incidents. Restructure both finish-move functions (finishMoveKeys / finishMoveShards, dispatched on SHARD_ENCODE_LOCATION_METADATA) into a two-transaction pattern with the wait in between: Transaction 1: read keyServers / serverTags / serverList (and dataMove metadata for finishMoveShards) via the new readShardState() helper. Save the read version and drop the transaction (tr.reset()). Wait: waitForShardReady — runs OUTSIDE any transaction; the 15s timeout is now safe. Transaction 2: re-verify via destUnchanged() (dest hasn't changed, dataMove still in Running phase for finishMoveShards), then commit metadata writes. If the destination changed during the wait, the inner loop retries from the top — same as today's behaviour on transient errors, just without burning the txn budget on the wait itself. Verification & retry details: * destUnchanged() loops every sub-range, not just keyServers[0]. The keys-flavor (`expectedDataMoveId={}`) tolerates empty-dest entries whose src ⊆ expectedDest — matching the planning loop's `alreadyMoved = dest2.empty() && isSubset` branch, which lets sibling iterations of OUR move that already completed pass through. A foreign src on an empty-dest entry signals a different move owns the range and forces a retry to avoid clobbering it. The shards-flavor uses the dataMoveId stamp as the per-sub-range invariant. * All retry paths (dest-changed, data-move-deleted, phase-changed, plus the count-mismatch else-branch in finishMoveShards) are bounded by FINISH_MOVE_KEYS_MAX_RETRIES and back off via finishMoveKeysBackoff(). Without the cap the dest-changed branch could livelock; the shards- side count-mismatch path was previously unbounded. * Txn 2's writes use the post-wait snapshot: keyServersValue uses reread.uidToTagMap; finishMoveShards introduces a postWaitDataMove local so the partial-complete / deleteCheckpoints / dataMoveValue writes reflect the fresh dataMove state. * runPreCheck=false is set inline on each retry path. The partial-complete success-continue deliberately leaves runPreCheck alone so chunks 2..N of a multi-transaction move each get their own AUDIT_DATAMOVE_PRE_CHECK. * finishMoveShards now takes finishMoveKeysParallelismLock per iteration (mirroring finishMoveKeys). The lock had been function- scoped and released mid-iteration before the wait, so retries ran lockless and silently exceeded MOVE_KEYS_PARALLELISM. * taskID = TaskPriority::MoveKeys is restored on txn 2 in both functions (tr.reset() drops it). * New CODE_PROBEs (\"dest changed\", \"data move deleted\", \"phase changed\") are marked probe::decoration::rare; reaching them requires a concurrent reassignment racing into the wait window. * SHARD_READY_DELAY is buggified to 5.0s to exercise the slow-dest scenario in simulation. Validation: * k8s rig: 3 transaction_too_old events vs 360,289 in the prior run without the patch; 0 OOMs. * Simulation (DDPipelineStall.toml, knob ON): cascade trigger eliminated; transaction_too_old goes to zero; residual TryFinishMoveShardsError events are not_committed which retry cleanly. ` 20260701-232737-stack-backport-74-028aaba11a9b3a30 compressed=True data_size=41562049 duration=3423521 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:29:46 sanity=False started=100000 stopped=20260701-235723 submitted=20260701-232737 timeout=5400 username=stack-backport-74 `",
+      "url": "https://github.com/apple/foundationdb/pull/13642",
+      "createdAt": "2026-07-02T18:49:23Z",
+      "updatedAt": "2026-08-20T01:26:06Z",
+      "timestamp": "2026-08-20T01:26:06Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 22
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13673",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Plumb TraceID/SpanID into debug tracing logs",
+      "text": "I found that debug transactions offer the highest quality telemetry for where in the commit pipeline a transaction gets stuck, but that the logs were difficult to work with (need to join across log lines distributed across roles to get the full connected graph of IDs that belong to a debug transaction). The tracing tool we use internally does not support this kind of stateful aggregation and instead relies on a consistent TraceID plumbed throughout the call graph. Conveniently, this already exists in the code base in the form of the OTEL tracing context. I added those IDs to all debug logs and was able to get a trace view in our systems that is useful to me. Here's what it looks like in our internal trace viewing tool. Yellow boxes correspond to the FDB Client debug traces (NativeAPIActor), the smaller green events are coming from GRV, Commit, and Storage Servers. This gives me a good view of stalls anywhere in the transaction lifecycle. I'm still refining how I parse these to make them more visually intuitive, but already useful in its current state. <img width=\"1727\" height=\"743\" alt=\"Screenshot 2026-07-10 at 12 23 08 PM\" src=\"https://github.com/user-attachments/assets/feaba889-0daa-4d98-b832-1f7d3226940d\" /> I use this by setting the Transaction ID through the SpecialKeys API, which then sets the span context: ```java String debugTransactionId = getDebugTransactionIdFromTraceMetadata(traceMetadata); String specialKeysTransactionId = getFdbTransactionIdFromTraceMetadata(traceMetadata); log.debug( \"Enabling FDB transaction debugging\", SafeArg.of(\"debugTransactionId\", debugTransactionId), SafeArg.of(\"specialKeysTransactionId\", specialKeysTransactionId)); transaction.options().setSpecialKeySpaceEnableWrites(); transaction.set(FDB_TRACING_TRANSACTION_ID_KEY, specialKeysTransactionId.getBytes(StandardCharsets.UTF_8)); transaction.options().setDebugTransactionIdentifier(debugTransactionId); transaction.options().setLogTransaction(); transaction.options().setServerRequestTracing(); ```",
+      "url": "https://github.com/apple/foundationdb/pull/13673",
+      "createdAt": "2026-07-10T05:25:55Z",
+      "updatedAt": "2026-08-19T16:21:30Z",
+      "timestamp": "2026-08-19T16:21:30Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 27
+      },
+      "labels": [],
+      "author": "laflechejonathan",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13722",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Backport to 7.4: Add metadata encoding (SHARD_ENCODE_LOCATION_METADATA) audit, rollback support, and tests (#13310)",
+      "text": "Adds tooling and code to support safe SHARD_ENCODE_LOCATION_METADATA rollback and migration verification: audit_storage metadata_encoding: New AuditType that scans keyServers and serverKeys to report encoding format counts (old tag-based vs new UID-based). Reports migration status: FORWARD COMPLETE / ROLLBACK IN PROGRESS / ROLLBACK COMPLETE. DD startup rewrite (DDTxnProcessor.cpp): When SHARD_ENCODE=false, clears stale DataMoveMetaData and rewrites shard-encoded keyServers entries to old format. serverKeys entries are left in place (readable in both formats, drain naturally). MoveKeys graceful bail (MoveKeys.cpp): Functions that require shard-encoding throw dd_config_changed instead of asserting when they detect the knob flipped or DataMoveMetaData is unexpectedly empty from a concurrent DD restart. Error handling (DataDistribution.cpp, DDRelocationQueue.actor.cpp): dd_config_changed added to normalDDQueueErrors to prevent SevError logging for expected operational restarts. Knob infrastructure (ServerKnobs.cpp): SHARD_ENCODE randomization respects explicitlySetKnobs so TOML overrides take effect in simulation tests. Tests: - CheckMetadataEncodingForward.toml: verifies new-format entries - CheckMetadataEncodingOldPath.toml: verifies old-format entries - ShardEncodeRollback.toml: full rollback test with Attrition, Rollback (TLog recovery), data consistency check Documentation: - design/shard-encode-location-metadata.md: full feature description This PR includes the below: > Author: Trevor Clinkenbeard <tclinkenbeard@openai.com> > Date: Fri Jul 17 12:51:45 2026 -0700 > > Reject anonymous shard-encoded data moves > > Backport of cb05ba78c64b84ae1a0802dd0b882f1a2b421d42 to release-7.4. ... because it fixes an issue seen in joshua runs. ` 20260717-052456-stack_backport-ec9bf69168b7233a compressed=True data_size=41579193 duration=3999432 ended=100000 fail=1 fail_fast=10 max_runs=100000 pass=99999 priority=100 remaining=0 runtime=0:27:19 sanity=False started=100000 stopped=20260717-055215 submitted=20260717-052456 timeout=5400 username=stack_backport` Unrelated `RandomSeed=\"3851425773\" SourceVersion=\"9e00776821b82db4969af20d2f88bf82ab2e178f\" Time=\"1784266992\" BuggifyEnabled=\"0\" DeterminismCheck=\"0\" FaultInjectionEnabled=\"1\" TestFile=\"tests/fast/MinimumThroughput.toml\"`",
+      "url": "https://github.com/apple/foundationdb/pull/13722",
+      "createdAt": "2026-07-17T20:29:30Z",
+      "updatedAt": "2026-08-20T01:41:49Z",
+      "timestamp": "2026-08-20T01:41:49Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 36
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13752",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "DD: config-driven bounded-time rollback of shard-encoded location metadata",
+      "text": "(Rewrite of the description after a request to move this PR to be totally configuration based which makes the PR better but meant more change. Intent is to backport this to 7.4.) Rolling SHARD_ENCODE_LOCATION_METADATA true->false could not reach `audit_storage metadata_encoding` ROLLBACK COMPLETE in bounded time: converged and \"safe to downgrade binary\" was unverifiable short of a storage wiggle (hours-to-days). This adds an opt-in, bounded-time DD-init rewrite that converges existing keyServers AND serverKeys back to old format and clears DataMoveMetaData, driven by two new DatabaseConfiguration options: configure shard_metadata_format = original | encoded (target format) configure shard_metadata_migration = enabled | disabled (run rewrite) Config is the source of truth for DD's encoding target, resolved once at init as `shard_metadata_format ?? SHARD_ENCODE_LOCATION_METADATA` (the knob is only the fallback when the config is UNSET) and used across all DD write/move paths -- so a rollback is driven by `configure shard_metadata_format=original` with no knob flip and no process restart (the configure triggers a recovery that re-inits DD). Deploying the binary is a byte-identical no-op until an operator opts in. A completion sentinel records ROLLBACK COMPLETE and fast-paths later inits. serverKeys are rewritten serially per storage server, so rewrite time scales with cluster size (minutes typically); progress is visible via DDShardEncode* trace events and the audit. Caveats (details in design/shard-encode-location-metadata.md and documentation/sphinx/source/command-line-interface.rst): - Binary downgrade: a pre-config binary reads only the knob, so downgrade is safe only at ROLLBACK COMPLETE with the target binary deployed SHARD_ENCODE_LOCATION_METADATA=false. - Known limitation: large teams (ddLargeTeamEnabled) and physical shard (ENABLE_DD_PHYSICAL_SHARD), mutually exclusive with shard encoding, still read the raw knob, not the config. Once shard_metadata_format is set, don't move the knob except for a downgrade. Tested: sim tests/fast/ShardEncodeRollback.toml (knob-fallback path) and tests/fast/ShardEncodeRollbackConfig.toml (config-only, no knob flip), each passing a 100,000-run joshua ensemble; plus a live-cluster forward->rollback->re-forward under mako load with DD-pod kills (test_shardencode_rollover_load, fdb-kubernetes-tests). Builds on #13310 (SHARD_ENCODE_LOCATION_METADATA audit + rollback support). Depends on #13670 (audit_storage counting fix, merged) to observe ROLLBACK COMPLETE. Here are two test runs. The first is just exercising the new test. The second is all joshua tests: ``` 20260724-183324-stack-pr2-shardencode-rollb-24db56d8fdb29f9d compressed=True data_size=38355992 duration=16719145 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=1:19:43 sanity=False started=100000 stopped=20260724-195307 submitted=20260724-183324 timeout=5400 username=stack-pr2-shardencode-rollback-rewrite-single 20260724-183332-stack-pr2-shardencode-rollb-1ff9ed3b7402c6ee compressed=True data_size=38345170 duration=3530901 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:35:21 sanity=False started=100000 stopped=20260724-190853 submitted=20260724-183332 timeout=5400 username=stack-pr2-shardencode-rollback-rewrite-all ```",
+      "url": "https://github.com/apple/foundationdb/pull/13752",
+      "createdAt": "2026-07-20T17:56:28Z",
+      "updatedAt": "2026-08-19T19:24:41Z",
+      "timestamp": "2026-08-19T19:24:41Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 38
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13786",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "always increment finishedQueries counter if incrementing allQueries",
+      "text": "Storage server processes publish a pair of counters `total_queries` and `finished_queries` (as well as a derived special counter `query_queue_max`) tracking how many read operations have been started and finished (and the high-water-mark for the number of pending queries—those that have been started, but not finished—in a status-fetch interval). Unfortunately, the counter underlying `total_queries` was incremented at the beginning of one of several actors, and the matching increment to `finished_queries` was done at the end, with several intervening `wait`s. If the actor was cancelled (or experienced another non-returnable error), `finished_queries` was not incremented, resulting in a permanent drift between `total_queries` and `all_queries` and apparently endless growth in `query_queue_max`. The easiest way to demonstrate this behavior is to have two different clients alternate between setting watches and updating values for the same keys—for example, run two simultaneous instances of this [simple Java program](https://gist.github.com/jkt-signal/1c3ea2a4a6aafd51571b462c57b50fd9) against a single database, and monitor its status to see `query_queue_max` on storage servers go up permanently every time you run the test. To solve this problem, we add a simple class `CountedSection` to `flow/Stats.h` to bump two counters in RAII-enforced balance; once a local `CountedSection` has bumped the first counter, it will always eventually bump the second one whether it is destroyed as a result of normal exit or exception. (Of course, if you store one in a heap object and leak it, you will still experience drift, so, uh, don't do that.) `CountedSection` is made move-only so you can use it in actor state, since `state` variables seem to always be default-constructed and then assigned to their initializers even if the initialization comes before the first `wait` in an actor. One of the actors involved actually updates a second counter pair, `getMappedRangeQueries` and `finishedGetMappedRangeQueries`, in a way vulnerable to the same problem, so we use `CountedSection` to address that as well, though I have not seen any instances of these getting out of sync (entirely due to lack of trying). Some other metrics updated at the ends of the affected actors—mostly latency metrics, but also some tagged size distributions—are not addressed by this change. Arguably they should not be, since including latency and response size of interrupted queries may significantly throw off the statistics in a not-necessarily-useful way. Leaving this as an RFC because I'm not sufficiently familiar with the FoundationDB testing setup to write a good test; the Java program linked above is a great demonstration but is not trivially adapted to an integration test (and presumably we'd like tests of the fdbserver itself to be C++, not dependent on the Java bindings). Advice for how to test the change greatly appreciated! This PR is against the 7.3 branch, rather than `main`, because all the relevant actors have been rewritten to use C++20 standard coroutines in the interim, and while I strongly suspect the same bug applies equally in `main`, I was not able to confirm this because `main` does not currently build a usable fdb for me. Porting forward to `main` should be relatively trivial and I'm happy to do so if requested.",
+      "url": "https://github.com/apple/foundationdb/pull/13786",
+      "createdAt": "2026-07-24T20:35:08Z",
+      "updatedAt": "2026-08-20T01:25:53Z",
+      "timestamp": "2026-08-20T01:25:53Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 32
+      },
+      "labels": [],
+      "author": "jkt-signal",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13854",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Convert LoadBalance.actor.h to standard coroutines",
+      "text": "## Summary - Convert load-balancing, replica-comparison, and TSS-comparison actors to standard C++ coroutines. - Consolidate the migrated implementation into `fdbrpc/LoadBalance.h` and update direct includes so the header no longer requires actor compilation. - Preserve request ownership, cancellation, inert `Never()` handling, race ordering, replica consistency checks, and `Void`-reply compatibility. ## Testing - `fdbrpc_test -f /fdbrpc/waitValueOrSignal/` — 3 tests passed. - `fdbclient_test -f /StorageServerInterface/TSSCompare/` — 1 test passed. - Built `fdbserver` successfully. - `tests/fast/CycleTest.toml` with replica consistency checking enabled — 2 simulation tests passed. - `clang-format` and `git diff --check` passed.",
+      "url": "https://github.com/apple/foundationdb/pull/13854",
+      "createdAt": "2026-08-12T10:34:28Z",
+      "updatedAt": "2026-08-20T02:25:40Z",
+      "timestamp": "2026-08-20T02:25:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 37
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13870",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Convert Data Distribution monitoring actors to coroutines",
+      "text": "## Summary - Convert `storageServerFailureTracker`, `monitorStorageServerRecruitment`, and `waitServerListChange` from Flow actors to standard C++ coroutines. - Preserve failure-monitor race ordering, recruitment state transitions, server-removal stream handling, and the remaining actor-compiled code and tests. - Avoid starting a data-removal transaction when the higher-priority health-change branch is already ready. ## Validation - `clang-format --dry-run --Werror fdbserver/datadistributor/DDTeamCollection.actor.cpp` (clang-format 19.1.0) - `fdbserver_datadistributor_test --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242 --simulation` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242 --simulation`",
+      "url": "https://github.com/apple/foundationdb/pull/13870",
+      "createdAt": "2026-08-14T17:22:37Z",
+      "updatedAt": "2026-08-20T01:13:00Z",
+      "timestamp": "2026-08-20T01:13:00Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 44
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13875",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Test unsupported mapped-range read options",
+      "text": "## Summary - Extend the existing `GetMappedRange` simulation workload to reject mapped reads with snapshot isolation. - Assert that mapped reads also reject transactions with `READ_YOUR_WRITES_DISABLE`. - Cover both existing `unsupported_operation` paths without changing production behavior. ## Testing - `clang-format --dry-run --Werror fdbserver/workloads/GetMappedRange.cpp` - `fdbserver -r simulation -f tests/fast/GetMappedRange.toml`",
+      "url": "https://github.com/apple/foundationdb/pull/13875",
+      "createdAt": "2026-08-15T17:07:38Z",
+      "updatedAt": "2026-08-19T20:37:05Z",
+      "timestamp": "2026-08-19T20:37:05Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 15
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13877",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Exercise streaming range selector boundary cases",
+      "text": "## Summary - Extend the existing `StreamingRangeRead` workload to exercise exclusive begin and end key selectors. - Compare streamed selector results with ordinary range reads, including the exact expected keys. - Verify that an inverted streaming range immediately terminates with `end_of_stream`. ## Test Plan - `clang-format --dry-run --Werror fdbserver/workloads/StreamingRangeRead.cpp` - Built `fdbserver_workloads` and `fdbserver` with Clang. - `fdbserver -r simulation -f tests/fast/StreamingRangeRead.toml -s 41237 -b off`: passed, including all seven workload clients and the consistency check. - Confirmed that the exclusive begin, exclusive end, and inverted-range code probes were all covered.",
+      "url": "https://github.com/apple/foundationdb/pull/13877",
+      "createdAt": "2026-08-15T17:16:38Z",
+      "updatedAt": "2026-08-19T20:45:52Z",
+      "timestamp": "2026-08-19T20:45:52Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 21
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13886",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Audit: bound validate_restore's slowest task instead of its average batch",
+      "text": "The `validate_restore` audit phase finishes only when its slowest task does, and nothing bounded that task. Measured at 100M scale, the slowest task took **2535.86s of a 2536.0s phase — 100% of the wall clock**, so per-task throughput improvements could not move the phase at all. An earlier attempt raised the per-batch byte budget, gained a real 1.94x in per-task throughput, and made the phase **25% slower**, because that run's shards happened to be 1.87x fatter. It was optimising an average when the metric is a maximum. This PR is a bit of a bucket. I tried splitting it out into 3/4 pieces but was hard to tell a story about each of the pieces. ## 1. Cap the size of one audit task `scheduleAuditOnRange` divided work by live `keyServers` boundaries — one task per shard, dispatched to a single storage server that scans it sequentially — with no size cap anywhere in the audit dispatch path, so a fat shard was an unbounded straggler. Shards above `AUDIT_TASK_MAX_BYTES` (default 128MB) are now subdivided via `splitStorageMetrics`, lazily one shard at a time so the first task dispatches immediately. A failed metrics read falls back to the unsplit shard — the previous behaviour — so this cannot fail an audit that would otherwise pass. `minSplitBytes` is `target/2`. The storage server stops splitting once `remaining.bytes < 2 * minSplitBytes`, so that product is the real \"leave it alone\" threshold and half the target is what puts it on the target. Passing the target itself pushes the threshold to *twice* the target and opens a dead band: 287 of 867 tasks sat unsplit in the 128–256MB band, too big for the cap but too small for the server to bother, and the tail stayed at 1215.92s. Going *below* `target/2` makes little difference, because `getSplitKey` only splits while `remaining > target/2` and that binds first. Note also that the client discards a trailing piece under `STORAGE_METRICS_UNFAIR_SPLIT_LIMIT` (2/3) of the target, so the largest task can reach roughly **1.4x** the knob rather than exactly 1x. The `delay(0.1)` that paces dispatch stays per `keyServers` shard rather than becoming per piece. Per piece it multiplies by the split factor and caps dispatch at 10 tasks/sec, adding a term linear in the piece count to the very wall-clock this cap exists to shorten. ## 2. Treat the batch byte budget as a ceiling and adapt within it `AUDIT_RESTORE_BATCH_BYTE_LIMIT` previously used `CLIENT_KNOBS->REPLY_BYTE_LIMIT` (80KB), a generic per-RPC-reply cap with nothing to do with audit batching. 80KB is reached long before `AUDIT_RESTORE_BATCH_KEY_LIMIT`'s 100,000 keys at any realistic record size, so that knob was unreachable and raising it changed nothing: a 1B validation spent 2h26m in ~3.6M two-round-trip iterations at ~5.5MB/s per server, against an `AUDIT_STORAGE_RATE_PER_SERVER_MAX` allowance ~9x higher. A fixed 4MB is no better — it took `transaction_too_old` from 679 to 2515 — because the real constraint is a **deadline, not a size**. A batch reads at a pinned version that expires after `MAX_READ_TRANSACTION_LIFE_VERSIONS`, so what a server can fetch in one go depends on current load; overshooting fails and the retry re-reads from the same key, buying double work rather than throughput. The budget now halves on a retryable error and grows back additively above `AUDIT_RESTORE_BATCH_BYTE_LIMIT_MIN`. Also on this path: - The two sides of a batch were read **serially** on one transaction, for two independent ranges at the same explicit read version. They are now issued together. - Retries slept a flat 1.0s regardless of cause. They now use the existing `Backoff` helper (`DEFAULT_BACKOFF` → `DEFAULT_MAX_BACKOFF` at `BACKOFF_GROWTH_RATE`, jittered), reset on success so an occasional retry does not ratchet to the maximum. - `numValidatedKeys`/`validatedBytes` advanced before the progress-persist that can throw, so a batch failing *there* double-counted the counters the throughput analysis reads. All per-attempt state is now snapshotted and rolled back — including `complete`, which is derived from `sourceReply.more` and would otherwise be able to end an audit early over a range never fully read. ## 3. Let a server work several audit tasks at once `SERVE_AUDIT_STORAGE_PARALLELISM` defaulted to 1, so subdivided pieces landing on the same server would serialize and the cap would buy nothing; the default is now 4, randomized 1..4 in simulation so both paths keep coverage. That exposed two things the knob being 1 had masked: - The rate limiter was built **per call site**, so concurrent tasks multiplied an allowance whose knob is named `AUDIT_STORAGE_RATE_PER_SERVER_MAX`. One limiter is now shared per server, with time blocked on it reported in `SSAuditRestoreComplete` — `auditRestoreQ` had no limiter accounting at all, so a throttled audit was indistinguishable from a slow one. - `auditStorageServerShardQ` requires **exclusive** use of the server: it owns `shardAssignmentHistory`, which is single-instance state, and `startTrackShardAssignment()` asserts tracking is off. It now takes a dedicated lock instead of relying on the permit count. Without that, the per-server retry at the end of `scheduleAuditStorageShardOnServer` can re-dispatch while the previous attempt is still running on that server; at one permit the second request queued, at four it runs concurrently and trips the guard. Observed as `SevError ExistStorageServerShardAuditExit` on `Sideband`, `InventoryTestSomeWrites` and `MoveKeysCycle` — 3 hits across 20,000 runs, every one audit id 1 and `usable_regions:=2`. ## 4. Two pre-existing ways an ssshard audit wedges a storage server Both reachable without any of the above, and both found while diagnosing the failure in §3. - **Cancellation stranded the tracking flag.** `stopTrackShardAssignment()` was reached only by plain statements at the end of the function and on its error paths. Cancellation runs none of them — it destroys the coroutine frame — leaving `trackShardAssignmentMinVersion` set with no audit owning it, after which every later ssshard audit on that server bails out on the guard **for the life of the process**. Now runs from a `ScopeExit` guard. - **The guard leaked a parallelism permit.** Its early `co_return` sat between `take()` and the `FlowLock::Releaser`, and that lock is shared by every audit type, so enough leaks exhaust it and every subsequent audit on that server blocks in `take()` forever, with only a warning to say so. Cancellation is routine here — the retry above re-dispatches after any failure, and Attrition, `RandomMoveKeys` and remote-DC latency all supply those failures — so these are worth considering for backport independently of the performance work. ## 5. Two report-storm fixes - **BulkLoad** — `scheduleBulkLoadTasks()` rescans task metadata every `DD_BULKLOAD_SCHEDULE_MIN_INTERVAL_SEC`, and a task in the terminal `Error` phase is deliberately left in place (unlike `Acknowledged`, it is never erased), so the `SevWarnAlways` report fired again on every scan for the life of the cluster: 11,313 events from 2 tasks in one 1B run, still climbing hours after the job finished. Each task is now reported once, carrying the running total. - **BulkDump** — the SS bulkdump loop retries up to 50 times, a second apart, while shards move underneath it; retrying is the normal path. Every attempt logged `SevWarn SSBulkDumpError` — 18,023 events in one run against 29,026 files generated. Intermediate retries move to `SSBulkDumpRetry` at `bulkLoadVerboseEventSev()`; the terminal cases keep the original name and severity, so existing greps and dashboards keep working and now match only tasks that actually failed. Both matter beyond tidiness: this is how the real failure ends up buried thousands of log lines from the top. ## Results | | before | after | |---|---|---| | audit phase | 42m16s | **25m00s** (also 26% below the 33m47s pre-existing baseline) | | `transaction_too_old` | 2515 | **150** (below the baseline's 679) | | aggregate audit throughput | 79 MB/s | **130 MB/s** | | `RateLimiterTotalWaitTime` | — | 0, so the shared limiter never bound | Zero `SSAuditRestoreError`, zero `StorageServerFailed`. **These numbers need retaking.** They were measured before the `minSplitBytes` correction in §1 and before the dispatch-throttle decision, both of which change the task count. Treat them as evidence that the approach works, not as the current figures. ## Testing `nextAuditBatchBytes()` is pure and unit tested for the budget staying within `[floor, ceiling]` and never reaching zero or below. That is *not* hang protection — `GetRangeLimits` sets `minRows = 1`, so even a zero budget returns a key — but because `GetRangeLimits` overloads the sign of `bytes`: `-1` means `BYTE_LIMIT_UNLIMITED` and silently removes the bound, below `-1` fails `isValid()`, and `0` costs a round trip per key. `boundAuditTaskRange()` is covered by a mock `IDDTxnProcessor`, including that a failed metrics read degrades to the unsplit shard rather than failing the audit, and asserting `minSplitBytes <= target/2` because exceeding it is silent — subdivision just does not happen and the only symptom is a slower tail that looks like variance. Split points become task ranges with the same consecutive-pairs idiom `DDShardTracker::executeShardSplit()` uses. `splitStorageMetrics()` guarantees `begin` and `end` as its first and last points and `NativeAPI` rejects out-of-order replies, so no defensive re-derivation is needed here. Per-batch traces are gated behind the existing `ENABLE_AUDIT_VERBOSE_TRACE` knob; at 1B scale they were ~18M unconditional `SevInfo` events. There is a `TODO(Audit)` to move that gate into `fdbclient/Audit.h` and adopt it in `DataDistribution.cpp`, which currently gates the same knob with six `if` blocks — deferred because it flips those sites from emitting nothing to `SevDebug`, a trace-volume change worth measuring on its own. Joshua, 100k runs, clean: ``` 20260818-041541-stack-13886-04944201f8ee8683 ended=100000 pass=100000 remaining=0 max_runs=100000 runtime=0:31:15 timeout=5400 username=stack-13886 ``` `ExistStorageServerShardAuditExit` did not recur, against 3 hits in 20,000 runs before §3 and §4. --- <sub>Rebased and squashed to a single commit since first posted. Substantive changes from review: `minSplitBytes` `target/8` → `target/2`; the dispatch throttle kept per-shard rather than per-piece; the ssshard fixes in §4 added; `AUDIT_RESTORE_BATCH_BYTE_LIMIT`/`_MIN` narrowed `int64_t` → `int` since they feed `GetRangeLimits::bytes`; and three reimplementations dropped in favour of existing machinery — a bespoke split-point partitioner (NativeAPI already guarantees the contract), a hand-rolled backoff (`Backoff`), and a local scope guard (`flow/ScopeExit.h`).</sub>",
+      "url": "https://github.com/apple/foundationdb/pull/13886",
+      "createdAt": "2026-08-17T18:39:12Z",
+      "updatedAt": "2026-08-19T16:39:45Z",
+      "timestamp": "2026-08-19T16:39:45Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 36
+      },
+      "labels": [],
+      "author": "saintstack",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13887",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Convert NativeAPI header actors to standard coroutines",
+      "text": "## Summary - Replace `NativeAPI.actor.h` with `NativeAPI.h` and convert `waitForCommittedVersion` and `splitStorageMetricsWithLocations` to C++ coroutines. - Preserve the exported signatures, argument ownership, race ordering, retries, cancellation, and split-result arena dependencies. - Update header consumers and preserve the multi-version-client dependency guard. Replace uses of the old header's leaked `loop` macro with `while (true)`. The remaining actors in `NativeAPI.actor.cpp` stay actor-compiled. The follow-up removes the standalone coroutine test file without changing the production conversion. ## Validation - After removing the standalone tests: `fdbclient_test` and `fdbserver` rebuilt successfully; client unit suite 92 passed; existing NativeAPI tests in Sim2 2 passed. - The original conversion passed Clang 19 Release builds of `fdbclient_test`, `fdbserver`, `fdbcli`/`fdbctl`, and `coro_tutorial`. - `Watches.toml`, `WatchCommitTimeout.toml`, and `DDPipelineSaturation.toml` passed on the unchanged production conversion before the test-file removal. - Clang-format and client/production-integration clang-tidy checks passed on the original conversion. Whole-file tutorial clang-tidy still reports three capturing-coroutine-lambda warnings and one integer-widening warning. All four reproduce unchanged on the base revision. No sanitizer build or broad correctness campaign was run.",
+      "url": "https://github.com/apple/foundationdb/pull/13887",
+      "createdAt": "2026-08-17T19:36:50Z",
+      "updatedAt": "2026-08-19T20:52:27Z",
+      "timestamp": "2026-08-19T20:52:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 29
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13897",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Make DD relocation retry observations resilient to delay jitter",
+      "text": "## Summary The merged-shard retry test waits slightly longer than one polling interval and expects exactly two requests. Simulation delay jitter can extend that observation across multiple valid retry rounds, making the final empty-stream assertion fail. Observe four consecutive requests as they arrive, verify their merged range and failed-team priority, and check that no three observed requests fall within one polling interval. Keep a bounded wait for missing retries, then stop the observation and yield before destroying the fixture because stream sends invoke callbacks synchronously. No production behavior or workload configuration changes. ## Validation - Clang Release build of `fdbserver_datadistributor_test` and `fdbserver`. - On this branch, the complete default Data Distributor unit suite passed all 50 tests in both native and simulation modes. The focused TeamTracker and shard-mapping regressions also passed in both modes. - Matched `SpecificUnitTests.toml` simulation reproduction on one source baseline: unchanged source fails; the fix passes with the same test and injection settings.",
+      "url": "https://github.com/apple/foundationdb/pull/13897",
+      "createdAt": "2026-08-18T02:25:27Z",
+      "updatedAt": "2026-08-20T01:38:55Z",
+      "timestamp": "2026-08-20T01:38:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13902",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Move storage simulation capabilities out of `fdbrpc`",
+      "text": "## Summary Follow up on #13080 and #13180 by moving the storage/TSS capability API out of the generic simulator policy. - Define `FDBSimulationCapability` and `IFDBSimulationPolicy` in `fdbclient`, and implement the interface in the existing server-owned `FDBSimulationPolicy`. - Query the currently installed, reference-counted simulation policy. Missing or non-FDB policies keep all capabilities disabled, and policy replacement cannot leave a stale provider. - Preserve the existing live TSS-mode predicates, mismatch severity, and fault-injection behavior. No protocol, serialization, scheduling, or random-draw changes are intended. - Document each policy implementation and keep focused regression coverage for fail-closed defaults and reentrant policy lifetime. ## Testing ### Current focused validation - Compiled and linked `fdbclient_test`; the build wrapper returned a nonzero status after linking. - Remaining client capability tests (`Defaults` and `ReentrantReplacement`): 2/2 passed in both normal and simulated modes with seed 13902. - Clang-format and `git diff --check` passed. ### Earlier validation - Existing TSS comparison, load-balancing hook, and `waitValueOrSignal` tests: 6/6 passed in both modes. - Compiled and linked `fdbrpclinktest`, `fdbclient_test`, `fdbrpc_test`, `fdbserver_core_test`, and `fdbserver`; executed the independent RPC link test successfully. - Two unchanged `tests/fast/CycleTest.toml` runs with BUGGIFY off and fault injection on: all four test phases passed, with no severity-40 trace events. - Clang-format 19 and `git diff --check` passed. The simulation runs selected normal and mutation-dropping TSS configurations, but neither completed TSS pairing. They provide general integration coverage, not proof of active TSS request comparison or injected faults; the retained focused tests cover fail-closed capability dispatch and reentrant policy lifetime directly.",
+      "url": "https://github.com/apple/foundationdb/pull/13902",
+      "createdAt": "2026-08-18T19:12:01Z",
+      "updatedAt": "2026-08-19T17:13:26Z",
+      "timestamp": "2026-08-19T17:13:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 22
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13903",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "fdbclient: after unlink of per-thread library copy, symlink to original",
+      "text": "This is an attempt to enable profilers (and debuggers etc) to find the dynamic library file for symbols and \"buildid\" (used to lookup debug symbols if they are separate). There is a lot to explain about these behaviors in libfdb_c: It seems the library must have global state that should not be shared between threads, so there must be separate loaded copies that get their own global data/bss areas in the process memory space. Real file copies need to be used instead of symlinks in the first place, otherwise the OS kernel will treat it as the already-loaded dynamic library. The `unlinkOnLoad` is to prevent many copies of library file accumulating and filling the storage volume, if the process is being restarted periodically. After the name in the filesystem is unlinked, the loaded library reference in the running process keeps the inode and filedata alive in the filesystem, until the process ends and the OS kernel cleans up. There is no place in fdbclient or libfdb_c where the \"external\" loaded dynamic library is explicitly unloaded, there are no destructors for these client objects. Anyway, if the running process was crashing and restarting, graceful cleanup would not run, so the unlinkOnLoad trick makes sense to let the OS kernel clean up. There is already a \"network\" option to keep the library file copies. This new symlink behavior should be a much lighter-weight alternative that can be left on everywhere. ------------------- I haven't really tested this, I'll need some help to figure out a semi-realistic setup. I assume that another copy of the original library path, in each DLApi class (in each thread), is no problem. But it is slightly awkward, making this kinda awkward logic a tiny bit worse. I tried a refactor, ran into a bit of awkwardness, maybe I should try again...",
+      "url": "https://github.com/apple/foundationdb/pull/13903",
+      "createdAt": "2026-08-18T20:13:57Z",
+      "updatedAt": "2026-08-19T17:10:47Z",
+      "timestamp": "2026-08-19T17:10:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 20
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13904",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "build: always compress debug section, cleanup debug level",
+      "text": "Debug section compression \"-gz\" was disabled for FDB_RELEASE because of compatibility with cpack (from cmake), but we really want them compressed for distribution to be practical. The more recent cmake/cpack 3.31.0 we now use seems to work. Instead of using -ggdb, use -gdwarf-4 or -gddwarf-5 with level -g3 or -g2 or -g1. It amounts to the same, but more clearly. ------------ I'll be honest, on my (okteto) dev VM, building the RPMs is very slow, it takes like 90 minutes 😬 ... seems to be cpu-limited, maxing-out 2 cpu cores? I'm investigating this now, will fix ... More details from https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html > -ggdb > Produce debugging information for use by GDB. This means to use the most expressive format available (DWARF, stabs, or the native format if neither of those are supported), including GDB extensions if at all possible. > -gdwarf > -gdwarf-_version_ > Produce debugging information in DWARF format (if that is supported). The value of _version_ may be either 2, 3, 4 or 5; the default version for most targets is 5 (with the exception of VxWorks, TPF and Darwin / macOS, which default to version 2, and AIX, which defaults to version 4). > -g _level_ > -ggdb _level_ > Request debugging information and also use _level_ to specify how much information. The default level is 2. > Level 0 produces no debug information at all. Thus, -g0 negates -g. > Level 1 produces minimal information, enough for making backtraces in parts of the program that you don’t plan to debug. This includes descriptions of functions and external variables, and line number tables, but no information about local variables. > Level 2 is the normal setting to produce debuggable code. The debug output includes all the information from level 1, plus information about local variables and typedefs to allow stepping through code and examining its state. For C++ code, additional information is also emitted to assist in debugging namespace, class, and template functions. > Level 3 includes extra information, such as all the macro definitions present in the program. Some debuggers support macro expansion when you use -g3. > If you use multiple -g options, with or without level numbers, the last such option is the one that is effective. > -gdwarf does not accept a concatenated debug level, to avoid confusion with -gdwarf-_level_. Instead use an additional -g _level_ option to change the debug level for DWARF.",
+      "url": "https://github.com/apple/foundationdb/pull/13904",
+      "createdAt": "2026-08-18T23:03:35Z",
+      "updatedAt": "2026-08-19T17:56:24Z",
+      "timestamp": "2026-08-19T17:56:24Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 16
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13905",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "[release-7.4] packaging/docker: update to kubectl 1.31.14 for YCSB image",
+      "text": "k8s 1.31 is the oldest allowed version on AWS EKS now, and version of kubectl shouldn't drift *too far* from k8s control-plane backport of https://github.com/apple/foundationdb/pull/13888",
+      "url": "https://github.com/apple/foundationdb/pull/13905",
+      "createdAt": "2026-08-19T16:35:20Z",
+      "updatedAt": "2026-08-20T01:02:50Z",
+      "timestamp": "2026-08-20T01:02:50Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 11
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13906",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Move FDB well-known endpoint registry into `fdbclient`",
+      "text": "## Summary Follow up on #13180 by moving the FoundationDB well-known endpoint registry from `fdbrpc` to `fdbclient`. - Give every existing application ID an explicit value. Transport IDs remain 0–2, FDB IDs remain 3–24, and the FDB reservation count remains 25. The protocol-info endpoint is still 10. - Let generic hostname RPC helpers accept neutral integer endpoint IDs. Pass the reservation count into the shared unit-test simulator; FDB callers retain the full application range, while standalone RPC and TLS tests use only the transport range. - Enforce the transport's minimum and exclusive reservation bounds. Add regression coverage for dynamic endpoint allocation and reuse, reserved-slot protection, and token encoding. FDB's existing reservation layout and wire-token encoding are unchanged. ## Validation After removing the redundant registry and hostname-signature tests: - Rebuilt and linked `fdbrpc_test` with Clang, Release, and `USE_WERROR=ON`. - `/fdbrpc/FlowTransport/WellKnownEndpointReservations` passed in both normal and simulated modes. Earlier validation of the unchanged production refactor: - Clang 19 Release builds and links with `USE_WERROR=ON` for `fdbrpc_test`, `fdbclient_test`, `fdbserver_core_test`, `fdbrpclinktest`, `authz_tls_unittest`, and `fdbserver`. - Focused transport, hostname/networked-future, client, and core interface-serialization tests passed. - Independent `fdbrpclinktest` execution and all 39 `authz_tls_unittest` cases passed. - Unchanged `tests/fast/ProtocolVersion.toml`, seed 1, BUGGIFY off, fault injection off: passed, with `ProtocolVersionTest` completion and no severity-40 trace events.",
+      "url": "https://github.com/apple/foundationdb/pull/13906",
+      "createdAt": "2026-08-19T16:50:37Z",
+      "updatedAt": "2026-08-19T20:47:32Z",
+      "timestamp": "2026-08-19T20:47:32Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 21
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13907",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Convert CoroFlow actors to standard C++ coroutines",
+      "text": "## Summary Convert the Boost and libcoro CoroFlow implementations to regular `.cpp` files using standard C++ coroutines. Preserve the public thread-pool interface, task priorities, and stack-switch scheduling boundaries. The mechanical conversion exposed a pool-lifecycle slowdown. Complete the error watcher through a private shutdown signal, retain the pool across cancellation callbacks that may release its last owner, and keep implicit cleanup inside the coroutine's exception boundary. Use detached coroutines only for discarded fire-and-forget scheduling results. Failed explicit cleanup retains its existing implicit-cleanup retry. Add focused lifecycle/error tests and a production-linked `fdbserver_coroflow_bench` target. ## Validation - All 11 `/fdbserver/CoroFlow/` tests pass on both backends in Net2 and Sim2. Across the original implementation and four incremental coroutine variants, all 440 test executions pass. - SQLite-backed `CycleTest.toml` passes on both optimized backends with seed `20260818`, BUGGIFY, and fault injection enabled. - Formatting and `git diff --check` pass. ## Performance Compared with the actor implementation at the branch's [public base](https://github.com/apple/foundationdb/commit/368414496b3768aa2b4f09165bfd495dde781af9). Measured on Linux x86-64 with Clang 19.1.5, Release `-O3`, static libc++, LLD, and jemalloc; sanitizers and profiling disabled. The same `^coroflow_` benchmark harness was used for all variants in forward/reverse order on one pinned CPU, with nine repetitions per invocation and a one-second minimum for the main benchmarks. | Backend | Operation | Original actors | Mechanical conversion | Optimized | |---|---|---:|---:|---:| | libcoro | Start/stop | 7.650 µs | 9.390 µs | 7.645 µs | | libcoro | Suspended wait | 1.663 µs | 1.698 µs | 1.687 µs | | Boost | Start/stop | 4.652 µs | 5.940 µs | 4.486 µs | | Boost | Suspended wait | 262.9 ns | 246.9 ns | 239.2 ns | Ready waits are effectively unchanged. The large start/stop regression is removed in this measurement, but the change is not performance-neutral everywhere: libcoro suspended waits remain 1.41% slower, and empty-pool create/drop costs approximately 153 ns more on libcoro and 247 ns more on Boost. These are focused microbenchmark results, not an end-to-end throughput or statistical-equivalence claim.",
+      "url": "https://github.com/apple/foundationdb/pull/13907",
+      "createdAt": "2026-08-19T16:55:41Z",
+      "updatedAt": "2026-08-19T22:51:00Z",
+      "timestamp": "2026-08-19T22:51:00Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 21
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13908",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "always increment finishedQueries counter if incrementing allQueries",
+      "text": "Forward-port of #13786 to 7.4. I've tested locally and it works correctly.",
+      "url": "https://github.com/apple/foundationdb/pull/13908",
+      "createdAt": "2026-08-19T17:44:27Z",
+      "updatedAt": "2026-08-19T21:04:37Z",
+      "timestamp": "2026-08-19T21:04:37Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "jkt-signal",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13909",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "Move proxy load metric decoding into `fdbclient`",
+      "text": "## Summary Follow up on #13180 by moving FoundationDB's GRV transaction-rate versus CPU interpretation of proxy load feedback out of `fdbrpc`. - Require an explicit metric policy on `ModelInterface` and preserve it through `basicLoadBalance`. - Define CPU and GRV metric policies in `fdbclient`, selected by `CommitProxyInfo` and `GrvProxyInfo`. Decode the packed value and read the minimum-load thresholds at probability-update time, as before. - Keep the serialized `processBusyTime` field, server encoding, knob names/defaults, probability calculation, stale-sample behavior, retry logic, and production random draws unchanged. - Add one behavioral test using the real proxy aliases. It checks weighted selection, minimum-load boundaries, signed/carry decoding, and live precision changes. ## Validation - `fdbrpc_test`, `fdbclient_test`, and `fdbserver` compiled and linked with Clang, Release, and `USE_WERROR=ON`. - Nine focused unit-test passes: the new proxy-metric test, existing load-balance hook tests, and TSS comparison coverage in normal and simulated modes, plus the new test through the full server unit-test runner. - Standalone `fdbrpclinktest` built, linked, and exited successfully. - Unchanged `tests/fast/CycleTest.toml` passed both `Clogged` and `Unclogged` with seed `424242`, BUGGIFY off, and fault injection on. Its trace confirmed GRV traffic and contained no severity-40 events.",
+      "url": "https://github.com/apple/foundationdb/pull/13909",
+      "createdAt": "2026-08-19T18:49:29Z",
+      "updatedAt": "2026-08-20T02:23:30Z",
+      "timestamp": "2026-08-20T02:23:30Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 19
+      },
+      "labels": [],
+      "author": "tclinkenbeard-oai",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13910",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "bindings/python: install python \"build\" pkg only if missing",
+      "text": "to reduce requests to PyPI during CI builds ... also, add pip install retries to `test_venv_setup`, also to try to deal with occasional PyPI 502 responses.",
+      "url": "https://github.com/apple/foundationdb/pull/13910",
+      "createdAt": "2026-08-19T20:46:45Z",
+      "updatedAt": "2026-08-20T01:56:51Z",
+      "timestamp": "2026-08-20T01:56:51Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 21
+      },
+      "labels": [],
+      "author": "ploxiln",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13911",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "always increment finishedQueries counter if incrementing allQueries",
+      "text": "Forward-port of #13786 to main. I've tested it locally; the buggy behavior it fixes is still observable in main, and is fixed by this change.",
+      "url": "https://github.com/apple/foundationdb/pull/13911",
+      "createdAt": "2026-08-19T20:48:18Z",
+      "updatedAt": "2026-08-19T21:13:49Z",
+      "timestamp": "2026-08-19T21:13:49Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "jkt-signal",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:apple/foundationdb:pull_request:13912",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "apple/foundationdb",
+      "kind": "pull_request",
+      "title": "[release-7.4] Forward-port stale peer fixes (storage server, commit/grv proxy)",
+      "text": "## Summary Forward-ports the stale-peer connection-timeout fixes from release-7.3 to release-7.4, per https://radar.apple.com/184531294. Ported from: - #13367 \"[release-7.3] Fix stale peers for client facing roles (storage server, commit proxy, grv proxy)\" - #13643 \"[release-7.3] Process ranges in chunks when evicting stale peers\" Squashed into a single commit here, applied in that order since #13643 depends on the `invalidateCacheByAddress` path #13367 introduced. ## What it does Client processes can keep stale RequestStream references to dead storage-server/proxy peers (via `DatabaseContext::locationCache` and `MonitorLeader::shrinkProxyList`'s sampled subset), causing connection-timeout churn. Adds opt-in draining of dead-peer connections: a per-DatabaseContext peer evictor driven by a persistent per-address connect-failed counter, a shrinkProxyList cache clear below the connection cap, eager proxy rebuild on clientInfo change, and an InterfaceTracker observability layer (all gated by knobs, default off in production). `invalidateCacheByAddress(es)` processes ranges in chunks and yields between chunks to avoid hogging the event loop on large caches. Includes `StalePeerTest`, a deterministic repro workload. ## Conflicts resolved during the port release-7.4 had already diverged from 7.3 in ways that touch the same files: - `tests/CMakeLists.txt`, `fdbclient/NativeAPI.actor.cpp`, `fdbclient/include/fdbclient/CommitProxyInterface.h`, `fdbrpc/include/fdbrpc/FlowTransport.h`, `fdbserver/SimulatedCluster.actor.cpp` -- 7.4 additions kept alongside the ported code (no functionality dropped from either side). - `fdbclient/include/fdbclient/StorageServerInterface.h` -- kept 7.4's simplified `serialize()` (which already dropped old protocol-version branching) and inserted only the InterfaceTracker hook into it. ## Fixes made beyond a straight port 1. **`StalePeerTest.toml` tuning for 7.4.** release-7.4 weights simulation storage-engine selection heavily toward RocksDB-family engines (`PROBABILITY_FACTOR_SHARDED_ROCKSDB_ENGINE_SELECTED_SIM=100`, a knob that doesn't exist on 7.3; `PROBABILITY_FACTOR_ROCKSDB_ENGINE_SELECTED_SIM` went from 2 on 7.3 to 100 on 7.4). ShardedRocksDB's slower post-kill shard relocation occasionally exceeded the test's original 60s `waitAfterKill` window -- unrelated to the stale-peer eviction logic itself, which was confirmed working correctly via trace analysis (it detects and re-evicts every 5s; DD relocation was just slow to complete). Excluded `SHARDED_ROCKSDB` (`storageEngineExcludeTypes = [5]`, same precedent as `tests/fast/DDPipelineSaturation.toml`) and bumped `waitAfterKill` 60.0 -> 120.0 to absorb the remaining engine-agnostic timing variance. ## Testing - General 100K, before/after: - baseline: `20260813-172150-praza-port-7.4-stalepeer-combined-base-0cc6fb276599316425f4eac6b58f53a1b4412fb8` -- pass=99999/100000 - ported: `20260813-175001-praza-port-7.4-stalepeer-combined-c54df8b1eedf0d3d348a57cab037ecdf4fb7e64c` -- pass=100000/100000 - `StalePeerTest` 10K (new test, no baseline counterpart): `20260814-180055-praza-port-7.4-stalepeer-combined-StalePeerTest-058497d3a` -- pass=10000/10000 after the two toml fixes above.",
+      "url": "https://github.com/apple/foundationdb/pull/13912",
+      "createdAt": "2026-08-19T21:29:39Z",
+      "updatedAt": "2026-08-20T01:47:17Z",
+      "timestamp": "2026-08-20T01:47:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 12
+      },
+      "labels": [],
+      "author": "spraza",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:b7ae214d4be871b28d74",
+      "signalId": "github:apple/foundationdb:pull_request:13854",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13854",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert LoadBalance.actor.h to standard coroutines",
+        "text": "## Summary - Convert load-balancing, replica-comparison, and TSS-comparison actors to standard C++ coroutines. - Consolidate the migrated implementation into `fdbrpc/LoadBalance.h` and update direct includes so the header no longer requires actor compilation. - Preserve request ownership, cancellation, inert `Never()` handling, race ordering, replica consistency checks, and `Void`-reply compatibility. ## Testing - `fdbrpc_test -f /fdbrpc/waitValueOrSignal/` — 3 tests passed. - `fdbclient_test -f /StorageServerInterface/TSSCompare/` — 1 test passed. - Built `fdbserver` successfully. - `tests/fast/CycleTest.toml` with replica consistency checking enabled — 2 simulation tests passed. - `clang-format` and `git diff --check` passed.",
+        "url": "https://github.com/apple/foundationdb/pull/13854",
+        "createdAt": "2026-08-12T10:34:28Z",
+        "updatedAt": "2026-08-20T02:25:40Z",
+        "timestamp": "2026-08-20T02:25:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 37
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:cdfd49ea59d052fde0b1",
+      "signalId": "github:apple/foundationdb:pull_request:13909",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13909",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Move proxy load metric decoding into `fdbclient`",
+        "text": "## Summary Follow up on #13180 by moving FoundationDB's GRV transaction-rate versus CPU interpretation of proxy load feedback out of `fdbrpc`. - Require an explicit metric policy on `ModelInterface` and preserve it through `basicLoadBalance`. - Define CPU and GRV metric policies in `fdbclient`, selected by `CommitProxyInfo` and `GrvProxyInfo`. Decode the packed value and read the minimum-load thresholds at probability-update time, as before. - Keep the serialized `processBusyTime` field, server encoding, knob names/defaults, probability calculation, stale-sample behavior, retry logic, and production random draws unchanged. - Add one behavioral test using the real proxy aliases. It checks weighted selection, minimum-load boundaries, signed/carry decoding, and live precision changes. ## Validation - `fdbrpc_test`, `fdbclient_test`, and `fdbserver` compiled and linked with Clang, Release, and `USE_WERROR=ON`. - Nine focused unit-test passes: the new proxy-metric test, existing load-balance hook tests, and TSS comparison coverage in normal and simulated modes, plus the new test through the full server unit-test runner. - Standalone `fdbrpclinktest` built, linked, and exited successfully. - Unchanged `tests/fast/CycleTest.toml` passed both `Clogged` and `Unclogged` with seed `424242`, BUGGIFY off, and fault injection on. Its trace confirmed GRV traffic and contained no severity-40 events.",
+        "url": "https://github.com/apple/foundationdb/pull/13909",
+        "createdAt": "2026-08-19T18:49:29Z",
+        "updatedAt": "2026-08-20T02:23:30Z",
+        "timestamp": "2026-08-20T02:23:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 19
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d679cc9604ef59ddd8da",
+      "signalId": "github:apple/foundationdb:pull_request:13910",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13910",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "bindings/python: install python \"build\" pkg only if missing",
+        "text": "to reduce requests to PyPI during CI builds ... also, add pip install retries to `test_venv_setup`, also to try to deal with occasional PyPI 502 responses.",
+        "url": "https://github.com/apple/foundationdb/pull/13910",
+        "createdAt": "2026-08-19T20:46:45Z",
+        "updatedAt": "2026-08-20T01:56:51Z",
+        "timestamp": "2026-08-20T01:56:51Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 21
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a4d7b687ed7217cd7bb9",
+      "signalId": "github:apple/foundationdb:pull_request:13912",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13912",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "[release-7.4] Forward-port stale peer fixes (storage server, commit/grv proxy)",
+        "text": "## Summary Forward-ports the stale-peer connection-timeout fixes from release-7.3 to release-7.4, per https://radar.apple.com/184531294. Ported from: - #13367 \"[release-7.3] Fix stale peers for client facing roles (storage server, commit proxy, grv proxy)\" - #13643 \"[release-7.3] Process ranges in chunks when evicting stale peers\" Squashed into a single commit here, applied in that order since #13643 depends on the `invalidateCacheByAddress` path #13367 introduced. ## What it does Client processes can keep stale RequestStream references to dead storage-server/proxy peers (via `DatabaseContext::locationCache` and `MonitorLeader::shrinkProxyList`'s sampled subset), causing connection-timeout churn. Adds opt-in draining of dead-peer connections: a per-DatabaseContext peer evictor driven by a persistent per-address connect-failed counter, a shrinkProxyList cache clear below the connection cap, eager proxy rebuild on clientInfo change, and an InterfaceTracker observability layer (all gated by knobs, default off in production). `invalidateCacheByAddress(es)` processes ranges in chunks and yields between chunks to avoid hogging the event loop on large caches. Includes `StalePeerTest`, a deterministic repro workload. ## Conflicts resolved during the port release-7.4 had already diverged from 7.3 in ways that touch the same files: - `tests/CMakeLists.txt`, `fdbclient/NativeAPI.actor.cpp`, `fdbclient/include/fdbclient/CommitProxyInterface.h`, `fdbrpc/include/fdbrpc/FlowTransport.h`, `fdbserver/SimulatedCluster.actor.cpp` -- 7.4 additions kept alongside the ported code (no functionality dropped from either side). - `fdbclient/include/fdbclient/StorageServerInterface.h` -- kept 7.4's simplified `serialize()` (which already dropped old protocol-version branching) and inserted only the InterfaceTracker hook into it. ## Fixes made beyond a straight port 1. **`StalePeerTest.toml` tuning for 7.4.** release-7.4 weights simulation storage-engine selection heavily toward RocksDB-family engines (`PROBABILITY_FACTOR_SHARDED_ROCKSDB_ENGINE_SELECTED_SIM=100`, a knob that doesn't exist on 7.3; `PROBABILITY_FACTOR_ROCKSDB_ENGINE_SELECTED_SIM` went from 2 on 7.3 to 100 on 7.4). ShardedRocksDB's slower post-kill shard relocation occasionally exceeded the test's original 60s `waitAfterKill` window -- unrelated to the stale-peer eviction logic itself, which was confirmed working correctly via trace analysis (it detects and re-evicts every 5s; DD relocation was just slow to complete). Excluded `SHARDED_ROCKSDB` (`storageEngineExcludeTypes = [5]`, same precedent as `tests/fast/DDPipelineSaturation.toml`) and bumped `waitAfterKill` 60.0 -> 120.0 to absorb the remaining engine-agnostic timing variance. ## Testing - General 100K, before/after: - baseline: `20260813-172150-praza-port-7.4-stalepeer-combined-base-0cc6fb276599316425f4eac6b58f53a1b4412fb8` -- pass=99999/100000 - ported: `20260813-175001-praza-port-7.4-stalepeer-combined-c54df8b1eedf0d3d348a57cab037ecdf4fb7e64c` -- pass=100000/100000 - `StalePeerTest` 10K (new test, no baseline counterpart): `20260814-180055-praza-port-7.4-stalepeer-combined-StalePeerTest-058497d3a` -- pass=10000/10000 after the two toml fixes above.",
+        "url": "https://github.com/apple/foundationdb/pull/13912",
+        "createdAt": "2026-08-19T21:29:39Z",
+        "updatedAt": "2026-08-20T01:47:17Z",
+        "timestamp": "2026-08-20T01:47:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 12
+        },
+        "labels": [],
+        "author": "spraza",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:37967dc062c84a788eeb",
+      "signalId": "github:apple/foundationdb:pull_request:13722",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13722",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Backport to 7.4: Add metadata encoding (SHARD_ENCODE_LOCATION_METADATA) audit, rollback support, and tests (#13310)",
+        "text": "Adds tooling and code to support safe SHARD_ENCODE_LOCATION_METADATA rollback and migration verification: audit_storage metadata_encoding: New AuditType that scans keyServers and serverKeys to report encoding format counts (old tag-based vs new UID-based). Reports migration status: FORWARD COMPLETE / ROLLBACK IN PROGRESS / ROLLBACK COMPLETE. DD startup rewrite (DDTxnProcessor.cpp): When SHARD_ENCODE=false, clears stale DataMoveMetaData and rewrites shard-encoded keyServers entries to old format. serverKeys entries are left in place (readable in both formats, drain naturally). MoveKeys graceful bail (MoveKeys.cpp): Functions that require shard-encoding throw dd_config_changed instead of asserting when they detect the knob flipped or DataMoveMetaData is unexpectedly empty from a concurrent DD restart. Error handling (DataDistribution.cpp, DDRelocationQueue.actor.cpp): dd_config_changed added to normalDDQueueErrors to prevent SevError logging for expected operational restarts. Knob infrastructure (ServerKnobs.cpp): SHARD_ENCODE randomization respects explicitlySetKnobs so TOML overrides take effect in simulation tests. Tests: - CheckMetadataEncodingForward.toml: verifies new-format entries - CheckMetadataEncodingOldPath.toml: verifies old-format entries - ShardEncodeRollback.toml: full rollback test with Attrition, Rollback (TLog recovery), data consistency check Documentation: - design/shard-encode-location-metadata.md: full feature description This PR includes the below: > Author: Trevor Clinkenbeard <tclinkenbeard@openai.com> > Date: Fri Jul 17 12:51:45 2026 -0700 > > Reject anonymous shard-encoded data moves > > Backport of cb05ba78c64b84ae1a0802dd0b882f1a2b421d42 to release-7.4. ... because it fixes an issue seen in joshua runs. ` 20260717-052456-stack_backport-ec9bf69168b7233a compressed=True data_size=41579193 duration=3999432 ended=100000 fail=1 fail_fast=10 max_runs=100000 pass=99999 priority=100 remaining=0 runtime=0:27:19 sanity=False started=100000 stopped=20260717-055215 submitted=20260717-052456 timeout=5400 username=stack_backport` Unrelated `RandomSeed=\"3851425773\" SourceVersion=\"9e00776821b82db4969af20d2f88bf82ab2e178f\" Time=\"1784266992\" BuggifyEnabled=\"0\" DeterminismCheck=\"0\" FaultInjectionEnabled=\"1\" TestFile=\"tests/fast/MinimumThroughput.toml\"`",
+        "url": "https://github.com/apple/foundationdb/pull/13722",
+        "createdAt": "2026-07-17T20:29:30Z",
+        "updatedAt": "2026-08-20T01:41:49Z",
+        "timestamp": "2026-08-20T01:41:49Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 36
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f352d648452b3eb09073",
+      "signalId": "github:apple/foundationdb:pull_request:13897",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13897",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Make DD relocation retry observations resilient to delay jitter",
+        "text": "## Summary The merged-shard retry test waits slightly longer than one polling interval and expects exactly two requests. Simulation delay jitter can extend that observation across multiple valid retry rounds, making the final empty-stream assertion fail. Observe four consecutive requests as they arrive, verify their merged range and failed-team priority, and check that no three observed requests fall within one polling interval. Keep a bounded wait for missing retries, then stop the observation and yield before destroying the fixture because stream sends invoke callbacks synchronously. No production behavior or workload configuration changes. ## Validation - Clang Release build of `fdbserver_datadistributor_test` and `fdbserver`. - On this branch, the complete default Data Distributor unit suite passed all 50 tests in both native and simulation modes. The focused TeamTracker and shard-mapping regressions also passed in both modes. - Matched `SpecificUnitTests.toml` simulation reproduction on one source baseline: unchanged source fails; the fix passes with the same test and injection settings.",
+        "url": "https://github.com/apple/foundationdb/pull/13897",
+        "createdAt": "2026-08-18T02:25:27Z",
+        "updatedAt": "2026-08-20T01:38:55Z",
+        "timestamp": "2026-08-20T01:38:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:f555f65ada0f4fc08daa",
+      "signalId": "github:apple/foundationdb:pull_request:13642",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13642",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "(Backport to 7.4): DD finishMoveKeys: move waitForShardReady outside transaction (#13364)",
+        "text": "Backport 0887ae6d29 from main to release-7.4 ``` ## Backport notes - Branch `release-7.4` uses Flow actors (`.actor.cpp`, `state` keyword, `wait()` macro) rather than main's C++20 coroutines (`co_await`). Local variables that need to cross a `wait()` point are declared with `state`; return statements use `return`, not `co_return`. - `constexpr` is not compatible with `state` variables on 7.4. - Otherwise the change is behavior-identical to the main PR. ``` DD finishMove*: drop the transaction across waitForShardReady SERVER_READY_QUORUM_TIMEOUT (15s) was used inside a transaction with a ~5s lifetime (MAX_WRITE_TRANSACTION_LIFE_VERSIONS). When destination servers were slow to respond, the wait alone consumed the txn budget, and commits failed with transaction_too_old — retries too, cascading into the DD pipeline stalls observed in incidents. Restructure both finish-move functions (finishMoveKeys / finishMoveShards, dispatched on SHARD_ENCODE_LOCATION_METADATA) into a two-transaction pattern with the wait in between: Transaction 1: read keyServers / serverTags / serverList (and dataMove metadata for finishMoveShards) via the new readShardState() helper. Save the read version and drop the transaction (tr.reset()). Wait: waitForShardReady — runs OUTSIDE any transaction; the 15s timeout is now safe. Transaction 2: re-verify via destUnchanged() (dest hasn't changed, dataMove still in Running phase for finishMoveShards), then commit metadata writes. If the destination changed during the wait, the inner loop retries from the top — same as today's behaviour on transient errors, just without burning the txn budget on the wait itself. Verification & retry details: * destUnchanged() loops every sub-range, not just keyServers[0]. The keys-flavor (`expectedDataMoveId={}`) tolerates empty-dest entries whose src ⊆ expectedDest — matching the planning loop's `alreadyMoved = dest2.empty() && isSubset` branch, which lets sibling iterations of OUR move that already completed pass through. A foreign src on an empty-dest entry signals a different move owns the range and forces a retry to avoid clobbering it. The shards-flavor uses the dataMoveId stamp as the per-sub-range invariant. * All retry paths (dest-changed, data-move-deleted, phase-changed, plus the count-mismatch else-branch in finishMoveShards) are bounded by FINISH_MOVE_KEYS_MAX_RETRIES and back off via finishMoveKeysBackoff(). Without the cap the dest-changed branch could livelock; the shards- side count-mismatch path was previously unbounded. * Txn 2's writes use the post-wait snapshot: keyServersValue uses reread.uidToTagMap; finishMoveShards introduces a postWaitDataMove local so the partial-complete / deleteCheckpoints / dataMoveValue writes reflect the fresh dataMove state. * runPreCheck=false is set inline on each retry path. The partial-complete success-continue deliberately leaves runPreCheck alone so chunks 2..N of a multi-transaction move each get their own AUDIT_DATAMOVE_PRE_CHECK. * finishMoveShards now takes finishMoveKeysParallelismLock per iteration (mirroring finishMoveKeys). The lock had been function- scoped and released mid-iteration before the wait, so retries ran lockless and silently exceeded MOVE_KEYS_PARALLELISM. * taskID = TaskPriority::MoveKeys is restored on txn 2 in both functions (tr.reset() drops it). * New CODE_PROBEs (\"dest changed\", \"data move deleted\", \"phase changed\") are marked probe::decoration::rare; reaching them requires a concurrent reassignment racing into the wait window. * SHARD_READY_DELAY is buggified to 5.0s to exercise the slow-dest scenario in simulation. Validation: * k8s rig: 3 transaction_too_old events vs 360,289 in the prior run without the patch; 0 OOMs. * Simulation (DDPipelineStall.toml, knob ON): cascade trigger eliminated; transaction_too_old goes to zero; residual TryFinishMoveShardsError events are not_committed which retry cleanly. ` 20260701-232737-stack-backport-74-028aaba11a9b3a30 compressed=True data_size=41562049 duration=3423521 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:29:46 sanity=False started=100000 stopped=20260701-235723 submitted=20260701-232737 timeout=5400 username=stack-backport-74 `",
+        "url": "https://github.com/apple/foundationdb/pull/13642",
+        "createdAt": "2026-07-02T18:49:23Z",
+        "updatedAt": "2026-08-20T01:26:06Z",
+        "timestamp": "2026-08-20T01:26:06Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 22
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:3e2e3770e0c07e2d7852",
+      "signalId": "github:apple/foundationdb:pull_request:13786",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13786",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "always increment finishedQueries counter if incrementing allQueries",
+        "text": "Storage server processes publish a pair of counters `total_queries` and `finished_queries` (as well as a derived special counter `query_queue_max`) tracking how many read operations have been started and finished (and the high-water-mark for the number of pending queries—those that have been started, but not finished—in a status-fetch interval). Unfortunately, the counter underlying `total_queries` was incremented at the beginning of one of several actors, and the matching increment to `finished_queries` was done at the end, with several intervening `wait`s. If the actor was cancelled (or experienced another non-returnable error), `finished_queries` was not incremented, resulting in a permanent drift between `total_queries` and `all_queries` and apparently endless growth in `query_queue_max`. The easiest way to demonstrate this behavior is to have two different clients alternate between setting watches and updating values for the same keys—for example, run two simultaneous instances of this [simple Java program](https://gist.github.com/jkt-signal/1c3ea2a4a6aafd51571b462c57b50fd9) against a single database, and monitor its status to see `query_queue_max` on storage servers go up permanently every time you run the test. To solve this problem, we add a simple class `CountedSection` to `flow/Stats.h` to bump two counters in RAII-enforced balance; once a local `CountedSection` has bumped the first counter, it will always eventually bump the second one whether it is destroyed as a result of normal exit or exception. (Of course, if you store one in a heap object and leak it, you will still experience drift, so, uh, don't do that.) `CountedSection` is made move-only so you can use it in actor state, since `state` variables seem to always be default-constructed and then assigned to their initializers even if the initialization comes before the first `wait` in an actor. One of the actors involved actually updates a second counter pair, `getMappedRangeQueries` and `finishedGetMappedRangeQueries`, in a way vulnerable to the same problem, so we use `CountedSection` to address that as well, though I have not seen any instances of these getting out of sync (entirely due to lack of trying). Some other metrics updated at the ends of the affected actors—mostly latency metrics, but also some tagged size distributions—are not addressed by this change. Arguably they should not be, since including latency and response size of interrupted queries may significantly throw off the statistics in a not-necessarily-useful way. Leaving this as an RFC because I'm not sufficiently familiar with the FoundationDB testing setup to write a good test; the Java program linked above is a great demonstration but is not trivially adapted to an integration test (and presumably we'd like tests of the fdbserver itself to be C++, not dependent on the Java bindings). Advice for how to test the change greatly appreciated! This PR is against the 7.3 branch, rather than `main`, because all the relevant actors have been rewritten to use C++20 standard coroutines in the interim, and while I strongly suspect the same bug applies equally in `main`, I was not able to confirm this because `main` does not currently build a usable fdb for me. Porting forward to `main` should be relatively trivial and I'm happy to do so if requested.",
+        "url": "https://github.com/apple/foundationdb/pull/13786",
+        "createdAt": "2026-07-24T20:35:08Z",
+        "updatedAt": "2026-08-20T01:25:53Z",
+        "timestamp": "2026-08-20T01:25:53Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 32
+        },
+        "labels": [],
+        "author": "jkt-signal",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2ecbed52d67705f21dd2",
+      "signalId": "github:apple/foundationdb:pull_request:13870",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13870",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert Data Distribution monitoring actors to coroutines",
+        "text": "## Summary - Convert `storageServerFailureTracker`, `monitorStorageServerRecruitment`, and `waitServerListChange` from Flow actors to standard C++ coroutines. - Preserve failure-monitor race ordering, recruitment state transitions, server-removal stream handling, and the remaining actor-compiled code and tests. - Avoid starting a data-removal transaction when the higher-priority health-change branch is already ready. ## Validation - `clang-format --dry-run --Werror fdbserver/datadistributor/DDTeamCollection.actor.cpp` (clang-format 19.1.0) - `fdbserver_datadistributor_test --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/Recruitment/RecruitmentFailedCooldownReleasesId --seed 424242 --simulation` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242` - `fdbserver_datadistributor_test -f /DataDistribution/TeamTracker/ --seed 424242 --simulation`",
+        "url": "https://github.com/apple/foundationdb/pull/13870",
+        "createdAt": "2026-08-14T17:22:37Z",
+        "updatedAt": "2026-08-20T01:13:00Z",
+        "timestamp": "2026-08-20T01:13:00Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 44
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:2d3aaead6fc9cd48f2e2",
+      "signalId": "github:apple/foundationdb:pull_request:13905",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13905",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "[release-7.4] packaging/docker: update to kubectl 1.31.14 for YCSB image",
+        "text": "k8s 1.31 is the oldest allowed version on AWS EKS now, and version of kubectl shouldn't drift *too far* from k8s control-plane backport of https://github.com/apple/foundationdb/pull/13888",
+        "url": "https://github.com/apple/foundationdb/pull/13905",
+        "createdAt": "2026-08-19T16:35:20Z",
+        "updatedAt": "2026-08-20T01:02:50Z",
+        "timestamp": "2026-08-20T01:02:50Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5fc66984c1e2f1ba8a1d",
+      "signalId": "github:apple/foundationdb:pull_request:13907",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13907",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert CoroFlow actors to standard C++ coroutines",
+        "text": "## Summary Convert the Boost and libcoro CoroFlow implementations to regular `.cpp` files using standard C++ coroutines. Preserve the public thread-pool interface, task priorities, and stack-switch scheduling boundaries. The mechanical conversion exposed a pool-lifecycle slowdown. Complete the error watcher through a private shutdown signal, retain the pool across cancellation callbacks that may release its last owner, and keep implicit cleanup inside the coroutine's exception boundary. Use detached coroutines only for discarded fire-and-forget scheduling results. Failed explicit cleanup retains its existing implicit-cleanup retry. Add focused lifecycle/error tests and a production-linked `fdbserver_coroflow_bench` target. ## Validation - All 11 `/fdbserver/CoroFlow/` tests pass on both backends in Net2 and Sim2. Across the original implementation and four incremental coroutine variants, all 440 test executions pass. - SQLite-backed `CycleTest.toml` passes on both optimized backends with seed `20260818`, BUGGIFY, and fault injection enabled. - Formatting and `git diff --check` pass. ## Performance Compared with the actor implementation at the branch's [public base](https://github.com/apple/foundationdb/commit/368414496b3768aa2b4f09165bfd495dde781af9). Measured on Linux x86-64 with Clang 19.1.5, Release `-O3`, static libc++, LLD, and jemalloc; sanitizers and profiling disabled. The same `^coroflow_` benchmark harness was used for all variants in forward/reverse order on one pinned CPU, with nine repetitions per invocation and a one-second minimum for the main benchmarks. | Backend | Operation | Original actors | Mechanical conversion | Optimized | |---|---|---:|---:|---:| | libcoro | Start/stop | 7.650 µs | 9.390 µs | 7.645 µs | | libcoro | Suspended wait | 1.663 µs | 1.698 µs | 1.687 µs | | Boost | Start/stop | 4.652 µs | 5.940 µs | 4.486 µs | | Boost | Suspended wait | 262.9 ns | 246.9 ns | 239.2 ns | Ready waits are effectively unchanged. The large start/stop regression is removed in this measurement, but the change is not performance-neutral everywhere: libcoro suspended waits remain 1.41% slower, and empty-pool create/drop costs approximately 153 ns more on libcoro and 247 ns more on Boost. These are focused microbenchmark results, not an end-to-end throughput or statistical-equivalence claim.",
+        "url": "https://github.com/apple/foundationdb/pull/13907",
+        "createdAt": "2026-08-19T16:55:41Z",
+        "updatedAt": "2026-08-19T22:51:00Z",
+        "timestamp": "2026-08-19T22:51:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 21
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:760aa0b728d4d86d5684",
+      "signalId": "github:apple/foundationdb:pull_request:13911",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13911",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "always increment finishedQueries counter if incrementing allQueries",
+        "text": "Forward-port of #13786 to main. I've tested it locally; the buggy behavior it fixes is still observable in main, and is fixed by this change.",
+        "url": "https://github.com/apple/foundationdb/pull/13911",
+        "createdAt": "2026-08-19T20:48:18Z",
+        "updatedAt": "2026-08-19T21:13:49Z",
+        "timestamp": "2026-08-19T21:13:49Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "jkt-signal",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0ed701ebe4fd79660ae3",
+      "signalId": "github:apple/foundationdb:pull_request:13908",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13908",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "always increment finishedQueries counter if incrementing allQueries",
+        "text": "Forward-port of #13786 to 7.4. I've tested locally and it works correctly.",
+        "url": "https://github.com/apple/foundationdb/pull/13908",
+        "createdAt": "2026-08-19T17:44:27Z",
+        "updatedAt": "2026-08-19T21:04:37Z",
+        "timestamp": "2026-08-19T21:04:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "jkt-signal",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:b32525b21e9d0441712c",
+      "signalId": "github:apple/foundationdb:pull_request:13887",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13887",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Convert NativeAPI header actors to standard coroutines",
+        "text": "## Summary - Replace `NativeAPI.actor.h` with `NativeAPI.h` and convert `waitForCommittedVersion` and `splitStorageMetricsWithLocations` to C++ coroutines. - Preserve the exported signatures, argument ownership, race ordering, retries, cancellation, and split-result arena dependencies. - Update header consumers and preserve the multi-version-client dependency guard. Replace uses of the old header's leaked `loop` macro with `while (true)`. The remaining actors in `NativeAPI.actor.cpp` stay actor-compiled. The follow-up removes the standalone coroutine test file without changing the production conversion. ## Validation - After removing the standalone tests: `fdbclient_test` and `fdbserver` rebuilt successfully; client unit suite 92 passed; existing NativeAPI tests in Sim2 2 passed. - The original conversion passed Clang 19 Release builds of `fdbclient_test`, `fdbserver`, `fdbcli`/`fdbctl`, and `coro_tutorial`. - `Watches.toml`, `WatchCommitTimeout.toml`, and `DDPipelineSaturation.toml` passed on the unchanged production conversion before the test-file removal. - Clang-format and client/production-integration clang-tidy checks passed on the original conversion. Whole-file tutorial clang-tidy still reports three capturing-coroutine-lambda warnings and one integer-widening warning. All four reproduce unchanged on the base revision. No sanitizer build or broad correctness campaign was run.",
+        "url": "https://github.com/apple/foundationdb/pull/13887",
+        "createdAt": "2026-08-17T19:36:50Z",
+        "updatedAt": "2026-08-19T20:52:27Z",
+        "timestamp": "2026-08-19T20:52:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 29
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b6be6e46d26b5cc4640f",
+      "signalId": "github:apple/foundationdb:pull_request:13906",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13906",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Move FDB well-known endpoint registry into `fdbclient`",
+        "text": "## Summary Follow up on #13180 by moving the FoundationDB well-known endpoint registry from `fdbrpc` to `fdbclient`. - Give every existing application ID an explicit value. Transport IDs remain 0–2, FDB IDs remain 3–24, and the FDB reservation count remains 25. The protocol-info endpoint is still 10. - Let generic hostname RPC helpers accept neutral integer endpoint IDs. Pass the reservation count into the shared unit-test simulator; FDB callers retain the full application range, while standalone RPC and TLS tests use only the transport range. - Enforce the transport's minimum and exclusive reservation bounds. Add regression coverage for dynamic endpoint allocation and reuse, reserved-slot protection, and token encoding. FDB's existing reservation layout and wire-token encoding are unchanged. ## Validation After removing the redundant registry and hostname-signature tests: - Rebuilt and linked `fdbrpc_test` with Clang, Release, and `USE_WERROR=ON`. - `/fdbrpc/FlowTransport/WellKnownEndpointReservations` passed in both normal and simulated modes. Earlier validation of the unchanged production refactor: - Clang 19 Release builds and links with `USE_WERROR=ON` for `fdbrpc_test`, `fdbclient_test`, `fdbserver_core_test`, `fdbrpclinktest`, `authz_tls_unittest`, and `fdbserver`. - Focused transport, hostname/networked-future, client, and core interface-serialization tests passed. - Independent `fdbrpclinktest` execution and all 39 `authz_tls_unittest` cases passed. - Unchanged `tests/fast/ProtocolVersion.toml`, seed 1, BUGGIFY off, fault injection off: passed, with `ProtocolVersionTest` completion and no severity-40 trace events.",
+        "url": "https://github.com/apple/foundationdb/pull/13906",
+        "createdAt": "2026-08-19T16:50:37Z",
+        "updatedAt": "2026-08-19T20:47:32Z",
+        "timestamp": "2026-08-19T20:47:32Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 21
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:03d2c0d2ff0e41992983",
+      "signalId": "github:apple/foundationdb:pull_request:13877",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13877",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Exercise streaming range selector boundary cases",
+        "text": "## Summary - Extend the existing `StreamingRangeRead` workload to exercise exclusive begin and end key selectors. - Compare streamed selector results with ordinary range reads, including the exact expected keys. - Verify that an inverted streaming range immediately terminates with `end_of_stream`. ## Test Plan - `clang-format --dry-run --Werror fdbserver/workloads/StreamingRangeRead.cpp` - Built `fdbserver_workloads` and `fdbserver` with Clang. - `fdbserver -r simulation -f tests/fast/StreamingRangeRead.toml -s 41237 -b off`: passed, including all seven workload clients and the consistency check. - Confirmed that the exclusive begin, exclusive end, and inverted-range code probes were all covered.",
+        "url": "https://github.com/apple/foundationdb/pull/13877",
+        "createdAt": "2026-08-15T17:16:38Z",
+        "updatedAt": "2026-08-19T20:45:52Z",
+        "timestamp": "2026-08-19T20:45:52Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 21
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a0b132872c35d46ee5a2",
+      "signalId": "github:apple/foundationdb:pull_request:13875",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13875",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Test unsupported mapped-range read options",
+        "text": "## Summary - Extend the existing `GetMappedRange` simulation workload to reject mapped reads with snapshot isolation. - Assert that mapped reads also reject transactions with `READ_YOUR_WRITES_DISABLE`. - Cover both existing `unsupported_operation` paths without changing production behavior. ## Testing - `clang-format --dry-run --Werror fdbserver/workloads/GetMappedRange.cpp` - `fdbserver -r simulation -f tests/fast/GetMappedRange.toml`",
+        "url": "https://github.com/apple/foundationdb/pull/13875",
+        "createdAt": "2026-08-15T17:07:38Z",
+        "updatedAt": "2026-08-19T20:37:05Z",
+        "timestamp": "2026-08-19T20:37:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 15
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a1a33a1dc1bae17c0ad9",
+      "signalId": "github:apple/foundationdb:pull_request:13752",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13752",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "DD: config-driven bounded-time rollback of shard-encoded location metadata",
+        "text": "(Rewrite of the description after a request to move this PR to be totally configuration based which makes the PR better but meant more change. Intent is to backport this to 7.4.) Rolling SHARD_ENCODE_LOCATION_METADATA true->false could not reach `audit_storage metadata_encoding` ROLLBACK COMPLETE in bounded time: converged and \"safe to downgrade binary\" was unverifiable short of a storage wiggle (hours-to-days). This adds an opt-in, bounded-time DD-init rewrite that converges existing keyServers AND serverKeys back to old format and clears DataMoveMetaData, driven by two new DatabaseConfiguration options: configure shard_metadata_format = original | encoded (target format) configure shard_metadata_migration = enabled | disabled (run rewrite) Config is the source of truth for DD's encoding target, resolved once at init as `shard_metadata_format ?? SHARD_ENCODE_LOCATION_METADATA` (the knob is only the fallback when the config is UNSET) and used across all DD write/move paths -- so a rollback is driven by `configure shard_metadata_format=original` with no knob flip and no process restart (the configure triggers a recovery that re-inits DD). Deploying the binary is a byte-identical no-op until an operator opts in. A completion sentinel records ROLLBACK COMPLETE and fast-paths later inits. serverKeys are rewritten serially per storage server, so rewrite time scales with cluster size (minutes typically); progress is visible via DDShardEncode* trace events and the audit. Caveats (details in design/shard-encode-location-metadata.md and documentation/sphinx/source/command-line-interface.rst): - Binary downgrade: a pre-config binary reads only the knob, so downgrade is safe only at ROLLBACK COMPLETE with the target binary deployed SHARD_ENCODE_LOCATION_METADATA=false. - Known limitation: large teams (ddLargeTeamEnabled) and physical shard (ENABLE_DD_PHYSICAL_SHARD), mutually exclusive with shard encoding, still read the raw knob, not the config. Once shard_metadata_format is set, don't move the knob except for a downgrade. Tested: sim tests/fast/ShardEncodeRollback.toml (knob-fallback path) and tests/fast/ShardEncodeRollbackConfig.toml (config-only, no knob flip), each passing a 100,000-run joshua ensemble; plus a live-cluster forward->rollback->re-forward under mako load with DD-pod kills (test_shardencode_rollover_load, fdb-kubernetes-tests). Builds on #13310 (SHARD_ENCODE_LOCATION_METADATA audit + rollback support). Depends on #13670 (audit_storage counting fix, merged) to observe ROLLBACK COMPLETE. Here are two test runs. The first is just exercising the new test. The second is all joshua tests: ``` 20260724-183324-stack-pr2-shardencode-rollb-24db56d8fdb29f9d compressed=True data_size=38355992 duration=16719145 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=1:19:43 sanity=False started=100000 stopped=20260724-195307 submitted=20260724-183324 timeout=5400 username=stack-pr2-shardencode-rollback-rewrite-single 20260724-183332-stack-pr2-shardencode-rollb-1ff9ed3b7402c6ee compressed=True data_size=38345170 duration=3530901 ended=100000 fail_fast=10 max_runs=100000 pass=100000 priority=100 remaining=0 runtime=0:35:21 sanity=False started=100000 stopped=20260724-190853 submitted=20260724-183332 timeout=5400 username=stack-pr2-shardencode-rollback-rewrite-all ```",
+        "url": "https://github.com/apple/foundationdb/pull/13752",
+        "createdAt": "2026-07-20T17:56:28Z",
+        "updatedAt": "2026-08-19T19:24:41Z",
+        "timestamp": "2026-08-19T19:24:41Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 38
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3cb2da8f043814a81f2b",
+      "signalId": "github:apple/foundationdb:pull_request:13904",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13904",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "build: always compress debug section, cleanup debug level",
+        "text": "Debug section compression \"-gz\" was disabled for FDB_RELEASE because of compatibility with cpack (from cmake), but we really want them compressed for distribution to be practical. The more recent cmake/cpack 3.31.0 we now use seems to work. Instead of using -ggdb, use -gdwarf-4 or -gddwarf-5 with level -g3 or -g2 or -g1. It amounts to the same, but more clearly. ------------ I'll be honest, on my (okteto) dev VM, building the RPMs is very slow, it takes like 90 minutes 😬 ... seems to be cpu-limited, maxing-out 2 cpu cores? I'm investigating this now, will fix ... More details from https://gcc.gnu.org/onlinedocs/gcc/Debugging-Options.html > -ggdb > Produce debugging information for use by GDB. This means to use the most expressive format available (DWARF, stabs, or the native format if neither of those are supported), including GDB extensions if at all possible. > -gdwarf > -gdwarf-_version_ > Produce debugging information in DWARF format (if that is supported). The value of _version_ may be either 2, 3, 4 or 5; the default version for most targets is 5 (with the exception of VxWorks, TPF and Darwin / macOS, which default to version 2, and AIX, which defaults to version 4). > -g _level_ > -ggdb _level_ > Request debugging information and also use _level_ to specify how much information. The default level is 2. > Level 0 produces no debug information at all. Thus, -g0 negates -g. > Level 1 produces minimal information, enough for making backtraces in parts of the program that you don’t plan to debug. This includes descriptions of functions and external variables, and line number tables, but no information about local variables. > Level 2 is the normal setting to produce debuggable code. The debug output includes all the information from level 1, plus information about local variables and typedefs to allow stepping through code and examining its state. For C++ code, additional information is also emitted to assist in debugging namespace, class, and template functions. > Level 3 includes extra information, such as all the macro definitions present in the program. Some debuggers support macro expansion when you use -g3. > If you use multiple -g options, with or without level numbers, the last such option is the one that is effective. > -gdwarf does not accept a concatenated debug level, to avoid confusion with -gdwarf-_level_. Instead use an additional -g _level_ option to change the debug level for DWARF.",
+        "url": "https://github.com/apple/foundationdb/pull/13904",
+        "createdAt": "2026-08-18T23:03:35Z",
+        "updatedAt": "2026-08-19T17:56:24Z",
+        "timestamp": "2026-08-19T17:56:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 16
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:af251d67d4346e1c11fb",
+      "signalId": "github:apple/foundationdb:pull_request:13902",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13902",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Move storage simulation capabilities out of `fdbrpc`",
+        "text": "## Summary Follow up on #13080 and #13180 by moving the storage/TSS capability API out of the generic simulator policy. - Define `FDBSimulationCapability` and `IFDBSimulationPolicy` in `fdbclient`, and implement the interface in the existing server-owned `FDBSimulationPolicy`. - Query the currently installed, reference-counted simulation policy. Missing or non-FDB policies keep all capabilities disabled, and policy replacement cannot leave a stale provider. - Preserve the existing live TSS-mode predicates, mismatch severity, and fault-injection behavior. No protocol, serialization, scheduling, or random-draw changes are intended. - Document each policy implementation and keep focused regression coverage for fail-closed defaults and reentrant policy lifetime. ## Testing ### Current focused validation - Compiled and linked `fdbclient_test`; the build wrapper returned a nonzero status after linking. - Remaining client capability tests (`Defaults` and `ReentrantReplacement`): 2/2 passed in both normal and simulated modes with seed 13902. - Clang-format and `git diff --check` passed. ### Earlier validation - Existing TSS comparison, load-balancing hook, and `waitValueOrSignal` tests: 6/6 passed in both modes. - Compiled and linked `fdbrpclinktest`, `fdbclient_test`, `fdbrpc_test`, `fdbserver_core_test`, and `fdbserver`; executed the independent RPC link test successfully. - Two unchanged `tests/fast/CycleTest.toml` runs with BUGGIFY off and fault injection on: all four test phases passed, with no severity-40 trace events. - Clang-format 19 and `git diff --check` passed. The simulation runs selected normal and mutation-dropping TSS configurations, but neither completed TSS pairing. They provide general integration coverage, not proof of active TSS request comparison or injected faults; the retained focused tests cover fail-closed capability dispatch and reentrant policy lifetime directly.",
+        "url": "https://github.com/apple/foundationdb/pull/13902",
+        "createdAt": "2026-08-18T19:12:01Z",
+        "updatedAt": "2026-08-19T17:13:26Z",
+        "timestamp": "2026-08-19T17:13:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 22
+        },
+        "labels": [],
+        "author": "tclinkenbeard-oai",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e72aaf86e46e62c5fa8f",
+      "signalId": "github:apple/foundationdb:pull_request:13903",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13903",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "fdbclient: after unlink of per-thread library copy, symlink to original",
+        "text": "This is an attempt to enable profilers (and debuggers etc) to find the dynamic library file for symbols and \"buildid\" (used to lookup debug symbols if they are separate). There is a lot to explain about these behaviors in libfdb_c: It seems the library must have global state that should not be shared between threads, so there must be separate loaded copies that get their own global data/bss areas in the process memory space. Real file copies need to be used instead of symlinks in the first place, otherwise the OS kernel will treat it as the already-loaded dynamic library. The `unlinkOnLoad` is to prevent many copies of library file accumulating and filling the storage volume, if the process is being restarted periodically. After the name in the filesystem is unlinked, the loaded library reference in the running process keeps the inode and filedata alive in the filesystem, until the process ends and the OS kernel cleans up. There is no place in fdbclient or libfdb_c where the \"external\" loaded dynamic library is explicitly unloaded, there are no destructors for these client objects. Anyway, if the running process was crashing and restarting, graceful cleanup would not run, so the unlinkOnLoad trick makes sense to let the OS kernel clean up. There is already a \"network\" option to keep the library file copies. This new symlink behavior should be a much lighter-weight alternative that can be left on everywhere. ------------------- I haven't really tested this, I'll need some help to figure out a semi-realistic setup. I assume that another copy of the original library path, in each DLApi class (in each thread), is no problem. But it is slightly awkward, making this kinda awkward logic a tiny bit worse. I tried a refactor, ran into a bit of awkwardness, maybe I should try again...",
+        "url": "https://github.com/apple/foundationdb/pull/13903",
+        "createdAt": "2026-08-18T20:13:57Z",
+        "updatedAt": "2026-08-19T17:10:47Z",
+        "timestamp": "2026-08-19T17:10:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 20
+        },
+        "labels": [],
+        "author": "ploxiln",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a415d792cad12eba46f7",
+      "signalId": "github:apple/foundationdb:pull_request:13886",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13886",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Audit: bound validate_restore's slowest task instead of its average batch",
+        "text": "The `validate_restore` audit phase finishes only when its slowest task does, and nothing bounded that task. Measured at 100M scale, the slowest task took **2535.86s of a 2536.0s phase — 100% of the wall clock**, so per-task throughput improvements could not move the phase at all. An earlier attempt raised the per-batch byte budget, gained a real 1.94x in per-task throughput, and made the phase **25% slower**, because that run's shards happened to be 1.87x fatter. It was optimising an average when the metric is a maximum. This PR is a bit of a bucket. I tried splitting it out into 3/4 pieces but was hard to tell a story about each of the pieces. ## 1. Cap the size of one audit task `scheduleAuditOnRange` divided work by live `keyServers` boundaries — one task per shard, dispatched to a single storage server that scans it sequentially — with no size cap anywhere in the audit dispatch path, so a fat shard was an unbounded straggler. Shards above `AUDIT_TASK_MAX_BYTES` (default 128MB) are now subdivided via `splitStorageMetrics`, lazily one shard at a time so the first task dispatches immediately. A failed metrics read falls back to the unsplit shard — the previous behaviour — so this cannot fail an audit that would otherwise pass. `minSplitBytes` is `target/2`. The storage server stops splitting once `remaining.bytes < 2 * minSplitBytes`, so that product is the real \"leave it alone\" threshold and half the target is what puts it on the target. Passing the target itself pushes the threshold to *twice* the target and opens a dead band: 287 of 867 tasks sat unsplit in the 128–256MB band, too big for the cap but too small for the server to bother, and the tail stayed at 1215.92s. Going *below* `target/2` makes little difference, because `getSplitKey` only splits while `remaining > target/2` and that binds first. Note also that the client discards a trailing piece under `STORAGE_METRICS_UNFAIR_SPLIT_LIMIT` (2/3) of the target, so the largest task can reach roughly **1.4x** the knob rather than exactly 1x. The `delay(0.1)` that paces dispatch stays per `keyServers` shard rather than becoming per piece. Per piece it multiplies by the split factor and caps dispatch at 10 tasks/sec, adding a term linear in the piece count to the very wall-clock this cap exists to shorten. ## 2. Treat the batch byte budget as a ceiling and adapt within it `AUDIT_RESTORE_BATCH_BYTE_LIMIT` previously used `CLIENT_KNOBS->REPLY_BYTE_LIMIT` (80KB), a generic per-RPC-reply cap with nothing to do with audit batching. 80KB is reached long before `AUDIT_RESTORE_BATCH_KEY_LIMIT`'s 100,000 keys at any realistic record size, so that knob was unreachable and raising it changed nothing: a 1B validation spent 2h26m in ~3.6M two-round-trip iterations at ~5.5MB/s per server, against an `AUDIT_STORAGE_RATE_PER_SERVER_MAX` allowance ~9x higher. A fixed 4MB is no better — it took `transaction_too_old` from 679 to 2515 — because the real constraint is a **deadline, not a size**. A batch reads at a pinned version that expires after `MAX_READ_TRANSACTION_LIFE_VERSIONS`, so what a server can fetch in one go depends on current load; overshooting fails and the retry re-reads from the same key, buying double work rather than throughput. The budget now halves on a retryable error and grows back additively above `AUDIT_RESTORE_BATCH_BYTE_LIMIT_MIN`. Also on this path: - The two sides of a batch were read **serially** on one transaction, for two independent ranges at the same explicit read version. They are now issued together. - Retries slept a flat 1.0s regardless of cause. They now use the existing `Backoff` helper (`DEFAULT_BACKOFF` → `DEFAULT_MAX_BACKOFF` at `BACKOFF_GROWTH_RATE`, jittered), reset on success so an occasional retry does not ratchet to the maximum. - `numValidatedKeys`/`validatedBytes` advanced before the progress-persist that can throw, so a batch failing *there* double-counted the counters the throughput analysis reads. All per-attempt state is now snapshotted and rolled back — including `complete`, which is derived from `sourceReply.more` and would otherwise be able to end an audit early over a range never fully read. ## 3. Let a server work several audit tasks at once `SERVE_AUDIT_STORAGE_PARALLELISM` defaulted to 1, so subdivided pieces landing on the same server would serialize and the cap would buy nothing; the default is now 4, randomized 1..4 in simulation so both paths keep coverage. That exposed two things the knob being 1 had masked: - The rate limiter was built **per call site**, so concurrent tasks multiplied an allowance whose knob is named `AUDIT_STORAGE_RATE_PER_SERVER_MAX`. One limiter is now shared per server, with time blocked on it reported in `SSAuditRestoreComplete` — `auditRestoreQ` had no limiter accounting at all, so a throttled audit was indistinguishable from a slow one. - `auditStorageServerShardQ` requires **exclusive** use of the server: it owns `shardAssignmentHistory`, which is single-instance state, and `startTrackShardAssignment()` asserts tracking is off. It now takes a dedicated lock instead of relying on the permit count. Without that, the per-server retry at the end of `scheduleAuditStorageShardOnServer` can re-dispatch while the previous attempt is still running on that server; at one permit the second request queued, at four it runs concurrently and trips the guard. Observed as `SevError ExistStorageServerShardAuditExit` on `Sideband`, `InventoryTestSomeWrites` and `MoveKeysCycle` — 3 hits across 20,000 runs, every one audit id 1 and `usable_regions:=2`. ## 4. Two pre-existing ways an ssshard audit wedges a storage server Both reachable without any of the above, and both found while diagnosing the failure in §3. - **Cancellation stranded the tracking flag.** `stopTrackShardAssignment()` was reached only by plain statements at the end of the function and on its error paths. Cancellation runs none of them — it destroys the coroutine frame — leaving `trackShardAssignmentMinVersion` set with no audit owning it, after which every later ssshard audit on that server bails out on the guard **for the life of the process**. Now runs from a `ScopeExit` guard. - **The guard leaked a parallelism permit.** Its early `co_return` sat between `take()` and the `FlowLock::Releaser`, and that lock is shared by every audit type, so enough leaks exhaust it and every subsequent audit on that server blocks in `take()` forever, with only a warning to say so. Cancellation is routine here — the retry above re-dispatches after any failure, and Attrition, `RandomMoveKeys` and remote-DC latency all supply those failures — so these are worth considering for backport independently of the performance work. ## 5. Two report-storm fixes - **BulkLoad** — `scheduleBulkLoadTasks()` rescans task metadata every `DD_BULKLOAD_SCHEDULE_MIN_INTERVAL_SEC`, and a task in the terminal `Error` phase is deliberately left in place (unlike `Acknowledged`, it is never erased), so the `SevWarnAlways` report fired again on every scan for the life of the cluster: 11,313 events from 2 tasks in one 1B run, still climbing hours after the job finished. Each task is now reported once, carrying the running total. - **BulkDump** — the SS bulkdump loop retries up to 50 times, a second apart, while shards move underneath it; retrying is the normal path. Every attempt logged `SevWarn SSBulkDumpError` — 18,023 events in one run against 29,026 files generated. Intermediate retries move to `SSBulkDumpRetry` at `bulkLoadVerboseEventSev()`; the terminal cases keep the original name and severity, so existing greps and dashboards keep working and now match only tasks that actually failed. Both matter beyond tidiness: this is how the real failure ends up buried thousands of log lines from the top. ## Results | | before | after | |---|---|---| | audit phase | 42m16s | **25m00s** (also 26% below the 33m47s pre-existing baseline) | | `transaction_too_old` | 2515 | **150** (below the baseline's 679) | | aggregate audit throughput | 79 MB/s | **130 MB/s** | | `RateLimiterTotalWaitTime` | — | 0, so the shared limiter never bound | Zero `SSAuditRestoreError`, zero `StorageServerFailed`. **These numbers need retaking.** They were measured before the `minSplitBytes` correction in §1 and before the dispatch-throttle decision, both of which change the task count. Treat them as evidence that the approach works, not as the current figures. ## Testing `nextAuditBatchBytes()` is pure and unit tested for the budget staying within `[floor, ceiling]` and never reaching zero or below. That is *not* hang protection — `GetRangeLimits` sets `minRows = 1`, so even a zero budget returns a key — but because `GetRangeLimits` overloads the sign of `bytes`: `-1` means `BYTE_LIMIT_UNLIMITED` and silently removes the bound, below `-1` fails `isValid()`, and `0` costs a round trip per key. `boundAuditTaskRange()` is covered by a mock `IDDTxnProcessor`, including that a failed metrics read degrades to the unsplit shard rather than failing the audit, and asserting `minSplitBytes <= target/2` because exceeding it is silent — subdivision just does not happen and the only symptom is a slower tail that looks like variance. Split points become task ranges with the same consecutive-pairs idiom `DDShardTracker::executeShardSplit()` uses. `splitStorageMetrics()` guarantees `begin` and `end` as its first and last points and `NativeAPI` rejects out-of-order replies, so no defensive re-derivation is needed here. Per-batch traces are gated behind the existing `ENABLE_AUDIT_VERBOSE_TRACE` knob; at 1B scale they were ~18M unconditional `SevInfo` events. There is a `TODO(Audit)` to move that gate into `fdbclient/Audit.h` and adopt it in `DataDistribution.cpp`, which currently gates the same knob with six `if` blocks — deferred because it flips those sites from emitting nothing to `SevDebug`, a trace-volume change worth measuring on its own. Joshua, 100k runs, clean: ``` 20260818-041541-stack-13886-04944201f8ee8683 ended=100000 pass=100000 remaining=0 max_runs=100000 runtime=0:31:15 timeout=5400 username=stack-13886 ``` `ExistStorageServerShardAuditExit` did not recur, against 3 hits in 20,000 runs before §3 and §4. --- <sub>Rebased and squashed to a single commit since first posted. Substantive changes from review: `minSplitBytes` `target/8` → `target/2`; the dispatch throttle kept per-shard rather than per-piece; the ssshard fixes in §4 added; `AUDIT_RESTORE_BATCH_BYTE_LIMIT`/`_MIN` narrowed `int64_t` → `int` since they feed `GetRangeLimits::bytes`; and three reimplementations dropped in favour of existing machinery — a bespoke split-point partitioner (NativeAPI already guarantees the contract), a hand-rolled backoff (`Backoff`), and a local scope guard (`flow/ScopeExit.h`).</sub>",
+        "url": "https://github.com/apple/foundationdb/pull/13886",
+        "createdAt": "2026-08-17T18:39:12Z",
+        "updatedAt": "2026-08-19T16:39:45Z",
+        "timestamp": "2026-08-19T16:39:45Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 36
+        },
+        "labels": [],
+        "author": "saintstack",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:07cd3300a74e0f56e562",
+      "signalId": "github:apple/foundationdb:pull_request:13673",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13673",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "Plumb TraceID/SpanID into debug tracing logs",
+        "text": "I found that debug transactions offer the highest quality telemetry for where in the commit pipeline a transaction gets stuck, but that the logs were difficult to work with (need to join across log lines distributed across roles to get the full connected graph of IDs that belong to a debug transaction). The tracing tool we use internally does not support this kind of stateful aggregation and instead relies on a consistent TraceID plumbed throughout the call graph. Conveniently, this already exists in the code base in the form of the OTEL tracing context. I added those IDs to all debug logs and was able to get a trace view in our systems that is useful to me. Here's what it looks like in our internal trace viewing tool. Yellow boxes correspond to the FDB Client debug traces (NativeAPIActor), the smaller green events are coming from GRV, Commit, and Storage Servers. This gives me a good view of stalls anywhere in the transaction lifecycle. I'm still refining how I parse these to make them more visually intuitive, but already useful in its current state. <img width=\"1727\" height=\"743\" alt=\"Screenshot 2026-07-10 at 12 23 08 PM\" src=\"https://github.com/user-attachments/assets/feaba889-0daa-4d98-b832-1f7d3226940d\" /> I use this by setting the Transaction ID through the SpecialKeys API, which then sets the span context: ```java String debugTransactionId = getDebugTransactionIdFromTraceMetadata(traceMetadata); String specialKeysTransactionId = getFdbTransactionIdFromTraceMetadata(traceMetadata); log.debug( \"Enabling FDB transaction debugging\", SafeArg.of(\"debugTransactionId\", debugTransactionId), SafeArg.of(\"specialKeysTransactionId\", specialKeysTransactionId)); transaction.options().setSpecialKeySpaceEnableWrites(); transaction.set(FDB_TRACING_TRANSACTION_ID_KEY, specialKeysTransactionId.getBytes(StandardCharsets.UTF_8)); transaction.options().setDebugTransactionIdentifier(debugTransactionId); transaction.options().setLogTransaction(); transaction.options().setServerRequestTracing(); ```",
+        "url": "https://github.com/apple/foundationdb/pull/13673",
+        "createdAt": "2026-07-10T05:25:55Z",
+        "updatedAt": "2026-08-19T16:21:30Z",
+        "timestamp": "2026-08-19T16:21:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 27
+        },
+        "labels": [],
+        "author": "laflechejonathan",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:7a56261feb352cb9a3d1",
+      "signalId": "github:apple/foundationdb:pull_request:13295",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "title",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:13295",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "report degraded multi-region status when failover is stuck waiting on the unavailable remote DC #12071",
+        "text": "### Commit 1: XDB-546 — Show keys data size and moving size when DD is initializing File: `fdbserver/clustercontroller/Status.cpp` __What:__ Moved the \"DD is initializing\" early-return check __after__ parsing `dataStats`, so that partition count, moving data size, and other data metrics are still populated in the status JSON even during DD initialization. Previously, these fields were omitted because the function returned before parsing them. __Why:__ To show moving-data volume during DD initialization (e.g., after a failover) instead of waiting for initialization to complete. --- ### Commit 2: XDB-546 — Add degraded multiregion status when recovery is stuck at accepting_commits __Files:__ `fdbserver/clustercontroller/Status.cpp`, `fdbclient/Schemas.cpp`, `fdbcli/StatusCommand.cpp` __What:__ 1. Introduced a `degraded_multi_region` flag: set to `true` when the cluster is configured with `usableRegions > 1` and recovery is stuck at `accepting_commits`. Exposed this field in the status JSON schema. 2. When DD reports its state as `initializing` in a degraded multiregion scenario, the description now reads `\"Degraded multiregional (Re)initializing automatic data distribution\"` — making the nature of the degradation explicit. 3. In `fdbcli status` output, when `degraded_multi_region` is `true`, the warning message *\"may have data loss and availability loss\"* is suppressed. This is replaced with a neutral header followed by the actionable message (which TLog interfaces to restart). __Why:__ In a multi-region cluster, when one region fails, recovery gets stuck at `accepting_commits` because the failed region's logs are unreachable. However, commits are already being accepted in the surviving region (and its satellite), and all committed data is safe and consistent. This is a __degraded-but-not-data-losing__ state. Previously, `fdbcli status` showed a misleading warning about potential data loss. Now the status honestly reflects degraded multiregion without a false data-loss alarm. topic in foundationdb forum about this problem : [link](https://forums.foundationdb.org/t/3dc2regions-simulating-primary-datacenter-failure/3329/5)",
+        "url": "https://github.com/apple/foundationdb/pull/13295",
+        "createdAt": "2026-05-28T13:13:50Z",
+        "updatedAt": "2026-08-19T13:42:26Z",
+        "timestamp": "2026-08-19T13:42:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 36
+        },
+        "labels": [],
+        "author": "MarkSh1",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:efec33d55eb6b10b3157",
+      "signalId": "github:apple/foundationdb:pull_request:12309",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:pull_request:12309",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "pull_request",
+        "title": "[release-7.3] Fix some potential DatabaseContext leaks in NativeApi",
+        "text": "1. Only start `clientStatusUpdateActor` when `DatabaseContext` successfully established connection to the cluster. 2. `DatabaseContext` starts few actors for monitoring as well as update client status to server. These sometimes pass pointers to `DatabaseContext` and the `Transaction` object created within these actors will increment the refcount. This can lead to cyclic references or holding `DatabaseContext` objects for long period of times if `Transaction` object is not cleaned up or we keep retrying forever without any limit. 3. Some actors don't handle `actor_cancelled` errors which can lead then to stay alive forever. This patch fixes some of those. rdar://155780163 found that in multi-version client if primary is incompatible with the cluster, we keep trying to reconnect with cluster, and spamming with IncompatibleConnectionClosed messages. (1) should be enough to fix that, but other issues were found during investigation which can potentially lead to similar issues in future. Testing: Manually started a 7.1 cluster, with 7.4 primary client and 7.1. secondary client. Started a client. Without this patch we'll see bunch of IncompatibleConnectionClosed messages, and with this patch they will be gone. # Code-Reviewer Section The general pull request guidelines can be found [here](https://github.com/apple/foundationdb/wiki/FoundationDB-Commit-Process). Please check each of the following things and check *all* boxes before accepting a PR. - [ ] The PR has a description, explaining both the problem and the solution. - [ ] The description mentions which forms of testing were done and the testing seems reasonable. - [ ] Every function/class/actor that was touched is reasonably well documented. ## For Release-Branches If this PR is made against a release-branch, please also check the following: - [ ] This change/bugfix is a cherry-pick from the next younger branch (younger `release-branch` or `main` if this is the youngest branch) - [ ] There is a good reason why this PR needs to go into a release branch and this reason is documented (either in the description above or in a linked GitHub issue)",
+        "url": "https://github.com/apple/foundationdb/pull/12309",
+        "createdAt": "2025-08-15T22:54:43Z",
+        "updatedAt": "2026-08-19T13:09:03Z",
+        "timestamp": "2026-08-19T13:09:03Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "vishesh",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:e562cc5351fe5848ca0b",
+      "signalId": "github:apple/foundationdb:issue:2739",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:apple/foundationdb:issue:2739",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "apple/foundationdb",
+        "kind": "issue",
+        "title": "Remove the double logging for open trace file failure from the TraceEvent cache based implementation",
+        "text": "With the new issue reporting mechanism in place (PR #2605), the old TraceEvent cache based implementation specifically for trace file open failure can be removed.",
+        "url": "https://github.com/apple/foundationdb/issues/2739",
+        "createdAt": "2020-02-25T03:24:14Z",
+        "updatedAt": "2026-08-19T10:08:38Z",
+        "timestamp": "2026-08-19T10:08:38Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "good first issue"
+        ],
+        "author": "dongxinEric",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}

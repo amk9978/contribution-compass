@@ -1,0 +1,937 @@
+{
+  "version": 4,
+  "date": "2026-08-20",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "nats-server",
+    "repo": "nats-io/nats-server",
+    "name": "NATS Server",
+    "keywords": [
+      "NATS server",
+      "NATS.io"
+    ]
+  },
+  "context": {
+    "repository": "nats-io/nats-server",
+    "url": "https://github.com/nats-io/nats-server",
+    "description": "High-Performance server for NATS.io, the cloud and edge native messaging system.",
+    "homepage": "https://nats.io",
+    "language": "Go",
+    "topics": [
+      "cloud",
+      "cloud-computing",
+      "cloud-native",
+      "connected-vehicle",
+      "distributed-systems",
+      "edge",
+      "edge-ai",
+      "edge-computing",
+      "go",
+      "golang",
+      "message-bus",
+      "message-queue",
+      "messaging",
+      "microservices-architecture",
+      "nats-server"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 20549,
+    "forks": 1912,
+    "openIssues": 549,
+    "archived": false,
+    "collectedAt": "2026-08-20T02:32:31.027265+00:00"
+  },
+  "news": {
+    "repository": "nats-io/nats-server",
+    "collectedAt": "2026-08-20T02:32:31.027265+00:00",
+    "latestRelease": {
+      "repository": "nats-io/nats-server",
+      "tag": "v2.14.5",
+      "title": "Release v2.14.5",
+      "url": "https://github.com/nats-io/nats-server/releases/tag/v2.14.5",
+      "publishedAt": "2026-08-12T15:31:27Z",
+      "notes": "## Changelog\r\n\r\nRefer to the [2.14 Upgrade Guide](https://docs.nats.io/release-notes/whats_new/whats_new_214) for backwards compatibility notes with 2.12.x. Please note that the 2.13.x version was skipped.\r\n\r\n### Go Version\r\n\r\n- 1.26.5\r\n\r\n### Dependencies\r\n\r\n- github.com/klauspost/compress v1.19.2 (#8459)\r\n- golang.org/x/crypto v0.55.0 (#8459)\r\n\r\n### Added\r\n\r\nLeafnodes\r\n\r\n- New `dial_timeout` option can be specified in the `leafnode` config block or for specific remotes in the configuration, allowing it to be increased above the default 1 second for high-latency links (#8427)\r\n\r\n### Fixed\r\n\r\nGeneral\r\n\r\n- Fixed a deadlock that could occur in the logger when a close error occurs (#8430)\r\n\r\nJetStream\r\n\r\n- Fix a bug that could result in potential data loss when handling idempotent stream creates when an offline node catches up from a metalayer snapshot, caused by an incorrect update to the create time in the stream assignment (#8449)\r\n\r\n### Complete Changes\r\n \r\nhttps://github.com/nats-io/nats-server/compare/v2.14.4...v2.14.5",
+      "highlights": [
+        "Changelog",
+        "Go Version",
+        "1.26.5",
+        "Dependencies",
+        "github.com/klauspost/compress v1.19.2 (#8459)",
+        "golang.org/x/crypto v0.55.0 (#8459)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-20T02:32:22.344433Z",
+      "since": "2026-08-19T02:32:22.344433Z",
+      "observedCount": 16,
+      "changedCount": 16
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:nats-io/nats-server:issue:8472",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "CRITICAL JetStream atomic batch publish leaves per-batch staging directories under <stream>/batches after commit",
+      "text": "### Observed behavior Streams created with `AllowAtomicPublish: true` accumulate one directory per batch under ` <store_dir>/jetstream/<account>/streams/<stream>/batches/<batchID>/ ` and these directories are never removed after the batch commits. The count grows monotonically for as long as the server is publishing. Measured on 2.14.5 across 10 file-backed streams, sampling every ~2 minutes: 19:53:45 batch_dirs=6374 logical=13.6GB 19:55:47 batch_dirs=11419 logical=18.6GB 19:57:52 batch_dirs=17301 logical=23.1GB 19:59:59 batch_dirs=23520 logical=27.6GB 20:02:08 batch_dirs=30143 logical=32.2GB 20:04:10 batch_dirs=37394 logical=36.4GB 20:06:11 batch_dirs=43813 logical=40.7GB 20:08:32 batch_dirs=50148 logical=45.9GB 20:10:55 batch_dirs=57614 logical=51.3GB 20:13:20 batch_dirs=65356 logical=56.9GB 20:15:48 batch_dirs=72991 logical=62.3GB 20:18:01 batch_dirs=80047 logical=67.4GB ``` $ ls -la .../streams/stream_name/batches/FU47okxc drwx------. 1 root root 30 Aug 16 19:48 . drwx------. 1 root root 2216896 Aug 16 20:28 .. -rw-------. 1 root root 16 Aug 16 19:48 meta.sum drwx------. 1 root root 10 Aug 16 19:48 msgs drwx------. 1 root root 0 Aug 16 19:48 obs ``` That directory was created when the stream was created and was still present 40 minutes later. Note also the parent directory entry, which had grown to **2,216,896 bytes** for a single stream. **On 2.12.14 the same directories retained the staged message data**, which was considerably worse: the filesystem grew ~2.7 GB/min while total stream bytes stayed flat, eventually filling the node's disk. Upgrading to 2.14.5 stopped the data from being retained but did not stop the directories themselves from accumulating. ### Expected behavior The staging directory for a batch should be removed once the batch is committed (and on abort/expiry). The number of entries under `<stream>/batches/` should stay bounded by the number of in-flight batches, rather than growing without limit for the lifetime of the stream. ### Server and client version Server: `nats:2.14.5-alpine` Also reproduced, in the more severe form where staged message data is retained, on `nats:2.12.14-alpine`. Client: `nats.go` (Go), publishing via the `jetstream` package with atomic batch publish. ### Host environment - Linux x86_64, Kubernetes (k3s), containerd runtime - Server runs as a StatefulSet; JetStream file store on a local NVMe host path - Filesystem: btrfs (metadata profile DUP) - 10 file-backed streams, all `AllowAtomicPublish: true`, aggregate publish rate ~40-50k msgs/sec ### Steps to reproduce Steps to reproduce 1. Create a file-backed stream with atomic batch publish enabled. Ours, via `nats.go`: ```go jetstream.StreamConfig{ Name: \"name\", Subjects: []string{\"name.*\"}, Retention: jetstream.LimitsPolicy, Storage: jetstream.FileStorage, Compression: jetstream.S2Compression, MaxAge: time.Hour, MaxBytes: 20 << 30, Duplicates: time.Minute, AllowAtomicPublish: true, } ``` 2. Publish continuously using atomic batches. 3. Watch the directory count under the stream's store: `watch -n 30 'ls -U <store>/jetstream/*/streams/*/batches | wc -l' `",
+      "url": "https://github.com/nats-io/nats-server/issues/8472",
+      "createdAt": "2026-08-16T20:44:18Z",
+      "updatedAt": "2026-08-19T10:43:33Z",
+      "timestamp": "2026-08-19T10:43:33Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "defect"
+      ],
+      "author": "singulariteer",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:issue:8481",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "Leaf interest arriving over a route does not skip when isolate_leafnode_interest is true",
+      "text": "### Observed behavior When an LS+ arrives through a route instead of directly on the node runs full canSubscribeInternal checks even if that leaf node has isolate_leafnode_interest set to true. The `if sub.client.kind == LEAF && ln.isIsolatedLeafNode() { continue }` check only applies to direct connection. ### Expected behavior Leaf node interest is gated on all servers based on isolate_leafnode_interest and not just direct connections. ### Server and client version Leaf node version: 2.12.4 Broker version: 2.14.4 ### Host environment _No response_ ### Steps to reproduce _No response_",
+      "url": "https://github.com/nats-io/nats-server/issues/8481",
+      "createdAt": "2026-08-19T11:16:29Z",
+      "updatedAt": "2026-08-19T11:16:29Z",
+      "timestamp": "2026-08-19T11:16:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "defect"
+      ],
+      "author": "formzeke",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:issue:8483",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "Tiered JetStream consumer limits are not additive",
+      "text": "### Observed behavior When using an account with tiered JetStream limits, I expect to be able to add R1 and R3 consumers to a stream as defined by their individual limits. For example, with an account with a limit of 3 R3 consumers and 2 R1 consumers, I expect to be able to add 5 consumer total to a stream: composed of 3 R3 and 2 R1. There seems to be a bug in counting of consumers across multiple tiers. See this failing test: https://github.com/nats-io/nats-server/compare/main...joeriddles:d68be0603aa821b89e8d46e413a4a249dd6c97be?expand=1 ### Expected behavior I am only able to add up to 3 consumers for the stream I would expect the test above to pass. ### Server and client version nats-server `main` branch commit `b1507e0545a83223bd774034c0e541b9feec805a` ### Host environment macOS ### Steps to reproduce _No response_",
+      "url": "https://github.com/nats-io/nats-server/issues/8483",
+      "createdAt": "2026-08-19T17:16:30Z",
+      "updatedAt": "2026-08-19T17:37:03Z",
+      "timestamp": "2026-08-19T17:37:03Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "defect"
+      ],
+      "author": "joeriddles",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:issue:8485",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "issue",
+      "title": "JetStream memory footprint grows with subject & dedup cardinailty despite storageType=File",
+      "text": "### Observed behavior Workloads which store a high cardinality of distinct stream subjects or a high rate of distinct dedup ID tracking drive high memory utilization in JetStream despite the streams being backed by file storage with adequate capacity. Attempts to limit memory utilization cause OOMs (ie: cgroup limits) or aggressive GC (ie: GOMEMLIMIT) that drives up CPU utilization and response latency. ### Expected behavior I would expect the in-memory structures used to index subjects and dedup IDs to be paged to disk to allow arbitrarily high cardinalities given adequate disk storage and limited RAM. For example, the dedup tracking could partition up the time window into smaller generations and rotate them to disk periodically and keep checks performant with bloom filters: The \"active\" generation would be an in-memory structure as it is today to deal with high frequency writes. When it came time to rotate, JetStream would write the active structure to disk once into a new file and compute a bloom filter for the generation to keep in memory. Each generation's bloom filter would be smaller than it's on-disk representation and would ensure dedup-misses remained fast. When the occasional duplicate message comes along and gets a hit in the bloom filter, JetStream would then need a definitive check against the on-disk file. At each rotation, the oldest on-disk generation and in-memory bloom filter generation would be dropped. The per-subject index seems trickier to page out to disk. A library like sqlite3 seems to manage this well for insertions & queries to large tables with its \"WAL to B-tree\" scheme, but I don't have enough depth in nats-server internals to make much of a coherent proposal. ### Server and client version nats-server 2.14.5 ### Host environment The repro procedure below was on an Apple M3 Pro with 36GB RAM, but the normal prod environment where I run a JetStream process as a leafnode is on Linux c6a.2xlarge. ### Steps to reproduce I put together a couple small demos in Java: demoHighCardinalitySubjects() and then demoHighCardinalityDedupTracking(). Both demos publish 50M messages to JetStream file-backed streams. The first is using KeyValue.put(UUID, []) to load up JetStream's per-subject index. The second is using Nats-Msg-Id: UUID on a retention=Interest stream with no consumers to load up the dedup tracking set. ```java package davcote; import io.nats.client.Nats; import io.nats.client.api.KeyValueConfiguration; import io.nats.client.api.RetentionPolicy; import io.nats.client.api.StorageType; import io.nats.client.api.StreamConfiguration; import io.nats.client.impl.Headers; import java.time.Duration; import java.util.UUID; import java.util.concurrent.Callable; import java.util.concurrent.CompletableFuture; import java.util.concurrent.atomic.AtomicLong; import java.util.stream.IntStream; public class NatsMemoryUseDemos { public static void main(final String[] args) throws Exception { demoHighCardinalitySubjects(); //demoHighCardinalityDedupTracking(); } private static void demoHighCardinalitySubjects() throws Exception { try (var nc = Nats.connect()) { nc.keyValueManagement().create(KeyValueConfiguration.builder() .name(\"MyBucket\") .storageType(StorageType.File) .build()); final var kv = nc.keyValue(\"MyBucket\"); final var count = 50_000_000L; final var threads = 32; runMultithreaded(count, threads, () -> kv.put(UUID.randomUUID().toString(), new byte[0])); } } private static void demoHighCardinalityDedupTracking() throws Exception { try (var nc = Nats.connect()) { nc.jetStreamManagement().addStream(StreamConfiguration.builder() .name(\"MyStream\") .subjects(\"mystream\") .retentionPolicy(RetentionPolicy.Interest) // No consumers -> no retention .storageType(StorageType.File) .duplicateWindow(Duration.ofDays(1)) .build()); final var js = nc.jetStream(); final var count = 50_000_000L; final var threads = 32; runMultithreaded(count, threads, () -> js.publish(\"mystream\", new Headers().put(\"Nats-Msg-Id\", UUID.randomUUID().toString()) , new byte[0])); } } private static void runMultithreaded(final long nCount, final int nThreads, final Callable<?> action) { final var remaining = new AtomicLong(nCount); final var threads = IntStream .range(0, nThreads) .mapToObj(threadId -> CompletableFuture.runAsync(() -> { try { while (remaining.decrementAndGet() >= 0) { action.call(); } } catch (final Exception e) { throw new RuntimeException(e); } }, Thread::startVirtualThread)) .toList(); try { threads.forEach(CompletableFuture::join); } finally { threads.forEach(cf -> cf.cancel(true)); } } } ``` For the KV high subject cardinality test, the memory footprint of nats-server grows to 2-3x the on-disk size reported by Jetstream. ```bash % nats stream report -a Obtaining Stream stats ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮ │ Stream Report │ ├─────────────┬─────────┬───────────┬───────────┬────────────┬─────────┬──────┬─────────┬───────────┬──────────┤ │ Stream │ Storage │ Placement │ Consumers │ Messages │ Bytes │ Lost │ Deleted │ API Level │ Replicas │ ├─────────────┼─────────┼───────────┼───────────┼────────────┼─────────┼──────┼─────────┼───────────┼──────────┤ │ KV_MyBucket │ File │ │ 0 │ 50,000,000 │ 3.7 GiB │ 0 │ 0 │ 0 │ │ ╰─────────────┴─────────┴───────────┴───────────┴────────────┴─────────┴──────┴─────────┴───────────┴──────────╯ % nats stream info KV_MyBucket Information for Stream KV_MyBucket created 2026-08-19 09:51:40 Subjects: $KV.MyBucket.> Replicas: 1 Storage: File Options: Retention: Limits Acknowledgments: true Discard Policy: New Duplicate Window: 2m0s Direct Get: true Allows Atomic Batch Publish: false Allows Fast Batch Publish: false Allows Counters: false Allows Msg Delete: false Allows Per-Message TTL: false Allows Purge: true Allows Schedules: false Allows Rollups: true Limits: Maximum Messages: unlimited Maximum Per Subject: 1 Maximum Bytes: unlimited Maximum Age: unlimited Maximum Message Size: unlimited Maximum Consumers: unlimited State: Host Version: 2.14.5 Required API Level: 0 hosted at level 4 Messages: 50,000,000 Bytes: 3.7 GiB First Sequence: 1 @ 2026-08-19 09:51:40 Last Sequence: 50,000,000 @ 2026-08-19 10:05:25 Active Consumers: 0 % vmmap --summary `pgrep nats-server` | grep Physical Physical footprint: 8.7G Physical footprint (peak): 11.0G ``` Likewise for the high-cardinality dedup tracking demo, memory footprint is about the same as the KV store and about 2-3x the size of the content written. (And because of the consumerless Interest stream, zero messages must actually be retained on disk.) ```bash % nats stream report -a Obtaining Stream stats ╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮ │ Stream Report │ ├──────────┬─────────┬───────────┬───────────┬──────────┬───────┬──────┬─────────┬───────────┬──────────┤ │ Stream │ Storage │ Placement │ Consumers │ Messages │ Bytes │ Lost │ Deleted │ API Level │ Replicas │ ├──────────┼─────────┼───────────┼───────────┼──────────┼───────┼──────┼─────────┼───────────┼──────────┤ │ MyStream │ File │ │ 0 │ 0 │ 0 B │ 0 │ 0 │ 0 │ │ ╰──────────┴─────────┴───────────┴───────────┴──────────┴───────┴──────┴─────────┴───────────┴──────────╯ % nats stream info MyStream Information for Stream MyStream created 2026-08-19 10:24:46 Subjects: mystream Replicas: 1 Storage: File Options: Retention: Interest Acknowledgments: true Discard Policy: Old Duplicate Window: 1d0h0m0s Allows Atomic Batch Publish: false Allows Fast Batch Publish: false Allows Counters: false Allows Msg Delete: true Allows Per-Message TTL: false Allows Purge: true Allows Schedules: false Allows Rollups: false Limits: Maximum Messages: unlimited Maximum Per Subject: unlimited Maximum Bytes: unlimited Maximum Age: unlimited Maximum Message Size: unlimited Maximum Consumers: unlimited State: Host Version: 2.14.5 Required API Level: 0 hosted at level 4 Messages: 0 Bytes: 0 B First Sequence: 50,000,001 Last Sequence: 50,000,000 @ 2026-08-19 10:35:50 Active Consumers: 0 % vmmap --summary `pgrep nats-server` | grep Physical Physical footprint: 8.5G Physical footprint (peak): 11.0G ``` nats-server emits a few ominous warnings about inconsistent writes during that demo: ```text [35525] 2026/08/19 10:26:51.689300 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:28:56.625147 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:31:01.552617 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:33:06.471954 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:35:11.391281 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write ``` Using GOMEMLIMIT seems to make GC more aggressive about freeing memory but at the expense of CPU utilization. Combined with GOMAXPROX, NATS JetStream response latency starts to escalate: ```bash % GOMAXPROCS=4 GOMEMLIMIT=4GiB nats-server -js [62195] 2026/08/19 12:57:43.774094 [INF] Starting nats-server [62195] 2026/08/19 12:57:43.774852 [INF] Version: 2.14.5 [62195] 2026/08/19 12:57:43.774856 [INF] Git: [not set] [62195] 2026/08/19 12:57:43.774858 [INF] Name: NCQHXBSJZZP6JC3M4K7TUS4LX7PDVHEG6U7Y5O4VJUVJPOSAEEABGLOD [62195] 2026/08/19 12:57:43.774862 [INF] Node: KU5XOTAW [62195] 2026/08/19 12:57:43.774864 [INF] ID: NCQHXBSJZZP6JC3M4K7TUS4LX7PDVHEG6U7Y5O4VJUVJPOSAEEABGLOD [62195] 2026/08/19 12:57:43.775212 [INF] Starting JetStream [62195] 2026/08/19 12:57:43.775230 [WRN] Temporary storage directory used, data could be lost on system reboot [62195] 2026/08/19 12:57:43.784171 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [62195] 2026/08/19 12:57:43.784191 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [62195] 2026/08/19 12:57:43.784193 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [62195] 2026/08/19 12:57:43.784194 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [62195] 2026/08/19 12:57:43.784196 [INF] [62195] 2026/08/19 12:57:43.784197 [INF] https://docs.nats.io/jetstream [62195] 2026/08/19 12:57:43.784198 [INF] [62195] 2026/08/19 12:57:43.784200 [INF] ---------------- JETSTREAM ---------------- [62195] 2026/08/19 12:57:43.784201 [INF] Strict: true [62195] 2026/08/19 12:57:43.784207 [INF] Max Memory: 3.00 GB [62195] 2026/08/19 12:57:43.784209 [INF] Max Storage: 21.76 GB [62195] 2026/08/19 12:57:43.784211 [INF] Store Directory: \"/var/folders/77/vwfgssrn4zdc54_js40_m2300000gq/T/nats/jetstream\" [62195] 2026/08/19 12:57:43.784238 [INF] API Level: 4 [62195] 2026/08/19 12:57:43.784241 [INF] ------------------------------------------- [62195] 2026/08/19 12:57:43.786007 [INF] Took 10.785708ms to start JetStream [62195] 2026/08/19 12:57:43.786355 [INF] Listening for client connections on 0.0.0.0:4222 [62195] 2026/08/19 12:57:43.786515 [INF] Server is ready [62195] 2026/08/19 13:09:04.357551 [WRN] 127.0.0.1:61224 - cid:5 - \"v2.20.5:java\" - Readloop processing time: 2.175411625s ``` ```bash % vmmap --summary `pgrep nats-server` | grep Physical Physical footprint: 5.9G Physical footprint (peak): 6.2G ``` JetStream's response latency eventually degrades beyond the NATS client's default JetStream response timeout. ```text Exception in thread \"main\" java.util.concurrent.CompletionException: java.lang.RuntimeException: java.io.IOException: Timeout or no response waiting for NATS JetStream server at java.base/java.util.concurrent.CompletableFuture.wrapInCompletionException(CompletableFuture.java:323) at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:359) at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:364) at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1828) at java.base/java.lang.VirtualThread.run(VirtualThread.java:460) Caused by: java.lang.RuntimeException: java.io.IOException: Timeout or no response waiting for NATS JetStream server at davcote.NatsMemoryUseDemos.lambda$runMultithreaded$1(NatsMemoryUseDemos.java:65) at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825) ... 1 more Caused by: java.io.IOException: Timeout or no response waiting for NATS JetStream server at io.nats.client.impl.NatsJetStreamImpl.responseRequired(NatsJetStreamImpl.java:260) at io.nats.client.impl.NatsJetStreamImpl.makeInternalRequestResponseRequired(NatsJetStreamImpl.java:251) at io.nats.client.impl.NatsJetStream.publishSyncInternal(NatsJetStream.java:152) at io.nats.client.impl.NatsJetStream.publish(NatsJetStream.java:82) at io.nats.client.impl.NatsKeyValue._write(NatsKeyValue.java:238) at io.nats.client.impl.NatsKeyValue.put(NatsKeyValue.java:142) at davcote.NatsMemoryUseDemos.lambda$demoHighCardinalitySubjects$0(NatsMemoryUseDemos.java:33) at davcote.NatsMemoryUseDemos.lambda$runMultithreaded$1(NatsMemoryUseDemos.java:62) ... 2 more ```",
+      "url": "https://github.com/nats-io/nats-server/issues/8485",
+      "createdAt": "2026-08-19T18:49:57Z",
+      "updatedAt": "2026-08-19T18:49:57Z",
+      "timestamp": "2026-08-19T18:49:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "defect"
+      ],
+      "author": "davidmcote",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:7882",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) Stream backup/restore v2",
+      "text": "Signed-off-by: Neil Twigg <neil@nats.io>",
+      "url": "https://github.com/nats-io/nats-server/pull/7882",
+      "createdAt": "2026-02-26T17:12:20Z",
+      "updatedAt": "2026-08-19T09:45:18Z",
+      "timestamp": "2026-08-19T09:45:18Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 20
+      },
+      "labels": [],
+      "author": "neilalexander",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8445",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) Raft proposal fast path",
+      "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+      "url": "https://github.com/nats-io/nats-server/pull/8445",
+      "createdAt": "2026-08-10T09:01:52Z",
+      "updatedAt": "2026-08-19T12:36:32Z",
+      "timestamp": "2026-08-19T12:36:32Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8447",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+      "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+      "url": "https://github.com/nats-io/nats-server/pull/8447",
+      "createdAt": "2026-08-10T10:58:45Z",
+      "updatedAt": "2026-08-19T14:26:18Z",
+      "timestamp": "2026-08-19T14:26:18Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8474",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [FIXED] Remove leftover atomic-batch staging dirs after cleanup",
+      "text": "## Summary - JetStream R=1 file-backed atomic batches stage under `streams/<name>/batches/<hash>/`. - `FileStore.Delete` unlinks `meta.inf` then `Rename`s `StoreDir` to `.<name>`. If that rename fails (leftover non-empty tomb / Windows dest-exists), it used to return immediately and leak the original directory. Callers ignore the error, and there is no runtime sweeper (startup `RemoveAll` of `batches/` is recovery-only). - On rename failure, `Delete` now `removeAllWithRetry`s both the original `StoreDir` and the sibling tomb **inline**, then returns nil if that cleanup succeeds. The success-path rename + async tomb purge is unchanged. - `cleanupLocked` just calls `store.Delete(true)` again. Memory stores are unchanged. `AsyncFlush`, `stopLocked()`, and startup recovery are not modified. Fixes #8472 ## Test plan - [x] `go test ./server -count=1 -timeout 180s -run TestFileStoreDeleteRemovesStoreDirWhenRenameDestExists` - [x] `go test ./server -count=1 -timeout 120s -run TestJetStreamAtomicBatchCleanupRemovesStagingWhenRenameFails` - [x] `go test ./server -count=1 -timeout 180s -run ^TestJetStreamAtomicBatchPublishCleanup$` - [ ] Linux CI (canonical) The FileStore test forces `os.Rename` to fail by pre-creating a **non-empty** destination tomb (Linux `ENOTEMPTY`, not only Windows dest-exists), then asserts both the original store dir and `.<name>` are gone. ## Note on Windows `TestJetStreamAtomicBatchPublishSingleServerRecovery` failed locally on Windows during `testing.T` TempDir cleanup: `unlinkat .../batches/<hash>/msgs/1.blk: The process cannot access the file because it is being used by another process` That test hard-kills and recovers a partial batch. It does **not** call `cleanupLocked`. The open `.blk` is leftover FileStore handle lifetime after `Stop()` / restart recovery, which this PR does not change. The new FileStore dest-exists test and the atomic-batch cleanup test passed on the same Windows machine.",
+      "url": "https://github.com/nats-io/nats-server/pull/8474",
+      "createdAt": "2026-08-17T06:49:49Z",
+      "updatedAt": "2026-08-19T10:43:22Z",
+      "timestamp": "2026-08-19T10:43:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "nishant-uxs",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8475",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Inline block compaction ignores SyncAlways",
+      "text": "Inline compaction works by rewriting an entire block file and replacing the old file with the new compacted file. However, inline compaction ignored the SyncAlways setting. Meaning that a power loss could result in the loss of acknowledged messages.",
+      "url": "https://github.com/nats-io/nats-server/pull/8475",
+      "createdAt": "2026-08-17T12:14:54Z",
+      "updatedAt": "2026-08-19T09:46:47Z",
+      "timestamp": "2026-08-19T09:46:47Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8476",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [IMPROVED] Finalize desired meta reconciliation",
+      "text": "This PR finalizes desired meta reconciliation with some tweaks: - The JS lock was held throughout both `runStreamMigration` and `runConsumerMigration`. Now we snapshot the fields we need and then release the JS lock so we're not holding JS lock when accessing stream, consumer or Raft data/locks. - When peer-removing a stream peer can't replace the peer, it leaves an empty spot that can be later added when a new peer joins the cluster. However, while in this \"under-replicated\" state it marked it as migrating, which resulted in constant meta layer churn since it initialized and finalized desired state in a loop while in this state. This PR fixes that by only running desired state reconciliation if there is desired state, if the assignment's peer set is different from the Raft group, or the group is part of a legacy move where the assignment's peer set is larger than the intended replica count. - A stream cancel move endpoint was added, which has similar behavior to the system-level cancel move, but is scoped purely to the account the user is in and allows the user to cancel a move which wasn't possible before. The `\"stream move not in progress\"` error was renamed to `\"stream reconfiguration not in progress\"` and a `\"stream reconfiguration already in progress\"` error was added since desired state is not limited to moves, it also includes scaling and retention changes. - Scale and retention changes can now be stacked again, and the meta layer and stream/consumer layer together ensure data is kept safe throughout. But, errors are kept to deny: concurrent scale and move, move while one is already in progress, move while a scale is already in progress, etc. - A little bit of code deduplication between `runStreamMigration` and `runConsumerMigration` by extracting: `desiredSnapshot` which snapshots all desired-related data under the JS lock, `removeEvictedPeers` which removes peers that are still part of the Raft group, but are no longer in the assignment (usually as a result of peer-remove, but could fix lingering peer set desync prior to upgrade too), and `extendPeerSet` which gradually adds peers to the Raft group. - Reporting migration status in stream/consumer info: `Cluster.Desired.Status: { Description: string, Type: string, Err: string? }`. The description contains a simple human-readable description of what status the migration is in, and the type contains an enum that can be used for identifying what the migration is waiting on, like a membership change, quorum, blocked on a consumer moving, etc. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+      "url": "https://github.com/nats-io/nats-server/pull/8476",
+      "createdAt": "2026-08-18T07:50:17Z",
+      "updatedAt": "2026-08-19T12:12:12Z",
+      "timestamp": "2026-08-19T12:12:12Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8477",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) NRG: Maximize batch size",
+      "text": "Cap batches to the configured maximum payload size.",
+      "url": "https://github.com/nats-io/nats-server/pull/8477",
+      "createdAt": "2026-08-18T08:57:14Z",
+      "updatedAt": "2026-08-19T15:02:45Z",
+      "timestamp": "2026-08-19T15:02:45Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8479",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Prevent duplicate JetStream ingestion subscriptions during concurrent stream updates",
+      "text": "Resolves #7801. The complete issue trace shows sequences 100-104 spanning two wire-level publishes, with each ingress multiplied independently. A controlled reproduction makes the boundary deterministic: one traced ingress produces eight PubAcks and eight durable stream records. Concurrent equivalent stream updates could each calculate their subscription delta from the same stale stream configuration. Each update then installed the same internal ingestion subscription. A later protocol publish matched every duplicate subscription, so one ingress was independently accepted multiple times and produced multiple durable records, stream sequences, and PubAcks. This change serializes `updateWithAdvisory` per stream, covering the configuration snapshot, delta calculation, and application. It does not add message deduplication or change publish retry, consumer acknowledgement, or redelivery semantics. The regression test performs eight concurrent equivalent public stream updates, then verifies that one traced ingress produces exactly one PubAck, one durable record/stream sequence, one first delivery, and zero redeliveries. Validation: - Fresh `main` control (`8e54a59546b11dc62bf894b2360c12a01f465cf6`): 1 ingress -> 8 PubAcks, 8 records/sequences, 8 first deliveries. - Candidate: 1 ingress -> 1 PubAck, 1 record/sequence, 1 first delivery, 0 redeliveries; 20/20 repeated witness runs passed. - Targeted PubAck, explicit-ack, retry, deduplication, and redelivery tests passed. - Strengthened race run covering the witness and `TestJetStreamUpdateStream` passed. - `golangci-lint` and Linux amd64/386 builds passed. - The full native run recorded two unrelated failures: the known `TestLeafNodeSlowConsumer` timing flake, and `TestOCSPPeerMonitor` failing to restart its fixed `8222` monitoring port between subtests. The OCSP failure reproduces identically on the unmodified base; the remainder of the `test` package passes with that baseline-broken case excluded. I certify that this contribution is my original work and that I license it to the project under the Apache License 2.0.",
+      "url": "https://github.com/nats-io/nats-server/pull/8479",
+      "createdAt": "2026-08-19T02:33:43Z",
+      "updatedAt": "2026-08-19T02:33:43Z",
+      "timestamp": "2026-08-19T02:33:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "realMoonBoy",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8480",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "De-flake TestJetStreamClusterStreamResetOnExpirationDuringPeerDownAndRestartWithLeaderChange",
+      "text": "Wait for stream readiness to prevent a nil pointer dereference on `mset.raftNode`",
+      "url": "https://github.com/nats-io/nats-server/pull/8480",
+      "createdAt": "2026-08-19T08:27:14Z",
+      "updatedAt": "2026-08-19T12:12:35Z",
+      "timestamp": "2026-08-19T12:12:35Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8482",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "Update to Go 1.26.7/1.25.14",
+      "url": "https://github.com/nats-io/nats-server/pull/8482",
+      "createdAt": "2026-08-19T14:57:42Z",
+      "updatedAt": "2026-08-19T15:11:02Z",
+      "timestamp": "2026-08-19T15:11:02Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "neilalexander",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8484",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "Fix cross-tier JetStream consumer counting for limits",
+      "text": "<!-- Please make sure to read CONTRIBUTING.md, then delete this notice and replace it with your PR description. Commit sign-offs certify that the contribution is your original work and that you license the work to the project under the Apache-2.0 license. We cannot accept contributions without it. --> closes https://github.com/nats-io/nats-server/issues/8483 Fix the server not distinguishing between consumer tiers when counting the number of consumers for a stream for account limits enforcement. I only updated the cluster path, `jsClusteredConsumerRequest`, since a single server would not have R3 assets by nature of not being clustered.",
+      "url": "https://github.com/nats-io/nats-server/pull/8484",
+      "createdAt": "2026-08-19T17:38:14Z",
+      "updatedAt": "2026-08-19T18:10:20Z",
+      "timestamp": "2026-08-19T18:10:20Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "joeriddles",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8486",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[IMPROVED] Direct get performance and stream lock decoupling",
+      "text": "This PR combines three improvements to speed up direct get reads when combined with stream writes and other operations that require the stream lock (like consumer deletes): - Use a separate `mset.isolateMu` to isolate reads without needing to hold the stream lock. This ensures that such reads don't block operations like removing consumers. However, stream writes still need to wait for the read to complete before they're allowed to apply, in order to provide isolated reads. Otherwise you could get a partial read before a rollup applies or within an atomic batch. - Direct multi requests are meant to be a point-in-time capture of messages. However, `MultiLastSeqs` returned sequences first, and then individual message lookups were performed which could fail to find a message given a TTL or MaxAge expiry happened between. `MultiLastMsgs` is added to load the messages while the store lock is still held, using a callback to receive the messages. - `MultiLastSeqs` was also very expensive given filters that target a large range of blocks. This would result in doing a backward scan for the full range. However, given the search is for the full stream, the stream has up-to-date `psi.lblk` for a given subject, and up-to-date per-subject state, we could retrieve `ss.Last` directly without wasting time on walking non-matching blocks.",
+      "url": "https://github.com/nats-io/nats-server/pull/8486",
+      "createdAt": "2026-08-19T20:42:59Z",
+      "updatedAt": "2026-08-19T21:00:43Z",
+      "timestamp": "2026-08-19T21:00:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:fdfa474a35cb9ca2216d",
+      "signalId": "github:nats-io/nats-server:pull_request:8486",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8486",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[IMPROVED] Direct get performance and stream lock decoupling",
+        "text": "This PR combines three improvements to speed up direct get reads when combined with stream writes and other operations that require the stream lock (like consumer deletes): - Use a separate `mset.isolateMu` to isolate reads without needing to hold the stream lock. This ensures that such reads don't block operations like removing consumers. However, stream writes still need to wait for the read to complete before they're allowed to apply, in order to provide isolated reads. Otherwise you could get a partial read before a rollup applies or within an atomic batch. - Direct multi requests are meant to be a point-in-time capture of messages. However, `MultiLastSeqs` returned sequences first, and then individual message lookups were performed which could fail to find a message given a TTL or MaxAge expiry happened between. `MultiLastMsgs` is added to load the messages while the store lock is still held, using a callback to receive the messages. - `MultiLastSeqs` was also very expensive given filters that target a large range of blocks. This would result in doing a backward scan for the full range. However, given the search is for the full stream, the stream has up-to-date `psi.lblk` for a given subject, and up-to-date per-subject state, we could retrieve `ss.Last` directly without wasting time on walking non-matching blocks.",
+        "url": "https://github.com/nats-io/nats-server/pull/8486",
+        "createdAt": "2026-08-19T20:42:59Z",
+        "updatedAt": "2026-08-19T21:00:43Z",
+        "timestamp": "2026-08-19T21:00:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:9cdf2f6e660af1c2ad2a",
+      "signalId": "github:nats-io/nats-server:issue:8485",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:8485",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "JetStream memory footprint grows with subject & dedup cardinailty despite storageType=File",
+        "text": "### Observed behavior Workloads which store a high cardinality of distinct stream subjects or a high rate of distinct dedup ID tracking drive high memory utilization in JetStream despite the streams being backed by file storage with adequate capacity. Attempts to limit memory utilization cause OOMs (ie: cgroup limits) or aggressive GC (ie: GOMEMLIMIT) that drives up CPU utilization and response latency. ### Expected behavior I would expect the in-memory structures used to index subjects and dedup IDs to be paged to disk to allow arbitrarily high cardinalities given adequate disk storage and limited RAM. For example, the dedup tracking could partition up the time window into smaller generations and rotate them to disk periodically and keep checks performant with bloom filters: The \"active\" generation would be an in-memory structure as it is today to deal with high frequency writes. When it came time to rotate, JetStream would write the active structure to disk once into a new file and compute a bloom filter for the generation to keep in memory. Each generation's bloom filter would be smaller than it's on-disk representation and would ensure dedup-misses remained fast. When the occasional duplicate message comes along and gets a hit in the bloom filter, JetStream would then need a definitive check against the on-disk file. At each rotation, the oldest on-disk generation and in-memory bloom filter generation would be dropped. The per-subject index seems trickier to page out to disk. A library like sqlite3 seems to manage this well for insertions & queries to large tables with its \"WAL to B-tree\" scheme, but I don't have enough depth in nats-server internals to make much of a coherent proposal. ### Server and client version nats-server 2.14.5 ### Host environment The repro procedure below was on an Apple M3 Pro with 36GB RAM, but the normal prod environment where I run a JetStream process as a leafnode is on Linux c6a.2xlarge. ### Steps to reproduce I put together a couple small demos in Java: demoHighCardinalitySubjects() and then demoHighCardinalityDedupTracking(). Both demos publish 50M messages to JetStream file-backed streams. The first is using KeyValue.put(UUID, []) to load up JetStream's per-subject index. The second is using Nats-Msg-Id: UUID on a retention=Interest stream with no consumers to load up the dedup tracking set. ```java package davcote; import io.nats.client.Nats; import io.nats.client.api.KeyValueConfiguration; import io.nats.client.api.RetentionPolicy; import io.nats.client.api.StorageType; import io.nats.client.api.StreamConfiguration; import io.nats.client.impl.Headers; import java.time.Duration; import java.util.UUID; import java.util.concurrent.Callable; import java.util.concurrent.CompletableFuture; import java.util.concurrent.atomic.AtomicLong; import java.util.stream.IntStream; public class NatsMemoryUseDemos { public static void main(final String[] args) throws Exception { demoHighCardinalitySubjects(); //demoHighCardinalityDedupTracking(); } private static void demoHighCardinalitySubjects() throws Exception { try (var nc = Nats.connect()) { nc.keyValueManagement().create(KeyValueConfiguration.builder() .name(\"MyBucket\") .storageType(StorageType.File) .build()); final var kv = nc.keyValue(\"MyBucket\"); final var count = 50_000_000L; final var threads = 32; runMultithreaded(count, threads, () -> kv.put(UUID.randomUUID().toString(), new byte[0])); } } private static void demoHighCardinalityDedupTracking() throws Exception { try (var nc = Nats.connect()) { nc.jetStreamManagement().addStream(StreamConfiguration.builder() .name(\"MyStream\") .subjects(\"mystream\") .retentionPolicy(RetentionPolicy.Interest) // No consumers -> no retention .storageType(StorageType.File) .duplicateWindow(Duration.ofDays(1)) .build()); final var js = nc.jetStream(); final var count = 50_000_000L; final var threads = 32; runMultithreaded(count, threads, () -> js.publish(\"mystream\", new Headers().put(\"Nats-Msg-Id\", UUID.randomUUID().toString()) , new byte[0])); } } private static void runMultithreaded(final long nCount, final int nThreads, final Callable<?> action) { final var remaining = new AtomicLong(nCount); final var threads = IntStream .range(0, nThreads) .mapToObj(threadId -> CompletableFuture.runAsync(() -> { try { while (remaining.decrementAndGet() >= 0) { action.call(); } } catch (final Exception e) { throw new RuntimeException(e); } }, Thread::startVirtualThread)) .toList(); try { threads.forEach(CompletableFuture::join); } finally { threads.forEach(cf -> cf.cancel(true)); } } } ``` For the KV high subject cardinality test, the memory footprint of nats-server grows to 2-3x the on-disk size reported by Jetstream. ```bash % nats stream report -a Obtaining Stream stats ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮ │ Stream Report │ ├─────────────┬─────────┬───────────┬───────────┬────────────┬─────────┬──────┬─────────┬───────────┬──────────┤ │ Stream │ Storage │ Placement │ Consumers │ Messages │ Bytes │ Lost │ Deleted │ API Level │ Replicas │ ├─────────────┼─────────┼───────────┼───────────┼────────────┼─────────┼──────┼─────────┼───────────┼──────────┤ │ KV_MyBucket │ File │ │ 0 │ 50,000,000 │ 3.7 GiB │ 0 │ 0 │ 0 │ │ ╰─────────────┴─────────┴───────────┴───────────┴────────────┴─────────┴──────┴─────────┴───────────┴──────────╯ % nats stream info KV_MyBucket Information for Stream KV_MyBucket created 2026-08-19 09:51:40 Subjects: $KV.MyBucket.> Replicas: 1 Storage: File Options: Retention: Limits Acknowledgments: true Discard Policy: New Duplicate Window: 2m0s Direct Get: true Allows Atomic Batch Publish: false Allows Fast Batch Publish: false Allows Counters: false Allows Msg Delete: false Allows Per-Message TTL: false Allows Purge: true Allows Schedules: false Allows Rollups: true Limits: Maximum Messages: unlimited Maximum Per Subject: 1 Maximum Bytes: unlimited Maximum Age: unlimited Maximum Message Size: unlimited Maximum Consumers: unlimited State: Host Version: 2.14.5 Required API Level: 0 hosted at level 4 Messages: 50,000,000 Bytes: 3.7 GiB First Sequence: 1 @ 2026-08-19 09:51:40 Last Sequence: 50,000,000 @ 2026-08-19 10:05:25 Active Consumers: 0 % vmmap --summary `pgrep nats-server` | grep Physical Physical footprint: 8.7G Physical footprint (peak): 11.0G ``` Likewise for the high-cardinality dedup tracking demo, memory footprint is about the same as the KV store and about 2-3x the size of the content written. (And because of the consumerless Interest stream, zero messages must actually be retained on disk.) ```bash % nats stream report -a Obtaining Stream stats ╭───────────────────────────────────────────────────────────────────────────────────────────────────────╮ │ Stream Report │ ├──────────┬─────────┬───────────┬───────────┬──────────┬───────┬──────┬─────────┬───────────┬──────────┤ │ Stream │ Storage │ Placement │ Consumers │ Messages │ Bytes │ Lost │ Deleted │ API Level │ Replicas │ ├──────────┼─────────┼───────────┼───────────┼──────────┼───────┼──────┼─────────┼───────────┼──────────┤ │ MyStream │ File │ │ 0 │ 0 │ 0 B │ 0 │ 0 │ 0 │ │ ╰──────────┴─────────┴───────────┴───────────┴──────────┴───────┴──────┴─────────┴───────────┴──────────╯ % nats stream info MyStream Information for Stream MyStream created 2026-08-19 10:24:46 Subjects: mystream Replicas: 1 Storage: File Options: Retention: Interest Acknowledgments: true Discard Policy: Old Duplicate Window: 1d0h0m0s Allows Atomic Batch Publish: false Allows Fast Batch Publish: false Allows Counters: false Allows Msg Delete: true Allows Per-Message TTL: false Allows Purge: true Allows Schedules: false Allows Rollups: false Limits: Maximum Messages: unlimited Maximum Per Subject: unlimited Maximum Bytes: unlimited Maximum Age: unlimited Maximum Message Size: unlimited Maximum Consumers: unlimited State: Host Version: 2.14.5 Required API Level: 0 hosted at level 4 Messages: 0 Bytes: 0 B First Sequence: 50,000,001 Last Sequence: 50,000,000 @ 2026-08-19 10:35:50 Active Consumers: 0 % vmmap --summary `pgrep nats-server` | grep Physical Physical footprint: 8.5G Physical footprint (peak): 11.0G ``` nats-server emits a few ominous warnings about inconsistent writes during that demo: ```text [35525] 2026/08/19 10:26:51.689300 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:28:56.625147 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:31:01.552617 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:33:06.471954 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write [35525] 2026/08/19 10:35:11.391281 [WRN] Filestore [MyStream] Stream state encountered internal inconsistency on write ``` Using GOMEMLIMIT seems to make GC more aggressive about freeing memory but at the expense of CPU utilization. Combined with GOMAXPROX, NATS JetStream response latency starts to escalate: ```bash % GOMAXPROCS=4 GOMEMLIMIT=4GiB nats-server -js [62195] 2026/08/19 12:57:43.774094 [INF] Starting nats-server [62195] 2026/08/19 12:57:43.774852 [INF] Version: 2.14.5 [62195] 2026/08/19 12:57:43.774856 [INF] Git: [not set] [62195] 2026/08/19 12:57:43.774858 [INF] Name: NCQHXBSJZZP6JC3M4K7TUS4LX7PDVHEG6U7Y5O4VJUVJPOSAEEABGLOD [62195] 2026/08/19 12:57:43.774862 [INF] Node: KU5XOTAW [62195] 2026/08/19 12:57:43.774864 [INF] ID: NCQHXBSJZZP6JC3M4K7TUS4LX7PDVHEG6U7Y5O4VJUVJPOSAEEABGLOD [62195] 2026/08/19 12:57:43.775212 [INF] Starting JetStream [62195] 2026/08/19 12:57:43.775230 [WRN] Temporary storage directory used, data could be lost on system reboot [62195] 2026/08/19 12:57:43.784171 [INF] _ ___ _____ ___ _____ ___ ___ _ __ __ [62195] 2026/08/19 12:57:43.784191 [INF] _ | | __|_ _/ __|_ _| _ \\ __| /_\\ | \\/ | [62195] 2026/08/19 12:57:43.784193 [INF] | || | _| | | \\__ \\ | | | / _| / _ \\| |\\/| | [62195] 2026/08/19 12:57:43.784194 [INF] \\__/|___| |_| |___/ |_| |_|_\\___/_/ \\_\\_| |_| [62195] 2026/08/19 12:57:43.784196 [INF] [62195] 2026/08/19 12:57:43.784197 [INF] https://docs.nats.io/jetstream [62195] 2026/08/19 12:57:43.784198 [INF] [62195] 2026/08/19 12:57:43.784200 [INF] ---------------- JETSTREAM ---------------- [62195] 2026/08/19 12:57:43.784201 [INF] Strict: true [62195] 2026/08/19 12:57:43.784207 [INF] Max Memory: 3.00 GB [62195] 2026/08/19 12:57:43.784209 [INF] Max Storage: 21.76 GB [62195] 2026/08/19 12:57:43.784211 [INF] Store Directory: \"/var/folders/77/vwfgssrn4zdc54_js40_m2300000gq/T/nats/jetstream\" [62195] 2026/08/19 12:57:43.784238 [INF] API Level: 4 [62195] 2026/08/19 12:57:43.784241 [INF] ------------------------------------------- [62195] 2026/08/19 12:57:43.786007 [INF] Took 10.785708ms to start JetStream [62195] 2026/08/19 12:57:43.786355 [INF] Listening for client connections on 0.0.0.0:4222 [62195] 2026/08/19 12:57:43.786515 [INF] Server is ready [62195] 2026/08/19 13:09:04.357551 [WRN] 127.0.0.1:61224 - cid:5 - \"v2.20.5:java\" - Readloop processing time: 2.175411625s ``` ```bash % vmmap --summary `pgrep nats-server` | grep Physical Physical footprint: 5.9G Physical footprint (peak): 6.2G ``` JetStream's response latency eventually degrades beyond the NATS client's default JetStream response timeout. ```text Exception in thread \"main\" java.util.concurrent.CompletionException: java.lang.RuntimeException: java.io.IOException: Timeout or no response waiting for NATS JetStream server at java.base/java.util.concurrent.CompletableFuture.wrapInCompletionException(CompletableFuture.java:323) at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:359) at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:364) at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1828) at java.base/java.lang.VirtualThread.run(VirtualThread.java:460) Caused by: java.lang.RuntimeException: java.io.IOException: Timeout or no response waiting for NATS JetStream server at davcote.NatsMemoryUseDemos.lambda$runMultithreaded$1(NatsMemoryUseDemos.java:65) at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1825) ... 1 more Caused by: java.io.IOException: Timeout or no response waiting for NATS JetStream server at io.nats.client.impl.NatsJetStreamImpl.responseRequired(NatsJetStreamImpl.java:260) at io.nats.client.impl.NatsJetStreamImpl.makeInternalRequestResponseRequired(NatsJetStreamImpl.java:251) at io.nats.client.impl.NatsJetStream.publishSyncInternal(NatsJetStream.java:152) at io.nats.client.impl.NatsJetStream.publish(NatsJetStream.java:82) at io.nats.client.impl.NatsKeyValue._write(NatsKeyValue.java:238) at io.nats.client.impl.NatsKeyValue.put(NatsKeyValue.java:142) at davcote.NatsMemoryUseDemos.lambda$demoHighCardinalitySubjects$0(NatsMemoryUseDemos.java:33) at davcote.NatsMemoryUseDemos.lambda$runMultithreaded$1(NatsMemoryUseDemos.java:62) ... 2 more ```",
+        "url": "https://github.com/nats-io/nats-server/issues/8485",
+        "createdAt": "2026-08-19T18:49:57Z",
+        "updatedAt": "2026-08-19T18:49:57Z",
+        "timestamp": "2026-08-19T18:49:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "defect"
+        ],
+        "author": "davidmcote",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:83cbd8be4b5828fc6f77",
+      "signalId": "github:nats-io/nats-server:pull_request:8484",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8484",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "Fix cross-tier JetStream consumer counting for limits",
+        "text": "<!-- Please make sure to read CONTRIBUTING.md, then delete this notice and replace it with your PR description. Commit sign-offs certify that the contribution is your original work and that you license the work to the project under the Apache-2.0 license. We cannot accept contributions without it. --> closes https://github.com/nats-io/nats-server/issues/8483 Fix the server not distinguishing between consumer tiers when counting the number of consumers for a stream for account limits enforcement. I only updated the cluster path, `jsClusteredConsumerRequest`, since a single server would not have R3 assets by nature of not being clustered.",
+        "url": "https://github.com/nats-io/nats-server/pull/8484",
+        "createdAt": "2026-08-19T17:38:14Z",
+        "updatedAt": "2026-08-19T18:10:20Z",
+        "timestamp": "2026-08-19T18:10:20Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "joeriddles",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c5d348f729904f4a4ac0",
+      "signalId": "github:nats-io/nats-server:issue:8483",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:8483",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "Tiered JetStream consumer limits are not additive",
+        "text": "### Observed behavior When using an account with tiered JetStream limits, I expect to be able to add R1 and R3 consumers to a stream as defined by their individual limits. For example, with an account with a limit of 3 R3 consumers and 2 R1 consumers, I expect to be able to add 5 consumer total to a stream: composed of 3 R3 and 2 R1. There seems to be a bug in counting of consumers across multiple tiers. See this failing test: https://github.com/nats-io/nats-server/compare/main...joeriddles:d68be0603aa821b89e8d46e413a4a249dd6c97be?expand=1 ### Expected behavior I am only able to add up to 3 consumers for the stream I would expect the test above to pass. ### Server and client version nats-server `main` branch commit `b1507e0545a83223bd774034c0e541b9feec805a` ### Host environment macOS ### Steps to reproduce _No response_",
+        "url": "https://github.com/nats-io/nats-server/issues/8483",
+        "createdAt": "2026-08-19T17:16:30Z",
+        "updatedAt": "2026-08-19T17:37:03Z",
+        "timestamp": "2026-08-19T17:37:03Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "defect"
+        ],
+        "author": "joeriddles",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:f177ef49e38953b48d2e",
+      "signalId": "github:nats-io/nats-server:pull_request:8482",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8482",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "Update to Go 1.26.7/1.25.14",
+        "url": "https://github.com/nats-io/nats-server/pull/8482",
+        "createdAt": "2026-08-19T14:57:42Z",
+        "updatedAt": "2026-08-19T15:11:02Z",
+        "timestamp": "2026-08-19T15:11:02Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "neilalexander",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:305dd1f759e54b153256",
+      "signalId": "github:nats-io/nats-server:pull_request:8477",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8477",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) NRG: Maximize batch size",
+        "text": "Cap batches to the configured maximum payload size.",
+        "url": "https://github.com/nats-io/nats-server/pull/8477",
+        "createdAt": "2026-08-18T08:57:14Z",
+        "updatedAt": "2026-08-19T15:02:45Z",
+        "timestamp": "2026-08-19T15:02:45Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4655c13b5b7228e1f8c5",
+      "signalId": "github:nats-io/nats-server:pull_request:8447",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8447",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) NRG: Relax SyncAlways for replicated streams",
+        "text": "This patch reduces the number of calls fd.Sync() for replicated streams on servers configured with `sync_interval: always`. Before this patch, the server called `fd.Sync()` for each Raft `appendEntry`, plus one `fd.Sync` on the stream's filestore for each message batched in the same `appendEntry`. This commit introduces a new internal flush policy, which syncs the stream filestore only only before creating a new snapshot. snapshot. This results in one `fd.Sync` call per raft appendEntry, plus one call for each dirty block in stream's filestore, before creating a snapshot. This leaves streams fully recoverable, while getting rid of unnecessary `fd.Sync` calls.",
+        "url": "https://github.com/nats-io/nats-server/pull/8447",
+        "createdAt": "2026-08-10T10:58:45Z",
+        "updatedAt": "2026-08-19T14:26:18Z",
+        "timestamp": "2026-08-19T14:26:18Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:72a5f33d70dbec80cb5e",
+      "signalId": "github:nats-io/nats-server:pull_request:8445",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8445",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) Raft proposal fast path",
+        "text": "Reduce contention by adding a proposal fast path that allows Propose and ProposeMulti to enqueue proposals in the hot path, without the need to acquire the raft mutex.",
+        "url": "https://github.com/nats-io/nats-server/pull/8445",
+        "createdAt": "2026-08-10T09:01:52Z",
+        "updatedAt": "2026-08-19T12:36:32Z",
+        "timestamp": "2026-08-19T12:36:32Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:4e952f5ff746b1c4d6e4",
+      "signalId": "github:nats-io/nats-server:pull_request:8480",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8480",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "De-flake TestJetStreamClusterStreamResetOnExpirationDuringPeerDownAndRestartWithLeaderChange",
+        "text": "Wait for stream readiness to prevent a nil pointer dereference on `mset.raftNode`",
+        "url": "https://github.com/nats-io/nats-server/pull/8480",
+        "createdAt": "2026-08-19T08:27:14Z",
+        "updatedAt": "2026-08-19T12:12:35Z",
+        "timestamp": "2026-08-19T12:12:35Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:7681424d64d9480febab",
+      "signalId": "github:nats-io/nats-server:pull_request:8476",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8476",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [IMPROVED] Finalize desired meta reconciliation",
+        "text": "This PR finalizes desired meta reconciliation with some tweaks: - The JS lock was held throughout both `runStreamMigration` and `runConsumerMigration`. Now we snapshot the fields we need and then release the JS lock so we're not holding JS lock when accessing stream, consumer or Raft data/locks. - When peer-removing a stream peer can't replace the peer, it leaves an empty spot that can be later added when a new peer joins the cluster. However, while in this \"under-replicated\" state it marked it as migrating, which resulted in constant meta layer churn since it initialized and finalized desired state in a loop while in this state. This PR fixes that by only running desired state reconciliation if there is desired state, if the assignment's peer set is different from the Raft group, or the group is part of a legacy move where the assignment's peer set is larger than the intended replica count. - A stream cancel move endpoint was added, which has similar behavior to the system-level cancel move, but is scoped purely to the account the user is in and allows the user to cancel a move which wasn't possible before. The `\"stream move not in progress\"` error was renamed to `\"stream reconfiguration not in progress\"` and a `\"stream reconfiguration already in progress\"` error was added since desired state is not limited to moves, it also includes scaling and retention changes. - Scale and retention changes can now be stacked again, and the meta layer and stream/consumer layer together ensure data is kept safe throughout. But, errors are kept to deny: concurrent scale and move, move while one is already in progress, move while a scale is already in progress, etc. - A little bit of code deduplication between `runStreamMigration` and `runConsumerMigration` by extracting: `desiredSnapshot` which snapshots all desired-related data under the JS lock, `removeEvictedPeers` which removes peers that are still part of the Raft group, but are no longer in the assignment (usually as a result of peer-remove, but could fix lingering peer set desync prior to upgrade too), and `extendPeerSet` which gradually adds peers to the Raft group. - Reporting migration status in stream/consumer info: `Cluster.Desired.Status: { Description: string, Type: string, Err: string? }`. The description contains a simple human-readable description of what status the migration is in, and the type contains an enum that can be used for identifying what the migration is waiting on, like a membership change, quorum, blocked on a consumer moving, etc. Follow-up of https://github.com/nats-io/nats-server/pull/8432",
+        "url": "https://github.com/nats-io/nats-server/pull/8476",
+        "createdAt": "2026-08-18T07:50:17Z",
+        "updatedAt": "2026-08-19T12:12:12Z",
+        "timestamp": "2026-08-19T12:12:12Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:dd0cf411acbb39b33f3c",
+      "signalId": "github:nats-io/nats-server:issue:8481",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:8481",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "Leaf interest arriving over a route does not skip when isolate_leafnode_interest is true",
+        "text": "### Observed behavior When an LS+ arrives through a route instead of directly on the node runs full canSubscribeInternal checks even if that leaf node has isolate_leafnode_interest set to true. The `if sub.client.kind == LEAF && ln.isIsolatedLeafNode() { continue }` check only applies to direct connection. ### Expected behavior Leaf node interest is gated on all servers based on isolate_leafnode_interest and not just direct connections. ### Server and client version Leaf node version: 2.12.4 Broker version: 2.14.4 ### Host environment _No response_ ### Steps to reproduce _No response_",
+        "url": "https://github.com/nats-io/nats-server/issues/8481",
+        "createdAt": "2026-08-19T11:16:29Z",
+        "updatedAt": "2026-08-19T11:16:29Z",
+        "timestamp": "2026-08-19T11:16:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "defect"
+        ],
+        "author": "formzeke",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ece372cec370ca458a92",
+      "signalId": "github:nats-io/nats-server:issue:8472",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:issue:8472",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "issue",
+        "title": "CRITICAL JetStream atomic batch publish leaves per-batch staging directories under <stream>/batches after commit",
+        "text": "### Observed behavior Streams created with `AllowAtomicPublish: true` accumulate one directory per batch under ` <store_dir>/jetstream/<account>/streams/<stream>/batches/<batchID>/ ` and these directories are never removed after the batch commits. The count grows monotonically for as long as the server is publishing. Measured on 2.14.5 across 10 file-backed streams, sampling every ~2 minutes: 19:53:45 batch_dirs=6374 logical=13.6GB 19:55:47 batch_dirs=11419 logical=18.6GB 19:57:52 batch_dirs=17301 logical=23.1GB 19:59:59 batch_dirs=23520 logical=27.6GB 20:02:08 batch_dirs=30143 logical=32.2GB 20:04:10 batch_dirs=37394 logical=36.4GB 20:06:11 batch_dirs=43813 logical=40.7GB 20:08:32 batch_dirs=50148 logical=45.9GB 20:10:55 batch_dirs=57614 logical=51.3GB 20:13:20 batch_dirs=65356 logical=56.9GB 20:15:48 batch_dirs=72991 logical=62.3GB 20:18:01 batch_dirs=80047 logical=67.4GB ``` $ ls -la .../streams/stream_name/batches/FU47okxc drwx------. 1 root root 30 Aug 16 19:48 . drwx------. 1 root root 2216896 Aug 16 20:28 .. -rw-------. 1 root root 16 Aug 16 19:48 meta.sum drwx------. 1 root root 10 Aug 16 19:48 msgs drwx------. 1 root root 0 Aug 16 19:48 obs ``` That directory was created when the stream was created and was still present 40 minutes later. Note also the parent directory entry, which had grown to **2,216,896 bytes** for a single stream. **On 2.12.14 the same directories retained the staged message data**, which was considerably worse: the filesystem grew ~2.7 GB/min while total stream bytes stayed flat, eventually filling the node's disk. Upgrading to 2.14.5 stopped the data from being retained but did not stop the directories themselves from accumulating. ### Expected behavior The staging directory for a batch should be removed once the batch is committed (and on abort/expiry). The number of entries under `<stream>/batches/` should stay bounded by the number of in-flight batches, rather than growing without limit for the lifetime of the stream. ### Server and client version Server: `nats:2.14.5-alpine` Also reproduced, in the more severe form where staged message data is retained, on `nats:2.12.14-alpine`. Client: `nats.go` (Go), publishing via the `jetstream` package with atomic batch publish. ### Host environment - Linux x86_64, Kubernetes (k3s), containerd runtime - Server runs as a StatefulSet; JetStream file store on a local NVMe host path - Filesystem: btrfs (metadata profile DUP) - 10 file-backed streams, all `AllowAtomicPublish: true`, aggregate publish rate ~40-50k msgs/sec ### Steps to reproduce Steps to reproduce 1. Create a file-backed stream with atomic batch publish enabled. Ours, via `nats.go`: ```go jetstream.StreamConfig{ Name: \"name\", Subjects: []string{\"name.*\"}, Retention: jetstream.LimitsPolicy, Storage: jetstream.FileStorage, Compression: jetstream.S2Compression, MaxAge: time.Hour, MaxBytes: 20 << 30, Duplicates: time.Minute, AllowAtomicPublish: true, } ``` 2. Publish continuously using atomic batches. 3. Watch the directory count under the stream's store: `watch -n 30 'ls -U <store>/jetstream/*/streams/*/batches | wc -l' `",
+        "url": "https://github.com/nats-io/nats-server/issues/8472",
+        "createdAt": "2026-08-16T20:44:18Z",
+        "updatedAt": "2026-08-19T10:43:33Z",
+        "timestamp": "2026-08-19T10:43:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "defect"
+        ],
+        "author": "singulariteer",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:37c72fbd9f15897b4a3e",
+      "signalId": "github:nats-io/nats-server:pull_request:8474",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8474",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] Remove leftover atomic-batch staging dirs after cleanup",
+        "text": "## Summary - JetStream R=1 file-backed atomic batches stage under `streams/<name>/batches/<hash>/`. - `FileStore.Delete` unlinks `meta.inf` then `Rename`s `StoreDir` to `.<name>`. If that rename fails (leftover non-empty tomb / Windows dest-exists), it used to return immediately and leak the original directory. Callers ignore the error, and there is no runtime sweeper (startup `RemoveAll` of `batches/` is recovery-only). - On rename failure, `Delete` now `removeAllWithRetry`s both the original `StoreDir` and the sibling tomb **inline**, then returns nil if that cleanup succeeds. The success-path rename + async tomb purge is unchanged. - `cleanupLocked` just calls `store.Delete(true)` again. Memory stores are unchanged. `AsyncFlush`, `stopLocked()`, and startup recovery are not modified. Fixes #8472 ## Test plan - [x] `go test ./server -count=1 -timeout 180s -run TestFileStoreDeleteRemovesStoreDirWhenRenameDestExists` - [x] `go test ./server -count=1 -timeout 120s -run TestJetStreamAtomicBatchCleanupRemovesStagingWhenRenameFails` - [x] `go test ./server -count=1 -timeout 180s -run ^TestJetStreamAtomicBatchPublishCleanup$` - [ ] Linux CI (canonical) The FileStore test forces `os.Rename` to fail by pre-creating a **non-empty** destination tomb (Linux `ENOTEMPTY`, not only Windows dest-exists), then asserts both the original store dir and `.<name>` are gone. ## Note on Windows `TestJetStreamAtomicBatchPublishSingleServerRecovery` failed locally on Windows during `testing.T` TempDir cleanup: `unlinkat .../batches/<hash>/msgs/1.blk: The process cannot access the file because it is being used by another process` That test hard-kills and recovers a partial batch. It does **not** call `cleanupLocked`. The open `.blk` is leftover FileStore handle lifetime after `Stop()` / restart recovery, which this PR does not change. The new FileStore dest-exists test and the atomic-batch cleanup test passed on the same Windows machine.",
+        "url": "https://github.com/nats-io/nats-server/pull/8474",
+        "createdAt": "2026-08-17T06:49:49Z",
+        "updatedAt": "2026-08-19T10:43:22Z",
+        "timestamp": "2026-08-19T10:43:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "nishant-uxs",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:5b01d9c27d61c4f04549",
+      "signalId": "github:nats-io/nats-server:pull_request:8475",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8475",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Inline block compaction ignores SyncAlways",
+        "text": "Inline compaction works by rewriting an entire block file and replacing the old file with the new compacted file. However, inline compaction ignored the SyncAlways setting. Meaning that a power loss could result in the loss of acknowledged messages.",
+        "url": "https://github.com/nats-io/nats-server/pull/8475",
+        "createdAt": "2026-08-17T12:14:54Z",
+        "updatedAt": "2026-08-19T09:46:47Z",
+        "timestamp": "2026-08-19T09:46:47Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8b46fa239b9ebd6f84bf",
+      "signalId": "github:nats-io/nats-server:pull_request:7882",
+      "event": "changed",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:7882",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) Stream backup/restore v2",
+        "text": "Signed-off-by: Neil Twigg <neil@nats.io>",
+        "url": "https://github.com/nats-io/nats-server/pull/7882",
+        "createdAt": "2026-02-26T17:12:20Z",
+        "updatedAt": "2026-08-19T09:45:18Z",
+        "timestamp": "2026-08-19T09:45:18Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 20
+        },
+        "labels": [],
+        "author": "neilalexander",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8feb8c4dd1719b425156",
+      "signalId": "github:nats-io/nats-server:pull_request:8479",
+      "event": "discovered",
+      "observedAt": "2026-08-20T02:32:22.344433Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8479",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Prevent duplicate JetStream ingestion subscriptions during concurrent stream updates",
+        "text": "Resolves #7801. The complete issue trace shows sequences 100-104 spanning two wire-level publishes, with each ingress multiplied independently. A controlled reproduction makes the boundary deterministic: one traced ingress produces eight PubAcks and eight durable stream records. Concurrent equivalent stream updates could each calculate their subscription delta from the same stale stream configuration. Each update then installed the same internal ingestion subscription. A later protocol publish matched every duplicate subscription, so one ingress was independently accepted multiple times and produced multiple durable records, stream sequences, and PubAcks. This change serializes `updateWithAdvisory` per stream, covering the configuration snapshot, delta calculation, and application. It does not add message deduplication or change publish retry, consumer acknowledgement, or redelivery semantics. The regression test performs eight concurrent equivalent public stream updates, then verifies that one traced ingress produces exactly one PubAck, one durable record/stream sequence, one first delivery, and zero redeliveries. Validation: - Fresh `main` control (`8e54a59546b11dc62bf894b2360c12a01f465cf6`): 1 ingress -> 8 PubAcks, 8 records/sequences, 8 first deliveries. - Candidate: 1 ingress -> 1 PubAck, 1 record/sequence, 1 first delivery, 0 redeliveries; 20/20 repeated witness runs passed. - Targeted PubAck, explicit-ack, retry, deduplication, and redelivery tests passed. - Strengthened race run covering the witness and `TestJetStreamUpdateStream` passed. - `golangci-lint` and Linux amd64/386 builds passed. - The full native run recorded two unrelated failures: the known `TestLeafNodeSlowConsumer` timing flake, and `TestOCSPPeerMonitor` failing to restart its fixed `8222` monitoring port between subtests. The OCSP failure reproduces identically on the unmodified base; the remainder of the `test` package passes with that baseline-broken case excluded. I certify that this contribution is my original work and that I license it to the project under the Apache License 2.0.",
+        "url": "https://github.com/nats-io/nats-server/pull/8479",
+        "createdAt": "2026-08-19T02:33:43Z",
+        "updatedAt": "2026-08-19T02:33:43Z",
+        "timestamp": "2026-08-19T02:33:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "realMoonBoy",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "version": 4,
+  "date": "2026-08-20",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "raft-rs",
+    "repo": "tikv/raft-rs",
+    "name": "raft-rs",
+    "keywords": [
+      "raft-rs"
+    ]
+  },
+  "context": {
+    "repository": "tikv/raft-rs",
+    "url": "https://github.com/tikv/raft-rs",
+    "description": "Raft distributed consensus algorithm implemented in Rust.",
+    "language": "Rust",
+    "topics": [
+      "distributed-consensus-algorithms",
+      "distributed-systems",
+      "raft",
+      "rust"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "master",
+    "stars": 3376,
+    "forks": 465,
+    "openIssues": 78,
+    "archived": false,
+    "collectedAt": "2026-08-20T02:32:23.493005+00:00"
+  },
+  "news": {
+    "repository": "tikv/raft-rs",
+    "collectedAt": "2026-08-20T02:32:23.493005+00:00",
+    "latestRelease": {
+      "repository": "tikv/raft-rs",
+      "tag": "v0.7.0",
+      "title": "0.7.0",
+      "url": "https://github.com/tikv/raft-rs/releases/tag/v0.7.0",
+      "publishedAt": "2023-03-07T09:22:26Z",
+      "notes": "- Update prost to 0.11 (#496)\r\n- Make priority an i64 so a lower than default priority can be configured (#495)\r\n- Allow fetching entries in asynchronous manner (#459)\r\n- Support setting max-inflight-msgs in runtime to reduce memory usage (#450)",
+      "highlights": [
+        "Update prost to 0.11 (#496)",
+        "Make priority an i64 so a lower than default priority can be configured (#495)",
+        "Allow fetching entries in asynchronous manner (#459)",
+        "Support setting max-inflight-msgs in runtime to reduce memory usage (#450)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-20T02:32:22.344433Z",
+      "since": "2026-08-19T02:32:22.344433Z",
+      "observedCount": 0,
+      "changedCount": 0
+    }
+  ],
+  "signals": [],
+  "events": []
+}
