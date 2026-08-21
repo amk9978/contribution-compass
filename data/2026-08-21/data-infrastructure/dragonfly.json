@@ -1,0 +1,1331 @@
+{
+  "version": 4,
+  "date": "2026-08-21",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "dragonfly",
+    "repo": "dragonflydb/dragonfly",
+    "name": "Dragonfly",
+    "keywords": [
+      "DragonflyDB"
+    ]
+  },
+  "context": {
+    "repository": "dragonflydb/dragonfly",
+    "url": "https://github.com/dragonflydb/dragonfly",
+    "description": "A modern replacement for Redis and Memcached",
+    "homepage": "https://www.dragonflydb.io/",
+    "language": "C++",
+    "topics": [
+      "cache",
+      "cpp",
+      "database",
+      "fibers",
+      "in-memory",
+      "in-memory-database",
+      "key-value",
+      "keydb",
+      "memcached",
+      "message-broker",
+      "multi-threading",
+      "nosql",
+      "redis",
+      "valkey",
+      "vector-search"
+    ],
+    "license": "NOASSERTION",
+    "defaultBranch": "main",
+    "stars": 31017,
+    "forks": 1229,
+    "openIssues": 299,
+    "archived": false,
+    "collectedAt": "2026-08-21T02:38:43.192796+00:00"
+  },
+  "news": {
+    "repository": "dragonflydb/dragonfly",
+    "collectedAt": "2026-08-21T02:38:43.192796+00:00",
+    "latestRelease": {
+      "repository": "dragonflydb/dragonfly",
+      "tag": "v1.40.1",
+      "title": "v1.40.1",
+      "url": "https://github.com/dragonflydb/dragonfly/releases/tag/v1.40.1",
+      "publishedAt": "2026-08-06T06:54:05Z",
+      "notes": "## This is a patch release.\r\n\r\n### What's Changed\r\n\r\n- Fixed connection-state handling in squashed pipelines. Commands following `AUTH`, `SELECT`, `HELLO`, `CLIENT`, or `RESET` now observe the updated connection state instead of stale authentication, database, or RESP protocol state ([#8016](https://github.com/dragonflydb/dragonfly/pull/8016)).\r\n- Fixed compressed QList node memory accounting and defragmentation ([#8011](https://github.com/dragonflydb/dragonfly/pull/8011), [#8014](https://github.com/dragonflydb/dragonfly/pull/8014)).\r\n\r\nFull Changelog: [v1.40.0...v1.40.1](https://github.com/dragonflydb/dragonfly/compare/v1.40.0...v1.40.1)",
+      "highlights": [
+        "This is a patch release.",
+        "What's Changed",
+        "Fixed connection-state handling in squashed pipelines. Commands following AUTH, SELECT, HELLO, CLIENT, or RESET now observe the updated connection state instead of stale authentication, database, or RESP protocol state (#8016).",
+        "Fixed compressed QList node memory accounting and defragmentation (#8011, #8014)."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "Cluster Search",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/19",
+        "description": "",
+        "dueAt": "2025-12-31T00:00:00Z",
+        "progress": 60,
+        "openIssues": 2,
+        "closedIssues": 3
+      },
+      {
+        "repository": "dragonflydb/dragonfly",
+        "kind": "milestone",
+        "title": "v1.41",
+        "url": "https://github.com/dragonflydb/dragonfly/milestone/24",
+        "description": "",
+        "dueAt": "2026-09-10T00:00:00Z",
+        "progress": 12,
+        "openIssues": 7,
+        "closedIssues": 1
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-21T02:38:33.805881Z",
+      "since": "2026-08-20T02:38:33.805881Z",
+      "observedCount": 22,
+      "changedCount": 22
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8106",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_slot_migration_oom_replica_rollback",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/cluster_test.py::test_slot_migration_oom_replica_rollback[df_factory0]` - Backend: iouring - Commit: 770bf7a4c8fda3ac5a08bbefb138be8fb18c385e - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32120110288 - Marker: run/32120110288/attempt/1 ``` Reason: AssertionError: target_master still has 57 keys after OOM rollback ____________ test_slot_migration_oom_replica_rollback[df_factory0] _____________ df_factory = Factory({'cluster_mode': 'yes'}) @dfly_args({\"cluster_mode\": \"yes\"}) async def test_slot_migration_oom_replica_rollback(df_factory): \"\"\" Regression test: when incoming slot migration fails with OOM, the target master rolls back the migrated keys via DeleteSlots, but that deletion must also be propagated to the target's replica via WriteFlushSlotsToJournal. Without the journal write, the replica retains the migrated keys while the master has already deleted them, causing master/replica divergence. After OOM rollback both target_master and target_replica must have 0 keys. \"\"\" source = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=4, maxmemory=\"1024MB\", ) target_master = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) target_replica = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) df_factory.start_all([source, target_master, target_replica]) source_node = await create_node_info(source) target_node = await create_node_info(target_master) source_node.slots = [(0, 16383)] target_node.slots = [] # Apply initial cluster config to source and target only (replica is not a cluster member) await apply_config([source_node, target_node]) # Populate source with large values that will OOM the target during migration await source_node.client.execute_command(\"DEBUG POPULATE 100 test 10000000\") # Start replication: target_replica follows target_master before migration begins c_replica_admin = target_replica.admin_client() await c_replica_admin.execute_command(f\"replicaof localhost {target_master.port}\") await wait_available_async(c_replica_admin) # Kick off migration from source -> target (expects OOM on target) source_node.migrations.append( MigrationInfo(\"127.0.0.1\", target_master.admin_port, [(0, 16383)], target_node.id) ) logging.info(\"Starting migration (expect OOM on target)\") await apply_config([source_node, target_node]) # Wait for both sides to reach FATAL await wait_for_status(source_node.admin_client, target_node.id, \"FATAL\", 300) await wait_for_status(target_node.admin_client, source_node.id, \"FATAL\") # Give the replica time to catch up with whatever the master has after rollback await check_all_replicas_finished([c_replica_admin], target_node.admin_client) master_keys = await target_node.admin_client.execute_command(\"DBSIZE\") replica_keys = await c_replica_admin.execute_command(\"DBSIZE\") logging.info(\"target_master DBSIZE=%d, target_replica DBSIZE=%d\", master_keys, replica_keys) # After OOM rollback the master must have 0 keys (DeleteSlots ran). > assert master_keys == 0, f\"target_master still has {master_keys} keys after OOM rollback\" E AssertionError: target_master still has 57 keys after OOM rollback E assert 57 == 0 c_replica_admin = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=30207,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_factory = Factory({'cluster_mode': 'yes'}) master_keys = 57 replica_keys = 57 source = :30202 source_node = NodeInfo(id='7c935bb6a16febed71134be6f248713e24628785', instance=:30202, client=<redis.asyncio.client.Redis(<redis.asy...1', port= ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8106",
+      "createdAt": "2026-08-18T09:48:38Z",
+      "updatedAt": "2026-08-20T08:47:43Z",
+      "timestamp": "2026-08-20T08:47:43Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [
+        "failing-test",
+        "iouring"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "closed",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8119",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_debug_traffic_records_pipeline_in_dispatch_order",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_debug_traffic_records_pipeline_in_dispatch_order[df_factory0]` - Backend: epoll - Commit: 2073b4e669c12b923fcf1dfb1506195aa4b587d5 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32338181080 - Marker: run/32338181080/attempt/1 ``` Reason: redis.exceptions.ResponseError: Traffic recording supported only on iouring ______ test_debug_traffic_records_pipeline_in_dispatch_order[df_factory0] ______ df_server = :41723 tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0') @dfly_multi_test_args( {\"enable_resp_io_loop_v2\": \"false\", \"proactor_threads\": 1}, {\"enable_resp_io_loop_v2\": \"true\", \"proactor_threads\": 1}, ) async def test_debug_traffic_records_pipeline_in_dispatch_order(df_server, tmp_path): \"\"\"Verify DEBUG TRAFFIC records a non-transactional pipeline in dispatch order.\"\"\" client = aioredis.Redis(port=df_server.port) log_prefix = tmp_path / \"traffic\" try: > assert await client.execute_command(\"DEBUG\", \"TRAFFIC\", \"START\", str(log_prefix)) == b\"OK\" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ client = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=41723,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_server = :41723 log_prefix = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0/traffic') tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0') dragonfly/connection_test.py:281: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782: in execute_command result = await conn.retry.call_with_retry( actual_retry_attempts = 0 args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0/traffic') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=41723,db=0)> failure_callback = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768777c40> options = {} pool = <redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,username=<REDACTED>,*** self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=41723,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> start_time = 692.524637951 /usr/local/lib/python3.12/dist-packages/redis/asyncio/retry.py:69: in call_with_retry return await do() ^^^^^^^^^^ do = <function Redis.execute_command.<locals>.<lambda> at 0x7f9768850900> fail = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768777c40> failures = 0 is_retryable = None self = <redis.asyncio.retry.Retry object at 0x7f9779573350> with_failure_count = True /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:723: in _send_command_parse_response return await self.parse_response(conn, command_name, **options) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0/traffic') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=41723,db=0)> options = {} self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=41723,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:824: in parse_response response = await connection.read_response() ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ command_name = 'DEBUG' connection = <redis.asyncio.connection.Connection(host=localhost,port=41723,db=0)> options = {} self = <redis.asyncio.cli ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8119",
+      "createdAt": "2026-08-20T06:41:14Z",
+      "updatedAt": "2026-08-20T12:46:26Z",
+      "timestamp": "2026-08-20T12:46:26Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "failing-test",
+        "epoll"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "closed",
+      "assignees": [
+        "glevkovich"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8120",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_debug_traffic_v2_parse_in_proactor_does_not_preempt",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_debug_traffic_v2_parse_in_proactor_does_not_preempt[df_factory0]` - Backend: epoll - Commit: 2073b4e669c12b923fcf1dfb1506195aa4b587d5 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32338181080 - Marker: run/32338181080/attempt/1 ``` Reason: redis.exceptions.ResponseError: Traffic recording supported only on iouring ____ test_debug_traffic_v2_parse_in_proactor_does_not_preempt[df_factory0] _____ df_server = :39641 tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0') @dfly_args({\"enable_resp_io_loop_v2\": \"true\", \"proactor_threads\": 1}) async def test_debug_traffic_v2_parse_in_proactor_does_not_preempt(df_server, tmp_path): \"\"\"V2 logging records queued commands and does not preempt proactor parsing.\"\"\" client = df_server.client() log_prefix = tmp_path / \"traffic-proactor\" reader, writer = await asyncio.open_connection(\"127.0.0.1\", df_server.port) try: # The SET is queued behind the blocking command before logging starts. writer.write(b\"BLPOP traffic:block 0\\r\\nSET traffic:queued before-start\\r\\n\") await writer.drain() await asyncio.sleep(0.05) > assert await client.execute_command(\"DEBUG\", \"TRAFFIC\", \"START\", str(log_prefix)) == \"OK\" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ client = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=39641,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_server = :39641 log_prefix = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0/traffic-proactor') reader = <StreamReader eof transport=<_SelectorSocketTransport closed fd=15>> tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0') writer = <StreamWriter transport=<_SelectorSocketTransport closed fd=15> reader=<StreamReader eof transport=<_SelectorSocketTransport closed fd=15>>> dragonfly/connection_test.py:313: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782: in execute_command result = await conn.retry.call_with_retry( actual_retry_attempts = 0 args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0/traffic-proactor') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=39641,db=0)> failure_callback = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768adbb00> options = {} pool = <redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,username=<REDACTED>,*** self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=39641,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> start_time = 692.907904211 /usr/local/lib/python3.12/dist-packages/redis/asyncio/retry.py:69: in call_with_retry return await do() ^^^^^^^^^^ do = <function Redis.execute_command.<locals>.<lambda> at 0x7f9768adb380> fail = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768adbb00> failures = 0 is_retryable = None self = <redis.asyncio.retry.Retry object at 0x7f9768e860c0> with_failure_count = True /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:723: in _send_command_parse_response return await self.parse_response(conn, command_name, **options) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0/traffic-proactor') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=39641,db=0)> options = {} self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usern ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8120",
+      "createdAt": "2026-08-20T06:41:16Z",
+      "updatedAt": "2026-08-20T12:47:48Z",
+      "timestamp": "2026-08-20T12:47:48Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [
+        "failing-test",
+        "epoll",
+        "iouring"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "open",
+      "assignees": [
+        "glevkovich"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8121",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "test_debug_traffic_v2_logs_retried_sync_command_once",
+      "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_debug_traffic_v2_logs_retried_sync_command_once[df_factory0]` - Backend: epoll - Commit: 2073b4e669c12b923fcf1dfb1506195aa4b587d5 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32338181080 - Marker: run/32338181080/attempt/1 ``` Reason: redis.exceptions.ResponseError: Traffic recording supported only on iouring ______ test_debug_traffic_v2_logs_retried_sync_command_once[df_factory0] _______ df_server = :46085 tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0') @dfly_args( { \"enable_resp_io_loop_v2\": \"true\", \"enable_pipeline_squashing_v2\": \"false\", \"proactor_threads\": 1, } ) async def test_debug_traffic_v2_logs_retried_sync_command_once(df_server, tmp_path): \"\"\"V2 does not log a command rejected with WOULD_BLOCK before retrying it as the head.\"\"\" client = df_server.client() log_prefix = tmp_path / \"traffic-retry\" reader, writer = await asyncio.open_connection(\"127.0.0.1\", df_server.port) try: > assert await client.execute_command(\"DEBUG\", \"TRAFFIC\", \"START\", str(log_prefix)) == \"OK\" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ client = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=46085,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_server = :46085 log_prefix = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0/traffic-retry') reader = <StreamReader eof transport=<_SelectorSocketTransport closed fd=15>> tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0') writer = <StreamWriter transport=<_SelectorSocketTransport closed fd=15> reader=<StreamReader eof transport=<_SelectorSocketTransport closed fd=15>>> dragonfly/connection_test.py:355: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782: in execute_command result = await conn.retry.call_with_retry( actual_retry_attempts = 0 args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0/traffic-retry') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=46085,db=0)> failure_callback = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768ada7a0> options = {} pool = <redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,username=<REDACTED>,*** self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=46085,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> start_time = 693.202786022 /usr/local/lib/python3.12/dist-packages/redis/asyncio/retry.py:69: in call_with_retry return await do() ^^^^^^^^^^ do = <function Redis.execute_command.<locals>.<lambda> at 0x7f9768ad8540> fail = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768ada7a0> failures = 0 is_retryable = None self = <redis.asyncio.retry.Retry object at 0x7f9778199a90> with_failure_count = True /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:723: in _send_command_parse_response return await self.parse_response(conn, command_name, **options) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0/traffic-retry') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=46085,db=0)> options = {} self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=46085,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> /usr/local/lib/python3.12/di ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8121",
+      "createdAt": "2026-08-20T06:41:17Z",
+      "updatedAt": "2026-08-20T12:46:05Z",
+      "timestamp": "2026-08-20T12:46:05Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "failing-test",
+        "epoll"
+      ],
+      "author": "dragonclaw-dragonflydb",
+      "state": "closed",
+      "assignees": [
+        "glevkovich"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8125",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "stuck in heartbeat",
+      "text": "df-i1.36.12 we have next stack trace where we stuck and consume 100% CPU ``` finish void boost::context::detail::fiber_entry<boost::context::detail::fiber_record<boost::context::fiber, util::fb2::FixedStackAllocator, util::fb2::detail::WorkerFiberImpl<dfly::EngineShard::StartPeriodicHeartbeatFiber(util::fb2::ProactorBase*)::{lambda()#2}>::WorkerFiberImpl<util::fb2::FixedStackAllocator>(std::basic_string_view<char, std... dfly::RunFPeriodically(std::function<void ()>, std::chrono::duration<long, std::ratio<1l, 1000l> >, std::basic_string_view<char, std::char_traits<char>>,util::fb2::Done*) dfly::EngineShard::Heartbeat() dfly::EngineShard::RetireExpiredAndEvict() dfly::DbSlice::DeleteExpiredStep(dfly::DbContext const&, unsigned int) dfly::DbSlice::DeleteExpiredStep(dfly::DbContext const&, unsigned int) dfly::detail::DashCursor dfly::DashTable<dfly::CompactKey, dfly::ExpirePeriod, dfly::detail::ExpireTablePolicy>::Traverse<dfly::DbSlice::DeleteExpiredStep(dfly::DbContext const&, unsigned int)::{lambda(dfly::DashTable<dfly::CompactKey, dfly::ExpirePeriod, dfly::detail::ExpireTablePolicy>::Iterator<false, false>)#1}&>(dfly::detail::Da... ```",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8125",
+      "createdAt": "2026-08-20T09:29:31Z",
+      "updatedAt": "2026-08-20T10:10:22Z",
+      "timestamp": "2026-08-20T10:10:22Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "BorysTheDev",
+      "state": "open",
+      "assignees": [
+        "dranikpg"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:issue:8128",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "issue",
+      "title": "Eviction can delete a key mid-full-sync before its baseline is captured, causing the replica to retain keys the master already evicted (#8090, #7925)",
+      "text": "**Describe the bug** Heartbeat and policy-based eviction delete keys without going through the copy-on-write `OnChange` hook that protects an in-progress full-sync snapshot. This lets eviction delete a key whose bucket a full-sync snapshot hasn't serialized yet (or whose value is mid-flight across multiple serialization chunks), causing the eviction's journal `DEL` to race ahead of — or fall outside — the bucket's still-in-progress baseline stream. The replica then applies the `DEL` as a no-op (the key hasn't finished loading yet) and later inserts the key once its remaining baseline chunks arrive, resurrecting a key the master has already evicted. Result: the replica's keyspace permanently diverges from the master's after an eviction + full-sync race, even though replication offsets report \"caught up.\" There are two separate eviction code paths with this same shape of gap: 1. `DbSlice::FreeMemWithEvictionStepAtomic` (`db_slice.cc:1658`) — heartbeat-driven eviction, called from `EngineShard::RetireExpiredAndEvict` (`engine_shard.cc:931`). 2. `PrimeEvictionPolicy::Evict` (`db_slice.cc:218-256`) — inline policy/maxmemory eviction, fired during dashtable inserts under memory pressure. I opened a partial fix in #8109 (closed) that addresses path 1 only — @vyavdoshenko correctly flagged it as incomplete since path 2 is untouched and is what the second failing test actually exercises. Filing this issue with the full analysis per their suggestion rather than merging that PR. **To Reproduce** Via the existing test suite, intermittently: 1. `tests/dragonfly/replication_specific_test.py::test_heartbeat_eviction_propagation` — populates 233 keys of 1MB each (`DEBUG POPULATE 233 size 1048576`), starts replication, enables heartbeat eviction, waits for eviction to settle, then compares `KEYS *` on master vs. replica. 2. `tests/dragonfly/replication_specific_test.py::test_policy_based_eviction_propagation` — populates data to ~87% of maxmemory with `enable_heartbeat_eviction: false`, starts replication, then runs a seeder to trigger policy-based eviction under memory pressure, then compares keyspaces. Both intermittently fail with a keyspace mismatch (see #8090 and #7925 for CI failure logs). I have not built a standalone reproduction outside this test harness — the race depends on precise timing between eviction and in-flight full-sync serialization, which the tests' large value sizes make more likely to hit but is not deterministic. **Expected behavior** After eviction and a full sync converge (`check_all_replicas_finished` reports caught up), the replica's keyspace should exactly match the master's — no keys the master has already evicted should remain on the replica. **Environment:** - OS: CI runs on `ubuntu-dev:24` (self-hosted ARM64 and GitHub-hosted); locally reproduced/tested on WSL2 Ubuntu 24.04 - Dragonfly Version: built from `main` at commit `05abfddc5d90733369aaa7f74526870e573653aa` (per #8090's failing CI run) **Additional context** Root cause mechanism, in more detail: both eviction paths delete a key via `DbSlice::Del()` without going through `PreUpdateBlocking`/`CallChangeCallbacks` — the CoW hook that would otherwise force a not-yet-visited bucket's pre-mutation state to be captured before the mutation applies. Both paths skip it because they run under `FiberAtomicGuard`, which disallows the hook's blocking call, so this isn't a simple missed call — it's structurally hard to add without yielding inside an atomic section. Without that protection, eviction can delete a key whose value is currently mid-flight across multiple serialization chunks (large values are split across several `PushToConsumerIfNeeded` calls — see `serializer_base.cc`/`snapshot.cc`). The eviction's journal `DEL` is written as untagged raw bytes into the same output stream and can land between two chunks of that key's own still-in-progress baseline entry. On the replica, `RDB_OPCODE_JOURNAL_BLOB` entries are applied immediately in stream order (`rdb_load.cc:2610-2614`), so the `DEL` becomes a no-op, and once the remaining chunks arrive and the value is fully reassembled, the key gets inserted — resurrecting a key the master no longer has. **Test evidence caveat:** local runs (5x each, 10/10 passing) of `test_heartbeat_eviction_propagation` are solid evidence for path 1, after patching it in #8109. Passing runs of `test_policy_based_eviction_propagation` are **not** meaningful evidence — that fix never touched path 2 (`PrimeEvictionPolicy::Evict`), which is what this test actually exercises (it explicitly disables heartbeat eviction). `snapshot.cc` already has a comment (near `ConsumeJournalChange`) referencing a \"delayed deletion queue proposal\" in a design doc as the intended comprehensive fix for this class of gap — this may already be on the team's radar architecturally rather than wanting per-call-site patches. **Suggested next steps:** decide whether to extend the `is_snapshot_`/bucket-version guard approach (from #8109) to `PrimeEvictionPolicy::Evict` as well, or pursue the more comprehensive \"delayed deletion queue\" design instead. Per @vyavdoshenko's feedback on #8109, stronger regression/stress testing under sustained full sync + concurrent memory pressure seems warranted before merging any fix here, given the sensitivity of this code path.",
+      "url": "https://github.com/dragonflydb/dragonfly/issues/8128",
+      "createdAt": "2026-08-20T17:55:04Z",
+      "updatedAt": "2026-08-20T17:55:04Z",
+      "timestamp": "2026-08-20T17:55:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [
+        "bug"
+      ],
+      "author": "Shikha-code36",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:7385",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(server): Implement COMMAND LIST (#5466)",
+      "text": "- Implements COMMAND LIST with FILTERBY MODULE (empty array, no module system), FILTERBY ACLCAT (case-insensitive, strips leading @), and FILTERBY PATTERN (GlobMatcher, case-insensitive). Unknown filter types return kSyntaxErr. - Adds tests for LIST subcommand in server_family_test.cc. - Updates COMMAND HELP strings to reflect new subcommand signatures.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/7385",
+      "createdAt": "2026-05-22T13:19:16Z",
+      "updatedAt": "2026-08-20T19:46:55Z",
+      "timestamp": "2026-08-20T19:46:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 10
+      },
+      "labels": [],
+      "author": "paarth-k2002",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8007",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(tiering): Tiered bin-bucket defragmentation",
+      "text": "Manually controllable flag (disabled by default) that: * Creates a cursor loop over buckets that computes the number of small-bin pages per bucket, exports that metric as `tiered_small_bins_estimated_bucket_fragmentation` * If the optimal number of pages is lower than some `kAcceptableWaste` threshold, we upload all its values",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8007",
+      "createdAt": "2026-08-04T17:27:38Z",
+      "updatedAt": "2026-08-20T07:29:24Z",
+      "timestamp": "2026-08-20T07:29:24Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "dranikpg",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8053",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(generic): avoid data loss on RENAME when destination write fails",
+      "text": "## Summary - `Renamer::FinalizeRename()` ran `DelSrc` and `DeserializeDest` in the same transaction hop with no ordering guarantee between shards. If `DeserializeDest` failed (e.g. OOM), the source key could already be deleted, silently losing its data. - Now deserializes into the destination first, and only deletes the source once that succeeds. `COPY` is unaffected since it never deletes the source. ## Test plan - [x] Added `GenericFamilyTest.RenameOOMPreservesSource`: drives real per-shard OOM via repeated `RESTORE`, then asserts a failed `RENAME` leaves the source key intact and does not create the destination. - [x] Full `generic_family_test` suite passes (84/84). - [x] `pre-commit` (clang-format) passes on changed files. Fixes #5296",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8053",
+      "createdAt": "2026-08-11T17:02:15Z",
+      "updatedAt": "2026-08-20T18:42:47Z",
+      "timestamp": "2026-08-20T18:42:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 11
+      },
+      "labels": [],
+      "author": "Shikha-code36",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8077",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(tiering): Use TraverseBySegmentOrder and export more metrics/configs",
+      "text": "The changes that I merged into 1.40 branch Only functional change: 1. Fixes small bins defrag by using bounded TraverseBySegmentOrder to avoid blowing up iteration costs when the table is largely empty Metrics & config: 1. Exports missing tiering fields from info to metrics 2. Adds new configurable values to allow limiting CPU limit consumption of offloading / background scanning",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8077",
+      "createdAt": "2026-08-13T11:05:19Z",
+      "updatedAt": "2026-08-20T06:39:25Z",
+      "timestamp": "2026-08-20T06:39:25Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 5
+      },
+      "labels": [],
+      "author": "dranikpg",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8096",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(facade): log V2 traffic before dispatch",
+      "text": "Move V2 traffic logging out of ParseRedis: V2 can call it from a receive callback that must not preempt, while logging may suspend. Log at the pre-dispatch boundary instead, preserving squashing and dispatch order. V1 stays the same. Extend DispatchSquashedBatch with an optional pre-dispatch callback that is invoked for each accepted command immediately before execution. has_unparsed_input preserves parser-buffer continuation metadata when logging is deferred. Tests cover ordered V1/V2 pipeline records and V2 proactor parsing without preemption.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8096",
+      "createdAt": "2026-08-16T08:52:19Z",
+      "updatedAt": "2026-08-20T03:23:24Z",
+      "timestamp": "2026-08-20T03:23:24Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 13
+      },
+      "labels": [],
+      "author": "glevkovich",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8109",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): skip evicting keys in buckets a full sync hasn't capture…",
+      "text": "Fixes a race between heartbeat/policy-based eviction and full sync that lets a replica retain a key the master has already evicted. **Root cause:** `DbSlice::FreeMemWithEvictionStepAtomic` deletes evicted keys via `Del()` without going through the CoW `OnChange` hook (`PreUpdateBlocking`/`CallChangeCallbacks`) — that hook can't be called here because eviction runs under `FiberAtomicGuard`, which disallows the hook's blocking call. Normally, `OnChange` is what protects an in-progress full-sync snapshot: if a bucket hasn't been serialized yet, it forces the bucket's pre-mutation state to be captured before the mutation is applied. Without that protection, eviction can delete a key whose bucket a full-sync snapshot hasn't visited yet, or whose value is currently mid-flight across multiple chunks (large values get split across several `PushToConsumerIfNeeded` calls). The eviction's journal `DEL` is written as untagged raw bytes into the same output stream and can land *between* two chunks of that key's own still-in-progress baseline entry. On the replica, `RDB_OPCODE_JOURNAL_BLOB` entries are applied immediately in stream order (`rdb_load.cc`), so the `DEL` becomes a no-op (the key hasn't finished loading yet) — and once the remaining chunks arrive and the value is fully reassembled, the key gets inserted, resurrecting a key the master no longer has. `test_heartbeat_eviction_propagation` (#8090) reproduces this directly: it populates 1MB values (`DEBUG POPULATE 233 size 1048576`) against a 300KB serialization chunk size, guaranteeing multi-chunk transmission for the values in play. `test_policy_based_eviction_propagation` (#7925) shows the same failure signature (replica retains a key master evicted) — plausibly the same underlying gap, though I haven't independently confirmed its value sizes hit the identical multi-chunk condition as #8090. ## Fix Before evicting a candidate key, skip it if any currently-registered full-sync consumer either: - hasn't yet serialized that key's bucket (`evict_it.GetVersion() < cb->snapshot_version_`), or - is currently mid-flight serializing some bucket (`cb->IsAnyBucketBlocked()`) Both checks reuse existing non-blocking infrastructure (`DbSlice::change_cb_`, `ChangeConsumerInterface::IsAnyBucketBlocked()`) and add no locking or yielding, so they're safe to call under the existing `FiberAtomicGuard`. Skipped keys remain eligible for eviction on the next heartbeat tick once the snapshot has moved past them — this doesn't reduce total eviction throughput, only defers eviction of specific keys that are momentarily in the race window. ## Test plan - [x] `test_heartbeat_eviction_propagation` — 5/5 passes locally with the fix (previously failing intermittently in CI, see #8090) - [x] `test_policy_based_eviction_propagation` — 5/5 passes locally with the fix (previously failing intermittently in CI, see #7925) - [ ] Not stress-tested: sustained full sync + heavy concurrent memory pressure, to confirm eviction doesn't stall behind a slow-syncing replica for longer than acceptable ## Notes for reviewers This is a targeted mitigation, not the full fix implied by the `snapshot.cc` comment referencing a \"delayed deletion queue proposal\" design doc — that would presumably address the same class of gap more comprehensively (e.g. for expiry too, not just eviction). Flagging in case this should be superseded by or coordinated with that design work rather than merged as a standalone patch. Fixes #8090 Fixes #7925",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8109",
+      "createdAt": "2026-08-18T16:11:30Z",
+      "updatedAt": "2026-08-20T17:50:29Z",
+      "timestamp": "2026-08-20T17:50:29Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 6
+      },
+      "labels": [],
+      "author": "Shikha-code36",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8110",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: stop SCRIPT FLUSH from deadlocking against a borrowed interpreter",
+      "text": "`InterpreterManager::Reset()` blocked until every borrowed interpreter was returned, so `SCRIPT FLUSH` inherited every lock its holders were waiting on. Reset no longer blocks: idle interpreters are destroyed inline, borrowed ones are retired and destroyed by whoever returns them. Three shapes, all reproduced on a debug build: 1. `MULTI; EVAL \"return 1\" 0; SCRIPT FLUSH; EXEC` - EXEC pre-borrows an interpreter and returns it only after the body ran, so it waits for itself. `SCRIPT` is `NO_KEY_TRANSACTIONAL`, so the EXEC runs as a global transaction: afterwards even `GET` hangs and only `PING` answers. 2. Concurrent `EVAL` + `SCRIPT FLUSH` - the flusher holds `ScriptMgr::mu_` while waiting for an interpreter whose holder is blocked on that same mutex. All scripting wedges permanently. 3. No pre-borrow at all - a keyed `EVAL` holds an interpreter behind the global lock that a concurrent `MULTI; SCRIPT FLUSH; EXEC` holds.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8110",
+      "createdAt": "2026-08-18T17:08:02Z",
+      "updatedAt": "2026-08-20T08:25:55Z",
+      "timestamp": "2026-08-20T08:25:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 11
+      },
+      "labels": [],
+      "author": "vyavdoshenko",
+      "state": "open",
+      "assignees": [
+        "vyavdoshenko"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8112",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(server): Skip forced snapshot serialization for redundant writes with second replica, add support for expire",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8112",
+      "createdAt": "2026-08-18T19:35:14Z",
+      "updatedAt": "2026-08-20T07:09:40Z",
+      "timestamp": "2026-08-20T07:09:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "dranikpg",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8116",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(acl): script context acl and enable flaky tests",
+      "text": "Long ago we changed how acl's are verified for multi/exec by effectively matching against a user's acl list at the command verification (and not later again). We never adjusted this for lua scripts. For reference: https://github.com/dragonflydb/dragonfly/pull/6340 * check acl's for a user only at eval * re-enable flaky tests As for test_acl_del_user_while_running_lua_script the main issue is that the script could execute before the del command run. The fix is simple, increase the load slightly + run this in debug more only. * additionally increase the load test_replicaof_reject_on_load",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8116",
+      "createdAt": "2026-08-19T13:00:08Z",
+      "updatedAt": "2026-08-20T14:05:17Z",
+      "timestamp": "2026-08-20T14:05:17Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "open",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8117",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: test_slot_migration_oom_replica_rollback",
+      "text": "`check_all_replicas_finished + assert dbsize` is flaky. The former checks the offsets match but may very well be that the slots have not yet been flushed (dragonfly backoffs for 500ms and then on INIT it flushes the slots). Use `assert_eventually` instead with a timeout of 5 seconds. fixes #8106",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8117",
+      "createdAt": "2026-08-19T15:51:03Z",
+      "updatedAt": "2026-08-20T08:47:44Z",
+      "timestamp": "2026-08-20T08:47:44Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "closed",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8118",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "chore: split python cluster tests",
+      "text": "As the python cluster tests grew too much (over >5k lines) split them by category/intent. `cluster_test.py` is split to: * cluster_client_test.py * cluster_config_test.py * cluster_migration_resilience_test.py * cluster_migration_test.py * cluster_pubsub_test.py * cluster_replication_test.py * cluster_search_test.py",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8118",
+      "createdAt": "2026-08-19T16:07:53Z",
+      "updatedAt": "2026-08-20T13:50:47Z",
+      "timestamp": "2026-08-20T13:50:47Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "closed",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8122",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "Tiered device usage",
+      "text": "Adapted from 1.40-branch",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8122",
+      "createdAt": "2026-08-20T08:55:30Z",
+      "updatedAt": "2026-08-20T08:55:30Z",
+      "timestamp": "2026-08-20T08:55:30Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "dranikpg",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8123",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix: apple clang16 crash on FloatToBf16",
+      "text": "crashes apple-clang-16 on my mac",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8123",
+      "createdAt": "2026-08-20T09:09:30Z",
+      "updatedAt": "2026-08-20T13:56:03Z",
+      "timestamp": "2026-08-20T13:56:03Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "closed",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8124",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "test(facade): exclude debug traffic tests on epoll",
+      "text": "Commit 2073b4e669c12b923fcf1dfb1506195aa4b587d5 added DEBUG TRAFFIC regression tests but forgot to exclude them from the epoll backend, where traffic recording is unsupported. Mark the three affected tests with exclude_epoll so they run in the io_uring regression lane while avoiding false failures on epoll.",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8124",
+      "createdAt": "2026-08-20T09:29:25Z",
+      "updatedAt": "2026-08-20T10:37:27Z",
+      "timestamp": "2026-08-20T10:37:27Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "glevkovich",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8126",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "feat(tiering): Account for tiered storage utility RAM",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8126",
+      "createdAt": "2026-08-20T09:58:52Z",
+      "updatedAt": "2026-08-20T09:58:52Z",
+      "timestamp": "2026-08-20T09:58:52Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "dranikpg",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dragonflydb/dragonfly:pull_request:8127",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "dragonflydb/dragonfly",
+      "kind": "pull_request",
+      "title": "fix(cluster): delete slots when OOM is discovered via ACK",
+      "text": "Apparently we had two diverging behaviors when the source node got OOM replies: * If it happened during flow -> we would cancel the context -> iterate the control loop which would delete the slots -> Finish That was not true for OOM replies when the source node send `ACK` after a migration finished. Upon that case: * ACK -> OOM -> call Finish -> no retries (init) and NO delete slots This PR converges the behaviour by cancelling the context such that the slots on the target get deleted on all paths. This is the actual fix for the test https://github.com/dragonflydb/dragonfly/issues/8106",
+      "url": "https://github.com/dragonflydb/dragonfly/pull/8127",
+      "createdAt": "2026-08-20T13:16:34Z",
+      "updatedAt": "2026-08-20T14:18:28Z",
+      "timestamp": "2026-08-20T14:18:28Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "kostasrim",
+      "state": "closed",
+      "assignees": [
+        "kostasrim"
+      ],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:2f4df5075ca824647b7d",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:7385",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:7385",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(server): Implement COMMAND LIST (#5466)",
+        "text": "- Implements COMMAND LIST with FILTERBY MODULE (empty array, no module system), FILTERBY ACLCAT (case-insensitive, strips leading @), and FILTERBY PATTERN (GlobMatcher, case-insensitive). Unknown filter types return kSyntaxErr. - Adds tests for LIST subcommand in server_family_test.cc. - Updates COMMAND HELP strings to reflect new subcommand signatures.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/7385",
+        "createdAt": "2026-05-22T13:19:16Z",
+        "updatedAt": "2026-08-20T19:46:55Z",
+        "timestamp": "2026-08-20T19:46:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 10
+        },
+        "labels": [],
+        "author": "paarth-k2002",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:0185f9c464f3d1f85ecc",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8053",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8053",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(generic): avoid data loss on RENAME when destination write fails",
+        "text": "## Summary - `Renamer::FinalizeRename()` ran `DelSrc` and `DeserializeDest` in the same transaction hop with no ordering guarantee between shards. If `DeserializeDest` failed (e.g. OOM), the source key could already be deleted, silently losing its data. - Now deserializes into the destination first, and only deletes the source once that succeeds. `COPY` is unaffected since it never deletes the source. ## Test plan - [x] Added `GenericFamilyTest.RenameOOMPreservesSource`: drives real per-shard OOM via repeated `RESTORE`, then asserts a failed `RENAME` leaves the source key intact and does not create the destination. - [x] Full `generic_family_test` suite passes (84/84). - [x] `pre-commit` (clang-format) passes on changed files. Fixes #5296",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8053",
+        "createdAt": "2026-08-11T17:02:15Z",
+        "updatedAt": "2026-08-20T18:42:47Z",
+        "timestamp": "2026-08-20T18:42:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [],
+        "author": "Shikha-code36",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fb033f0e66b5399cc211",
+      "signalId": "github:dragonflydb/dragonfly:issue:8128",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8128",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "Eviction can delete a key mid-full-sync before its baseline is captured, causing the replica to retain keys the master already evicted (#8090, #7925)",
+        "text": "**Describe the bug** Heartbeat and policy-based eviction delete keys without going through the copy-on-write `OnChange` hook that protects an in-progress full-sync snapshot. This lets eviction delete a key whose bucket a full-sync snapshot hasn't serialized yet (or whose value is mid-flight across multiple serialization chunks), causing the eviction's journal `DEL` to race ahead of — or fall outside — the bucket's still-in-progress baseline stream. The replica then applies the `DEL` as a no-op (the key hasn't finished loading yet) and later inserts the key once its remaining baseline chunks arrive, resurrecting a key the master has already evicted. Result: the replica's keyspace permanently diverges from the master's after an eviction + full-sync race, even though replication offsets report \"caught up.\" There are two separate eviction code paths with this same shape of gap: 1. `DbSlice::FreeMemWithEvictionStepAtomic` (`db_slice.cc:1658`) — heartbeat-driven eviction, called from `EngineShard::RetireExpiredAndEvict` (`engine_shard.cc:931`). 2. `PrimeEvictionPolicy::Evict` (`db_slice.cc:218-256`) — inline policy/maxmemory eviction, fired during dashtable inserts under memory pressure. I opened a partial fix in #8109 (closed) that addresses path 1 only — @vyavdoshenko correctly flagged it as incomplete since path 2 is untouched and is what the second failing test actually exercises. Filing this issue with the full analysis per their suggestion rather than merging that PR. **To Reproduce** Via the existing test suite, intermittently: 1. `tests/dragonfly/replication_specific_test.py::test_heartbeat_eviction_propagation` — populates 233 keys of 1MB each (`DEBUG POPULATE 233 size 1048576`), starts replication, enables heartbeat eviction, waits for eviction to settle, then compares `KEYS *` on master vs. replica. 2. `tests/dragonfly/replication_specific_test.py::test_policy_based_eviction_propagation` — populates data to ~87% of maxmemory with `enable_heartbeat_eviction: false`, starts replication, then runs a seeder to trigger policy-based eviction under memory pressure, then compares keyspaces. Both intermittently fail with a keyspace mismatch (see #8090 and #7925 for CI failure logs). I have not built a standalone reproduction outside this test harness — the race depends on precise timing between eviction and in-flight full-sync serialization, which the tests' large value sizes make more likely to hit but is not deterministic. **Expected behavior** After eviction and a full sync converge (`check_all_replicas_finished` reports caught up), the replica's keyspace should exactly match the master's — no keys the master has already evicted should remain on the replica. **Environment:** - OS: CI runs on `ubuntu-dev:24` (self-hosted ARM64 and GitHub-hosted); locally reproduced/tested on WSL2 Ubuntu 24.04 - Dragonfly Version: built from `main` at commit `05abfddc5d90733369aaa7f74526870e573653aa` (per #8090's failing CI run) **Additional context** Root cause mechanism, in more detail: both eviction paths delete a key via `DbSlice::Del()` without going through `PreUpdateBlocking`/`CallChangeCallbacks` — the CoW hook that would otherwise force a not-yet-visited bucket's pre-mutation state to be captured before the mutation applies. Both paths skip it because they run under `FiberAtomicGuard`, which disallows the hook's blocking call, so this isn't a simple missed call — it's structurally hard to add without yielding inside an atomic section. Without that protection, eviction can delete a key whose value is currently mid-flight across multiple serialization chunks (large values are split across several `PushToConsumerIfNeeded` calls — see `serializer_base.cc`/`snapshot.cc`). The eviction's journal `DEL` is written as untagged raw bytes into the same output stream and can land between two chunks of that key's own still-in-progress baseline entry. On the replica, `RDB_OPCODE_JOURNAL_BLOB` entries are applied immediately in stream order (`rdb_load.cc:2610-2614`), so the `DEL` becomes a no-op, and once the remaining chunks arrive and the value is fully reassembled, the key gets inserted — resurrecting a key the master no longer has. **Test evidence caveat:** local runs (5x each, 10/10 passing) of `test_heartbeat_eviction_propagation` are solid evidence for path 1, after patching it in #8109. Passing runs of `test_policy_based_eviction_propagation` are **not** meaningful evidence — that fix never touched path 2 (`PrimeEvictionPolicy::Evict`), which is what this test actually exercises (it explicitly disables heartbeat eviction). `snapshot.cc` already has a comment (near `ConsumeJournalChange`) referencing a \"delayed deletion queue proposal\" in a design doc as the intended comprehensive fix for this class of gap — this may already be on the team's radar architecturally rather than wanting per-call-site patches. **Suggested next steps:** decide whether to extend the `is_snapshot_`/bucket-version guard approach (from #8109) to `PrimeEvictionPolicy::Evict` as well, or pursue the more comprehensive \"delayed deletion queue\" design instead. Per @vyavdoshenko's feedback on #8109, stronger regression/stress testing under sustained full sync + concurrent memory pressure seems warranted before merging any fix here, given the sensitivity of this code path.",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8128",
+        "createdAt": "2026-08-20T17:55:04Z",
+        "updatedAt": "2026-08-20T17:55:04Z",
+        "timestamp": "2026-08-20T17:55:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [
+          "bug"
+        ],
+        "author": "Shikha-code36",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:1976590b86e17e2d575a",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8109",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8109",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(server): skip evicting keys in buckets a full sync hasn't capture…",
+        "text": "Fixes a race between heartbeat/policy-based eviction and full sync that lets a replica retain a key the master has already evicted. **Root cause:** `DbSlice::FreeMemWithEvictionStepAtomic` deletes evicted keys via `Del()` without going through the CoW `OnChange` hook (`PreUpdateBlocking`/`CallChangeCallbacks`) — that hook can't be called here because eviction runs under `FiberAtomicGuard`, which disallows the hook's blocking call. Normally, `OnChange` is what protects an in-progress full-sync snapshot: if a bucket hasn't been serialized yet, it forces the bucket's pre-mutation state to be captured before the mutation is applied. Without that protection, eviction can delete a key whose bucket a full-sync snapshot hasn't visited yet, or whose value is currently mid-flight across multiple chunks (large values get split across several `PushToConsumerIfNeeded` calls). The eviction's journal `DEL` is written as untagged raw bytes into the same output stream and can land *between* two chunks of that key's own still-in-progress baseline entry. On the replica, `RDB_OPCODE_JOURNAL_BLOB` entries are applied immediately in stream order (`rdb_load.cc`), so the `DEL` becomes a no-op (the key hasn't finished loading yet) — and once the remaining chunks arrive and the value is fully reassembled, the key gets inserted, resurrecting a key the master no longer has. `test_heartbeat_eviction_propagation` (#8090) reproduces this directly: it populates 1MB values (`DEBUG POPULATE 233 size 1048576`) against a 300KB serialization chunk size, guaranteeing multi-chunk transmission for the values in play. `test_policy_based_eviction_propagation` (#7925) shows the same failure signature (replica retains a key master evicted) — plausibly the same underlying gap, though I haven't independently confirmed its value sizes hit the identical multi-chunk condition as #8090. ## Fix Before evicting a candidate key, skip it if any currently-registered full-sync consumer either: - hasn't yet serialized that key's bucket (`evict_it.GetVersion() < cb->snapshot_version_`), or - is currently mid-flight serializing some bucket (`cb->IsAnyBucketBlocked()`) Both checks reuse existing non-blocking infrastructure (`DbSlice::change_cb_`, `ChangeConsumerInterface::IsAnyBucketBlocked()`) and add no locking or yielding, so they're safe to call under the existing `FiberAtomicGuard`. Skipped keys remain eligible for eviction on the next heartbeat tick once the snapshot has moved past them — this doesn't reduce total eviction throughput, only defers eviction of specific keys that are momentarily in the race window. ## Test plan - [x] `test_heartbeat_eviction_propagation` — 5/5 passes locally with the fix (previously failing intermittently in CI, see #8090) - [x] `test_policy_based_eviction_propagation` — 5/5 passes locally with the fix (previously failing intermittently in CI, see #7925) - [ ] Not stress-tested: sustained full sync + heavy concurrent memory pressure, to confirm eviction doesn't stall behind a slow-syncing replica for longer than acceptable ## Notes for reviewers This is a targeted mitigation, not the full fix implied by the `snapshot.cc` comment referencing a \"delayed deletion queue proposal\" design doc — that would presumably address the same class of gap more comprehensively (e.g. for expiry too, not just eviction). Flagging in case this should be superseded by or coordinated with that design work rather than merged as a standalone patch. Fixes #8090 Fixes #7925",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8109",
+        "createdAt": "2026-08-18T16:11:30Z",
+        "updatedAt": "2026-08-20T17:50:29Z",
+        "timestamp": "2026-08-20T17:50:29Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [],
+        "author": "Shikha-code36",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e3c6fa9cd34c6b8ba3f8",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8127",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8127",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(cluster): delete slots when OOM is discovered via ACK",
+        "text": "Apparently we had two diverging behaviors when the source node got OOM replies: * If it happened during flow -> we would cancel the context -> iterate the control loop which would delete the slots -> Finish That was not true for OOM replies when the source node send `ACK` after a migration finished. Upon that case: * ACK -> OOM -> call Finish -> no retries (init) and NO delete slots This PR converges the behaviour by cancelling the context such that the slots on the target get deleted on all paths. This is the actual fix for the test https://github.com/dragonflydb/dragonfly/issues/8106",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8127",
+        "createdAt": "2026-08-20T13:16:34Z",
+        "updatedAt": "2026-08-20T14:18:28Z",
+        "timestamp": "2026-08-20T14:18:28Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "closed",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c12e4f6776c2f2ba632d",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8116",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8116",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(acl): script context acl and enable flaky tests",
+        "text": "Long ago we changed how acl's are verified for multi/exec by effectively matching against a user's acl list at the command verification (and not later again). We never adjusted this for lua scripts. For reference: https://github.com/dragonflydb/dragonfly/pull/6340 * check acl's for a user only at eval * re-enable flaky tests As for test_acl_del_user_while_running_lua_script the main issue is that the script could execute before the del command run. The fix is simple, increase the load slightly + run this in debug more only. * additionally increase the load test_replicaof_reject_on_load",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8116",
+        "createdAt": "2026-08-19T13:00:08Z",
+        "updatedAt": "2026-08-20T14:05:17Z",
+        "timestamp": "2026-08-20T14:05:17Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "open",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1cef2ff2319b42746835",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8123",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8123",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: apple clang16 crash on FloatToBf16",
+        "text": "crashes apple-clang-16 on my mac",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8123",
+        "createdAt": "2026-08-20T09:09:30Z",
+        "updatedAt": "2026-08-20T13:56:03Z",
+        "timestamp": "2026-08-20T13:56:03Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "closed",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5770e44966925c8b9348",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8118",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8118",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "chore: split python cluster tests",
+        "text": "As the python cluster tests grew too much (over >5k lines) split them by category/intent. `cluster_test.py` is split to: * cluster_client_test.py * cluster_config_test.py * cluster_migration_resilience_test.py * cluster_migration_test.py * cluster_pubsub_test.py * cluster_replication_test.py * cluster_search_test.py",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8118",
+        "createdAt": "2026-08-19T16:07:53Z",
+        "updatedAt": "2026-08-20T13:50:47Z",
+        "timestamp": "2026-08-20T13:50:47Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "closed",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:ecdb9c6253fd0d893889",
+      "signalId": "github:dragonflydb/dragonfly:issue:8120",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8120",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "test_debug_traffic_v2_parse_in_proactor_does_not_preempt",
+        "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_debug_traffic_v2_parse_in_proactor_does_not_preempt[df_factory0]` - Backend: epoll - Commit: 2073b4e669c12b923fcf1dfb1506195aa4b587d5 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32338181080 - Marker: run/32338181080/attempt/1 ``` Reason: redis.exceptions.ResponseError: Traffic recording supported only on iouring ____ test_debug_traffic_v2_parse_in_proactor_does_not_preempt[df_factory0] _____ df_server = :39641 tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0') @dfly_args({\"enable_resp_io_loop_v2\": \"true\", \"proactor_threads\": 1}) async def test_debug_traffic_v2_parse_in_proactor_does_not_preempt(df_server, tmp_path): \"\"\"V2 logging records queued commands and does not preempt proactor parsing.\"\"\" client = df_server.client() log_prefix = tmp_path / \"traffic-proactor\" reader, writer = await asyncio.open_connection(\"127.0.0.1\", df_server.port) try: # The SET is queued behind the blocking command before logging starts. writer.write(b\"BLPOP traffic:block 0\\r\\nSET traffic:queued before-start\\r\\n\") await writer.drain() await asyncio.sleep(0.05) > assert await client.execute_command(\"DEBUG\", \"TRAFFIC\", \"START\", str(log_prefix)) == \"OK\" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ client = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=39641,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_server = :39641 log_prefix = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0/traffic-proactor') reader = <StreamReader eof transport=<_SelectorSocketTransport closed fd=15>> tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0') writer = <StreamWriter transport=<_SelectorSocketTransport closed fd=15> reader=<StreamReader eof transport=<_SelectorSocketTransport closed fd=15>>> dragonfly/connection_test.py:313: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782: in execute_command result = await conn.retry.call_with_retry( actual_retry_attempts = 0 args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0/traffic-proactor') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=39641,db=0)> failure_callback = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768adbb00> options = {} pool = <redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,username=<REDACTED>,*** self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=39641,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> start_time = 692.907904211 /usr/local/lib/python3.12/dist-packages/redis/asyncio/retry.py:69: in call_with_retry return await do() ^^^^^^^^^^ do = <function Redis.execute_command.<locals>.<lambda> at 0x7f9768adb380> fail = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768adbb00> failures = 0 is_retryable = None self = <redis.asyncio.retry.Retry object at 0x7f9768e860c0> with_failure_count = True /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:723: in _send_command_parse_response return await self.parse_response(conn, command_name, **options) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_parse_in0/traffic-proactor') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=39641,db=0)> options = {} self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usern ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8120",
+        "createdAt": "2026-08-20T06:41:16Z",
+        "updatedAt": "2026-08-20T12:47:48Z",
+        "timestamp": "2026-08-20T12:47:48Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [
+          "failing-test",
+          "epoll",
+          "iouring"
+        ],
+        "author": "dragonclaw-dragonflydb",
+        "state": "open",
+        "assignees": [
+          "glevkovich"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:8b01e42e4df6e0229241",
+      "signalId": "github:dragonflydb/dragonfly:issue:8119",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8119",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "test_debug_traffic_records_pipeline_in_dispatch_order",
+        "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_debug_traffic_records_pipeline_in_dispatch_order[df_factory0]` - Backend: epoll - Commit: 2073b4e669c12b923fcf1dfb1506195aa4b587d5 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32338181080 - Marker: run/32338181080/attempt/1 ``` Reason: redis.exceptions.ResponseError: Traffic recording supported only on iouring ______ test_debug_traffic_records_pipeline_in_dispatch_order[df_factory0] ______ df_server = :41723 tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0') @dfly_multi_test_args( {\"enable_resp_io_loop_v2\": \"false\", \"proactor_threads\": 1}, {\"enable_resp_io_loop_v2\": \"true\", \"proactor_threads\": 1}, ) async def test_debug_traffic_records_pipeline_in_dispatch_order(df_server, tmp_path): \"\"\"Verify DEBUG TRAFFIC records a non-transactional pipeline in dispatch order.\"\"\" client = aioredis.Redis(port=df_server.port) log_prefix = tmp_path / \"traffic\" try: > assert await client.execute_command(\"DEBUG\", \"TRAFFIC\", \"START\", str(log_prefix)) == b\"OK\" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ client = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=41723,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_server = :41723 log_prefix = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0/traffic') tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0') dragonfly/connection_test.py:281: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782: in execute_command result = await conn.retry.call_with_retry( actual_retry_attempts = 0 args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0/traffic') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=41723,db=0)> failure_callback = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768777c40> options = {} pool = <redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,username=<REDACTED>,*** self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=41723,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> start_time = 692.524637951 /usr/local/lib/python3.12/dist-packages/redis/asyncio/retry.py:69: in call_with_retry return await do() ^^^^^^^^^^ do = <function Redis.execute_command.<locals>.<lambda> at 0x7f9768850900> fail = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768777c40> failures = 0 is_retryable = None self = <redis.asyncio.retry.Retry object at 0x7f9779573350> with_failure_count = True /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:723: in _send_command_parse_response return await self.parse_response(conn, command_name, **options) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_records_pip0/traffic') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=41723,db=0)> options = {} self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=41723,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:824: in parse_response response = await connection.read_response() ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ command_name = 'DEBUG' connection = <redis.asyncio.connection.Connection(host=localhost,port=41723,db=0)> options = {} self = <redis.asyncio.cli ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8119",
+        "createdAt": "2026-08-20T06:41:14Z",
+        "updatedAt": "2026-08-20T12:46:26Z",
+        "timestamp": "2026-08-20T12:46:26Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "failing-test",
+          "epoll"
+        ],
+        "author": "dragonclaw-dragonflydb",
+        "state": "closed",
+        "assignees": [
+          "glevkovich"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:2f5d4dc001e930832edc",
+      "signalId": "github:dragonflydb/dragonfly:issue:8121",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8121",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "test_debug_traffic_v2_logs_retried_sync_command_once",
+        "text": "Automated regression triage opened this issue. - Test: `dragonfly/connection_test.py::test_debug_traffic_v2_logs_retried_sync_command_once[df_factory0]` - Backend: epoll - Commit: 2073b4e669c12b923fcf1dfb1506195aa4b587d5 - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32338181080 - Marker: run/32338181080/attempt/1 ``` Reason: redis.exceptions.ResponseError: Traffic recording supported only on iouring ______ test_debug_traffic_v2_logs_retried_sync_command_once[df_factory0] _______ df_server = :46085 tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0') @dfly_args( { \"enable_resp_io_loop_v2\": \"true\", \"enable_pipeline_squashing_v2\": \"false\", \"proactor_threads\": 1, } ) async def test_debug_traffic_v2_logs_retried_sync_command_once(df_server, tmp_path): \"\"\"V2 does not log a command rejected with WOULD_BLOCK before retrying it as the head.\"\"\" client = df_server.client() log_prefix = tmp_path / \"traffic-retry\" reader, writer = await asyncio.open_connection(\"127.0.0.1\", df_server.port) try: > assert await client.execute_command(\"DEBUG\", \"TRAFFIC\", \"START\", str(log_prefix)) == \"OK\" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ client = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=46085,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_server = :46085 log_prefix = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0/traffic-retry') reader = <StreamReader eof transport=<_SelectorSocketTransport closed fd=15>> tmp_path = PosixPath('/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0') writer = <StreamWriter transport=<_SelectorSocketTransport closed fd=15> reader=<StreamReader eof transport=<_SelectorSocketTransport closed fd=15>>> dragonfly/connection_test.py:355: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:782: in execute_command result = await conn.retry.call_with_retry( actual_retry_attempts = 0 args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0/traffic-retry') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=46085,db=0)> failure_callback = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768ada7a0> options = {} pool = <redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,username=<REDACTED>,*** self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=46085,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> start_time = 693.202786022 /usr/local/lib/python3.12/dist-packages/redis/asyncio/retry.py:69: in call_with_retry return await do() ^^^^^^^^^^ do = <function Redis.execute_command.<locals>.<lambda> at 0x7f9768ad8540> fail = <function Redis.execute_command.<locals>.failure_callback at 0x7f9768ada7a0> failures = 0 is_retryable = None self = <redis.asyncio.retry.Retry object at 0x7f9778199a90> with_failure_count = True /usr/local/lib/python3.12/dist-packages/redis/asyncio/client.py:723: in _send_command_parse_response return await self.parse_response(conn, command_name, **options) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ args = ('DEBUG', 'TRAFFIC', 'START', '/tmp/pytest-of-root/pytest-0/test_debug_traffic_v2_logs_ret0/traffic-retry') command_name = 'DEBUG' conn = <redis.asyncio.connection.Connection(host=localhost,port=46085,db=0)> options = {} self = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=46085,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> /usr/local/lib/python3.12/di ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8121",
+        "createdAt": "2026-08-20T06:41:17Z",
+        "updatedAt": "2026-08-20T12:46:05Z",
+        "timestamp": "2026-08-20T12:46:05Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "failing-test",
+          "epoll"
+        ],
+        "author": "dragonclaw-dragonflydb",
+        "state": "closed",
+        "assignees": [
+          "glevkovich"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:be29e67c5ace26574756",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8124",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8124",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "test(facade): exclude debug traffic tests on epoll",
+        "text": "Commit 2073b4e669c12b923fcf1dfb1506195aa4b587d5 added DEBUG TRAFFIC regression tests but forgot to exclude them from the epoll backend, where traffic recording is unsupported. Mark the three affected tests with exclude_epoll so they run in the io_uring regression lane while avoiding false failures on epoll.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8124",
+        "createdAt": "2026-08-20T09:29:25Z",
+        "updatedAt": "2026-08-20T10:37:27Z",
+        "timestamp": "2026-08-20T10:37:27Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "glevkovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:87c3e5aba213b4a61347",
+      "signalId": "github:dragonflydb/dragonfly:issue:8125",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8125",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "stuck in heartbeat",
+        "text": "df-i1.36.12 we have next stack trace where we stuck and consume 100% CPU ``` finish void boost::context::detail::fiber_entry<boost::context::detail::fiber_record<boost::context::fiber, util::fb2::FixedStackAllocator, util::fb2::detail::WorkerFiberImpl<dfly::EngineShard::StartPeriodicHeartbeatFiber(util::fb2::ProactorBase*)::{lambda()#2}>::WorkerFiberImpl<util::fb2::FixedStackAllocator>(std::basic_string_view<char, std... dfly::RunFPeriodically(std::function<void ()>, std::chrono::duration<long, std::ratio<1l, 1000l> >, std::basic_string_view<char, std::char_traits<char>>,util::fb2::Done*) dfly::EngineShard::Heartbeat() dfly::EngineShard::RetireExpiredAndEvict() dfly::DbSlice::DeleteExpiredStep(dfly::DbContext const&, unsigned int) dfly::DbSlice::DeleteExpiredStep(dfly::DbContext const&, unsigned int) dfly::detail::DashCursor dfly::DashTable<dfly::CompactKey, dfly::ExpirePeriod, dfly::detail::ExpireTablePolicy>::Traverse<dfly::DbSlice::DeleteExpiredStep(dfly::DbContext const&, unsigned int)::{lambda(dfly::DashTable<dfly::CompactKey, dfly::ExpirePeriod, dfly::detail::ExpireTablePolicy>::Iterator<false, false>)#1}&>(dfly::detail::Da... ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8125",
+        "createdAt": "2026-08-20T09:29:31Z",
+        "updatedAt": "2026-08-20T10:10:22Z",
+        "timestamp": "2026-08-20T10:10:22Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "bug"
+        ],
+        "author": "BorysTheDev",
+        "state": "open",
+        "assignees": [
+          "dranikpg"
+        ],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d8712a448a3c5b0d4637",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8126",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8126",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(tiering): Account for tiered storage utility RAM",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8126",
+        "createdAt": "2026-08-20T09:58:52Z",
+        "updatedAt": "2026-08-20T09:58:52Z",
+        "timestamp": "2026-08-20T09:58:52Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5f74267a80e7342eb6da",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8122",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8122",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "Tiered device usage",
+        "text": "Adapted from 1.40-branch",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8122",
+        "createdAt": "2026-08-20T08:55:30Z",
+        "updatedAt": "2026-08-20T08:55:30Z",
+        "timestamp": "2026-08-20T08:55:30Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:c0abba9dc9b28f767c9a",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8117",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8117",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: test_slot_migration_oom_replica_rollback",
+        "text": "`check_all_replicas_finished + assert dbsize` is flaky. The former checks the offsets match but may very well be that the slots have not yet been flushed (dragonfly backoffs for 500ms and then on INIT it flushes the slots). Use `assert_eventually` instead with a timeout of 5 seconds. fixes #8106",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8117",
+        "createdAt": "2026-08-19T15:51:03Z",
+        "updatedAt": "2026-08-20T08:47:44Z",
+        "timestamp": "2026-08-20T08:47:44Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "kostasrim",
+        "state": "closed",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:96f18e992d1be266bb11",
+      "signalId": "github:dragonflydb/dragonfly:issue:8106",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:issue:8106",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "issue",
+        "title": "test_slot_migration_oom_replica_rollback",
+        "text": "Automated regression triage opened this issue. - Test: `dragonfly/cluster_test.py::test_slot_migration_oom_replica_rollback[df_factory0]` - Backend: iouring - Commit: 770bf7a4c8fda3ac5a08bbefb138be8fb18c385e - Run: https://github.com/dragonflydb/dragonfly/actions/runs/32120110288 - Marker: run/32120110288/attempt/1 ``` Reason: AssertionError: target_master still has 57 keys after OOM rollback ____________ test_slot_migration_oom_replica_rollback[df_factory0] _____________ df_factory = Factory({'cluster_mode': 'yes'}) @dfly_args({\"cluster_mode\": \"yes\"}) async def test_slot_migration_oom_replica_rollback(df_factory): \"\"\" Regression test: when incoming slot migration fails with OOM, the target master rolls back the migrated keys via DeleteSlots, but that deletion must also be propagated to the target's replica via WriteFlushSlotsToJournal. Without the journal write, the replica retains the migrated keys while the master has already deleted them, causing master/replica divergence. After OOM rollback both target_master and target_replica must have 0 keys. \"\"\" source = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=4, maxmemory=\"1024MB\", ) target_master = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) target_replica = df_factory.create( port=next(next_port), admin_port=next(next_port), proactor_threads=2, maxmemory=\"512MB\", ) df_factory.start_all([source, target_master, target_replica]) source_node = await create_node_info(source) target_node = await create_node_info(target_master) source_node.slots = [(0, 16383)] target_node.slots = [] # Apply initial cluster config to source and target only (replica is not a cluster member) await apply_config([source_node, target_node]) # Populate source with large values that will OOM the target during migration await source_node.client.execute_command(\"DEBUG POPULATE 100 test 10000000\") # Start replication: target_replica follows target_master before migration begins c_replica_admin = target_replica.admin_client() await c_replica_admin.execute_command(f\"replicaof localhost {target_master.port}\") await wait_available_async(c_replica_admin) # Kick off migration from source -> target (expects OOM on target) source_node.migrations.append( MigrationInfo(\"127.0.0.1\", target_master.admin_port, [(0, 16383)], target_node.id) ) logging.info(\"Starting migration (expect OOM on target)\") await apply_config([source_node, target_node]) # Wait for both sides to reach FATAL await wait_for_status(source_node.admin_client, target_node.id, \"FATAL\", 300) await wait_for_status(target_node.admin_client, source_node.id, \"FATAL\") # Give the replica time to catch up with whatever the master has after rollback await check_all_replicas_finished([c_replica_admin], target_node.admin_client) master_keys = await target_node.admin_client.execute_command(\"DBSIZE\") replica_keys = await c_replica_admin.execute_command(\"DBSIZE\") logging.info(\"target_master DBSIZE=%d, target_replica DBSIZE=%d\", master_keys, replica_keys) # After OOM rollback the master must have 0 keys (DeleteSlots ran). > assert master_keys == 0, f\"target_master still has {master_keys} keys after OOM rollback\" E AssertionError: target_master still has 57 keys after OOM rollback E assert 57 == 0 c_replica_admin = <redis.asyncio.client.Redis(<redis.asyncio.connection.ConnectionPool(<redis.asyncio.connection.Connection(db=0,usernam...tocol=2,host=localhost,port=30207,socket_connect_timeout=None,socket_keepalive=None,socket_keepalive_options=None)>)>)> df_factory = Factory({'cluster_mode': 'yes'}) master_keys = 57 replica_keys = 57 source = :30202 source_node = NodeInfo(id='7c935bb6a16febed71134be6f248713e24628785', instance=:30202, client=<redis.asyncio.client.Redis(<redis.asy...1', port= ```",
+        "url": "https://github.com/dragonflydb/dragonfly/issues/8106",
+        "createdAt": "2026-08-18T09:48:38Z",
+        "updatedAt": "2026-08-20T08:47:43Z",
+        "timestamp": "2026-08-20T08:47:43Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 6
+        },
+        "labels": [
+          "failing-test",
+          "iouring"
+        ],
+        "author": "dragonclaw-dragonflydb",
+        "state": "closed",
+        "assignees": [
+          "kostasrim"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:0e2f79ef708ce91dd371",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8110",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8110",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix: stop SCRIPT FLUSH from deadlocking against a borrowed interpreter",
+        "text": "`InterpreterManager::Reset()` blocked until every borrowed interpreter was returned, so `SCRIPT FLUSH` inherited every lock its holders were waiting on. Reset no longer blocks: idle interpreters are destroyed inline, borrowed ones are retired and destroyed by whoever returns them. Three shapes, all reproduced on a debug build: 1. `MULTI; EVAL \"return 1\" 0; SCRIPT FLUSH; EXEC` - EXEC pre-borrows an interpreter and returns it only after the body ran, so it waits for itself. `SCRIPT` is `NO_KEY_TRANSACTIONAL`, so the EXEC runs as a global transaction: afterwards even `GET` hangs and only `PING` answers. 2. Concurrent `EVAL` + `SCRIPT FLUSH` - the flusher holds `ScriptMgr::mu_` while waiting for an interpreter whose holder is blocked on that same mutex. All scripting wedges permanently. 3. No pre-borrow at all - a keyed `EVAL` holds an interpreter behind the global lock that a concurrent `MULTI; SCRIPT FLUSH; EXEC` holds.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8110",
+        "createdAt": "2026-08-18T17:08:02Z",
+        "updatedAt": "2026-08-20T08:25:55Z",
+        "timestamp": "2026-08-20T08:25:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 11
+        },
+        "labels": [],
+        "author": "vyavdoshenko",
+        "state": "open",
+        "assignees": [
+          "vyavdoshenko"
+        ],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:dd17d08fedfc061b45f8",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8007",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8007",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "feat(tiering): Tiered bin-bucket defragmentation",
+        "text": "Manually controllable flag (disabled by default) that: * Creates a cursor loop over buckets that computes the number of small-bin pages per bucket, exports that metric as `tiered_small_bins_estimated_bucket_fragmentation` * If the optimal number of pages is lower than some `kAcceptableWaste` threshold, we upload all its values",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8007",
+        "createdAt": "2026-08-04T17:27:38Z",
+        "updatedAt": "2026-08-20T07:29:24Z",
+        "timestamp": "2026-08-20T07:29:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:ba018b5acd81fb94a2f3",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8112",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "title",
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8112",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(server): Skip forced snapshot serialization for redundant writes with second replica, add support for expire",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8112",
+        "createdAt": "2026-08-18T19:35:14Z",
+        "updatedAt": "2026-08-20T07:09:40Z",
+        "timestamp": "2026-08-20T07:09:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:51c04e8ba2294305bacf",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8077",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8077",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(tiering): Use TraverseBySegmentOrder and export more metrics/configs",
+        "text": "The changes that I merged into 1.40 branch Only functional change: 1. Fixes small bins defrag by using bounded TraverseBySegmentOrder to avoid blowing up iteration costs when the table is largely empty Metrics & config: 1. Exports missing tiering fields from info to metrics 2. Adds new configurable values to allow limiting CPU limit consumption of offloading / background scanning",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8077",
+        "createdAt": "2026-08-13T11:05:19Z",
+        "updatedAt": "2026-08-20T06:39:25Z",
+        "timestamp": "2026-08-20T06:39:25Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 5
+        },
+        "labels": [],
+        "author": "dranikpg",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:e191eab2b18e1a939cd5",
+      "signalId": "github:dragonflydb/dragonfly:pull_request:8096",
+      "event": "changed",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dragonflydb/dragonfly:pull_request:8096",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "dragonflydb/dragonfly",
+        "kind": "pull_request",
+        "title": "fix(facade): log V2 traffic before dispatch",
+        "text": "Move V2 traffic logging out of ParseRedis: V2 can call it from a receive callback that must not preempt, while logging may suspend. Log at the pre-dispatch boundary instead, preserving squashing and dispatch order. V1 stays the same. Extend DispatchSquashedBatch with an optional pre-dispatch callback that is invoked for each accepted command immediately before execution. has_unparsed_input preserves parser-buffer continuation metadata when logging is deferred. Tests cover ordered V1/V2 pipeline records and V2 proactor parsing without preemption.",
+        "url": "https://github.com/dragonflydb/dragonfly/pull/8096",
+        "createdAt": "2026-08-16T08:52:19Z",
+        "updatedAt": "2026-08-20T03:23:24Z",
+        "timestamp": "2026-08-20T03:23:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 13
+        },
+        "labels": [],
+        "author": "glevkovich",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    }
+  ]
+}

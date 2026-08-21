@@ -1,0 +1,301 @@
+{
+  "version": 4,
+  "date": "2026-08-21",
+  "group": {
+    "id": "distributed-systems",
+    "name": "Distributed Systems & Correctness"
+  },
+  "repository": {
+    "id": "etcd-raft",
+    "repo": "etcd-io/raft",
+    "name": "etcd Raft",
+    "keywords": [
+      "etcd raft"
+    ]
+  },
+  "context": {
+    "repository": "etcd-io/raft",
+    "url": "https://github.com/etcd-io/raft",
+    "description": "Raft library for maintaining a replicated state machine",
+    "language": "Go",
+    "topics": [
+      "consensus",
+      "distributed-systems",
+      "raft"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 1095,
+    "forks": 269,
+    "openIssues": 83,
+    "archived": false,
+    "collectedAt": "2026-08-21T02:38:35.083994+00:00"
+  },
+  "news": {
+    "repository": "etcd-io/raft",
+    "collectedAt": "2026-08-21T02:38:35.083994+00:00",
+    "latestRelease": {
+      "repository": "etcd-io/raft",
+      "tag": "v3.7.0",
+      "title": "v3.7.0",
+      "url": "https://github.com/etcd-io/raft/releases/tag/v3.7.0",
+      "publishedAt": "2026-06-23T13:40:04Z",
+      "notes": "See the [CHANGELOG/v3.7.0](https://github.com/etcd-io/raft/blob/main/CHANGELOG/CHANGELOG-3.7.md#v3702026-06-21) for more details.",
+      "highlights": [],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "etcd-io/raft",
+        "kind": "milestone",
+        "title": "v4.0.0",
+        "url": "https://github.com/etcd-io/raft/milestone/2",
+        "description": "",
+        "progress": 0,
+        "openIssues": 4,
+        "closedIssues": 0
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-21T02:38:33.805881Z",
+      "since": "2026-08-20T02:38:33.805881Z",
+      "observedCount": 4,
+      "changedCount": 4
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:etcd-io/raft:pull_request:479",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "etcd-io/raft",
+      "kind": "pull_request",
+      "title": "log: optimize findConflictByTerm with binary search",
+      "text": "The current `findConflictByTerm` performs an O(n) linear scan backward from the given index. Since log terms are monotonically non-decreasing, we can instead binary search over `[firstIndex-1, index]` to find the rightmost entry whose term does not exceed the target, reducing the worst-case complexity from O(n) to O(log n). This matters most during partition recovery, where a follower's conflicting suffix may span thousands of entries. The valid term range is `[firstIndex-1, lastIndex]`: - `firstIndex-1` is the snapshot index, whose term is still readable. - Entries below `firstIndex-1` are fully compacted and cause `ErrCompacted`. - Entries above `lastIndex` cause `ErrUnavailable`. Corner cases handled: - `index > lastIndex`: return `(index, 0)` immediately (ErrUnavailable). - `index < firstIndex-1`: return `(index, 0)` immediately (ErrCompacted). - All accessible entries exceed `term`: return `(firstIndex-2, 0)` to signal that the matching point is in compacted territory, matching the original linear-scan behavior. All existing `TestFindConflictByTerm` cases pass unchanged. Full test suite passes with `go test ./...`. Closes #180",
+      "url": "https://github.com/etcd-io/raft/pull/479",
+      "createdAt": "2026-07-25T12:02:49Z",
+      "updatedAt": "2026-08-20T12:06:46Z",
+      "timestamp": "2026-08-20T12:06:46Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "size/M",
+        "needs-ok-to-test"
+      ],
+      "author": "Lfan-ke",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:etcd-io/raft:pull_request:500",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "etcd-io/raft",
+      "kind": "pull_request",
+      "title": "bump go 1.26.7",
+      "text": "Part of https://github.com/etcd-io/etcd/issues/22309",
+      "url": "https://github.com/etcd-io/raft/pull/500",
+      "createdAt": "2026-08-20T14:57:17Z",
+      "updatedAt": "2026-08-20T15:26:55Z",
+      "timestamp": "2026-08-20T15:26:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS",
+        "approved"
+      ],
+      "author": "pjsharath28",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:etcd-io/raft:pull_request:501",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "etcd-io/raft",
+      "kind": "pull_request",
+      "title": "[release-3.7] bump go 1.26.7",
+      "text": "Part of https://github.com/etcd-io/etcd/issues/22309",
+      "url": "https://github.com/etcd-io/raft/pull/501",
+      "createdAt": "2026-08-20T14:59:27Z",
+      "updatedAt": "2026-08-20T15:29:02Z",
+      "timestamp": "2026-08-20T15:29:02Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS",
+        "approved"
+      ],
+      "author": "pjsharath28",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:etcd-io/raft:pull_request:502",
+      "source": "github",
+      "group": "distributed-systems",
+      "project": "etcd-io/raft",
+      "kind": "pull_request",
+      "title": "[release-3.6] bump go 1.25.14",
+      "text": "Part of https://github.com/etcd-io/etcd/issues/22309",
+      "url": "https://github.com/etcd-io/raft/pull/502",
+      "createdAt": "2026-08-20T15:01:18Z",
+      "updatedAt": "2026-08-20T15:29:24Z",
+      "timestamp": "2026-08-20T15:29:24Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "size/XS",
+        "approved"
+      ],
+      "author": "pjsharath28",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:e10933e71493fec4820a",
+      "signalId": "github:etcd-io/raft:pull_request:502",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:etcd-io/raft:pull_request:502",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "etcd-io/raft",
+        "kind": "pull_request",
+        "title": "[release-3.6] bump go 1.25.14",
+        "text": "Part of https://github.com/etcd-io/etcd/issues/22309",
+        "url": "https://github.com/etcd-io/raft/pull/502",
+        "createdAt": "2026-08-20T15:01:18Z",
+        "updatedAt": "2026-08-20T15:29:24Z",
+        "timestamp": "2026-08-20T15:29:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/XS",
+          "approved"
+        ],
+        "author": "pjsharath28",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:da127afbacefd8cdc91e",
+      "signalId": "github:etcd-io/raft:pull_request:501",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:etcd-io/raft:pull_request:501",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "etcd-io/raft",
+        "kind": "pull_request",
+        "title": "[release-3.7] bump go 1.26.7",
+        "text": "Part of https://github.com/etcd-io/etcd/issues/22309",
+        "url": "https://github.com/etcd-io/raft/pull/501",
+        "createdAt": "2026-08-20T14:59:27Z",
+        "updatedAt": "2026-08-20T15:29:02Z",
+        "timestamp": "2026-08-20T15:29:02Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/XS",
+          "approved"
+        ],
+        "author": "pjsharath28",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:686143268e5d38d421b4",
+      "signalId": "github:etcd-io/raft:pull_request:500",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:etcd-io/raft:pull_request:500",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "etcd-io/raft",
+        "kind": "pull_request",
+        "title": "bump go 1.26.7",
+        "text": "Part of https://github.com/etcd-io/etcd/issues/22309",
+        "url": "https://github.com/etcd-io/raft/pull/500",
+        "createdAt": "2026-08-20T14:57:17Z",
+        "updatedAt": "2026-08-20T15:26:55Z",
+        "timestamp": "2026-08-20T15:26:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "size/XS",
+          "approved"
+        ],
+        "author": "pjsharath28",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:fb6a84bf27b432d7ed18",
+      "signalId": "github:etcd-io/raft:pull_request:479",
+      "event": "discovered",
+      "observedAt": "2026-08-21T02:38:33.805881Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:etcd-io/raft:pull_request:479",
+        "source": "github",
+        "group": "distributed-systems",
+        "project": "etcd-io/raft",
+        "kind": "pull_request",
+        "title": "log: optimize findConflictByTerm with binary search",
+        "text": "The current `findConflictByTerm` performs an O(n) linear scan backward from the given index. Since log terms are monotonically non-decreasing, we can instead binary search over `[firstIndex-1, index]` to find the rightmost entry whose term does not exceed the target, reducing the worst-case complexity from O(n) to O(log n). This matters most during partition recovery, where a follower's conflicting suffix may span thousands of entries. The valid term range is `[firstIndex-1, lastIndex]`: - `firstIndex-1` is the snapshot index, whose term is still readable. - Entries below `firstIndex-1` are fully compacted and cause `ErrCompacted`. - Entries above `lastIndex` cause `ErrUnavailable`. Corner cases handled: - `index > lastIndex`: return `(index, 0)` immediately (ErrUnavailable). - `index < firstIndex-1`: return `(index, 0)` immediately (ErrCompacted). - All accessible entries exceed `term`: return `(firstIndex-2, 0)` to signal that the matching point is in compacted territory, matching the original linear-scan behavior. All existing `TestFindConflictByTerm` cases pass unchanged. Full test suite passes with `go test ./...`. Closes #180",
+        "url": "https://github.com/etcd-io/raft/pull/479",
+        "createdAt": "2026-07-25T12:02:49Z",
+        "updatedAt": "2026-08-20T12:06:46Z",
+        "timestamp": "2026-08-20T12:06:46Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "size/M",
+          "needs-ok-to-test"
+        ],
+        "author": "Lfan-ke",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}
