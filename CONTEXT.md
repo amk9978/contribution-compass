@@ -1,137 +1,95 @@
-# Contribution Compass Domain Context
+# Contribution Compass v2 Domain Context
 
 ## Mission
 
-Contribution Compass keeps the developer community current on important activity in curated
-open-source projects and helps opportunistic contributors find evidence-backed places where their
-work may be useful.
+Contribution Compass helps a serious software engineer identify the few open-source projects where
+their skills, growth, career value, and community impact align. The scarce resource is the
+developer's next several months of engineering attention.
 
 ## Domain language
 
-### Project Sensor
+### Developer Profile
 
-A configured GitHub repository monitored deeply over time. A Project Sensor belongs to an arbitrary
-Project Group and may carry maintainer-curated Keywords for search and Hacker News matching. Avoid
-“built-in repository” or domain-specific repository taxonomies.
+An evidence-backed representation of a developer’s languages, topics, repositories, dependencies,
+ecosystems, explicit interests, and desired direction. Every inferred affinity preserves its
+provenance; explicit preferences may steer or override inference.
 
-### Keyword
+### Topic Affinity
 
-A maintainer-curated phrase attached to a Project Sensor in `config.yml`. Keywords are persisted as
-project metadata and included in factual catalog searches. They may guide discovery but are not
-evidence that an individual Signal is about that phrase.
+A developer’s measured relationship to a GitHub Topic, with strength and provenance. Topics form
+the primary semantic coordinate system but are not the only candidate source.
 
-### Signal
+### Topic Relation
 
-A normalized issue, pull request, or release backed by a direct URL to its GitHub evidence. A Signal
-is factual collected data, not an interpretation.
+A lazily derived relationship between Topics based on evidence such as co-occurrence, specificity,
+aliases, and semantic distance. No global ontology is required.
 
-### Observation Event
+### Candidate Repository
 
-An append-only record that a Signal was first discovered or materially changed at a particular
-collection time. It contains the collected Signal snapshot and changed fields so consumers can
-reconstruct a factual trail.
+A repository admitted to the temporary evaluation funnel through explicit Discovery Evidence. Most
+Candidates are discarded and never persisted.
 
-### Project Context
+### Discovery Evidence
 
-Collected repository metadata that helps a developer or model interpret Signals: description,
-topics, primary language, license, default branch, activity counts, and repository URL.
+The factual reason a Candidate Repository entered the funnel, such as a topic intersection,
+dependency relation, explicit seed, starred repository, curated prior, or momentum source.
 
-### Project Comparison
+### Project Evidence
 
-A side-by-side projection of Project Context, latest stable release evidence, and Contribution Leads
-observed in one collection snapshot. It has no composite score or generated recommendation. Lead
-counts describe the collected snapshot, not a repository's complete open backlog, and unavailable
-facts remain unknown.
+The minimal public facts required to evaluate a Candidate Repository. Evidence retains source,
+window, sample size, coverage, and as-of time where applicable.
 
-### Project News Snapshot
+### Measurement
 
-Factual public release and roadmap information plus separately labeled Community Discussions for a
-Project Sensor at collection time. It contains the latest stable Release Bulletin and any publicly
-visible Upcoming Items. It is evidence, not a prediction that maintainers will deliver a plan on
-time.
+A versioned derived fact calculated from Project Evidence. Missing or low-sample evidence remains
+unknown; it is never silently imputed as average.
 
-### Community Discussion
+### Taste Policy
 
-A current Hacker News story matched to a configured Project Sensor by explicit title keywords or an
-exact repository reference. It retains both article and discussion URLs, score, comment count,
-author, and match reason. It is community evidence, not maintainer evidence or endorsement. Avoid
-“project announcement” unless the source itself establishes that fact.
+An explicit, versioned, inspectable set of product judgments. It applies hard floors before
+comparative weighting and is regression-tested against known-good, known-bad, and ambiguous cases.
+It is not a trained recommendation model.
 
-### Release Bulletin
+### Project Evaluation
 
-A published GitHub release with its original release notes and a direct evidence URL. Release-note
-highlights are deterministically extracted headings and bullets, not an inferred summary.
+The result of applying a Taste Policy to peer-normalized Measurements for one Candidate Repository.
+Survivors have exactly three evaluation axes: Fit, Absorption, and Upside.
 
-### Upcoming Item
+### Recommendation
 
-A public prerelease or open GitHub milestone that may indicate upcoming work. Its wording must say
-“publicly indicated” rather than claiming a release commitment. Absence means no supported public
-evidence was found, not that the project has no private roadmap.
+A personalized, evidence-backed judgment that a repository deserves serious engineering attention.
+It records its policy version, profile fingerprint, measurements, explanation, provenance, bucket,
+and as-of time.
 
-### Contribution Lead
+### Recommendation Bucket
 
-An open, unassigned issue surfaced by transparent deterministic rules. A Lead always contains its
-evidence, reasons, and caveat.
+One disjoint portfolio role: Best Investment, Career Signal, or Fresh Breeze. Career Signal remains
+provisional and should be folded into Best Investment if it cannot reliably mean accessible
+prestige.
 
-### Contribution Measure
+### Recommended Issue
 
-A named, factual scoring input attached to a Contribution Lead. It contains its point contribution
-and the collected evidence that activated it. A Lead's score is exactly the sum of its Measures;
-zero-point eligibility Measures may be retained for explanation. Avoid “quality score” or
-“recommended task.”
+A small, concrete call to action selected only inside an already-recommended repository. It carries
+factual selection reasons and a conservative action: START, INVESTIGATE, ASK_MAINTAINER, or AVOID.
 
-### Contribution Policy
+### Dependency Relation
 
-Curator-controlled label sets, weights, and thresholds used to qualify and rank Contribution Leads.
-It is configuration, not collected evidence. Empty configured label sets stay empty, and a zero
-weight disables that Measure's scoring effect.
-
-### Maintainer-Invited Lead
-
-A Contribution Lead with an explicit invitation label such as `good first issue` or `help wanted`.
-It is still not a guarantee of acceptance or difficulty.
-
-### Triage Lead
-
-A lower-confidence Contribution Lead based on factual signals such as documentation labeling and
-visible engagement. It must never be represented as maintainer-approved work.
-
-### Inference Extension
-
-An optional consumer of Signals, Observation Events, Project Context, and Contribution Leads. It may
-produce hypotheses, but its output remains separate from collected evidence and must cite the
-evidence it used.
-
-### Personal Profile
-
-A browser-local selection of Project Sensors used to filter the public catalog into a contributor's
-own table. It is stored in `localStorage` or a shareable URL and never sent to a Contribution Compass
-backend.
-
-### Catalog Overlay
-
-An optional, versioned Contribution Compass catalog reused by another installation. Only Project
-Sensors already named in the consumer's `config.yml` may flow through an Overlay. Equally current
-local data wins; stale or unavailable Overlays fall back to direct collection.
-
-### Catalog Provenance
-
-Metadata recording whether a repository snapshot came from local collection or a Catalog Overlay,
-including the source snapshot date and, for an Overlay, its configured identity, URL, and generation
-time.
+A provenance-bearing relationship between a developer, package, and repository. It distinguishes
+runtime from development use, direct from transitive evidence, and package identity from repository
+identity whenever the source permits.
 
 ## Invariants
 
-- Every Signal and Contribution Lead retains a primary evidence URL.
-- Every Release Bulletin and Upcoming Item retains a primary evidence URL.
-- Every Community Discussion retains its article and Hacker News discussion URLs.
-- Collection does not require or invoke an LLM.
-- Observation Events are append-only; newer observations do not erase their trail.
-- Empty configured groups stay empty and no hidden Project Sensors appear.
-- Empty configured keyword lists stay empty and stored Keywords mirror `config.yml`.
-- Empty Contribution Policy label sets and empty Catalog Overlay lists stay empty.
-- A Contribution Lead score equals the sum of its named Contribution Measures.
-- Catalog Overlays cannot introduce Project Sensors absent from the consumer's `config.yml`.
-- Reused repository snapshots expose Catalog Provenance.
-- MCP, CLI, static HTML, and JSON are adapters over the same application interface.
-- Inference output, when added, is distinguishable from direct evidence.
+- Project first, issue second.
+- Archived, deprecated, dead, inaccessible, or too-weakly-observed projects cannot buy their way
+  past a hard floor with stars or popularity.
+- Evidence, Measurements, Taste Policy, and Recommendations remain distinguishable.
+- Missing evidence is unknown, not average.
+- Exactly three axes—Fit, Absorption, and Upside—shape project evaluation after floors.
+- Recommendation buckets are disjoint and the final portfolio is diversified.
+- Every recommendation and Recommended Issue retains the evidence and policy that explain it.
+- Bot activity is excluded before contribution-climate aggregation.
+- GitHub remains the primary live source of truth.
+- Collection and recommendation require no LLM inference.
+- Persistence exists only for synchronization, reproducibility, explanation, outcomes, and feedback.
+- CLI, MCP, and static output are adapters over application use cases, not catalog-shaped products.

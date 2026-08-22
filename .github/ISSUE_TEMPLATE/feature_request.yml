@@ -1,5 +1,5 @@
 name: Feature request
-description: Propose a focused improvement that serves open-source contributors.
+description: Propose a focused improvement to personalized OSS investment recommendations.
 title: "[Feature]: "
 labels:
   - enhancement
@@ -11,13 +11,13 @@ body:
       options:
         - label: I searched existing issues and discussions for this proposal.
           required: true
-        - label: This can preserve direct links to original evidence.
+        - label: I read the v2 product specification and this preserves project-first evaluation.
           required: true
   - type: textarea
     id: problem
     attributes:
-      label: Contributor problem
-      description: What concrete difficulty does an open-source contributor face today?
+      label: Investment decision problem
+      description: What decision about sustained open-source contribution is hard today?
     validations:
       required: true
   - type: textarea
@@ -31,11 +31,11 @@ body:
     id: evidence
     attributes:
       label: Evidence or examples
-      description: Link to relevant repositories, issues, feeds, formats, or workflows.
+      description: Link to relevant developers, repositories, measurements, or recommendation cases.
     validations:
       required: true
   - type: textarea
     id: boundaries
     attributes:
       label: Scope and tradeoffs
-      description: What should remain out of scope? Consider noise, maintenance, and configurability.
+      description: What should remain out of scope? Which signal would materially change a recommendation?

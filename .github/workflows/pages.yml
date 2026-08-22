@@ -5,20 +5,11 @@ on:
     branches:
       - main
     paths:
-      - "data/**"
       - "src/contribution_compass/**"
-      - "web/**"
-      - "config.yml"
+      - "docs/product-spec-v2.md"
       - "pyproject.toml"
       - "uv.lock"
       - ".github/workflows/pages.yml"
-  workflow_run:
-    workflows:
-      - Contribution Compass
-    types:
-      - completed
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -32,7 +23,6 @@ concurrency:
 
 jobs:
   build:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -45,7 +35,7 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --locked
-      - name: Build human and machine views
+      - name: Build v2 rewrite-status site
         env:
           SITE_URL_OVERRIDE: ${{ vars.SITE_URL }}
         run: |

@@ -6,10 +6,10 @@ changelog:
     - title: Features
       labels:
         - enhancement
-    - title: Source and catalog improvements
+    - title: Discovery and evaluation improvements
       labels:
-        - source-request
-        - source
+        - discovery
+        - evaluation
     - title: Fixes
       labels:
         - bug

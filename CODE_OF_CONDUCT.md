@@ -15,7 +15,7 @@ and the maintainers of projects represented in the catalog.
 - Give context, evidence, and reproducible examples where possible.
 - Respect project boundaries, maintainer decisions, and contributor time.
 - Accept correction gracefully and help repair harm.
-- Avoid pressuring upstream maintainers or treating a Contribution Lead as an entitlement to work.
+- Avoid pressuring upstream maintainers or treating a recommendation as an entitlement to work.
 
 ## Unacceptable behavior
 

@@ -1,1 +1,1 @@
-"""Application use cases coordinating the domain through adapter seams."""
+"""V2 use cases will orchestrate domain modules through adapter seams."""

@@ -1,1 +1,1 @@
-"""Human and machine presentation modules."""
+"""Static presentation adapters."""

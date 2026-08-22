@@ -1,1 +1,1 @@
-"""Infrastructure adapters for external systems and persistence."""
+"""External evidence and discovery adapters."""

@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "contribution-compass"
-version = "0.3.0"
-description = "Evidence-first open-source updates and contribution discovery"
+version = "0.4.0a0"
+description = "Personalized open-source project investment recommendations"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { file = "LICENSE" }
@@ -13,7 +13,6 @@ dependencies = [
   "httpx>=0.28,<1",
   "Jinja2>=3.1,<4",
   "mcp>=2,<3",
-  "PyYAML>=6,<7",
 ]
 
 [project.optional-dependencies]
@@ -21,7 +20,6 @@ dev = [
   "mypy>=1.17,<2",
   "pytest>=8.4,<9",
   "ruff>=0.12,<1",
-  "types-PyYAML>=6.0,<7",
 ]
 
 [project.scripts]

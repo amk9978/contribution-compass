@@ -28,11 +28,11 @@ remediation, credit, and disclosure with the reporter.
 Reports are especially useful when they concern:
 
 - leakage or misuse of `GITHUB_TOKEN` or other credentials;
-- unsafe handling of untrusted GitHub, Hacker News, YAML, or remote catalog content;
+- unsafe handling of untrusted GitHub, registry, manifest, or profile content;
 - script injection in generated static pages;
 - path traversal or unsafe file persistence;
-- remote catalog provenance or integrity bypasses; or
+- evidence or recommendation provenance bypasses; or
 - unintended data exposure through CLI or MCP responses.
 
-Upstream GitHub, Hacker News, dependency, or browser vulnerabilities should be reported to their
-respective maintainers unless Contribution Compass introduces the vulnerable behavior.
+Upstream GitHub, package-registry, dependency, or browser vulnerabilities should be reported to
+their respective maintainers unless Contribution Compass introduces the vulnerable behavior.

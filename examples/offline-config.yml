@@ -1,6 +1,0 @@
-lookback_hours: 24
-
-repo_groups:
-  empty-example:
-    name: Empty Example
-    repos: []

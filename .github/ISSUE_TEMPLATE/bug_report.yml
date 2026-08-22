@@ -1,5 +1,5 @@
 name: Bug report
-description: Report reproducible incorrect collection, state, CLI, MCP, or rendering behavior.
+description: Report reproducible v2 foundation, CLI, MCP, discovery, or rendering behavior.
 title: "[Bug]: "
 labels:
   - bug
@@ -22,10 +22,11 @@ body:
     attributes:
       label: Area
       options:
-        - Collection
-        - Configuration or init
-        - State and observation history
-        - Static website or feeds
+        - Developer profile
+        - Candidate discovery
+        - Project evidence or measurements
+        - Evaluation or recommendation
+        - Static website
         - CLI
         - MCP
         - GitHub Actions
@@ -51,7 +52,7 @@ body:
     id: version
     attributes:
       label: Version or commit
-      placeholder: v0.3.0 or a commit SHA
+      placeholder: v0.4.0a0 or a commit SHA
     validations:
       required: true
   - type: textarea

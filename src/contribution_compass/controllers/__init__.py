@@ -1,1 +1,1 @@
-"""Transport controllers for the command line and MCP."""
+"""Command-line and MCP transport adapters."""
