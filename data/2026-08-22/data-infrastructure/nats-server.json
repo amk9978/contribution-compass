@@ -1,0 +1,387 @@
+{
+  "version": 4,
+  "date": "2026-08-22",
+  "group": {
+    "id": "data-infrastructure",
+    "name": "Data / Messaging / Storage Infrastructure"
+  },
+  "repository": {
+    "id": "nats-server",
+    "repo": "nats-io/nats-server",
+    "name": "NATS Server",
+    "keywords": [
+      "NATS server",
+      "NATS.io"
+    ]
+  },
+  "context": {
+    "repository": "nats-io/nats-server",
+    "url": "https://github.com/nats-io/nats-server",
+    "description": "High-Performance server for NATS.io, the cloud and edge native messaging system.",
+    "homepage": "https://nats.io",
+    "language": "Go",
+    "topics": [
+      "cloud",
+      "cloud-computing",
+      "cloud-native",
+      "connected-vehicle",
+      "distributed-systems",
+      "edge",
+      "edge-ai",
+      "edge-computing",
+      "go",
+      "golang",
+      "message-bus",
+      "message-queue",
+      "messaging",
+      "microservices-architecture",
+      "nats-server"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 20559,
+    "forks": 1913,
+    "openIssues": 539,
+    "archived": false,
+    "collectedAt": "2026-08-22T02:30:01.756425+00:00"
+  },
+  "news": {
+    "repository": "nats-io/nats-server",
+    "collectedAt": "2026-08-22T02:30:01.756425+00:00",
+    "latestRelease": {
+      "repository": "nats-io/nats-server",
+      "tag": "v2.14.5",
+      "title": "Release v2.14.5",
+      "url": "https://github.com/nats-io/nats-server/releases/tag/v2.14.5",
+      "publishedAt": "2026-08-12T15:31:27Z",
+      "notes": "## Changelog\r\n\r\nRefer to the [2.14 Upgrade Guide](https://docs.nats.io/release-notes/whats_new/whats_new_214) for backwards compatibility notes with 2.12.x. Please note that the 2.13.x version was skipped.\r\n\r\n### Go Version\r\n\r\n- 1.26.5\r\n\r\n### Dependencies\r\n\r\n- github.com/klauspost/compress v1.19.2 (#8459)\r\n- golang.org/x/crypto v0.55.0 (#8459)\r\n\r\n### Added\r\n\r\nLeafnodes\r\n\r\n- New `dial_timeout` option can be specified in the `leafnode` config block or for specific remotes in the configuration, allowing it to be increased above the default 1 second for high-latency links (#8427)\r\n\r\n### Fixed\r\n\r\nGeneral\r\n\r\n- Fixed a deadlock that could occur in the logger when a close error occurs (#8430)\r\n\r\nJetStream\r\n\r\n- Fix a bug that could result in potential data loss when handling idempotent stream creates when an offline node catches up from a metalayer snapshot, caused by an incorrect update to the create time in the stream assignment (#8449)\r\n\r\n### Complete Changes\r\n \r\nhttps://github.com/nats-io/nats-server/compare/v2.14.4...v2.14.5",
+      "highlights": [
+        "Changelog",
+        "Go Version",
+        "1.26.5",
+        "Dependencies",
+        "github.com/klauspost/compress v1.19.2 (#8459)",
+        "golang.org/x/crypto v0.55.0 (#8459)"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-22T02:29:52.118351Z",
+      "since": "2026-08-21T02:29:52.118351Z",
+      "observedCount": 6,
+      "changedCount": 6
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:nats-io/nats-server:pull_request:8482",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "Update to Go 1.27.0/1.26.7",
+      "url": "https://github.com/nats-io/nats-server/pull/8482",
+      "createdAt": "2026-08-19T14:57:42Z",
+      "updatedAt": "2026-08-21T15:29:28Z",
+      "timestamp": "2026-08-21T15:29:28Z",
+      "metrics": {
+        "reactions": 2,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "neilalexander",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8489",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) NRG: Don't campaign as managed node outside the peer set",
+      "text": "If a server was added in the assignment but was not added as a peer in the Raft group yet, it could still campaign and try to become leader. This PR fixes that by not allowing a peer of a managed group, that is not in the peer set, to try to campaign for leadership. This was the original reason for `TestJetStreamClusterStreamScaleDownChangesRaftGroup` flaking. Since that's not what the test is meant to cover, a simple `c.waitOnStreamLeader` after the scale up was added to ensure the scale up completes and all peers are added, a small NRG change with a test to cover that was made instead. Also added a test covering the `n.managed` interaction in `n.trackPeer`, which was technically already covered by the high-level tests, but good to have as a simpler Raft-level one too. Finally, added `PeerInfo.Pending` to expose whether any peers exist in the assignment but are not part of the Raft group yet.",
+      "url": "https://github.com/nats-io/nats-server/pull/8489",
+      "createdAt": "2026-08-21T08:03:03Z",
+      "updatedAt": "2026-08-21T09:16:09Z",
+      "timestamp": "2026-08-21T09:16:09Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8490",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [FIXED] Preserve FirstSeq during WAL replay",
+      "text": "If replicated SyncAlways stream is restarted before its first Raft snapshot, WAL replay would reset the stream store to sequence zero, ignoring FirstSeq.",
+      "url": "https://github.com/nats-io/nats-server/pull/8490",
+      "createdAt": "2026-08-21T09:35:54Z",
+      "updatedAt": "2026-08-21T11:25:06Z",
+      "timestamp": "2026-08-21T11:25:06Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8491",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "[FIXED] Rejected consumer create destroys existing consumer state",
+      "text": "This PR fixes a number of issues relating to errors on consumer create: - `setConsumer` no longer overwrites an existing consumer and `removeConsumer` only unregisters when the entry is the same instance that is passed, so a stale consumer with the same name can't evict the live consumer from `mset.consumers`, `cList` and `csl`. - The name-exists check now runs before `mset.store.ConsumerStore(o.name, ...)`, which opened the existing consumer's on-disk directory and then deleted it when the rejected create tore itself down. - Error paths release the temporary consumer with `o.stop()` instead of `o.deleteWithoutAdvisory()`, which on the early name checks could `os.RemoveAll` an unrelated stream named `obs` (unlikely but fixed anyhow). - The `ackMsgs`/`nextMsgReqs` ipQueues are created after the name-exists check, since they key `s.ipQueues` by consumer name and the rejected create overwrote and then unregistered the live consumer's entries. - `mset.numFilter` is removed, as it was maintained in three places, never read, and miscounted consumers using `FilterSubjects`. In practice the name-exists paths above only apply to single/standalone servers, since clustered paths perform this check elsewhere and would prevent it.",
+      "url": "https://github.com/nats-io/nats-server/pull/8491",
+      "createdAt": "2026-08-21T10:11:00Z",
+      "updatedAt": "2026-08-21T13:50:13Z",
+      "timestamp": "2026-08-21T13:50:13Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8492",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "Various de-flakes and fixes",
+      "url": "https://github.com/nats-io/nats-server/pull/8492",
+      "createdAt": "2026-08-21T10:43:03Z",
+      "updatedAt": "2026-08-21T12:05:08Z",
+      "timestamp": "2026-08-21T12:05:08Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 3
+      },
+      "labels": [],
+      "author": "MauriceVanVeen",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:nats-io/nats-server:pull_request:8493",
+      "source": "github",
+      "group": "data-infrastructure",
+      "project": "nats-io/nats-server",
+      "kind": "pull_request",
+      "title": "(2.15) [FIXED] prepareForWALReplay failed to Truncate deleted sequence",
+      "text": "When WAL recovery truncated a filestore to a deleted and compacted snapshot sequence, Truncate failed with errDeletedMsg. The fix is to truncate the selected block at the preceding stored message, if any.",
+      "url": "https://github.com/nats-io/nats-server/pull/8493",
+      "createdAt": "2026-08-21T15:26:45Z",
+      "updatedAt": "2026-08-21T19:28:37Z",
+      "timestamp": "2026-08-21T19:28:37Z",
+      "metrics": {
+        "reactions": 1,
+        "comments": 4
+      },
+      "labels": [],
+      "author": "sciascid",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:4c69bf9709d46ffd5ab5",
+      "signalId": "github:nats-io/nats-server:pull_request:8493",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8493",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] prepareForWALReplay failed to Truncate deleted sequence",
+        "text": "When WAL recovery truncated a filestore to a deleted and compacted snapshot sequence, Truncate failed with errDeletedMsg. The fix is to truncate the selected block at the preceding stored message, if any.",
+        "url": "https://github.com/nats-io/nats-server/pull/8493",
+        "createdAt": "2026-08-21T15:26:45Z",
+        "updatedAt": "2026-08-21T19:28:37Z",
+        "timestamp": "2026-08-21T19:28:37Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 4
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:eee460e1f34875484524",
+      "signalId": "github:nats-io/nats-server:pull_request:8482",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8482",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "Update to Go 1.27.0/1.26.7",
+        "url": "https://github.com/nats-io/nats-server/pull/8482",
+        "createdAt": "2026-08-19T14:57:42Z",
+        "updatedAt": "2026-08-21T15:29:28Z",
+        "timestamp": "2026-08-21T15:29:28Z",
+        "metrics": {
+          "reactions": 2,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "neilalexander",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fa36b055d931ae29bbef",
+      "signalId": "github:nats-io/nats-server:pull_request:8491",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8491",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "[FIXED] Rejected consumer create destroys existing consumer state",
+        "text": "This PR fixes a number of issues relating to errors on consumer create: - `setConsumer` no longer overwrites an existing consumer and `removeConsumer` only unregisters when the entry is the same instance that is passed, so a stale consumer with the same name can't evict the live consumer from `mset.consumers`, `cList` and `csl`. - The name-exists check now runs before `mset.store.ConsumerStore(o.name, ...)`, which opened the existing consumer's on-disk directory and then deleted it when the rejected create tore itself down. - Error paths release the temporary consumer with `o.stop()` instead of `o.deleteWithoutAdvisory()`, which on the early name checks could `os.RemoveAll` an unrelated stream named `obs` (unlikely but fixed anyhow). - The `ackMsgs`/`nextMsgReqs` ipQueues are created after the name-exists check, since they key `s.ipQueues` by consumer name and the rejected create overwrote and then unregistered the live consumer's entries. - `mset.numFilter` is removed, as it was maintained in three places, never read, and miscounted consumers using `FilterSubjects`. In practice the name-exists paths above only apply to single/standalone servers, since clustered paths perform this check elsewhere and would prevent it.",
+        "url": "https://github.com/nats-io/nats-server/pull/8491",
+        "createdAt": "2026-08-21T10:11:00Z",
+        "updatedAt": "2026-08-21T13:50:13Z",
+        "timestamp": "2026-08-21T13:50:13Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:57d37aaf23738e3d484d",
+      "signalId": "github:nats-io/nats-server:pull_request:8492",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8492",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "Various de-flakes and fixes",
+        "url": "https://github.com/nats-io/nats-server/pull/8492",
+        "createdAt": "2026-08-21T10:43:03Z",
+        "updatedAt": "2026-08-21T12:05:08Z",
+        "timestamp": "2026-08-21T12:05:08Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 3
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:d8ff341c07ff6e0eebf9",
+      "signalId": "github:nats-io/nats-server:pull_request:8490",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8490",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) [FIXED] Preserve FirstSeq during WAL replay",
+        "text": "If replicated SyncAlways stream is restarted before its first Raft snapshot, WAL replay would reset the stream store to sequence zero, ignoring FirstSeq.",
+        "url": "https://github.com/nats-io/nats-server/pull/8490",
+        "createdAt": "2026-08-21T09:35:54Z",
+        "updatedAt": "2026-08-21T11:25:06Z",
+        "timestamp": "2026-08-21T11:25:06Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "sciascid",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:5a5ed925826a97b80771",
+      "signalId": "github:nats-io/nats-server:pull_request:8489",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:nats-io/nats-server:pull_request:8489",
+        "source": "github",
+        "group": "data-infrastructure",
+        "project": "nats-io/nats-server",
+        "kind": "pull_request",
+        "title": "(2.15) NRG: Don't campaign as managed node outside the peer set",
+        "text": "If a server was added in the assignment but was not added as a peer in the Raft group yet, it could still campaign and try to become leader. This PR fixes that by not allowing a peer of a managed group, that is not in the peer set, to try to campaign for leadership. This was the original reason for `TestJetStreamClusterStreamScaleDownChangesRaftGroup` flaking. Since that's not what the test is meant to cover, a simple `c.waitOnStreamLeader` after the scale up was added to ensure the scale up completes and all peers are added, a small NRG change with a test to cover that was made instead. Also added a test covering the `n.managed` interaction in `n.trackPeer`, which was technically already covered by the high-level tests, but good to have as a simpler Raft-level one too. Finally, added `PeerInfo.Pending` to expose whether any peers exist in the assignment but are not part of the Raft group yet.",
+        "url": "https://github.com/nats-io/nats-server/pull/8489",
+        "createdAt": "2026-08-21T08:03:03Z",
+        "updatedAt": "2026-08-21T09:16:09Z",
+        "timestamp": "2026-08-21T09:16:09Z",
+        "metrics": {
+          "reactions": 1,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "MauriceVanVeen",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}

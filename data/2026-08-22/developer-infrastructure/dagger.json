@@ -1,0 +1,879 @@
+{
+  "version": 4,
+  "date": "2026-08-22",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "dagger",
+    "repo": "dagger/dagger",
+    "name": "Dagger",
+    "keywords": [
+      "Dagger CI"
+    ]
+  },
+  "context": {
+    "repository": "dagger/dagger",
+    "url": "https://github.com/dagger/dagger",
+    "description": "Automation engine to build, test and ship any codebase. Runs locally, in CI, or directly in the cloud",
+    "homepage": "https://dagger.io",
+    "language": "Go",
+    "topics": [
+      "agents",
+      "caching",
+      "ci-cd",
+      "containers",
+      "continuous-deployment",
+      "continuous-integration",
+      "devops",
+      "docker",
+      "graphql",
+      "workflows"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 16190,
+    "forks": 913,
+    "openIssues": 139,
+    "archived": false,
+    "collectedAt": "2026-08-22T02:30:07.223962+00:00"
+  },
+  "news": {
+    "repository": "dagger/dagger",
+    "collectedAt": "2026-08-22T02:30:07.223962+00:00",
+    "latestRelease": {
+      "repository": "dagger/dagger",
+      "tag": "v0.21.8",
+      "title": "v0.21.8",
+      "url": "https://github.com/dagger/dagger/releases/tag/v0.21.8",
+      "publishedAt": "2026-07-29T17:07:24Z",
+      "notes": "## v0.21.8 - 2026-07-29\n\n### Changed\n\n- Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in\n  https://github.com/dagger/dagger/pull/13615\n\n### Fixed\n\n- Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: `COPY`-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content\n  actually changes. by @marcosnils in https://github.com/dagger/dagger/pull/13765\n- The `--x-release` CLI re-exec so `_EXPERIMENTAL_DAGGER_RUNNER_HOST` is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by\n  @tiborvass in https://github.com/dagger/dagger/pull/13752\n- Silent SDK sessions no longer retain frontend telemetry in memory while Cloud and OTLP export remain enabled. `DAGGER_SILENT` is now honored as the equivalent of `--silent`. by @sipsma in\n  https://github.com/dagger/dagger/pull/13762\n\n### What to do next?\n\n- Read the [documentation](https://docs.dagger.io)\n- Join our [Discord server](https://discord.gg/dagger-io)\n- Follow us on [Twitter](https://twitter.com/dagger_io)\n\n",
+      "highlights": [
+        "v0.21.8 - 2026-07-29",
+        "Changed",
+        "Changeset diffs are now computed from filesystem metadata instead of full-content comparison, significantly speeding up diff computation for large directories. by @marcosnils in",
+        "Fixed",
+        "Dockerfile build layer caching so unrelated build-context changes no longer bust the cache: COPY-ed directories now get a content-based cache identity, re-keying downstream steps only when copied content",
+        "The --x-release CLI re-exec so EXPERIMENTALDAGGERRUNNERHOST is preserved (with a warning) instead of being stripped, and clarified its startup message to avoid implying it runs from any build. by"
+      ],
+      "prerelease": false
+    },
+    "upcoming": [
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "vsometime",
+        "url": "https://github.com/dagger/dagger/milestone/37",
+        "description": "High-priority issues that should be released soon, but are not strict blockers for the immediate next release.",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 36
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.1",
+        "url": "https://github.com/dagger/dagger/milestone/130",
+        "progress": 0,
+        "openIssues": 1,
+        "closedIssues": 0
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v1.0.0-beta.8",
+        "url": "https://github.com/dagger/dagger/milestone/131",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 9
+      },
+      {
+        "repository": "dagger/dagger",
+        "kind": "milestone",
+        "title": "v0.21.9",
+        "url": "https://github.com/dagger/dagger/milestone/132",
+        "description": "",
+        "progress": 100,
+        "openIssues": 0,
+        "closedIssues": 6
+      }
+    ],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-22T02:29:52.118351Z",
+      "since": "2026-08-21T02:29:52.118351Z",
+      "observedCount": 14,
+      "changedCount": 14
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:dagger/dagger:issue:13769",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "issue",
+      "title": "stdlib: remove dependency on polyfill module",
+      "text": "## Problem Our official modules import a \"polyfill\" module for features that want in the engine, but didn't have the patience to wait for :) At 1.0 launch, the number of official modules that import polyfill should be ideally zero, or at most a very small number for niche use cases. As it stands today, aspiring module developers that peek at our own modules, will undoubtebly have to learn about polyfill, which will make their learning and development journey more complicated. ## Solution Remove all dependencies on github.com/dagger/polyfill (and legacy github.com/dagger/sdk-sdk/polyfill) in all modules under github.com/dagger",
+      "url": "https://github.com/dagger/dagger/issues/13769",
+      "createdAt": "2026-07-29T16:26:02Z",
+      "updatedAt": "2026-08-21T04:05:24Z",
+      "timestamp": "2026-08-21T04:05:24Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "shykes",
+      "state": "open",
+      "assignees": [
+        "grouville"
+      ],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13608",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "Clean up tests for the Go client library",
+      "text": "## Problem To test the Go client library, we built a custom test harness. That harness only runs in GitHub Actions; it relies heavily on single-use glue code; and it jams together testing dimensions that should be decoupled. Concretely: the `TestProvision` test is wired into `publish.yml` and only runs on pushes to main and tags, never on a PR. The rest of the suite runs through `go-sdk-dev`, a Dagger module built only to call `go test`. And one suite does three jobs at once — bootstrap the CLI, start an engine, test the client — so a developer with plain `go test` can't run any of it. ## Solution Turn them into ordinary Go tests. The engine-dependent tests move to `sdk/go/e2e`, a normal Go module which can be tested by `go test`, either called directly by the user, or orchestrated by a generic Dagger module such as `github.com/dagger/go`. | Dependency | Before | After | | -- | -- | -- | | Github Actions | required 🔴 | not required 🟢 | | Single-use Dagger module | required 🔴 | not required 🟢 | | Run with native `go test` | not supported 🔴 | supported 🟢 | - `sdk/go` holds unit tests with no engine dependency, and pre-existing documentation examples. - `sdk/go/e2e` holds two e2e test suites: `TestBootstrap` (the library downloads and runs a CLI), and `TestAgainstEngines` (call the library against a matrix of engines) ## Task list > **TL;DR:** `sdk/go/e2e`'s `TestBootstrap` and `TestAgainstEngines` both fail during their shared harness setup. The nested Dagger client detects the container's projected filesystem as its workspace instead of inheriting the caller's workspace. - [ ] Fix both tests by implementing [#13054](https://github.com/dagger/dagger/issues/13054).",
+      "url": "https://github.com/dagger/dagger/pull/13608",
+      "createdAt": "2026-07-10T01:03:47Z",
+      "updatedAt": "2026-08-22T02:00:00Z",
+      "timestamp": "2026-08-22T02:00:00Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "shykes",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13761",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "feat: docker api compatibility",
+      "text": "Add support for `experimentalDockerCompatibility: true` on `Container.withExec()` and `Container.terminal()`, which prompts the Dagger engine to bind a Docker-compatible API on a random available port during the lifetime of the exec/terminal and point Docker clients to it via the `DOCKER_HOST` environment variable. This is very similar to the way that Dagger-in-Dagger via `experimentalPrivilegedNesting: true` works. Only a subset of the Docker API is supported as of writing (the API calls behind `docker run` and `docker run -d -p`). Support is provided by mapping Docker API requests to equivalent Dagger functionality, largely provided by `github.com/dagger/dagger/engine/engineutil.Client` Aiming to resolve https://github.com/dagger/dagger/discussions/11710",
+      "url": "https://github.com/dagger/dagger/pull/13761",
+      "createdAt": "2026-07-29T02:24:41Z",
+      "updatedAt": "2026-08-22T01:59:58Z",
+      "timestamp": "2026-08-22T01:59:58Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 3
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "frantjc",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13838",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "dagger agent dev env: in-repo agent modules",
+      "text": "The dogfooding layer: the in-repo agent modules that `dagger agent --env dev` composes, plus the wiring that makes them reachable. No engine changes. | module | what it does | | --- | --- | | `editor` | a sandboxed coding agent — read, write, edit, find, grep, todoWrite — plus a commit tool built on the workspace's staged commits. Vendored from `github.com/vito/editor` so it can be iterated on in-tree. | | `review` | the `git status` / `git diff` an agent with no Bash tool can't otherwise get, via `Workspace.git.uncommitted`'s diffstats and patch | | `history` | the `git log` half of the same, over `Workspace.git.stagedCommits` | | `delegate` | hands a noisy, context-heavy subtask to a fresh sub-agent that runs it in its own conversation and returns one distilled report | | `engine-lab` | `./hack/dev` + `./hack/with-dev` as agent tools: build from the workspace, hold the engine as a Service, exec against it, poke its debug endpoints | | `contributor` | the same idea aimed at somebody else's repo — fetch it as a Workspace, compose editor's tools onto it, work the task, open the PR | | `tui-qa` | drives nested agent TUI sessions; now inherits the session's LLM config and gets a real git repo as its fixture | Supporting changes: `EngineDev.GoContainer` is a Wolfi Go base with the from-source `dagger` on `$PATH`, so Go commands (and the integration tests, which shell out to `dagger`) find the CLI without paying for a full engine build — it's what the `golang` toolchain is based on in the dev env. `dagger.toml` gains the `env.dev` module set, with contributor's GitHub token resolving through `cmd://gh auth token` rather than being stored. And catwalk moves to v0.51.11 for its refreshed model catalog. Each module commit is self-contained, and the `dagger.toml` wiring is last, so any intermediate state is a module directory with no install entry — inert rather than broken.",
+      "url": "https://github.com/dagger/dagger/pull/13838",
+      "createdAt": "2026-08-04T23:43:30Z",
+      "updatedAt": "2026-08-22T01:58:42Z",
+      "timestamp": "2026-08-22T01:58:42Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "vito",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13858",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "Add DAGGER_GO_SDK_OFFLINE support",
+      "text": "This is needed for modules in airgapped environments, so that `go build` does not try to reach `dagger.io` for modules.",
+      "url": "https://github.com/dagger/dagger/pull/13858",
+      "createdAt": "2026-08-07T17:30:53Z",
+      "updatedAt": "2026-08-22T01:59:55Z",
+      "timestamp": "2026-08-22T01:59:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [
+        "kind/stale"
+      ],
+      "author": "suprjinx",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13921",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "Better SDK UX & config",
+      "text": "Implements #13912 and #13944. ## Not included From #13912: - `dagger sdk <SDK> claimable` - `dagger sdk <SDK> module remove` - `dagger sdk <SDK> client remove` ## Behavior change `dagger install` now loads a module to detect SDK capabilities. This makes installation more eager and causes an install to fail when the module cannot load.",
+      "url": "https://github.com/dagger/dagger/pull/13921",
+      "createdAt": "2026-08-18T19:29:45Z",
+      "updatedAt": "2026-08-21T07:15:55Z",
+      "timestamp": "2026-08-21T07:15:55Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "shykes",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13932",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "docs: show prepare as places, and Go downloads as generate vs call",
+      "text": "Fixes https://github.com/dagger/dagger/issues/13931 ## Mental model Two pictures. Not troubleshooting. The diagram shows the model. A short line under it is the summary. Clicking a box adds one extra line. **Execution (where things sit).** Host, engine, helper, function. You typed `dagger` on the host. The engine is already on and starts a short-lived helper. Those are containers. They do not use the terminal shell. The function has not started. GOPROXY, git, and SSH on the host are not the helper. This is still true in v1. v1 does not move those boxes. **Service Proxies (when a Go download happens).** Engine (already on, no download) → Generate (writes SDK files; `go get` if the cache is empty) → Call (build and run). Asking for the list and running the function are the same process. Call uses files that already exist. A first build can still download if the cache is empty. Later calls are not the shopping trip. That is the v1 split. Codegen is not mixed into every call. ## Test plan - [ ] Open `/next/extending/how-dagger-works/execution`. The four places are visible without clicking. Click Host, CLI, Engine, Helper, the list arrow, or Your function. - [ ] Open `/next/reference/configuration/proxy`. Three boxes: Engine, Generate (`go get`), Call. Click for the extra line.",
+      "url": "https://github.com/dagger/dagger/pull/13932",
+      "createdAt": "2026-08-19T20:27:55Z",
+      "updatedAt": "2026-08-21T18:52:40Z",
+      "timestamp": "2026-08-21T18:52:40Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "EmmS21",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13938",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "dagql: retry canceled lazy evaluations",
+      "text": "## Summary A new healthy `Cache.Evaluate` caller could join a lazy callback attempt after every earlier waiter had abandoned and canceled it. When that callback finished with the shared cancellation, the new caller inherited an error it did not cause. A second form occurred when a completed canceled attempt remained published after its last waiter selected its own cancellation arm, allowing a later caller to drain the stale error. This change makes cancellation caused by abandoned shared work transparent to healthy callers while preserving lazy-evaluation mutual exclusion. Reworking the coordination also exposed two adjacent defects in the same code, both fixed here: evaluation could be reported complete before an attempt's cache-side bookkeeping settled, and cache-hit lazy registration raced the callback body's object-side state. ## Runtime design Each lazy callback execution has an attempt-scoped record containing its completion channel, cancel function, waiter count, outcome, cancellation provenance, and telemetry wait targets. The shared result publishes one current attempt while its callback runs. Callback completion stores the outcome and retires that attempt under the lazy mutex before closing its completion channel. Existing waiters retain the retired record, so they cannot read or decrement a newer attempt's state. A healthy waiter retries when the callback error is attributable to cancellation of that attempt's shared callback context. A waiter's own cancellation still returns its own cause, and genuine callback failures still propagate to every waiter. A new callback can begin only after the preceding callback has returned, so retries never overlap. Evaluation preflight consults the published attempt before any object-side lazy state. Callback bodies (Directory, File, Container) clear their object-side `Lazy` pointer while the attempt is still running its cache-side bookkeeping (snapshot-lease sync, lease release), so object-side state is only trustworthy once no attempt is published; attempt retirement under the lazy mutex orders the body's writes before such a reader. A second caller arriving during the bookkeeping window therefore joins the attempt instead of observing the cleared pointer and reporting success early. A failed attempt whose body already succeeded records pending bookkeeping. The next `Evaluate` leads a bookkeeping-only attempt that retries just the snapshot-lease sync instead of treating the consumed object-side callback as completed evaluation, so a bookkeeping failure is no longer reported once and then silently swallowed. Cache-hit lazy registration applies the same attempt-first order under the lazy mutex, closing a data race between the hit path's read and the callback body's write. ## Telemetry Native-profiler and OpenTelemetry wait targets are fresh per attempt. They are minted, or deliberately left invalid, under the lazy mutex before the attempt pointer is published. OpenTelemetry waits remain gated by the result producer's profile-skip state, never the forcing waiter's state. ## Behavior and cost Retry happens only after a real callback attempt completes. A genuinely canceled attempt can therefore cause one additional callback execution for a healthy caller. The object-side lazy state remains idempotent, no two callbacks for one result run concurrently, and a bookkeeping-only retry never re-runs the callback body. ## Tests and model The deterministic standard-library `testing/synctest` coverage exercises: - a healthy caller joining canceled work and succeeding through retry; - own cancellation affecting only the canceling waiter; - mutual exclusion across retries; - cancellation-shaped genuine callback failures; - retirement after callback finish but before the completion-channel close; - a second caller joining an attempt whose body finished but whose bookkeeping is still in flight, a failed bookkeeping step staying retryable without re-running the body, and the retry settling completion. A separate regression drives cache hits concurrently with a running callback and is meaningful under the race detector: with the old registration ordering, `-race` reports the object-side write against the hit path's read. The five-second timeout guards use the synctest bubble's fake clock and remain active when all goroutines are durably blocked. The TLA+ model separates callback retirement, completion-channel observation, and waiter wake-up, and now also separates the callback body from the attempt's cache-side bookkeeping: body success moves the attempt into a syncing stage, a bookkeeping failure records a retryable pending obligation, and a bookkeeping-only attempt starts directly in that stage. Cancellation is a flag that composes with both stages, and the canceled-finish action can latch a genuine failure, matching the per-error retry decision in the Go. Evaluators can only demand results whose attachment barrier is neither open nor errored, matching what callers can actually hold. Two new invariants gate the fixed behavior in the lazy configurations: `EvalDoneComplete` (a successful Evaluate return implies completed evaluation) and `LazyCompleteSettled` (completion is only recorded with every stage settled); weakening the preflight back to its old shape violates them within seconds. The model also covers lazy work on imported results: persisted payloads can carry deferred work (a lazy container persists its recipe), which arms on first value load after import or restart, and a new `lazy_import` configuration exercises the full lazy protocol against store-produced results interleaved with flush and restart. The `lazy_stale_cancel` configuration is a green regression gate, `lazy`, `lazy_liveness`, and `lazy_import` are green, and reachability probes confirmed that foreign-cancellation, retry-cycle, pending-bookkeeping, imported-arming, and post-restart re-arming states are explored within the configured bounds. ## Validation - `go test ./dagql -count=1` - `go test ./engine/server -count=1` - `go test -race ./dagql -run '^(TestCacheHitRegistrationDoesNotRaceLazyCallback|TestCacheEvaluateSettlesBookkeepingBeforeReportingComplete|TestCacheEvaluateRetriesForeignCancellation|TestCacheEvaluateRetiresFinishedAttemptBeforeWaitersDrain|TestCacheEvaluateOwnCancellationOnlyCancelsOwnWait|TestCacheEvaluatePropagatesCallbackFailure)$' -count=1` - `go vet ./dagql` - `dagger check tla-check:cache-lifecycle` — all 24 configurations, every expected outcome matched - Fresh direct TLC runs of `lazy`, `lazy_liveness`, and `lazy_stale_cancel`, plus re-break runs proving the new invariants catch the old preflight and probe runs proving the gated states are reachable - Focused packaging generator check: `dagger check dagger-go-sdk:generate` ## Stack This is layer three of the cache-remediation stack. It depends on #13936, which depends on #13934, and relies on the engine-lifetime-unique numeric result IDs introduced at the base of the stack.",
+      "url": "https://github.com/dagger/dagger/pull/13938",
+      "createdAt": "2026-08-20T05:32:15Z",
+      "updatedAt": "2026-08-21T19:19:57Z",
+      "timestamp": "2026-08-21T19:19:57Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sipsma",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13940",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "dagql: defer session release until in-flight operations finish",
+      "text": "## Summary The dagql cache could not see its own in-flight work. Session release could therefore collect a result after a cache operation claimed it but before that operation returned, including work from detached executors that the server handler drain cannot count. The same gap allowed shutdown persistence to observe transient publication ownership. This is layer four of the cache-remediation stack and depends on #13938, #13936, and #13934. ## Design - Add a per-session lifecycle record that packs the released tombstone and active-operation count into one atomic word. Operation admission and release are linearized with compare-and-swap without taking a cache-wide mutex. - Count operations at every value-bearing cache boundary, including call lookup/initialization, result attachment and ID loads, Evaluate waiters, each lazy callback attempt, snapshot lease synchronization, and the arbitrary-value cache. - Mark a session dead immediately in ReleaseSession. If work is active, cleanup is irrevocably assigned to the last exiting operation; if no work is active, release performs cleanup immediately. - Refuse a value-bearing success at operation exit when release won the race, so detached work cannot return a result whose cleanup is eligible. - Make Cache.Close reject new work, wait for operation and deferred-cleanup quiescence on its caller context, and fail dirty if the context expires or deferred cleanup failed. It never takes a timed-out snapshot or writes a clean marker after such a failure. - Give lazy callbacks their own attempt-lifetime token, held until the callback goroutine actually exits rather than only until its waiters return. The token covers both stages of an attempt (callback body, then cache-side bookkeeping) and bookkeeping-only retry attempts. - Refuse telemetry span capture for released sessions. The two span writers now match the other per-session map writers, so no writer can recreate a released session's maps. Under this layer's operation accounting every current caller is already enclosed by a counted operation; the guards keep that safe independent of future callers. - Check mutation-helper registration by ID membership. Numeric result IDs are engine-lifetime unique (#13934), so the four e-graph mutation helpers guard against operating on a collected result with a plain registration check instead of pointer identity. ## Contract and cost - ReleaseSession returning now means the session is dead and cleanup is complete or irrevocably assigned. Cleanup hooks may run later on another caller goroutine. - Deferred cleanup errors are logged when observed, accumulated by the cache, and returned from Cache.Close. - New claims and late value-bearing returns for released sessions fail with ErrCacheSessionReleased. - Immediate before/after cache-size logging during session teardown is approximate because cleanup may be deferred. - The uncontended hot path adds one per-session map lookup and two atomic compare-and-swaps per counted operation, with no cache-wide mutex acquisition. - Per-session lifecycle records remain for the engine lifetime. This is intentional because server session IDs are single-use and retaining the tombstone closes the admission race. ## Model The TLA+ model now faithfully represents operation admission and exit, deferred release, shutdown quiescence, and lazy callback attempt tokens, layered over the current two-stage lazy attempt model (callback body, then cache-side bookkeeping). The four former expected-failure configurations for release-in-flight, drain escape, flush-in-flight, and flush-with-drain are strengthened green gates, with a conditional liveness property that assigned cleanup eventually completes. A new lazy_release configuration gates callback-token deferral. Invariant coverage was widened after review: every release-enabled configuration now checks the live-return property, and the lazy_import configuration (the only one combining release, lazy work, import, and flush) gates the return-boundary and token-deferral properties. All 25 configurations are green. A one-time exhaustive three-evaluator run of the lazy configuration also passed, at 78,792,507 distinct states; the configuration stays at two evaluators for CI cost. ## Validation - `go test ./dagql -count=1` - `go test ./engine/server -count=1` - Targeted `go test -race ./dagql` coverage for operation counting, deferred release, lazy callback lifetime, arbitrary-value cleanup, shutdown cancellation, and released-session span capture - `go vet ./dagql ./engine/server` — the dagql package was clean; engine/server reported one pre-existing unrelated context-cancel finding - `dagger check tla-check:cache-lifecycle` — 25 configurations green - `dagger check dagger-go-sdk:generate` No integration test suite was run.",
+      "url": "https://github.com/dagger/dagger/pull/13940",
+      "createdAt": "2026-08-20T09:04:47Z",
+      "updatedAt": "2026-08-21T19:48:04Z",
+      "timestamp": "2026-08-21T19:48:04Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "sipsma",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13942",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "future: reserve builtin runtime names for engine-bundled runtimes",
+      "text": "`dagger/python-sdk` PR #17 brings the Python module runtime into that repository, deliberately with no codegen at module load. The natural follow-up is to teach the engine to resolve the short runtime name `python` there, so modules keep writing `runtime = \"python\"` instead of a full git ref. **Investigated and rejected.** No engine change is proposed. This PR is the writeup plus the decision it settles. The only route that preserves pre-1.0 `dagger.json` modules is to split resolution by module config format — `dagger.json` keeps the engine-baked runtime, `dagger-module.toml` resolves the ref. Three verified defects sink it: 1. **The format is not a proxy for \"has committed generated files.\"** `dagger setup` migration copies `sdk.source = \"python\"` into `[runtime] source` verbatim and marshals as the current format (`core/modules/config_format.go:85`, `core/schema/workspace_migrate_module_config.go:82-93`, `core/workspace/migrate.go:331-345`), and `setupResolveMigratedSDKs` rewrites only workspace `as-sdk` entries, never the module's runtime. So every legacy Python module lands in the \"modern\" bucket the moment it migrates. This is fatal to the concept, not to an implementation of it. 2. **It would make `ModuleSource.generate` a no-op for modern Python modules.** `runSDKCodegen` dispatches to the SDK's `Codegen` with no format gate (`core/schema/modulesource.go:2593-2612`); python-sdk's runtime implements `Codegen` as a documented no-op because its authoring module owns generation. `core/integration/module_runtime_codegen_test.go` already builds `dagger-module.toml` Python modules and drives that path. 3. **`SDKForModule` also loads client generators** (`core/schema/modulesource.go:2742-2766`), passing the *hosting* module's source — so a format gate there would decide generator identity on the consuming module's config format, which is the wrong axis. **The recommendation needs no engine change.** `targetRuntime` is already the delegating-SDK contract: the engine writes its value verbatim into a new module's `[runtime] source` (`core/schema/workspace_module_init.go:133-153`) and resolves it through the normal ref path, with the same lockfile treatment. `dagger/python-sdk` PR 2 flips `targetRuntime` to its runtime ref and nothing here has to move. Also settles `future/cli-1.0.md`'s open question on the builtin-runtime-name namespace in the direction it already leaned: closed, and a builtin name resolves only to an artefact the engine bundles. Full investigation, options weighed, what the recommendation costs, and the two things that would change the answer: `future/python-runtime-name-resolution.md`.",
+      "url": "https://github.com/dagger/dagger/pull/13942",
+      "createdAt": "2026-08-20T14:51:53Z",
+      "updatedAt": "2026-08-21T07:59:18Z",
+      "timestamp": "2026-08-21T07:59:18Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13945",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "docs: derive snapshot version from release ref",
+      "text": "## Summary - accept a GitRef for docs snapshot-release and use its resolved tree - derive a bare version from the resolved ref name and reject non-semver refs - return an empty changeset when the target versioned docs directory already exists ## Testing - go test ./internal/releaseversion - verified v1.0.0-beta.9 creates docs/versioned_docs/version-1.0.0-beta.9 in the changeset - verified existing v1.0.0-beta.10 returns an empty changeset - verified the main ref fails semantic-version validation - dagger generate -y dagger-go-sdk:generate",
+      "url": "https://github.com/dagger/dagger/pull/13945",
+      "createdAt": "2026-08-21T00:14:37Z",
+      "updatedAt": "2026-08-21T17:45:35Z",
+      "timestamp": "2026-08-21T17:45:35Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "shykes",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13946",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "docs: noindex archived versions, restore 0.21.4 banner, polish",
+      "text": "- Mark archived versions and `/next/` noindex so they stop outranking the default 1.0 docs in Google (derived from `versions.json`; sitemap now only lists default-version URLs) - Restore the unmaintained-version banner on 0.21.4 - Update the stale 0.x tagline to the 1.0 landing copy - Stop hardcoding the footer copyright year",
+      "url": "https://github.com/dagger/dagger/pull/13946",
+      "createdAt": "2026-08-21T00:45:53Z",
+      "updatedAt": "2026-08-21T06:36:49Z",
+      "timestamp": "2026-08-21T06:36:49Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "shykes",
+      "state": "open",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13947",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "Apply only the paths a changeset reports",
+      "text": "`dagger generate` on a module that already has generated output re-reports the whole generated context, every time, as soon as a single generated file actually changes — files the SDK never rewrote included. Only the very first generation of a module ever looked right, which is why this went unnoticed: test fixtures start from an empty workspace. ### The bug, minus the SDK ``` before = a directory holding keep.txt and nested/other.txt after = the same two files regenerated (identical bytes, fresh timestamps), plus added.txt after.changes(before).addedPaths → [\"added.txt\"] ← correct target = a directory holding keep.txt = \"local edit\" target.withChanges(after.changes(before)) → keep.txt is now \"same\" ← overwritten, never reported → nested/other.txt appeared ← never reported ``` ### Why The paths a `Changeset` reports come from comparing **content**, so a file rewritten with identical bytes is not reported. But applying one went through `Directory.diff`, which is a filesystem-level diff — a different modification time alone puts a path in it. Codegen hits that every single time, since generated files come back from a container with fresh timestamps. On a host-backed workspace it snowballs: the overlay sizes the baseline it compares against from the reported paths, so the surplus files diff against nothing and come back as *newly added*. Hence the whole-context re-report. `Changeset.export` and `Changeset.layer` had the same gap. Export is the worse one — it wrote unreported paths straight into your working tree, while the preview the CLI shows you comes from `asPatch`, which is content-based. What you were shown was not what got written. ### The fix All three follow the paths the changeset reports. One deliberate consequence: a changeset no longer propagates a timestamp-, ownership- or permission-only change through `withChanges`. Those were never expressible via `asPatch` either, so the two ways of applying a changeset now agree. ### On the test gap The existing changeset tests assert the right thing — `testChangeApplying` already requires an unchanged file to survive being applied over. No fixture could violate it, though: both sides are built from engine primitives, which carry normalized timestamps, so the underlying diff was already tight; and the changeset is applied back onto the very tree it was diffed from, where over-copying writes identical bytes over themselves. You need a tree of foreign provenance on one side *and* a different apply target to see it. Both new tests have both.",
+      "url": "https://github.com/dagger/dagger/pull/13947",
+      "createdAt": "2026-08-21T15:02:58Z",
+      "updatedAt": "2026-08-21T15:15:15Z",
+      "timestamp": "2026-08-21T15:15:15Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "eunomie",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:dagger/dagger:pull_request:13948",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "dagger/dagger",
+      "kind": "pull_request",
+      "title": "cli: compose dagger setup progress",
+      "text": "## Summary - correctly distinguish missing Cloud auth from a successful auth lookup - render Cloud login inside the setup screen before telemetry starts - let commands own the outer pretty TUI while composing interactive span lists - give `dagger setup` a semantic workspace and recommendation screen - choose recommended modules individually from a preselected checklist - make inactive confirmation buttons visually unfilled - preserve clean final output in interactive and report modes ## Testing - `go test ./dagql/idtui ./internal/cmd/dagger` - headless `DAGGER_TUI_CONSOLE` smoke test of `dagger setup --auto-apply` - report-mode smoke test of `dagger setup --auto-apply`",
+      "url": "https://github.com/dagger/dagger/pull/13948",
+      "createdAt": "2026-08-21T19:59:14Z",
+      "updatedAt": "2026-08-22T02:27:08Z",
+      "timestamp": "2026-08-22T02:27:08Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "vito",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:d8ac3c53ff4884619819",
+      "signalId": "github:dagger/dagger:pull_request:13948",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13948",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "cli: compose dagger setup progress",
+        "text": "## Summary - correctly distinguish missing Cloud auth from a successful auth lookup - render Cloud login inside the setup screen before telemetry starts - let commands own the outer pretty TUI while composing interactive span lists - give `dagger setup` a semantic workspace and recommendation screen - choose recommended modules individually from a preselected checklist - make inactive confirmation buttons visually unfilled - preserve clean final output in interactive and report modes ## Testing - `go test ./dagql/idtui ./internal/cmd/dagger` - headless `DAGGER_TUI_CONSOLE` smoke test of `dagger setup --auto-apply` - report-mode smoke test of `dagger setup --auto-apply`",
+        "url": "https://github.com/dagger/dagger/pull/13948",
+        "createdAt": "2026-08-21T19:59:14Z",
+        "updatedAt": "2026-08-22T02:27:08Z",
+        "timestamp": "2026-08-22T02:27:08Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "vito",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:7903a31a307aa74cdd0e",
+      "signalId": "github:dagger/dagger:pull_request:13608",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13608",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "Clean up tests for the Go client library",
+        "text": "## Problem To test the Go client library, we built a custom test harness. That harness only runs in GitHub Actions; it relies heavily on single-use glue code; and it jams together testing dimensions that should be decoupled. Concretely: the `TestProvision` test is wired into `publish.yml` and only runs on pushes to main and tags, never on a PR. The rest of the suite runs through `go-sdk-dev`, a Dagger module built only to call `go test`. And one suite does three jobs at once — bootstrap the CLI, start an engine, test the client — so a developer with plain `go test` can't run any of it. ## Solution Turn them into ordinary Go tests. The engine-dependent tests move to `sdk/go/e2e`, a normal Go module which can be tested by `go test`, either called directly by the user, or orchestrated by a generic Dagger module such as `github.com/dagger/go`. | Dependency | Before | After | | -- | -- | -- | | Github Actions | required 🔴 | not required 🟢 | | Single-use Dagger module | required 🔴 | not required 🟢 | | Run with native `go test` | not supported 🔴 | supported 🟢 | - `sdk/go` holds unit tests with no engine dependency, and pre-existing documentation examples. - `sdk/go/e2e` holds two e2e test suites: `TestBootstrap` (the library downloads and runs a CLI), and `TestAgainstEngines` (call the library against a matrix of engines) ## Task list > **TL;DR:** `sdk/go/e2e`'s `TestBootstrap` and `TestAgainstEngines` both fail during their shared harness setup. The nested Dagger client detects the container's projected filesystem as its workspace instead of inheriting the caller's workspace. - [ ] Fix both tests by implementing [#13054](https://github.com/dagger/dagger/issues/13054).",
+        "url": "https://github.com/dagger/dagger/pull/13608",
+        "createdAt": "2026-07-10T01:03:47Z",
+        "updatedAt": "2026-08-22T02:00:00Z",
+        "timestamp": "2026-08-22T02:00:00Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "shykes",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:dcc4ddfc84e9510d2b06",
+      "signalId": "github:dagger/dagger:pull_request:13761",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13761",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "feat: docker api compatibility",
+        "text": "Add support for `experimentalDockerCompatibility: true` on `Container.withExec()` and `Container.terminal()`, which prompts the Dagger engine to bind a Docker-compatible API on a random available port during the lifetime of the exec/terminal and point Docker clients to it via the `DOCKER_HOST` environment variable. This is very similar to the way that Dagger-in-Dagger via `experimentalPrivilegedNesting: true` works. Only a subset of the Docker API is supported as of writing (the API calls behind `docker run` and `docker run -d -p`). Support is provided by mapping Docker API requests to equivalent Dagger functionality, largely provided by `github.com/dagger/dagger/engine/engineutil.Client` Aiming to resolve https://github.com/dagger/dagger/discussions/11710",
+        "url": "https://github.com/dagger/dagger/pull/13761",
+        "createdAt": "2026-07-29T02:24:41Z",
+        "updatedAt": "2026-08-22T01:59:58Z",
+        "timestamp": "2026-08-22T01:59:58Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 3
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "frantjc",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a8dd52ddecbfbc815522",
+      "signalId": "github:dagger/dagger:pull_request:13858",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13858",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "Add DAGGER_GO_SDK_OFFLINE support",
+        "text": "This is needed for modules in airgapped environments, so that `go build` does not try to reach `dagger.io` for modules.",
+        "url": "https://github.com/dagger/dagger/pull/13858",
+        "createdAt": "2026-08-07T17:30:53Z",
+        "updatedAt": "2026-08-22T01:59:55Z",
+        "timestamp": "2026-08-22T01:59:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [
+          "kind/stale"
+        ],
+        "author": "suprjinx",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:892b38ace013947827b3",
+      "signalId": "github:dagger/dagger:pull_request:13838",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13838",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "dagger agent dev env: in-repo agent modules",
+        "text": "The dogfooding layer: the in-repo agent modules that `dagger agent --env dev` composes, plus the wiring that makes them reachable. No engine changes. | module | what it does | | --- | --- | | `editor` | a sandboxed coding agent — read, write, edit, find, grep, todoWrite — plus a commit tool built on the workspace's staged commits. Vendored from `github.com/vito/editor` so it can be iterated on in-tree. | | `review` | the `git status` / `git diff` an agent with no Bash tool can't otherwise get, via `Workspace.git.uncommitted`'s diffstats and patch | | `history` | the `git log` half of the same, over `Workspace.git.stagedCommits` | | `delegate` | hands a noisy, context-heavy subtask to a fresh sub-agent that runs it in its own conversation and returns one distilled report | | `engine-lab` | `./hack/dev` + `./hack/with-dev` as agent tools: build from the workspace, hold the engine as a Service, exec against it, poke its debug endpoints | | `contributor` | the same idea aimed at somebody else's repo — fetch it as a Workspace, compose editor's tools onto it, work the task, open the PR | | `tui-qa` | drives nested agent TUI sessions; now inherits the session's LLM config and gets a real git repo as its fixture | Supporting changes: `EngineDev.GoContainer` is a Wolfi Go base with the from-source `dagger` on `$PATH`, so Go commands (and the integration tests, which shell out to `dagger`) find the CLI without paying for a full engine build — it's what the `golang` toolchain is based on in the dev env. `dagger.toml` gains the `env.dev` module set, with contributor's GitHub token resolving through `cmd://gh auth token` rather than being stored. And catwalk moves to v0.51.11 for its refreshed model catalog. Each module commit is self-contained, and the `dagger.toml` wiring is last, so any intermediate state is a module directory with no install entry — inert rather than broken.",
+        "url": "https://github.com/dagger/dagger/pull/13838",
+        "createdAt": "2026-08-04T23:43:30Z",
+        "updatedAt": "2026-08-22T01:58:42Z",
+        "timestamp": "2026-08-22T01:58:42Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "vito",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:b856883dfec6318c68dd",
+      "signalId": "github:dagger/dagger:pull_request:13940",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13940",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "dagql: defer session release until in-flight operations finish",
+        "text": "## Summary The dagql cache could not see its own in-flight work. Session release could therefore collect a result after a cache operation claimed it but before that operation returned, including work from detached executors that the server handler drain cannot count. The same gap allowed shutdown persistence to observe transient publication ownership. This is layer four of the cache-remediation stack and depends on #13938, #13936, and #13934. ## Design - Add a per-session lifecycle record that packs the released tombstone and active-operation count into one atomic word. Operation admission and release are linearized with compare-and-swap without taking a cache-wide mutex. - Count operations at every value-bearing cache boundary, including call lookup/initialization, result attachment and ID loads, Evaluate waiters, each lazy callback attempt, snapshot lease synchronization, and the arbitrary-value cache. - Mark a session dead immediately in ReleaseSession. If work is active, cleanup is irrevocably assigned to the last exiting operation; if no work is active, release performs cleanup immediately. - Refuse a value-bearing success at operation exit when release won the race, so detached work cannot return a result whose cleanup is eligible. - Make Cache.Close reject new work, wait for operation and deferred-cleanup quiescence on its caller context, and fail dirty if the context expires or deferred cleanup failed. It never takes a timed-out snapshot or writes a clean marker after such a failure. - Give lazy callbacks their own attempt-lifetime token, held until the callback goroutine actually exits rather than only until its waiters return. The token covers both stages of an attempt (callback body, then cache-side bookkeeping) and bookkeeping-only retry attempts. - Refuse telemetry span capture for released sessions. The two span writers now match the other per-session map writers, so no writer can recreate a released session's maps. Under this layer's operation accounting every current caller is already enclosed by a counted operation; the guards keep that safe independent of future callers. - Check mutation-helper registration by ID membership. Numeric result IDs are engine-lifetime unique (#13934), so the four e-graph mutation helpers guard against operating on a collected result with a plain registration check instead of pointer identity. ## Contract and cost - ReleaseSession returning now means the session is dead and cleanup is complete or irrevocably assigned. Cleanup hooks may run later on another caller goroutine. - Deferred cleanup errors are logged when observed, accumulated by the cache, and returned from Cache.Close. - New claims and late value-bearing returns for released sessions fail with ErrCacheSessionReleased. - Immediate before/after cache-size logging during session teardown is approximate because cleanup may be deferred. - The uncontended hot path adds one per-session map lookup and two atomic compare-and-swaps per counted operation, with no cache-wide mutex acquisition. - Per-session lifecycle records remain for the engine lifetime. This is intentional because server session IDs are single-use and retaining the tombstone closes the admission race. ## Model The TLA+ model now faithfully represents operation admission and exit, deferred release, shutdown quiescence, and lazy callback attempt tokens, layered over the current two-stage lazy attempt model (callback body, then cache-side bookkeeping). The four former expected-failure configurations for release-in-flight, drain escape, flush-in-flight, and flush-with-drain are strengthened green gates, with a conditional liveness property that assigned cleanup eventually completes. A new lazy_release configuration gates callback-token deferral. Invariant coverage was widened after review: every release-enabled configuration now checks the live-return property, and the lazy_import configuration (the only one combining release, lazy work, import, and flush) gates the return-boundary and token-deferral properties. All 25 configurations are green. A one-time exhaustive three-evaluator run of the lazy configuration also passed, at 78,792,507 distinct states; the configuration stays at two evaluators for CI cost. ## Validation - `go test ./dagql -count=1` - `go test ./engine/server -count=1` - Targeted `go test -race ./dagql` coverage for operation counting, deferred release, lazy callback lifetime, arbitrary-value cleanup, shutdown cancellation, and released-session span capture - `go vet ./dagql ./engine/server` — the dagql package was clean; engine/server reported one pre-existing unrelated context-cancel finding - `dagger check tla-check:cache-lifecycle` — 25 configurations green - `dagger check dagger-go-sdk:generate` No integration test suite was run.",
+        "url": "https://github.com/dagger/dagger/pull/13940",
+        "createdAt": "2026-08-20T09:04:47Z",
+        "updatedAt": "2026-08-21T19:48:04Z",
+        "timestamp": "2026-08-21T19:48:04Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sipsma",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:6de2f0c8653b35be8657",
+      "signalId": "github:dagger/dagger:pull_request:13938",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13938",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "dagql: retry canceled lazy evaluations",
+        "text": "## Summary A new healthy `Cache.Evaluate` caller could join a lazy callback attempt after every earlier waiter had abandoned and canceled it. When that callback finished with the shared cancellation, the new caller inherited an error it did not cause. A second form occurred when a completed canceled attempt remained published after its last waiter selected its own cancellation arm, allowing a later caller to drain the stale error. This change makes cancellation caused by abandoned shared work transparent to healthy callers while preserving lazy-evaluation mutual exclusion. Reworking the coordination also exposed two adjacent defects in the same code, both fixed here: evaluation could be reported complete before an attempt's cache-side bookkeeping settled, and cache-hit lazy registration raced the callback body's object-side state. ## Runtime design Each lazy callback execution has an attempt-scoped record containing its completion channel, cancel function, waiter count, outcome, cancellation provenance, and telemetry wait targets. The shared result publishes one current attempt while its callback runs. Callback completion stores the outcome and retires that attempt under the lazy mutex before closing its completion channel. Existing waiters retain the retired record, so they cannot read or decrement a newer attempt's state. A healthy waiter retries when the callback error is attributable to cancellation of that attempt's shared callback context. A waiter's own cancellation still returns its own cause, and genuine callback failures still propagate to every waiter. A new callback can begin only after the preceding callback has returned, so retries never overlap. Evaluation preflight consults the published attempt before any object-side lazy state. Callback bodies (Directory, File, Container) clear their object-side `Lazy` pointer while the attempt is still running its cache-side bookkeeping (snapshot-lease sync, lease release), so object-side state is only trustworthy once no attempt is published; attempt retirement under the lazy mutex orders the body's writes before such a reader. A second caller arriving during the bookkeeping window therefore joins the attempt instead of observing the cleared pointer and reporting success early. A failed attempt whose body already succeeded records pending bookkeeping. The next `Evaluate` leads a bookkeeping-only attempt that retries just the snapshot-lease sync instead of treating the consumed object-side callback as completed evaluation, so a bookkeeping failure is no longer reported once and then silently swallowed. Cache-hit lazy registration applies the same attempt-first order under the lazy mutex, closing a data race between the hit path's read and the callback body's write. ## Telemetry Native-profiler and OpenTelemetry wait targets are fresh per attempt. They are minted, or deliberately left invalid, under the lazy mutex before the attempt pointer is published. OpenTelemetry waits remain gated by the result producer's profile-skip state, never the forcing waiter's state. ## Behavior and cost Retry happens only after a real callback attempt completes. A genuinely canceled attempt can therefore cause one additional callback execution for a healthy caller. The object-side lazy state remains idempotent, no two callbacks for one result run concurrently, and a bookkeeping-only retry never re-runs the callback body. ## Tests and model The deterministic standard-library `testing/synctest` coverage exercises: - a healthy caller joining canceled work and succeeding through retry; - own cancellation affecting only the canceling waiter; - mutual exclusion across retries; - cancellation-shaped genuine callback failures; - retirement after callback finish but before the completion-channel close; - a second caller joining an attempt whose body finished but whose bookkeeping is still in flight, a failed bookkeeping step staying retryable without re-running the body, and the retry settling completion. A separate regression drives cache hits concurrently with a running callback and is meaningful under the race detector: with the old registration ordering, `-race` reports the object-side write against the hit path's read. The five-second timeout guards use the synctest bubble's fake clock and remain active when all goroutines are durably blocked. The TLA+ model separates callback retirement, completion-channel observation, and waiter wake-up, and now also separates the callback body from the attempt's cache-side bookkeeping: body success moves the attempt into a syncing stage, a bookkeeping failure records a retryable pending obligation, and a bookkeeping-only attempt starts directly in that stage. Cancellation is a flag that composes with both stages, and the canceled-finish action can latch a genuine failure, matching the per-error retry decision in the Go. Evaluators can only demand results whose attachment barrier is neither open nor errored, matching what callers can actually hold. Two new invariants gate the fixed behavior in the lazy configurations: `EvalDoneComplete` (a successful Evaluate return implies completed evaluation) and `LazyCompleteSettled` (completion is only recorded with every stage settled); weakening the preflight back to its old shape violates them within seconds. The model also covers lazy work on imported results: persisted payloads can carry deferred work (a lazy container persists its recipe), which arms on first value load after import or restart, and a new `lazy_import` configuration exercises the full lazy protocol against store-produced results interleaved with flush and restart. The `lazy_stale_cancel` configuration is a green regression gate, `lazy`, `lazy_liveness`, and `lazy_import` are green, and reachability probes confirmed that foreign-cancellation, retry-cycle, pending-bookkeeping, imported-arming, and post-restart re-arming states are explored within the configured bounds. ## Validation - `go test ./dagql -count=1` - `go test ./engine/server -count=1` - `go test -race ./dagql -run '^(TestCacheHitRegistrationDoesNotRaceLazyCallback|TestCacheEvaluateSettlesBookkeepingBeforeReportingComplete|TestCacheEvaluateRetriesForeignCancellation|TestCacheEvaluateRetiresFinishedAttemptBeforeWaitersDrain|TestCacheEvaluateOwnCancellationOnlyCancelsOwnWait|TestCacheEvaluatePropagatesCallbackFailure)$' -count=1` - `go vet ./dagql` - `dagger check tla-check:cache-lifecycle` — all 24 configurations, every expected outcome matched - Fresh direct TLC runs of `lazy`, `lazy_liveness`, and `lazy_stale_cancel`, plus re-break runs proving the new invariants catch the old preflight and probe runs proving the gated states are reachable - Focused packaging generator check: `dagger check dagger-go-sdk:generate` ## Stack This is layer three of the cache-remediation stack. It depends on #13936, which depends on #13934, and relies on the engine-lifetime-unique numeric result IDs introduced at the base of the stack.",
+        "url": "https://github.com/dagger/dagger/pull/13938",
+        "createdAt": "2026-08-20T05:32:15Z",
+        "updatedAt": "2026-08-21T19:19:57Z",
+        "timestamp": "2026-08-21T19:19:57Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "sipsma",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:df85c46f17e587be4fb9",
+      "signalId": "github:dagger/dagger:pull_request:13932",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "title",
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13932",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "docs: show prepare as places, and Go downloads as generate vs call",
+        "text": "Fixes https://github.com/dagger/dagger/issues/13931 ## Mental model Two pictures. Not troubleshooting. The diagram shows the model. A short line under it is the summary. Clicking a box adds one extra line. **Execution (where things sit).** Host, engine, helper, function. You typed `dagger` on the host. The engine is already on and starts a short-lived helper. Those are containers. They do not use the terminal shell. The function has not started. GOPROXY, git, and SSH on the host are not the helper. This is still true in v1. v1 does not move those boxes. **Service Proxies (when a Go download happens).** Engine (already on, no download) → Generate (writes SDK files; `go get` if the cache is empty) → Call (build and run). Asking for the list and running the function are the same process. Call uses files that already exist. A first build can still download if the cache is empty. Later calls are not the shopping trip. That is the v1 split. Codegen is not mixed into every call. ## Test plan - [ ] Open `/next/extending/how-dagger-works/execution`. The four places are visible without clicking. Click Host, CLI, Engine, Helper, the list arrow, or Your function. - [ ] Open `/next/reference/configuration/proxy`. Three boxes: Engine, Generate (`go get`), Call. Click for the extra line.",
+        "url": "https://github.com/dagger/dagger/pull/13932",
+        "createdAt": "2026-08-19T20:27:55Z",
+        "updatedAt": "2026-08-21T18:52:40Z",
+        "timestamp": "2026-08-21T18:52:40Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "EmmS21",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:80d1eb9e60c122ec7515",
+      "signalId": "github:dagger/dagger:pull_request:13945",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13945",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "docs: derive snapshot version from release ref",
+        "text": "## Summary - accept a GitRef for docs snapshot-release and use its resolved tree - derive a bare version from the resolved ref name and reject non-semver refs - return an empty changeset when the target versioned docs directory already exists ## Testing - go test ./internal/releaseversion - verified v1.0.0-beta.9 creates docs/versioned_docs/version-1.0.0-beta.9 in the changeset - verified existing v1.0.0-beta.10 returns an empty changeset - verified the main ref fails semantic-version validation - dagger generate -y dagger-go-sdk:generate",
+        "url": "https://github.com/dagger/dagger/pull/13945",
+        "createdAt": "2026-08-21T00:14:37Z",
+        "updatedAt": "2026-08-21T17:45:35Z",
+        "timestamp": "2026-08-21T17:45:35Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "shykes",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:d6fbe024fcf3fc4f2bc9",
+      "signalId": "github:dagger/dagger:pull_request:13947",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13947",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "Apply only the paths a changeset reports",
+        "text": "`dagger generate` on a module that already has generated output re-reports the whole generated context, every time, as soon as a single generated file actually changes — files the SDK never rewrote included. Only the very first generation of a module ever looked right, which is why this went unnoticed: test fixtures start from an empty workspace. ### The bug, minus the SDK ``` before = a directory holding keep.txt and nested/other.txt after = the same two files regenerated (identical bytes, fresh timestamps), plus added.txt after.changes(before).addedPaths → [\"added.txt\"] ← correct target = a directory holding keep.txt = \"local edit\" target.withChanges(after.changes(before)) → keep.txt is now \"same\" ← overwritten, never reported → nested/other.txt appeared ← never reported ``` ### Why The paths a `Changeset` reports come from comparing **content**, so a file rewritten with identical bytes is not reported. But applying one went through `Directory.diff`, which is a filesystem-level diff — a different modification time alone puts a path in it. Codegen hits that every single time, since generated files come back from a container with fresh timestamps. On a host-backed workspace it snowballs: the overlay sizes the baseline it compares against from the reported paths, so the surplus files diff against nothing and come back as *newly added*. Hence the whole-context re-report. `Changeset.export` and `Changeset.layer` had the same gap. Export is the worse one — it wrote unreported paths straight into your working tree, while the preview the CLI shows you comes from `asPatch`, which is content-based. What you were shown was not what got written. ### The fix All three follow the paths the changeset reports. One deliberate consequence: a changeset no longer propagates a timestamp-, ownership- or permission-only change through `withChanges`. Those were never expressible via `asPatch` either, so the two ways of applying a changeset now agree. ### On the test gap The existing changeset tests assert the right thing — `testChangeApplying` already requires an unchanged file to survive being applied over. No fixture could violate it, though: both sides are built from engine primitives, which carry normalized timestamps, so the underlying diff was already tight; and the changeset is applied back onto the very tree it was diffed from, where over-copying writes identical bytes over themselves. You need a tree of foreign provenance on one side *and* a different apply target to see it. Both new tests have both.",
+        "url": "https://github.com/dagger/dagger/pull/13947",
+        "createdAt": "2026-08-21T15:02:58Z",
+        "updatedAt": "2026-08-21T15:15:15Z",
+        "timestamp": "2026-08-21T15:15:15Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "eunomie",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:4524f7c94c377d255e8c",
+      "signalId": "github:dagger/dagger:pull_request:13942",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "state"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13942",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "future: reserve builtin runtime names for engine-bundled runtimes",
+        "text": "`dagger/python-sdk` PR #17 brings the Python module runtime into that repository, deliberately with no codegen at module load. The natural follow-up is to teach the engine to resolve the short runtime name `python` there, so modules keep writing `runtime = \"python\"` instead of a full git ref. **Investigated and rejected.** No engine change is proposed. This PR is the writeup plus the decision it settles. The only route that preserves pre-1.0 `dagger.json` modules is to split resolution by module config format — `dagger.json` keeps the engine-baked runtime, `dagger-module.toml` resolves the ref. Three verified defects sink it: 1. **The format is not a proxy for \"has committed generated files.\"** `dagger setup` migration copies `sdk.source = \"python\"` into `[runtime] source` verbatim and marshals as the current format (`core/modules/config_format.go:85`, `core/schema/workspace_migrate_module_config.go:82-93`, `core/workspace/migrate.go:331-345`), and `setupResolveMigratedSDKs` rewrites only workspace `as-sdk` entries, never the module's runtime. So every legacy Python module lands in the \"modern\" bucket the moment it migrates. This is fatal to the concept, not to an implementation of it. 2. **It would make `ModuleSource.generate` a no-op for modern Python modules.** `runSDKCodegen` dispatches to the SDK's `Codegen` with no format gate (`core/schema/modulesource.go:2593-2612`); python-sdk's runtime implements `Codegen` as a documented no-op because its authoring module owns generation. `core/integration/module_runtime_codegen_test.go` already builds `dagger-module.toml` Python modules and drives that path. 3. **`SDKForModule` also loads client generators** (`core/schema/modulesource.go:2742-2766`), passing the *hosting* module's source — so a format gate there would decide generator identity on the consuming module's config format, which is the wrong axis. **The recommendation needs no engine change.** `targetRuntime` is already the delegating-SDK contract: the engine writes its value verbatim into a new module's `[runtime] source` (`core/schema/workspace_module_init.go:133-153`) and resolves it through the normal ref path, with the same lockfile treatment. `dagger/python-sdk` PR 2 flips `targetRuntime` to its runtime ref and nothing here has to move. Also settles `future/cli-1.0.md`'s open question on the builtin-runtime-name namespace in the direction it already leaned: closed, and a builtin name resolves only to an artefact the engine bundles. Full investigation, options weighed, what the recommendation costs, and the two things that would change the answer: `future/python-runtime-name-resolution.md`.",
+        "url": "https://github.com/dagger/dagger/pull/13942",
+        "createdAt": "2026-08-20T14:51:53Z",
+        "updatedAt": "2026-08-21T07:59:18Z",
+        "timestamp": "2026-08-21T07:59:18Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "eunomie",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:64c9139f58ac70570fa0",
+      "signalId": "github:dagger/dagger:pull_request:13921",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13921",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "Better SDK UX & config",
+        "text": "Implements #13912 and #13944. ## Not included From #13912: - `dagger sdk <SDK> claimable` - `dagger sdk <SDK> module remove` - `dagger sdk <SDK> client remove` ## Behavior change `dagger install` now loads a module to detect SDK capabilities. This makes installation more eager and causes an install to fail when the module cannot load.",
+        "url": "https://github.com/dagger/dagger/pull/13921",
+        "createdAt": "2026-08-18T19:29:45Z",
+        "updatedAt": "2026-08-21T07:15:55Z",
+        "timestamp": "2026-08-21T07:15:55Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "shykes",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:a21a78a9573a040df676",
+      "signalId": "github:dagger/dagger:pull_request:13946",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "text",
+        "updatedAt"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:pull_request:13946",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "pull_request",
+        "title": "docs: noindex archived versions, restore 0.21.4 banner, polish",
+        "text": "- Mark archived versions and `/next/` noindex so they stop outranking the default 1.0 docs in Google (derived from `versions.json`; sitemap now only lists default-version URLs) - Restore the unmaintained-version banner on 0.21.4 - Update the stale 0.x tagline to the 1.0 landing copy - Stop hardcoding the footer copyright year",
+        "url": "https://github.com/dagger/dagger/pull/13946",
+        "createdAt": "2026-08-21T00:45:53Z",
+        "updatedAt": "2026-08-21T06:36:49Z",
+        "timestamp": "2026-08-21T06:36:49Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "shykes",
+        "state": "open",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8ee2119e0258ca2692e0",
+      "signalId": "github:dagger/dagger:issue:13769",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics"
+      ],
+      "signal": {
+        "id": "github:dagger/dagger:issue:13769",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "dagger/dagger",
+        "kind": "issue",
+        "title": "stdlib: remove dependency on polyfill module",
+        "text": "## Problem Our official modules import a \"polyfill\" module for features that want in the engine, but didn't have the patience to wait for :) At 1.0 launch, the number of official modules that import polyfill should be ideally zero, or at most a very small number for niche use cases. As it stands today, aspiring module developers that peek at our own modules, will undoubtebly have to learn about polyfill, which will make their learning and development journey more complicated. ## Solution Remove all dependencies on github.com/dagger/polyfill (and legacy github.com/dagger/sdk-sdk/polyfill) in all modules under github.com/dagger",
+        "url": "https://github.com/dagger/dagger/issues/13769",
+        "createdAt": "2026-07-29T16:26:02Z",
+        "updatedAt": "2026-08-21T04:05:24Z",
+        "timestamp": "2026-08-21T04:05:24Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "shykes",
+        "state": "open",
+        "assignees": [
+          "grouville"
+        ],
+        "change": "updated"
+      }
+    }
+  ]
+}

@@ -1,0 +1,525 @@
+{
+  "version": 4,
+  "date": "2026-08-22",
+  "group": {
+    "id": "developer-infrastructure",
+    "name": "Developer Infrastructure"
+  },
+  "repository": {
+    "id": "buf",
+    "repo": "bufbuild/buf",
+    "name": "Buf",
+    "keywords": [
+      "Buf protobuf",
+      "Buf Schema Registry"
+    ]
+  },
+  "context": {
+    "repository": "bufbuild/buf",
+    "url": "https://github.com/bufbuild/buf",
+    "description": "The best way of working with Protocol Buffers.",
+    "homepage": "https://buf.build",
+    "language": "Go",
+    "topics": [
+      "buf-cli",
+      "buf-schema-registry",
+      "grpc",
+      "protobuf",
+      "protoc",
+      "protocol-buffers"
+    ],
+    "license": "Apache-2.0",
+    "defaultBranch": "main",
+    "stars": 11378,
+    "forks": 366,
+    "openIssues": 61,
+    "archived": false,
+    "collectedAt": "2026-08-22T02:30:09.860820+00:00"
+  },
+  "news": {
+    "repository": "bufbuild/buf",
+    "collectedAt": "2026-08-22T02:30:09.860820+00:00",
+    "latestRelease": {
+      "repository": "bufbuild/buf",
+      "tag": "v1.72.0",
+      "title": "v1.72.0",
+      "url": "https://github.com/bufbuild/buf/releases/tag/v1.72.0",
+      "publishedAt": "2026-07-17T20:15:07Z",
+      "notes": "- Fix `buf beta registry webhook create` and `buf beta registry webhook list` to emit proto JSON output.\r\n- Fix HTTPS Basic authentication for remote inputs to use `BUF_INPUT_HTTPS_USERNAME` for the username.\r\n- Fix `IMPORT_USED` lint rule silently reporting no unused imports when `google/protobuf/descriptor.proto` is in the transitive dependency graph.",
+      "highlights": [
+        "Fix buf beta registry webhook create and buf beta registry webhook list to emit proto JSON output.",
+        "Fix HTTPS Basic authentication for remote inputs to use BUFINPUTHTTPSUSERNAME for the username.",
+        "Fix IMPORTUSED lint rule silently reporting no unused imports when google/protobuf/descriptor.proto is in the transitive dependency graph."
+      ],
+      "prerelease": false
+    },
+    "upcoming": [],
+    "communityDiscussions": []
+  },
+  "runs": [
+    {
+      "collectedAt": "2026-08-22T02:29:52.118351Z",
+      "since": "2026-08-21T02:29:52.118351Z",
+      "observedCount": 8,
+      "changedCount": 8
+    }
+  ],
+  "signals": [
+    {
+      "id": "github:bufbuild/buf:issue:4650",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "issue",
+      "title": "buf format v1.71+ regressions: non-idempotent inline block comments and stripped interior indentation",
+      "text": "### Description `buf format` v1.71.0 introduced two regressions with the \"Port new formatter\" change: **Bug 1: Non-idempotent formatting of trailing line comments** Trailing `//` comments on option fields are converted to `/* */` block comments on the first pass (kept inline), then moved to a separate line on the second pass. The output never stabilizes in a single pass. **Repro (`example.proto`):** ```protobuf syntax = \"proto3\"; message Foo { bool bar = 1; // keep this inline } ``` **First `buf format` pass:** ```protobuf bool bar = 1; /* keep this inline */ ``` **Second `buf format` pass:** ```protobuf bool bar = 1; /* keep this inline */ ``` Running `buf format` twice produces different output — formatting is not idempotent. **Bug 2: Interior indentation alignment stripped from block comments** The formatter strips intentional interior indentation, destroying semantic alignment. Previously fixed in PR #1615 (v1.10.0) but reintroduced by the v1.71.0 new formatter port. **Repro:** ```protobuf syntax = \"proto3\"; service ExampleService { /** Reverse lookup a user from an identifier. - OK - response contains the resolved user id - NOT_FOUND - identifier was not found - INVALID_ARGUMENT - invalid identifier type - missing identifier - provided identifier is already USER_ID */ rpc GetUserId(GetUserIdRequest) returns (GetUserIdResponse); } message GetUserIdRequest {} message GetUserIdResponse {} ``` **`buf format` output (v1.72.0):** ```protobuf /** Reverse lookup a user from an identifier. - OK - response contains the resolved user id - NOT_FOUND - identifier was not found - INVALID_ARGUMENT - invalid identifier type - missing identifier - provided identifier is already USER_ID */ ``` The aligned sub-items under `INVALID_ARGUMENT` are flattened to the same indentation level as top-level list items, destroying the semantic grouping. \"missing identifier\" and \"provided identifier is already USER_ID\" are sub-cases of `INVALID_ARGUMENT`, not independent items. ### Expected behavior 1. Formatting should be idempotent — running `buf format` twice should produce the same output. 2. Interior indentation within block comments should be preserved (relative indentation maintained, as it was in v1.70.0 and earlier). ### Versions affected Both bugs affect v1.71.0+ (tested on v1.72.0). v1.70.0 does not have either issue.",
+      "url": "https://github.com/bufbuild/buf/issues/4650",
+      "createdAt": "2026-08-21T10:13:09Z",
+      "updatedAt": "2026-08-21T10:28:34Z",
+      "timestamp": "2026-08-21T10:28:34Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 0
+      },
+      "labels": [],
+      "author": "honnix",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:bufbuild/buf:pull_request:2039",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "pull_request",
+      "title": "Bump github.com/docker/docker from 23.0.4+incompatible to 23.0.5+incompatible",
+      "text": "Bumps [github.com/docker/docker](https://github.com/docker/docker) from 23.0.4+incompatible to 23.0.5+incompatible. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/docker/docker/releases\">github.com/docker/docker's releases</a>.</em></p> <blockquote> <h2>v23.0.5</h2> <h2>23.0.5</h2> <p>For a full list of pull requests and changes in this release, refer to the relevant GitHub milestones:</p> <ul> <li><a href=\"https://github.com/docker/cli/milestone/79?closed=1\">docker/cli, 23.0.5 milestone</a></li> <li><a href=\"https://github.com/moby/moby/milestone/118?closed=1\">moby/moby, 23.0.5 milestone</a></li> </ul> <h3>Bug fixes and enhancements</h3> <ul> <li>Add the <code>--all</code> / <code>-a</code> option when pruning volumes. <a href=\"https://redirect.github.com/docker/cli/pull/4229\">docker/cli#4229</a></li> <li>Add <code>--format=json</code> for <code>docker info</code>. <a href=\"https://redirect.github.com/docker/cli/pull/4230\">docker/cli#4320</a></li> <li>Fix log loss with the AWSLogs log driver. <a href=\"https://redirect.github.com/moby/moby/pull/45350\">moby/moby#45350</a></li> <li>Fix a regression introduced in v23.0.4 where dockerd would refuse to start if the fixed-cidr config parameter is provided but not bip. <a href=\"https://redirect.github.com/moby/moby/pull/45403\">moby/moby#45403</a></li> <li>Fix a panic in libnetwork during daemon start <a href=\"https://redirect.github.com/moby/moby/pull/45376\">moby/moby#45376</a></li> <li>Fix &quot;tag&quot; event not being sent when an image is built with <code>buildx</code>. <a href=\"https://redirect.github.com/moby/moby/pull/45410\">moby/moby#45410</a></li> </ul> <h3>Packaging Updates</h3> <ul> <li>Upgrade Compose to <code>2.17.3</code>. <a href=\"https://redirect.github.com/docker/docker-ce-packaging/pull/883\">docker/docker-ce-packaging#883</a></li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/moby/moby/commit/94d3ad69cc598b5a8eb8a643d6999375953512e8\"><code>94d3ad6</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45410\">#45410</a> from rumpl/23.0_backport-fix-buildx-tag-events</li> <li><a href=\"https://github.com/moby/moby/commit/933a9f83b7cda9d1fc49319a24a4b87f4aa1909c\"><code>933a9f8</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45407\">#45407</a> from thaJeztah/23.0_backport_vendor_runc_1.1.5</li> <li><a href=\"https://github.com/moby/moby/commit/fe0a414613e9033df12ff3bccb61204d8facc9e8\"><code>fe0a414</code></a> Use the image service instead of the reference store for tagging</li> <li><a href=\"https://github.com/moby/moby/commit/1b1230eaaf00f9a78bd7e1a624b1d8b95db356df\"><code>1b1230e</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45375\">#45375</a> from thaJeztah/23.0_backport_bump_swarmkit</li> <li><a href=\"https://github.com/moby/moby/commit/1b263035af5004a440ecb6fea7225d6068073765\"><code>1b26303</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45374\">#45374</a> from thaJeztah/23.0_backport_stfu_grpc</li> <li><a href=\"https://github.com/moby/moby/commit/682542fd081646d1587720481ac5a4ea55b75337\"><code>682542f</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45373\">#45373</a> from thaJeztah/23.0_backport_assorted_test_and_pack...</li> <li><a href=\"https://github.com/moby/moby/commit/40ec0eb9fe21d5fe8a9e98c8aa26e49a442f6036\"><code>40ec0eb</code></a> vendor: github.com/opencontainers/runc v1.1.5</li> <li><a href=\"https://github.com/moby/moby/commit/9af6762d34a0b47006472b319803d85834e216fd\"><code>9af6762</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45403\">#45403</a> from akerouanton/23.0-cherrypick-2d31697</li> <li><a href=\"https://github.com/moby/moby/commit/0b6449a4772f01118cf7ba9645d737fc94e773e1\"><code>0b6449a</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45376\">#45376</a> from thaJeztah/23.0_backport_delete_network_more_at...</li> <li><a href=\"https://github.com/moby/moby/commit/227d3f39a354caaf5252f7a29d78aad92e8bfba2\"><code>227d3f3</code></a> daemon: set docker0 subpool as the IPAM pool</li> <li>Additional commits viewable in <a href=\"https://github.com/docker/docker/compare/v23.0.4...v23.0.5\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=github.com/docker/docker&package-manager=go_modules&previous-version=23.0.4+incompatible&new-version=23.0.5+incompatible)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot merge` will merge this PR after your CI passes on it - `@dependabot squash and merge` will squash and merge this PR after your CI passes on it - `@dependabot cancel merge` will cancel a previously requested merge and block automerging - `@dependabot reopen` will reopen this PR if it is closed - `@dependabot close` will close this PR and stop Dependabot recreating it. You can achieve the same result by closing it manually - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+      "url": "https://github.com/bufbuild/buf/pull/2039",
+      "createdAt": "2023-05-01T05:01:45Z",
+      "updatedAt": "2026-08-21T15:28:45Z",
+      "timestamp": "2026-08-21T15:28:45Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:bufbuild/buf:pull_request:4641",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "pull_request",
+      "title": "Bump buf.build/gen/go/bufbuild/bufplugin/protocolbuffers/go from 1.36.11-20260722160903-4d94f3df3a7b.1 to 1.36.12-20260722160903-4d94f3df3a7b.1",
+      "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/bufplugin/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20260722160903-4d94f3df3a7b.1&new-version=1.36.12-20260722160903-4d94f3df3a7b.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+      "url": "https://github.com/bufbuild/buf/pull/4641",
+      "createdAt": "2026-08-16T04:32:37Z",
+      "updatedAt": "2026-08-21T16:17:35Z",
+      "timestamp": "2026-08-21T16:17:35Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:bufbuild/buf:pull_request:4642",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "pull_request",
+      "title": "Bump buf.build/gen/go/bufbuild/protodescriptor/protocolbuffers/go from 1.36.11-20250109164928-1da0de137947.1 to 1.36.12-20250109164928-1da0de137947.1",
+      "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/protodescriptor/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20250109164928-1da0de137947.1&new-version=1.36.12-20250109164928-1da0de137947.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+      "url": "https://github.com/bufbuild/buf/pull/4642",
+      "createdAt": "2026-08-16T04:32:44Z",
+      "updatedAt": "2026-08-21T16:17:37Z",
+      "timestamp": "2026-08-21T16:17:37Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:bufbuild/buf:pull_request:4643",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "pull_request",
+      "title": "Bump buf.build/gen/go/bufbuild/registry/protocolbuffers/go from 1.36.11-20260713175918-10d915f5b43b.1 to 1.36.12-20260713175918-10d915f5b43b.1",
+      "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/registry/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20260713175918-10d915f5b43b.1&new-version=1.36.12-20260713175918-10d915f5b43b.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+      "url": "https://github.com/bufbuild/buf/pull/4643",
+      "createdAt": "2026-08-16T04:32:47Z",
+      "updatedAt": "2026-08-21T16:17:32Z",
+      "timestamp": "2026-08-21T16:17:32Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:bufbuild/buf:pull_request:4644",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "pull_request",
+      "title": "Bump buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go from 1.36.11-20260709200747-435963d16310.1 to 1.36.12-20260709200747-435963d16310.1",
+      "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20260709200747-435963d16310.1&new-version=1.36.12-20260709200747-435963d16310.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+      "url": "https://github.com/bufbuild/buf/pull/4644",
+      "createdAt": "2026-08-16T04:32:51Z",
+      "updatedAt": "2026-08-21T16:17:37Z",
+      "timestamp": "2026-08-21T16:17:37Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [
+        "dependencies",
+        "go"
+      ],
+      "author": "dependabot[bot]",
+      "state": "closed",
+      "assignees": [],
+      "change": "updated"
+    },
+    {
+      "id": "github:bufbuild/buf:pull_request:4651",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "pull_request",
+      "title": "Upgrade Go 1.27",
+      "text": "Bumps CI to Go 1.27 and fixes lint issues.",
+      "url": "https://github.com/bufbuild/buf/pull/4651",
+      "createdAt": "2026-08-21T14:19:24Z",
+      "updatedAt": "2026-08-21T16:15:33Z",
+      "timestamp": "2026-08-21T16:15:33Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 2
+      },
+      "labels": [],
+      "author": "emcfarlane",
+      "state": "closed",
+      "assignees": [],
+      "change": "new"
+    },
+    {
+      "id": "github:bufbuild/buf:pull_request:4652",
+      "source": "github",
+      "group": "developer-infrastructure",
+      "project": "bufbuild/buf",
+      "kind": "pull_request",
+      "title": "Fix LSP workspace leases",
+      "text": "This adds fixes to the LSP workspaces. Improves file associated with workspace which degraded completion and renames, and ensures workspaces are released when all files that reference it are closed to free resources.",
+      "url": "https://github.com/bufbuild/buf/pull/4652",
+      "createdAt": "2026-08-21T21:01:54Z",
+      "updatedAt": "2026-08-21T21:02:11Z",
+      "timestamp": "2026-08-21T21:02:11Z",
+      "metrics": {
+        "reactions": 0,
+        "comments": 1
+      },
+      "labels": [],
+      "author": "emcfarlane",
+      "state": "open",
+      "assignees": [],
+      "change": "new"
+    }
+  ],
+  "events": [
+    {
+      "id": "event:3c42ecfaec3921cb9194",
+      "signalId": "github:bufbuild/buf:pull_request:4652",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:bufbuild/buf:pull_request:4652",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "pull_request",
+        "title": "Fix LSP workspace leases",
+        "text": "This adds fixes to the LSP workspaces. Improves file associated with workspace which degraded completion and renames, and ensures workspaces are released when all files that reference it are closed to free resources.",
+        "url": "https://github.com/bufbuild/buf/pull/4652",
+        "createdAt": "2026-08-21T21:01:54Z",
+        "updatedAt": "2026-08-21T21:02:11Z",
+        "timestamp": "2026-08-21T21:02:11Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 1
+        },
+        "labels": [],
+        "author": "emcfarlane",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:3b86e01a8eccbe100aaf",
+      "signalId": "github:bufbuild/buf:pull_request:4644",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:bufbuild/buf:pull_request:4644",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "pull_request",
+        "title": "Bump buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go from 1.36.11-20260709200747-435963d16310.1 to 1.36.12-20260709200747-435963d16310.1",
+        "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20260709200747-435963d16310.1&new-version=1.36.12-20260709200747-435963d16310.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+        "url": "https://github.com/bufbuild/buf/pull/4644",
+        "createdAt": "2026-08-16T04:32:51Z",
+        "updatedAt": "2026-08-21T16:17:37Z",
+        "timestamp": "2026-08-21T16:17:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:3c5dc329b67616f5baff",
+      "signalId": "github:bufbuild/buf:pull_request:4642",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:bufbuild/buf:pull_request:4642",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "pull_request",
+        "title": "Bump buf.build/gen/go/bufbuild/protodescriptor/protocolbuffers/go from 1.36.11-20250109164928-1da0de137947.1 to 1.36.12-20250109164928-1da0de137947.1",
+        "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/protodescriptor/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20250109164928-1da0de137947.1&new-version=1.36.12-20250109164928-1da0de137947.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+        "url": "https://github.com/bufbuild/buf/pull/4642",
+        "createdAt": "2026-08-16T04:32:44Z",
+        "updatedAt": "2026-08-21T16:17:37Z",
+        "timestamp": "2026-08-21T16:17:37Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:1c8c90100010ee2b3494",
+      "signalId": "github:bufbuild/buf:pull_request:4641",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:bufbuild/buf:pull_request:4641",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "pull_request",
+        "title": "Bump buf.build/gen/go/bufbuild/bufplugin/protocolbuffers/go from 1.36.11-20260722160903-4d94f3df3a7b.1 to 1.36.12-20260722160903-4d94f3df3a7b.1",
+        "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/bufplugin/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20260722160903-4d94f3df3a7b.1&new-version=1.36.12-20260722160903-4d94f3df3a7b.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+        "url": "https://github.com/bufbuild/buf/pull/4641",
+        "createdAt": "2026-08-16T04:32:37Z",
+        "updatedAt": "2026-08-21T16:17:35Z",
+        "timestamp": "2026-08-21T16:17:35Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:fdf9012607c814dc6f8a",
+      "signalId": "github:bufbuild/buf:pull_request:4643",
+      "event": "changed",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [
+        "updatedAt",
+        "metrics",
+        "state"
+      ],
+      "signal": {
+        "id": "github:bufbuild/buf:pull_request:4643",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "pull_request",
+        "title": "Bump buf.build/gen/go/bufbuild/registry/protocolbuffers/go from 1.36.11-20260713175918-10d915f5b43b.1 to 1.36.12-20260713175918-10d915f5b43b.1",
+        "text": "[![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=buf.build/gen/go/bufbuild/registry/protocolbuffers/go&package-manager=go_modules&previous-version=1.36.11-20260713175918-10d915f5b43b.1&new-version=1.36.12-20260713175918-10d915f5b43b.1)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot show <dependency name> ignore conditions` will show all of the ignore conditions of the specified dependency - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+        "url": "https://github.com/bufbuild/buf/pull/4643",
+        "createdAt": "2026-08-16T04:32:47Z",
+        "updatedAt": "2026-08-21T16:17:32Z",
+        "timestamp": "2026-08-21T16:17:32Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "updated"
+      }
+    },
+    {
+      "id": "event:8b8f95b5f561bf1653f5",
+      "signalId": "github:bufbuild/buf:pull_request:4651",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:bufbuild/buf:pull_request:4651",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "pull_request",
+        "title": "Upgrade Go 1.27",
+        "text": "Bumps CI to Go 1.27 and fixes lint issues.",
+        "url": "https://github.com/bufbuild/buf/pull/4651",
+        "createdAt": "2026-08-21T14:19:24Z",
+        "updatedAt": "2026-08-21T16:15:33Z",
+        "timestamp": "2026-08-21T16:15:33Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [],
+        "author": "emcfarlane",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a44d187b9052f3f63e4f",
+      "signalId": "github:bufbuild/buf:pull_request:2039",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:bufbuild/buf:pull_request:2039",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "pull_request",
+        "title": "Bump github.com/docker/docker from 23.0.4+incompatible to 23.0.5+incompatible",
+        "text": "Bumps [github.com/docker/docker](https://github.com/docker/docker) from 23.0.4+incompatible to 23.0.5+incompatible. <details> <summary>Release notes</summary> <p><em>Sourced from <a href=\"https://github.com/docker/docker/releases\">github.com/docker/docker's releases</a>.</em></p> <blockquote> <h2>v23.0.5</h2> <h2>23.0.5</h2> <p>For a full list of pull requests and changes in this release, refer to the relevant GitHub milestones:</p> <ul> <li><a href=\"https://github.com/docker/cli/milestone/79?closed=1\">docker/cli, 23.0.5 milestone</a></li> <li><a href=\"https://github.com/moby/moby/milestone/118?closed=1\">moby/moby, 23.0.5 milestone</a></li> </ul> <h3>Bug fixes and enhancements</h3> <ul> <li>Add the <code>--all</code> / <code>-a</code> option when pruning volumes. <a href=\"https://redirect.github.com/docker/cli/pull/4229\">docker/cli#4229</a></li> <li>Add <code>--format=json</code> for <code>docker info</code>. <a href=\"https://redirect.github.com/docker/cli/pull/4230\">docker/cli#4320</a></li> <li>Fix log loss with the AWSLogs log driver. <a href=\"https://redirect.github.com/moby/moby/pull/45350\">moby/moby#45350</a></li> <li>Fix a regression introduced in v23.0.4 where dockerd would refuse to start if the fixed-cidr config parameter is provided but not bip. <a href=\"https://redirect.github.com/moby/moby/pull/45403\">moby/moby#45403</a></li> <li>Fix a panic in libnetwork during daemon start <a href=\"https://redirect.github.com/moby/moby/pull/45376\">moby/moby#45376</a></li> <li>Fix &quot;tag&quot; event not being sent when an image is built with <code>buildx</code>. <a href=\"https://redirect.github.com/moby/moby/pull/45410\">moby/moby#45410</a></li> </ul> <h3>Packaging Updates</h3> <ul> <li>Upgrade Compose to <code>2.17.3</code>. <a href=\"https://redirect.github.com/docker/docker-ce-packaging/pull/883\">docker/docker-ce-packaging#883</a></li> </ul> </blockquote> </details> <details> <summary>Commits</summary> <ul> <li><a href=\"https://github.com/moby/moby/commit/94d3ad69cc598b5a8eb8a643d6999375953512e8\"><code>94d3ad6</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45410\">#45410</a> from rumpl/23.0_backport-fix-buildx-tag-events</li> <li><a href=\"https://github.com/moby/moby/commit/933a9f83b7cda9d1fc49319a24a4b87f4aa1909c\"><code>933a9f8</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45407\">#45407</a> from thaJeztah/23.0_backport_vendor_runc_1.1.5</li> <li><a href=\"https://github.com/moby/moby/commit/fe0a414613e9033df12ff3bccb61204d8facc9e8\"><code>fe0a414</code></a> Use the image service instead of the reference store for tagging</li> <li><a href=\"https://github.com/moby/moby/commit/1b1230eaaf00f9a78bd7e1a624b1d8b95db356df\"><code>1b1230e</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45375\">#45375</a> from thaJeztah/23.0_backport_bump_swarmkit</li> <li><a href=\"https://github.com/moby/moby/commit/1b263035af5004a440ecb6fea7225d6068073765\"><code>1b26303</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45374\">#45374</a> from thaJeztah/23.0_backport_stfu_grpc</li> <li><a href=\"https://github.com/moby/moby/commit/682542fd081646d1587720481ac5a4ea55b75337\"><code>682542f</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45373\">#45373</a> from thaJeztah/23.0_backport_assorted_test_and_pack...</li> <li><a href=\"https://github.com/moby/moby/commit/40ec0eb9fe21d5fe8a9e98c8aa26e49a442f6036\"><code>40ec0eb</code></a> vendor: github.com/opencontainers/runc v1.1.5</li> <li><a href=\"https://github.com/moby/moby/commit/9af6762d34a0b47006472b319803d85834e216fd\"><code>9af6762</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45403\">#45403</a> from akerouanton/23.0-cherrypick-2d31697</li> <li><a href=\"https://github.com/moby/moby/commit/0b6449a4772f01118cf7ba9645d737fc94e773e1\"><code>0b6449a</code></a> Merge pull request <a href=\"https://redirect.github.com/docker/docker/issues/45376\">#45376</a> from thaJeztah/23.0_backport_delete_network_more_at...</li> <li><a href=\"https://github.com/moby/moby/commit/227d3f39a354caaf5252f7a29d78aad92e8bfba2\"><code>227d3f3</code></a> daemon: set docker0 subpool as the IPAM pool</li> <li>Additional commits viewable in <a href=\"https://github.com/docker/docker/compare/v23.0.4...v23.0.5\">compare view</a></li> </ul> </details> <br /> [![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=github.com/docker/docker&package-manager=go_modules&previous-version=23.0.4+incompatible&new-version=23.0.5+incompatible)](https://docs.github.com/en/github/managing-security-vulnerabilities/about-dependabot-security-updates#about-compatibility-scores) Dependabot will resolve any conflicts with this PR as long as you don't alter it yourself. You can also trigger a rebase manually by commenting `@dependabot rebase`. [//]: # (dependabot-automerge-start) [//]: # (dependabot-automerge-end) --- <details> <summary>Dependabot commands and options</summary> <br /> You can trigger Dependabot actions by commenting on this PR: - `@dependabot rebase` will rebase this PR - `@dependabot recreate` will recreate this PR, overwriting any edits that have been made to it - `@dependabot merge` will merge this PR after your CI passes on it - `@dependabot squash and merge` will squash and merge this PR after your CI passes on it - `@dependabot cancel merge` will cancel a previously requested merge and block automerging - `@dependabot reopen` will reopen this PR if it is closed - `@dependabot close` will close this PR and stop Dependabot recreating it. You can achieve the same result by closing it manually - `@dependabot ignore this major version` will close this PR and stop Dependabot creating any more for this major version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this minor version` will close this PR and stop Dependabot creating any more for this minor version (unless you reopen the PR or upgrade to it yourself) - `@dependabot ignore this dependency` will close this PR and stop Dependabot creating any more for this dependency (unless you reopen the PR or upgrade to it yourself) </details>",
+        "url": "https://github.com/bufbuild/buf/pull/2039",
+        "createdAt": "2023-05-01T05:01:45Z",
+        "updatedAt": "2026-08-21T15:28:45Z",
+        "timestamp": "2026-08-21T15:28:45Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 2
+        },
+        "labels": [
+          "dependencies",
+          "go"
+        ],
+        "author": "dependabot[bot]",
+        "state": "closed",
+        "assignees": [],
+        "change": "new"
+      }
+    },
+    {
+      "id": "event:a6dfe7458a88ad5d9a6c",
+      "signalId": "github:bufbuild/buf:issue:4650",
+      "event": "discovered",
+      "observedAt": "2026-08-22T02:29:52.118351Z",
+      "changedFields": [],
+      "signal": {
+        "id": "github:bufbuild/buf:issue:4650",
+        "source": "github",
+        "group": "developer-infrastructure",
+        "project": "bufbuild/buf",
+        "kind": "issue",
+        "title": "buf format v1.71+ regressions: non-idempotent inline block comments and stripped interior indentation",
+        "text": "### Description `buf format` v1.71.0 introduced two regressions with the \"Port new formatter\" change: **Bug 1: Non-idempotent formatting of trailing line comments** Trailing `//` comments on option fields are converted to `/* */` block comments on the first pass (kept inline), then moved to a separate line on the second pass. The output never stabilizes in a single pass. **Repro (`example.proto`):** ```protobuf syntax = \"proto3\"; message Foo { bool bar = 1; // keep this inline } ``` **First `buf format` pass:** ```protobuf bool bar = 1; /* keep this inline */ ``` **Second `buf format` pass:** ```protobuf bool bar = 1; /* keep this inline */ ``` Running `buf format` twice produces different output — formatting is not idempotent. **Bug 2: Interior indentation alignment stripped from block comments** The formatter strips intentional interior indentation, destroying semantic alignment. Previously fixed in PR #1615 (v1.10.0) but reintroduced by the v1.71.0 new formatter port. **Repro:** ```protobuf syntax = \"proto3\"; service ExampleService { /** Reverse lookup a user from an identifier. - OK - response contains the resolved user id - NOT_FOUND - identifier was not found - INVALID_ARGUMENT - invalid identifier type - missing identifier - provided identifier is already USER_ID */ rpc GetUserId(GetUserIdRequest) returns (GetUserIdResponse); } message GetUserIdRequest {} message GetUserIdResponse {} ``` **`buf format` output (v1.72.0):** ```protobuf /** Reverse lookup a user from an identifier. - OK - response contains the resolved user id - NOT_FOUND - identifier was not found - INVALID_ARGUMENT - invalid identifier type - missing identifier - provided identifier is already USER_ID */ ``` The aligned sub-items under `INVALID_ARGUMENT` are flattened to the same indentation level as top-level list items, destroying the semantic grouping. \"missing identifier\" and \"provided identifier is already USER_ID\" are sub-cases of `INVALID_ARGUMENT`, not independent items. ### Expected behavior 1. Formatting should be idempotent — running `buf format` twice should produce the same output. 2. Interior indentation within block comments should be preserved (relative indentation maintained, as it was in v1.70.0 and earlier). ### Versions affected Both bugs affect v1.71.0+ (tested on v1.72.0). v1.70.0 does not have either issue.",
+        "url": "https://github.com/bufbuild/buf/issues/4650",
+        "createdAt": "2026-08-21T10:13:09Z",
+        "updatedAt": "2026-08-21T10:28:34Z",
+        "timestamp": "2026-08-21T10:28:34Z",
+        "metrics": {
+          "reactions": 0,
+          "comments": 0
+        },
+        "labels": [],
+        "author": "honnix",
+        "state": "open",
+        "assignees": [],
+        "change": "new"
+      }
+    }
+  ]
+}
