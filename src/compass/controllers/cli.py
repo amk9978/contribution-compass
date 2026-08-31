@@ -4,7 +4,9 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
-from compass.application import get_topics_frequencies, get_topic_projects, TopicProject
+
+from compass.application import get_topic_projects, get_topics_frequencies
+from compass.domain import TopicProject
 
 app = typer.Typer()
 
