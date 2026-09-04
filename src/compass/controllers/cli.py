@@ -12,6 +12,7 @@ from compass.domain import TopicProject
 app = typer.Typer()
 
 TOPICS_FILE = Path("topics.json")
+TEST_TOPIC = "github-actions"
 
 
 def format_github_handle(gitub_handle: str) -> str:
@@ -77,7 +78,7 @@ def get_topics_pages(
         for topic, _ in topics:
             if topic in pages:
                 continue
-            if topic != "github-actions":
+            if topic != TEST_TOPIC:
                 continue
 
             result: list[TopicProject] = get_topic_projects(

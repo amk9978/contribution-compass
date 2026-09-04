@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 import pydantic
 
@@ -80,3 +81,14 @@ class ProjectIssue(pydantic.BaseModel):
     is_locked: bool = False
     is_good_first_issue: bool = False
     is_help_wanted: bool = False
+
+
+class Recommendation(pydantic.BaseModel):
+    topicProject: TopicProject
+    score: float = 0.0
+
+
+class RecommendationGroup(pydantic.BaseModel):
+    good_on_resume: List[Recommendation]
+    fresh_air: List[Recommendation]
+    aligned: List[Recommendation]
