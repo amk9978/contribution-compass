@@ -1,4 +1,5 @@
 import datetime
+from enum import Enum
 from typing import List
 
 import pydantic
@@ -83,9 +84,21 @@ class ProjectIssue(pydantic.BaseModel):
     is_help_wanted: bool = False
 
 
-class Recommendation(pydantic.BaseModel):
+class Candidate(pydantic.BaseModel):
     topicProject: TopicProject
     score: float = 0.0
+
+
+class RecommendationFeedback(Enum):
+    REJECTED = 'rejected'
+    ACCEPTED = 'accepted'
+    DISMISSED = 'dismissed'
+
+
+class Recommendation(pydantic.BaseModel):
+    candidate: Candidate
+    recommendation_date: datetime.datetime
+    feedback: RecommendationFeedback = RecommendationFeedback.DISMISSED
 
 
 class RecommendationGroup(pydantic.BaseModel):

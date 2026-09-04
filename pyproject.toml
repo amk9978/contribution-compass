@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "contribution-compass"
+name = "contributor-compass"
 version = "0.4.0a0"
 description = "Personalized open-source project investment recommendations"
 readme = "README.md"
@@ -27,11 +27,11 @@ dev = [
 ]
 
 [project.scripts]
-contribution-compass = "contribution_compass.controllers.cli:main"
-contribution-compass-mcp = "contribution_compass.controllers.mcp:main"
+compass = "compass.controllers.cli:main"
+compass-mcp = "compass.controllers.mcp:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/contribution_compass"]
+packages = ["src/compass"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -48,4 +48,4 @@ ignore = ["E501"]
 [tool.mypy]
 python_version = "3.12"
 strict = true
-packages = ["contribution_compass"]
+packages = ["compass"]
