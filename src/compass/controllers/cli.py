@@ -8,6 +8,8 @@ import typer
 from compass.adapters import GitHubClient
 from compass.application import get_topic_projects, get_topics_frequencies
 from compass.domain import TopicProject
+from compass.views.recommendations import render_group
+from compass.views.samples import SAMPLE_GROUP
 
 app = typer.Typer()
 
@@ -95,6 +97,11 @@ def get_topics_pages(
             write_into_file(pages)
 
     return pages
+
+
+@app.command()
+def preview() -> None:
+    typer.echo(render_group(SAMPLE_GROUP))
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import datetime
-from enum import Enum
-from typing import List
+from enum import StrEnum
+from uuid import UUID
 
 import pydantic
 
@@ -12,6 +12,7 @@ class TopicProject(pydantic.BaseModel):
 
     description: str | None = None
     language: str | None = None
+    language_bytes: dict[str, int] = {}
     topics: list[str] = []
 
     stars: int = 0
@@ -21,11 +22,11 @@ class TopicProject(pydantic.BaseModel):
     updated_at: datetime.datetime | None = None
     pushed_at: datetime.datetime | None = None
 
-    archived: bool = False
+    is_archived: bool = False
     latest_release_at: datetime.datetime | None = None
 
-    contributors_count: int | None = None
     open_pr_count: int | None = None
+    open_prs_older_than_90_days: int | None = None
 
     has_external_prs: bool | None = None
     external_commit_ratio: float | None = None
@@ -33,7 +34,7 @@ class TopicProject(pydantic.BaseModel):
 
     default_branch: str | None = None
 
-    license: str | None = None
+    license_spdx_id: str | None = None
 
     last_commit_at: datetime.datetime | None = None
 
@@ -42,10 +43,18 @@ class TopicProject(pydantic.BaseModel):
     commits_last_90_days: int | None = None
     merged_prs_last_90_days: int | None = None
     external_merged_prs_last_90_days: int | None = None
+    closed_unmerged_prs_last_90_days: int | None = None
 
     median_pr_merge_days: float | None = None
+    median_pr_first_response_days: float | None = None
 
+    has_issues_enabled: bool = True
     open_issues_count: int | None = None
+    open_good_first_issue_count: int | None = None
+
+    has_contributing_guide: bool | None = None
+    has_pr_template: bool | None = None
+    has_code_of_conduct: bool | None = None
 
     contributor_concentration: float | None = None
 
@@ -56,7 +65,7 @@ class ProjectIssue(pydantic.BaseModel):
 
     title: str
     url: str
-    description: str | None = None
+    body: str | None = None
 
     language: str | None = None
     topics: list[str] = []
@@ -67,7 +76,7 @@ class ProjectIssue(pydantic.BaseModel):
     created_at: datetime.datetime | None = None
     updated_at: datetime.datetime | None = None
 
-    participants_count: int | None = None
+    participants_count: int = 0
     comments_count: int = 0
 
     has_assignee: bool = False
@@ -84,24 +93,71 @@ class ProjectIssue(pydantic.BaseModel):
     is_help_wanted: bool = False
 
 
-class Candidate(pydantic.BaseModel):
-    topicProject: TopicProject
-    score: float = 0.0
-
-
-class RecommendationFeedback(Enum):
+class RecommendationFeedback(StrEnum):
     REJECTED = 'rejected'
     ACCEPTED = 'accepted'
     DISMISSED = 'dismissed'
+    UNANSWERED = 'unanswered'
+
+class RecommendationGroupFeedback(StrEnum):
+    REJECTED = 'rejected'
+    ACCEPTED = 'accepted'
+    DISMISSED = 'dismissed'
+    UNANSWERED = 'unanswered'
+
+
+class Bucket(StrEnum):
+    CAREER_SIGNAL = "career_signal"
+    FRESH_BREEZE = "fresh_breeze"
+    ALIGNED = "aligned"
+
+
+class BucketThresholds(pydantic.BaseModel):
+    bucket: Bucket
+    min_stars: int
+    min_forks: int
+    max_days_since_push: int
+    requires_outside_merges: bool = True
+
+
+class CareerSignalBucketThresholds(BucketThresholds):
+    bucket: Bucket = Bucket.CAREER_SIGNAL
+    min_stars: int = 5000
+    min_forks: int = 500
+
+
+class FreshAirBucketThresholds(BucketThresholds):
+    bucket: Bucket = Bucket.FRESH_BREEZE
+    min_stars: int = 500
+    min_forks: int = 100
+
+
+class AlignedBucketThresholds(BucketThresholds):
+    bucket: Bucket = Bucket.ALIGNED
+    min_stars: int = 500
+    min_forks: int = 50
+
+
+class Evaluation(pydantic.BaseModel):
+    fit: float | None = None
+    absorption: float | None = None
+    upside: float | None = None
 
 
 class Recommendation(pydantic.BaseModel):
-    candidate: Candidate
-    recommendation_date: datetime.datetime
-    feedback: RecommendationFeedback = RecommendationFeedback.DISMISSED
+    id: UUID
+    project: TopicProject
+    bucket: Bucket
+    evaluation: Evaluation
+    explanation: str
+    policy_version: str
+    as_of: datetime.datetime
+    feedback_at: datetime.datetime | None = None
+    feedback: RecommendationFeedback = RecommendationFeedback.UNANSWERED
 
 
 class RecommendationGroup(pydantic.BaseModel):
-    good_on_resume: List[Recommendation]
-    fresh_air: List[Recommendation]
-    aligned: List[Recommendation]
+    id: UUID
+    recommendations: list[Recommendation]
+    as_of: datetime.datetime
+    feedback: RecommendationGroupFeedback = RecommendationGroupFeedback.UNANSWERED
