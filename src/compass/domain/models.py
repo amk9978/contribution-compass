@@ -5,7 +5,11 @@ from uuid import UUID
 import pydantic
 
 
-class TopicProject(pydantic.BaseModel):
+class DomainModel(pydantic.BaseModel):
+    model_config = pydantic.ConfigDict(extra="forbid")
+
+
+class TopicProject(DomainModel):
     owner: str
     name: str
     url: str
@@ -59,7 +63,7 @@ class TopicProject(pydantic.BaseModel):
     contributor_concentration: float | None = None
 
 
-class ProjectIssue(pydantic.BaseModel):
+class ProjectIssue(DomainModel):
     project_name: str
     project_url: str
 
@@ -94,16 +98,17 @@ class ProjectIssue(pydantic.BaseModel):
 
 
 class RecommendationFeedback(StrEnum):
-    REJECTED = 'rejected'
-    ACCEPTED = 'accepted'
-    DISMISSED = 'dismissed'
-    UNANSWERED = 'unanswered'
+    REJECTED = "rejected"
+    ACCEPTED = "accepted"
+    DISMISSED = "dismissed"
+    UNANSWERED = "unanswered"
+
 
 class RecommendationGroupFeedback(StrEnum):
-    REJECTED = 'rejected'
-    ACCEPTED = 'accepted'
-    DISMISSED = 'dismissed'
-    UNANSWERED = 'unanswered'
+    REJECTED = "rejected"
+    ACCEPTED = "accepted"
+    DISMISSED = "dismissed"
+    UNANSWERED = "unanswered"
 
 
 class Bucket(StrEnum):
@@ -112,7 +117,7 @@ class Bucket(StrEnum):
     ALIGNED = "aligned"
 
 
-class BucketThresholds(pydantic.BaseModel):
+class BucketThresholds(DomainModel):
     bucket: Bucket
     min_stars: int
     min_forks: int
@@ -138,13 +143,13 @@ class AlignedBucketThresholds(BucketThresholds):
     min_forks: int = 50
 
 
-class Evaluation(pydantic.BaseModel):
+class Evaluation(DomainModel):
     fit: float | None = None
     absorption: float | None = None
     upside: float | None = None
 
 
-class Recommendation(pydantic.BaseModel):
+class Recommendation(DomainModel):
     id: UUID
     project: TopicProject
     bucket: Bucket
@@ -156,7 +161,7 @@ class Recommendation(pydantic.BaseModel):
     feedback: RecommendationFeedback = RecommendationFeedback.UNANSWERED
 
 
-class RecommendationGroup(pydantic.BaseModel):
+class RecommendationGroup(DomainModel):
     id: UUID
     recommendations: list[Recommendation]
     as_of: datetime.datetime

@@ -1,8 +1,9 @@
 import logging
+from collections.abc import Iterator
 from typing import TypedDict
 
 from dotenv import load_dotenv
-from selectolax.parser import HTMLParser
+from selectolax.parser import HTMLParser, Node
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,7 @@ def build_headers(token: str) -> dict[str, str]:
     }
 
 
-def parse_topic_article(article) -> TopicRepoRecord | None:
+def parse_topic_article(article: Node) -> TopicRepoRecord | None:
     heading = article.css_first("h3")
 
     if heading is None:
@@ -56,33 +57,15 @@ def parse_topic_article(article) -> TopicRepoRecord | None:
         owner=repo_links[0].text(strip=True),
         name=repo_link.text(strip=True),
         url=f"{GITHUB_WEB}{href}",
-        description=(
-            description_node.text(strip=True)
-            if description_node
-            else None
-        ),
-        language=(
-            language_node.text(strip=True)
-            if language_node
-            else None
-        ),
-        topics=[
-            node.text(strip=True)
-            for node in article.css("a.topic-tag")
-        ],
-        updated_at=(
-            updated_node.attributes.get("datetime")
-            if updated_node
-            else None
-        ),
+        description=(description_node.text(strip=True) if description_node else None),
+        language=(language_node.text(strip=True) if language_node else None),
+        topics=[node.text(strip=True) for node in article.css("a.topic-tag")],
+        updated_at=(updated_node.attributes.get("datetime") if updated_node else None),
     )
 
 
 def parse_topic_page(tree: HTMLParser) -> list[TopicRepoRecord]:
-    records = (
-        parse_topic_article(article)
-        for article in tree.css("article")
-    )
+    records = (parse_topic_article(article) for article in tree.css("article"))
 
     return [record for record in records if record is not None]
 
@@ -90,21 +73,27 @@ def parse_topic_page(tree: HTMLParser) -> list[TopicRepoRecord]:
 class GitHubClient:
     def __init__(self, token: str | None = None, timeout: float = 30) -> None:
         load_dotenv()
+        self.token = token
+        self.timeout = timeout
 
-    def graphql_request(self,):
-        pass
+    def __enter__(self) -> "GitHubClient":
+        return self
 
-    def graphql_read_project(self):
-        pass
+    def __exit__(self, *exc_info: object) -> None:
+        return None
 
-    def graphql_read_issues(self):
-        pass
+    def iter_user_repos(
+        self,
+        github_handle: str,
+    ) -> Iterator[list[TopicRepoRecord]]:
+        raise NotImplementedError
 
-    def graphql_read_topic(self):
-        pass
+    def iter_topic_repos(
+        self,
+        topic: str,
+        max_pages: int = 5,
+    ) -> Iterator[list[TopicRepoRecord]]:
+        raise NotImplementedError
 
-    def graphql_read_user(self):
-        pass
-
-    def graphql_read_repo(self):
-        pass
+    def get_repo_stats(self, owner: str, name: str) -> tuple[int, int]:
+        raise NotImplementedError

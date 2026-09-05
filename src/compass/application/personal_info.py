@@ -23,8 +23,8 @@ def rank_frequencies(frequencies: dict[str, int]) -> list[tuple[str, int]]:
 
 
 def get_topics_frequencies(
-        github_handle: str,
-        github: GitHubClient,
+    github_handle: str,
+    github: GitHubClient,
 ) -> list[tuple[str, int]]:
     frequencies: defaultdict[str, int] = defaultdict(int)
 
@@ -48,8 +48,8 @@ def get_topics_frequencies(
 
 
 def build_topic_project(
-        record: TopicRepoRecord,
-        github: GitHubClient,
+    record: TopicRepoRecord,
+    github: GitHubClient,
 ) -> TopicProject:
     stars, forks = github.get_repo_stats(
         owner=record["owner"],
@@ -65,14 +65,14 @@ def build_topic_project(
         forks=forks,
         language=record["language"],
         topics=record["topics"],
-        updated_at=record["updated_at"],
+        updated_at=parse_timestamp(record["updated_at"]),
     )
 
 
 def get_topic_projects(
-        topic: str,
-        github: GitHubClient,
-        max_pages: int = 5,
+    topic: str,
+    github: GitHubClient,
+    max_pages: int = 5,
 ) -> list[TopicProject]:
     projects: list[TopicProject] = []
     seen: set[str] = set()
@@ -84,9 +84,6 @@ def get_topic_projects(
             break
 
         seen.update(record["url"] for record in fresh)
-        projects.extend(
-            build_topic_project(record=record, github=github)
-            for record in fresh
-        )
+        projects.extend(build_topic_project(record=record, github=github) for record in fresh)
 
     return projects

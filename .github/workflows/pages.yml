@@ -1,15 +1,6 @@
 name: Pages
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "src/contribution_compass/**"
-      - "docs/product-spec-v2.md"
-      - "pyproject.toml"
-      - "uv.lock"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -44,7 +35,7 @@ jobs:
           else
             export SITE_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
           fi
-          uv run contribution-compass site
+          uv run compass site
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

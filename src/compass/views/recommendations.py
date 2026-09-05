@@ -39,8 +39,7 @@ def render_bucket(bucket: Bucket, recommendations: list[Recommendation]) -> str:
         return f"{BUCKET_TITLES[bucket]}\n  {EMPTY_BUCKET}"
 
     bodies = "\n\n".join(
-        render_recommendation(recommendation)
-        for recommendation in recommendations
+        render_recommendation(recommendation) for recommendation in recommendations
     )
 
     return f"{BUCKET_TITLES[bucket]}\n{bodies}"

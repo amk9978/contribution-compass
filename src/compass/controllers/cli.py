@@ -24,8 +24,8 @@ def format_github_handle(gitub_handle: str) -> str:
 
 
 def collect_topics(
-        github_handle: str,
-        github: GitHubClient,
+    github_handle: str,
+    github: GitHubClient,
 ) -> list[tuple[str, int]]:
     formatted_github_handle = format_github_handle(github_handle)
     typer.echo(f"Fetching your topics at {formatted_github_handle}...")
@@ -41,21 +41,23 @@ def collect_topics(
 
 @app.command()
 def get_topics(
-        github_handle: Annotated[str, typer.Argument()],
+    github_handle: Annotated[str, typer.Argument()],
 ) -> list[tuple[str, int]]:
     with GitHubClient() as github:
         return collect_topics(github_handle=github_handle, github=github)
 
 
-def load_existing_pages() -> dict[str, list[dict]]:
+def load_existing_pages() -> dict[str, list[dict[str, object]]]:
     if not TOPICS_FILE.exists():
         return {}
 
     with TOPICS_FILE.open() as file:
-        return json.load(file)
+        pages: dict[str, list[dict[str, object]]] = json.load(file)
+
+    return pages
 
 
-def write_into_file(topics: dict[str, list[dict]]) -> None:
+def write_into_file(topics: dict[str, list[dict[str, object]]]) -> None:
     temp_file = TOPICS_FILE.with_suffix(".json.tmp")
 
     with temp_file.open("w") as file:
@@ -68,8 +70,8 @@ def write_into_file(topics: dict[str, list[dict]]) -> None:
 
 @app.command()
 def get_topics_pages(
-        github_handle: Annotated[str, typer.Argument()],
-) -> dict:
+    github_handle: Annotated[str, typer.Argument()],
+) -> dict[str, list[dict[str, object]]]:
     pages = load_existing_pages()
 
     with GitHubClient() as github:
@@ -87,15 +89,16 @@ def get_topics_pages(
                 max_pages=10,
             )
 
-            pages[topic] = [
-                project.model_dump(mode="json")
-                for project in result
-            ]
+            pages[topic] = [project.model_dump(mode="json") for project in result]
 
             write_into_file(pages)
 
     return pages
 
 
-if __name__ == '__main__':
+def main() -> None:
     app()
+
+
+if __name__ == "__main__":
+    main()
